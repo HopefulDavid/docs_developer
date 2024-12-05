@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title> | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/Docs_Developer/blob/main/programming/net/net_wpf.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
+            Dokumentace pro v&#253;voj&#225;ře
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<h2 id="wpf-windows-presentation-foundation">WPF (Windows Presentation Foundation)</h2>
+<ul>
+<li>Tvorba desktopových aplikací na platformě Windows</li>
+<li>Odděluje logiku aplikace (C#) od vzhledu (XAML)</li>
+<li>Umožňuje datové vazby a stylování</li>
+<li>Podpora vektorové grafiky, animací a multimédií</li>
+</ul>
+<h3 id="prvky">Prvky</h3>
+<details>
+<summary><span style="color:#1E90FF;">Button</span></summary>
+Tlačítko je interaktivní prvek, na který může uživatel kliknout.
+<h5 id="vlastnosti-které-lze-stylovat">Vlastnosti, které lze stylovat</h5>
+<ul>
+<li><p>Background: Barva pozadí tlačítka.</p>
+</li>
+<li><p>Foreground: Barva textu.</p>
+</li>
+<li><p>BorderBrush: Barva ohraničení.</p>
+</li>
+<li><p>BorderThickness: Tloušťka ohraničení.</p>
+</li>
+<li><p>FontSize: Velikost písma.</p>
+</li>
+<li><p>Padding: Vnitřní odsazení (rozestup textu od okrajů).</p>
+</li>
+<li><p>Margin: Vnější odsazení (rozestup tlačítka od ostatních prvků).</p>
+</li>
+<li><p>CornerRadius: Zaoblení rohů tlačítka.</p>
+</li>
+</ul>
+<h5 id="události">Události</h5>
+<ul>
+<li>Click: Vyvolána, když uživatel klikne na tlačítko.</li>
+</ul>
+<h5 id="příklad-použití">Příklad použití</h5>
+<pre><code class="lang-xml">&lt;Button 
+    Content=&quot;Klikni na mě&quot;
+    Background=&quot;LightBlue&quot;
+    Foreground=&quot;White&quot;
+    BorderBrush=&quot;Blue&quot;
+    BorderThickness=&quot;2&quot;
+    FontSize=&quot;16&quot;
+    Padding=&quot;10&quot;
+    Margin=&quot;10&quot;
+    CornerRadius=&quot;5&quot;/&gt;
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">TextBox</span></summary>
+<p>TextBox je prvek pro vstup textu od uživatele.</p>
+<h5 id="vlastnosti-které-lze-stylovat-1">Vlastnosti, které lze stylovat</h5>
+<ul>
+<li>Background: Barva pozadí vstupního pole.</li>
+<li>Foreground: Barva textu.</li>
+<li>BorderBrush: Barva ohraničení.</li>
+<li>BorderThickness: Tloušťka ohraničení.</li>
+<li>FontSize: Velikost písma.</li>
+<li>Padding: Vnitřní odsazení.</li>
+<li>Margin: Vnější odsazení.</li>
+<li>Width: Šířka pole.</li>
+<li>Height: Výška pole.</li>
+</ul>
+<h5 id="události-1">Události</h5>
+<ul>
+<li>TextChanged: Vyvolána, když se změní obsah <code>TextBox</code>.</li>
+<li>GotFocus: Vyvolána, když <code>TextBox</code> získá fokus.</li>
+<li>LostFocus: Vyvolána, když <code>TextBox</code> ztratí fokus.</li>
+</ul>
+<h5 id="příklad-použití-1">Příklad použití</h5>
+<pre><code class="lang-xml">&lt;TextBox 
+    Text=&quot;Zadejte text&quot;
+    Background=&quot;White&quot;
+    Foreground=&quot;Black&quot;
+    BorderBrush=&quot;Gray&quot;
+    BorderThickness=&quot;1&quot;
+    FontSize=&quot;14&quot;
+    Padding=&quot;5&quot;
+    Margin=&quot;10&quot;
+    Width=&quot;200&quot;
+    Height=&quot;30&quot;
+    TextChanged=&quot;TextBox_TextChanged&quot;
+    GotFocus=&quot;TextBox_GotFocus&quot;
+    LostFocus=&quot;TextBox_LostFocus&quot;/&gt;
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">CheckBox</span></summary>
+<p>CheckBox je prvek, který umožňuje uživateli vybrat nebo odznačit volbu.</p>
+<h5 id="vlastnosti-které-lze-stylovat-2">Vlastnosti, které lze stylovat</h5>
+<ul>
+<li>Background: Barva pozadí.</li>
+<li>Foreground: Barva textu.</li>
+<li>BorderBrush: Barva ohraničení.</li>
+<li>BorderThickness: Tloušťka ohraničení.</li>
+<li>FontSize: Velikost písma.</li>
+<li>Padding: Vnitřní odsazení.</li>
+<li>Margin: Vnější odsazení.</li>
+</ul>
+<h5 id="události-2">Události</h5>
+<ul>
+<li>Checked: Vyvolána, když uživatel zaškrtne <code>CheckBox</code>.</li>
+<li>Unchecked: Vyvolána, když uživatel odškrtne <code>CheckBox</code>.</li>
+<li>Click: Vyvolána, když uživatel klikne na <code>CheckBox</code>.</li>
+</ul>
+<h5 id="příklad-použití-2">Příklad použití</h5>
+<pre><code class="lang-xml">&lt;CheckBox 
+    Content=&quot;Souhlasím s podmínkami&quot;
+    Background=&quot;Transparent&quot;
+    Foreground=&quot;Black&quot;
+    BorderBrush=&quot;Gray&quot;
+    BorderThickness=&quot;1&quot;
+    FontSize=&quot;14&quot;
+    Padding=&quot;5&quot;
+    Margin=&quot;10&quot;
+    Checked=&quot;CheckBox_Checked&quot;
+    Unchecked=&quot;CheckBox_Unchecked&quot;
+    Click=&quot;CheckBox_Click&quot;/&gt;
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">ComboBox</span></summary>
+<p>ComboBox je prvek, který umožňuje výběr jedné hodnoty z rozevíracího seznamu.</p>
+<h5 id="vlastnosti-které-lze-stylovat-3">Vlastnosti, které lze stylovat</h5>
+<ul>
+<li>Background: Barva pozadí.</li>
+<li>Foreground: Barva textu.</li>
+<li>BorderBrush: Barva ohraničení.</li>
+<li>BorderThickness: Tloušťka ohraničení.</li>
+<li>FontSize: Velikost písma.</li>
+<li>Padding: Vnitřní odsazení.</li>
+<li>Margin: Vnější odsazení.</li>
+<li>Width: Šířka pole.</li>
+<li>Height: Výška pole.</li>
+</ul>
+<h5 id="události-3">Události</h5>
+<ul>
+<li>SelectionChanged:Vyvolána, když uživatel vybere novou položku v <code>ComboBox</code>.</li>
+<li>DropDownOpened: Vyvolána, když je rozevírací seznam otevřen.</li>
+<li>DropDownClosed: Vyvolána, když je rozevírací seznam zavřen.</li>
+</ul>
+<h5 id="příklad-použití-3">Příklad použití</h5>
+<pre><code class="lang-xml">&lt;ComboBox 
+    Background=&quot;White&quot;
+    Foreground=&quot;Black&quot;
+    BorderBrush=&quot;Gray&quot;
+    BorderThickness=&quot;1&quot;
+    FontSize=&quot;14&quot;
+    Padding=&quot;5&quot;
+    Margin=&quot;10&quot;
+    Width=&quot;150&quot;
+    Height=&quot;30&quot;
+    SelectionChanged=&quot;ComboBox_SelectionChanged&quot;
+    DropDownOpened=&quot;ComboBox_DropDownOpened&quot;
+    DropDownClosed=&quot;ComboBox_DropDownClosed&quot;&gt;
+    &lt;ComboBoxItem Content=&quot;Možnost 1&quot;/&gt;
+    &lt;ComboBoxItem Content=&quot;Možnost 2&quot;/&gt;
+    &lt;ComboBoxItem Content=&quot;Možnost 3&quot;/&gt;
+&lt;/ComboBox&gt;
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">RadioButton</span></summary>
+<p>RadioButton je prvek, který umožňuje uživateli vybrat jednu možnost z více možností.</p>
+<h5 id="vlastnosti-které-lze-stylovat-4">Vlastnosti, které lze stylovat</h5>
+<ul>
+<li>Background: Barva pozadí.</li>
+<li>Foreground: Barva textu.</li>
+<li>BorderBrush: Barva ohraničení.</li>
+<li>BorderThickness: Tloušťka ohraničení.</li>
+<li>FontSize: Velikost písma.</li>
+<li>Padding: Vnitřní odsazení.</li>
+<li>Margin: Vnější odsazení.</li>
+</ul>
+<h5 id="události-4">Události</h5>
+<ul>
+<li>Checked: Vyvolána, když je <code>RadioButton</code> vybrán.</li>
+<li>Unchecked: Vyvolána, když je <code>RadioButton</code> odznačen.</li>
+<li>Click: Vyvolána, když uživatel klikne na <code>RadioButton</code>.</li>
+</ul>
+<h5 id="příklad-použití-4">Příklad použití</h5>
+<pre><code class="lang-xml">&lt;StackPanel Margin=&quot;10&quot;&gt;
+    &lt;TextBlock Text=&quot;Vyberte si jednu z možností:&quot; FontSize=&quot;16&quot; Margin=&quot;0,0,0,10&quot;/&gt;
+
+    &lt;RadioButton 
+        Content=&quot;Možnost A&quot;
+        GroupName=&quot;OptionsGroup&quot;
+        Background=&quot;LightGray&quot;
+        Foreground=&quot;Black&quot;
+        BorderBrush=&quot;DarkGray&quot;
+        BorderThickness=&quot;2&quot;
+        FontSize=&quot;14&quot;
+        Padding=&quot;8&quot;
+        Margin=&quot;0,5&quot;
+        CornerRadius=&quot;10&quot;
+        Checked=&quot;RadioButton_Checked&quot;
+        Unchecked=&quot;RadioButton_Unchecked&quot;
+        Click=&quot;RadioButton_Click&quot;/&gt;
+
+    &lt;RadioButton 
+        Content=&quot;Možnost B&quot;
+        GroupName=&quot;OptionsGroup&quot;
+        Background=&quot;LightGray&quot;
+        Foreground=&quot;Black&quot;
+        BorderBrush=&quot;DarkGray&quot;
+        BorderThickness=&quot;2&quot;
+        FontSize=&quot;14&quot;
+        Padding=&quot;8&quot;
+        Margin=&quot;0,5&quot;
+        CornerRadius=&quot;10&quot;
+        Checked=&quot;RadioButton_Checked&quot;
+        Unchecked=&quot;RadioButton_Unchecked&quot;
+        Click=&quot;RadioButton_Click&quot;/&gt;
+&lt;/StackPanel&gt;
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Slider</span></summary>
+<p>Slider je prvek, který umožňuje uživateli vybrat hodnotu posunutím jezdce.</p>
+<h5 id="vlastnosti-které-lze-stylovat-5">Vlastnosti, které lze stylovat</h5>
+<ul>
+<li>Background: Barva pozadí.</li>
+<li>Foreground: Barva jezdce.</li>
+<li>BorderBrush: Barva ohraničení.</li>
+<li>BorderThickness: Tloušťka ohraničení.</li>
+<li>Width: Šířka slideru.</li>
+<li>Height: Výška slideru.</li>
+</ul>
+<h5 id="události-5">Události</h5>
+<ul>
+<li>ValueChanged: Vyvolána, když se změní hodnota <code>Slider</code>.</li>
+<li>GotFocus: Vyvolána, když <code>Slider</code> získá fokus.</li>
+<li>LostFocus: Vyvolána, když <code>Slider</code> ztratí fokus.</li>
+</ul>
+<h5 id="příklad-použití-5">Příklad použití</h5>
+<pre><code class="lang-xml">&lt;Slider 
+    Minimum=&quot;0&quot;
+    Maximum=&quot;100&quot;
+    Value=&quot;50&quot;
+    Background=&quot;LightGray&quot;
+    Foreground=&quot;Blue&quot;
+    Width=&quot;200&quot;
+    Height=&quot;30&quot;
+    Margin=&quot;10&quot;
+    ValueChanged=&quot;Slider_ValueChanged&quot;
+    GotFocus=&quot;Slider_GotFocus&quot;
+    LostFocus=&quot;Slider_LostFocus&quot;/&gt;
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Vlastní ovládací prvek</span></summary>
+<p>Pokud standardní ovládací prvky nevyhovují vašim potřebám, můžete vytvořit vlastní ovládací prvek.</p>
+<ul>
+<li><p><strong>Definice vlastního ovládacího prvku</strong></p>
+<p>Vytvořte třídu vlastního ovládacího prvku. (Tato třída by měla dědit z existujícího ovládacího prvku, např. <code>Button</code>.)</p>
+<pre><code class="lang-csharp">  using System.Windows;
+  using System.Windows.Controls;
+
+  namespace YourNamespace
+  {
+      public class MyCustomButton : Button
+      {
+          static MyCustomButton()
+          {
+              DefaultStyleKeyProperty.OverrideMetadata(typeof(MyCustomButton), 
+                  new FrameworkPropertyMetadata(typeof(MyCustomButton)));
+          }
+      }
+  }
+</code></pre>
+<ul>
+<li><strong>DefaultStyleKeyProperty</strong>: Určuje výchozí styl pro vlastní ovládací prvek.</li>
+</ul>
+</li>
+<li><p><strong>Definujte styl a šablonu pro vlastní ovládací prvek</strong></p>
+<p>Styl a šablonu můžete definovat v XAML jako obvykle.</p>
+<pre><code class="lang-xml">&lt;Window.Resources&gt;
+  &lt;Style TargetType=&quot;{x:Type local:MyCustomButton}&quot;&gt;
+      &lt;Setter Property=&quot;Background&quot; Value=&quot;LightGray&quot;/&gt;
+      &lt;Setter Property=&quot;Foreground&quot; Value=&quot;Black&quot;/&gt;
+      &lt;Setter Property=&quot;FontSize&quot; Value=&quot;16&quot;/&gt;
+      &lt;Setter Property=&quot;Template&quot;&gt;
+          &lt;Setter.Value&gt;
+              &lt;ControlTemplate TargetType=&quot;{x:Type local:MyCustomButton}&quot;&gt;
+                  &lt;Border Background=&quot;{TemplateBinding Background}&quot; 
+                          BorderBrush=&quot;Black&quot; 
+                          BorderThickness=&quot;2&quot; 
+                          CornerRadius=&quot;10&quot;&gt;
+                      &lt;ContentPresenter HorizontalAlignment=&quot;Center&quot; 
+                                        VerticalAlignment=&quot;Center&quot;/&gt;
+                  &lt;/Border&gt;
+              &lt;/ControlTemplate&gt;
+          &lt;/Setter.Value&gt;
+      &lt;/Setter&gt;
+  &lt;/Style&gt;
+&lt;/Window.Resources&gt;
+</code></pre>
+</li>
+<li><p><strong>Použití vlastního ovládacího prvku</strong> v XAML:</p>
+<pre><code class="lang-xml">&lt;local:MyCustomButton Content=&quot;Moje vlastní tlačítko&quot; Width=&quot;200&quot; Height=&quot;50&quot;/&gt;
+</code></pre>
+</li>
+</ul>
+</details>
+<h3 id="styly">Styly</h3>
+<p>Styl se používá k definování vzhledu a chování více prvků najednou.</p>
+<p>Definuje se pomocí <strong>XAML</strong>.</p>
+<ul>
+<li><p>Definování stylu</p>
+<p>Styl se definuje v sekci <strong>Resources</strong>:</p>
+<pre><code class="lang-xml">    &lt;Window.Resources&gt;
+        &lt;Style x:Key=&quot;MyButtonStyle&quot; TargetType=&quot;Button&quot;&gt;
+            &lt;Setter Property=&quot;Background&quot; Value=&quot;Blue&quot;/&gt;
+            &lt;Setter Property=&quot;Foreground&quot; Value=&quot;White&quot;/&gt;
+            &lt;Setter Property=&quot;FontSize&quot; Value=&quot;14&quot;/&gt;
+            &lt;Setter Property=&quot;Padding&quot; Value=&quot;10&quot;/&gt;
+        &lt;/Style&gt;
+    &lt;/Window.Resources&gt;
+</code></pre>
+<ul>
+<li><p><strong>x</strong>: Unikátní název stylu, který použijete později.</p>
+</li>
+<li><p><strong>TargetType</strong>: Typ prvku, na který se styl vztahuje.</p>
+</li>
+</ul>
+</li>
+<li><p>Použití stylu</p>
+<p>Chcete-li styl použít na prvek, využijete atribut <strong>Style</strong>:</p>
+<pre><code class="lang-xml">&lt;Button Style=&quot;{StaticResource MyButtonStyle}&quot; Content=&quot;Klikni na mě&quot;/&gt;
+</code></pre>
+</li>
+</ul>
+<h4 id="prefixy">Prefixy</h4>
+<p><strong>x</strong>:</p>
+<ul>
+<li>Vyhrazen pro XAML standardní funkce a typy.</li>
+<li>Používá se pro přístup k základním vlastnostem, jako jsou <code>x:Class</code>, <code>x:Name</code>, <code>x:Key</code>, atd.</li>
+<li>Příklad
+<pre><code class="lang-xml">&lt;Window x:Class=&quot;MyNamespace.MainWindow&quot;
+      x:Name=&quot;mainWindow&quot;
+      x:Key=&quot;myWindowKey&quot;&gt;
+</code></pre>
+</li>
+</ul>
+<p><strong>xmlns:</strong></p>
+<ul>
+<li>Používá se k deklaraci namespace.</li>
+<li>Obvykle se používá v kořenovém prvku XAML souboru.</li>
+<li>Příklad deklarace namespace:
+<pre><code class="lang-xml">  &lt;Window xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+          xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+          xmlns:local=&quot;clr-namespace:MyNamespace&quot;&gt;
+</code></pre>
+</li>
+</ul>
+<p><strong>local</strong>:</p>
+<ul>
+<li>Používán k odkazování na vlastní namespace aplikace.</li>
+<li>Můžete ho použít k přístupu k vlastním ovládacím prvkům, datovým modelům a dalším třídám definovaným ve vaší aplikaci.</li>
+<li>Příklad:
+<pre><code class="lang-xml">  &lt;local:MyCustomButton Content=&quot;Moje vlastní tlačítko&quot;/&gt;
+</code></pre>
+</li>
+</ul>
+<p><strong>xmlns:sys:</strong></p>
+<ul>
+<li>Pro přístup k základním typům .NET, jako jsou <code>System.String</code>, <code>System.Int32</code>, atd.</li>
+<li>Příklad:</li>
+</ul>
+<pre><code class="lang-xml">xmlns:sys=&quot;clr-namespace:System;assembly=mscorlib&quot;
+</code></pre>
+<p><strong>xmlns:controls:</strong></p>
+<ul>
+<li>Pro přístup k ovládacím prvkům z externích knihoven, jako je například <strong>Windows Community Toolkit</strong>.</li>
+<li>Příklad:
+<pre><code class="lang-xml">  &lt;controls:MyCustomControl/&gt;
+</code></pre>
+</li>
+</ul>
+<p><strong>xmlns:mc:</strong></p>
+<ul>
+<li>Používá se pro <strong>Markup Compatibility</strong>.</li>
+<li>Umožňuje použití starších XAML formátů a zajišťuje zpětnou kompatibilitu.</li>
+<li>Příklad:
+<pre><code class="lang-xml">    xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+</code></pre>
+</li>
+</ul>
+<p><strong>xmlns:d:</strong></p>
+<ul>
+<li>Používá se pro návrhové časové funkce a umožňuje definovat prvky, které se zobrazují pouze během návrhu.</li>
+<li>Příklad:
+<pre><code class="lang-xml">    xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+</code></pre>
+</li>
+</ul>
+<h5 id="použití-prefixů-v-xaml">Použití prefixů v XAML</h5>
+<pre><code class="lang-xml">&lt;Window x:Class=&quot;MyNamespace.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:local=&quot;clr-namespace:MyNamespace&quot;
+        xmlns:controls=&quot;clr-namespace:MyCustomControls;assembly=MyCustomControlsAssembly&quot;
+        xmlns:sys=&quot;clr-namespace:System;assembly=mscorlib&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;Hlavní okno&quot; Height=&quot;350&quot; Width=&quot;525&quot;&gt;
+    
+    &lt;Grid&gt;
+        &lt;local:MyCustomButton Content=&quot;Moje vlastní tlačítko&quot; Width=&quot;200&quot; Height=&quot;50&quot;/&gt;
+        &lt;Button Content=&quot;Tlačítko&quot; Width=&quot;100&quot; Height=&quot;30&quot;/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</code></pre>
+<h4 id="šablony-controltemplates">Šablony (ControlTemplates)</h4>
+<p>Šablony umožňují plně přizpůsobit vzhled ovládacího prvku.</p>
+<p>Šablona definuje strukturu a vzhled prvku.</p>
+<ul>
+<li><p>Vytvoření šablony pro tlačítko</p>
+<pre><code class="lang-xml">&lt;Window.Resources&gt;
+  &lt;ControlTemplate x:Key=&quot;MyButtonTemplate&quot; TargetType=&quot;Button&quot;&gt;
+      &lt;Border Background=&quot;{TemplateBinding Background}&quot; 
+              BorderBrush=&quot;Black&quot; 
+              BorderThickness=&quot;2&quot; 
+              CornerRadius=&quot;5&quot;&gt;
+          &lt;ContentPresenter HorizontalAlignment=&quot;Center&quot; 
+                            VerticalAlignment=&quot;Center&quot;/&gt;
+      &lt;/Border&gt;
+  &lt;/ControlTemplate&gt;
+&lt;/Window.Resources&gt;
+</code></pre>
+<ul>
+<li><p><strong>ControlTemplate</strong>: Určuje, jak bude tlačítko vypadat.</p>
+</li>
+<li><p><strong>TemplateBinding</strong>: Slouží k vázání vlastností stylu na vlastnosti šablony.</p>
+</li>
+</ul>
+</li>
+<li><p>Použití šablony</p>
+<pre><code class="lang-xml">&lt;Button Template=&quot;{StaticResource MyButtonTemplate}&quot; 
+      Background=&quot;LightBlue&quot; 
+      Content=&quot;Stylizované tlačítko&quot;/&gt;
+</code></pre>
+</li>
+</ul>
+<h3 id="responzivní-design-prvků">Responzivní design prvků</h3>
+<p><strong>Responzivní design</strong> znamená, že se aplikace přizpůsobí různým velikostem a rozlišením obrazovky.</p>
+<h4 id="layout-panely">Layout Panely</h4>
+<p>WPF nabízí různé layout panely, které vám pomohou uspořádat ovládací prvky, jako jsou tlačítka nebo textová pole.</p>
+<p>Zde jsou nejčastěji používané panely:</p>
+<ul>
+<li><p><strong>Grid</strong>:</p>
+<p>Rozděluje okno na řádky a sloupce.</p>
+<p>Umožňuje flexibilní uspořádání.</p>
+<p>Příklad:</p>
+<pre><code class="lang-xml">&lt;Grid&gt;
+    &lt;Grid.RowDefinitions&gt;
+        &lt;RowDefinition Height=&quot;*&quot; /&gt;
+        &lt;RowDefinition Height=&quot;*&quot; /&gt;
+    &lt;/Grid.RowDefinitions&gt;
+    &lt;Grid.ColumnDefinitions&gt;
+        &lt;ColumnDefinition Width=&quot;*&quot; /&gt;
+        &lt;ColumnDefinition Width=&quot;*&quot; /&gt;
+    &lt;/Grid.ColumnDefinitions&gt;
+
+    &lt;Button Grid.Row=&quot;0&quot; Grid.Column=&quot;0&quot; Content=&quot;Tlačítko 1&quot; /&gt;
+    &lt;Button Grid.Row=&quot;0&quot; Grid.Column=&quot;1&quot; Content=&quot;Tlačítko 2&quot; /&gt;
+    &lt;Button Grid.Row=&quot;1&quot; Grid.Column=&quot;0&quot; Content=&quot;Tlačítko 3&quot; /&gt;
+    &lt;Button Grid.Row=&quot;1&quot; Grid.Column=&quot;1&quot; Content=&quot;Tlačítko 4&quot; /&gt;
+&lt;/Grid&gt;
+</code></pre>
+<p>V tomto příkladu je <strong>Grid</strong> rozdělen na 2 řádky a 2 sloupce, každá buňka obsahuje jedno tlačítko.</p>
+</li>
+<li><p><strong>StackPanel</strong>:</p>
+<p>Ukládá ovládací prvky buď vertikálně (jeden pod druhým), nebo horizontálně (vedle sebe).</p>
+<p>Příklad:</p>
+<pre><code class="lang-xml">&lt;StackPanel Orientation=&quot;Vertical&quot;&gt;
+    &lt;Button Content=&quot;Tlačítko 1&quot; /&gt;
+    &lt;Button Content=&quot;Tlačítko 2&quot; /&gt;
+    &lt;Button Content=&quot;Tlačítko 3&quot; /&gt;
+  &lt;/StackPanel&gt;
+</code></pre>
+<p>Zde jsou tlačítka naskládána vertikálně (jedno pod druhým).</p>
+<p>Pokud chceme prvky uspořádat horizontálně:</p>
+<pre><code class="lang-xml">&lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;
+    &lt;Button Content=&quot;Tlačítko 1&quot; /&gt;
+    &lt;Button Content=&quot;Tlačítko 2&quot; /&gt;
+    &lt;Button Content=&quot;Tlačítko 3&quot; /&gt;
+&lt;/StackPanel&gt;
+</code></pre>
+</li>
+<li><p><strong>WrapPanel</strong>:</p>
+<p>Pokud je na obrazovce málo místa, ovládací prvky se &quot;obalí&quot; na další řádek/sloupec.</p>
+<p>Příklad:</p>
+<pre><code class="lang-xml">&lt;WrapPanel&gt;
+    &lt;Button Content=&quot;Tlačítko 1&quot; Width=&quot;100&quot; Height=&quot;50&quot; /&gt;
+    &lt;Button Content=&quot;Tlačítko 2&quot; Width=&quot;100&quot; Height=&quot;50&quot; /&gt;
+    &lt;Button Content=&quot;Tlačítko 3&quot; Width=&quot;100&quot; Height=&quot;50&quot; /&gt;
+    &lt;Button Content=&quot;Tlačítko 4&quot; Width=&quot;100&quot; Height=&quot;50&quot; /&gt;
+    &lt;Button Content=&quot;Tlačítko 5&quot; Width=&quot;100&quot; Height=&quot;50&quot; /&gt;
+&lt;/WrapPanel&gt;
+</code></pre>
+</li>
+<li><p><strong>DockPanel</strong>:</p>
+<p>Umožňuje umístit ovládací prvky na okraje okna (vlevo, vpravo, nahoře, dole) a zbývající prostor zaplní jeden prvek.</p>
+<p>Příklad:</p>
+<pre><code class="lang-xml">&lt;DockPanel&gt;
+    &lt;Button DockPanel.Dock=&quot;Top&quot; Content=&quot;Horní tlačítko&quot; /&gt;
+    &lt;Button DockPanel.Dock=&quot;Bottom&quot; Content=&quot;Spodní tlačítko&quot; /&gt;
+    &lt;Button DockPanel.Dock=&quot;Left&quot; Content=&quot;Levé tlačítko&quot; /&gt;
+    &lt;Button DockPanel.Dock=&quot;Right&quot; Content=&quot;Pravé tlačítko&quot; /&gt;
+    &lt;Button Content=&quot;Centrální tlačítko&quot; /&gt;
+&lt;/DockPanel&gt;
+</code></pre>
+</li>
+</ul>
+<h4 id="dynamické-velikosti">Dynamické Velikosti</h4>
+<p><strong>Dynamické velikosti</strong> znamenají, že se ovládací prvky automaticky přizpůsobují velikosti okna.</p>
+<p>Místo pevně definovaných hodnot můžete použít:</p>
+<ul>
+<li><p><strong>Procentuální hodnoty</strong></p>
+<p>Umožňují ovládacím prvkům zabírat procento rodičovského prvku.</p>
+<p>Příklad:</p>
+<pre><code class="lang-xml">&lt;Grid&gt;
+    &lt;Grid.ColumnDefinitions&gt;
+        &lt;ColumnDefinition Width=&quot;50%&quot;/&gt; &lt;!-- 50% šířky rodičovského prvku --&gt;
+        &lt;ColumnDefinition Width=&quot;50%&quot;/&gt; &lt;!-- 50% šířky rodičovského prvku --&gt;
+    &lt;/Grid.ColumnDefinitions&gt;
+
+    &lt;TextBlock Text=&quot;Toto zabírá 50% šířky okna&quot; Background=&quot;LightCoral&quot; Grid.Column=&quot;0&quot; /&gt;
+    &lt;TextBlock Text=&quot;Toto také zabírá 50% šířky okna&quot; Background=&quot;LightBlue&quot; Grid.Column=&quot;1&quot; /&gt;
+&lt;/Grid&gt;
+</code></pre>
+</li>
+<li><p><strong>Hodnoty s <code>*</code></strong></p>
+<p>V Gridu můžete použít <code>*</code> k rozdělení zbývajícího místa.</p>
+<p>Například <code>2*</code> a <code>1*</code> znamená, že první sloupec zabere dvakrát více místa než druhý.</p>
+<p>Příklad:</p>
+<pre><code class="lang-xml">    &lt;Grid&gt;
+      &lt;Grid.ColumnDefinitions&gt;
+          &lt;ColumnDefinition Width=&quot;2*&quot;/&gt; &lt;!-- Dva díly prostoru --&gt;
+          &lt;ColumnDefinition Width=&quot;1*&quot;/&gt; &lt;!-- Jeden díl prostoru --&gt;
+      &lt;/Grid.ColumnDefinitions&gt;
+
+      &lt;TextBlock Text=&quot;Toto zabírá 2/3 šířky okna&quot; Background=&quot;LightCoral&quot; Grid.Column=&quot;0&quot;/&gt;
+      &lt;TextBlock Text=&quot;Toto zabírá 1/3 šířky okna&quot; Background=&quot;LightBlue&quot; Grid.Column=&quot;1&quot;/&gt;
+  &lt;/Grid&gt;
+</code></pre>
+</li>
+<li><p><strong>Auto</strong></p>
+<p>Automatická velikost na základě obsahu.</p>
+<p>Příklad:</p>
+<pre><code class="lang-xml">  &lt;Grid&gt;
+      &lt;Grid.RowDefinitions&gt;
+          &lt;RowDefinition Height=&quot;Auto&quot;/&gt;  &lt;!-- Automatická výška pro hlavičku --&gt;
+          &lt;RowDefinition Height=&quot;*&quot;/&gt;     &lt;!-- Zbytek prostoru pro další prvky --&gt;
+      &lt;/Grid.RowDefinitions&gt;
+
+      &lt;TextBlock Text=&quot;Hlavička&quot; Grid.Row=&quot;0&quot; FontSize=&quot;24&quot; Background=&quot;LightGray&quot; /&gt;
+      &lt;Button Content=&quot;Toto tlačítko zabírá zbytek prostoru&quot; Grid.Row=&quot;1&quot; /&gt;
+  &lt;/Grid&gt;
+</code></pre>
+</li>
+</ul>
+<h4 id="sledování-změny-velikosti">Sledování Změny Velikosti</h4>
+<p>Můžete sledovat změny velikosti okna a upravit rozložení ovládacích prvků.</p>
+<p>Pomocí události <code>SizeChanged</code> můžete reagovat na změnu velikosti okna a provést potřebné úpravy.</p>
+<p>Příklad:</p>
+<pre><code class="lang-csharp">private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+{
+    // Získání nové šířky a výšky okna
+    double newWidth = e.NewSize.Width;
+    double newHeight = e.NewSize.Height;
+
+    // Například upravit velikost tlačítka na základě velikosti okna
+    if (newWidth &lt; 600)
+    {
+        myButton.Width = 100; // Menší šířka tlačítka
+    }
+    else
+    {
+        myButton.Width = 200; // Větší šířka tlačítka
+    }
+
+    // Můžete také změnit další vlastnosti na základě velikosti okna
+}
+</code></pre>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Nezapomeňte přidat událost do XAML:</p>
+<pre><code class="lang-xml">&lt;Window x:Class=&quot;ResponzivniDesign.MainWindow&quot;
+       ...
+       SizeChanged=&quot;Window_SizeChanged&quot;&gt;
+</code></pre>
+</div>
+<h4 id="viewbox">ViewBox</h4>
+<p>Vše, co je uvnitř ViewBoxu, se přizpůsobí velikosti okna. (Automatické škálování obsahu.)</p>
+<p>Příklad:</p>
+<pre><code class="lang-xml">&lt;ViewBox&gt;
+    &lt;Grid&gt;
+        &lt;TextBlock Text=&quot;Toto je responzivní text!&quot; FontSize=&quot;20&quot;/&gt;
+    &lt;/Grid&gt;
+&lt;/ViewBox&gt;
+</code></pre>
+<h3 id="triggery">Triggery</h3>
+<p>Triggery umožňují dynamicky měnit vzhled prvku na základě určitých událostí nebo podmínek.</p>
+<ul>
+<li><p>Použití triggeru</p>
+<p>Zde je příklad stylu tlačítka, který mění barvu pozadí, když je kurzor myši nad tlačítkem:</p>
+<pre><code class="lang-xml">  &lt;Style TargetType=&quot;Button&quot;&gt;
+      &lt;Setter Property=&quot;Background&quot; Value=&quot;Gray&quot;/&gt;
+      &lt;Setter Property=&quot;Foreground&quot; Value=&quot;White&quot;/&gt;
+      &lt;Style.Triggers&gt;
+          &lt;Trigger Property=&quot;IsMouseOver&quot; Value=&quot;True&quot;&gt;
+              &lt;Setter Property=&quot;Background&quot; Value=&quot;Green&quot;/&gt;
+          &lt;/Trigger&gt;
+      &lt;/Style.Triggers&gt;
+  &lt;/Style&gt;
+</code></pre>
+</li>
+</ul>
+<h3 id="data-binding-vazba-modelu-na-view">Data Binding (Vazba Modelu na View)</h3>
+<h4 id="1-vytvoření-viewmodel">1. Vytvoření ViewModel</h4>
+<p>Nejprve vytvoříme ViewModel, který bude obsahovat vlastnost, kterou chceme vázat.</p>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Použijeme <code>INotifyPropertyChanged</code>, aby WPF věděl, kdy se vlastnost změnila.</p>
+</div>
+<pre><code class="lang-csharp">using System.ComponentModel;
+
+public class MyViewModel : INotifyPropertyChanged
+{
+    private string _name;
+
+    public string Name
+    {
+        get { return _name; }
+        set
+        {
+            _name = value;
+            OnPropertyChanged(nameof(Name));
+        }
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+}
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p><code>MyViewModel</code> má vlastnost <code>Name</code>, která implementuje <code>INotifyPropertyChanged</code>.</p>
+<p>To zajišťuje, že pokud se <code>Name</code> změní, UI se automaticky aktualizuje.</p>
+</div>
+<h4 id="2-vytvoření-xaml-pro-ui">2. Vytvoření XAML pro UI</h4>
+<p>Vytvoříme jednoduché uživatelské rozhraní, které umožní uživateli zadat jméno a zobrazit ho.</p>
+<p>Použijeme <code>TextBox</code> pro zadání a <code>TextBlock</code> pro zobrazení.</p>
+<pre><code class="lang-csharp">&lt;Window x:Class=&quot;WpfApp.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        Title=&quot;Binding Example&quot; Height=&quot;200&quot; Width=&quot;300&quot;&gt;
+    &lt;Grid&gt;
+        &lt;TextBox Text=&quot;{Binding Name, UpdateSourceTrigger=PropertyChanged}&quot; Width=&quot;200&quot; Margin=&quot;10&quot;/&gt;
+        &lt;TextBlock Text=&quot;{Binding Name}&quot; Margin=&quot;10,50,10,10&quot;/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>V XAML používáme <code>{Binding Name}</code> pro vázání <code>TextBox</code> a <code>TextBlock</code> na vlastnost <code>Name</code> ve ViewModelu.</p>
+<p><code>UpdateSourceTrigger=PropertyChanged</code> znamená, že binding se aktualizuje při každé změně textu v <code>TextBox</code>.</p>
+<p>(Vlastnost ViewModelu se aktualizuje okamžitě při každé změně textu.)</p>
+<p>Příklad:</p>
+<pre><code class="lang-csharp">&lt;TextBox Text=&quot;{Binding Name, UpdateSourceTrigger=PropertyChanged}&quot; Width=&quot;200&quot; Margin=&quot;10&quot;/&gt;
+</code></pre>
+<p>Bez explicitního nastavení <code>UpdateSourceTrigger</code> se binding aktualizuje při ztrátě fokusu (<code>LostFocus</code>).</p>
+<p>(Vlastnost ViewModelu se aktualizuje pouze po ztrátě fokusu či při změně výběru v ComboBox.)</p>
+<p>Příklad:</p>
+<pre><code class="lang-csharp">&lt;TextBox Text=&quot;{Binding Name}&quot; Width=&quot;200&quot; Margin=&quot;10&quot;/&gt;
+</code></pre>
+</div>
+<h4 id="3-nastavení-datacontext">3. Nastavení DataContext</h4>
+<p>V <code>MainWindow.xaml.cs</code> nastavíme <code>DataContext</code> na instanci našeho <code>ViewModelu</code>.</p>
+<pre><code class="lang-csharp">using System.Windows;
+
+namespace WpfApp
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+            DataContext = new MyViewModel(); // Nastavujeme DataContext
+        }
+    }
+}
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>V konstruktoru <code>MainWindow</code> nastavujeme <code>DataContext</code> na instanci <code>MyViewModel</code>.</p>
+<p>To umožňuje XAML binding k vlastnostem ViewModelu.</p>
+</div>
+<h3 id="validace">Validace</h3>
+<h4 id="implementace">Implementace</h4>
+<ul>
+<li><p><strong><code>INotifyPropertyChanged</code> + <code>IDataErrorInfo</code></strong></p>
+<p>Obvykle se používá pro vracení celkové chyby objektu.</p>
+<pre><code class="lang-csharp">public class MyViewModel : INotifyPropertyChanged, IDataErrorInfo
+{
+    private string _name;
+
+    // Property s validací
+    [Required(ErrorMessage = &quot;Pole je povinné.&quot;)]
+    public string Name
+    {
+        get =&gt; _name;
+        set
+        {
+            _name = value;
+            OnPropertyChanged(nameof(Name)); // Oznámení o změně
+        }
+    }
+
+    // Notifikace o změně
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    // Implementace IDataErrorInfo
+    public string this[string columnName]
+    {
+        get
+        {
+            var validationResults = new List&lt;ValidationResult&gt;();
+            var context = new ValidationContext(this) { MemberName = columnName };
+            Validator.TryValidateProperty(
+                this.GetType().GetProperty(columnName).GetValue(this),
+                context,
+                validationResults
+            );
+
+            // Vrátí první chybu, pokud existuje, jinak vrátí null
+            return validationResults.FirstOrDefault()?.ErrorMessage;
+        }
+    }
+
+    public string Error
+    {
+        get
+        {
+            return null; // Gets a message that describes any validation errors for the object.
+        }
+    }
+}
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Použití <code>this[string columnName]</code>:</p>
+<p>Tato metoda slouží k validaci konkrétní vlastnosti.</p>
+<p>Pokud se objeví chyba, vrací odpovídající chybovou zprávu.</p>
+</div>
+<p><strong>XAML pro validaci pomocí <code>IDataErrorInfo</code></strong></p>
+<pre><code class="lang-xml">  &lt;TextBox Text=&quot;{Binding Name, 
+                  UpdateSourceTrigger=PropertyChanged, 
+                  ValidatesOnDataErrors=True}&quot; /&gt;
+
+  &lt;TextBox.Style&gt;
+      &lt;Style TargetType=&quot;TextBox&quot;&gt;
+          &lt;Style.Triggers&gt;
+              &lt;Trigger Property=&quot;Validation.HasError&quot; Value=&quot;True&quot;&gt;
+                  &lt;Setter Property=&quot;BorderBrush&quot; Value=&quot;Red&quot; /&gt;
+                  &lt;Setter Property=&quot;BorderThickness&quot; Value=&quot;2&quot; /&gt;
+              &lt;/Trigger&gt;
+          &lt;/Style.Triggers&gt;
+      &lt;/Style&gt;
+  &lt;/TextBox.Style&gt;
+</code></pre>
+</li>
+<li><p><strong><code>INotifyPropertyChanged</code> + <code>INotifyDataErrorInfo</code></strong></p>
+<p>Umožňuje validovat více chyb na jedné vlastnosti a spravovat chybové zprávy pro každou vlastnost asynchronně.</p>
+<pre><code class="lang-csharp">public class MyViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
+{
+    private string _name;
+    private readonly Dictionary&lt;string, List&lt;string&gt;&gt; _errors = new Dictionary&lt;string, List&lt;string&gt;&gt;();
+
+    // Property s validací
+    [Required(ErrorMessage = &quot;Pole je povinné.&quot;)]
+    [StringLength(10, ErrorMessage = &quot;Maximálně 10 znaků.&quot;)]
+    public string Name
+    {
+        get =&gt; _name;
+        set
+        {
+            _name = value;
+            OnPropertyChanged(nameof(Name)); // Oznámení o změně
+            ValidateProperty(nameof(Name), value); // Spuštění validace
+        }
+    }
+
+    // Notifikace o změně
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    // Validace vlastnosti
+    private void ValidateProperty(string propertyName, object value)
+    {
+        var context = new ValidationContext(this) { MemberName = propertyName };
+        var validationResults = new List&lt;ValidationResult&gt;();
+
+        bool isValid = Validator.TryValidateProperty(value, context, validationResults);
+
+        if (!isValid)
+        {
+            _errors[propertyName] = validationResults.Select(vr =&gt; vr.ErrorMessage).ToList();
+        }
+        else
+        {
+            _errors.Remove(propertyName);
+        }
+
+        OnErrorsChanged(propertyName);
+    }
+
+    // Implementace INotifyDataErrorInfo
+    public event EventHandler&lt;DataErrorsChangedEventArgs&gt; ErrorsChanged;
+
+    // Vrací, zda má objekt nějaké chyby
+    public bool HasErrors =&gt; _errors.Any();
+
+    // Získá seznam chyb pro konkrétní vlastnost
+    public IEnumerable GetErrors(string propertyName)
+    {
+        if (_errors.ContainsKey(propertyName))
+            return _errors[propertyName];
+        return null;
+    }
+
+    protected void OnErrorsChanged(string propertyName)
+    {
+        ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+    }
+}
+</code></pre>
+<p><strong>XAML pro validaci pomocí <code>INotifyDataErrorInfo</code></strong></p>
+<pre><code class="lang-xml">&lt;TextBox Text=&quot;{Binding Name, 
+            UpdateSourceTrigger=PropertyChanged, 
+            ValidatesOnNotifyDataErrors=True}&quot; /&gt;
+
+&lt;TextBox.Style&gt;
+    &lt;Style TargetType=&quot;TextBox&quot;&gt;
+        &lt;Style.Triggers&gt;
+            &lt;Trigger Property=&quot;Validation.HasError&quot; Value=&quot;True&quot;&gt;
+                &lt;Setter Property=&quot;BorderBrush&quot; Value=&quot;Red&quot; /&gt;
+                &lt;Setter Property=&quot;BorderThickness&quot; Value=&quot;2&quot; /&gt;
+            &lt;/Trigger&gt;
+        &lt;/Style.Triggers&gt;
+    &lt;/Style&gt;
+&lt;/TextBox.Style&gt;
+</code></pre>
+</li>
+</ul>
+<h3 id="animace">Animace</h3>
+<p>WPF podporuje animace, které umožňují měnit vlastnosti prvků v čase.</p>
+<p>Zde je příklad, jak animovat změnu barvy pozadí tlačítka, když na něj najedete:</p>
+<pre><code class="lang-xml">&lt;Button Content=&quot;Klikni na mě&quot;&gt;
+    &lt;Button.Triggers&gt;
+        &lt;EventTrigger RoutedEvent=&quot;Button.MouseEnter&quot;&gt;
+            &lt;BeginStoryboard&gt;
+                &lt;Storyboard&gt;
+                    &lt;ColorAnimation Storyboard.TargetProperty=&quot;(Button.Background).(SolidColorBrush.Color)&quot;
+                                    To=&quot;Red&quot; Duration=&quot;0:0:1&quot;/&gt;
+                &lt;/Storyboard&gt;
+            &lt;/BeginStoryboard&gt;
+        &lt;/EventTrigger&gt;
+    &lt;/Button.Triggers&gt;
+&lt;/Button&gt;
+</code></pre>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HopefulDavid/Docs_Developer/blob/main/programming/net/net_wpf.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

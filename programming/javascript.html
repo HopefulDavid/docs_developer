@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title> | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/Docs_Developer/blob/main/programming/javascript.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
+            Dokumentace pro v&#253;voj&#225;ře
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<h2 id="balíčky">Balíčky</h2>
+<details>
+<summary><span style="color:#1E90FF;">Globální balíčky</span></summary>
+<ul>
+<li><p>Umístění windows: C:\Users&lt;user&gt;\AppData\Roaming\npm\node_modules</p>
+<pre><code class="lang-bash">npm root -g
+</code></pre>
+</li>
+</ul>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Záloha</span></summary>
+<ol>
+<li><p>Vytvořit soubor s informacemi o nainstalovaných balíčcích.</p>
+<ul>
+<li><p>Záloha globálních balíčků</p>
+<pre><code class="lang-bash">npm list -g --depth=0 &gt; npm_global_packages.txt
+</code></pre>
+</li>
+<li><p>Záloha lokálních balíčků</p>
+<pre><code class="lang-bash">npm list --depth=0 &gt; npm_local_packages.txt
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p>Vytvořit .tgz soubory pro balíčky.</p>
+</li>
+</ol>
+<ul>
+<li><p>Možnosti:</p>
+  <details>
+  <summary><span style="color:#E95A84;">Automaticky</span></summary>
+<pre><code class="lang-bash"># Cesta k souboru se seznamem balíčků v aktuální pracovní složce
+$packageListFilePath = Join-Path -Path $PWD.Path -ChildPath 'npm_global_packages.txt'
+
+# Cesta k složce, kde se mají balíčky uložit
+$outputFolder = Join-Path -Path $PWD.Path -ChildPath 'offline_packages'
+
+# Kontrola, zda soubor existuje
+if (!(Test-Path -Path $packageListFilePath)) {
+    Write-Error &quot;Soubor npm_global_packages.txt nebyl nalezen v aktuálním adresáři.&quot;
+    exit
+}
+
+# Vytvoření složky pro offline balíčky, pokud neexistuje
+if (!(Test-Path -Path $outputFolder)) {
+    New-Item -ItemType Directory -Path $outputFolder
+}
+
+# Načtení obsahu souboru
+$content = Get-Content -Path $packageListFilePath
+
+# Přeskočení první řádky (pokud je soubor ve formátu, který obsahuje hlavičku)
+$content = $content | Select-Object -Skip 1
+
+# Zpracování každé řádky v souboru
+foreach ($line in $content) {
+    # Odstranění nepotřebných symbolů
+    $line = $line -replace '[+`-]', ''
+
+    # Rozdělení řádky pomocí '@' na jméno balíčku a verzi
+    $parts = $line -split '@'
+
+    # Jméno balíčku je první část
+    $packageName = $parts[0].Trim()
+
+    # Získání verze (pokud je specifikována)
+    $version = if ($parts.Length -gt 1) { $parts[1].Trim() } else { '' }
+
+    # Ignorování prázdných řádků a případně jiných záznamů
+    if ($packageName -ne &quot;&quot; -and $packageName -ne &quot;globalpackages.txt&quot; -and $packageName -ne &quot;npm_global_packages.txt&quot;) {
+
+        # Připravit cestu k balíčku
+        $packageDir = Join-Path -Path $outputFolder -ChildPath $packageName
+        if (!(Test-Path -Path $packageDir)) {
+            New-Item -ItemType Directory -Path $packageDir
+        }
+
+        # Pokud je specifikována verze, stáhnout balíček s verzí
+        if ($version -ne '') {
+            Write-Output &quot;Stahuji balíček: $packageName@$version&quot;
+            npm pack &quot;$packageName@$version&quot; --pack-destination $packageDir
+        } else {
+            Write-Output &quot;Stahuji balíček: $packageName&quot;
+            npm pack $packageName --pack-destination $packageDir
+        }
+
+        # Pokud balíček obsahuje package.json, stáhnout závislosti
+        $packageJsonPath = Join-Path -Path $packageDir -ChildPath 'package.json'
+        if (Test-Path -Path $packageJsonPath) {
+            Write-Output &quot;Stahuji závislosti pro balíček: $packageName&quot;
+
+            # Pro každý závislý balíček stáhnout jeho tarball
+            $dependencies = (Get-Content -Path $packageJsonPath | ConvertFrom-Json).dependencies
+            foreach ($dependency in $dependencies.Keys) {
+                Write-Output &quot;Stahuji závislost: $dependency&quot;
+                npm pack $dependency --pack-destination $packageDir
+            }
+        }
+    }
+}
+
+Write-Output &quot;Všechny balíčky a závislosti byly úspěšně staženy pro offline instalaci.&quot;
+</code></pre>
+  </details>
+  <details>
+  <summary><span style="color:#E95A84;">Manuálně</span></summary>
+<p>Pro každý balíček vytvoříme zálohu.</p>
+<pre><code>```bash
+
+npm pack &lt;package_name&gt;
+```
+</code></pre>
+<blockquote>
+<p><code>&lt;package_name&gt;</code></p>
+<p>Název balíčku, který chceme zazálohovat.</p>
+<p>Například: <code>npm pack sass@1.76.0</code></p>
+</blockquote>
+  </details>
+</li>
+</ul>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Obnova</span></summary>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Při instalaci balíčku z <code>.tgz</code> je tento soubor následně automaticky odstraněn.</p>
+</div>
+<ol>
+<li>Instalace balíčků z .tgz souborů.</li>
+</ol>
+<ul>
+<li><p>Možnosti:</p>
+<details>
+<summary><span style="color:#E95A84;">Automaticky</span></summary>
+<pre><code class="lang-bash"># Cesta k složce s offline balíčky
+$packageFolder = Join-Path -Path $PWD.Path -ChildPath 'offline_packages'
+
+# Kontrola, zda složka existuje
+if (!(Test-Path -Path $packageFolder)) {
+    Write-Error &quot;Složka s offline balíčky nebyla nalezena: $packageFolder&quot;
+    exit
+}
+
+# Získání všech .tgz souborů v dané složce
+$tgzFiles = Get-ChildItem -Path $packageFolder -Filter *.tgz
+
+if ($tgzFiles.Count -eq 0) {
+    Write-Error &quot;Nebyl nalezen žádný .tgz soubor v složce $packageFolder. Zkontrolujte, že máte offline balíčky připravené.&quot;
+    exit
+}
+
+# Instalace každého .tgz souboru
+foreach ($tgzFile in $tgzFiles) {
+    Write-Output &quot;Instaluji balíček: $($tgzFile.Name)&quot;
+
+    # Extrahování názvu balíčku z názvu souboru .tgz
+    $packageName = [System.IO.Path]::GetFileNameWithoutExtension($tgzFile.Name)
+
+    # Vytvoření složky pro instalaci, pokud ještě neexistuje
+    $installDir = Join-Path -Path $PWD.Path -ChildPath $packageName
+    if (!(Test-Path -Path $installDir)) {
+        Write-Output &quot;Vytvářím složku pro instalaci: $installDir&quot;
+        New-Item -ItemType Directory -Path $installDir
+    }
+
+    # Instalace balíčku pomocí .tgz souboru
+    try {
+        Write-Output &quot;Instaluji balíček z $($tgzFile.FullName)...&quot;
+        npm install --prefix $installDir $tgzFile.FullName
+        Write-Output &quot;Balíček $packageName byl úspěšně nainstalován.&quot;
+    }
+    catch {
+        Write-Error &quot;Chyba při instalaci balíčku $packageName z $($tgzFile.FullName): $_&quot;
+        continue
+    }
+
+    # Pokud balíček obsahuje závislosti (package.json), pokusíme se stáhnout a nainstalovat je offline
+    $packageJsonPath = Join-Path -Path $installDir -ChildPath 'node_modules' -ChildPath $packageName -ChildPath 'package.json'
+
+    if (Test-Path -Path $packageJsonPath) {
+        Write-Output &quot;Balíček $packageName obsahuje závislosti. Stahuji je...&quot;
+
+        # Načteme závislosti z package.json
+        $dependencies = (Get-Content -Path $packageJsonPath | ConvertFrom-Json).dependencies
+        if ($dependencies) {
+            foreach ($dependency in $dependencies.Keys) {
+                $dependencyPackagePath = Join-Path -Path $packageFolder -ChildPath &quot;$dependency-*.tgz&quot;
+
+                if (Test-Path -Path $dependencyPackagePath) {
+                    Write-Output &quot;Instaluji závislost: $dependency&quot;
+                    npm install --prefix $installDir $dependencyPackagePath
+                } else {
+                    Write-Error &quot;Závislost $dependency není k dispozici pro offline instalaci!&quot;
+                }
+            }
+        }
+    }
+}
+
+Write-Output &quot;Všechny balíčky byly úspěšně nainstalovány z offline záloh.&quot;
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#E95A84;">Manuálně</span></summary>
+<ul>
+<li><p>Pro každý balíček obnovíme zálohu.</p>
+<pre><code class="lang-bash">npm install &lt;package_path&gt;
+</code></pre>
+</li>
+</ul>
+<blockquote>
+<p>Ceta k balíčku, který chceme obnovit.</p>
+<p>Například: <code>npm install sass-1.76.0.tgz</code></p>
+</blockquote>
+</details>
+</li></ul></details>
+
+
+<h2 id="aplikační-balíčky">Aplikační balíčky</h2>
+<details>
+<summary><span style="color:#1E90FF;">conventional-changelog-cli</span></summary>
+<p>Slouží k automatickému generování changelogu na základě commit zpráv.</p>
+<ol>
+<li><p>Instalace balíčku.</p>
+<pre><code class="lang-bash">npm install -g conventional-changelog-cli
+</code></pre>
+</li>
+<li><p>Generování changelogu.</p>
+<pre><code class="lang-bash">conventional-changelog -p angular -i CHANGELOG.md -o CHANGELOG.md -s
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-p</code> / <code>--preset</code></td>
+<td>Přednastavený styl changelogu, např. <code>angular</code>, <code>eslint</code>, <code>conventionalcommits</code>.</td>
+</tr>
+<tr>
+<td><code>-i</code> / <code>--infile</code></td>
+<td>Vstupní soubor pro generování changelogu (např. <code>CHANGELOG.md</code>).</td>
+</tr>
+<tr>
+<td><code>-o</code> / <code>--outfile</code></td>
+<td>Výstupní soubor pro generování changelogu.</td>
+</tr>
+<tr>
+<td><code>-r</code> / <code>--release-count</code></td>
+<td>Počet posledních verzí, pro které bude changelog generován.</td>
+</tr>
+<tr>
+<td><code>--context</code></td>
+<td>JSON nebo JS soubor obsahující vlastní kontext pro šablonu changelogu.</td>
+</tr>
+<tr>
+<td><code>--pkg</code></td>
+<td>Cesta k <code>package.json</code>, může být použita pro čtení verzí a dalších údajů.</td>
+</tr>
+<tr>
+<td><code>--append</code></td>
+<td>Přidá změny na konec souboru místo přepsání celého obsahu.</td>
+</tr>
+<tr>
+<td><code>--same-file</code></td>
+<td>Přepíše stejný soubor bez použití dočasného souboru.</td>
+</tr>
+<tr>
+<td><code>--tag-prefix</code></td>
+<td>Přidá prefix k tagům verzí (např. <code>v</code>).</td>
+</tr>
+<tr>
+<td><code>-n</code> / <code>--config</code></td>
+<td>Vlastní konfigurační soubor, který přizpůsobí generování changelogu.</td>
+</tr>
+</tbody>
+</table>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Použití vlastní šablony pro generování changelogu.</p>
+<pre><code class="lang-bash">conventional-changelog -i index.md -s --config ./changelog-config.js
+</code></pre>
+<p><a href="../images/changelog-config.js">Příklad konfigurace s emoji</a></p>
+<p><a href="../images/changelog-config-noEmojis.js">Příklad konfigurace bez emoji</a></p>
+</div>
+</li>
+</ol>
+</details>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HopefulDavid/Docs_Developer/blob/main/programming/javascript.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

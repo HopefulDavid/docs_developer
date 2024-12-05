@@ -1,0 +1,1078 @@
+{
+  "source_base_path": "/home/runner/work/Docs_Developer/Docs_Developer",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      }
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "ai/ollama.md",
+      "output": {
+        ".html": {
+          "relative_path": "ai/ollama.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "ai/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "ai/toc.json"
+        },
+        ".html": {
+          "relative_path": "ai/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "database/Dapper.md",
+      "output": {
+        ".html": {
+          "relative_path": "database/Dapper.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "database/EntityFramework.md",
+      "output": {
+        ".html": {
+          "relative_path": "database/EntityFramework.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "database/MSSQL.md",
+      "output": {
+        ".html": {
+          "relative_path": "database/MSSQL.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "database/PostgreSQL.md",
+      "output": {
+        ".html": {
+          "relative_path": "database/PostgreSQL.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "database/mongoDB.md",
+      "output": {
+        ".html": {
+          "relative_path": "database/mongoDB.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "database/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "database/toc.json"
+        },
+        ".html": {
+          "relative_path": "database/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "gaming/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "gaming/toc.json"
+        },
+        ".html": {
+          "relative_path": "gaming/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "gaming/unity.md",
+      "output": {
+        ".html": {
+          "relative_path": "gaming/unity.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "gaming/unity/2d.md",
+      "output": {
+        ".html": {
+          "relative_path": "gaming/unity/2d.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "gaming/unity/animation.md",
+      "output": {
+        ".html": {
+          "relative_path": "gaming/unity/animation.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "gaming/unity/camera.md",
+      "output": {
+        ".html": {
+          "relative_path": "gaming/unity/camera.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "gaming/unity/navigation.md",
+      "output": {
+        ".html": {
+          "relative_path": "gaming/unity/navigation.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "gaming/unity/renderer.md",
+      "output": {
+        ".html": {
+          "relative_path": "gaming/unity/renderer.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "gaming/unity/scriptableObject.md",
+      "output": {
+        ".html": {
+          "relative_path": "gaming/unity/scriptableObject.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "gaming/unity/ui.md",
+      "output": {
+        ".html": {
+          "relative_path": "gaming/unity/ui.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "gaming/unity/uiToolkit.md",
+      "output": {
+        ".html": {
+          "relative_path": "gaming/unity/uiToolkit.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "graphics/affinity.md",
+      "output": {
+        ".html": {
+          "relative_path": "graphics/affinity.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "graphics/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "graphics/toc.json"
+        },
+        ".html": {
+          "relative_path": "graphics/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "ide/jetBrains.md",
+      "output": {
+        ".html": {
+          "relative_path": "ide/jetBrains.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "ide/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "ide/toc.json"
+        },
+        ".html": {
+          "relative_path": "ide/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/0qjIRo5xxb.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/0qjIRo5xxb.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/2D_grid_calculation.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/2D_grid_calculation.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/2D_rigging_copy.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/2D_rigging_copy.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/2D_rigging_depth.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/2D_rigging_depth.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/2D_rigging_paste.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/2D_rigging_paste.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/2D_rigging_skinWeight.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/2D_rigging_skinWeight.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/2D_sprite_blackLines.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/2D_sprite_blackLines.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/2D_sprite_blackLines_solution.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/2D_sprite_blackLines_solution.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/2D_sprite_blackLines_solution2.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/2D_sprite_blackLines_solution2.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/2D_sprite_blackLines_solutionCamera.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/2D_sprite_blackLines_solutionCamera.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/2D_sprite_blackLines_solution_failed.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/2D_sprite_blackLines_solution_failed.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/A2q5GRgncw.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/A2q5GRgncw.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/G0Loa7KgVA.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/G0Loa7KgVA.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/GhlBCozwaQ.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/GhlBCozwaQ.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/TtTAcQSAM1.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/TtTAcQSAM1.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/VwxJhRuC8S.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/VwxJhRuC8S.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/Vz1J4Pij2Z.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/Vz1J4Pij2Z.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/WHDIpG6Uzg.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/WHDIpG6Uzg.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/changelog-config-noEmojis.js",
+      "output": {
+        "resource": {
+          "relative_path": "images/changelog-config-noEmojis.js"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/changelog-config.js",
+      "output": {
+        "resource": {
+          "relative_path": "images/changelog-config.js"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/dockerKeepDataOnLocal.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/dockerKeepDataOnLocal.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/oY0QJRKkL1.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/oY0QJRKkL1.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/optionsPowerShell.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/optionsPowerShell.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/outlook_calendarAfterOverlay.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/outlook_calendarAfterOverlay.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/outlook_calendarBeforeOverlay.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/outlook_calendarBeforeOverlay.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/postgreSQL_Install.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/postgreSQL_Install.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/postgreSQL_Install_2.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/postgreSQL_Install_2.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/postgreSQL_Install_3.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/postgreSQL_Install_3.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/postgreSQL_Install_4.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/postgreSQL_Install_4.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/postgreSQL_Install_5.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/postgreSQL_Install_5.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/postgreSQL_Install_6.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/postgreSQL_Install_6.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/postgreSQL_Install_7.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/postgreSQL_Install_7.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/postgreSQL_Install_8.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/postgreSQL_Install_8.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/runAsAdministatorPowerShell.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/runAsAdministatorPowerShell.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/sOYccHNNHx.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/sOYccHNNHx.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/t0Vjh1fqzy.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/t0Vjh1fqzy.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/t0m7kk76Jm.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/t0m7kk76Jm.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/t9hZzZp1FO.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/t9hZzZp1FO.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/wNNBV4Lsm4.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/wNNBV4Lsm4.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/windows_keyboard_explorerAddressBar.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/windows_keyboard_explorerAddressBar.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/wqiRRNNKOT.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/wqiRRNNKOT.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/zGRvsmYA6A.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/zGRvsmYA6A.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "network/ssh.md",
+      "output": {
+        ".html": {
+          "relative_path": "network/ssh.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "network/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "network/toc.json"
+        },
+        ".html": {
+          "relative_path": "network/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "network/wireshark.md",
+      "output": {
+        ".html": {
+          "relative_path": "network/wireshark.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "operatingSystem/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "operatingSystem/toc.json"
+        },
+        ".html": {
+          "relative_path": "operatingSystem/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "operatingSystem/windows.md",
+      "output": {
+        ".html": {
+          "relative_path": "operatingSystem/windows.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "operatingSystem/windows/cmd.md",
+      "output": {
+        ".html": {
+          "relative_path": "operatingSystem/windows/cmd.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "operatingSystem/windows/powerShell.md",
+      "output": {
+        ".html": {
+          "relative_path": "operatingSystem/windows/powerShell.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/javascript.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/javascript.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/net.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/net.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/net/net_attributes.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/net/net_attributes.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/net/net_dataTypes.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/net/net_dataTypes.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/net/net_files.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/net/net_files.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/net/net_interface.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/net/net_interface.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/net/net_methods.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/net/net_methods.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/net/net_nunit.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/net/net_nunit.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/net/net_wpf.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/net/net_wpf.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/net/net_xml.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/net/net_xml.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/netCLI.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/netCLI.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/nugetPackage.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/nugetPackage.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/python.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/python.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/techniques.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/techniques.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "programming/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "programming/toc.json"
+        },
+        ".html": {
+          "relative_path": "programming/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "teamwork/outlook.md",
+      "output": {
+        ".html": {
+          "relative_path": "teamwork/outlook.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "teamwork/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "teamwork/toc.json"
+        },
+        ".html": {
+          "relative_path": "teamwork/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "toc.json"
+        },
+        ".html": {
+          "relative_path": "toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/git/gitConfig.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/gitConfig.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/git/history/deleteCommits.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/history/deleteCommits.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/git/history/fixCommits.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/history/fixCommits.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/git/history/moveCommits.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/history/moveCommits.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/git/history/updateGitignore.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/history/updateGitignore.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/git/repository.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/repository.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "vcs/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "vcs/toc.json"
+        },
+        ".html": {
+          "relative_path": "vcs/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "video/obs.md",
+      "output": {
+        ".html": {
+          "relative_path": "video/obs.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "video/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "video/toc.json"
+        },
+        ".html": {
+          "relative_path": "video/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "virtualization/docker.md",
+      "output": {
+        ".html": {
+          "relative_path": "virtualization/docker.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "virtualization/kubernetes.md",
+      "output": {
+        ".html": {
+          "relative_path": "virtualization/kubernetes.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "virtualization/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "virtualization/toc.json"
+        },
+        ".html": {
+          "relative_path": "virtualization/toc.html"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

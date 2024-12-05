@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title> | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/Docs_Developer/blob/main/operatingSystem/windows.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
+            Dokumentace pro v&#253;voj&#225;ře
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<h2 id="instalace">Instalace</h2>
+<details>
+<summary><span style="color:#1E90FF;">Řešení problému s neviditelným diskem při instalaci Windows</span></summary>
+<ol>
+<li><p>Stáhněte si ovladač pro diskovou jednotku</p>
+<ul>
+<li><p>Získejte informace o diskových ovladačích:</p>
+<p>Zadejte: <code>Shift</code> + <code>F10</code></p>
+<p>Otevře se příkazový řádek. Zadejte: <code>wmic diskdrive list brief</code></p>
+</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Pokud používáte Intel RST (RAID) nebo Intel Optane, může se zobrazit Intel RAID Controller nebo Intel Optane v
+popisu.</p>
+</div>
+<ul>
+<li><p><strong>Intel RST (Rapid Storage Technology)</strong>:</p>
+<ul>
+<li>Použijte <strong>&quot;Intel RST VMD Managed Controller&quot;</strong> nebo <strong>&quot;Intel RST VMD Controller&quot;</strong>, pokud používáte
+technologii RAID nebo Intel RST.</li>
+<li>Tento ovladač bude fungovat pro většinu běžných konfigurací disků (SATA, NVMe).</li>
+</ul>
+</li>
+<li><p><strong>Intel Optane</strong>:</p>
+<ul>
+<li>Pokud máte v notebooku <strong>Intel Optane Memory</strong>, stáhněte ovladač **Intel Optane Memory and Storage Management
+**.</li>
+<li>Tento ovladač je potřebný pro správu Optane paměti a jejích disků.</li>
+</ul>
+</li>
+</ul>
+<p>Ovladače by měly být ve formátu <code>.zip</code>.</p>
+<p>Ujistěte se, že máte rozbalený obsah souboru na <strong>USB disku</strong> (rozbalení souboru je nezbytné).</p>
+</li>
+<li><p>Načtení ovladač během instalace</p>
+<ul>
+<li>Postup:</li>
+</ul>
+<ol>
+<li><p>Spusťte instalaci Windows.</p>
+</li>
+<li><p>Na obrazovce, kde se výběr disků nezobrazuje nebo je omezený, klikněte na <strong>Načíst ovladač (Load Driver)</strong>.</p>
+</li>
+<li><p>Vložte <strong>USB disk</strong>, na kterém máte rozbalený ovladač.</p>
+</li>
+<li><p>Vyberte správný ovladač.</p>
+<pre><code>  &gt; [!IMPORTANT]
+  &gt; Poznat novější verzi lze za pomoci čísla verze v názvu souboru.
+  &gt; 
+  &gt; Čísla jako **09AB**, **467F** atd. jsou zde jako **hexadecimální čísla**
+  &gt;
+  &gt; Například: 
+  &gt; - Intel RST VMD Managed Controller (09AB) - 9AB je verze ovladače.
+  &gt;    Jedná se o novější verzi než Intel RST VMD Managed Controller (08AB).
+  &gt; 
+  &gt; - Intel RST VMD Controller (467F)
+  &gt;
+  &gt;     Tento ovladač má nižší číselný kód (467F), což znamená, že je starší verze.
+</code></pre>
+</li>
+<li><p>Po načtení ovladače by měl být váš disk viditelný a připravený pro instalaci.</p>
+</li>
+</ol>
+</li>
+</ol>
+</details>
+<h2 id="základní-nastavení">Základní nastavení</h2>
+<details>
+<summary><span style="color:#1E90FF;">Zobrazení sekund v dolním panelu</span></summary>
+<img src="../images/t9hZzZp1FO.png">
+</details>
+<h2 id="klávesnicové-zkratky">Klávesnicové zkratky</h2>
+<details>
+<summary><span style="color:#1E90FF;">Minimalizace/Maximalizace všech oken</span></summary>
+<p><code>Win</code> + <code>D</code></p>
+</details>
+<details>
+<summary><span style="color:#1E90FF;"> Skočení na adresní řádek</span></summary>
+<p><code>Alt</code> + <code>D</code></p>
+<img src="../images/windows_keyboard_explorerAddressBar.png" alt="windows_explorer_addressBar.png" width="800px">
+</details>
+<h2 id="chybějící-klávesy-na-klávesnici">Chybějící klávesy na klávesnici</h2>
+<details>
+<summary><span style="color:#1E90FF;">Kontextová klávesa</span></summary>
+<img src="https://filestore.community.support.microsoft.com/api/images/d42eb865-8390-4aa3-af19-e7272d95121e" alt="windows_missingKeyboardContextMenu.png" width="800px">
+<p>Řešení:</p>
+<p><code>Shift</code> + <code>F10</code></p>
+</details>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HopefulDavid/Docs_Developer/blob/main/operatingSystem/windows.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

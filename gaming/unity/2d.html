@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title> | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/Docs_Developer/blob/main/gaming/unity/2d.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
+            Dokumentace pro v&#253;voj&#225;ře
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<h2 id="2d">2D</h2>
+<h3 id="tilemap-x-sprite-renderer">Tilemap x Sprite Renderer</h3>
+<p><img src="../../images/Vz1J4Pij2Z.png" alt=""></p>
+<h3 id="tilemap">Tilemap</h3>
+<details>
+<summary><span style="color:#1E90FF;">Vykreslit a nastavit barvu na dlaždici</span></summary>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Z nějakého důvodu kód funguje pouze pokud je to takto oddělený.</p>
+</div>
+<pre><code class="lang-c#">        public void GenerateTilemap(int width, int height, Color color)
+        {
+            // Delete all tiles
+            this.ClearTiles();
+
+            for (int x = 0; x &lt; width; x++)
+            for (int y = 0; y &lt; height; y++)
+            {
+                this.Tilemap.SetTile(new(x, y, 0), this.TileBase);
+            }
+
+            for (int x = 0; x &lt; width; x++)
+            for (int y = 0; y &lt; height; y++)
+            {
+                this.Tilemap.SetColor(new(x, y, 0), color);
+            }
+        }
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Pravidla pro Tilemap</span></summary>
+<p><img src="../../images/TtTAcQSAM1.png" alt=""></p>
+</details>
+<h3 id="velikost-obrázku">Velikost obrázku</h3>
+<details>
+<summary><span style="color:#1E90FF;">Definice velikostí</span></summary>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Používají se mocniny čísla 2.</p>
+<p>Například: 16x16 px, 32x32 px, 64x64 px, 128x128 px, 256x256 px, 512x512 px, atd...</p>
+</div>
+<p>16x16 px</p>
+<ul>
+<li><strong>Ikony a jednoduché grafiky</strong></li>
+<li>Používá se pro základní UI prvky a malé ikony.</li>
+<li><strong>Vzdálenost od kamery:</strong> Velmi daleko, nedůležitý detail.</li>
+</ul>
+<p>32x32 px</p>
+<ul>
+<li><strong>Malé UI prvky</strong></li>
+<li>Ideální pro malé ikony a základní grafiky v uživatelském rozhraní.</li>
+<li><strong>Vzdálenost od kamery:</strong> Velmi daleko, nedůležitý detail.</li>
+</ul>
+<p>64x64 px</p>
+<ul>
+<li><strong>Menší objekty</strong></li>
+<li>Vhodné pro objekty s mírným detailem, jako jsou malé herní prvky.</li>
+<li><strong>Vzdálenost od kamery:</strong> Střední vzdálenost, detail je stále mírně rozmazaný.</li>
+</ul>
+<p>128x128 px</p>
+<ul>
+<li><strong>Střední objekty</strong></li>
+<li>Dobré pro středně velké herní prvky a detaily v prostředí.</li>
+<li><strong>Vzdálenost od kamery:</strong> Blízká vzdálenost, viditelný detail.</li>
+</ul>
+<p>256x256 px</p>
+<ul>
+<li><strong>Větší objekty a detailní textury</strong></li>
+<li>Používá se pro detailnější objekty a textury v herním prostředí.</li>
+<li><strong>Vzdálenost od kamery:</strong> Střední až blízká vzdálenost, detailní zobrazení.</li>
+</ul>
+<p>512x512 px</p>
+<ul>
+<li><strong>Velmi detailní objekty</strong></li>
+<li>Vhodné pro blízké záběry a detailní textury.</li>
+<li><strong>Vzdálenost od kamery:</strong> Blízká vzdálenost, vysoká úroveň detailu.</li>
+</ul>
+<p>1024x1024 px</p>
+<ul>
+<li><strong>Velké objekty a textury</strong></li>
+<li>Ideální pro velmi detailní textury a objekty z blízka.</li>
+<li><strong>Vzdálenost od kamery:</strong> Velmi blízká vzdálenost, extrémní detail.</li>
+</ul>
+<p>2048x2048 px a více</p>
+<ul>
+<li><strong>Maximální detail</strong></li>
+<li>Nejvyšší kvalita textur pro extrémně detailní objekty a prostředí.</li>
+<li><strong>Vzdálenost od kamery:</strong> Extrémně blízká vzdálenost, maximální detail.</li>
+</ul>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Nastavení velikosti</span></summary>
+<p>Například obrázek o velikosti 64x64 pixelů.</p>
+<p><img src="../../images/VwxJhRuC8S.png" alt=""></p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Pixel Per Unit (PPU) - kolik pixelů je na jednotku v Unity.</p>
+<p>Určuje velikost Sprite</p>
+<p>Je důležité nastavit dle velikosti grafiky, aby byla správně zobrazena.</p>
+<p>Například pro obrázky o velikosti 256x256 pixelů ve sprite sheet, použijeme PPU 256 na sprite sheet.</p>
+</div>
+<p>Příklad:</p>
+<p>Vytvořit dlaždici o velikosti 1x1 jednotka.</p>
+<p>Pokud nastavíte PPU na 32, pak sprite o rozměrech 32x32 dokonale zabere celou dlaždici (1x1).</p>
+<p>Nyní chcete dlaždici 2x2, pak byste nastavili PPU 16, takže pro každou jednotku použije 16 pixelů ze spritu. (16 / 32 =
+2 jednotky).</p>
+<p>Například pro dlaždici o velikosti 1x2, pokud byste nastavili PPU 32, tak by rozměr obrázku byl 32x16 px.
+(32/32 = 1, 32/16=2) px</p>
+<p>Pro více
+informací <a href="https://www.reddit.com/r/aseprite/comments/vq2mq9/what_size_should_sprites_be_for_a_2d_game/">
+zde</a>.</p>
+</details>
+<h3 id="animace-obrázku">Animace obrázku</h3>
+<details>
+<summary><span style="color:#1E90FF;">Hloubka (Depth) u kostí</span></summary>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Ovlivňuje <strong>pořadí vykreslení vybraného Sprite (Sprite Mesh)</strong>.</p>
+<p>Příklad:</p>
+<p>Pokud máte levou paži (arm L), která je ovlivněna třemi kostmi.</p>
+<p>Nastavíte například hloubku jedné z kostí <code>forearm_l</code> na <code>-5</code>, zatímco ostatní kosti budou mít hloubku <code>0</code>.</p>
+<p>Tak se tato <code>forearm_l</code> vykreslí pod ostatními částmi tohoto Sprite Mesh.</p>
+</div>
+<ol>
+<li><p>Otevřít <code>Sprite Editor</code></p>
+</li>
+<li><p>Přepnout do <code>Skinning Editor</code></p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Aktivovat <code>Visibility</code>, pokud není aktivní</p>
+</div>
+</li>
+<li><p>Nastavit u kostí <code>depth</code></p>
+<img src="../../images/2D_rigging_depth.png" alt="2D_rigging_depth.png">
+</li>
+</ol>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Univerzální Rigging </span></summary>
+<ol>
+<li><p>Otevřít <code>Sprite Editor</code></p>
+</li>
+<li><p>Přepnout do <code>Skinning Editor</code></p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Aktivovat <code>Visibility</code>, pokud není aktivní</p>
+</div>
+</li>
+<li><p>Vytvořit kosti (bones)</p>
+</li>
+<li><p>Nastavit Geometry a Weights</p>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Pokud se nevykresluje barevně část, která je ovlivněna kostí, může to být způsobeno tímto nastavením:</p>
+<img src="../../images/2D_rigging_skinWeight.png" alt="2D_rigging_skinWeight.png">
+<p>Ujistěte se, že máte oba posuvníky posunuté úplně do prava.</p>
+</div>
+</li>
+<li><p>Zkopírovat rig
+<img src="../../images/2D_rigging_copy.png" alt="2D_rigging_copy.png"></p>
+</li>
+<li><p>Otevřít nový sprite</p>
+</li>
+<li><p>Vložit rig
+<img src="../../images/2D_rigging_paste.png" alt="2D_rigging_paste.png"></p>
+</li>
+</ol>
+</details>
+<h3 id="řešení-chyb-při-vykreslování-sprite">Řešení chyb při vykreslování sprite</h3>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Na kameře musí být přidána komponenta <code>Pixel Perfect Camera</code> pro 2D</p>
+<p>Zabraňuje deformacím, rozmazání a trhání obrazu</p>
+</div>
+<details>
+<summary><span style="color:#1E90FF;">Černé čáry</span></summary>
+<p>Problém, viz. níže:</p>
+<img src="../../images/2D_sprite_blackLines.png" alt="2D_sprite_blackLines.png">
+<p>Řešení:</p>
+<ul>
+<li><p>Zkontrolujte obrázek, zda je správně umístěn.</p>
+<img src="../../images/2D_sprite_blackLines_solution.png" alt="2D_sprite_blackLines_solution.png">
+<div class="NOTE">
+<h5>Note</h5>
+<p>Upravit obrázek hlavy, aby byla umístěna uvnitř rozsahu</p>
+</div>
+<div class="CAUTION">
+<h5>Caution</h5>
+<p>Takto vypadá špatně umístěný obrázek v dokumentu</p>
+<img src="../../images/2D_sprite_blackLines_solution_failed.png" alt="2D_sprite_blackLines_solution_failed.png">
+</div>
+</li>
+<li><p>Nastavit padding v <code>TexturePacker</code></p>
+<img src="../../images/2D_sprite_blackLines_solution2.png" alt="2D_sprite_blackLines_solution2.png">
+<div class="NOTE">
+<h5>Note</h5>
+<p>Pomůže zabránit problémům, jako je &quot;bleeding&quot; efekt. (Přetekání obrázku přes okraje.)</p>
+</div>
+<p>Nastavte libovolnou velikost výplně, která bude větší než 0 pro:</p>
+<ul>
+<li><p><strong>Border padding</strong></p>
+<p>Mezera kolem okrajů celého <code>sheetu</code>.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Pomáhá předejít vizuálním artefaktům (nechtěným chybám jako jsou rozmazání nebo barevné okraje) na okrajích
+<code>sheetu</code>.</p>
+</div>
+</li>
+<li><p><strong>Shape padding</strong></p>
+<p>Mezera mezi jednotlivými <code>sprites</code> na <code>sheetu</code>.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Zabraňuje vzájemnému překrývání a nežádoucím vlivům mezi jednotlivými <code>sprites</code>.</p>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Objeví-li se později znovu černé čáry, stačí zvýšit velikost výplně (padding)</p>
+</div>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Problikávání</span></summary>
+<p>Zkontrolujte měřítko v herním okně, že je nastaveno na <strong>1x</strong></p>
+<img src="../../images/2D_sprite_blackLines_solutionCamera.png" alt="2D_sprite_blackLines_solutionCamera.png">
+</details>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HopefulDavid/Docs_Developer/blob/main/gaming/unity/2d.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

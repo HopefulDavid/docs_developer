@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title> | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/Docs_Developer/blob/main/database/MSSQL.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
+            Dokumentace pro v&#253;voj&#225;ře
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<h2 id="microsof-sql">Microsof SQL</h2>
+<h3 id="kód">Kód</h3>
+<h4 id="získat-informace">Získat informace</h4>
+<details>
+<summary><span style="color:#1E90FF;">Informace ze Serveru</span></summary>
+<pre><code class="lang-sql">  SELECT 
+      SERVERPROPERTY('MachineName') AS MachineName,
+      SERVERPROPERTY('ServerName') AS ServerName,
+      SERVERPROPERTY('InstanceName') AS InstanceName,
+      SERVERPROPERTY('IsClustered') AS IsClustered,
+      SERVERPROPERTY('Edition') AS Edition,
+      SERVERPROPERTY('ProductVersion') AS ProductVersion,
+      SERVERPROPERTY('ProductLevel') AS ProductLevel,
+      SERVERPROPERTY('ComputerNamePhysicalNetBIOS') AS PhysicalMachineName,
+      CONNECTIONPROPERTY('client_net_address') AS ClientIPAddress
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Informace z Tabulky</span></summary>
+<pre><code class="lang-sql">   DECLARE @tableName NVARCHAR(128) = N'place_table_name';
+   
+   SELECT 
+       C.TABLE_SCHEMA as 'Namespace',
+       C.TABLE_NAME as 'Název tabulky',
+       C.COLUMN_NAME as 'Název sloupce', 
+       C.DATA_TYPE as 'Typ dat', 
+       C.IS_NULLABLE as 'Může být NULL ?', 
+       T.TABLE_TYPE as 'Typ tabulky'
+   FROM 
+       INFORMATION_SCHEMA.COLUMNS C
+   INNER JOIN
+       INFORMATION_SCHEMA.TABLES T
+   ON
+       C.TABLE_NAME = T.TABLE_NAME AND C.TABLE_SCHEMA = T.TABLE_SCHEMA
+   WHERE 
+       C.TABLE_NAME = @tableName
+   ORDER BY 
+       C.ORDINAL_POSITION;
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Velikost Tabulek</span></summary>
+<pre><code class="lang-sql">    SELECT 
+      t.NAME AS [Název tabulky],
+      s.Name AS [Název schématu],
+      p.rows AS [Počet řádků],
+      CONVERT(NVARCHAR, CAST(SUM(a.total_pages) * 8 / 1024.0 / 1024.0 AS DECIMAL(10, 2))) 
+          + ' GB (' + CONVERT(NVARCHAR, CAST((SUM(a.total_pages) * 8 / 1024.0) AS INT)) + ' MB)' AS [Celkový prostor],
+      CONVERT(NVARCHAR, CAST(SUM(a.used_pages) * 8 / 1024.0 / 1024.0 AS DECIMAL(10, 2))) 
+          + ' GB (' + CONVERT(NVARCHAR, CAST((SUM(a.used_pages) * 8 / 1024.0) AS INT)) + ' MB)' AS [Využitý prostor],
+      CONVERT(NVARCHAR, CAST((SUM(a.total_pages) - SUM(a.used_pages)) * 8 / 1024.0 / 1024.0 AS DECIMAL(10, 2))) 
+          + ' GB (' + CONVERT(NVARCHAR, CAST(((SUM(a.total_pages) - SUM(a.used_pages)) * 8 / 1024.0) AS INT)) + ' MB)' AS [Nevyužitý prostor]
+  FROM 
+      sys.tables t
+  INNER JOIN      
+      sys.indexes i ON t.OBJECT_ID = i.object_id
+  INNER JOIN 
+      sys.partitions p ON i.object_id = p.OBJECT_ID AND i.index_id = p.index_id
+  INNER JOIN 
+      sys.allocation_units a ON p.partition_id = a.container_id
+  LEFT OUTER JOIN 
+      sys.schemas s ON t.schema_id = s.schema_id
+  WHERE 
+      t.NAME NOT LIKE 'dt%' 
+      AND t.is_ms_shipped = 0
+      AND i.OBJECT_ID &gt; 255 
+  GROUP BY 
+      t.Name, s.Name, p.Rows
+  ORDER BY 
+      SUM(a.total_pages) * 8 / 1024.0 / 1024.0 DESC;
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Zaokrouhle na dvě místa</p>
+</div>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Informace o indexech na sloupcích</span></summary>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Indexy jsou nejefektivnější, když jsou často čteny a málo aktualizovány</p>
+</div>
+<pre><code class="lang-sql">SELECT 
+    OBJECT_NAME(s.object_id) AS 'Table',
+    i.name AS 'Index',
+    user_seeks + user_scans + user_lookups AS 'Reads',
+    user_updates AS 'Updates'
+FROM 
+    sys.dm_db_index_usage_stats AS s 
+JOIN 
+    sys.indexes AS i 
+ON 
+    s.object_id = i.object_id 
+AND 
+    i.index_id = s.index_id
+WHERE 
+    OBJECTPROPERTY(s.object_id,'IsUserTable') = 1
+ORDER BY 
+    'Reads' DESC, 'Updates' ASC
+</code></pre>
+</details>
+<h4 id="hledat">Hledat</h4>
+<details>
+<summary><span style="color:#1E90FF;">Sloupec a zjistit v jaké Tabulce se nachází</span></summary>
+<pre><code>- Komplexní informace (včetně názvu schématu)
+
+  ```sql
+  SELECT t.name AS table_name,
+  SCHEMA_NAME(schema_id) AS schema_name,
+  c.name AS column_name
+  FROM sys.tables AS t
+  INNER JOIN sys.columns c ON t.OBJECT_ID = c.OBJECT_ID
+  WHERE c.name LIKE '%ino_doklad%'
+  ORDER BY schema_name, table_name;
+  ```
+
+- Základní informace (pouze názvy tabulek a sloupců)
+
+  ```sql
+  SELECT TABLE_NAME, COLUMN_NAME 
+  FROM INFORMATION_SCHEMA.COLUMNS
+  WHERE COLUMN_NAME LIKE '%place_column_name%'
+  ```
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Datový typ Sloupce z Tabulky</span></summary>
+<pre><code class="lang-sql">Vyhledat datový typ sloupce:
+SELECT DATA_TYPE 
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE 
+     TABLE_NAME = 'place_table_name' 
+AND  COLUMN_NAME = 'place_column_name'
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Hodnoty ve všech textových a číselných sloupcích databáze</span></summary>
+<p>Prohledává textové i číselné hodnoty napříč všemi tabulkami a sloupci vybrané databáze.</p>
+<p>Pokud zadáte číslo, použije přesné porovnání, a pokud zadáte text, použije vyhledávání pomocí <code>LIKE</code></p>
+<pre><code class="lang-sql">DECLARE @SearchStr nvarchar(100) = 'Doplňte hledanou hodnotu zde!'
+CREATE TABLE #Results (ColumnName nvarchar(370), ColumnValue nvarchar(3630))
+
+SET NOCOUNT ON
+
+DECLARE @TableName nvarchar(256), @ColumnName nvarchar(128), @SearchStr2 nvarchar(110)
+SET  @TableName = ''
+
+-- Rozhodnutí, zda hledaný řetězec je číslo nebo text (pro dynamické SQL)
+IF ISNUMERIC(@SearchStr) = 1
+    SET @SearchStr2 = @SearchStr
+ELSE
+    SET @SearchStr2 = QUOTENAME('%' + @SearchStr + '%','''')
+
+-- Získání celkového počtu tabulek
+DECLARE @TotalTables int, @CompletedTables int
+SELECT @TotalTables = COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'
+SET @CompletedTables = 0
+
+WHILE @TableName IS NOT NULL
+BEGIN
+    SET @ColumnName = ''
+    SET @TableName = 
+    (
+        SELECT MIN(QUOTENAME(TABLE_SCHEMA) + '.' + QUOTENAME(TABLE_NAME))
+        FROM    INFORMATION_SCHEMA.TABLES
+        WHERE       TABLE_TYPE = 'BASE TABLE'
+            AND QUOTENAME(TABLE_SCHEMA) + '.' + QUOTENAME(TABLE_NAME) &gt; @TableName
+            AND OBJECTPROPERTY(
+                    OBJECT_ID(
+                        QUOTENAME(TABLE_SCHEMA) + '.' + QUOTENAME(TABLE_NAME)
+                         ), 'IsMSShipped'
+                           ) = 0
+    )
+
+    WHILE (@TableName IS NOT NULL) AND (@ColumnName IS NOT NULL)
+    BEGIN
+        SET @ColumnName =
+        (
+            SELECT MIN(QUOTENAME(COLUMN_NAME))
+            FROM    INFORMATION_SCHEMA.COLUMNS
+            WHERE       TABLE_SCHEMA    = PARSENAME(@TableName, 2)
+                AND TABLE_NAME  = PARSENAME(@TableName, 1)
+                -- Rozšíření pro textové i číselné datové typy
+                AND DATA_TYPE IN ('char', 'varchar', 'nchar', 'nvarchar', 'int', 'decimal', 'float', 'numeric', 'bigint', 'smallint')
+                AND QUOTENAME(COLUMN_NAME) &gt; @ColumnName
+        )
+
+        IF @ColumnName IS NOT NULL
+        BEGIN
+            -- Dynamický SQL pro číselné a textové typy
+            IF ISNUMERIC(@SearchStr) = 1
+            BEGIN
+                INSERT INTO #Results
+                EXEC
+                (
+                    'SELECT ''' + @TableName + '.' + @ColumnName + ''', CAST(' + @ColumnName + ' AS nvarchar(3630)) 
+                    FROM ' + @TableName + ' (NOLOCK) ' +
+                    ' WHERE ' + @ColumnName + ' = ' + @SearchStr2
+                )
+            END
+            ELSE
+            BEGIN
+                INSERT INTO #Results
+                EXEC
+                (
+                    'SELECT ''' + @TableName + '.' + @ColumnName + ''', LEFT(' + @ColumnName + ', 3630) 
+                    FROM ' + @TableName + ' (NOLOCK) ' +
+                    ' WHERE ' + @ColumnName + ' LIKE ' + @SearchStr2
+                )
+            END
+        END
+    END
+
+    -- Aktualizace počtu dokončených tabulek a výpis pokroku
+    SET @CompletedTables = @CompletedTables + 1
+    PRINT 'Dokončeno ' + CAST(@CompletedTables AS nvarchar) + ' z ' + CAST(@TotalTables AS nvarchar) + ' tabulek.'
+END
+
+SELECT ColumnName, ColumnValue FROM #Results
+DROP TABLE #Results
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Nejnovější a Nejstarší záznam</span></summary>
+<pre><code class="lang-sql">SELECT MIN(date_column) as Oldest, MAX(date_column) as Newest FROM table_name;
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Nejčastěji se vyskytující hodnoty</span></summary>
+<pre><code class="lang-sql">SELECT place_column_name, COUNT(*) 
+FROM place_table_name 
+GROUP BY place_column_name 
+ORDER BY COUNT(*) DESC;
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Port na kterém je spuštěn Server</span></summary>
+<pre><code class="lang-sql">  EXEC xp_readerrorlog 0, 1, N'Server is listening on';
+</code></pre>
+</details>
+<h4 id="výkon">Výkon</h4>
+<details>
+<summary><span style="color:#1E90FF;">Efektivita dotazů</span></summary>
+<ul>
+<li><p>SQL Server Managment Studio</p>
+<ol>
+<li>V menu SSMS vyberte Query &gt; Include Client Statistics.</li>
+<li>Spusťte svůj dotaz.</li>
+</ol>
+</li>
+<li><p>JetBrains</p>
+<ol>
+<li>File -&gt; Settings -&gt; Database -&gt; General</li>
+<li>Zaškrtnout: Show query statistics.</li>
+</ol>
+<pre><code class="lang-sql">SET STATISTICS TIME ON;
+SELECT * FROM place_table -- custom code to execute
+SET STATISTICS TIME OFF;
+</code></pre>
+</li>
+</ul>
+</details>
+<h4 id="konfigurace">Konfigurace</h4>
+<details>
+<summary><span style="color:#1E90FF;">Vzdálený přístup</span></summary>
+<pre><code class="lang-sql">EXEC sp_configure 'remote access';
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p><code>run_value = 1</code> znamená, že vzdálený přístup je povolen.</p>
+<p>Pokud je hodnota 0, povolte vzdálený přístup příkazem:</p>
+<pre><code class="lang-sql">EXEC sp_configure 'remote access', 1;
+RECONFIGURE;
+</code></pre>
+</div>
+</details>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HopefulDavid/Docs_Developer/blob/main/database/MSSQL.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

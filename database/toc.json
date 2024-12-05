@@ -1,0 +1,2 @@
+
+{"items":[{"name":"Databáze","items":[{"name":"Microsoft SQL","href":"MSSQL.html","topicHref":"MSSQL.html"},{"name":"MongoDB","href":"mongoDB.html","topicHref":"mongoDB.html"},{"name":"PostgreSQL","href":"PostgreSQL.html","topicHref":"PostgreSQL.html"}]},{"name":"Nástroje pro přístup k datům","items":[{"name":"Entity Framework","href":"EntityFramework.html","topicHref":"EntityFramework.html"},{"name":"Dapper","href":"Dapper.html","topicHref":"Dapper.html"}]}],"pdf":true}

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title> | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/Docs_Developer/blob/main/virtualization/docker.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
+            Dokumentace pro v&#253;voj&#225;ře
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p>Izoluje aplikace se všemi jejími knihovnami, konfiguračními soubory a dalšími závislými soubory do kontejnerů.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Kontejnery zajišťují, že aplikace mohou být spuštěny v jakémkoli prostředí.</p>
+</div>
+<p>Docker se stará o celý životní cyklus kontejnerů.</p>
+<p><strong>Kontejner</strong> ➜ <strong>Vytvoření</strong> ➜ <strong>Spuštění</strong> ➜ <strong>Zastavení</strong></p>
+<div class="TIP">
+<h5>Tip</h5>
+<ul>
+<li><p>Kontejnerizace je virtualizací jádra operačního systému.</p>
+<p>Všechny kontejnery běží v rámci jednoho operačního systému a sdílejí paměť, knihovny a další zdroje.</p>
+</li>
+<li><p>Zdroje se tímto způsobem využívají efektivnější než klasická virtualizace.</p>
+<p>Spuštění kontejneru je navíc mnohem rychlejší než spuštění virtuálního stroje s instalací operačního systému.</p>
+</li>
+<li><p>Malá režie a na stejném hardwaru můžete spustit více docker kontejnerů než virtuálních strojů</p>
+</li>
+</ul>
+<img src="../images/A2q5GRgncw.png" alt="docker_kontejnery.png">
+</div>
+<h2 id="soubory-dockeru">Soubory dockeru</h2>
+<h3 id="dockerdexe-a-dockerexe">dockerd.exe a docker.exe</h3>
+<ul>
+<li><p>dockerd.exe:</p>
+<p>Spouští Docker Daemon, což je hlavní služba, která spravuje kontejnery a poslouchá na socketu či TCP portu.</p>
+</li>
+<li><p>docker.exe</p>
+<p>Klientský nástroj, který posílá příkazy daemonu (např. <code>docker run</code>, <code>docker ps</code>).</p>
+</li>
+</ul>
+<h3 id="docker-composeexe-a-docker-composeyml">docker-compose.exe a docker-compose.yml</h3>
+<ul>
+<li><p>docker-compose.exe:</p>
+<p>Umožňuje definovat a spouštět více Docker kontejnerů jako součásti jedné aplikace.</p>
+<p>Pomocí souboru <code>docker-compose.yml</code> můžete definovat všechny služby (kontejnery), které mají běžet, včetně jejich konfigurací, závislostí a propojení mezi nimi.</p>
+</li>
+<li><p>docker-compose.yml:</p>
+<p>Konfigurační soubor, který popisuje, jaké kontejnery (služby) mají být spuštěny, jaké obrazové soubory mají používat, jaké porty mají být mapovány a jaké další nastavení kontejnery potřebují.</p>
+<p>Tento soubor je zpracován příkazem <code>docker-compose up</code>, který automaticky spustí všechny definované kontejnery.</p>
+</li>
+</ul>
+<h2 id="základní-pojmy">Základní pojmy</h2>
+<h3 id="dockerfile">dockerfile</h3>
+<p>Textový soubor s instrukcemi k vytvoření <code>Docker image</code>.</p>
+<p>Specifikuje operační systém, na kterém bude běžet kontejner, jazyky, lokace, porty a další komponenty.</p>
+<h3 id="docker-image">docker image</h3>
+<p>Komprimovaná, samostatná část softwaru vytvořená příkazy v <code>Dockerfile</code>.</p>
+<p>Je to &quot;šablona&quot; (aplikace plus požadované knihovny a binární soubory) potřebná k vytvoření a spuštění Docker kontejneru.</p>
+<h3 id="docker-run">docker run</h3>
+<p>Příkaz, který spouští kontejnery.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Každý kontejner je instancí jednoho image.</p>
+</div>
+<h3 id="docker-hub">docker hub</h3>
+<p>Oficiální úložiště pro sdílení <code>docker image</code>.</p>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Obsahuje officiální <code>docker image</code> z open-source projektů a neoficiální od komunity.</p>
+<p>Možnost pracovat i s lokálními docker úložišti.</p>
+</div>
+<h3 id="docker-engine">docker engine</h3>
+<p>Jádro softwaru docker.</p>
+<p>Technologie na principu klient-server, která vytváří a provozuje kontejnery.</p>
+<h3 id="docker-compose">docker compose</h3>
+<p>Definice ke spuštění více kontejnerů.</p>
+<h2 id="příkazy">Příkazy</h2>
+<h3 id="stáhnout-docker-image">Stáhnout docker image</h3>
+<pre><code class="lang-Docker">docker pull &lt;Image name&gt;
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<image name>
+<p>Je název <code>docker image</code>.</p>
+<p>Například: <code>mcr.microsoft.com/dotnet/core/sdk:3.1</code></p>
+</image></div>
+<p>Umístění docker image po stažení:</p>
+<ul>
+<li><p>Linux:</p>
+<pre><code class="lang-Bash">/var/lib/docker/
+</code></pre>
+</li>
+<li><p>Windows:</p>
+<pre><code class="lang-Bash">C:\ProgramData\DockerDesktop
+</code></pre>
+</li>
+<li><p>macOS:</p>
+<pre><code class="lang-Bash">~/Library/Containers/com.docker.docker/Data/vms/0/
+</code></pre>
+</li>
+</ul>
+<h3 id="sestavení-docker-image">Sestavení docker image</h3>
+<ul>
+<li><p><code>docker build [-t] customFolder</code></p>
+<p>Sestaví kontejner pro docker image ve vybraném adresáři.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p><code>customFolder</code></p>
+<p>Název vybraného adresáře k sestavení docker image.</p>
+<p>Může být například aktuální adresář: <code>.</code>, nebo jakkoli jinak.</p>
+<p><code>-t</code></p>
+<p>Pojmenování image a tagu. (Pokud není zadán parametr -t, použije se tag: <code>latest</code>)</p>
+</div>
+</li>
+<li><p>Příklad:</p>
+<pre><code class="lang-Docker">docker build -t myapp .
+</code></pre>
+<div class="TIP">
+<h5>Tip</h5>
+<p><code>myapp</code></p>
+<p>Název pro nově sestavený kontejner. (Může být jakýkoli.)</p>
+<p><code>.</code></p>
+<p>Pracovní adresář v dockeru. (V tomto příkladu kořenový adresář.)</p>
+</div>
+</li>
+</ul>
+<h3 id="spuštění-kontejneru-z-docker-image">Spuštění kontejneru z docker image</h3>
+<ul>
+<li><p><code>docker run &lt;docker image&gt;</code></p>
+<p>Spustí kontejner pro docker image.</p>
+<pre><code class="lang-Docker">docker run kitematic/hello-world-nginx
+</code></pre>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Spustí docker kontejner s docker image: <code>kitematic/hello-world-nginx</code></p>
+</div>
+</li>
+</ul>
+<h3 id="spustit-na-jiném-portu">Spustit na jiném portu</h3>
+<pre><code class="lang-Docker">docker run -p 70:80 kitematic/hello-world-nginx 
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p><code>-p</code></p>
+<p>Mapuje port 70 na hostitelském stroji na port 80 uvnitř kontejneru. (To znamená, že pokud aplikace uvnitř kontejneru poslouchá na portu 80, bude přístupná na portu 70 hostitelského stroje.)</p>
+<p><code>kitematic/hello-world-nginx</code></p>
+<p>Název docker image ke spuštění.</p>
+</div>
+<h3 id="spustit-v-interaktivním-módu">Spustit v interaktivním módu</h3>
+<pre><code class="lang-Docker">docker run -it kitematic/hello-world-nginx 
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Užitečné, pokud chcete spustit kontejner a poté v něm spustit další příkazy, například při ladění nebo vývoji.</p>
+</div>
+<h3 id="odstranit-po-zastavení">Odstranit po zastavení</h3>
+<pre><code class="lang-Docker">docker run --rm kitematic/hello-world-nginx 
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p><code>--rm</code></p>
+<p>Docker automaticky odstraní kontejner, když je běh kontejneru přerušení.</p>
+</div>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Užitečné, pokud nechcete, aby se vaše lokální úložiště naplnilo zastavenými kontejnery.</p>
+</div>
+<h3 id="spuštění-více-kontejnerů-z-docker-image-najednou">Spuštění více kontejnerů z docker image najednou</h3>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Musíte použít soubor YAML k definování služeb vaší aplikace.</p>
+<p>Následně pomocí jediného příkazu <code>docker-compose up</code> můžete vytvořit a spustit všechny služby definované ve vašem souboru <code>docker-compose.yml</code>.</p>
+</div>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Automaticky použije lokální <code>docker image</code>, pokud je k dispozici.</p>
+</div>
+<p>Příklad souboru <code>docker-compose.yaml</code>:</p>
+<pre><code class="lang-yaml"># Verze Docker Compose souboru
+version: '3.4'
+
+# Definice služeb
+services:
+  # Název služby
+  webapp:
+    # Obraz, který se má použít pro tuto službu
+    # Tento obraz je vzorová aplikace ASP.NET Core od Microsoftu
+    image: mcr.microsoft.com/dotnet/core/samples:aspnetapp
+    # Instrukce pro sestavení obrazu
+    build:
+      # Kontext pro sestavení, obvykle je to adresář obsahující Dockerfile
+      context: .
+      # Cesta k Dockerfile
+      dockerfile: Dockerfile
+    # Mapování portů mezi hostitelem a kontejnerem
+    # Formát je &quot;host:kontejner&quot;
+    # Toto nastavení říká Dockeru, aby přesměroval port 8000 na hostiteli na port 80 v kontejneru
+    ports:
+      - &quot;8000:80&quot;
+</code></pre>
+<h2 id="dockerfile-1">Dockerfile</h2>
+<p>V dockeru <strong>není žádná výchozí složka</strong>.</p>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Když vytváříte Dockerfile, můžete nastavit pracovní adresář v kontejneru pomocí příkazu <code>WORKDIR</code>.</p>
+</div>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Pokud není nastaven <code>WORKDIR</code>, vztahuje se vše na kořenový adresář (/) kontejneru.</p>
+</div>
+<h3 id="příklad-pro-net-core">Příklad pro .NET Core</h3>
+<pre><code class="lang-Docker"># Používáme oficiální .NET Core runtime image z Docker Hub
+# 'dotnet' je jméno image a '3.1' je tag, který specifikuje verzi
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1
+
+# Nastavíme pracovní adresář v kontejneru na /app
+# Pokud tento adresář neexistuje, docker ho vytvoří
+WORKDIR /app
+
+# Kopírujeme výstup buildu z našeho stroje do kontejneru
+# 'publish' je cesta k výstupu buildu na našem stroji
+# '.' znamená aktuální (pracovní) adresář v kontejneru
+COPY ./publish .
+
+# Nastavíme spustitelný soubor pro kontejner
+# 'myapp.dll' je název naší aplikace
+ENTRYPOINT [&quot;dotnet&quot;, &quot;myapp.dll&quot;]
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Vytvoří <code>docker image</code> pro vaši aplikaci .NET Core.</p>
+<p>Když spustíte kontejner z této image, vaše aplikace se automaticky spustí.</p>
+</div>
+<h3 id="příklad-pro-c-aplikaci">Příklad pro C# Aplikaci</h3>
+<pre><code class="lang-Docker"># Používáme oficiální .NET Core SDK image z Docker Hub
+# 'dotnet' je jméno image a '3.1' je tag, který specifikuje verzi
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1
+
+# Nastavíme pracovní adresář v kontejneru na /app
+# Pokud tento adresář neexistuje, docker ho vytvoří
+WORKDIR /app
+
+# Kopírujeme všechny soubory z našeho stroje do kontejneru
+# '.' znamená aktuální adresář na našem stroji
+# '.' znamená aktuální (pracovní) adresář v kontejneru
+COPY . .
+
+# Spustíme příkaz 'dotnet restore', který stáhne všechny potřebné NuGet balíčky
+RUN dotnet restore
+
+# Spustíme příkaz 'dotnet publish', který vytvoří výstup buildu naší aplikace
+RUN dotnet publish -c Release -o out
+
+# Nastavíme spustitelný soubor pro kontejner
+# 'myapp.dll' je název naší aplikace
+ENTRYPOINT [&quot;dotnet&quot;, &quot;out/myapp.dll&quot;]
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Tento Dockerfile vytvoří docker image pro vaši aplikaci C#.</p>
+<p>Když spustíte kontejner z této image, vaše aplikace se automaticky spustí.</p>
+</div>
+<h3 id="příklad-net-core-a-lokálních-nuget-balíčků">Příklad .NET Core a lokálních NuGet balíčků</h3>
+<pre><code class="lang-Docker"># Používáme oficiální .NET Core SDK image z Docker Hub
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1
+
+# Nastavíme pracovní adresář v kontejneru na /app
+WORKDIR /app
+
+# Kopírujeme všechny soubory z našeho stroje do kontejneru
+COPY . .
+
+# Spustíme příkaz 'dotnet restore', který načte všechny potřebné NuGet balíčky z lokálního úložiště
+# Předpokládáme, že všechny potřebné NuGet balíčky jsou uloženy v adresáři 'nuget' našeho projektu
+RUN dotnet restore --source ./nuget
+
+# Spustíme příkaz 'dotnet publish', který vytvoří výstup buildu naší aplikace
+RUN dotnet publish -c Release -o out
+
+# Nastavíme spustitelný soubor pro kontejner
+ENTRYPOINT [&quot;dotnet&quot;, &quot;out/myapp.dll&quot;]
+</code></pre>
+<div class="TIP">
+<h5>Tip</h5>
+<p>V tomto příkladu předpokládáme, že všechny potřebné NuGet balíčky jsou uloženy v adresáři <code>nuget</code> vašeho projektu.</p>
+<p>Příkaz <code>dotnet restore --source ./nuget</code> pak načte tyto balíčky z lokálního úložiště místo stahování z internetu.</p>
+</div>
+<h2 id="zachování-dat-z-kontejneru-na-lokálním-disku">Zachování dat z kontejneru na lokálním disku</h2>
+<img src="/../images/dockerKeepDataOnLocal.png" altr="dockerKeepDataOnLocal.png" width="800px">
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HopefulDavid/Docs_Developer/blob/main/virtualization/docker.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
