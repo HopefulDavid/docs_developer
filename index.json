@@ -87,7 +87,7 @@
   "index.html": {
     "href": "index.html",
     "title": "| Vývojář",
-    "keywords": "Changelog 2024-12-05 \uD83D\uDD28 improve clarity and error handling in scripts Initialize changelog \uD83D\uDD27 update changelog Changelog 2024-12-05 Initialize changelog"
+    "keywords": "Changelog 2024-12-05 \uD83D\uDD28 improve clarity and error handling in scripts Initialize changelog \uD83D\uDD27 Remove index.md for changelog generation before generating the new changelog. \uD83D\uDD27 update changelog \uD83D\uDD27 update changelog"
   },
   "network/ssh.html": {
     "href": "network/ssh.html",
