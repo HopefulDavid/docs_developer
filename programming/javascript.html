@@ -98,176 +98,188 @@
 </details>
 <details>
 <summary><span style="color:#1E90FF;">Záloha</span></summary>
-<ol>
-<li><p>Vytvořit soubor s informacemi o nainstalovaných balíčcích.</p>
-<ul>
-<li><p>Záloha globálních balíčků</p>
-<pre><code class="lang-bash">npm list -g --depth=0 &gt; npm_global_packages.txt
-</code></pre>
-</li>
-<li><p>Záloha lokálních balíčků</p>
-<pre><code class="lang-bash">npm list --depth=0 &gt; npm_local_packages.txt
-</code></pre>
-</li>
-</ul>
-</li>
-<li><p>Vytvořit .tgz soubory pro balíčky.</p>
-</li>
-</ol>
-<ul>
-<li><p>Možnosti:</p>
-  <details>
-  <summary><span style="color:#E95A84;">Automaticky</span></summary>
 <pre><code class="lang-bash"># Cesta k souboru se seznamem balíčků v aktuální pracovní složce
 $packageListFilePath = Join-Path -Path $PWD.Path -ChildPath 'npm_global_packages.txt'
 
 # Cesta k složce, kde se mají balíčky uložit
 $outputFolder = Join-Path -Path $PWD.Path -ChildPath 'offline_packages'
 
-# Kontrola, zda soubor existuje
+# Záloha globálních balíčků do souboru npm_global_packages.txt
+Write-Host &quot;Zálohuji seznam globálních balíčků...&quot; -ForegroundColor Cyan
+npm list -g --depth=0 | Out-File -FilePath $packageListFilePath -Encoding utf8
+
+# Kontrola existence souboru se seznamem balíčků
 if (!(Test-Path -Path $packageListFilePath)) {
-    Write-Error &quot;Soubor npm_global_packages.txt nebyl nalezen v aktuálním adresáři.&quot;
-    exit
+    Write-Host &quot;Soubor $packageListFilePath nebyl nalezen. Zkontrolujte, zda je správně vygenerován.&quot; -ForegroundColor Red
+    throw &quot;Soubor neexistuje.&quot;
 }
 
 # Vytvoření složky pro offline balíčky, pokud neexistuje
 if (!(Test-Path -Path $outputFolder)) {
-    New-Item -ItemType Directory -Path $outputFolder
+    Write-Host &quot;Vytvářím složku pro offline balíčky: $outputFolder&quot; -ForegroundColor Yellow
+    New-Item -ItemType Directory -Path $outputFolder | Out-Null
 }
 
-# Načtení obsahu souboru
+# Načítání obsahu souboru
+Write-Host &quot;Načítám seznam balíčků z $packageListFilePath...&quot; -ForegroundColor Cyan
 $content = Get-Content -Path $packageListFilePath
 
 # Přeskočení první řádky (pokud je soubor ve formátu, který obsahuje hlavičku)
 $content = $content | Select-Object -Skip 1
 
+# Inicializace počítadel
+$totalPackages = 0
+$successfulPackages = 0
+$failedPackages = 0
+
 # Zpracování každé řádky v souboru
 foreach ($line in $content) {
-    # Odstranění nepotřebných symbolů
-    $line = $line -replace '[+`-]', ''
+    # Odstranění přebytečných znaků na začátku řádky
+    $line = $line.Trim() -replace '^[+`-]+\s*', ''
+
+    # Pokud je řádek prázdný nebo neobsahuje jméno balíčku, přeskočíme ho
+    if ([string]::IsNullOrWhiteSpace($line)) {
+        continue
+    }
 
     # Rozdělení řádky pomocí '@' na jméno balíčku a verzi
     $parts = $line -split '@'
-
-    # Jméno balíčku je první část
     $packageName = $parts[0].Trim()
-
-    # Získání verze (pokud je specifikována)
     $version = if ($parts.Length -gt 1) { $parts[1].Trim() } else { '' }
 
-    # Ignorování prázdných řádků a případně jiných záznamů
-    if ($packageName -ne &quot;&quot; -and $packageName -ne &quot;globalpackages.txt&quot; -and $packageName -ne &quot;npm_global_packages.txt&quot;) {
+    # Ověření, že balíček není součástí seznamu výjimek
+    if ($packageName -in @(&quot;globalpackages.txt&quot;, &quot;npm_global_packages.txt&quot;)) {
+        continue
+    }
 
-        # Připravit cestu k balíčku
-        $packageDir = Join-Path -Path $outputFolder -ChildPath $packageName
-        if (!(Test-Path -Path $packageDir)) {
-            New-Item -ItemType Directory -Path $packageDir
-        }
+    # Připravit cestu k balíčku
+    $packageDir = Join-Path -Path $outputFolder -ChildPath $packageName
+    if (!(Test-Path -Path $packageDir)) {
+        Write-Host &quot;Vytvářím složku pro balíček: $packageName&quot; -ForegroundColor Yellow
+        New-Item -ItemType Directory -Path $packageDir | Out-Null
+    }
 
-        # Pokud je specifikována verze, stáhnout balíček s verzí
-        if ($version -ne '') {
-            Write-Output &quot;Stahuji balíček: $packageName@$version&quot;
-            npm pack &quot;$packageName@$version&quot; --pack-destination $packageDir
+    # Stáhnout balíček s verzí, pokud je specifikována
+    $totalPackages++
+    $downloadSuccess = $false
+    try {
+        if ($version) {
+            Write-Host &quot;Stahuji balíček: $packageName@$version&quot; -ForegroundColor Green
+            $npmOutput = npm pack &quot;$packageName@$version&quot; --pack-destination $packageDir 2&gt;&amp;1
         } else {
-            Write-Output &quot;Stahuji balíček: $packageName&quot;
-            npm pack $packageName --pack-destination $packageDir
+            Write-Host &quot;Stahuji balíček: $packageName&quot; -ForegroundColor Green
+            $npmOutput = npm pack $packageName --pack-destination $packageDir 2&gt;&amp;1
         }
 
-        # Pokud balíček obsahuje package.json, stáhnout závislosti
-        $packageJsonPath = Join-Path -Path $packageDir -ChildPath 'package.json'
-        if (Test-Path -Path $packageJsonPath) {
-            Write-Output &quot;Stahuji závislosti pro balíček: $packageName&quot;
+        # Kontrola výstupu npm pro chyby
+        if ($npmOutput -match &quot;404 Not Found&quot;) {
+            Write-Host &quot;Chyba: Balíček $packageName nebyl nalezen v npm registry.&quot; -ForegroundColor Red
+            $downloadSuccess = $false
+        } elseif ($npmOutput -match &quot;npm ERR&quot;) {
+            Write-Host &quot;Chyba při stahování balíčku: $packageName&quot; -ForegroundColor Red
+            $downloadSuccess = $false
+        } else {
+            $downloadSuccess = $true
+        }
+    } catch {
+        Write-Host &quot;Chyba při stahování balíčku: $packageName - $($_.Exception.Message)&quot; -ForegroundColor Red
+    }
 
-            # Pro každý závislý balíček stáhnout jeho tarball
-            $dependencies = (Get-Content -Path $packageJsonPath | ConvertFrom-Json).dependencies
-            foreach ($dependency in $dependencies.Keys) {
-                Write-Output &quot;Stahuji závislost: $dependency&quot;
+    # Pokud se stahování neprovede, zvyšujeme počet neúspěšných balíčků
+    if ($downloadSuccess) {
+        Write-Host &quot;Úspěšně staženo: $packageName&quot; -ForegroundColor Green
+        $successfulPackages++
+    } else {
+        Write-Host &quot;Neúspěšně staženo: $packageName&quot; -ForegroundColor Red
+        $failedPackages++
+    }
+
+    # Pokud balíček obsahuje package.json, stáhnout závislosti
+    $packageJsonPath = Join-Path -Path $packageDir -ChildPath 'package.json'
+    if (Test-Path -Path $packageJsonPath) {
+        Write-Host &quot;Stahuji závislosti pro balíček: $packageName&quot; -ForegroundColor Cyan
+        $dependencies = (Get-Content -Path $packageJsonPath | ConvertFrom-Json).dependencies
+        foreach ($dependency in $dependencies.Keys) {
+            Write-Host &quot;Stahuji závislost: $dependency&quot; -ForegroundColor Cyan
+            try {
                 npm pack $dependency --pack-destination $packageDir
+            }
+            catch {
+                Write-Host &quot;Chyba při stahování závislosti ${dependency} pro balíček ${packageName}: $($_.Exception.Message)&quot; -ForegroundColor Red
             }
         }
     }
 }
 
-Write-Output &quot;Všechny balíčky a závislosti byly úspěšně staženy pro offline instalaci.&quot;
+# Výpis výsledků
+Write-Host &quot;Zálohování dokončeno.&quot; -ForegroundColor Cyan
+Write-Host &quot;Úspěšně zálohováno: $successfulPackages z $totalPackages balíčků.&quot; -ForegroundColor Green
+Write-Host &quot;Neúspěšně zálohováno: $failedPackages balíčků.&quot; -ForegroundColor Red
 </code></pre>
-  </details>
-  <details>
-  <summary><span style="color:#E95A84;">Manuálně</span></summary>
-<p>Pro každý balíček vytvoříme zálohu.</p>
-<pre><code>```bash
-
-npm pack &lt;package_name&gt;
-```
-</code></pre>
-<blockquote>
-<p><code>&lt;package_name&gt;</code></p>
-<p>Název balíčku, který chceme zazálohovat.</p>
-<p>Například: <code>npm pack sass@1.76.0</code></p>
-</blockquote>
-  </details>
-</li>
-</ul>
 </details>
 <details>
 <summary><span style="color:#1E90FF;">Obnova</span></summary>
-<div class="IMPORTANT">
-<h5>Important</h5>
-<p>Při instalaci balíčku z <code>.tgz</code> je tento soubor následně automaticky odstraněn.</p>
-</div>
-<ol>
-<li>Instalace balíčků z .tgz souborů.</li>
-</ol>
-<ul>
-<li><p>Možnosti:</p>
-<details>
-<summary><span style="color:#E95A84;">Automaticky</span></summary>
 <pre><code class="lang-bash"># Cesta k složce s offline balíčky
 $packageFolder = Join-Path -Path $PWD.Path -ChildPath 'offline_packages'
+$installBaseFolder = Join-Path -Path $PWD.Path -ChildPath 'Installed'
 
 # Kontrola, zda složka existuje
 if (!(Test-Path -Path $packageFolder)) {
-    Write-Error &quot;Složka s offline balíčky nebyla nalezena: $packageFolder&quot;
+    Write-Host &quot;Složka s offline balíčky nebyla nalezena: $packageFolder&quot; -ForegroundColor Red
     exit
 }
 
-# Získání všech .tgz souborů v dané složce
-$tgzFiles = Get-ChildItem -Path $packageFolder -Filter *.tgz
+# Vytvoření složky pro instalaci, pokud ještě neexistuje
+if (!(Test-Path -Path $installBaseFolder)) {
+    Write-Host &quot;Vytvářím složku pro instalaci: $installBaseFolder&quot; -ForegroundColor Yellow
+    New-Item -ItemType Directory -Path $installBaseFolder
+}
+
+# Získání všech .tgz souborů v dané složce a podadresářích
+$tgzFiles = Get-ChildItem -Path $packageFolder -Filter *.tgz -Recurse
 
 if ($tgzFiles.Count -eq 0) {
-    Write-Error &quot;Nebyl nalezen žádný .tgz soubor v složce $packageFolder. Zkontrolujte, že máte offline balíčky připravené.&quot;
+    Write-Host &quot;Nebyl nalezen žádný .tgz soubor v složce $packageFolder. Zkontrolujte, že máte offline balíčky připravené.&quot; -ForegroundColor Red
     exit
 }
+
+# Inicializace počítadel
+$totalPackages = $tgzFiles.Count
+$successfulPackages = 0
+$failedPackages = 0
 
 # Instalace každého .tgz souboru
 foreach ($tgzFile in $tgzFiles) {
-    Write-Output &quot;Instaluji balíček: $($tgzFile.Name)&quot;
+    Write-Host &quot;Instaluji balíček: $($tgzFile.Name)&quot; -ForegroundColor Cyan
 
     # Extrahování názvu balíčku z názvu souboru .tgz
     $packageName = [System.IO.Path]::GetFileNameWithoutExtension($tgzFile.Name)
 
     # Vytvoření složky pro instalaci, pokud ještě neexistuje
-    $installDir = Join-Path -Path $PWD.Path -ChildPath $packageName
+    $installDir = Join-Path -Path $installBaseFolder -ChildPath $packageName
     if (!(Test-Path -Path $installDir)) {
-        Write-Output &quot;Vytvářím složku pro instalaci: $installDir&quot;
+        Write-Host &quot;Vytvářím složku pro instalaci: $installDir&quot; -ForegroundColor Yellow
         New-Item -ItemType Directory -Path $installDir
     }
 
     # Instalace balíčku pomocí .tgz souboru
     try {
-        Write-Output &quot;Instaluji balíček z $($tgzFile.FullName)...&quot;
+        Write-Host &quot;Instaluji balíček z $($tgzFile.FullName)...&quot; -ForegroundColor Green
         npm install --prefix $installDir $tgzFile.FullName
-        Write-Output &quot;Balíček $packageName byl úspěšně nainstalován.&quot;
+        Write-Host &quot;Balíček $packageName byl úspěšně nainstalován.&quot; -ForegroundColor Green
+        $successfulPackages++
     }
     catch {
-        Write-Error &quot;Chyba při instalaci balíčku $packageName z $($tgzFile.FullName): $_&quot;
+        Write-Host &quot;Chyba při instalaci balíčku $packageName z $($tgzFile.FullName): $_&quot; -ForegroundColor Red
+        $failedPackages++
         continue
     }
 
     # Pokud balíček obsahuje závislosti (package.json), pokusíme se stáhnout a nainstalovat je offline
-    $packageJsonPath = Join-Path -Path $installDir -ChildPath 'node_modules' -ChildPath $packageName -ChildPath 'package.json'
+    $packageJsonPath = Join-Path -Path $installDir -ChildPath &quot;node_modules\$packageName\package.json&quot;
 
     if (Test-Path -Path $packageJsonPath) {
-        Write-Output &quot;Balíček $packageName obsahuje závislosti. Stahuji je...&quot;
+        Write-Host &quot;Balíček $packageName obsahuje závislosti. Stahuji je...&quot; -ForegroundColor Cyan
 
         # Načteme závislosti z package.json
         $dependencies = (Get-Content -Path $packageJsonPath | ConvertFrom-Json).dependencies
@@ -276,35 +288,21 @@ foreach ($tgzFile in $tgzFiles) {
                 $dependencyPackagePath = Join-Path -Path $packageFolder -ChildPath &quot;$dependency-*.tgz&quot;
 
                 if (Test-Path -Path $dependencyPackagePath) {
-                    Write-Output &quot;Instaluji závislost: $dependency&quot;
+                    Write-Host &quot;Instaluji závislost: $dependency&quot; -ForegroundColor Cyan
                     npm install --prefix $installDir $dependencyPackagePath
                 } else {
-                    Write-Error &quot;Závislost $dependency není k dispozici pro offline instalaci!&quot;
+                    Write-Host &quot;Závislost $dependency není k dispozici pro offline instalaci!&quot; -ForegroundColor Red
                 }
             }
         }
     }
 }
 
-Write-Output &quot;Všechny balíčky byly úspěšně nainstalovány z offline záloh.&quot;
+# Výpis výsledků
+Write-Host &quot;Všechny balíčky byly úspěšně nainstalovány z offline záloh.&quot; -ForegroundColor Cyan
+Write-Host &quot;Úspěšně nainstalováno: $successfulPackages z $totalPackages balíčků.&quot; -ForegroundColor Green
+Write-Host &quot;Neúspěšně nainstalováno: $failedPackages balíčků.&quot; -ForegroundColor Red
 </code></pre>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Manuálně</span></summary>
-<ul>
-<li><p>Pro každý balíček obnovíme zálohu.</p>
-<pre><code class="lang-bash">npm install &lt;package_path&gt;
-</code></pre>
-</li>
-</ul>
-<blockquote>
-<p>Ceta k balíčku, který chceme obnovit.</p>
-<p>Například: <code>npm install sass-1.76.0.tgz</code></p>
-</blockquote>
-</details>
-</li></ul></details>
-
-
 <h2 id="aplikační-balíčky">Aplikační balíčky</h2>
 <details>
 <summary><span style="color:#1E90FF;">conventional-changelog-cli</span></summary>
@@ -378,7 +376,7 @@ Write-Output &quot;Všechny balíčky byly úspěšně nainstalovány z offline 
 </li>
 </ol>
 </details>
-
+</details>
 </article>
 
         <div class="contribution d-print-none">
