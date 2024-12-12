@@ -753,6 +753,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "programming/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "programming/javascript.md",
       "output": {
         ".html": {

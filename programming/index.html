@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title> | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/Docs_Developer/blob/main/programming/index.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
+            Dokumentace pro v&#253;voj&#225;ře
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Informace níže jsou pouze orientační!</p>
+</div>
+<details>
+<summary><span style="color:#1E90FF;">Webové aplikace</span></summary>
+<table>
+<thead>
+<tr>
+<th>Nástroj/Framework</th>
+<th>Platformy</th>
+<th>Výhody</th>
+<th>Nevýhody</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>React</strong></td>
+<td>Web</td>
+<td>- Velká komunita<br>- Znovupoužitelné komponenty<br>- Virtuální DOM pro výkon<br>- Bohatý ekosystém knihoven</td>
+<td>- Strmá křivka učení<br>- Syntaxe JSX může být matoucí<br>- Vyžaduje další knihovny pro správu stavu</td>
+</tr>
+<tr>
+<td><strong>Vue.js</strong></td>
+<td>Web</td>
+<td>- Snadné na naučení<br>- Reaktivní datové vazby<br>- Flexibilní a modulární<br>- Silná podpora komunity</td>
+<td>- Menší ekosystém ve srovnání s React a Angular<br>- Omezená škálovatelnost pro velké aplikace<br>- Nedostatek podpory pro velké podniky</td>
+</tr>
+<tr>
+<td><strong>Angular</strong></td>
+<td>Web</td>
+<td>- Komplexní framework<br>- Obousměrné datové vazby<br>- Injekce závislostí<br>- Silná podpora komunity</td>
+<td>- Strmá křivka učení<br>- Rozsáhlý a složitý<br>- Problémy s výkonem u velkých aplikací</td>
+</tr>
+<tr>
+<td><strong>Svelte</strong></td>
+<td>Web</td>
+<td>- Žádný virtuální DOM<br>- Vysoce výkonný<br>- Jednoduchá a stručná syntaxe<br>- Reaktivní programovací model</td>
+<td>- Menší komunita<br>- Omezený ekosystém<br>- Méně vyspělý ve srovnání s jinými frameworky</td>
+</tr>
+<tr>
+<td><strong>ASP.NET Core</strong></td>
+<td>Web</td>
+<td>- Vysoký výkon<br>- Cross-platformní<br>- Silné bezpečnostní funkce<br>- Integrace s .NET ekosystémem</td>
+<td>- Strmá křivka učení<br>- Rozsáhlý a složitý<br>- Omezené front-endové schopnosti</td>
+</tr>
+<tr>
+<td><strong>Django</strong></td>
+<td>Web</td>
+<td>- Vysoce úrovňový framework<br>- Vestavěný administrátorský panel<br>- Silné bezpečnostní funkce<br>- Škálovatelný a udržovatelný</td>
+<td>- Monolitická struktura<br>- Strmá křivka učení<br>- Omezené front-endové schopnosti</td>
+</tr>
+<tr>
+<td><strong>Laravel</strong></td>
+<td>Web</td>
+<td>- Elegantní syntaxe<br>- Vestavěná autentizace a autorizace<br>- Silná podpora komunity<br>- Rychlý vývoj</td>
+<td>- Problémy s výkonem<br>- Monolitická struktura<br>- Omezená škálovatelnost pro velké aplikace</td>
+</tr>
+<tr>
+<td><strong>Spring Boot</strong></td>
+<td>Web</td>
+<td>- Komplexní framework<br>- Silné bezpečnostní funkce<br>- Škálovatelný a udržovatelný<br>- Integrace s Java ekosystémem</td>
+<td>- Strmá křivka učení<br>- Rozsáhlý a složitý<br>- Vyžaduje značnou konfiguraci</td>
+</tr>
+<tr>
+<td><strong>Express.js</strong></td>
+<td>Web</td>
+<td>- Minimalistický framework<br>- Vysoký výkon<br>- Flexibilní a modulární<br>- Silná podpora komunity</td>
+<td>- Vyžaduje další knihovny pro plnou funkčnost<br>- Omezené vestavěné funkce<br>- Méně názorový, což může vést k nekonzistentnímu kódu</td>
+</tr>
+<tr>
+<td><strong>Ruby on Rails</strong></td>
+<td>Web</td>
+<td>- Konvence nad konfigurací<br>- Rychlý vývoj<br>- Vestavěný testovací framework<br>- Silná podpora komunity</td>
+<td>- Problémy s výkonem<br>- Monolitická struktura<br>- Strmá křivka učení pro začátečníky</td>
+</tr>
+</tbody>
+</table>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Mobilní aplikace</span></summary>
+<table>
+<thead>
+<tr>
+<th>Nástroj/Framework</th>
+<th>Platformy</th>
+<th>Výhody</th>
+<th>Nevýhody</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>React Native</strong></td>
+<td>iOS, Android</td>
+<td>- Rychlý vývoj<br>- Velká komunita<br>- Znovupoužitelný kód<br>- Podpora hot-reload<br>- Široká podpora knihoven a pluginů</td>
+<td>- Problémy s výkonem<br>- Velká velikost aplikace<br>- Závislost na nativních modulech<br>- Omezený přístup k některým nativním funkcím</td>
+</tr>
+<tr>
+<td><strong>Flutter</strong></td>
+<td>iOS, Android</td>
+<td>- Vysoký výkon<br>- Krásné UI<br>- Jeden kód pro obě platformy<br>- Podpora hot-reload<br>- Bohatá sada widgetů</td>
+<td>- Velká velikost aplikace<br>- Omezené třetí strany knihovny<br>- Strmá křivka učení pro Dart</td>
+</tr>
+<tr>
+<td><strong>Xamarin</strong></td>
+<td>iOS, Android</td>
+<td>- Nativní výkon<br>- Jeden kód pro obě platformy<br>- Silná podpora Microsoftu<br>- Přístup k nativním API<br>- Integrace s Visual Studio</td>
+<td>- Větší velikost aplikace<br>- Pomalejší vývoj ve srovnání s jinými frameworky<br>- Závislost na Microsoft ekosystému</td>
+</tr>
+<tr>
+<td><strong>Swift</strong></td>
+<td>iOS</td>
+<td>- Vysoký výkon<br>- Nativní vzhled a pocit<br>- Silná podpora Apple<br>- Přístup k nejnovějším funkcím iOS</td>
+<td>- Omezeno na iOS<br>- Strmá křivka učení<br>- Menší komunita ve srovnání s multiplatformními frameworky</td>
+</tr>
+<tr>
+<td><strong>Kotlin Multiplatform</strong></td>
+<td>iOS, Android</td>
+<td>- Sdílení kódu mezi platformami<br>- Silná podpora Kotlinu<br>- Možnost postupného přechodu na multiplatformní vývoj</td>
+<td>- Stále se vyvíjí<br>- Omezená podpora komunity<br>- Složitější nastavení projektu</td>
+</tr>
+<tr>
+<td><strong>Ionic</strong></td>
+<td>iOS, Android</td>
+<td>- Webové technologie<br>- Rychlý vývoj<br>- Velká komunita<br>- Široká podpora pluginů<br>- Snadná integrace s webovými aplikacemi</td>
+<td>- Problémy s výkonem<br>- Nevhodné pro aplikace s vysokým výkonem<br>- Závislost na webview</td>
+</tr>
+<tr>
+<td><strong>Cordova</strong></td>
+<td>iOS, Android</td>
+<td>- Webové technologie<br>- Velký ekosystém pluginů<br>- Snadná integrace s webovými aplikacemi</td>
+<td>- Problémy s výkonem<br>- Nevhodné pro složité aplikace<br>- Závislost na webview</td>
+</tr>
+<tr>
+<td><strong>NativeScript</strong></td>
+<td>iOS, Android</td>
+<td>- Nativní výkon<br>- Přístup k nativním API<br>- Podpora Angular a Vue.js<br>- Možnost psát v TypeScriptu</td>
+<td>- Menší komunita<br>- Omezené třetí strany knihovny<br>- Složitější ladění</td>
+</tr>
+<tr>
+<td><strong>PhoneGap</strong></td>
+<td>iOS, Android</td>
+<td>- Webové technologie<br>- Snadné použití<br>- Rychlý vývoj<br>- Podpora Adobe</td>
+<td>- Problémy s výkonem<br>- Nevhodné pro složité aplikace<br>- Závislost na webview</td>
+</tr>
+<tr>
+<td><strong>Sencha Touch</strong></td>
+<td>iOS, Android</td>
+<td>- Bohaté UI komponenty<br>- Dobrý výkon<br>- Podpora MVC architektury<br>- Integrace s Ext JS</td>
+<td>- Drahé licencování<br>- Menší komunita<br>- Strmá křivka učení</td>
+</tr>
+</tbody>
+</table>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Počítačové aplikace</span></summary>
+<table>
+<thead>
+<tr>
+<th>Nástroj/Framework</th>
+<th>Platformy</th>
+<th>Výhody</th>
+<th>Nevýhody</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Electron</strong></td>
+<td>Windows, macOS, Linux</td>
+<td>- Webové technologie<br>- Velká komunita<br>- Široká podpora knihoven a pluginů<br>- Snadná integrace s webovými aplikacemi</td>
+<td>- Velká velikost aplikace<br>- Vysoká spotřeba paměti<br>- Závislost na Chromium</td>
+</tr>
+<tr>
+<td><strong>Qt</strong></td>
+<td>Windows, macOS, Linux</td>
+<td>- Vysoký výkon<br>- Bohatá sada widgetů<br>- Podpora více jazyků (C++, Python, atd.)<br>- Nativní vzhled a pocit</td>
+<td>- Strmá křivka učení<br>- Drahé licencování pro komerční použití<br>- Velikost knihovny</td>
+</tr>
+<tr>
+<td><strong>WPF (Windows Presentation Foundation)</strong></td>
+<td>Windows</td>
+<td>- Bohaté UI možnosti<br>- Silná podpora Microsoftu<br>- Integrace s .NET ekosystémem<br>- Podpora MVVM architektury</td>
+<td>- Omezeno na Windows<br>- Strmá křivka učení<br>- Vyšší nároky na systémové prostředky</td>
+</tr>
+<tr>
+<td><strong>JavaFX</strong></td>
+<td>Windows, macOS, Linux</td>
+<td>- Podpora více platforem<br>- Integrace s Java ekosystémem<br>- Bohaté UI možnosti<br>- Podpora FXML pro návrh UI</td>
+<td>- Strmá křivka učení<br>- Menší komunita ve srovnání s jinými frameworky<br>- Vyšší nároky na systémové prostředky</td>
+</tr>
+<tr>
+<td><strong>GTK</strong></td>
+<td>Windows, macOS, Linux</td>
+<td>- Nativní vzhled a pocit<br>- Podpora více jazyků (C, Python, atd.)<br>- Velká komunita<br>- Otevřený zdrojový kód</td>
+<td>- Strmá křivka učení<br>- Omezené UI možnosti ve srovnání s jinými frameworky<br>- Složitější ladění</td>
+</tr>
+<tr>
+<td><strong>WinForms</strong></td>
+<td>Windows</td>
+<td>- Snadné použití<br>- Rychlý vývoj<br>- Integrace s .NET ekosystémem<br>- Velká komunita</td>
+<td>- Omezeno na Windows<br>- Zastaralý vzhled<br>- Omezené UI možnosti ve srovnání s moderními frameworky</td>
+</tr>
+<tr>
+<td><strong>Swing</strong></td>
+<td>Windows, macOS, Linux</td>
+<td>- Podpora více platforem<br>- Integrace s Java ekosystémem<br>- Bohaté UI možnosti<br>- Velká komunita</td>
+<td>- Zastaralý vzhled<br>- Vyšší nároky na systémové prostředky<br>- Strmá křivka učení</td>
+</tr>
+<tr>
+<td><strong>Tcl/Tk</strong></td>
+<td>Windows, macOS, Linux</td>
+<td>- Snadné použití<br>- Rychlý vývoj<br>- Podpora více jazyků (Tcl, Python, atd.)<br>- Otevřený zdrojový kód</td>
+<td>- Zastaralý vzhled<br>- Omezené UI možnosti<br>- Menší komunita ve srovnání s jinými frameworky</td>
+</tr>
+</tbody>
+</table>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Databázový vývoj</span></summary>
+<table>
+<thead>
+<tr>
+<th>Nástroj/Framework</th>
+<th>Platformy</th>
+<th>Výhody</th>
+<th>Nevýhody</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PostgreSQL</strong></td>
+<td>Cross-platform</td>
+<td>- Otevřený zdrojový kód<br>- Silná podpora komunity<br>- Pokročilé funkce<br>- Vysoký výkon</td>
+<td>- Složitější nastavení<br>- Vyšší nároky na systémové prostředky<br>- Strmá křivka učení</td>
+</tr>
+<tr>
+<td><strong>MySQL</strong></td>
+<td>Cross-platform</td>
+<td>- Otevřený zdrojový kód<br>- Velká komunita<br>- Snadné použití<br>- Vysoký výkon</td>
+<td>- Omezené pokročilé funkce<br>- Problémy s výkonem při velkém zatížení<br>- Méně flexibilní než PostgreSQL</td>
+</tr>
+<tr>
+<td><strong>SQLite</strong></td>
+<td>Cross-platform</td>
+<td>- Otevřený zdrojový kód<br>- Snadné použití<br>- Nízké nároky na systémové prostředky<br>- Vestavěný v mnoha aplikacích</td>
+<td>- Omezené pokročilé funkce<br>- Nevhodné pro velké aplikace<br>- Omezená podpora pro víceuživatelské prostředí</td>
+</tr>
+<tr>
+<td><strong>MongoDB</strong></td>
+<td>Cross-platform</td>
+<td>- Otevřený zdrojový kód<br>- Flexibilní schéma<br>- Vysoký výkon<br>- Silná podpora komunity</td>
+<td>- Vyšší nároky na systémové prostředky<br>- Omezené transakční funkce<br>- Problémy s konzistencí dat</td>
+</tr>
+<tr>
+<td><strong>Microsoft SQL Server</strong></td>
+<td>Windows, Linux</td>
+<td>- Silná podpora Microsoftu<br>- Pokročilé funkce<br>- Vysoký výkon<br>- Integrace s .NET ekosystémem</td>
+<td>- Drahé licencování<br>- Vyšší nároky na systémové prostředky<br>- Omezená podpora pro jiné platformy než Windows</td>
+</tr>
+<tr>
+<td><strong>Oracle Database</strong></td>
+<td>Cross-platform</td>
+<td>- Pokročilé funkce<br>- Vysoký výkon<br>- Silná podpora pro velké podniky<br>- Škálovatelnost</td>
+<td>- Drahé licencování<br>- Složitější nastavení<br>- Vyšší nároky na systémové prostředky</td>
+</tr>
+<tr>
+<td><strong>Redis</strong></td>
+<td>Cross-platform</td>
+<td>- Otevřený zdrojový kód<br>- Vysoký výkon<br>- Podpora pro různé datové struktury<br>- Snadné použití</td>
+<td>- Omezené pokročilé funkce<br>- Nevhodné pro trvalé ukládání dat<br>- Omezená podpora pro složité dotazy</td>
+</tr>
+<tr>
+<td><strong>Cassandra</strong></td>
+<td>Cross-platform</td>
+<td>- Otevřený zdrojový kód<br>- Vysoká škálovatelnost<br>- Vysoký výkon<br>- Silná podpora komunity</td>
+<td>- Složitější nastavení<br>- Vyšší nároky na systémové prostředky<br>- Strmá křivka učení</td>
+</tr>
+<tr>
+<td><strong>MariaDB</strong></td>
+<td>Cross-platform</td>
+<td>- Otevřený zdrojový kód<br>- Velká komunita<br>- Snadné použití<br>- Vysoký výkon</td>
+<td>- Omezené pokročilé funkce<br>- Problémy s výkonem při velkém zatížení<br>- Méně flexibilní než PostgreSQL</td>
+</tr>
+<tr>
+<td><strong>Elasticsearch</strong></td>
+<td>Cross-platform</td>
+<td>- Otevřený zdrojový kód<br>- Vysoký výkon<br>- Silná podpora pro full-textové vyhledávání<br>- Škálovatelnost</td>
+<td>- Vyšší nároky na systémové prostředky<br>- Složitější nastavení<br>- Omezená podpora pro transakce</td>
+</tr>
+</tbody>
+</table>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Herní vývoj</span></summary>
+<table>
+<thead>
+<tr>
+<th>Nástroj/Framework</th>
+<th>Platformy</th>
+<th>Výhody</th>
+<th>Nevýhody</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Unity</strong></td>
+<td>Cross-platform</td>
+<td>- Velká komunita<br>- Rozsáhlý obchod s aktivy<br>- C# skriptování<br>- Všestranný pro 2D a 3D hry</td>
+<td>- Strmá křivka učení<br>- Problémy s výkonem u velkých projektů<br>- Licenční náklady na pokročilé funkce</td>
+</tr>
+<tr>
+<td><strong>Unreal Engine</strong></td>
+<td>Cross-platform</td>
+<td>- Vysoce kvalitní grafika<br>- Blueprint vizuální skriptování<br>- Velká komunita<br>- Zdarma pro malé projekty</td>
+<td>- Strmá křivka učení<br>- Vysoké systémové požadavky<br>- Licenční náklady pro projekty s vysokými příjmy</td>
+</tr>
+<tr>
+<td><strong>Godot</strong></td>
+<td>Cross-platform</td>
+<td>- Otevřený zdrojový kód<br>- Lehký<br>- GDScript pro snadné skriptování<br>- Všestranný pro 2D a 3D hry</td>
+<td>- Menší komunita<br>- Méně vyspělý než Unity a Unreal<br>- Omezený obchod s aktivy</td>
+</tr>
+<tr>
+<td><strong>GameMaker Studio</strong></td>
+<td>Cross-platform</td>
+<td>- Snadné na naučení<br>- Drag-and-drop rozhraní<br>- Dobré pro 2D hry<br>- Velká komunita</td>
+<td>- Omezené 3D schopnosti<br>- Licenční náklady na pokročilé funkce<br>- Problémy s výkonem u velkých projektů</td>
+</tr>
+<tr>
+<td><strong>CryEngine</strong></td>
+<td>Cross-platform</td>
+<td>- Vysoce kvalitní grafika<br>- Zdarma k použití<br>- Výkonný pro FPS hry<br>- Velká komunita</td>
+<td>- Strmá křivka učení<br>- Vysoké systémové požadavky<br>- Omezená dokumentace</td>
+</tr>
+<tr>
+<td><strong>RPG Maker</strong></td>
+<td>Cross-platform</td>
+<td>- Snadné použití<br>- Dobré pro RPG hry<br>- Velká komunita<br>- Rozsáhlý obchod s aktivy</td>
+<td>- Omezeno na RPG žánr<br>- Omezené možnosti přizpůsobení<br>- Licenční náklady na pokročilé funkce</td>
+</tr>
+<tr>
+<td><strong>Construct</strong></td>
+<td>Cross-platform</td>
+<td>- Snadné na naučení<br>- Drag-and-drop rozhraní<br>- Dobré pro 2D hry<br>- Velká komunita</td>
+<td>- Omezené 3D schopnosti<br>- Licenční náklady na pokročilé funkce<br>- Problémy s výkonem u velkých projektů</td>
+</tr>
+<tr>
+<td><strong>Cocos2d</strong></td>
+<td>Cross-platform</td>
+<td>- Otevřený zdrojový kód<br>- Dobré pro 2D hry<br>- Lehký<br>- Velká komunita</td>
+<td>- Omezené 3D schopnosti<br>- Strmá křivka učení pro začátečníky<br>- Omezený obchod s aktivy</td>
+</tr>
+<tr>
+<td><strong>Panda3D</strong></td>
+<td>Cross-platform</td>
+<td>- Otevřený zdrojový kód<br>- Dobré pro 3D hry<br>- Python skriptování<br>- Velká komunita</td>
+<td>- Strmá křivka učení<br>- Omezený obchod s aktivy<br>- Méně vyspělý než Unity a Unreal</td>
+</tr>
+<tr>
+<td><strong>Phaser</strong></td>
+<td>Cross-platform</td>
+<td>- Otevřený zdrojový kód<br>- Dobré pro 2D hry<br>- JavaScript skriptování<br>- Velká komunita</td>
+<td>- Omezené 3D schopnosti<br>- Problémy s výkonem u velkých projektů<br>- Omezený obchod s aktivy</td>
+</tr>
+</tbody>
+</table>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">CI & CD</span></summary>
+<table>
+<thead>
+<tr>
+<th>Nástroj/Framework</th>
+<th>Platformy</th>
+<th>Výhody</th>
+<th>Nevýhody</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Jenkins</strong></td>
+<td>Cross-platform</td>
+<td>- Otevřený zdrojový kód<br>- Velká komunita<br>- Široká podpora pluginů<br>- Flexibilní a rozšiřitelný</td>
+<td>- Složitější nastavení<br>- Vyšší nároky na systémové prostředky<br>- Strmá křivka učení</td>
+</tr>
+<tr>
+<td><strong>GitLab CI/CD</strong></td>
+<td>Cross-platform</td>
+<td>- Integrované s GitLab<br>- Snadné použití<br>- Silná podpora komunity<br>- Široká podpora pro různé platformy</td>
+<td>- Omezené možnosti mimo GitLab<br>- Vyšší nároky na systémové prostředky<br>- Složitější konfigurace pro pokročilé scénáře</td>
+</tr>
+<tr>
+<td><strong>CircleCI</strong></td>
+<td>Cross-platform</td>
+<td>- Snadné použití<br>- Rychlé buildy<br>- Silná podpora pro Docker<br>- Integrace s GitHub a Bitbucket</td>
+<td>- Omezené možnosti pro self-hosting<br>- Vyšší náklady pro větší týmy<br>- Omezená podpora pro některé platformy</td>
+</tr>
+<tr>
+<td><strong>Travis CI</strong></td>
+<td>Cross-platform</td>
+<td>- Snadné použití<br>- Integrace s GitHub<br>- Podpora více jazyků<br>- Bezplatné pro open-source projekty</td>
+<td>- Omezené možnosti pro self-hosting<br>- Vyšší náklady pro větší týmy<br>- Omezená podpora pro některé platformy</td>
+</tr>
+<tr>
+<td><strong>Azure DevOps</strong></td>
+<td>Cross-platform</td>
+<td>- Silná podpora Microsoftu<br>- Integrace s Azure ekosystémem<br>- Široká podpora pro různé platformy<br>- Silné bezpečnostní funkce</td>
+<td>- Složitější nastavení<br>- Vyšší náklady pro větší týmy<br>- Strmá křivka učení</td>
+</tr>
+<tr>
+<td><strong>GitHub Actions</strong></td>
+<td>Cross-platform</td>
+<td>- Integrované s GitHub<br>- Snadné použití<br>- Široká podpora pro různé platformy<br>- Silná podpora komunity</td>
+<td>- Omezené možnosti mimo GitHub<br>- Vyšší náklady pro větší týmy<br>- Složitější konfigurace pro pokročilé scénáře</td>
+</tr>
+<tr>
+<td><strong>Bamboo</strong></td>
+<td>Cross-platform</td>
+<td>- Silná podpora Atlassian<br>- Integrace s Jira<br>- Široká podpora pro různé platformy<br>- Flexibilní a rozšiřitelný</td>
+<td>- Vyšší náklady pro větší týmy<br>- Složitější nastavení<br>- Strmá křivka učení</td>
+</tr>
+<tr>
+<td><strong>TeamCity</strong></td>
+<td>Cross-platform</td>
+<td>- Silná podpora JetBrains<br>- Široká podpora pro různé platformy<br>- Flexibilní a rozšiřitelný<br>- Silné bezpečnostní funkce</td>
+<td>- Vyšší náklady pro větší týmy<br>- Složitější nastavení<br>- Strmá křivka učení</td>
+</tr>
+<tr>
+<td><strong>Bitbucket Pipelines</strong></td>
+<td>Cross-platform</td>
+<td>- Integrované s Bitbucket<br>- Snadné použití<br>- Široká podpora pro různé platformy<br>- Silná podpora komunity</td>
+<td>- Omezené možnosti mimo Bitbucket<br>- Vyšší náklady pro větší týmy<br>- Složitější konfigurace pro pokročilé scénáře</td>
+</tr>
+<tr>
+<td><strong>Spinnaker</strong></td>
+<td>Cross-platform</td>
+<td>- Silná podpora pro multi-cloud<br>- Flexibilní a rozšiřitelný<br>- Silná podpora komunity<br>- Široká podpora pro různé platformy</td>
+<td>- Složitější nastavení<br>- Vyšší nároky na systémové prostředky<br>- Strmá křivka učení</td>
+</tr>
+</tbody>
+</table>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Testování</span></summary>
+<table>
+<thead>
+<tr>
+<th>Nástroj/Framework</th>
+<th>Platformy</th>
+<th>Výhody</th>
+<th>Nevýhody</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Selenium</strong></td>
+<td>Cross-platform</td>
+<td>- Otevřený zdrojový kód<br>- Podpora více prohlížečů<br>- Velká komunita<br>- Flexibilní a rozšiřitelný</td>
+<td>- Složitější nastavení<br>- Vyšší nároky na systémové prostředky<br>- Strmá křivka učení</td>
+</tr>
+<tr>
+<td><strong>JUnit</strong></td>
+<td>Cross-platform</td>
+<td>- Otevřený zdrojový kód<br>- Integrace s Java ekosystémem<br>- Snadné použití<br>- Velká komunita</td>
+<td>- Omezené možnosti pro ne-Java projekty<br>- Omezené vestavěné funkce<br>- Vyžaduje další knihovny pro plnou funkčnost</td>
+</tr>
+<tr>
+<td><strong>TestNG</strong></td>
+<td>Cross-platform</td>
+<td>- Otevřený zdrojový kód<br>- Flexibilní a rozšiřitelný<br>- Podpora paralelního testování<br>- Integrace s Java ekosystémem</td>
+<td>- Složitější nastavení<br>- Vyšší nároky na systémové prostředky<br>- Strmá křivka učení</td>
+</tr>
+<tr>
+<td><strong>Cypress</strong></td>
+<td>Cross-platform</td>
+<td>- Snadné použití<br>- Rychlé testování<br>- Silná podpora pro JavaScript<br>- Bohatá sada funkcí</td>
+<td>- Omezené možnosti pro ne-JavaScript projekty<br>- Vyšší nároky na systémové prostředky<br>- Omezená podpora pro některé prohlížeče</td>
+</tr>
+<tr>
+<td><strong>Mocha</strong></td>
+<td>Cross-platform</td>
+<td>- Snadné použití<br>- Flexibilní a rozšiřitelný<br>- Silná podpora pro JavaScript<br>- Integrace s Node.js ekosystémem</td>
+<td>- Omezené vestavěné funkce<br>- Vyžaduje další knihovny pro plnou funkčnost<br>- Omezená podpora pro některé prohlížeče</td>
+</tr>
+<tr>
+<td><strong>Jest</strong></td>
+<td>Cross-platform</td>
+<td>- Snadné použití<br>- Rychlé testování<br>- Silná podpora pro JavaScript<br>- Bohatá sada funkcí</td>
+<td>- Omezené možnosti pro ne-JavaScript projekty<br>- Vyšší nároky na systémové prostředky<br>- Omezená podpora pro některé prohlížeče</td>
+</tr>
+<tr>
+<td><strong>PyTest</strong></td>
+<td>Cross-platform</td>
+<td>- Otevřený zdrojový kód<br>- Snadné použití<br>- Silná podpora pro Python<br>- Flexibilní a rozšiřitelný</td>
+<td>- Omezené možnosti pro ne-Python projekty<br>- Vyšší nároky na systémové prostředky<br>- Strmá křivka učení</td>
+</tr>
+<tr>
+<td><strong>Robot Framework</strong></td>
+<td>Cross-platform</td>
+<td>- Otevřený zdrojový kód<br>- Snadné použití<br>- Podpora více jazyků<br>- Flexibilní a rozšiřitelný</td>
+<td>- Složitější nastavení<br>- Vyšší nároky na systémové prostředky<br>- Strmá křivka učení</td>
+</tr>
+<tr>
+<td><strong>Karma</strong></td>
+<td>Cross-platform</td>
+<td>- Snadné použití<br>- Rychlé testování<br>- Silná podpora pro JavaScript<br>- Integrace s Angular ekosystémem</td>
+<td>- Omezené možnosti pro ne-JavaScript projekty<br>- Vyšší nároky na systémové prostředky<br>- Omezená podpora pro některé prohlížeče</td>
+</tr>
+<tr>
+<td><strong>NUnit</strong></td>
+<td>Cross-platform</td>
+<td>- Otevřený zdrojový kód<br>- Integrace s .NET ekosystémem<br>- Snadné použití<br>- Velká komunita</td>
+<td>- Omezené možnosti pro ne-.NET projekty<br>- Omezené vestavěné funkce<br>- Vyžaduje další knihovny pro plnou funkčnost</td>
+</tr>
+</tbody>
+</table>
+</details>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HopefulDavid/Docs_Developer/blob/main/programming/index.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
