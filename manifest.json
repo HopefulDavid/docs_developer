@@ -246,6 +246,16 @@
       "version": ""
     },
     {
+      "type": "Conceptual",
+      "source_relative_path": "ide/visualStudio.md",
+      "output": {
+        ".html": {
+          "relative_path": "ide/visualStudio.html"
+        }
+      },
+      "version": ""
+    },
+    {
       "type": "Resource",
       "source_relative_path": "images/0qjIRo5xxb.png",
       "output": {

@@ -84,10 +84,15 @@
     "title": "| Vývojář",
     "keywords": "Klávesové zkratky Parametry metody Informace o parametrech metody Ctrl + Shift + Space Procházení seznamu Vpřed Ctrl + Shift + Space Zpět Ctrl + Shift + P XML komentáře - zalomení řádku Použijte: <para>&#160;</para> Warning <para></para> a <br/> nefungují pro zalomení řádku Příklad použití: /// <summary> /// This sentence shows up when the type is hovered /// <para>&#160;</para> /// <para>int PrimaryKey</para> /// <para>&#160;</para> /// <para>virtual Relation Relation</para> /// </summary> Pro více informací: XML zalomení komentáře"
   },
+  "ide/visualStudio.html": {
+    "href": "ide/visualStudio.html",
+    "title": "| Vývojář",
+    "keywords": "Visual Studio Stažení instalátoru pro offline použití Stáhněte si instalátor Visual Studio Community z oficiálních stránek. Přesuňte se do složky, kde je uložen instalační program (např. vs_community.exe). Otevřete příkazový řádek a spusťte následující příkaz: vs_community.exe --layout C:\\visualstudio_offline --lang cs-CZ en-US --all --layout určuje složku, kam se mají stáhnout všechny potřebné soubory. --lang určuje jazyky, které se mají stáhnout. (V tomto případě se stáhnou jazyky čeština a angličtina.) --all zajistí, že se stáhnou všechny dostupné komponenty, včetně volitelných modulů a specifických nástrojů. Note Po dokončení stahování se vytvoří složka visualstudio_offline s kompletními instalačními soubory."
+  },
   "index.html": {
     "href": "index.html",
     "title": "| Vývojář",
-    "keywords": "Changelog 2024-12-13 ✨ Add Flutter mobile development documentation. \uD83C\uDFA8 Rearrange table of contents for clarity Alphabeticaly. 2024-12-12 ✨ Add programming frameworks overview in documentation. \uD83D\uDD27 update changelog 2024-12-05 \uD83D\uDD28 improve clarity and error handling in scripts Initialize changelog \uD83D\uDD27 Remove index.md for changelog generation before generating the new changelog. \uD83D\uDD27 update changelog \uD83D\uDD27 update changelog \uD83D\uDD27 update changelog"
+    "keywords": "Changelog 2024-12-13 ✨ Add Flutter mobile development documentation. ✨ Add instructions for downloading the Visual Studio installer for offline use. \uD83C\uDFA8 Rearrange table of contents for clarity Alphabeticaly. \uD83D\uDD27 update changelog 2024-12-12 ✨ Add programming frameworks overview in documentation. \uD83D\uDD27 update changelog 2024-12-05 \uD83D\uDD28 improve clarity and error handling in scripts Initialize changelog \uD83D\uDD27 Remove index.md for changelog generation before generating the new changelog. \uD83D\uDD27 update changelog \uD83D\uDD27 update changelog \uD83D\uDD27 update changelog"
   },
   "network/ssh.html": {
     "href": "network/ssh.html",
