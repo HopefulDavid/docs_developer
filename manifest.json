@@ -357,6 +357,26 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/5d7ee05eacb549d5ada6e1edef7a2e59.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/5d7ee05eacb549d5ada6e1edef7a2e59.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/77fb408804c94851a06078aae17e694f.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/77fb408804c94851a06078aae17e694f.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/A2q5GRgncw.png",
       "output": {
         "resource": {
@@ -767,6 +787,16 @@
       "output": {
         ".html": {
           "relative_path": "programming/javascript.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/mobile/flutter.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/mobile/flutter.html"
         }
       },
       "version": ""
