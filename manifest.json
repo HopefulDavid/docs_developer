@@ -284,6 +284,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/737ee01108d04cb9b0ebcfac84835eda.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/737ee01108d04cb9b0ebcfac84835eda.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/77fb408804c94851a06078aae17e694f.png",
       "output": {
         "resource": {

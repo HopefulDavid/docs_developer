@@ -86,28 +86,89 @@
 
         <article data-uid="">
 
-<h2 id="klávesové-zkratky">Klávesové zkratky</h2>
+<h4 id="propojení-s-mobilním-zařízením">Propojení s mobilním zařízením</h4>
 <details>
-<summary><span style="color:#1E90FF;">Parametry metody</span></summary>
+<summary><span style="color:#1E90FF;">Android</span></summary>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Týká se těch, co mají CPU procesor od AMD</p>
+<p>Otevřít <code>BIOS</code> a najít konfiguraci pro CPU (advance settings) a změnit <code>SVM</code> na <code>Enabled</code></p>
+</div>
+<ol>
+<li><p>Než začneme nastavovat Android SDK</p>
+ <img src="../images/737ee01108d04cb9b0ebcfac84835eda.png">
+<p>Umožňuje spravovat SDK uvnitř IDE a umožní následně i propojení s <code>Android Studio</code></p>
+</li>
+<li><p>Nastavit Android SDK</p>
+<p>Uvnitř JetBrains IDE otevřete: <code>File</code> -&gt; <code>Project Structure</code> -&gt; <code>SDKs</code> -&gt; <code>Project</code> a zde nastavíte SDK pro Android</p>
+<div class="TIP">
+<h5>Tip</h5>
+<p>SDK pro android můžete stáhnout otevřením: <code>Android Studio</code> -&gt; <code>More Actions</code> -&gt; <code>SDK Manager</code></p>
+</div>
+</li>
+<li><p>Ověřte, že máte nainstalované základní komponenty pro práci v Androidu</p>
+<p>V sekci <code>SDK Tools</code> by měly být nainstalovány následující komponenty:</p>
+<table>
+<thead>
+<tr>
+<th>Komponenta</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Android SDK Built-Tools</code></td>
+<td>Nástroje pro sestavení Android aplikací.</td>
+</tr>
+<tr>
+<td><code>Android SDK Command-Line Tools</code></td>
+<td>Příkazové nástroje pro správu Android SDK.</td>
+</tr>
+<tr>
+<td><code>Android Emulator</code></td>
+<td>Emulátor pro testování Android aplikací na různých zařízeních.</td>
+</tr>
+<tr>
+<td><code>Android Emulator hypervisor driver</code></td>
+<td>Ovladač pro zlepšení výkonu emulátoru na počítačích s Intel a AMD procesory.</td>
+</tr>
+<tr>
+<td><code>Android SDK Platform-Tools</code></td>
+<td>Nástroje pro komunikaci s Android zařízeními, jako je <code>adb</code>.</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><p>Nastavení AVD</p>
+<p>= AVD (Android Virtual Device) je emulátor, který umožňuje spouštět aplikace na různých zařízeních</p>
+<p>Přidat do proměnné prostředí: <code>C:\Users\&lt;YourUsername&gt;\AppData\Local\Android\Sdk\platform-tools</code></p>
+<p>ADB (Android Debug Bridge) je nástroj, který umožňuje komunikaci mezi počítačem a Android zařízením</p>
 <ul>
-<li><p>Informace o parametrech metody</p>
-<p><code>Ctrl</code> + <code>Shift</code> + <code>Space</code></p>
+<li><p>Nyní zkontrolujte, zda je emulátor správně nastavený</p>
+  <details>
+  <summary><span style="color:#E95A84;">Zkontrolovat status emulátorů</span></summary>
+<pre><code class="lang-bash">adb devices
+</code></pre>
+  </details>
+  <details>
+  <summary><span style="color:#E95A84;">Restart ADB služby (v případě potřeby)</span></summary>
+<pre><code class="lang-bash">adb kill-server
+adb start-server
+</code></pre>
+  </details>    
 </li>
 </ul>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">Procházení seznamu</span></summary>
-<ul>
-<li><p>Vpřed</p>
-<p><code>Ctrl</code> + <code>Shift</code> + <code>Space</code></p>
 </li>
-<li><p>Zpět</p>
-<p><code>Ctrl</code> + <code>Shift</code> + <code>P</code></p>
+<li><p>Propojení s mobilním zařízením</p>
+<p>Otevřít <code>Android Studio</code> -&gt; <code>More Actions</code> -&gt; <code>Virtual Device Manager</code></p>
+<p>Vytvořit nové virtuální zařízení a spustit</p>
+<p>Vybrat zařízení v JetBrains IDE, na kterém chcete aplikaci spustit a aplikaci spustit</p>
 </li>
-</ul>
+</ol>
 </details>
+<h4 id="xml-komentáře">XML komentáře</h4>
 <details>
-<summary><span style="color:#1E90FF;">XML komentáře - zalomení řádku</span></summary>
+<summary><span style="color:#1E90FF;">Zalomení řádku</span></summary>
 <ul>
 <li><p>Použijte:</p>
 <p><strong><code>&lt;para&gt;&amp;#160;&lt;/para&gt;</code></strong></p>
@@ -126,6 +187,26 @@
 </code></pre>
 <p>Pro více
 informací: <a href="https://stackoverflow.com/questions/7279108/how-to-add-a-line-break-in-c-sharp-net-documentation">XML zalomení komentáře</a></p>
+</li>
+</ul>
+</details>
+<h4 id="klávesové-zkratky">Klávesové zkratky</h4>
+<details>
+<summary><span style="color:#1E90FF;">Parametry metody</span></summary>
+<ul>
+<li><p>Informace o parametrech metody</p>
+<p><code>Ctrl</code> + <code>Shift</code> + <code>Space</code></p>
+</li>
+</ul>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Procházení seznamu</span></summary>
+<ul>
+<li><p>Vpřed</p>
+<p><code>Ctrl</code> + <code>Shift</code> + <code>Space</code></p>
+</li>
+<li><p>Zpět</p>
+<p><code>Ctrl</code> + <code>Shift</code> + <code>P</code></p>
 </li>
 </ul>
 </details>
