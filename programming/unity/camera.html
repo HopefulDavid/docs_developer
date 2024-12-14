@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/Docs_Developer/blob/main/gaming/unity/scriptableObject.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/Docs_Developer/blob/main/programming/unity/camera.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -86,21 +86,60 @@
 
         <article data-uid="">
 
-<h2 id="skriptovatelné-objekty">Skriptovatelné Objekty</h2>
-<p>Nemusí se vytvářet ve scéně, jsou namísto toho vytvořeny již v projektu.</p>
+<h2 id="kamera">Kamera</h2>
 <div class="IMPORTANT">
 <h5>Important</h5>
-<p>ScriptableObjects se po zavření a opětovném otevření hry obnoví na výchozí hodnoty.</p>
+<p>Pro 2D hry musí být přidána komponenta &quot;Pixel Perfect Camera&quot;, která zabrání deformacím, trhání obrazu atd..</p>
 </div>
 <details>
-<summary><span style="color:#1E90FF;">Singleton</span></summary>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/O7ziNEzanWI?si=oymyfqzq4v0hDHn6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
- </details>
+<summary><span style="color:#1E90FF;">Ortografická Kamera</span></summary>
+<ul>
+<li><p>Zobrazení:</p>
+<p>Objektivní (bez perspektivního zkreslení).</p>
+</li>
+<li><p>Velikost objektů:</p>
+<p>Všechny objekty vypadají stejně velké bez ohledu na jejich vzdálenost od kamery.</p>
+</li>
+<li><p>Použití:</p>
+<p>Ideální pro 2D hry, izometrické zobrazení, architektonické vizualizace.</p>
+</li>
+<li><p>Nastavení:</p>
+<p>Používá Orthographic Size k určení velikosti záběru kamery.</p>
+</li>
+<li><p>Zobrazení linie:</p>
+<p>Rovnoběžné linie zůstávají rovnoběžné.</p>
+</li>
+</ul>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Perspektivní Kamera</span></summary>
+<ul>
+<li><p>Zobrazení:</p>
+<p>Simuluje reálnou perspektivu (s perspektivním zkreslením).</p>
+</li>
+<li><p>Velikost objektů:</p>
+<p>Objekty se jeví menší, jak se vzdálí od kamery.</p>
+</li>
+<li><p>Použití:</p>
+<p>Vhodné pro 3D hry, kde je důležitý realistický pocit hloubky.</p>
+</li>
+<li><p>Nastavení:</p>
+<p>Používá Field of View (FOV) k určení šířky záběru kamery.</p>
+</li>
+<li><p>Zobrazení linie:</p>
+<p>Rovnoběžné linie se sbíhají do jednoho bodu (vanishing point).</p>
+</li>
+</ul>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Novinky</span></summary>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/OL0bLrb8DV4?si=cYRtPAg8tjvLExw6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</details>
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/HopefulDavid/Docs_Developer/blob/main/gaming/unity/scriptableObject.md/#L1" class="edit-link">Edit this page</a>
+          <a href="https://github.com/HopefulDavid/Docs_Developer/blob/main/programming/unity/camera.md/#L1" class="edit-link">Edit this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>

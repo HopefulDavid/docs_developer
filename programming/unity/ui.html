@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/Docs_Developer/blob/main/gaming/unity/animation.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/Docs_Developer/blob/main/programming/unity/ui.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -86,25 +86,50 @@
 
         <article data-uid="">
 
-<h2 id="umotion">UMotion</h2>
+<h2 id="ui">UI</h2>
+<p>Původní systém pro vytváření uživatelského rozhraní v Unity.</p>
 <details>
-<summary><span style="color:#1E90FF;">Uložení změn</span></summary>
-<p>Existuje několik způsobů (můžete použít kterýkoli z těchto 3):</p>
+<summary><span style="color:#1E90FF;">Tlačítko (Button)</span></summary>
+<details>
+<summary><span style="color:#E95A84;">Rozsah detekce kliknutí (dle průhlednosti obrázku)</span></summary>
+<p><code>alphaHitTestMinimumThreshold</code> je používána u komponenty <code>Image</code></p>
+<p>Určuje minimální prahovou hodnotu alfa (průhlednosti), při které bude kliknutí na tento obrázek zaregistrováno.</p>
+<p>Nabývá rozsah hodnoty (0 až 1)</p>
 <ul>
-<li><p>Pomocí &quot;Key Selected&quot; vytvořte/upravte klíče pro vybrané kosti/transformace</p>
+<li><p>Hodnota <code>0</code> znamená, že kliknutí bude zaregistrováno i na úplně průhledných částech obrázku.</p>
 </li>
-<li><p>Povolte &quot;Auto Key&quot;, aby UMotion automaticky vytvořil klíče/upravil klíče</p>
-</li>
-<li><p>Použijte &quot;Key Dialog&quot; pro získání pěkného přehledu o tom, co jste změnili a co by mělo být klíčováno</p>
-<p><img src="../../images/WHDIpG6Uzg.png" alt=""></p>
+<li><p>Hodnota <code>1</code> znamená, že kliknutí bude zaregistrováno pouze na zcela neprůhledných částech obrázku.</p>
 </li>
 </ul>
+<p>Například, pokud nastavíme <code>alphaHitTestMinimumThreshold</code> na <code>0.5</code>, kliknutí bude zaregistrováno pouze na částech
+obrázku, které mají alfa hodnotu alespoň 0.5 (tedy nejsou příliš průhledné).</p>
+<p>Příklad použití:</p>
+<pre><code class="lang-c#">using UnityEngine;
+using System.Collections;
+using UnityEngine.UI; // Required when Using UI elements.
+
+public class ExampleClass : MonoBehaviour
+{
+    public Image theButton;
+
+    // Use this for initialization
+    void Start()
+    {
+        theButton.alphaHitTestMinimumThreshold = 0.5f;
+    }
+}
+</code></pre>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Lze použít například při tvorbě kruhového tlačítka.</p>
+</div>
+</details>
 </details>
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/HopefulDavid/Docs_Developer/blob/main/gaming/unity/animation.md/#L1" class="edit-link">Edit this page</a>
+          <a href="https://github.com/HopefulDavid/Docs_Developer/blob/main/programming/unity/ui.md/#L1" class="edit-link">Edit this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>

@@ -97,109 +97,6 @@
       "version": ""
     },
     {
-      "type": "Toc",
-      "source_relative_path": "gaming/toc.yml",
-      "output": {
-        ".json": {
-          "relative_path": "gaming/toc.json"
-        },
-        ".html": {
-          "relative_path": "gaming/toc.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "gaming/unity.md",
-      "output": {
-        ".html": {
-          "relative_path": "gaming/unity.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "gaming/unity/2d.md",
-      "output": {
-        ".html": {
-          "relative_path": "gaming/unity/2d.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "gaming/unity/animation.md",
-      "output": {
-        ".html": {
-          "relative_path": "gaming/unity/animation.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "gaming/unity/camera.md",
-      "output": {
-        ".html": {
-          "relative_path": "gaming/unity/camera.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "gaming/unity/navigation.md",
-      "output": {
-        ".html": {
-          "relative_path": "gaming/unity/navigation.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "gaming/unity/renderer.md",
-      "output": {
-        ".html": {
-          "relative_path": "gaming/unity/renderer.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "gaming/unity/scriptableObject.md",
-      "output": {
-        ".html": {
-          "relative_path": "gaming/unity/scriptableObject.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "gaming/unity/ui.md",
-      "output": {
-        ".html": {
-          "relative_path": "gaming/unity/ui.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "gaming/unity/uiToolkit.md",
-      "output": {
-        ".html": {
-          "relative_path": "gaming/unity/uiToolkit.html"
-        }
-      },
-      "version": ""
-    },
-    {
       "type": "Conceptual",
       "source_relative_path": "graphics/affinity.md",
       "output": {
@@ -218,6 +115,16 @@
         },
         ".html": {
           "relative_path": "graphics/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "ide/components.md",
+      "output": {
+        ".html": {
+          "relative_path": "ide/components.html"
         }
       },
       "version": ""
@@ -481,6 +388,16 @@
       "output": {
         "resource": {
           "relative_path": "images/dockerKeepDataOnLocal.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/lkjf3DXNjN.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/lkjf3DXNjN.png"
         }
       },
       "version": ""
@@ -950,6 +867,96 @@
         },
         ".html": {
           "relative_path": "programming/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/unity.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/unity.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/unity/2d.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/unity/2d.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/unity/animation.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/unity/animation.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/unity/camera.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/unity/camera.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/unity/navigation.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/unity/navigation.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/unity/renderer.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/unity/renderer.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/unity/scriptableObject.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/unity/scriptableObject.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/unity/ui.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/unity/ui.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/unity/uiToolkit.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/unity/uiToolkit.html"
         }
       },
       "version": ""

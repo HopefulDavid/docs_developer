@@ -103,15 +103,25 @@
 </div>
 </li>
 </ul>
-<h2 id="collections">Collections</h2>
-<ul>
-<li><p>Data jsou organizována do <strong><code>collections</code></strong></p>
+<h2 id="klíčové-pojmy">Klíčové pojmy</h2>
+<details>
+<summary><span style="color:#1E90FF;">Dokumenty</span></summary>
+<p>Záznamy v MongoDB.</p>
 <div class="NOTE">
 <h5>Note</h5>
-<p>Jsou ekvivalentem tabulek v SQL.</p>
+<p>Každý dokument je struktura dat podobná JSON.</p>
+</div>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Kolekce</span></summary>
+<ul>
+<li><p>Data jsou organizována do <strong><code>kolekce</code></strong></p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Jsou to ekvivalenty tabulek v SQL.</p>
 </div>
 </li>
-<li><p>Každá tato kolekce obsahuje <strong><code>documents</code></strong>, což jsou jednotlivé záznamy dat.</p>
+<li><p>Každá kolekce obsahuje <strong><code>dokumenty</code></strong>, což jsou jednotlivé záznamy dat.</p>
 <div class="NOTE">
 <h5>Note</h5>
 <p>Na rozdíl od řádků v tabulce SQL nemusí mít dokumenty v MongoDB stejnou strukturu.</p>
@@ -126,22 +136,6 @@ db.myPeople.insert(document2);
 </div>
 </li>
 </ul>
-<h2 id="klíčové-pojmy">Klíčové pojmy</h2>
-<details>
-<summary><span style="color:#1E90FF;">Dokumenty</span></summary>
-<p>Záznamy v MongoDB.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Každý dokument je struktura dat podobná JSON.</p>
-</div>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">Kolekce</span></summary>
-<p>Skupiny dokumentů.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Jsou to ekvivalenty tabulek v SQL.</p>
-</div>
 </details>
 <details>
 <summary><span style="color:#1E90FF;">BSON</span></summary>
@@ -307,7 +301,8 @@ dotazů, které vyžadují řazení</p>
 </code></pre>
 </details>
 <h2 id="rady-a-tipy">Rady a Tipy</h2>
-<h3 id="povolení-autorizace">Povolení autorizace</h3>
+<details>
+<summary><span style="color:#1E90FF;">Povolení autorizace</span></summary>
 <ul>
 <li><p>MongoDB má vestavěný systém pro správu uživatelů a rolí.</p>
 <p>Pro povolení autorizace upravte konfigurační soubor MongoDB a nastavte <code>security.authorization</code> na <code>enabled</code>.</p>
@@ -316,7 +311,9 @@ dotazů, které vyžadují řazení</p>
 </code></pre>
 </li>
 </ul>
-<h3 id="využití-indexů">Využití indexů</h3>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Využití indexů</span></summary>
 <ul>
 <li><p>Indexy v MongoDB vytváříte pomocí metody <code>createIndex()</code>.</p>
 <p>Například pro vytvoření vzestupného indexu na pole <code>name</code> v kolekci <code>mycollection</code> použijete následující příkaz:</p>
@@ -324,7 +321,9 @@ dotazů, které vyžadují řazení</p>
 </code></pre>
 </li>
 </ul>
-<h3 id="optimalizace-dotazů">Optimalizace dotazů</h3>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Optimalizace dotazů</span></summary>
 <ul>
 <li><p>MongoDB poskytuje operátor <code>explain()</code>, který vám umožní zjistit, jak databáze vykonává váš dotaz.</p>
 <p>Tímto způsobem můžete identifikovat, které části dotazu je třeba optimalizovat.</p>
@@ -332,30 +331,39 @@ dotazů, které vyžadují řazení</p>
 </code></pre>
 </li>
 </ul>
-<h3 id="správné-modelování-dat">Správné modelování dat</h3>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Správné modelování dat</span></summary>
 <ul>
 <li><p>MongoDB je dokumentová databáze, která umožňuje velmi flexibilní modelování dat.</p>
 <p>Při návrhu vašeho datového modelu zvažte, jak budou data dotazována a jaké budou pracovní zátěže.</p>
 </li>
 </ul>
-<h3 id="škálování">Škálování</h3>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Škálování</span></summary>
 <ul>
 <li><p>MongoDB podporuje horizontální škálování pomocí replikačních sad a sharding.</p>
 <p>Pro větší aplikace zvažte použití těchto funkcí pro zlepšení výkonu a dostupnosti.</p>
 </li>
 </ul>
-<h3 id="paměť">Paměť</h3>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Paměť</span></summary>
 <ul>
 <li><p>MongoDB využívá paměť pro ukládání pracovní sady, což zlepšuje výkon dotazů.</p>
 <p>Ujistěte se, že váš server má dostatek RAM pro vaše pracovní zátěže.</p>
 </li>
 </ul>
-<h3 id="šetření-prostředky">Šetření prostředky</h3>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Šetření prostředky</span></summary>
 <ul>
 <li><p>Pokud máte dotazy, které se často opakují, zvažte ukládání výsledků těchto dotazů pro pozdější použití.</p>
 <p>To může šetřit výpočetní prostředky a zlepšit výkon vaší aplikace.</p>
 </li>
 </ul>
+</details>
 
 </article>
 

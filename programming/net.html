@@ -86,8 +86,9 @@
 
         <article data-uid="">
 
-<h2 id="modifikátory-přístupu">Modifikátory přístupu</h2>
-<p>Určuje přistup k danému prvku.</p>
+<details>
+<summary><span style="color:#1E90FF;">Modifikátory přístupu</span></summary>
+<p>Určuje přístup k danému prvku.</p>
 <table>
 <thead>
 <tr>
@@ -165,7 +166,9 @@
 </tbody>
 </table>
 <p>Více podrobností <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/access-modifiers#summary-table">zde</a>.</p>
-<h2 id="složka-runtimes-a-multiplatformní-nasazení">Složka 'runtimes' a multiplatformní nasazení</h2>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Složka 'runtimes' a multiplatformní nasazení</span></summary>
 <p>Slouží k ukládání <strong>platformově specifických knihoven a binárních souborů</strong>, které jsou nezbytné pro správné spuštění aplikace na různých operačních systémech a architekturách.</p>
 <p>Používá se v aplikacích:</p>
 <ul>
@@ -235,7 +238,9 @@ Runtime Identifiers (RID) jsou klíčovou součástí procesu nasazení, protož
       &lt;SelfContained&gt;false&lt;/SelfContained&gt;
   &lt;/PropertyGroup&gt;
 </code></pre>
-<h2 id="uvolnění-zdrojů">Uvolnění zdrojů</h2>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Uvolnění zdrojů</span></summary>
 <ul>
 <li><p><strong>Řízené zdroje</strong></p>
 <p>= Objekty, které jsou spravovány garbage collectorem.</p>
@@ -290,7 +295,9 @@ Runtime Identifiers (RID) jsou klíčovou součástí procesu nasazení, protož
 <li><p>Metoda <code>Dispose</code> je určena pro uvolnění jak řízených, tak neřízených zdrojů.</p>
 </li>
 </ul>
-<h2 id="volání-funkcí-z-externích-dll">Volání funkcí z externích DLL</h2>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Volání funkcí z externích DLL</span></summary>
 <div class="NOTE">
 <h5>Note</h5>
 <p><strong>Platform Invocation Services (PInvoke)</strong> se používá pro volání knihoven z nativního kódu.</p>
@@ -307,7 +314,7 @@ Runtime Identifiers (RID) jsou klíčovou součástí procesu nasazení, protož
 <p><strong>Importování funkce z DLL</strong></p>
 <p>Atribut <strong><code>DllImport</code></strong> z <code>System.Runtime.InteropServices</code> k importování funkce z DLL.</p>
 <p>Například:</p>
-<pre><code class="lang-c#">using System.Runtime.InteropServices;
+<pre><code class="lang-csharp">using System.Runtime.InteropServices;
 
 public class MyProgram
 {
@@ -356,36 +363,11 @@ extern &quot;C&quot; __declspec(dllexport) int MessageBox(HWND h, LPCSTR m, LPCS
 <li><p><strong><code>LPCTSTR</code></strong></p>
 <p>&quot;Long Pointer Constant String&quot;</p>
 <blockquote>
-<table>
-<thead>
-<tr>
-<th>Item</th>
-<th>8-bitů (Ansi)</th>
-<th>16-bitů (Wide)</th>
-<th>Různé</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>character</td>
-<td>CHAR</td>
-<td>WCHAR</td>
-<td>TCHAR</td>
-</tr>
-<tr>
-<td>string</td>
-<td>LPSTR</td>
-<td>LPWSTR</td>
-<td>LPTSTR</td>
-</tr>
-<tr>
-<td>string (const)</td>
-<td>LPCSTR</td>
-<td>LPCWSTR</td>
-<td>LPCTSTR</td>
-</tr>
-</tbody>
-</table>
+<p>| Item           | 8-bitů (Ansi) | 16-bitů (Wide) | Různé   |
+&gt; |----------------|---------------|----------------|---------|
+| character      | CHAR          | WCHAR          | TCHAR   |
+| string         | LPSTR         | LPWSTR         | LPTSTR  |
+| string (const) | LPCSTR        | LPCWSTR        | LPCTSTR |</p>
 <p>Odkaz <a href="https://stackoverflow.com/questions/321413/lpcstr-lpctstr-and-lptstr"> zde</a></p>
 </blockquote>
 </li>
@@ -393,7 +375,7 @@ extern &quot;C&quot; __declspec(dllexport) int MessageBox(HWND h, LPCSTR m, LPCS
 </li>
 <li>
 <p><strong>Volání importované funkce</strong></p>
-<pre><code class="lang-c#">public class MyProgram
+<pre><code class="lang-csharp">public class MyProgram
 {
     public static void Main()
     {
@@ -414,31 +396,39 @@ extern &quot;C&quot; __declspec(dllexport) int MessageBox(HWND h, LPCSTR m, LPCS
 <h5>Tip</h5>
 <p>Hledá tedy v samotné aplikaci, pokud je to nativní kód, nebo v jedné z knihoven, na které aplikace odkazuje.</p>
 <ul>
-<li><p>Příklad použití v C#:</p>
-<pre><code class="lang-c++">public class MyProgram
+<li><p>Příklad použití v C#:
+&gt;
+&gt;       ```csharp
+public class MyProgram
 {
-    [DllImport(&quot;__Internal&quot;)]
-    public static extern int MyFunction();
-
-    public static void Main()
-    {
-        MyFunction();
-    }
-}
+[DllImport(&quot;__Internal&quot;)]
+public static extern int MyFunction();</p>
+<pre><code>  public static void Main()
+  {
+      MyFunction();
+  }
+</code></pre>
+<p>}</p>
+<pre><code>
 </code></pre>
 </li>
-<li><p>Příklad definice v C++</p>
-<pre><code class="lang-c++">extern &quot;C&quot; __declspec(dllexport) int MyFunction()
+<li><p>Příklad definice v C++
+&gt;
+&gt;       ```c++
+extern &quot;C&quot; __declspec(dllexport) int MyFunction()
 {
-    // Implementace vaší funkce
-    return 0;
-}
-</code></pre>
-<p>V tomto příkladu <code>MyFunction</code> je funkce definovaná v nativním kódu.</p>
-<p>Je tedy součástí aplikace nebo jedné z jejích závislostí.</p>
+// Implementace vaší funkce
+return 0;
+}</p>
+<pre><code></code></pre>
 </li>
 </ul>
 </div>
+<pre><code>  &gt;
+  &gt;       V tomto příkladu `MyFunction` je funkce definovaná v nativním kódu.
+  &gt;
+  &gt;       Je tedy součástí aplikace nebo jedné z jejích závislostí.
+</code></pre>
 <h3 id="tipy">Tipy</h3>
 <ul>
 <li><p><code>PInvoke</code></p>
@@ -447,7 +437,7 @@ extern &quot;C&quot; __declspec(dllexport) int MessageBox(HWND h, LPCSTR m, LPCS
 <h5>Tip</h5>
 <p>To je obvykle používáno pro volání C API funkcí, které jsou definovány v DLL.</p>
 <p>Příklad:</p>
-<pre><code class="lang-c#">      private static class PInvoke
+<pre><code class="lang-csharp">      private static class PInvoke
       {
       #if UNITY_IOS || UNITY_TVOS
            private const string DllName = &quot;__Internal&quot;;
@@ -498,6 +488,7 @@ extern &quot;C&quot; __declspec(dllexport) int MessageBox(HWND h, LPCSTR m, LPCS
 <p>Více info <a href="https://github.com/lupidan/apple-signin-unity/blob/master/AppleAuth/AppleAuthManager.cs">zde</a>.</p>
 </li>
 </ul>
+</details>
 
 </article>
 
