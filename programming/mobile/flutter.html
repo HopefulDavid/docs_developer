@@ -162,6 +162,145 @@
 flutter run
 </code></pre>
 </details>
+<details>
+<summary><span style="color:#1E90FF;">Lokalizace (interní knihovna)</span></summary>
+<ol>
+<li><p>Přidání závislosti do souboru <code>pubspec.yaml</code>:</p>
+<p>Přidejte <code>flutter_localizations</code> viz. níže:</p>
+<pre><code class="lang-yaml">dependencies:
+#  Internal dependencies
+flutter:
+     sdk: flutter
+flutter_localizations:
+     sdk: flutter
+# External dependencies
+cupertino_icons: ^1.0.8
+flutter_svg: ^2.0.16
+</code></pre>
+</li>
+<li><p>Vytvořte lokalizační soubory</p>
+<ul>
+<li><p><code>lib/l10n/intl_en.arb</code>, příklad souboru pro anglické texty</p>
+<pre><code class="lang-json">    {
+      &quot;@@locale&quot;: &quot;en&quot;,
+      &quot;hello&quot;: &quot;Hello&quot;,
+      &quot;welcome&quot;: &quot;Welcome&quot;
+    }
+</code></pre>
+</li>
+<li><p><code>lib/l10n/intl_cs.arb</code>, příklad souboru pro české texty</p>
+<pre><code class="lang-json">{
+   &quot;@@locale&quot;: &quot;cs&quot;,
+   &quot;hello&quot;: &quot;Ahoj&quot;,
+   &quot;welcome&quot;: &quot;Vítejte&quot;
+}
+</code></pre>
+</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p><code>@@locale</code>, definuje jazykovou verzi překladu obsaženou v souboru <code>.arb</code>.</p>
+</div>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Pokud chcete nastavit výchozí lokalizační soubor bez nutnosti mít <code>intl_messages.arb</code>, musíte nastavit výchozí jazyk ve vašem Flutter kódu.</p>
+<pre><code class="lang-c++">// Material design for applications
+import 'package:flutter/material.dart';
+// Localization
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'generated/l10n.dart';
+	
+void main() {
+   runApp(MyApp());
+}
+	
+  class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+  		return MaterialApp(
+  			localizationsDelegates: [
+  				S.delegate,
+  				GlobalMaterialLocalizations.delegate,
+  				GlobalWidgetsLocalizations.delegate,
+  				GlobalCupertinoLocalizations.delegate,
+  		],
+  		supportedLocales: S.delegate.supportedLocales,
+  		locale: Locale('cs'), // Nastavení výchozího jazyka na češtinu
+  		home: MainPage(),
+  	);
+   }
+}
+</code></pre>
+</div>
+</li>
+<li><p>Vygenerovat potřebné lokalizační soubory</p>
+<p>Přidejte <code>intl_utils</code> do konfiguračního souboru (<code>pubspec.yaml</code>):</p>
+<pre><code class="lang-yaml"> dependencies:
+   #  Internal dependencies
+   flutter:
+ 	sdk: flutter
+   flutter_localizations:
+ 	sdk: flutter
+   # External dependencies
+   intl_utils: ^2.5.0
+   cupertino_icons: ^1.0.8
+   flutter_svg: ^2.0.16
+</code></pre>
+<p>Spusťte následující příkaz:</p>
+<pre><code class="lang-bash"># Install the dependencies listed in pubspec.yaml
+dart pub get
+# Generate the necessary localization files based on the ARB files
+dart run intl_utils:generate
+</code></pre>
+</li>
+<li><p>Zobrazení textu z lokalizace</p>
+<pre><code class="lang-dart"> import 'package:flutter/material.dart'; // Import package for material design
+ import 'package:flutter_localizations/flutter_localizations.dart'; // Import package for localization
+ import 'generated/l10n.dart'; // Import generated localization file
+
+ void main() {
+ 	// Spuštění aplikace
+ 	runApp(MyApp());
+ }
+
+ class MyApp extends StatelessWidget {
+ 	@override
+ 	Widget build(BuildContext context) {
+ 		return MaterialApp(
+ 			// Definování delegátů pro lokalizaci
+ 			localizationsDelegates: [
+ 				S.delegate, // Vlastní generovaný delegát pro lokalizaci
+ 				GlobalMaterialLocalizations.delegate, // Material design lokalizace
+ 				GlobalWidgetsLocalizations.delegate, // Widgety lokalizace
+ 				GlobalCupertinoLocalizations.delegate, // Cupertino (iOS) lokalizace
+ 			],
+ 			// Podporované jazyky
+ 			supportedLocales: S.delegate.supportedLocales,
+ 			// Hlavní stránka aplikace
+ 			home: MainPage(),
+ 		);
+ 	}
+ }
+
+ class MainPage extends StatelessWidget {
+ 	@override
+ 	Widget build(BuildContext context) {
+ 		return Scaffold(
+ 			appBar: AppBar(
+ 				// Zobrazení lokalizovaného textu v AppBar
+ 				title: Text(S.of(context).hello),
+ 			),
+ 			body: Center(
+ 				// Zobrazení lokalizovaného textu v těle stránky
+ 				child: Text(S.of(context).welcome),
+ 			),
+ 		);
+ 	}
+ }
+</code></pre>
+</li>
+</ol>
+</details>
 
 </article>
 
