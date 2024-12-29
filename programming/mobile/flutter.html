@@ -163,6 +163,35 @@
 flutter run
 </code></pre>
 </details>
+<h4 id="záloha-a-obnova">Záloha a obnova</h4>
+<details>
+<summary><span style="color:#1E90FF;">Záloha závislostí</span></summary>
+<p>Pro zálohování všech balíčků projektu při použití <code>flutter pub get</code>, můžete zálohovat složku <code>.pub-cache</code>, která obsahuje všechny stažené závislosti.</p>
+<ul>
+<li><strong>Windows</strong>: <code>C:\Users\&lt;uživatelské_jméno&gt;\AppData\Local\Pub\Cache</code></li>
+<li><strong>macOS</strong> a <strong>Linux</strong>: <code>/Users/&lt;uživatelské_jméno&gt;/.pub-cache</code></li>
+</ul>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Složka <code>hosted</code> obsahuje všechny balíčky stažené z veřejných (například: <a href="https://pub.dev/">pub.dev</a>) nebo  soukromých repozitářů. (Hlavní úložiště pro závislosti projektu.)</p>
+<p>Složka <code>hosted-hashes</code> obsahuje hash soubory, které slouží k ověření integrity balíčků uložených ve složce <code>hosted</code>. (Zajišťuje, že balíčky nebyly změněny.)</p>
+<p>Složka <code>temp</code> obsahuje dočasné soubory, které jsou vytvořeny během stahování balíčků a jsou odstraněny po dokončení stahování.</p>
+</div>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Obnova závislostí</span></summary>
+<p>Pro obnovení všech balíčků projektu zálohovaných v <code>.pub-cache</code>, stačí obnovit obsah složky <code>.pub-cache</code> do původního umístění.</p>
+<ul>
+<li><strong>Windows</strong>: <code>C:\Users\&lt;uživatelské_jméno&gt;\AppData\Local\Pub\Cache</code></li>
+<li><strong>macOS</strong> a <strong>Linux</strong>: <code>/Users/&lt;uživatelské_jméno&gt;/.pub-cache</code></li>
+</ul>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Složka <code>hosted</code> obsahuje všechny balíčky stažené z veřejných (například: <a href="https://pub.dev/">pub.dev</a>) nebo  soukromých repozitářů. (Hlavní úložiště pro závislosti projektu.)</p>
+<p>Složka <code>hosted-hashes</code> obsahuje hash soubory, které slouží k ověření integrity balíčků uložených ve složce <code>hosted</code>. (Zajišťuje, že balíčky nebyly změněny.)</p>
+<p>Složka <code>temp</code> obsahuje dočasné soubory, které jsou vytvořeny během stahování balíčků a jsou odstraněny po dokončení stahování.</p>
+</div>
+</details>
 <h4 id="základní-znalosti">Základní znalosti</h4>
 <details>
 <summary><span style="color:#1E90FF;">Widget</span></summary>
@@ -243,106 +272,131 @@ void main() {
 <table>
 <thead>
 <tr>
+<th>Kategorie</th>
 <th>Příkaz</th>
 <th>Popis</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td><strong>Verze a kanály</strong></td>
 <td><code>flutter --version</code></td>
 <td>Zobrazí aktuální verzi Flutter SDK, Dart SDK a aktivní kanál.</td>
 </tr>
 <tr>
-<td><code>flutter doctor</code></td>
-<td>Zkontroluje nastavení Flutteru a zobrazí seznam chybějících nebo nesprávně nastavených komponent.</td>
-</tr>
-<tr>
-<td><code>flutter doctor -v</code></td>
-<td>Detailní výstup diagnostiky Flutteru.</td>
-</tr>
-<tr>
+<td></td>
 <td><code>flutter upgrade</code></td>
 <td>Aktualizuje Flutter SDK na nejnovější verzi v aktuálním kanálu.</td>
 </tr>
 <tr>
+<td></td>
 <td><code>flutter downgrade</code></td>
 <td>Vrátí Flutter SDK na předchozí verzi.</td>
 </tr>
 <tr>
+<td></td>
 <td><code>flutter channel</code></td>
 <td>Zobrazí aktuální kanál a seznam dostupných kanálů (stable, beta, dev, master).</td>
 </tr>
 <tr>
+<td></td>
 <td><code>flutter channel stable</code></td>
 <td>Přepne na stabilní kanál.</td>
 </tr>
 <tr>
+<td></td>
 <td><code>flutter channel beta</code></td>
 <td>Přepne na beta kanál.</td>
 </tr>
 <tr>
+<td><strong>Diagnostika</strong></td>
+<td><code>flutter doctor</code></td>
+<td>Zkontroluje nastavení Flutteru a zobrazí seznam chybějících nebo nesprávně nastavených komponent.</td>
+</tr>
+<tr>
+<td></td>
+<td><code>flutter doctor -v</code></td>
+<td>Detailní výstup diagnostiky Flutteru.</td>
+</tr>
+<tr>
+<td><strong>Závislosti</strong></td>
 <td><code>flutter pub get</code></td>
 <td>Stáhne závislosti uvedené v souboru <code>pubspec.yaml</code>.</td>
 </tr>
 <tr>
+<td></td>
 <td><code>flutter pub upgrade</code></td>
 <td>Aktualizuje všechny závislosti na nejnovější kompatibilní verze.</td>
 </tr>
 <tr>
-<td><code>flutter create project_name</code></td>
-<td>Vytvoří nový Flutter projekt ve složce <code>project_name</code>.</td>
-</tr>
-<tr>
-<td><code>flutter run</code></td>
-<td>Spustí aplikaci na připojeném zařízení nebo emulátoru.</td>
-</tr>
-<tr>
-<td><code>flutter build apk</code></td>
-<td>Vytvoří produkční APK soubor aplikace.</td>
-</tr>
-<tr>
-<td><code>flutter build ios</code></td>
-<td>Vytvoří produkční build pro iOS (vyžaduje macOS a Xcode).</td>
-</tr>
-<tr>
-<td><code>flutter clean</code></td>
-<td>Odstraní dočasné soubory a vyčistí build cache.</td>
-</tr>
-<tr>
+<td></td>
 <td><code>flutter pub cache repair</code></td>
 <td>Opraví a znovu stáhne závislosti uložené v cache.</td>
 </tr>
 <tr>
+<td><strong>Projektové příkazy</strong></td>
+<td><code>flutter create project_name</code></td>
+<td>Vytvoří nový Flutter projekt ve složce <code>project_name</code>.</td>
+</tr>
+<tr>
+<td></td>
+<td><code>flutter run</code></td>
+<td>Spustí aplikaci na připojeném zařízení nebo emulátoru.</td>
+</tr>
+<tr>
+<td></td>
+<td><code>flutter build apk</code></td>
+<td>Vytvoří produkční APK soubor aplikace.</td>
+</tr>
+<tr>
+<td></td>
+<td><code>flutter build ios</code></td>
+<td>Vytvoří produkční build pro iOS (vyžaduje macOS a Xcode).</td>
+</tr>
+<tr>
+<td></td>
+<td><code>flutter clean</code></td>
+<td>Odstraní dočasné soubory a vyčistí build cache.</td>
+</tr>
+<tr>
+<td></td>
 <td><code>flutter test</code></td>
 <td>Spustí všechny testy definované v projektu.</td>
 </tr>
 <tr>
-<td><code>flutter logs</code></td>
-<td>Zobrazí logy aplikace z běžící instance Flutteru.</td>
-</tr>
-<tr>
+<td><strong>Zařízení a emulátory</strong></td>
 <td><code>flutter devices</code></td>
 <td>Zobrazí seznam připojených zařízení a dostupných emulátorů.</td>
 </tr>
 <tr>
+<td></td>
 <td><code>flutter emulators</code></td>
 <td>Zobrazí seznam dostupných emulátorů.</td>
 </tr>
 <tr>
+<td></td>
 <td><code>flutter emulators --launch emulator_id</code></td>
 <td>Spustí specifický emulátor podle jeho ID.</td>
 </tr>
 <tr>
+<td></td>
 <td><code>flutter install</code></td>
 <td>Nainstaluje aplikaci na připojené zařízení.</td>
 </tr>
 <tr>
+<td><strong>Analýza a opravy</strong></td>
 <td><code>dart analyze</code></td>
 <td>Spustí analýzu kódu na projektu a zobrazí potenciální chyby nebo varování.</td>
 </tr>
 <tr>
+<td></td>
 <td><code>dart fix --apply</code></td>
 <td>Aplikuje doporučené opravy kódu podle výsledků analýzy.</td>
+</tr>
+<tr>
+<td><strong>Logy</strong></td>
+<td><code>flutter logs</code></td>
+<td>Zobrazí logy aplikace z běžící instance Flutteru.</td>
 </tr>
 </tbody>
 </table>
