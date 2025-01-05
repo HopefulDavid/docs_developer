@@ -144,12 +144,12 @@
 <pre><code class="lang-bash">flutter config --no-web-browser
 </code></pre>
 <ol>
-<li>Použijte</li>
-</ol>
+<li><p>Použijte</p>
 <pre><code class="lang-bash">flutter run -d web-server
 </code></pre>
-<ol start="2">
-<li>Otevřete ve vlastním prohlížeči a zadejte adresu <code>http://localhost:PORT/</code></li>
+</li>
+<li><p>Otevřete ve vlastním prohlížeči a zadejte adresu <code>http://localhost:PORT/</code></p>
+</li>
 </ol>
 </details>
 </details>
@@ -538,6 +538,65 @@ dart run intl_utils:generate
  		);
  	}
  }
+</code></pre>
+</li>
+</ol>
+</details>
+<h4 id="pokrytí-kódů-code-coverage">Pokrytí kódů (Code Coverage)</h4>
+<details>
+<summary><span style="color:#1E90FF;">Bez nahlédnutí do zdrojového kódu</span></summary>
+<ol>
+<li><p>Nainstalujte balíček skrze npm:</p>
+<pre><code class="lang-bash">npm install -g @lcov-viewer/cli
+</code></pre>
+</li>
+<li><p>Vytvořte nový soubor <code>package.json</code> s výchozími hodnoty:</p>
+<pre><code class="lang-bash">npm init -y
+</code></pre>
+</li>
+<li><p>Vaše konfigurace bude vypadat podobně takto:</p>
+<pre><code class="lang-json">{
+&quot;name&quot;: &quot;xxx_app&quot;,
+&quot;version&quot;: &quot;1.0.0&quot;,
+&quot;description&quot;: &quot;A new Flutter project.&quot;,
+&quot;main&quot;: &quot;index.js&quot;,
+&quot;directories&quot;: {
+&quot;lib&quot;: &quot;lib&quot;,
+&quot;test&quot;: &quot;test&quot;
+},
+&quot;scripts&quot;: {
+&quot;test-report&quot;: &quot; flutter test --coverage &amp;&amp; lcov-viewer lcov -o ./coverage/report ./coverage/lcov.info&quot;
+},
+&quot;keywords&quot;: [],
+&quot;author&quot;: &quot;&quot;,
+&quot;license&quot;: &quot;ISC&quot;
+}
+</code></pre>
+</li>
+<li><p>Spusťte příkaz:</p>
+<pre><code class="lang-bash">npm run test-report
+</code></pre>
+</li>
+</ol>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">S nahlédnutím do zdrojového kódu</span></summary>
+<ol>
+<li><p>Stáhněte si soubor <a href="https://github.com/linux-test-project/lcov/blob/master/bin/genhtml"><code>genhtml</code></a></p>
+</li>
+<li><p>Dejte soubor do kořenové složky projektu</p>
+</li>
+<li><p>Ujistěte se, že máte nainstalovaný <code>Git Bash</code></p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>S tím se nainstaluje i perl, který je potřeba pro správné fungování <code>genhtml</code>.</p>
+<p>Spusťte příkaz v Git Bash:</p>
+<pre><code class="lang-bash">where perl
+</code></pre>
+</div>
+</li>
+<li><p>Spusťte následující příkaz v Git Bash v kořenové složce projektu:</p>
+<pre><code class="lang-bash">perl genhtml coverage/lcov.info -o coverage/html
 </code></pre>
 </li>
 </ol>
