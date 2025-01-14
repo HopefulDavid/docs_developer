@@ -760,6 +760,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "programming/net/net_conversion.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/net/net_conversion.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "programming/net/net_dataTypes.md",
       "output": {
         ".html": {
