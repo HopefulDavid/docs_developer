@@ -710,6 +710,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "programming/appcast.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/appcast.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "programming/index.md",
       "output": {
         ".html": {
