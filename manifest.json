@@ -657,6 +657,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "network/vpn.md",
+      "output": {
+        ".html": {
+          "relative_path": "network/vpn.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "network/wireshark.md",
       "output": {
         ".html": {
@@ -704,16 +714,6 @@
       "output": {
         ".html": {
           "relative_path": "operatingSystem/windows/powerShell.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "operatingSystem/windows/vpn.md",
-      "output": {
-        ".html": {
-          "relative_path": "operatingSystem/windows/vpn.html"
         }
       },
       "version": ""
