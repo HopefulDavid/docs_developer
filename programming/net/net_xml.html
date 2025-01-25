@@ -128,6 +128,21 @@
 </div>
 </details>
 <details>
+<summary><span style="color:#1E90FF;">CDATA</span></summary>
+<p>CDATA (Character Data) je způsob, jak vložit data do XML souboru, která by jinak byla interpretována jako XML.</p>
+<pre><code class="lang-xml">&lt;exampleOfACDATA&gt;
+  &lt;![CDATA[
+    Protože se jedná o sekci CDATA
+    mohu použít všechny druhy vyhrazených znaků jako:
+    &gt; &lt; „ &amp;
+    nebo psát věci jako:
+    &lt;foo&gt;&lt;/bar&gt;
+    a dokument je stále dobře zformátovaný!
+]]&gt;
+&lt;/exampleOfACDATA&gt;
+</code></pre>
+</details>
+<details>
 <summary><span style="color:#1E90FF;">Serializace a Deserializace objektu</span></summary>
 <h3 id="serializace">Serializace</h3>
 <p>Proces, kdy se objekt převede na XML soubor.</p>

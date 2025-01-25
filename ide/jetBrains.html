@@ -210,6 +210,35 @@ informací: <a href="https://stackoverflow.com/questions/7279108/how-to-add-a-li
 </li>
 </ul>
 </details>
+<h4 id="regulární-výrazy">Regulární výrazy</h4>
+<details>
+<summary><span style="color:#1E90FF;">Použití proměnné</span></summary>
+<p>Zkusíme naleznout proměnnou v textu, uložit ji do proměnné a následně použít k nahrazení.</p>
+<details>
+<summary><span style="color:#E95A84;">Čiselná proměnná</span></summary>
+<p>Vyhledávání proměnné v textu:</p>
+<pre><code class="lang-regex">&lt;h2&gt;(.*?)&lt;/h2&gt;
+</code></pre>
+<p>Tento výraz vyhledá všechny nadpisy druhé úrovně a uloží je do proměnné.</p>
+<p>Uložení do proměnné je možné pomocí závorek <code>()</code> a následně se na proměnnou odkazuje pomocí <code>$1</code>, <code>$2</code>, <code>$3</code> atd.</p>
+<p>Nahrazení proměnné v textu:</p>
+<pre><code class="lang-regex">&lt;h2&gt;Test $1&lt;/h2&gt;
+</code></pre>
+<p>Tento výraz nahradí nalezené nadpisy druhé úrovně za nadpis <code>Test</code> a proměnnou, která byla uložena v prvním výrazu.</p>
+</details>
+<details>
+<summary><span style="color:#E95A84;">Pojmenovanná proměnná</span></summary>
+<p>Vyhledávání proměnné v textu:</p>
+<pre><code class="lang-regex">&lt;h2&gt;(?&lt;customName&gt;.*?)&lt;/h2&gt;
+</code></pre>
+<p>Tento výraz vyhledá všechny nadpisy druhé úrovně a uloží je do proměnné s názvem <code>customName</code>.</p>
+<p>Uložení do proměnné je možné pomocí závorek <code>(?&lt;customName&gt;)</code> a následně se na proměnnou odkazuje pomocí <code>(?&lt;customName&gt;)</code>.</p>
+<p>Nahrazení proměnné v textu:</p>
+<pre><code class="lang-regex">&lt;h2&gt;Test ${customName}&lt;/h2&gt;
+</code></pre>
+<p>Tento výraz nahradí nalezené nadpisy druhé úrovně za nadpis <code>Test</code> a proměnnou, která byla uložena v prvním výrazu.</p>
+</details>
+</details>
 
 </article>
 

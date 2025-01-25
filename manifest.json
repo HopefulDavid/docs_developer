@@ -780,10 +780,30 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "programming/net/net_createAPI.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/net/net_createAPI.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "programming/net/net_dataTypes.md",
       "output": {
         ".html": {
           "relative_path": "programming/net/net_dataTypes.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/net/net_enum.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/net/net_enum.html"
         }
       },
       "version": ""

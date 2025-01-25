@@ -190,26 +190,24 @@ ORDER BY
 <h4 id="hledat">Hledat</h4>
 <details>
 <summary><span style="color:#1E90FF;">Sloupec a zjistit v jaké Tabulce se nachází</span></summary>
-<pre><code>- Komplexní informace (včetně názvu schématu)
-
-  ```sql
-  SELECT t.name AS table_name,
-  SCHEMA_NAME(schema_id) AS schema_name,
-  c.name AS column_name
-  FROM sys.tables AS t
-  INNER JOIN sys.columns c ON t.OBJECT_ID = c.OBJECT_ID
-  WHERE c.name LIKE '%ino_doklad%'
-  ORDER BY schema_name, table_name;
-  ```
-
-- Základní informace (pouze názvy tabulek a sloupců)
-
-  ```sql
-  SELECT TABLE_NAME, COLUMN_NAME 
-  FROM INFORMATION_SCHEMA.COLUMNS
-  WHERE COLUMN_NAME LIKE '%place_column_name%'
-  ```
+<ul>
+<li><p>Komplexní informace (včetně názvu schématu)</p>
+<pre><code class="lang-sql">SELECT t.name AS table_name,
+SCHEMA_NAME(schema_id) AS schema_name,
+c.name AS column_name
+FROM sys.tables AS t
+INNER JOIN sys.columns c ON t.OBJECT_ID = c.OBJECT_ID
+WHERE c.name LIKE '%ino_doklad%'
+ORDER BY schema_name, table_name;
 </code></pre>
+</li>
+<li><p>Základní informace (pouze názvy tabulek a sloupců)</p>
+<pre><code class="lang-sql">SELECT TABLE_NAME, COLUMN_NAME 
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE COLUMN_NAME LIKE '%place_column_name%'
+</code></pre>
+</li>
+</ul>
 </details>
 <details>
 <summary><span style="color:#1E90FF;">Datový typ Sloupce z Tabulky</span></summary>
