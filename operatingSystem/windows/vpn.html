@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title> | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/Docs_Developer/blob/main/operatingSystem/windows/vpn.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
+            Dokumentace pro v&#253;voj&#225;ře
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<h2 id="vpn">VPN</h2>
+<p>VPN (Virtual Private Network) je technologie, která vytváří zabezpečené a šifrované připojení přes méně zabezpečenou síť, jako je internet.</p>
+<p>Funguje tak, že internetové připojení vašeho zařízení je směrováno přes soukromý server, nikoli přes poskytovatele internetových služeb (ISP = Internet Service Provider).</p>
+<p>Podrobněji jak VPN funguje:</p>
+<ul>
+<li><p>Šifrování</p>
+<p>Když se připojíte k síti VPN, zašifruje vaše data.</p>
+<p>To znamená, že veškeré informace odesílané přes internet jsou zakódované a nečitelné pro kohokoli, kdo by je mohl zachytit.</p>
+</li>
+<li><p>Tunelování:</p>
+<p>Vaše data procházejí zabezpečeným <code>tunelem</code> vytvořeným sítí VPN.</p>
+<p>Tento tunel skrývá vaše data před hackery, poskytovateli internetových služeb a dalšími subjekty.</p>
+</li>
+<li><p>Maskování IP adresy:</p>
+<p>Server VPN vám přidělí novou IP adresu, která maskuje vaši skutečnou IP adresu.</p>
+<p>To pomáhá chránit vaši identitu a polohu.</p>
+</li>
+<li><p>Řízení přístupu:</p>
+<p>VPN vám také může umožnit přístup k obsahu omezenému na určitý region tím, že se bude zdát, že procházíte z jiného místa.</p>
+</li>
+</ul>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Příklad použití pro připojení do firemní sítě:</p>
+<ul>
+<li><p>Zabezpečení dat</p>
+<ul>
+<li><p>S VPN:</p>
+<p>Data jsou šifrována, což znamená, že jsou chráněna před neoprávněným přístupem během přenosu. To je důležité zejména při připojení přes veřejné nebo nezabezpečené sítě.</p>
+</li>
+<li><p>Bez VPN:</p>
+<p>Data nejsou šifrována, což zvyšuje riziko jejich zachycení a zneužití třetími stranami, jako jsou hackeři nebo poskytovatelé internetových služeb.</p>
+</li>
+</ul>
+</li>
+<li><p>Přístup k firemním zdrojům</p>
+<ul>
+<li><p>S VPN:</p>
+<p>Umožňuje bezpečný vzdálený přístup k interním firemním zdrojům, jako jsou servery, databáze a aplikace, které jsou jinak dostupné pouze z firemní sítě.</p>
+</li>
+<li><p>Bez VPN</p>
+<p>Přístup k těmto zdrojům je omezený nebo nemožný, pokud nejsou vystaveny veřejně, což může omezit produktivitu a schopnost pracovat na dálku.</p>
+</li>
+</ul>
+</li>
+<li><p>Maskování IP adresy:</p>
+<ul>
+<li><p>S VPN:</p>
+<p>VPN server přidělí novou IP adresu, což maskuje vaši skutečnou IP adresu a chrání vaši identitu a polohu.</p>
+</li>
+<li><p>Bez VPN</p>
+<p>Vaše skutečná IP adresa je viditelná, což může vést k potenciálním bezpečnostním rizikům a sledování vaší aktivity.</p>
+</li>
+</ul>
+</li>
+<li><p>Tunelování:</p>
+<ul>
+<li><p>S VPN</p>
+<p>Data procházejí zabezpečeným tunelem, který skrývá vaši komunikaci před poskytovateli internetových služeb a dalšími subjekty.</p>
+</li>
+<li><p>Bez VPN:</p>
+<p>Data procházejí přímo přes internet bez dodatečné ochrany, což zvyšuje riziko jejich zachycení a analýzy.</p>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HopefulDavid/Docs_Developer/blob/main/operatingSystem/windows/vpn.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

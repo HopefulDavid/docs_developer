@@ -710,6 +710,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "operatingSystem/windows/vpn.md",
+      "output": {
+        ".html": {
+          "relative_path": "operatingSystem/windows/vpn.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "programming/appcast.md",
       "output": {
         ".html": {

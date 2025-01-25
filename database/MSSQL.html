@@ -360,6 +360,89 @@ RECONFIGURE;
 </code></pre>
 </div>
 </details>
+<h4 id="spojování-tabulek">Spojování tabulek</h4>
+<details>
+<summary><span style="color:#1E90FF;">left join</span></summary>
+<p><code>left join</code></p>
+<p>Vrátí všechny řádky z první tabulky.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Pokud existuje odpovídající řádek v druhé tabulce, budou vráceny hodnoty z obou tabulek.</p>
+<p>Pokud neexistuje odpovídající řádek v druhé tabulce, budou hodnoty z druhé tabulky <code>NULL</code>.</p>
+</div>
+<pre><code class="lang-sql">SELECT
+  employees.name AS EmployeeName,
+  departments.name AS DepartmentName
+FROM employees LEFT JOIN departments ON employees.department_id = departments.id;
+</code></pre>
+<p>Tento dotaz vrátí všechny zaměstnance a odpovídající oddělení (pokud existuje a pokud ne, bude hodnota <code>DepartmentName</code> <code>NULL</code>).</p>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">right join</span></summary>
+<p><code>right join</code></p>
+<p>Vrátí všechny řádky z druhé tabulky</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Pokud existuje odpovídající řádek v první tabulce, budou vráceny hodnoty z obou tabulek.</p>
+<p>Pokud neexistuje odpovídající řádek v první tabulce, budou hodnoty z první tabulky <code>NULL</code>.</p>
+</div>
+<pre><code class="lang-sql">SELECT
+  employees.name AS EmployeeName,
+  departments.name AS DepartmentName
+FROM
+  employees
+    RIGHT JOIN
+  departments ON employees.department_id = departments.id;
+</code></pre>
+<p>Tento dotaz vrátí všechny oddělení a odpovídající zaměstnance (pokud existuje a pokud ne, bude hodnota <code>EmployeeName</code> <code>NULL</code>).</p>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">full outter join</span></summary>
+<p><code>full outter join</code></p>
+<p>Vrátí všechny řádky z obou tabulek.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Pokud dojde k shodě, budou vráceny hodnoty z obou tabulek.</p>
+<p>Pokud nedojde k shodě, řádek nebude vrácen.</p>
+</div>
+<pre><code class="lang-sql">SELECT
+  employees.name AS EmployeeName,
+  departments.name AS DepartmentName
+FROM employees 
+FULL OUTER JOIN departments ON employees.department_id = departments.id;
+</code></pre>
+<p>Příkaz vrátí všechny zaměstnance a oddělení (pokud existují a pokud ne, budou hodnoty <code>NULL</code>).</p>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">inner join</span></summary>
+<p><code>inner join</code></p>
+<p>Vrátí pouze řádky, které mají odpovídající hodnoty v obou tabulkách.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Pokud dojde k shodě, budou vráceny hodnoty z obou tabulek.</p>
+<p>Pokud nedojde k shodě, řádek nebude vrácen.</p>
+</div>
+<pre><code class="lang-sql">SELECT
+  employees.name [Employee Name],
+  departments.name [Department Name]
+FROM employees 
+INNER JOIN departments ON employees.department_id = departments.id;
+</code></pre>
+<p>Tento dotaz vrátí pouze zaměstnance, kteří mají odpovídající oddělení.</p>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">cross apply</span></summary>
+<p><code>cross apply</code> je užitečný, když potřebujete provést poddotaz pro každý řádek z první tabulky, což nelze snadno dosáhnout pomocí INNER JOIN.</p>
+<pre><code class="lang-sql">SELECT t1.column1, t2.column2
+FROM table1 t1
+  CROSS APPLY (
+    SELECT column2
+    FROM table2
+    WHERE t1.column1 = table2.column2
+) t2;
+</code></pre>
+<p>Tento dotaz vrátí všechny řádky z <code>table1</code> a pro každý řádek provede poddotaz, který vrátí odpovídající hodnotu z <code>table2</code>.</p>
+</details>
 
 </article>
 
