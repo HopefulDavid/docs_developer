@@ -274,10 +274,30 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/32ntGCZMUJ.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/32ntGCZMUJ.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/5d7ee05eacb549d5ada6e1edef7a2e59.png",
       "output": {
         "resource": {
           "relative_path": "images/5d7ee05eacb549d5ada6e1edef7a2e59.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/6Ry3w30HPF.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/6Ry3w30HPF.png"
         }
       },
       "version": ""
@@ -328,6 +348,16 @@
       "output": {
         "resource": {
           "relative_path": "images/GhlBCozwaQ.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/SK8PEQ57KG.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/SK8PEQ57KG.png"
         }
       },
       "version": ""
@@ -724,6 +754,16 @@
       "output": {
         ".html": {
           "relative_path": "programming/appcast.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/designPatterns.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/designPatterns.html"
         }
       },
       "version": ""
