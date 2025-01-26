@@ -90,8 +90,11 @@
 <p>Vzory pro vytváření objektů</p>
 <details>
 <summary><span style="color:#1E90FF;">Factory Method</span></summary>
-<p>Factory Method (Tovární metoda) je návrhový vzor pro tvorbu objektů, který poskytuje rozhraní pro vytváření objektů v
-nadřazené třídě, ale umožňuje podtřídám upravit typ objektů, které budou vytvořeny.</p>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Zaměřuje se na <strong>vytváření jednoho typu produktu</strong>. (Má jednu tovární metodu, která je přepsána v podtřídách.)</p>
+<p>Používá se, když je potřeba vytvořit objekty, které mohou být různých typů, ale sdílejí společné rozhraní.</p>
+</div>
 <ul>
 <li><p>Problém:</p>
 <p>Představte si, že vytváříte aplikaci pro správu logistiky.</p>
@@ -105,15 +108,18 @@ dopravou, aby aplikace podporovala i námořní logistiku.</p>
 </div>
 </li>
 <li><p>Řešení:</p>
-<p>Vzor <code>Factory Method</code> navrhuje nahradit přímé volání konstruktorů (pomocí operátoru <code>new</code>) voláním speciální <strong>tovární metody</strong>.</p>
+<p>Vzor <code>Factory Method</code> navrhuje nahradit přímé volání konstruktorů (pomocí operátoru <code>new</code>) voláním speciální <strong>tovární
+metody</strong>.</p>
 <div class="NOTE">
 <h5>Note</h5>
 <p>Nemusíte se obávat: objekty se stále vytvářejí pomocí operátoru <code>new</code>, ale tento operátor je volán z tovární metody.</p>
 <p>Objekty vrácené tovární metodou se často nazývají <strong>produkty</strong>.</p>
 </div>
 <img src="../images/32ntGCZMUJ.png">
-<p>To umožňí možnost přepsat tovární metodu v podtřídě a změnit třídu produktů, které metoda vytváří</p>
 </li>
+</ul>
+<p>To umožňí možnost přepsat tovární metodu v podtřídě a změnit třídu produktů, které metoda vytváří</p>
+<ul>
 <li><p>Struktura:</p>
 <img src="../images/SK8PEQ57KG.png">
 <ol>
@@ -124,7 +130,8 @@ dopravou, aby aplikace podporovala i námořní logistiku.</p>
 </ol>
 </li>
 </ul>
-<p>Tento vzor zajišťuje, že klientský kód (kód používající tovární metodu) nepozná rozdíl mezi produkty různých podtříd, protože pracuje pouze s abstraktními produkty.</p>
+<p>Tento vzor zajišťuje, že klientský kód (kód používající tovární metodu) nepozná rozdíl mezi produkty různých podtříd,
+protože pracuje pouze s abstraktními produkty.</p>
 <p>Příklad</p>
 <pre><code class="lang-csharp">//1. Product interface
 public interface ITransport
@@ -192,6 +199,2482 @@ class Program
 
         logistics = new SeaLogistics();
         logistics.PlanDelivery();
+    }
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Abstract Factory</span></summary>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Zaměřuje se na <strong>vytváření celé rodiny produktů, které spolu souvisejí</strong>. (Má několik továrních metod, které jsou
+implementovány v konkrétních továrnách.)</p>
+<p>Používá se, když je potřeba vytvořit sadu souvisejících nebo závislých objektů, které musí být použity společně.</p>
+</div>
+<ul>
+<li><p>Problém:</p>
+<p>Představte si, že vytváříte simulátor obchodu s nábytkem.</p>
+<p>Kód se skládá z tříd, které reprezentují:</p>
+<ol>
+<li><p>Produkty z rodiny, jako například <code>Chair</code>, <code>Sofa</code> a <code>CoffeeTable</code>.</p>
+</li>
+<li><p>Různé varianty této rodiny, například produkty <code>Chair</code>, <code>Sofa</code> a <code>CoffeeTable</code> jsou dostupné ve variantách
+<code>Modern</code>, <code>Victorian</code>, <code>ArtDeco</code>.</p>
+ <img src="../images/wVLtmuFEWr.png">
+</li>
+</ol>
+<p>Je třeba vytvořit jednotlivé kusy nábytku tak, aby odpovídaly ostatním objektům ve stejné rodině. (Zákazníci totiž
+neradi dostávají nesourodý nábytek.)</p>
+<img src="../images/2gaLgutVIR.png">
+<p>Moderní pohovka se nehodí k viktoriánským židlím.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Nechcete měnit stávající kód pokaždé, když přidáte nové produkty nebo rodiny produktů.</p>
+<p>Prodejci nábytku často aktualizují své katalogy, takže změny v základním kódu by byly zbytečně náročné.</p>
+</div>
+</li>
+<li><p>Řešení:</p>
+<ol>
+<li><p>Deklarování rozhraní pro každý typ produktu v rámci rodiny (např. židle, pohovka, konferenční stolek).</p>
+<p>Všechny varianty produktů poté implementují tato rozhraní.</p>
+<p>Například všechny varianty židlí implementují rozhraní <code>Chair</code>, všechny konferenční stolky implementují rozhraní
+<code>CoffeeTable</code> atd.</p>
+<img src="../images/hJGmbHsLeI.png">
+</li>
+<li><p>Deklarovat <code>Abstract Factory</code> – rozhraní s metodami pro vytváření všech produktů v dané rodině (např.
+<code>createChair</code>, <code>createSofa</code>, <code>createCoffeeTable</code>).</p>
+<p>Tyto metody vrací <code>abstraktní</code> typy produktů, reprezentované výše zmíněnými rozhraními (<code>Chair</code>, <code>Sofa</code>,
+<code>CoffeeTable</code>).</p>
+<img src="../images/ierpy4lHJC.png">
+<p>Pro každou variantu produktů vytvoříte samostatnou tovární třídu, která vychází z rozhraní <code>AbstractFactory</code>.</p>
+<p>Například <code>ModernFurnitureFactory</code> vytvoří pouze produkty <code>ModernChair</code>, <code>ModernSofa</code> a <code>ModernCoffeeTable</code>.</p>
+</li>
+</ol>
+<p>Klientský kód pracuje s továrnami i produkty výhradně prostřednictvím jejich abstraktních rozhraní.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>To umožňuje měnit typ továrny a varianty produktů, které klientský kód obdrží, aniž by to klientský kód ovlivnilo.</p>
+</div>
+</li>
+<li><p>Struktura:</p>
+  <img src="../images/IN3lzoSUMT.png">
+<ol>
+<li><p>Abstraktní produkty (<code>Abstract Products</code>)</p>
+<p>Rozhraní deklarující sadu příbuzných produktů tvořících jednu rodinu.</p>
+</li>
+<li><p>Konkrétní produkty (<code>Concrete Products</code>)</p>
+<p>Implementace abstraktních produktů. Každý abstraktní produkt musí být implementován pro všechny varianty.</p>
+</li>
+<li><p>Abstraktní továrna (<code>Abstract Factory</code>)</p>
+<p>Rozhraní deklarující metody pro vytváření produktů.</p>
+</li>
+<li><p>Konkrétní továrny (<code>Concrete Factories</code>)</p>
+<p>Implementace abstraktní továrny.</p>
+<p>Každá konkrétní továrna odpovídá specifické variantě produktů.</p>
+</li>
+<li><p>Klient (<code>Client</code>)</p>
+<p>Pracuje s produkty a továrnami prostřednictvím abstraktních rozhraní, což zajišťuje nezávislost na konkrétních
+implementacích.</p>
+</li>
+</ol>
+</li>
+</ul>
+<p>Příklad:</p>
+<pre><code class="lang-csharp">//1. Abstract Product interfaces
+public interface IChair
+{
+    void SitOn();
+}
+
+public interface ISofa
+{
+    void LieOn();
+}
+
+public interface ICoffeeTable
+{
+    void PlaceItems();
+}
+
+//2. Concrete Product classes for Modern style
+public class ModernChair : IChair
+{
+    public void SitOn()
+    {
+        Console.WriteLine(&quot;Sitting on a modern chair.&quot;);
+    }
+}
+
+public class ModernSofa : ISofa
+{
+    public void LieOn()
+    {
+        Console.WriteLine(&quot;Lying on a modern sofa.&quot;);
+    }
+}
+
+public class ModernCoffeeTable : ICoffeeTable
+{
+    public void PlaceItems()
+    {
+        Console.WriteLine(&quot;Placing items on a modern coffee table.&quot;);
+    }
+}
+
+//2. Concrete Product classes for Victorian style
+public class VictorianChair : IChair
+{
+    public void SitOn()
+    {
+        Console.WriteLine(&quot;Sitting on a Victorian chair.&quot;);
+    }
+}
+
+public class VictorianSofa : ISofa
+{
+    public void LieOn()
+    {
+        Console.WriteLine(&quot;Lying on a Victorian sofa.&quot;);
+    }
+}
+
+public class VictorianCoffeeTable : ICoffeeTable
+{
+    public void PlaceItems()
+    {
+        Console.WriteLine(&quot;Placing items on a Victorian coffee table.&quot;);
+    }
+}
+
+//3. Abstract Factory interface
+public interface IFurnitureFactory
+{
+    IChair CreateChair();
+    ISofa CreateSofa();
+    ICoffeeTable CreateCoffeeTable();
+}
+
+//4. Concrete Factory classes
+public class ModernFurnitureFactory : IFurnitureFactory
+{
+    public IChair CreateChair()
+    {
+        return new ModernChair();
+    }
+
+    public ISofa CreateSofa()
+    {
+        return new ModernSofa();
+    }
+
+    public ICoffeeTable CreateCoffeeTable()
+    {
+        return new ModernCoffeeTable();
+    }
+}
+
+public class VictorianFurnitureFactory : IFurnitureFactory
+{
+    public IChair CreateChair()
+    {
+        return new VictorianChair();
+    }
+
+    public ISofa CreateSofa()
+    {
+        return new VictorianSofa();
+    }
+
+    public ICoffeeTable CreateCoffeeTable()
+    {
+        return new VictorianCoffeeTable();
+    }
+}
+
+//5. Client code
+class Program
+{
+    static void Main(string[] args)
+    {
+        IFurnitureFactory factory;
+
+        // Create modern furniture
+        factory = new ModernFurnitureFactory();
+        IChair modernChair = factory.CreateChair();
+        ISofa modernSofa = factory.CreateSofa();
+        ICoffeeTable modernTable = factory.CreateCoffeeTable();
+
+        modernChair.SitOn();
+        modernSofa.LieOn();
+        modernTable.PlaceItems();
+
+        // Create Victorian furniture
+        factory = new VictorianFurnitureFactory();
+        IChair victorianChair = factory.CreateChair();
+        ISofa victorianSofa = factory.CreateSofa();
+        ICoffeeTable victorianTable = factory.CreateCoffeeTable();
+
+        victorianChair.SitOn();
+        victorianSofa.LieOn();
+        victorianTable.PlaceItems();
+    }
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Builder</span></summary>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Zaměřuje se na <strong>konstrukci složitých objektů krok za krokem</strong>. (Má několik metod pro konstrukci objektu, které mohou
+být volány v různém pořadí.)</p>
+<p>Používá se, když je potřeba vytvořit objekt, který se skládá z mnoha součástí, ale jeho vytváření je stejné pro
+všechny součásti.</p>
+</div>
+<ul>
+<li><p>Problém:</p>
+<p>Představte si složitý objekt, který vyžaduje zdlouhavou a postupnou inicializaci mnoha polí a vnořených objektů.</p>
+<p>Takový inicializační kód bývá obvykle ukryt v obřím konstruktoru s mnoha parametry, nebo i hůře a to roztříštěn po
+celém klientském kódu.</p>
+  <img src="../images/NqjNbekRF2.png">
+<p>Mohli byste program příliš zkomplikovat tím, že byste vytvořili podtřídu pro každou možnou konfiguraci objektu.</p>
+<p>Například, uvažujme, jak vytvořit objekt <code>House</code>.</p>
+<ul>
+<li><p>Pro stavbu jednoduchého domu potřebujete postavit čtyři zdi a podlahu, nainstalovat dveře, osadit okna a postavit
+střechu. Ale co když chcete větší, světlejší dům se zahradou a dalšími vychytávkami (jako je topný systém, vodovod
+a elektroinstalace)?</p>
+<p>Nejjednodušším řešením je rozšířit základní třídu <code>House</code> a vytvořit sadu podtříd pokrývajících všechny kombinace
+parametrů. (Nakonec ale skončíte s obrovským množstvím podtříd.)</p>
+<p>Každý nový parametr, jako například styl verandy, si vyžádá další růst této hierarchie.</p>
+<p>Existuje jiný přístup, který nevyžaduje množení podtříd.</p>
+</li>
+<li><p>Můžete vytvořit obří konstruktor přímo v základní třídě <code>House</code> s veškerými možnými parametry, které objekt domu
+ovládají. (Tento přístup sice eliminuje potřebu podtříd, ale vytváří jiný problém.)</p>
+  <img src="../images/oXiTjeGZYK.png">
+<p>Konstruktor s mnoha parametry má své nevýhody a to, že ne všechny parametry jsou vždy potřebné.</p>
+<p>Ve většině případů bude většina parametrů nepoužitá, což činí kód těžko čitelným a udržovatelným. (Například jen
+zlomek domů má bazény, takže parametry týkající se bazénů budou devětkrát z deseti zbytečné.)</p>
+</li>
+</ul>
+</li>
+<li><p>Řešení:</p>
+<p>Vzor Builder navrhuje přesunout kód konstrukce objektů z jejich vlastní třídy do samostatných objektů nazývaných
+<code>builders</code>.</p>
+  <img src="../images/XKFGaxW3GC.png">
+<p>Tento vzor umožňuje konstruovat složité objekty krok za krokem.</p>
+<p>Nedovoluje ostatním objektům přístup k produktu během jeho konstrukce.</p>
+<p>Vzor organizuje konstrukci objektu do sady kroků (<code>buildWalls</code>, <code>buildDoor</code> atd.).</p>
+<p>Pro vytvoření objektu spustíte na objektu builder sérii těchto kroků.</p>
+<p>Důležitou částí je, že nemusíte volat všechny kroky. (Můžete zavolat jen ty kroky, které jsou potřebné pro vytvoření
+konkrétní konfigurace objektu.)</p>
+<p>Některé kroky konstrukce mohou vyžadovat různé implementace, když potřebujete vytvořit různé reprezentace produktu. (
+Například stěny chaty mohou být postaveny ze dřeva, zatímco stěny hradu musí být postaveny z kamene.)</p>
+<p>V tomto případě můžete vytvořit několik různých tříd builderů, které implementují stejnou sadu kroků, ale různými
+způsoby. Poté můžete tyto buildery použít v procesu konstrukce (tj. v nařízené sadě volání konstrukčních kroků) k
+vytvoření různých druhů objektů.</p>
+  <img src="../images/o5mZ6uXeRR.png">
+<p>Například si představte builder, který staví vše ze dřeva a skla, druhý, který staví vše z kamene a železa, a třetí,
+který používá zlato a diamanty.</p>
+<p>Zavoláním stejné sady kroků získáte běžný dům od prvního builderu, malý hrad od druhého a palác od třetího.</p>
+<p>To by však fungovalo pouze v případě, že klientský kód, který volá stavební kroky, dokáže komunikovat s buildery
+pomocí společného rozhraní.</p>
+  <hr>
+<p>Director</p>
+<p>Můžete jít dál a přesunout sérii volání kroků builderu, které používáte k vytvoření produktu, do samostatné třídy
+nazývané <code>director</code>.</p>
+<p>Třída director definuje pořadí, ve kterém se provádějí stavební kroky, zatímco builder poskytuje implementaci těchto
+kroků.</p>
+<img src="../images/Z4EPv2avqi.png">
+<p>Director zná, jaké kroky provést, aby vznikl funkční produkt.</p>
+<p>Použití třídy director není nezbytné. (Kroky konstrukce můžete vždy volat v určitém pořadí přímo z klientského kódu.)
+Třída director však může být vhodným místem pro uložení různých konstrukčních rutin, abyste je mohli znovu použít v
+celém programu.</p>
+<p>Navíc třída director zcela skrývá detaily konstrukce produktu před klientským kódem. (Klient potřebuje pouze přiřadit
+builder k directorovi, spustit konstrukci přes director a získat výsledek od builderu.)</p>
+</li>
+<li><p>Struktura</p>
+<ol>
+<li><p>Rozhraní Builder deklaruje kroky konstrukce produktu, které jsou společné pro všechny typy builderů.</p>
+</li>
+<li><p>Konkrétní buildeři poskytují různé implementace konstrukčních kroků. (Konkrétní buildeři mohou produkovat
+produkty, které nemusí dodržovat společné rozhraní.)</p>
+</li>
+<li><p>Produkty jsou výsledné objekty. (Produkty vytvořené různými buildry nemusí patřit do stejné hierarchie tříd nebo
+rozhraní.)</p>
+</li>
+<li><p>Třída Director definuje pořadí, ve kterém se volají konstrukční kroky, takže můžete vytvářet a znovu používat
+specifické konfigurace produktů.</p>
+</li>
+<li><p>Klient musí přiřadit jeden z builder objektů k directorovi.</p>
+<p>Obvykle se to dělá jen jednou, prostřednictvím parametrů konstruktoru directora.</p>
+<p>Poté director používá tento builder objekt pro veškerou další konstrukci.</p>
+<p>Existuje však alternativní přístup, kdy klient předává builder objekt metodě produkce directora. (V tomto případě
+můžete použít jiný builder pokaždé, když
+něco produkujete s directorem.)</p>
+</li>
+</ol>
+</li>
+</ul>
+<p>Příklad:</p>
+<pre><code class="lang-csharp">// Rozhraní pro produkt
+public interface IHouse
+{
+    void Show();
+}
+
+// Konkrétní produkt - Dřevěný dům
+public class WoodenHouse : IHouse
+{
+    public void Show()
+    {
+        Console.WriteLine(&quot;Dřevěný dům postaven.&quot;);
+    }
+}
+
+// Konkrétní produkt - Kamenný dům
+public class StoneHouse : IHouse
+{
+    public void Show()
+    {
+        Console.WriteLine(&quot;Kamenný dům postaven.&quot;);
+    }
+}
+
+// Rozhraní pro builder
+public interface IHouseBuilder
+{
+    void BuildWalls();
+    void BuildDoors();
+    void BuildWindows();
+    void BuildRoof();
+    IHouse GetHouse();
+}
+
+// Konkrétní builder - Dřevěný dům
+public class WoodenHouseBuilder : IHouseBuilder
+{
+    private WoodenHouse house = new WoodenHouse();
+
+    public void BuildWalls()
+    {
+        Console.WriteLine(&quot;Stavba dřevěných zdí.&quot;);
+    }
+
+    public void BuildDoors()
+    {
+        Console.WriteLine(&quot;Instalace dřevěných dveří.&quot;);
+    }
+
+    public void BuildWindows()
+    {
+        Console.WriteLine(&quot;Instalace dřevěných oken.&quot;);
+    }
+
+    public void BuildRoof()
+    {
+        Console.WriteLine(&quot;Stavba dřevěné střechy.&quot;);
+    }
+
+    public IHouse GetHouse()
+    {
+        return house;
+    }
+}
+
+// Konkrétní builder - Kamenný dům
+public class StoneHouseBuilder : IHouseBuilder
+{
+    private StoneHouse house = new StoneHouse();
+
+    public void BuildWalls()
+    {
+        Console.WriteLine(&quot;Stavba kamenných zdí.&quot;);
+    }
+
+    public void BuildDoors()
+    {
+        Console.WriteLine(&quot;Instalace kamenných dveří.&quot;);
+    }
+
+    public void BuildWindows()
+    {
+        Console.WriteLine(&quot;Instalace kamenných oken.&quot;);
+    }
+
+    public void BuildRoof()
+    {
+        Console.WriteLine(&quot;Stavba kamenné střechy.&quot;);
+    }
+
+    public IHouse GetHouse()
+    {
+        return house;
+    }
+}
+
+// Director třída
+public class HouseDirector
+{
+    private IHouseBuilder builder;
+
+    public HouseDirector(IHouseBuilder builder)
+    {
+        this.builder = builder;
+    }
+
+    public void ConstructHouse()
+    {
+        builder.BuildWalls();
+        builder.BuildDoors();
+        builder.BuildWindows();
+        builder.BuildRoof();
+    }
+}
+
+// Klientský kód
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Vytvoření dřevěného domu
+        IHouseBuilder woodenBuilder = new WoodenHouseBuilder();
+        HouseDirector director = new HouseDirector(woodenBuilder);
+        director.ConstructHouse();
+        IHouse woodenHouse = woodenBuilder.GetHouse();
+        woodenHouse.Show();
+        
+        // Vytvoření kamenného domu
+        IHouseBuilder stoneBuilder = new StoneHouseBuilder();
+        director = new HouseDirector(stoneBuilder);
+        director.ConstructHouse();
+        IHouse stoneHouse = stoneBuilder.GetHouse();
+        stoneHouse.Show();
+        
+        // Vytvoření dřevěného domu bez použití Directora
+        IHouseBuilder woodenBuilder = new WoodenHouseBuilder();
+        woodenBuilder.BuildWalls();
+        woodenBuilder.BuildDoors();
+        woodenBuilder.BuildWindows();
+        woodenBuilder.BuildRoof();
+        IHouse woodenHouse = woodenBuilder.GetHouse();
+        woodenHouse.Show();
+    }
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Prototype</span></summary>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Zaměřuje se na <strong>vytváření objektů pomocí kopírování existujících objektů</strong>. (Má metodu <code>clone</code>, která vytváří kopii
+objektu.)</p>
+<p>Používá se, když je potřeba vytvořit objekt, který je podobný existujícímu objektu, ale s některými změnami.</p>
+</div>
+<ul>
+<li><p>Problém</p>
+<p>Představte si, že máte objekt a chcete vytvořit jeho přesnou kopii.</p>
+<p>Jak byste to udělali? Nejprve musíte vytvořit nový objekt stejné třídy. Poté musíte projít všechna pole původního
+objektu a zkopírovat jejich hodnoty do nového objektu.</p>
+<p>Super! Ale je tu háček. Ne všechny objekty lze takto kopírovat, protože některá jejich pole mohou být soukromá a
+nedostupná zvenčí.</p>
+<img src="../images/gddGxGy2O7.png">
+<p>Kopírování objektu „z vnějšku“ není vždy možné.</p>
+<p>Dalším problémem přímého přístupu je to, že musíte znát třídu objektu, abyste vytvořili jeho duplikát, čímž váš kód
+závisí na této třídě.</p>
+<p>Pokud vás další závislost neděsí, je tu ještě jedna potíž. Někdy znáte pouze rozhraní, kterému objekt odpovídá,
+nikoliv jeho konkrétní třídu. Například když metoda přijímá parametry, které splňují určité rozhraní.</p>
+</li>
+<li><p>Řešení</p>
+<p>Vzor <code>prototyp</code> deleguje proces klonování na samotné objekty, které mají být klonovány.</p>
+<p>Tento vzor definuje společné rozhraní pro všechny objekty podporující klonování. (Toto rozhraní umožňuje klonovat
+objekt, aniž byste museli spojovat váš kód s třídou tohoto objektu.)</p>
+<p>Obvykle toto rozhraní obsahuje pouze jednu metodu <code>clone</code>.</p>
+<p>Implementace metody <code>clone</code> je velmi podobná ve všech třídách. (Metoda vytvoří objekt aktuální třídy a přenese všechny
+hodnoty polí starého objektu do nového.)</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Můžete dokonce kopírovat soukromá pole, protože většina programovacích jazyků umožňuje objektům přistupovat k
+soukromým polím jiných objektů patřících ke stejné třídě.</p>
+</div>
+<p>Objekt, který podporuje klonování, se nazývá <code>prototyp</code>. (Pokud mají vaše objekty desítky polí a stovky možných
+konfigurací, může jejich klonování sloužit jako alternativa k podtřídám.)</p>
+<img src="../images/lRCeGcyyCN.png">
+<ul>
+<li><p>Struktura</p>
+<ol>
+<li><p>Rozhraní prototypu</p>
+<p>Deklaruje metodu klonování.</p>
+</li>
+<li><p>Konkrétní prototyp</p>
+<p>Implementuje metodu klonování.</p>
+<p>Kromě kopírování dat původního objektu do klonu může tato metoda řešit i některé okrajové případy spojené s
+klonováním, jako je klonování propojených objektů, rozplétání
+rekurzivních závislostí atd.</p>
+</li>
+<li><p>Klient</p>
+<p>Může vytvořit kopii libovolného objektu, který implementuje rozhraní prototypu.</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<p>Příklad:</p>
+<pre><code class="lang-csharp">// Rozhraní pro prototyp
+public interface IPrototype
+{
+    IPrototype Clone();
+}
+
+// Konkrétní prototyp - Kniha
+public class Book : IPrototype
+{
+    public string Title { get; set; }
+    public string Author { get; set; }
+
+    public Book(string title, string author)
+    {
+        Title = title;
+        Author = author;
+    }
+
+    // Metoda klonování
+    public IPrototype Clone()
+    {
+        return new Book(Title, Author);
+    }
+
+    public void ShowDetails()
+    {
+        Console.WriteLine($&quot;Kniha: {Title}, Autor: {Author}&quot;);
+    }
+}
+
+// Klientský kód
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Původní objekt
+        Book originalBook = new Book(&quot;1984&quot;, &quot;George Orwell&quot;);
+        originalBook.ShowDetails();
+
+        // Klonovaný objekt
+        Book clonedBook = (Book)originalBook.Clone();
+        clonedBook.ShowDetails();
+    }
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Singleton</span></summary>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Zaměřuje se na <strong>zajištění, že třída má pouze jednu instanci</strong> a poskytuje globální přístup k ní.</p>
+<p>Používá se, když je potřeba, aby v systému existovala pouze jedna instance třídy, která je sdílena všemi ostatními</p>
+</div>
+<ul>
+<li><p>Problém</p>
+<p>Vzor Singleton řeší dva problémy zároveň a porušuje <code>Princip jediné odpovědnosti</code>:</p>
+<ol>
+<li><p>Zajistit, že třída má pouze jednu instanci.</p>
+<p>Proč by někdo chtěl kontrolovat, kolik instancí třída má? Nejčastější důvod je kontrola přístupu k nějakému
+sdílenému zdroji, například databázi nebo souboru.</p>
+<p>Představte si, že jste vytvořili objekt, ale po chvíli jste se rozhodli vytvořit nový.</p>
+<p>Místo toho, abyste obdrželi nový objekt, dostanete ten, který jste již vytvořili.  (Tento způsob chování nelze
+implementovat běžným konstruktorem, protože volání konstruktoru musí vždy vrátit nový objekt podle návrhu.)</p>
+<img src="../images/DI1aOl6eDo.png">
+<p>Klienti si nemusí ani uvědomit, že pracují stále s tím samým objektem.</p>
+</li>
+<li><p>Poskytnout globální přístupový bod k této instanci</p>
+<p>Stejně jako globální proměnná, i Singleton vzor vám umožňuje přistupovat k objektu z jakéhokoli místa v
+programu. (Nicméně chrání tuto instanci před přepsáním jiným kódem.)</p>
+</li>
+</ol>
+</li>
+<li><p>Řešení</p>
+<p>Všechny implementace Singleton mají dva společné kroky:</p>
+<ul>
+<li><p>Udělejte výchozí konstruktor soukromý, aby zabránil jiným objektům používat operátor <code>new</code> s třídou Singleton.</p>
+</li>
+<li><p>Vytvořte statickou metodu pro tvorbu objektu, která slouží jako konstruktor.</p>
+<p>Tato metoda volá soukromý konstruktor pro vytvoření objektu a uloží ho do statického pole.</p>
+<p>Všechny následující volání této metody vrací tento uložený objekt.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>Příklad:</p>
+<pre><code class="lang-csharp">// Singleton třída
+public class Singleton
+{
+    // Statická proměnná pro uložení jediné instance třídy
+    private static Singleton instance;
+
+    // Soukromý konstruktor, aby se zabránilo vytváření instancí zvenčí
+    private Singleton() { }
+
+    // Statická metoda pro získání jediné instance třídy
+    public static Singleton GetInstance()
+    {
+        if (instance == null)
+        {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+
+    // Příklad metody třídy Singleton
+    public void ShowMessage()
+    {
+        Console.WriteLine(&quot;Toto je Singleton instance.&quot;);
+    }
+}
+
+// Klientský kód
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Získání jediné instance třídy Singleton
+        Singleton singleton = Singleton.GetInstance();
+        singleton.ShowMessage();
+
+        // Pokus o vytvoření další instance vrátí stejnou instanci
+        Singleton anotherSingleton = Singleton.GetInstance();
+        anotherSingleton.ShowMessage();
+
+        // Ověření, že obě instance jsou stejné
+        Console.WriteLine(object.ReferenceEquals(singleton, anotherSingleton)); // Výstup: True
+    }
+}
+</code></pre>
+</details>
+<hr>
+<p>Vzory pro skturury tříd</p>
+<details>
+<summary><span style="color:#1E90FF;">Adapter (Wrapper)</span></summary>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Zaměřuje se na <strong>přizpůsobení rozhraní existující třídy tak, aby vyhovovalo potřebám jiné třídy</strong>.</p>
+<p>Používá se, když je potřeba propojit dvě třídy, které nemají kompatibilní rozhraní.</p>
+</div>
+<ul>
+<li><p>Problém</p>
+<p>Představte si, že vytváříte aplikaci pro sledování akciového trhu.</p>
+<p>Aplikace stahuje data o akciích z různých zdrojů ve formátu XML a poté zobrazuje uživatelsky příjemné grafy a diagramy.</p>
+<p>V určitém okamžiku se rozhodnete vylepšit aplikaci integrací chytré analytické knihovny třetí strany. Ale je tu háček: analytická knihovna funguje pouze s daty ve formátu JSON.</p>
+  <img src="../images/gwMfzQMOvC.png">
+<p>Nemůžete použít analytickou knihovnu &quot;tak jak je&quot;, protože očekává data v formátu, který je nekompatibilní s vaší aplikací.</p>
+<p>Můžete změnit knihovnu, aby pracovala s XML. (To by však mohlo zničit některý existující kód, který na knihovnu spoléhá, nebo možná nemáte přístup k původnímu kódu knihovny, což tuto možnost činí nemožnou.)</p>
+</li>
+<li><p>Řešení</p>
+<p>Můžete vytvořit <code>adapter</code>.</p>
+<p>To je speciální objekt, který převádí rozhraní jednoho objektu tak, aby ho druhý objekt mohl pochopit.</p>
+<p>Adapter zabalí jeden z objektů a skryje složitost převodu, který se děje v pozadí. (Zabalený objekt si ani neuvědomuje adapter.)</p>
+<p>Například můžete zabalit objekt, který pracuje v metrech a kilometrech, do adapteru, který převádí všechna data na imperiální jednotky, jako jsou stopy a míle.</p>
+<p>Adaptéry mohou nejen převádět data do různých formátů, ale mohou také pomoci objektům s různými rozhraními spolupracovat.</p>
+<p>Jak to funguje:</p>
+<ol>
+<li>Adapter získá rozhraní kompatibilní s jedním z existujících objektů.</li>
+<li>Pomocí tohoto rozhraní může existující objekt bezpečně volat metody adapteru.</li>
+<li>Po obdržení požadavku adapter předá žádost druhému objektu, ale ve formátu a pořadí, které druhý objekt očekává.</li>
+</ol>
+<p>Někdy je dokonce možné vytvořit obousměrný adapter, který může převádět volání v obou směrech.</p>
+  <img src="../images/7NaF0iqhX4.png">
+<p>Vraťme se zpět k naší aplikaci pro akciový trh.</p>
+<p>Abychom vyřešili dilema nekompatibilních formátů, můžeme vytvořit XML-to-JSON adaptéry pro každou třídu analytické knihovny, se kterou náš kód přímo pracuje.</p>
+<p>Poté upravíme náš kód, aby komunikoval s knihovnou pouze prostřednictvím těchto adaptérů.</p>
+<p>Když adapter obdrží požadavek, přeloží příchozí XML data do JSON struktury a předá požadavek na příslušné metody zabaleného analytického objektu.</p>
+</li>
+<li><p>Struktura</p>
+  <img src="../images/FGHnDA1tNp.png">
+</li>
+</ul>
+<ol>
+<li><p>Client</p>
+<p>Třída, která obsahuje existující obchodní logiku programu.</p>
+</li>
+<li><p>Client Interface</p>
+<p>Popisuje protokol, který musí ostatní třídy dodržovat, aby mohly spolupracovat s klientským kódem.</p>
+</li>
+<li><p>Service</p>
+<p>Je užitečná třída (obvykle třetí strany nebo legacy), kterou klient nemůže použít přímo, protože má nekompatibilní rozhraní.</p>
+</li>
+<li><p>Adapter</p>
+<p>Třída, která je schopná pracovat s klientem i službou: implementuje klientské rozhraní, zatímco obaluje objekt služby.</p>
+<p>Adapter přijímá volání od klienta prostřednictvím klientského rozhraní a převádí je na volání zabaleného objektu služby v formátu, který služba chápe.</p>
+</li>
+<li><p>Klientský kód není spojen s konkrétní třídou adapteru, pokud pracuje s adapterem prostřednictvím klientského rozhraní.</p>
+<p>Díky tomu můžete do programu přidávat nové typy adapterů, aniž byste rozbili existující klientský kód.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>To může být užitečné, když se změní nebo nahradí rozhraní třídy služby, jelikož stačí vytvořit novou třídu adapteru, aniž byste museli měnit klientský kód.</p>
+</div>
+</li>
+</ol>
+<p>Příklad:</p>
+<pre><code class="lang-csharp">// Rozhraní klienta, které očekává data ve formátu JSON
+public interface IJsonData
+{
+    string GetJsonData();
+}
+
+// Třída služby, která poskytuje data ve formátu XML
+public class XmlDataService
+{
+    public string GetXmlData()
+    {
+        return &quot;&lt;data&gt;&lt;item&gt;Hodnota&lt;/item&gt;&lt;/data&gt;&quot;;
+    }
+}
+
+// Adapter, který převádí XML data na JSON data
+public class XmlToJsonAdapter : IJsonData
+{
+    private readonly XmlDataService _xmlDataService;
+
+    public XmlToJsonAdapter(XmlDataService xmlDataService)
+    {
+        _xmlDataService = xmlDataService;
+    }
+
+    public string GetJsonData()
+    {
+        // Získání XML dat ze služby
+        string xmlData = _xmlDataService.GetXmlData();
+
+        // Převod XML na JSON (zde je to zjednodušeno)
+        string jsonData = &quot;{\&quot;data\&quot;: {\&quot;item\&quot;: \&quot;Hodnota\&quot;}}&quot;;
+
+        return jsonData;
+    }
+}
+
+// Klientský kód, který pracuje s daty ve formátu JSON
+public class Client
+{
+    private readonly IJsonData _jsonData;
+
+    public Client(IJsonData jsonData)
+    {
+        _jsonData = jsonData;
+    }
+
+    public void DisplayData()
+    {
+        string data = _jsonData.GetJsonData();
+        Console.WriteLine(&quot;Data ve formátu JSON: &quot; + data);
+    }
+}
+
+// Hlavní program
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Vytvoření instance služby, která poskytuje XML data
+        XmlDataService xmlDataService = new XmlDataService();
+
+        // Vytvoření adapteru, který převádí XML data na JSON data
+        IJsonData jsonData = new XmlToJsonAdapter(xmlDataService);
+
+        // Vytvoření klienta, který pracuje s JSON daty
+        Client client = new Client(jsonData);
+
+        // Zobrazení dat ve formátu JSON
+        client.DisplayData();
+    }
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Bridge</span></summary>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Zaměřuje se na <strong>rozložení velké třídy nebo několika tříd do dvou samostatných hierarchií</strong> - abstrakce a implementace - které mohou být vyvíjeny nezávisle na sobě.</p>
+<p>Používá se, když je potřeba, aby se abstrakce a implementace mohly vyvíjet nezávisle na sobě.</p>
+</div>
+<ul>
+<li><p>Problém</p>
+<p>Řekněme, že máte geometrií <code>Shape</code> třídu se dvěma podtřídami: <code>Circle</code> a <code>Square</code>.</p>
+<p>Chcete tuto hierarchii tříd rozšířit o barvy, takže plánujete vytvořit podtřídy <code>Red</code> a <code>Blue</code> pro tvary.</p>
+<p>Avšak, protože už máte dvě podtřídy, budete muset vytvořit čtyři kombinace tříd, jako například <code>BlueCircle</code> a <code>RedSquare</code>.</p>
+  <img src="../images/cFT7edPhap.png">
+<p>Počet kombinací tříd roste v geometrické progresi.</p>
+</li>
+<li><p>Řešení</p>
+<p>Vzor Bridge se tento problém snaží vyřešit přechodem od dědičnosti k objektové kompozici.</p>
+<p>To znamená, že extrahujete jednu z dimenzí do samostatné hierarchie tříd, takže původní třídy budou odkazovat na objekt z nové hierarchie, místo aby měly celý svůj stav a chování v jedné třídě.</p>
+  <img src="../images/7Biis7dol1.png">
+<p>Můžete zabránit explozí hierarchie tříd tím, že ji přeměníte na několik souvisejících hierarchií.</p>
+</li>
+</ul>
+<p>Příklad:</p>
+<pre><code class="lang-csharp">// Rozhraní implementace
+public interface IColor
+{
+    void ApplyColor();
+}
+
+// Konkrétní implementace - Červená barva
+public class RedColor : IColor
+{
+    public void ApplyColor()
+    {
+        Console.WriteLine(&quot;Aplikování červené barvy.&quot;);
+    }
+}
+
+// Konkrétní implementace - Modrá barva
+public class BlueColor : IColor
+{
+    public void ApplyColor()
+    {
+        Console.WriteLine(&quot;Aplikování modré barvy.&quot;);
+    }
+}
+
+// Abstrakce
+public abstract class Shape
+{
+    protected IColor color;
+
+    protected Shape(IColor color)
+    {
+        this.color = color;
+    }
+
+    public abstract void Draw();
+}
+
+// Rozšířená abstrakce - Kruh
+public class Circle : Shape
+{
+    public Circle(IColor color) : base(color) { }
+
+    public override void Draw()
+    {
+        Console.Write(&quot;Kreslení kruhu s barvou: &quot;);
+        color.ApplyColor();
+    }
+}
+
+// Rozšířená abstrakce - Čtverec
+public class Square : Shape
+{
+    public Square(IColor color) : base(color) { }
+
+    public override void Draw()
+    {
+        Console.Write(&quot;Kreslení čtverce s barvou: &quot;);
+        color.ApplyColor();
+    }
+}
+
+// Klientský kód
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Vytvoření červeného kruhu
+        Shape redCircle = new Circle(new RedColor());
+        redCircle.Draw();
+
+        // Vytvoření modrého čtverce
+        Shape blueSquare = new Square(new BlueColor());
+        blueSquare.Draw();
+    }
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Composite</span></summary>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Zaměřuje se na <strong>seskupení objektů do stromové struktury, aby bylo možné pracovat s jednotlivými objekty i skupinami objektů stejným způsobem</strong>.</p>
+<p>Používá se, když je potřeba pracovat s objekty a skupinami objektů stejným způsobem.</p>
+</div>
+<ul>
+<li><p>Problém</p>
+<p>Má smysl pouze tehdy, když jádrový model vaší aplikace lze reprezentovat jako strom.</p>
+<p>Například si představte, že máte dva typy objektů: <code>Produkty</code> a <code>Krabice</code>.</p>
+<ul>
+<li><code>Krabice</code> může obsahovat několik <code>Produktů</code> a také několik menších <code>Krabic</code>.</li>
+<li>Tyto malé <code>Krabice</code> mohou také obsahovat některé <code>Produkty</code> nebo ještě menší <code>Krabice</code> a tak dále.</li>
+</ul>
+<p>Řekněme, že se rozhodnete vytvořit objednávkový systém, který používá tyto třídy.</p>
+<p>Objednávky mohou obsahovat jednoduché produkty bez jakéhokoliv balení, stejně jako krabice plné produktů... a dalších krabic. Jak byste určili celkovou cenu takové objednávky?</p>
+  <img src="../images/HV5zUWuMiu.png">
+<p>Objednávka může zahrnovat různé produkty, zabalené v krabicích, které jsou zabalené v ještě větších krabicích a tak dále. (Celá struktura vypadá jako obrácený strom.)</p>
+<p>Můžete zkusit přímý přístup, tak že rozbalíte všechny krabice, projdete všechny produkty a pak spočítáte celkovou cenu.</p>
+<p>To by bylo v reálném světě proveditelné, ale v programu to není tak jednoduché, jako provést smyčku.</p>
+<p>Musíte znát třídy <code>Produktů</code> a <code>Krabic</code>, kterými procházíte, úroveň zanoření krabic a další detaily předem.</p>
+<p>To vše činí přímý přístup buď příliš nepohodlným, nebo dokonce nemožným.</p>
+</li>
+<li><p>Řešení</p>
+<p>Vzorec <code>Composite</code> navrhuje, abyste pracovali s <code>Produkty</code> a <code>Krabicemi</code> prostřednictvím společného rozhraní, které vyhlašuje metodu pro výpočet celkové ceny.</p>
+<p>Jak by tato metoda fungovala? U produktu by jednoduše vrátila cenu produktu.</p>
+<ul>
+<li>U krabice by prošla každý prvek, který obsahuje, zeptala se na jeho cenu a pak vrátila celkovou cenu této krabice.</li>
+<li>Pokud by některý z těchto prvků byla menší krabice, tato krabice by začala procházet svůj obsah a tak dále, dokud by nebyly vypočítány ceny všech vnitřních komponent.</li>
+<li>Krabice by dokonce mohla přidat nějaké dodatečné náklady na konečnou cenu, například náklady na balení.</li>
+</ul>
+  <img src="../images/A6QaLVyhyO.png">
+<p>Vzorec <code>Composite</code> umožňuje provádět chování rekurzivně na všech komponentách objektového stromu.</p>
+<p>Největší výhodou tohoto přístupu je, že se nemusíte starat o konkrétní třídy objektů, které tvoří strom.</p>
+<p>Nemusíte vědět, zda je objekt jednoduchý produkt, nebo sofistikovaná krabice.</p>
+<p>Všechny je můžete ošetřovat stejně prostřednictvím společného rozhraní.</p>
+<p>Když zavoláte metodu, objekty samy předají požadavek dolů stromem.</p>
+</li>
+<li><p>Struktura</p>
+  <img src="../images/lhkGBjJ7SB.png">
+<ol>
+<li><p>Component</p>
+<p>Rozhraní popisuje operace, které jsou společné jak pro jednoduché, tak pro složité prvky stromu.</p>
+</li>
+<li><p>Leaf</p>
+<p>Základní prvek stromu, který nemá pod-prvky.</p>
+<p>Obvykle právě listové komponenty vykonávají většinu skutečné práce, protože nemají nikoho, na koho by práci delegovaly.</p>
+</li>
+<li><p>Container (nebo také <code>composite</code>)</p>
+<p>Prvek, který má pod-prvky: listy nebo jiné kontejnery.</p>
+<p>Kontejner nezná konkrétní třídy svých dětí. (Pracuje s pod-prvky pouze prostřednictvím komponentového rozhraní.)</p>
+<p>Po obdržení požadavku kontejner deleguje práci na své pod-prvky, zpracuje mezivýsledky a pak vrátí konečný výsledek klientovi.</p>
+</li>
+<li><p>Client</p>
+<p>Pracuje se všemi prvky prostřednictvím komponentového rozhraní. (Díky tomu může klient pracovat stejně s jednoduchými i složitými prvky stromu.)</p>
+</li>
+</ol>
+</li>
+</ul>
+<p>Příklad:</p>
+<pre><code class="lang-csharp">// Rozhraní Component, které deklaruje operace společné pro jednoduché i složité prvky stromu
+public interface IComponent
+{
+    void DisplayPrice();
+}
+
+// Třída Leaf, která reprezentuje základní prvek stromu bez pod-prvků
+public class Product : IComponent
+{
+    private string name;
+    private int price;
+
+    public Product(string name, int price)
+    {
+        this.name = name;
+        this.price = price;
+    }
+
+    public void DisplayPrice()
+    {
+        Console.WriteLine($&quot;{name}: {price} Kč&quot;);
+    }
+}
+
+// Třída Composite, která reprezentuje prvek stromu s pod-prvky
+public class Box : IComponent
+{
+    private string name;
+    private List&lt;IComponent&gt; components = new List&lt;IComponent&gt;();
+
+    public Box(string name)
+    {
+        this.name = name;
+    }
+
+    public void AddComponent(IComponent component)
+    {
+        components.Add(component);
+    }
+
+    public void DisplayPrice()
+    {
+        Console.WriteLine($&quot;{name} obsahuje:&quot;);
+        foreach (var component in components)
+        {
+            component.DisplayPrice();
+        }
+    }
+}
+
+// Klientský kód
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Vytvoření produktů
+        IComponent product1 = new Product(&quot;Produkt 1&quot;, 100);
+        IComponent product2 = new Product(&quot;Produkt 2&quot;, 200);
+        IComponent product3 = new Product(&quot;Produkt 3&quot;, 300);
+
+        // Vytvoření krabice a přidání produktů
+        Box box1 = new Box(&quot;Krabice 1&quot;);
+        box1.AddComponent(product1);
+        box1.AddComponent(product2);
+
+        // Vytvoření další krabice a přidání produktů a krabice
+        Box box2 = new Box(&quot;Krabice 2&quot;);
+        box2.AddComponent(box1);
+        box2.AddComponent(product3);
+
+        // Zobrazení cen všech produktů a krabic
+        box2.DisplayPrice();
+    }
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Decorator</span></summary>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Zaměřuje se na <strong>přidání nových funkcí existující třídě, aniž by bylo nutné měnit její kód</strong>.</p>
+<p>Používá se, když je potřeba přidat nové funkce existující třídě, ale nemůžete nebo nechcete měnit její kód.</p>
+</div>
+<ul>
+<li><p>Problém</p>
+<p>Představte si, že máte třídu <code>Car</code>, která má metodu <code>Drive</code>.</p>
+<p>Nyní chcete přidat novou funkcionalitu, například <code>CarWithNavigation</code>, která umožňuje vozidlu navigovat.</p>
+<p>Můžete přidat novou metodu <code>Navigate</code> do třídy <code>Car</code>, ale co když budete chtít vozidlo s navigací, ale bez klimatizace?</p>
+<p>Nebo vozidlo s klimatizací, ale bez navigace?</p>
+<p>Nebo vozidlo s oběma funkcemi?</p>
+<p>Přidávání všech těchto kombinací do třídy <code>Car</code> by vedlo k explozi tříd.</p>
+</li>
+<li><p>Řešení</p>
+<p>Vzor <code>Decorator</code> řeší tento problém tím, že vytváří nové třídy, které obalují původní třídu a přidávají novou funkcionalitu.</p>
+<p>Každý dekorátor implementuje stejné rozhraní jako původní třída a obsahuje odkaz na původní třídu.</p>
+<p>Když dekorátor obdrží požadavek, může buď přidat novou funkcionalitu, nebo předat požadavek původní třídě.</p>
+<p>Výhodou tohoto přístupu je, že můžete kombinovat různé dekorátory, abyste získali různé kombinace funkcí.</p>
+<p>Můžete také snadno přidávat nové dekorátory, aniž byste museli měnit původní třídu.</p>
+</li>
+</ul>
+<p>Příklad:</p>
+<pre><code class="lang-csharp">// Rozhraní pro auto
+public interface ICar
+{
+    void Drive();
+}
+
+// Konkrétní třída auta
+public class Car : ICar
+{
+    public void Drive()
+    {
+        Console.WriteLine(&quot;Auto jede.&quot;);
+    }
+}
+
+// Abstraktní dekorátor, který implementuje rozhraní ICar
+public abstract class CarDecorator : ICar
+{
+    protected ICar car;
+
+    public CarDecorator(ICar car)
+    {
+        this.car = car;
+    }
+
+    public virtual void Drive()
+    {
+        car.Drive();
+    }
+}
+
+// Konkrétní dekorátor pro navigaci
+public class CarWithNavigation : CarDecorator
+{
+    public CarWithNavigation(ICar car) : base(car) { }
+
+    public override void Drive()
+    {
+        base.Drive();
+        Console.WriteLine(&quot;Navigace je zapnutá.&quot;);
+    }
+}
+
+// Konkrétní dekorátor pro klimatizaci
+public class CarWithAirConditioning : CarDecorator
+{
+    public CarWithAirConditioning(ICar car) : base(car) { }
+
+    public override void Drive()
+    {
+        base.Drive();
+        Console.WriteLine(&quot;Klimatizace je zapnutá.&quot;);
+    }
+}
+
+// Klientský kód
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Vytvoření základního auta
+        ICar car = new Car();
+        car.Drive();
+
+        // Vytvoření auta s navigací
+        ICar carWithNav = new CarWithNavigation(car);
+        carWithNav.Drive();
+
+        // Vytvoření auta s navigací a klimatizací
+        ICar carWithNavAndAC = new CarWithAirConditioning(carWithNav);
+        carWithNavAndAC.Drive();
+    }
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Facade</span></summary>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Zaměřuje se na <strong>poskytnutí jednoduchého rozhraní pro složitý systém tříd</strong>.</p>
+<p>Používá se, když je potřeba poskytnout jednoduché rozhraní pro složitý systém tříd.</p>
+</div>
+<ul>
+<li><p>Problém</p>
+<p>Představte si, že máte složitý systém tříd, který poskytuje mnoho funkcí, ale je obtížné s ním pracovat.</p>
+<p>Například, když potřebujete provést několik kroků, než můžete zavolat metodu, která vás zajímá.</p>
+<p>Nebo když musíte pracovat s několika třídami najednou, abyste dosáhli svého cíle.</p>
+</li>
+<li><p>Řešení</p>
+<p>Vzor <code>Facade</code> poskytuje jednoduché rozhraní pro složitý systém tříd.</p>
+<p>Toto rozhraní skrývá složitost systému a poskytuje jednotné rozhraní pro klienty.</p>
+<p>Když klient zavolá metodu na fasádě, fasáda zpracuje požadavek a předá ho jednotlivým třídám v systému.</p>
+<p>Klient nemusí znát vnitřní strukturu systému ani pracovat s jednotlivými třídami přímo.</p>
+<p>Výhody fasády:</p>
+<ul>
+<li>Skrývá složitost systému.</li>
+<li>Poskytuje jednotné rozhraní pro klienty.</li>
+<li>Umožňuje snadné použití systému.</li>
+</ul>
+</li>
+</ul>
+<p>Příklad:</p>
+<pre><code class="lang-csharp">// Rozhraní pro subsystém A
+public class SubsystemA
+{
+    public void OperationA()
+    {
+        Console.WriteLine(&quot;Operace A&quot;);
+    }
+}
+
+// Rozhraní pro subsystém B
+public class SubsystemB
+{
+    public void OperationB()
+    {
+        Console.WriteLine(&quot;Operace B&quot;);
+    }
+}
+
+// Fasáda, která poskytuje jednoduché rozhraní pro složitý systém tříd
+public class Facade
+{
+    private SubsystemA subsystemA;
+    private SubsystemB subsystemB;
+
+    public Facade()
+    {
+        subsystemA = new SubsystemA();
+        subsystemB = new SubsystemB();
+    }
+
+    public void Operation()
+    {
+        subsystemA.OperationA();
+        subsystemB.OperationB();
+    }
+}
+
+// Klientský kód
+class Program
+{
+    static void Main(string[] args)
+    {
+        Facade facade = new Facade();
+        facade.Operation();
+    }
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Flyweight</span></summary>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Zaměřuje se na <strong>sdílení velkého počtu malých objektů</strong>.</p>
+<p>Používá se, když je potřeba vytvořit velké množství malých objektů.</p>
+</div>
+<ul>
+<li><p>Problém</p>
+<p>Představte si, že máte aplikaci pro kreslení, která umožňuje uživatelům kreslit různé tvary.</p>
+<p>Každý tvar má svou vlastní barvu, kterou si uživatel může vybrat.</p>
+<p>Když uživatel vybere tvar a barvu, aplikace vytvoří nový objekt pro tento tvar a barvu.</p>
+<p>Pokud uživatel vybere stejný tvar a barvu, aplikace vytvoří nový objekt.</p>
+<p>To může vést k vytvoření velkého množství objektů, které jsou si velmi podobné.</p>
+</li>
+<li><p>Řešení</p>
+<p>Vzor <code>Flyweight</code> řeší tento problém tím, že vytváří jednu instanci objektu pro každý unikátní stav objektu a sdílí ji mezi všemi objekty se stejným stavem.</p>
+<p>Když uživatel vybere tvar a barvu, aplikace nevytváří nový objekt, ale používá existující objekt pro tento tvar a barvu.</p>
+<p>Výhody vzoru <code>Flyweight</code>:</p>
+<ul>
+<li>Ušetří paměť tím, že sdílí objekty.</li>
+<li>Sníží počet objektů v paměti.</li>
+<li>Umožňuje vytvářet velké množství objektů.</li>
+</ul>
+</li>
+</ul>
+<p>Příklad:</p>
+<pre><code class="lang-csharp">// Rozhraní pro Flyweight
+public interface IShape
+{
+    void Draw(string color);
+}
+
+// Konkrétní třída Flyweight
+public class Circle : IShape
+{
+    private string _shapeType;
+
+    public Circle()
+    {
+        _shapeType = &quot;Kruh&quot;;
+    }
+
+    public void Draw(string color)
+    {
+        Console.WriteLine($&quot;Kreslení {_shapeType} s barvou: {color}&quot;);
+    }
+}
+
+// Flyweight Factory
+public class ShapeFactory
+{
+    private static Dictionary&lt;string, IShape&gt; _shapes = new Dictionary&lt;string, IShape&gt;();
+
+    public static IShape GetShape(string shapeType)
+    {
+        if (!_shapes.ContainsKey(shapeType))
+        {
+            switch (shapeType)
+            {
+                case &quot;Kruh&quot;:
+                    _shapes[shapeType] = new Circle();
+                    break;
+                // Můžete přidat další tvary zde
+            }
+        }
+        return _shapes[shapeType];
+    }
+}
+
+// Klientský kód
+class Program
+{
+    static void Main(string[] args)
+    {
+        IShape shape1 = ShapeFactory.GetShape(&quot;Kruh&quot;);
+        shape1.Draw(&quot;Červená&quot;);
+
+        IShape shape2 = ShapeFactory.GetShape(&quot;Kruh&quot;);
+        shape2.Draw(&quot;Modrá&quot;);
+
+        IShape shape3 = ShapeFactory.GetShape(&quot;Kruh&quot;);
+        shape3.Draw(&quot;Zelená&quot;);
+
+        // Ověření, že shape1, shape2 a shape3 jsou stejná instance
+        Console.WriteLine(object.ReferenceEquals(shape1, shape2)); // Výstup: True
+        Console.WriteLine(object.ReferenceEquals(shape2, shape3)); // Výstup: True
+    }
+}
+</code></pre>
+</details>
+<hr>
+<p>Vzory pro chování tříd</p>
+<details>
+<summary><span style="color:#1E90FF;">Chain of Responsibility</span></summary>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Zaměřuje se na <strong>řetězení objektů, které mohou zpracovat požadavek</strong>.</p>
+<p>Používá se, když je potřeba, aby více objektů mohlo zpracovat požadavek.</p>
+</div>
+<ul>
+<li><p>Problém</p>
+<p>Představte si, že máte aplikaci pro zpracování žádostí.</p>
+<p>Každá žádost může být zpracována jedním nebo více objekty.</p>
+<p>Například žádost o slevu může být zpracována manažerem, vedoucím oddělení nebo ředitelem.</p>
+<p>Jak můžete implementovat tento systém tak, aby bylo možné snadno přidávat nebo odebírat objekty, které mohou zpracovat žádost?</p>
+</li>
+<li><p>Řešení</p>
+<p>Vzor <code>Chain of Responsibility</code> řeší tento problém tím, že vytváří řetězec objektů, které mohou zpracovat požadavek.</p>
+<p>Každý objekt v řetězci má odkaz na následující objekt v řetězci.</p>
+<p>Když objekt obdrží požadavek, může buď zpracovat požadavek, nebo předat požadavek dalšímu objektu v řetězci.</p>
+<p>Výhody vzoru <code>Chain of Responsibility</code>:</p>
+<ul>
+<li>Umožňuje snadné přidávání nebo odebírání objektů v řetězci.</li>
+<li>Umožňuje objektům zpracovat požadavek, aniž by klient musel znát vnitřní strukturu řetězce.</li>
+</ul>
+</li>
+</ul>
+<p>Příklad:</p>
+<pre><code class="lang-csharp">// Rozhraní pro zpracovatele požadavků
+public abstract class Handler
+{
+    protected Handler nextHandler;
+
+    public void SetNextHandler(Handler handler)
+    {
+        nextHandler = handler;
+    }
+
+    public abstract void HandleRequest(string request);
+}
+
+// Konkrétní zpracovatel - Manažer
+public class Manager : Handler
+{
+    public override void HandleRequest(string request)
+    {
+        if (request == &quot;Sleva&quot;)
+        {
+            Console.WriteLine(&quot;Manažer zpracovává žádost o slevu.&quot;);
+        }
+        else if (nextHandler != null)
+        {
+            nextHandler.HandleRequest(request);
+        }
+    }
+}
+
+// Konkrétní zpracovatel - Vedoucí oddělení
+public class DepartmentHead : Handler
+{
+    public override void HandleRequest(string request)
+    {
+        if (request == &quot;Sleva&quot;)
+        {
+            Console.WriteLine(&quot;Vedoucí oddělení zpracovává žádost o slevu.&quot;);
+        }
+        else if (nextHandler != null)
+        {
+            nextHandler.HandleRequest(request);
+        }
+    }
+}
+
+// Konkrétní zpracovatel - Ředitel
+public class Director : Handler
+{
+    public override void HandleRequest(string request)
+    {
+        if (request == &quot;Sleva&quot;)
+        {
+            Console.WriteLine(&quot;Ředitel zpracovává žádost o slevu.&quot;);
+        }
+        else if (nextHandler != null)
+        {
+            nextHandler.HandleRequest(request);
+        }
+    }
+}
+
+// Klientský kód
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Vytvoření zpracovatelů
+        Handler manager = new Manager();
+        Handler departmentHead = new DepartmentHead();
+        Handler director = new Director();
+
+        // Nastavení řetězce zpracovatelů
+        manager.SetNextHandler(departmentHead);
+        departmentHead.SetNextHandler(director);
+
+        // Odeslání žádosti
+        manager.HandleRequest(&quot;Sleva&quot;);
+    }
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Command</span></summary>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Zaměřuje se na <strong>zapouzdření požadavku jako objekt</strong>.</p>
+<p>Používá se, když je potřeba zapouzdřit požadavek jako objekt.</p>
+</div>
+<ul>
+<li><p>Problém</p>
+<p>Představte si, že máte aplikaci pro ovládání domácího zařízení.</p>
+<p>Každé zařízení má několik funkcí, které mohou být spuštěny pomocí tlačítek na dálkovém ovladači.</p>
+<p>Jak můžete implementovat tento systém tak, aby bylo možné snadno přidávat nebo odebírat funkce?</p>
+</li>
+<li><p>Řešení</p>
+<p>Vzor <code>Command</code> řeší tento problém tím, že zapouzdřuje požadavek jako objekt.</p>
+<p>Každý objekt představuje jednu funkci a obsahuje metodu pro spuštění této funkce.</p>
+<p>Když uživatel stiskne tlačítko na dálkovém ovladači, aplikace vytvoří objekt pro tuto funkci a spustí metodu pro spuštění této funkce.</p>
+<p>Výhody vzoru <code>Command</code>:</p>
+<ul>
+<li>Umožňuje snadné přidávání nebo odebírání funkcí.</li>
+<li>Umožňuje zapouzdřit požadavek jako objekt.</li>
+</ul>
+</li>
+</ul>
+<p>Příklad:</p>
+<pre><code class="lang-csharp">// Rozhraní pro příkaz
+public interface ICommand
+{
+    void Execute();
+}
+
+// Konkrétní příkaz pro zapnutí světla
+public class LightOnCommand : ICommand
+{
+    private Light _light;
+
+    public LightOnCommand(Light light)
+    {
+        _light = light;
+    }
+
+    public void Execute()
+    {
+        _light.On();
+    }
+}
+
+// Konkrétní příkaz pro vypnutí světla
+public class LightOffCommand : ICommand
+{
+    private Light _light;
+
+    public LightOffCommand(Light light)
+    {
+        _light = light;
+    }
+
+    public void Execute()
+    {
+        _light.Off();
+    }
+}
+
+// Přijímač - Světlo
+public class Light
+{
+    public void On()
+    {
+        Console.WriteLine(&quot;Světlo je zapnuté.&quot;);
+    }
+
+    public void Off()
+    {
+        Console.WriteLine(&quot;Světlo je vypnuté.&quot;);
+    }
+}
+
+// Invoker - Dálkový ovladač
+public class RemoteControl
+{
+    private ICommand _command;
+
+    public void SetCommand(ICommand command)
+    {
+        _command = command;
+    }
+
+    public void PressButton()
+    {
+        _command.Execute();
+    }
+}
+
+// Klientský kód
+class Program
+{
+    static void Main(string[] args)
+    {
+        Light livingRoomLight = new Light();
+        ICommand lightOn = new LightOnCommand(livingRoomLight);
+        ICommand lightOff = new LightOffCommand(livingRoomLight);
+
+        RemoteControl remote = new RemoteControl();
+
+        // Zapnutí světla
+        remote.SetCommand(lightOn);
+        remote.PressButton();
+
+        // Vypnutí světla
+        remote.SetCommand(lightOff);
+        remote.PressButton();
+    }
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Iterator</span></summary>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Zaměřuje se na <strong>poskytnutí způsobu, jak přistupovat k prvkům kolekce bez odhalení její vnitřní reprezentace</strong>.</p>
+<p>Používá se, když je potřeba přistupovat k prvkům kolekce bez odhalení její vnitřní reprezentace.</p>
+</div>
+<ul>
+<li><p>Problém</p>
+<p>Představte si, že máte kolekci prvků, například seznam knih.</p>
+<p>Jak můžete implementovat způsob, jak přistupovat k prvkům této kolekce, aniž byste museli znát vnitřní reprezentaci kolekce?</p>
+</li>
+<li><p>Řešení</p>
+<p>Vzor <code>Iterator</code> řeší tento problém tím, že poskytuje způsob, jak přistupovat k prvkům kolekce bez odhalení její vnitřní reprezentace.</p>
+<p>Každá kolekce má svůj vlastní iterátor, který poskytuje metody pro přístup k prvkům kolekce.</p>
+<p>Výhody vzoru <code>Iterator</code>:</p>
+<ul>
+<li>Umožňuje přistupovat k prvkům kolekce bez odhalení její vnitřní reprezentace.</li>
+<li>Umožňuje iterovat přes prvky kolekce bez znalosti vnitřní struktury kolekce.</li>
+</ul>
+</li>
+</ul>
+<p>Příklad:</p>
+<pre><code class="lang-csharp">// Rozhraní pro iterátor
+public interface IIterator
+{
+    bool HasNext();
+    object Next();
+}
+
+// Rozhraní pro kolekci
+public interface IAggregate
+{
+    IIterator CreateIterator();
+}
+
+// Konkrétní kolekce - Knihovna
+public class Library : IAggregate
+{
+    private List&lt;string&gt; books = new List&lt;string&gt;();
+
+    public void AddBook(string book)
+    {
+        books.Add(book);
+    }
+
+    public IIterator CreateIterator()
+    {
+        return new LibraryIterator(books);
+    }
+}
+
+// Konkrétní iterátor - Iterátor knihovny
+public class LibraryIterator : IIterator
+{
+    private List&lt;string&gt; books;
+    private int position = 0;
+
+    public LibraryIterator(List&lt;string&gt; books)
+    {
+        this.books = books;
+    }
+
+    public bool HasNext()
+    {
+        return position &lt; books.Count;
+    }
+
+    public object Next()
+    {
+        if (this.HasNext())
+        {
+            return books[position++];
+        }
+        else
+        {
+            return null;
+        }
+    }
+}
+
+// Klientský kód
+class Program
+{
+    static void Main(string[] args)
+    {
+        Library library = new Library();
+        library.AddBook(&quot;Kniha 1&quot;);
+        library.AddBook(&quot;Kniha 2&quot;);
+        library.AddBook(&quot;Kniha 3&quot;);
+
+        IIterator iterator = library.CreateIterator();
+
+        while (iterator.HasNext())
+        {
+            string book = (string)iterator.Next();
+            Console.WriteLine(book);
+        }
+    }
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Mediator</span></summary>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Zaměřuje se na <strong>definování objektu, který zprostředkovává komunikaci mezi objekty</strong>.</p>
+<p>Používá se, když je potřeba definovat objekt, který zprostředkovává komunikaci mezi objekty.</p>
+</div>
+<ul>
+<li><p>Problém</p>
+<p>Představte si, že máte aplikaci pro chatování, která umožňuje uživatelům posílat zprávy mezi sebou.</p>
+<p>Každý uživatel může poslat zprávu jinému uživateli.</p>
+<p>Jak můžete implementovat tento systém tak, aby uživatelé mohli posílat zprávy mezi sebou, aniž by museli znát identitu jiných uživatelů?</p>
+</li>
+<li><p>Řešení</p>
+<p>Vzor <code>Mediator</code> řeší tento problém tím, že definuje objekt, který zprostředkovává komunikaci mezi objekty.</p>
+<p>Každý objekt v systému komunikuje pouze s tímto objektem, který zprostředkovává komunikaci.</p>
+<p>Když objekt chce poslat zprávu jinému objektu, pošle zprávu tomuto objektu prostřednictvím objektu mediátoru.</p>
+<p>Výhody vzoru <code>Mediator</code>:</p>
+<ul>
+<li>Umožňuje objektům komunikovat mezi sebou, aniž by musely znát identitu jiných objektů.</li>
+<li>Umožňuje snadné přidávání nebo odebírání objektů v systému.</li>
+</ul>
+</li>
+</ul>
+<p>Příklad:</p>
+<pre><code class="lang-csharp">// Rozhraní pro mediátora
+public interface IMediator
+{
+    void SendMessage(string message, Colleague colleague);
+}
+
+// Abstraktní třída pro kolegy
+public abstract class Colleague
+{
+    protected IMediator mediator;
+
+    public Colleague(IMediator mediator)
+    {
+        this.mediator = mediator;
+    }
+}
+
+// Konkrétní třída pro kolegu A
+public class ColleagueA : Colleague
+{
+    public ColleagueA(IMediator mediator) : base(mediator) { }
+
+    public void Send(string message)
+    {
+        Console.WriteLine(&quot;ColleagueA posílá zprávu: &quot; + message);
+        mediator.SendMessage(message, this);
+    }
+
+    public void Receive(string message)
+    {
+        Console.WriteLine(&quot;ColleagueA přijímá zprávu: &quot; + message);
+    }
+}
+
+// Konkrétní třída pro kolegu B
+public class ColleagueB : Colleague
+{
+    public ColleagueB(IMediator mediator) : base(mediator) { }
+
+    public void Send(string message)
+    {
+        Console.WriteLine(&quot;ColleagueB posílá zprávu: &quot; + message);
+        mediator.SendMessage(message, this);
+    }
+
+    public void Receive(string message)
+    {
+        Console.WriteLine(&quot;ColleagueB přijímá zprávu: &quot; + message);
+    }
+}
+
+// Konkrétní třída pro mediátora
+public class ConcreteMediator : IMediator
+{
+    public ColleagueA ColleagueA { get; set; }
+    public ColleagueB ColleagueB { get; set; }
+
+    public void SendMessage(string message, Colleague colleague)
+    {
+        if (colleague == ColleagueA)
+        {
+            ColleagueB.Receive(message);
+        }
+        else
+        {
+            ColleagueA.Receive(message);
+        }
+    }
+}
+
+// Klientský kód
+class Program
+{
+    static void Main(string[] args)
+    {
+        ConcreteMediator mediator = new ConcreteMediator();
+
+        ColleagueA colleagueA = new ColleagueA(mediator);
+        ColleagueB colleagueB = new ColleagueB(mediator);
+
+        mediator.ColleagueA = colleagueA;
+        mediator.ColleagueB = colleagueB;
+
+        colleagueA.Send(&quot;Ahoj B!&quot;);
+        colleagueB.Send(&quot;Ahoj A!&quot;);
+    }
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Memento</span></summary>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Zaměřuje se na <strong>uchování a obnovení stavu objektu</strong>.</p>
+<p>Používá se, když je potřeba uchovat a obnovit stav objektu.</p>
+</div>
+<ul>
+<li><p>Problém</p>
+<p>Představte si, že máte aplikaci pro kreslení, která umožňuje uživatelům kreslit různé tvary.</p>
+<p>Uživatel může měnit barvu, velikost nebo polohu tvaru.</p>
+<p>Jak můžete implementovat způsob, jak uživatel může vrátit změny, kter</p>
+</li>
+<li><p>Řešení</p>
+<p>Vzor <code>Memento</code> řeší tento problém tím, že uchovává stav objektu a umožňuje obnovit tento stav.</p>
+<p>Memento je objekt, který uchovává stav objektu.</p>
+<p>Originátor je objekt, který uchovává memento.</p>
+<p>Když uživatel chce vrátit změny, aplikace obnoví stav objektu z memento.</p>
+<p>Výhody vzoru <code>Memento</code>:</p>
+<ul>
+<li>Umožňuje uchovat a obnovit stav objektu.</li>
+<li>Umožňuje vrátit změny, které byly provedeny na objektu.</li>
+</ul>
+</li>
+</ul>
+<p>Příklad:</p>
+<pre><code class="lang-csharp">// Rozhraní pro memento
+public interface IMemento
+{
+    string GetName();
+    string GetState();
+    DateTime GetDate();
+}
+
+// Konkrétní třída memento
+public class ConcreteMemento : IMemento
+{
+    private string _state;
+    private DateTime _date;
+
+    public ConcreteMemento(string state)
+    {
+        this._state = state;
+        this._date = DateTime.Now;
+    }
+
+    public string GetName()
+    {
+        return $&quot;{this._date} / ({this._state.Substring(0, 9)})...&quot;;
+    }
+
+    public string GetState()
+    {
+        return this._state;
+    }
+
+    public DateTime GetDate()
+    {
+        return this._date;
+    }
+}
+
+// Originátor, který vytváří a obnovuje memento
+public class Originator
+{
+    private string _state;
+
+    public Originator(string state)
+    {
+        this._state = state;
+    }
+
+    public void DoSomething()
+    {
+        this._state = Guid.NewGuid().ToString();
+    }
+
+    public IMemento Save()
+    {
+        return new ConcreteMemento(this._state);
+    }
+
+    public void Restore(IMemento memento)
+    {
+        if (!(memento is ConcreteMemento))
+        {
+            throw new Exception(&quot;Neplatné memento.&quot;);
+        }
+
+        this._state = memento.GetState();
+    }
+}
+
+// Správce, který spravuje mementa
+public class Caretaker
+{
+    private List&lt;IMemento&gt; _mementos = new List&lt;IMemento&gt;();
+    private Originator _originator = null;
+
+    public Caretaker(Originator originator)
+    {
+        this._originator = originator;
+    }
+
+    public void Backup()
+    {
+        this._mementos.Add(this._originator.Save());
+    }
+
+    public void Undo()
+    {
+        if (this._mementos.Count == 0)
+        {
+            return;
+        }
+
+        var memento = this._mementos.Last();
+        this._mementos.Remove(memento);
+
+        try
+        {
+            this._originator.Restore(memento);
+        }
+        catch (Exception)
+        {
+            this.Undo();
+        }
+    }
+
+    public void ShowHistory()
+    {
+        foreach (var memento in this._mementos)
+        {
+            Console.WriteLine(memento.GetName());
+        }
+    }
+}
+
+// Klientský kód
+class Program
+{
+    static void Main(string[] args)
+    {
+        Originator originator = new Originator(&quot;Počáteční stav&quot;);
+        Caretaker caretaker = new Caretaker(originator);
+
+        caretaker.Backup();
+        originator.DoSomething();
+
+        caretaker.Backup();
+        originator.DoSomething();
+
+        caretaker.Backup();
+        originator.DoSomething();
+
+        Console.WriteLine();
+        caretaker.ShowHistory();
+
+        Console.WriteLine(&quot;\nVrácení zpět:\n&quot;);
+        caretaker.Undo();
+        caretaker.Undo();
+    }
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Observer</span></summary>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Zaměřuje se na <strong>definování závislosti mezi objekty tak, aby když se změní stav jednoho objektu, všechny závislé objekty byly informovány a aktualizovány</strong>.</p>
+<p>Používá se, když je potřeba definovat závislosti mezi objekty tak, aby když se změní stav jednoho objektu, všechny závislé objekty byly informovány a aktualizovány.</p>
+</div>
+<ul>
+<li><p>Problém</p>
+<p>Představte si, že máte aplikaci pro sledování akcií na burze.</p>
+<p>Když se cena akcie změní, chcete aktualizovat všechny závislé objekty, například grafy nebo tabulky.</p>
+<p>Jak můžete implementovat způsob, jak informovat všechny závislé objekty, když se změní stav jednoho objektu?</p>
+</li>
+<li><p>Řešení</p>
+<p>Vzor <code>Observer</code> řeší tento problém tím, že definuje závislosti mezi objekty tak, aby když se změní stav jednoho objektu, všechny závislé objekty byly informovány a aktualizovány.</p>
+<p>Subject je objekt, který má seznam závislých objektů (Observerů).</p>
+<p>Když se změní stav Subjectu, Subject informuje všechny Observery a aktualizuje je.</p>
+<p>Výhody vzoru <code>Observer</code>:</p>
+<ul>
+<li>Umožňuje definovat závislosti mezi objekty.</li>
+<li>Umožňuje informovat všechny závislé objekty, když se změní stav jednoho objektu.</li>
+</ul>
+</li>
+</ul>
+<p>Příklad:</p>
+<pre><code class="lang-csharp">// Rozhraní pro pozorovatele
+public interface IObserver
+{
+    void Update(string message);
+}
+
+// Rozhraní pro subjekt
+public interface ISubject
+{
+    void Attach(IObserver observer);
+    void Detach(IObserver observer);
+    void Notify();
+}
+
+// Konkrétní subjekt
+public class Stock : ISubject
+{
+    private List&lt;IObserver&gt; _observers = new List&lt;IObserver&gt;();
+    private string _stockState;
+
+    public string StockState
+    {
+        get { return _stockState; }
+        set
+        {
+            _stockState = value;
+            Notify();
+        }
+    }
+
+    public void Attach(IObserver observer)
+    {
+        _observers.Add(observer);
+    }
+
+    public void Detach(IObserver observer)
+    {
+        _observers.Remove(observer);
+    }
+
+    public void Notify()
+    {
+        foreach (var observer in _observers)
+        {
+            observer.Update(_stockState);
+        }
+    }
+}
+
+// Konkrétní pozorovatel
+public class Investor : IObserver
+{
+    private string _name;
+
+    public Investor(string name)
+    {
+        _name = name;
+    }
+
+    public void Update(string message)
+    {
+        Console.WriteLine($&quot;Investor {_name} byl informován o změně: {message}&quot;);
+    }
+}
+
+// Klientský kód
+class Program
+{
+    static void Main(string[] args)
+    {
+        Stock stock = new Stock();
+        Investor investor1 = new Investor(&quot;Petr&quot;);
+        Investor investor2 = new Investor(&quot;Jana&quot;);
+
+        stock.Attach(investor1);
+        stock.Attach(investor2);
+
+        stock.StockState = &quot;Cena akcie vzrostla na 150 Kč&quot;;
+        stock.StockState = &quot;Cena akcie klesla na 120 Kč&quot;;
+    }
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">State</span></summary>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Zaměřuje se na <strong>definování objektu, který mění své chování na základě svého stavu</strong>.</p>
+<p>Používá se, když je potřeba definovat objekt, který mění své chování na základě svého stavu.</p>
+</div>
+<ul>
+<li><p>Problém</p>
+<p>Představte si, že máte aplikaci pro zpracování objednávek.</p>
+<p>Objednávka může mít různé stavy, například &quot;Nová&quot;, &quot;Zpracovává se&quot;, &quot;Odeslána&quot; nebo &quot;Doručena&quot;.</p>
+<p>Jak můžete implementovat způsob, jak objednávka mění svůj stav na základě událostí, které se vyskytují během zpracování objednávky?</p>
+</li>
+<li><p>Řešení</p>
+<p>Vzor <code>State</code> řeší tento problém tím, že definuje objekt, který mění své chování na základě svého stavu.</p>
+<p>State je rozhraní, které definuje metody pro změnu stavu objektu.</p>
+<p>Konkrétní stavy jsou třídy, které implementují rozhraní State a definují chování pro každý stav.</p>
+<p>Výhody vzoru <code>State</code>:</p>
+<ul>
+<li>Umožňuje definovat objekt, který mění své chování na základě svého stavu.</li>
+<li>Umožňuje snadné přidávání nebo odebírání stavů.</li>
+<li>Umožňuje snadné rozšíření objektu o nové stavy.</li>
+<li>Umožňuje snadné testování objektu v různých stavech.</li>
+</ul>
+</li>
+</ul>
+<p>Příklad:</p>
+<pre><code class="lang-csharp">// Rozhraní pro stav
+public interface IOrderState
+{
+    void Handle(OrderContext context);
+}
+
+// Konkrétní stav - Nová objednávka
+public class NewOrderState : IOrderState
+{
+    public void Handle(OrderContext context)
+    {
+        Console.WriteLine(&quot;Objednávka je nyní v stavu: Nová&quot;);
+        context.SetState(new ProcessingOrderState());
+    }
+}
+
+// Konkrétní stav - Zpracovává se
+public class ProcessingOrderState : IOrderState
+{
+    public void Handle(OrderContext context)
+    {
+        Console.WriteLine(&quot;Objednávka je nyní v stavu: Zpracovává se&quot;);
+        context.SetState(new ShippedOrderState());
+    }
+}
+
+// Konkrétní stav - Odeslána
+public class ShippedOrderState : IOrderState
+{
+    public void Handle(OrderContext context)
+    {
+        Console.WriteLine(&quot;Objednávka je nyní v stavu: Odeslána&quot;);
+        context.SetState(new DeliveredOrderState());
+    }
+}
+
+// Konkrétní stav - Doručena
+public class DeliveredOrderState : IOrderState
+{
+    public void Handle(OrderContext context)
+    {
+        Console.WriteLine(&quot;Objednávka je nyní v stavu: Doručena&quot;);
+    }
+}
+
+// Kontext objednávky
+public class OrderContext
+{
+    private IOrderState _state;
+
+    public OrderContext()
+    {
+        _state = new NewOrderState();
+    }
+
+    public void SetState(IOrderState state)
+    {
+        _state = state;
+    }
+
+    public void Request()
+    {
+        _state.Handle(this);
+    }
+}
+
+// Klientský kód
+class Program
+{
+    static void Main(string[] args)
+    {
+        OrderContext order = new OrderContext();
+        order.Request(); // Nová -&gt; Zpracovává se
+        order.Request(); // Zpracovává se -&gt; Odeslána
+        order.Request(); // Odeslána -&gt; Doručena
+        order.Request(); // Doručena
+    }
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Strategy</span></summary>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Zaměřuje se na <strong>definování rodiny algoritmů, zapouzdření každého algoritmu a jejich vzájemnou výměnu</strong>.</p>
+<p>Používá se, když je potřeba definovat rodinu algoritmů, zapouzdřit každý algoritmus a umožnit jejich vzájemnou výměnu.</p>
+</div>
+<ul>
+<li><p>Problém</p>
+<p>Představte si, že máte aplikaci pro třídění seznamu čísel.</p>
+<p>Chcete umožnit uživatelům vybrat algoritmus třídění, který chtějí použít, například Bubble Sort, Quick Sort nebo Merge Sort.</p>
+<p>Jak můžete implementovat způsob, jak umožnit uživatelům vybrat algoritmus třídění a snadno změnit algoritmus třídění?</p>
+</li>
+<li><p>Řešení</p>
+<p>Vzor <code>Strategy</code> řeší tento problém tím, že definuje rodinu algoritmů, zapouzdřuje každý algoritmus a umožňuje jejich vzájemnou výměnu.</p>
+<p>Strategy je rozhraní, které definuje metodu pro provedení algoritmu.</p>
+<p>Konkrétní strategie jsou třídy, které implementují rozhraní Strategy a definují algoritmus.</p>
+<p>Context je třída, která obsahuje strategii a volá metodu pro provedení algoritmu.</p>
+<p>Výhody vzoru <code>Strategy</code>:</p>
+<ul>
+<li>Umožňuje definovat rodinu algoritmů.</li>
+<li>Umožňuje zapouzdřit každý algoritmus.</li>
+<li>Umožňuje snadnou výměnu algoritmů.</li>
+<li>Umožňuje snadné testování algoritmů.</li>
+</ul>
+</li>
+</ul>
+<p>Příklad:</p>
+<pre><code class="lang-csharp">// Rozhraní pro strategii
+public interface ISortingStrategy
+{
+    void Sort(List&lt;int&gt; list);
+}
+
+// Konkrétní strategie - Bubble Sort
+public class BubbleSort : ISortingStrategy
+{
+    public void Sort(List&lt;int&gt; list)
+    {
+        int n = list.Count;
+        for (int i = 0; i &lt; n - 1; i++)
+        {
+            for (int j = 0; j &lt; n - i - 1; j++)
+            {
+                if (list[j] &gt; list[j + 1])
+                {
+                    // Prohození prvků
+                    int temp = list[j];
+                    list[j] = list[j + 1];
+                    list[j + 1] = temp;
+                }
+            }
+        }
+        Console.WriteLine(&quot;Seřazeno pomocí Bubble Sort&quot;);
+    }
+}
+
+// Konkrétní strategie - Quick Sort
+public class QuickSort : ISortingStrategy
+{
+    public void Sort(List&lt;int&gt; list)
+    {
+        QuickSortHelper(list, 0, list.Count - 1);
+        Console.WriteLine(&quot;Seřazeno pomocí Quick Sort&quot;);
+    }
+
+    private void QuickSortHelper(List&lt;int&gt; list, int low, int high)
+    {
+        if (low &lt; high)
+        {
+            int pi = Partition(list, low, high);
+            QuickSortHelper(list, low, pi - 1);
+            QuickSortHelper(list, pi + 1, high);
+        }
+    }
+
+    private int Partition(List&lt;int&gt; list, int low, int high)
+    {
+        int pivot = list[high];
+        int i = (low - 1);
+        for (int j = low; j &lt; high; j++)
+        {
+            if (list[j] &lt; pivot)
+            {
+                i++;
+                int temp = list[i];
+                list[i] = list[j];
+                list[j] = temp;
+            }
+        }
+        int temp1 = list[i + 1];
+        list[i + 1] = list[high];
+        list[high] = temp1;
+        return i + 1;
+    }
+}
+
+// Kontext, který používá strategii
+public class SortingContext
+{
+    private ISortingStrategy _strategy;
+
+    public void SetStrategy(ISortingStrategy strategy)
+    {
+        _strategy = strategy;
+    }
+
+    public void SortList(List&lt;int&gt; list)
+    {
+        _strategy.Sort(list);
+    }
+}
+
+// Klientský kód
+class Program
+{
+    static void Main(string[] args)
+    {
+        List&lt;int&gt; list = new List&lt;int&gt; { 34, 7, 23, 32, 5, 62 };
+
+        SortingContext context = new SortingContext();
+
+        // Použití Bubble Sort
+        context.SetStrategy(new BubbleSort());
+        context.SortList(list);
+        Console.WriteLine(string.Join(&quot;, &quot;, list));
+
+        // Použití Quick Sort
+        list = new List&lt;int&gt; { 34, 7, 23, 32, 5, 62 };
+        context.SetStrategy(new QuickSort());
+        context.SortList(list);
+        Console.WriteLine(string.Join(&quot;, &quot;, list));
+    }
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Template Method</span></summary>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Zaměřuje se na <strong>definování kostry algoritmu v nadřazené třídě a delegování implementace jednotlivých kroků do podřazených tříd</strong>.</p>
+<p>Používá se, když je potřeba definovat kostru algoritmu v nadřazené třídě a delegovat implementaci jednotlivých kroků do podřazených tříd.</p>
+</div>
+<ul>
+<li><p>Problém</p>
+<p>Představte si, že máte aplikaci pro zpracování objednávek.</p>
+<p>Každá objednávka má několik kroků, například vytvoření objednávky, zpracování platby a odeslání objednávky.</p>
+<p>Jak můžete implementovat způsob, jak zpracovat objednávku tak, aby bylo možné snadno přidávat nebo odebírat kroky zpracování objednávky?</p>
+</li>
+<li><p>Řešení</p>
+<p>Vzor <code>Template Method</code> řeší tento problém tím, že definuje kostru algoritmu v nadřazené třídě a deleguje implementaci jednotlivých kroků do</p>
+<p>Template Method je metoda, která definuje kostru algoritmu a volá abstraktní metody pro implementaci jednotlivých kroků.</p>
+<p>Abstraktní metody jsou metody, které jsou implementovány v podřazených třídách.</p>
+<p>Výhody vzoru <code>Template Method</code>:</p>
+<ul>
+<li>Umožňuje definovat kostru algoritmu v nadřazené třídě.</li>
+<li>Umožňuje snadno přidávat nebo odebírat kroky zpracování objednávky.</li>
+<li>Umožňuje snadné testování jednotlivých kroků zpracování objednávky.</li>
+</ul>
+</li>
+</ul>
+<p>Příklad:</p>
+<pre><code class="lang-csharp">// Abstraktní třída definující kostru algoritmu
+public abstract class OrderProcessor
+{
+    // Template Method definující kostru algoritmu
+    public void ProcessOrder()
+    {
+        CreateOrder();
+        ProcessPayment();
+        ShipOrder();
+    }
+
+    // Abstraktní metody, které budou implementovány v podtřídách
+    protected abstract void CreateOrder();
+    protected abstract void ProcessPayment();
+    protected abstract void ShipOrder();
+}
+
+// Konkrétní třída implementující kroky algoritmu
+public class OnlineOrderProcessor : OrderProcessor
+{
+    protected override void CreateOrder()
+    {
+        Console.WriteLine(&quot;Vytvoření online objednávky.&quot;);
+    }
+
+    protected override void ProcessPayment()
+    {
+        Console.WriteLine(&quot;Zpracování platby online.&quot;);
+    }
+
+    protected override void ShipOrder()
+    {
+        Console.WriteLine(&quot;Odeslání online objednávky.&quot;);
+    }
+}
+
+// Konkrétní třída implementující kroky algoritmu
+public class InStoreOrderProcessor : OrderProcessor
+{
+    protected override void CreateOrder()
+    {
+        Console.WriteLine(&quot;Vytvoření objednávky v obchodě.&quot;);
+    }
+
+    protected override void ProcessPayment()
+    {
+        Console.WriteLine(&quot;Zpracování platby v obchodě.&quot;);
+    }
+
+    protected override void ShipOrder()
+    {
+        Console.WriteLine(&quot;Předání objednávky zákazníkovi v obchodě.&quot;);
+    }
+}
+
+// Klientský kód
+class Program
+{
+    static void Main(string[] args)
+    {
+        OrderProcessor onlineOrder = new OnlineOrderProcessor();
+        onlineOrder.ProcessOrder();
+
+        OrderProcessor inStoreOrder = new InStoreOrderProcessor();
+        inStoreOrder.ProcessOrder();
+    }
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Visitor</span></summary>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Zaměřuje se na <strong>definování operace, která bude aplikována na objekty v hierarchii objektů</strong>.</p>
+<p>Používá se, když je potřeba definovat operaci, která bude aplikována na objekty v hierarchii objektů.</p>
+</div>
+<ul>
+<li><p>Problém</p>
+<p>Představte si, že máte aplikaci pro zpracování dokumentů.</p>
+<p>Dokument může obsahovat různé prvky, například text, obrázky nebo tabulky.</p>
+<p>Jak můžete implementovat způsob, jak aplikovat operaci na všechny prvky dokumentu?</p>
+</li>
+<li><p>Řešení</p>
+<p>Vzor <code>Visitor</code> řeší tento problém tím, že definuje operaci, která bude aplikována na objekty v hierarchii objektů.</p>
+<p>Visitor je rozhraní, které definuje metodu pro každý typ objektu v hierarchii objektů.</p>
+<p>Konkrétní návštěvník je třída, která implementuje rozhraní Visitor a definuje operaci pro každý typ objektu.</p>
+<p>Element je třída, která obsahuje metodu Accept, která přijímá návštěvníka a volá metodu návštěvníka pro tento objekt.</p>
+<p>Výhody vzoru <code>Visitor</code>:</p>
+<ul>
+<li>Umožňuje definovat operaci, která bude aplikována na objekty v hierarchii objektů.</li>
+<li>Umožňuje snadné přidávání nebo odebírání operací.</li>
+<li>Umožňuje snadné rozšíření objektů o nové operace.</li>
+</ul>
+</li>
+</ul>
+<p>Příklad:</p>
+<pre><code class="lang-csharp">// Rozhraní pro návštěvníka
+public interface IVisitor
+{
+    void Visit(TextElement textElement);
+    void Visit(ImageElement imageElement);
+    void Visit(TableElement tableElement);
+}
+
+// Rozhraní pro prvek
+public interface IElement
+{
+    void Accept(IVisitor visitor);
+}
+
+// Konkrétní prvek - Text
+public class TextElement : IElement
+{
+    public string Text { get; set; }
+
+    public TextElement(string text)
+    {
+        Text = text;
+    }
+
+    public void Accept(IVisitor visitor)
+    {
+        visitor.Visit(this);
+    }
+}
+
+// Konkrétní prvek - Obrázek
+public class ImageElement : IElement
+{
+    public string ImagePath { get; set; }
+
+    public ImageElement(string imagePath)
+    {
+        ImagePath = imagePath;
+    }
+
+    public void Accept(IVisitor visitor)
+    {
+        visitor.Visit(this);
+    }
+}
+
+// Konkrétní prvek - Tabulka
+public class TableElement : IElement
+{
+    public string[,] Table { get; set; }
+
+    public TableElement(string[,] table)
+    {
+        Table = table;
+    }
+
+    public void Accept(IVisitor visitor)
+    {
+        visitor.Visit(this);
+    }
+}
+
+// Konkrétní návštěvník - vykreslení prvků
+public class RenderVisitor : IVisitor
+{
+    public void Visit(TextElement textElement)
+    {
+        Console.WriteLine(&quot;Vykreslení textu: &quot; + textElement.Text);
+    }
+
+    public void Visit(ImageElement imageElement)
+    {
+        Console.WriteLine(&quot;Vykreslení obrázku: &quot; + imageElement.ImagePath);
+    }
+
+    public void Visit(TableElement tableElement)
+    {
+        Console.WriteLine(&quot;Vykreslení tabulky:&quot;);
+        for (int i = 0; i &lt; tableElement.Table.GetLength(0); i++)
+        {
+            for (int j = 0; j &lt; tableElement.Table.GetLength(1); j++)
+            {
+                Console.Write(tableElement.Table[i, j] + &quot;\t&quot;);
+            }
+            Console.WriteLine();
+        }
+    }
+}
+
+// Klientský kód
+class Program
+{
+    static void Main(string[] args)
+    {
+        List&lt;IElement&gt; elements = new List&lt;IElement&gt;
+        {
+            new TextElement(&quot;Ahoj světe&quot;),
+            new ImageElement(&quot;/path/to/image.png&quot;),
+            new TableElement(new string[,] { { &quot;A&quot;, &quot;B&quot; }, { &quot;C&quot;, &quot;D&quot; } })
+        };
+
+        IVisitor renderVisitor = new RenderVisitor();
+
+        foreach (var element in elements)
+        {
+            element.Accept(renderVisitor);
+        }
     }
 }
 </code></pre>

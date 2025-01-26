@@ -274,6 +274,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/2gaLgutVIR.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/2gaLgutVIR.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/32ntGCZMUJ.png",
       "output": {
         "resource": {
@@ -324,10 +334,60 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/7Biis7dol1.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/7Biis7dol1.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/7NaF0iqhX4.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/7NaF0iqhX4.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/A2q5GRgncw.png",
       "output": {
         "resource": {
           "relative_path": "images/A2q5GRgncw.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/A6QaLVyhyO.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/A6QaLVyhyO.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/DI1aOl6eDo.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/DI1aOl6eDo.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/FGHnDA1tNp.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/FGHnDA1tNp.png"
         }
       },
       "version": ""
@@ -348,6 +408,36 @@
       "output": {
         "resource": {
           "relative_path": "images/GhlBCozwaQ.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/HV5zUWuMiu.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/HV5zUWuMiu.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/IN3lzoSUMT.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/IN3lzoSUMT.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/NqjNbekRF2.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/NqjNbekRF2.png"
         }
       },
       "version": ""
@@ -404,6 +494,36 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/XKFGaxW3GC.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/XKFGaxW3GC.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/Z4EPv2avqi.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/Z4EPv2avqi.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/cFT7edPhap.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/cFT7edPhap.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/changelog-config-noEmojis.js",
       "output": {
         "resource": {
@@ -434,10 +554,90 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/gddGxGy2O7.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/gddGxGy2O7.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/gwMfzQMOvC.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/gwMfzQMOvC.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/hJGmbHsLeI.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/hJGmbHsLeI.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/ierpy4lHJC.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/ierpy4lHJC.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/lRCeGcyyCN.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/lRCeGcyyCN.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/lhkGBjJ7SB.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/lhkGBjJ7SB.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/lkjf3DXNjN.png",
       "output": {
         "resource": {
           "relative_path": "images/lkjf3DXNjN.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/o5mZ6uXeRR.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/o5mZ6uXeRR.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/oXiTjeGZYK.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/oXiTjeGZYK.png"
         }
       },
       "version": ""
@@ -618,6 +818,16 @@
       "output": {
         "resource": {
           "relative_path": "images/wNNBV4Lsm4.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/wVLtmuFEWr.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/wVLtmuFEWr.png"
         }
       },
       "version": ""
