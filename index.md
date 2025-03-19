@@ -1,7 +1,10 @@
 Changelog
+## 2025-03-19
+  - 📝 přidání dokumentu o vývojových vzorech
 ## 2025-01-26
   - 📝 aktualizace dokumentace design patterns
   - ✨ přidání dokumentace k návrhovým vzorům (docs)
+  - 🔧 update changelog
   - 🔧 update changelog
 ## 2025-01-25
   - 🔧 aktualizace GitHub Actions na verzi 4
