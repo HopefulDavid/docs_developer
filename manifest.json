@@ -1,5 +1,5 @@
 {
-  "source_base_path": "/home/runner/work/Docs_Developer/Docs_Developer",
+  "source_base_path": "/home/runner/work/docs_developer/docs_developer",
   "xrefmap": "xrefmap.yml",
   "files": [
     {
@@ -24,11 +24,11 @@
       "type": "Toc",
       "source_relative_path": "ai/toc.yml",
       "output": {
-        ".html": {
-          "relative_path": "ai/toc.html"
-        },
         ".json": {
           "relative_path": "ai/toc.json"
+        },
+        ".html": {
+          "relative_path": "ai/toc.html"
         }
       },
       "version": ""
@@ -87,11 +87,11 @@
       "type": "Toc",
       "source_relative_path": "database/toc.yml",
       "output": {
-        ".html": {
-          "relative_path": "database/toc.html"
-        },
         ".json": {
           "relative_path": "database/toc.json"
+        },
+        ".html": {
+          "relative_path": "database/toc.html"
         }
       },
       "version": ""
@@ -110,11 +110,11 @@
       "type": "Toc",
       "source_relative_path": "graphics/toc.yml",
       "output": {
-        ".html": {
-          "relative_path": "graphics/toc.html"
-        },
         ".json": {
           "relative_path": "graphics/toc.json"
+        },
+        ".html": {
+          "relative_path": "graphics/toc.html"
         }
       },
       "version": ""
@@ -143,11 +143,11 @@
       "type": "Toc",
       "source_relative_path": "ide/toc.yml",
       "output": {
-        ".html": {
-          "relative_path": "ide/toc.html"
-        },
         ".json": {
           "relative_path": "ide/toc.json"
+        },
+        ".html": {
+          "relative_path": "ide/toc.html"
         }
       },
       "version": ""
@@ -886,11 +886,11 @@
       "type": "Toc",
       "source_relative_path": "network/toc.yml",
       "output": {
-        ".html": {
-          "relative_path": "network/toc.html"
-        },
         ".json": {
           "relative_path": "network/toc.json"
+        },
+        ".html": {
+          "relative_path": "network/toc.html"
         }
       },
       "version": ""
@@ -919,11 +919,11 @@
       "type": "Toc",
       "source_relative_path": "operatingSystem/toc.yml",
       "output": {
-        ".html": {
-          "relative_path": "operatingSystem/toc.html"
-        },
         ".json": {
           "relative_path": "operatingSystem/toc.json"
+        },
+        ".html": {
+          "relative_path": "operatingSystem/toc.html"
         }
       },
       "version": ""
@@ -959,6 +959,16 @@
       "version": ""
     },
     {
+      "type": "Resource",
+      "source_relative_path": "pdf/dev_design_patterns.pdf",
+      "output": {
+        "resource": {
+          "relative_path": "pdf/dev_design_patterns.pdf"
+        }
+      },
+      "version": ""
+    },
+    {
       "type": "Conceptual",
       "source_relative_path": "programming/appcast.md",
       "output": {
@@ -974,6 +984,16 @@
       "output": {
         ".html": {
           "relative_path": "programming/designPatterns.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/developmentPatterns.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/developmentPatterns.html"
         }
       },
       "version": ""
@@ -1172,11 +1192,11 @@
       "type": "Toc",
       "source_relative_path": "programming/toc.yml",
       "output": {
-        ".html": {
-          "relative_path": "programming/toc.html"
-        },
         ".json": {
           "relative_path": "programming/toc.json"
+        },
+        ".html": {
+          "relative_path": "programming/toc.html"
         }
       },
       "version": ""
@@ -1285,11 +1305,11 @@
       "type": "Toc",
       "source_relative_path": "teamwork/toc.yml",
       "output": {
-        ".html": {
-          "relative_path": "teamwork/toc.html"
-        },
         ".json": {
           "relative_path": "teamwork/toc.json"
+        },
+        ".html": {
+          "relative_path": "teamwork/toc.html"
         }
       },
       "version": ""
@@ -1298,11 +1318,11 @@
       "type": "Toc",
       "source_relative_path": "toc.yml",
       "output": {
-        ".html": {
-          "relative_path": "toc.html"
-        },
         ".json": {
           "relative_path": "toc.json"
+        },
+        ".html": {
+          "relative_path": "toc.html"
         }
       },
       "version": ""
@@ -1371,11 +1391,11 @@
       "type": "Toc",
       "source_relative_path": "vcs/toc.yml",
       "output": {
-        ".html": {
-          "relative_path": "vcs/toc.html"
-        },
         ".json": {
           "relative_path": "vcs/toc.json"
+        },
+        ".html": {
+          "relative_path": "vcs/toc.html"
         }
       },
       "version": ""
@@ -1394,11 +1414,11 @@
       "type": "Toc",
       "source_relative_path": "video/toc.yml",
       "output": {
-        ".html": {
-          "relative_path": "video/toc.html"
-        },
         ".json": {
           "relative_path": "video/toc.json"
+        },
+        ".html": {
+          "relative_path": "video/toc.html"
         }
       },
       "version": ""
@@ -1427,11 +1447,11 @@
       "type": "Toc",
       "source_relative_path": "virtualization/toc.yml",
       "output": {
-        ".html": {
-          "relative_path": "virtualization/toc.html"
-        },
         ".json": {
           "relative_path": "virtualization/toc.json"
+        },
+        ".html": {
+          "relative_path": "virtualization/toc.html"
         }
       },
       "version": ""
