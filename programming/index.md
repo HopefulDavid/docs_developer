@@ -1,4 +1,6 @@
-﻿> [!WARNING]
+﻿Jakou platformu vybrat?
+
+> [!WARNING]
 > Informace níže jsou pouze orientační!
 
 <details>

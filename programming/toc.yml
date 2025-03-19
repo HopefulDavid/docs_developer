@@ -1,5 +1,7 @@
 - name: Techniky a koncepty
   items:
+    - name: Vývojové vzory
+      href: developmentPatterns.md
     - name: Techniky
       href: techniques.md
     - name: Návrhové vzory
