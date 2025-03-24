@@ -1,6 +1,9 @@
 Changelog
+## 2025-03-24
+  - 🐛 odstranění sekce o návrhových vzorech kdy vznikla duplikace (docs)
 ## 2025-03-19
   - 📝 přidání dokumentu o vývojových vzorech
+  - 🔧 update changelog
 ## 2025-01-26
   - 📝 aktualizace dokumentace design patterns
   - ✨ přidání dokumentace k návrhovým vzorům (docs)
