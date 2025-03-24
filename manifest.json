@@ -980,16 +980,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "programming/designPatterns.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/designPatterns.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "programming/developmentPatterns.md",
       "output": {
         ".html": {
