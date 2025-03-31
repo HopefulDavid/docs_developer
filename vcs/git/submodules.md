@@ -2,15 +2,14 @@
 
 Umožňuje vložit jeden Git repozitář do jiného jako podadresář, přičemž si oba repozitáře zachovávají nezávislost.
 
-## Co jsou Git Submodules
-
 Submoduly řeší problém, kdy potřebujete:
 
 - Zahrnout externí kód do svého projektu
 - Udržovat přesnou verzi závislostí
 - Pracovat na více souvisejících projektech současně
 
-## Základní struktura
+<details>
+<summary><span style="color:#1E90FF;">Základní struktura</span></summary>
 
 ```plaintext
 HlavniProjekt/
@@ -21,7 +20,12 @@ HlavniProjekt/
       └── .git/              # Samostatný git repozitář
 ```
 
-## Základní příkazy
+</details>
+
+---
+
+<details>
+<summary><span style="color:#1E90FF;">Základní příkazy</span></summary>
 
 ### Přidání submodulu
 
@@ -57,7 +61,12 @@ git add cesta/k/submodulu
 git commit -m "Aktualizován submodul na nejnovější verzi"
 ```
 
-## Praktický příklad použití v Unity projektu
+</details>
+
+---
+
+<details>
+<summary><span style="color:#1E90FF;">Praktický příklad použití v Unity projektu</span></summary>
 
 ### Vhodná struktura
 
@@ -88,7 +97,12 @@ git submodule add https://github.com/author/ui-framework Assets/Plugins/UI-Frame
 git submodule add https://github.com/author/network-lib Assets/Plugins/Network
 ```
 
-## Tipy pro práci se submoduly
+</details>
+
+---
+
+<details>
+<summary><span style="color:#1E90FF;">Tipy pro práci se submoduly</span></summary>
 
 1. **Přepínání mezi verzemi**
    ```bash
@@ -123,7 +137,12 @@ git submodule add https://github.com/author/network-lib Assets/Plugins/Network
    git commit -m "Odstraněn submodul"
    ```
 
-## Časté problémy a řešení
+</details>
+
+---
+
+<details>
+<summary><span style="color:#1E90FF;">Časté problémy a řešení</span></summary>
 
 1. **Submodul v "detached HEAD" stavu**
    ```bash
@@ -147,14 +166,21 @@ git submodule add https://github.com/author/network-lib Assets/Plugins/Network
    git submodule status
    ```
 
-## Výhody submodulů
+</details>
 
+---
+
+<details>
+<summary><span style="color:#1E90FF;">Výhody a nevýhody</span></summary>
+
+### Výhody submodulů
 - Přesná kontrola verzí externích knihoven
 - Možnost přímo upravovat a přispívat do závislostí
 - Lepší organizace kódu v komplexních projektech
 
-## Nevýhody submodulů
-
+### Nevýhody submodulů
 - Vyšší složitost správy repozitáře
 - Nutnost vždy aktualizovat hlavní repozitář po změnách v submodulech
 - Strmější učící křivka pro nové členy týmu
+
+</details>
