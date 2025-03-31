@@ -65,6 +65,11 @@ pause
 
 ### Defragmentace disku
 
+> [!NOTE]
+> Windows 10 a novější automaticky spouští TRIM na SSD discích jednou týdně. Ruční optimalizace SSD není běžně potřeba, pokud je zapnuté automatické plánování (výchozí nastavení).
+>
+> U HDD je doporučeno provádět defragmentaci jednou měsíčně.
+
 Tento příkaz **optimalizuje disky "C:" a "D:" podle jejich typu**.
 
 ```cmd
