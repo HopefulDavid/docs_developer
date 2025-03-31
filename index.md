@@ -1,6 +1,12 @@
 Changelog
 ## 2025-03-31
+  - 📝 aktualizace dokumentace Git Flow
+  - 📝 aktualizace dokumentace pro Git submoduly
+  - 📝 aktualizace dokumentace pro příkazy Pandoc
+  - 📝 aktualizace sekce optimalizace disků
+  - 📝 přidání mezery pro lepší čitelnost (cmd)
   - ✨ přidání sekce o defragmentaci disku (cmd)
+  - 📝 přidání tipů pro defragmentaci disku (cmd)
   - ✨ přidání dokumentace pro Doxygen (dokumentace)
   - ✨ přidání dokumentace pro Pandoc (dokumentace)
   - ✨ aktualizace dokumentace pro vypnutí pravidla 'no_logic_in_create_state' (Flutter)
@@ -10,6 +16,8 @@ Changelog
   - ✨ Zahrnuje detaily o struktuře složek a souboru `shared_preferences.json`. (Flutter)
   - ✨ přidání dokumentace k submodulům pro Git
   - ✨ přidání dokumentace pro Git Flow
+  - 🔧 update changelog
+  - 📝 vylepšení struktury dokumentace Doxygen
 ## 2025-03-24
   - 🐛 odstranění sekce o návrhových vzorech kdy vznikla duplikace (docs)
   - 🔧 update changelog
