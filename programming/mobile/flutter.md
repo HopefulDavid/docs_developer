@@ -90,7 +90,7 @@ flutter run
 
 </details>
 
-#### Záloha a obnova
+#### Záloha/Obnova a ukládání dat
 
 <details>
 <summary><span style="color:#1E90FF;">Umístění aplikačních dat</span></summary>
