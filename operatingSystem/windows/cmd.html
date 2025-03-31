@@ -123,7 +123,14 @@ Microsoft SQL Server.</p>
 <p>(To umožňuje uživateli vidět výsledky před tím, než se okno zavře.)</p>
 </div>
 </details>
-<h3 id="defragmentace-disku">Defragmentace disku</h3>
+<h3 id="windows-optimalizace">Windows optimalizace</h3>
+<details>
+<summary><span style="color:#1E90FF;">Optimalizace disků</span></summary>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Windows 10 a novější automaticky spouští TRIM na SSD discích jednou týdně. Ruční optimalizace SSD není běžně potřeba, pokud je zapnuté automatické plánování (výchozí nastavení).</p>
+<p>U HDD je doporučeno provádět defragmentaci jednou měsíčně.</p>
+</div>
 <p>Tento příkaz <strong>optimalizuje disky &quot;C:&quot; a &quot;D:&quot; podle jejich typu</strong>.</p>
 <pre><code class="lang-cmd">defrag C: D: /O
 </code></pre>
@@ -139,8 +146,8 @@ Microsoft SQL Server.</p>
 </li>
 </ul>
 <hr>
-<p><strong>🔹 Co přesně se stane po spuštění?</strong>
-1️⃣ <strong>SSD (C:)</strong></p>
+<p><strong>🔹 Co přesně se stane po spuštění?</strong></p>
+<p>1️⃣ <strong>SSD (C:)</strong></p>
 <ul>
 <li>Nástroj zjistí, že jde o SSD a místo klasické defragmentace spustí <strong>TRIM</strong>.</li>
 <li><strong>TRIM vymaže nepoužívané bloky a pomůže SSD efektivněji zapisovat nová data.</strong></li>
@@ -151,6 +158,7 @@ Microsoft SQL Server.</p>
 <li><strong>Defragmentace přesune roztříštěné soubory tak, aby byly uloženy pohromadě.</strong></li>
 <li>Výsledkem je rychlejší čtení dat a plynulejší chod disku.</li>
 </ul>
+</details>
 
 </article>
 

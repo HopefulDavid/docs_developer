@@ -89,7 +89,8 @@
 <h2 id="doxygen">Doxygen</h2>
 <p>Slouží k automatickému generování dokumentace z komentářů v kódu.</p>
 <p>Je to velmi užitečný nástroj pro vývojáře, kteří chtějí mít přehlednou a strukturovanou dokumentaci ke kódu.</p>
-<h3 id="instalace">Instalace</h3>
+<details>
+<summary><span style="color:#1E90FF;">Instalace</span></summary>
 <h4 id="-krok-1-instalace-potřebných-nástrojů"><strong>🔹 Krok 1: Instalace potřebných nástrojů</strong></h4>
 <ol>
 <li><p><strong>Nainstalovat Doxygen</strong></p>
@@ -165,7 +166,10 @@ DOT_IMAGE_FORMAT       = svg
 </li>
 </ol>
 <p>Doxygen vytvoří složku s názvem <code>docs</code> (nebo jiným dle <code>OUTPUT_DIRECTORY</code>), která obsahuje vygenerovanou dokumentaci.</p>
-<h3 id="vynechat-private-a-protected-z-dokumentace">Vynechat private a protected z dokumentace</h3>
+</details>
+<hr>
+<details>
+<summary><span style="color:#1E90FF;">Vynechat private a protected z dokumentace</span></summary>
 <p>V souboru <code>DoxyFile</code> upravit:</p>
 <pre><code class="lang-plaintext">Along with EXTRACT_PRIVATE = NO, use the following additional settings:
 
@@ -175,6 +179,7 @@ EXPAND_ONLY_PREDEF = YES
 PREDEFINED = protected=private
 </code></pre>
 <p>Tímto způsobem Doxygen vynechá private a protected členy z dokumentace.</p>
+</details>
 
 </article>
 

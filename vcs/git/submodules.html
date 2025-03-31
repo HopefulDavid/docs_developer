@@ -88,14 +88,14 @@
 <h1 id="git-submodules">Git Submodules</h1>
 
 <p>Umožňuje vložit jeden Git repozitář do jiného jako podadresář, přičemž si oba repozitáře zachovávají nezávislost.</p>
-<h2 id="co-jsou-git-submodules">Co jsou Git Submodules</h2>
 <p>Submoduly řeší problém, kdy potřebujete:</p>
 <ul>
 <li>Zahrnout externí kód do svého projektu</li>
 <li>Udržovat přesnou verzi závislostí</li>
 <li>Pracovat na více souvisejících projektech současně</li>
 </ul>
-<h2 id="základní-struktura">Základní struktura</h2>
+<details>
+<summary><span style="color:#1E90FF;">Základní struktura</span></summary>
 <pre><code class="lang-plaintext">HlavniProjekt/
   ├── .git/                  # Git repozitář hlavního projektu
   ├── .gitmodules            # Konfigurace submodulů
@@ -103,7 +103,10 @@
   └── Submodul/              # Podadresář obsahující submodul
       └── .git/              # Samostatný git repozitář
 </code></pre>
-<h2 id="základní-příkazy">Základní příkazy</h2>
+</details>
+<hr>
+<details>
+<summary><span style="color:#1E90FF;">Základní příkazy</span></summary>
 <h3 id="přidání-submodulu">Přidání submodulu</h3>
 <pre><code class="lang-bash"># Syntaxe: git submodule add [URL] [cesta]
 git submodule add https://github.com/uzivatel/knihovna libs/knihovna
@@ -129,7 +132,10 @@ cd ../..
 git add cesta/k/submodulu
 git commit -m &quot;Aktualizován submodul na nejnovější verzi&quot;
 </code></pre>
-<h2 id="praktický-příklad-použití-v-unity-projektu">Praktický příklad použití v Unity projektu</h2>
+</details>
+<hr>
+<details>
+<summary><span style="color:#1E90FF;">Praktický příklad použití v Unity projektu</span></summary>
 <h3 id="vhodná-struktura">Vhodná struktura</h3>
 <pre><code class="lang-plaintext">UnityProjekt/
   ├── .git/
@@ -153,7 +159,10 @@ git submodule add https://github.com/author/ui-framework Assets/Plugins/UI-Frame
 # Přidání síťové knihovny jako submodulu
 git submodule add https://github.com/author/network-lib Assets/Plugins/Network
 </code></pre>
-<h2 id="tipy-pro-práci-se-submoduly">Tipy pro práci se submoduly</h2>
+</details>
+<hr>
+<details>
+<summary><span style="color:#1E90FF;">Tipy pro práci se submoduly</span></summary>
 <ol>
 <li><p><strong>Přepínání mezi verzemi</strong></p>
 <pre><code class="lang-bash">cd cesta/k/submodulu
@@ -186,7 +195,10 @@ git commit -m &quot;Odstraněn submodul&quot;
 </code></pre>
 </li>
 </ol>
-<h2 id="časté-problémy-a-řešení">Časté problémy a řešení</h2>
+</details>
+<hr>
+<details>
+<summary><span style="color:#1E90FF;">Časté problémy a řešení</span></summary>
 <ol>
 <li><p><strong>Submodul v &quot;detached HEAD&quot; stavu</strong></p>
 <pre><code class="lang-bash">cd cesta/k/submodulu
@@ -207,18 +219,23 @@ git submodule sync
 </code></pre>
 </li>
 </ol>
-<h2 id="výhody-submodulů">Výhody submodulů</h2>
+</details>
+<hr>
+<details>
+<summary><span style="color:#1E90FF;">Výhody a nevýhody</span></summary>
+<h3 id="výhody-submodulů">Výhody submodulů</h3>
 <ul>
 <li>Přesná kontrola verzí externích knihoven</li>
 <li>Možnost přímo upravovat a přispívat do závislostí</li>
 <li>Lepší organizace kódu v komplexních projektech</li>
 </ul>
-<h2 id="nevýhody-submodulů">Nevýhody submodulů</h2>
+<h3 id="nevýhody-submodulů">Nevýhody submodulů</h3>
 <ul>
 <li>Vyšší složitost správy repozitáře</li>
 <li>Nutnost vždy aktualizovat hlavní repozitář po změnách v submodulech</li>
 <li>Strmější učící křivka pro nové členy týmu</li>
 </ul>
+</details>
 
 </article>
 
