@@ -473,6 +473,22 @@ Každý widget je buď `StatelessWidget` nebo `StatefulWidget`.
 #### Řešení problémů
 
 <details>
+<summary><span style="color:#1E90FF;">Automaticky zmenšit text bez použití doplňků</span></summary>
+
+```dart
+Expanded(
+  child: FittedBox(
+    fit: BoxFit.scaleDown,
+    child: Text('${widget.article.price * chosenQuantity} DH',
+      style: const TextStyle(fontSize: 25 , fontWeight: FontWeight.w700),
+    ),
+  ),
+),
+```
+
+</details>
+
+<details>
 <summary><span style="color:#1E90FF;">Building with plugins requires symlink support.</span></summary>
 
 Pokud se vyskytne chyba `Building with plugins requires symlink support.` při spuštění aplikace, je potřeba povolit
