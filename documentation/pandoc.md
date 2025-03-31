@@ -4,8 +4,6 @@ Pandoc je univerzální konvertor dokumentů, který dokáže převádět soubor
 
 Podporuje širokou škálu formátů, včetně Markdown, HTML, LaTeX a mnoha dalších.
 
-## Přehled Příkazů
-
 <details>
 <summary><span style="color:#1E90FF;">Přehled příkazů</span></summary>
 
