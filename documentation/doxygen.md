@@ -4,7 +4,8 @@ Slouží k automatickému generování dokumentace z komentářů v kódu.
 
 Je to velmi užitečný nástroj pro vývojáře, kteří chtějí mít přehlednou a strukturovanou dokumentaci ke kódu.
 
-### Instalace
+<details>
+<summary><span style="color:#1E90FF;">Instalace</span></summary>
 
 #### **🔹 Krok 1: Instalace potřebných nástrojů**
 1. **Nainstalovat Doxygen**  
@@ -74,9 +75,12 @@ Je to velmi užitečný nástroj pro vývojáře, kteří chtějí mít přehled
    ```
 Doxygen vytvoří složku s názvem `docs` (nebo jiným dle `OUTPUT_DIRECTORY`), která obsahuje vygenerovanou dokumentaci.
 
+</details>
 
+---
 
-### Vynechat private a protected z dokumentace
+<details>
+<summary><span style="color:#1E90FF;">Vynechat private a protected z dokumentace</span></summary>
 
 V souboru `DoxyFile` upravit:
 
@@ -90,3 +94,5 @@ PREDEFINED = protected=private
 ```
 
 Tímto způsobem Doxygen vynechá private a protected členy z dokumentace.
+
+</details>
