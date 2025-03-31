@@ -82,6 +82,7 @@ defrag C: D: /O
 ---
 
 **🔹 Co přesně se stane po spuštění?**
+
 1️⃣ **SSD (C:)**  
 - Nástroj zjistí, že jde o SSD a místo klasické defragmentace spustí **TRIM**.  
 - **TRIM vymaže nepoužívané bloky a pomůže SSD efektivněji zapisovat nová data.**  
