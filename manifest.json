@@ -98,6 +98,39 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "documentation/doxygen.md",
+      "output": {
+        ".html": {
+          "relative_path": "documentation/doxygen.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "documentation/pandoc.md",
+      "output": {
+        ".html": {
+          "relative_path": "documentation/pandoc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "documentation/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "documentation/toc.json"
+        },
+        ".html": {
+          "relative_path": "documentation/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "graphics/affinity.md",
       "output": {
         ".html": {
@@ -1329,6 +1362,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "vcs/git/gitFlow.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/gitFlow.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "vcs/git/history/deleteCommits.md",
       "output": {
         ".html": {
@@ -1373,6 +1416,16 @@
       "output": {
         ".html": {
           "relative_path": "vcs/git/repository.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/git/submodules.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/submodules.html"
         }
       },
       "version": ""

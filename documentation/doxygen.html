@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title> | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/documentation/doxygen.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
+            Dokumentace pro v&#253;voj&#225;ře
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<h2 id="doxygen">Doxygen</h2>
+<p>Slouží k automatickému generování dokumentace z komentářů v kódu.</p>
+<p>Je to velmi užitečný nástroj pro vývojáře, kteří chtějí mít přehlednou a strukturovanou dokumentaci ke kódu.</p>
+<h3 id="instalace">Instalace</h3>
+<h4 id="-krok-1-instalace-potřebných-nástrojů"><strong>🔹 Krok 1: Instalace potřebných nástrojů</strong></h4>
+<ol>
+<li><p><strong>Nainstalovat Doxygen</strong></p>
+<ul>
+<li>Stáhněte a nainstalujte z <a href="https://www.doxygen.nl/download.html">doxygen.nl</a>.</li>
+<li>Po instalaci ověřte, že funguje, spuštěním příkazu v terminálu nebo příkazovém řádku:
+<pre><code class="lang-sh">doxygen --version
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p><strong>Nainstalujte Graphviz</strong> (pro generování diagramů)</p>
+<ul>
+<li>Stáhněte z <a href="https://graphviz.gitlab.io/download/">Graphviz Download</a> a nainstalujte.</li>
+<li>Přidejte cestu ke složce <strong>Graphviz/bin</strong> do <strong>systémové PATH</strong>, aby Doxygen našel <code>dot.exe</code>.</li>
+<li>Ověřte, že Graphviz funguje:
+<pre><code class="lang-sh">dot -version
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p><strong>Nainstaluj TeX Live nebo MiKTeX</strong> (pro PDF)</p>
+<ul>
+<li><strong>Windows</strong>: Stáhněte si <strong>MiKTeX</strong> <a href="https://miktex.org/download">miktex.org/download</a></li>
+<li><strong>Linux</strong>:
+<pre><code class="lang-sh">sudo apt install texlive-full
+</code></pre>
+</li>
+<li><strong>Mac</strong>:
+<pre><code class="lang-sh">brew install mactex
+</code></pre>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4 id="-krok-2-vytvoření-konfiguračního-souboru-doxygen"><strong>🔹 Krok 2: Vytvoření konfiguračního souboru Doxygen</strong></h4>
+<ol>
+<li><p><strong>Otevřete terminál / CMD v adresáři projektu</strong> a vytvořte <code>Doxyfile</code>:</p>
+<pre><code class="lang-sh">doxygen -g Doxyfile
+</code></pre>
+<p><strong>Tím se vytvoří soubor <code>Doxyfile</code>, který bude obsahovat všechna nastavení.</strong></p>
+</li>
+<li><p><strong>Otevřete <code>Doxyfile</code> v textovém editoru a upravte klíčové parametry:</strong></p>
+<pre><code>INPUT                  = ../../
+PROJECT_NAME           = &quot;Moje C# dokumentace&quot;
+OUTPUT_DIRECTORY       = &quot;docs&quot;
+RECURSIVE              = YES
+EXTRACT_ALL            = YES
+GENERATE_LATEX         = YES
+GENERATE_HTML          = NO
+GENERATE_XML           = NO
+HAVE_DOT               = YES
+UML_LOOK               = YES
+DOT_PATH               = &quot;C:/Program Files/Graphviz/bin&quot;
+SHOW_USED_FILES        = NO
+SHOW_NAMESPACES        = NO
+DOT_IMAGE_FORMAT       = svg
+</code></pre>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Tyto parametry ovlivňují generování dokumentace</p>
+<p>Obsahuje spoustu dalších nastavení, které můžeš upravit podle potřeby.</p>
+</div>
+</li>
+</ol>
+<hr>
+<h4 id="-krok-3-generování-dokumentace"><strong>🔹 Krok 3: Generování dokumentace</strong></h4>
+<ol>
+<li><strong>Spusťte Doxygen</strong> a vygeneruj výstupní soubory:
+<pre><code class="lang-sh">doxygen Doxyfile
+</code></pre>
+</li>
+</ol>
+<p>Doxygen vytvoří složku s názvem <code>docs</code> (nebo jiným dle <code>OUTPUT_DIRECTORY</code>), která obsahuje vygenerovanou dokumentaci.</p>
+<h3 id="vynechat-private-a-protected-z-dokumentace">Vynechat private a protected z dokumentace</h3>
+<p>V souboru <code>DoxyFile</code> upravit:</p>
+<pre><code class="lang-plaintext">Along with EXTRACT_PRIVATE = NO, use the following additional settings:
+
+ENABLE_PREPROCESSING = YES
+MACRO_EXPANSION = YES
+EXPAND_ONLY_PREDEF = YES
+PREDEFINED = protected=private
+</code></pre>
+<p>Tímto způsobem Doxygen vynechá private a protected členy z dokumentace.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/documentation/doxygen.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

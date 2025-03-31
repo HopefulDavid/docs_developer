@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Git Submodules | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git Submodules | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/submodules.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
+            Dokumentace pro v&#253;voj&#225;ře
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git-submodules">Git Submodules</h1>
+
+<p>Umožňuje vložit jeden Git repozitář do jiného jako podadresář, přičemž si oba repozitáře zachovávají nezávislost.</p>
+<h2 id="co-jsou-git-submodules">Co jsou Git Submodules</h2>
+<p>Submoduly řeší problém, kdy potřebujete:</p>
+<ul>
+<li>Zahrnout externí kód do svého projektu</li>
+<li>Udržovat přesnou verzi závislostí</li>
+<li>Pracovat na více souvisejících projektech současně</li>
+</ul>
+<h2 id="základní-struktura">Základní struktura</h2>
+<pre><code class="lang-plaintext">HlavniProjekt/
+  ├── .git/                  # Git repozitář hlavního projektu
+  ├── .gitmodules            # Konfigurace submodulů
+  ├── BeznyAdresar/          # Běžný adresář v hlavním projektu
+  └── Submodul/              # Podadresář obsahující submodul
+      └── .git/              # Samostatný git repozitář
+</code></pre>
+<h2 id="základní-příkazy">Základní příkazy</h2>
+<h3 id="přidání-submodulu">Přidání submodulu</h3>
+<pre><code class="lang-bash"># Syntaxe: git submodule add [URL] [cesta]
+git submodule add https://github.com/uzivatel/knihovna libs/knihovna
+</code></pre>
+<h3 id="klonování-projektu-se-submoduly">Klonování projektu se submoduly</h3>
+<pre><code class="lang-bash"># Způsob 1: Vše najednou
+git clone --recursive https://github.com/uzivatel/projekt
+
+# Způsob 2: Nejprve projekt, pak inicializace submodulů
+git clone https://github.com/uzivatel/projekt
+git submodule init
+git submodule update
+</code></pre>
+<h3 id="aktualizace-submodulů">Aktualizace submodulů</h3>
+<pre><code class="lang-bash"># Aktualizace všech submodulů na nejnovější commit z remote
+git submodule update --remote
+
+# Aktualizace konkrétního submodulu
+cd cesta/k/submodulu
+git checkout main
+git pull
+cd ../..
+git add cesta/k/submodulu
+git commit -m &quot;Aktualizován submodul na nejnovější verzi&quot;
+</code></pre>
+<h2 id="praktický-příklad-použití-v-unity-projektu">Praktický příklad použití v Unity projektu</h2>
+<h3 id="vhodná-struktura">Vhodná struktura</h3>
+<pre><code class="lang-plaintext">UnityProjekt/
+  ├── .git/
+  ├── .gitmodules
+  └── Assets/
+      ├── Game/             # Váš herní kód (součást hlavního repozitáře)
+      └── Plugins/          # Složka pro externí knihovny
+          ├── UI-Framework/ # Submodul s UI frameworkem
+          │   └── .git/
+          └── Network/      # Submodul s síťovou knihovnou
+              └── .git/
+</code></pre>
+<h3 id="vytvoření-této-struktury">Vytvoření této struktury</h3>
+<pre><code class="lang-bash"># Vytvoření hlavního repozitáře
+cd UnityProjekt
+git init
+
+# Přidání UI frameworku jako submodulu
+git submodule add https://github.com/author/ui-framework Assets/Plugins/UI-Framework
+
+# Přidání síťové knihovny jako submodulu
+git submodule add https://github.com/author/network-lib Assets/Plugins/Network
+</code></pre>
+<h2 id="tipy-pro-práci-se-submoduly">Tipy pro práci se submoduly</h2>
+<ol>
+<li><p><strong>Přepínání mezi verzemi</strong></p>
+<pre><code class="lang-bash">cd cesta/k/submodulu
+git checkout v2.0.0
+cd ../..
+git add cesta/k/submodulu
+git commit -m &quot;Změněna verze submodulu na v2.0.0&quot;
+</code></pre>
+</li>
+<li><p><strong>Úpravy v submodulu</strong></p>
+<pre><code class="lang-bash"># Změny v submodulu
+cd cesta/k/submodulu
+git checkout -b oprava-chyby
+# proveďte změny
+git commit -am &quot;Oprava chyby&quot;
+git push origin oprava-chyby
+# vytvořte pull request v repozitáři submodulu
+</code></pre>
+</li>
+<li><p><strong>Odstranění submodulu</strong></p>
+<pre><code class="lang-bash"># 1. Odebrat z .gitmodules
+git submodule deinit cesta/k/submodulu
+# 2. Odebrat z .git/config
+git rm --cached cesta/k/submodulu
+# 3. Smazat adresář
+rm -rf cesta/k/submodulu
+rm -rf .git/modules/cesta/k/submodulu
+# 4. Commit
+git commit -m &quot;Odstraněn submodul&quot;
+</code></pre>
+</li>
+</ol>
+<h2 id="časté-problémy-a-řešení">Časté problémy a řešení</h2>
+<ol>
+<li><p><strong>Submodul v &quot;detached HEAD&quot; stavu</strong></p>
+<pre><code class="lang-bash">cd cesta/k/submodulu
+git checkout main
+</code></pre>
+</li>
+<li><p><strong>Submodul ukazuje změny i když žádné nemáte</strong></p>
+<pre><code class="lang-bash">git submodule update
+</code></pre>
+</li>
+<li><p><strong>Změna URL submodulu</strong></p>
+<pre><code class="lang-bash">git config --file=.gitmodules submodule.nazev.url NOVA_URL
+git submodule sync
+</code></pre>
+</li>
+<li><p><strong>Kontrola stavu submodulů</strong></p>
+<pre><code class="lang-bash">git submodule status
+</code></pre>
+</li>
+</ol>
+<h2 id="výhody-submodulů">Výhody submodulů</h2>
+<ul>
+<li>Přesná kontrola verzí externích knihoven</li>
+<li>Možnost přímo upravovat a přispívat do závislostí</li>
+<li>Lepší organizace kódu v komplexních projektech</li>
+</ul>
+<h2 id="nevýhody-submodulů">Nevýhody submodulů</h2>
+<ul>
+<li>Vyšší složitost správy repozitáře</li>
+<li>Nutnost vždy aktualizovat hlavní repozitář po změnách v submodulech</li>
+<li>Strmější učící křivka pro nové členy týmu</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/submodules.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

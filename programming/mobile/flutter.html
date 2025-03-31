@@ -163,7 +163,25 @@
 flutter run
 </code></pre>
 </details>
-<h4 id="záloha-a-obnova">Záloha a obnova</h4>
+<h4 id="zálohaobnova-a-ukládání-dat">Záloha/Obnova a ukládání dat</h4>
+<details>
+<summary><span style="color:#1E90FF;">Umístění aplikačních dat</span></summary>
+<p>Aplikační data jsou uložena v následujících lokacích:</p>
+<ul>
+<li><p><strong>shared_preferences.json</strong>: <code>%APPDATA%\com.example\xxx_app</code></p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Soubor se nachází v následující struktuře složek:</p>
+<ul>
+<li><code>%APPDATA%</code> - složka s uživatelskými daty (<code>C:\Users\&lt;uživatel&gt;\AppData\Roaming</code>)</li>
+<li><code>com.example</code> - identifikátor aplikace</li>
+<li><code>xxx_app</code> - název aplikace</li>
+<li><code>shared_preferences.json</code> - soubor s uloženými daty</li>
+</ul>
+</div>
+</li>
+</ul>
+</details>
 <details>
 <summary><span style="color:#1E90FF;">Záloha závislostí</span></summary>
 <p>Pro zálohování všech balíčků projektu při použití <code>flutter pub get</code>, můžete zálohovat složku <code>.pub-cache</code>, která obsahuje všechny stažené závislosti.</p>
@@ -607,6 +625,48 @@ dart run intl_utils:generate
 </ol>
 </details>
 <h4 id="řešení-problémů">Řešení problémů</h4>
+<h5 id="zlepšení-chování-v-kódi">Zlepšení chování v kódi</h5>
+<details>
+<summary><span style="color:#1E90FF;">Automaticky zmenšit text bez použití doplňků</span></summary>
+<pre><code class="lang-dart">Expanded(
+  child: FittedBox(
+    fit: BoxFit.scaleDown,
+    child: Text('${widget.article.price * chosenQuantity} DH',
+      style: const TextStyle(fontSize: 25 , fontWeight: FontWeight.w700),
+    ),
+  ),
+),
+</code></pre>
+</details>
+<h5 id="analýza-kódu-napříč-ide">Analýza kódu napříč IDE</h5>
+<details>
+<summary><span style="color:#1E90FF;">Vypnutí pravida "no_logic_in_create_state"</span></summary>
+<ol>
+<li><p>Otevřete soubor <code>analysis_options.yaml</code></p>
+<p>Tento soubor by měl být umístěn v kořenovém adresáři vašeho projektu.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Pokud soubor nemáte, můžete ho vytvořit v hlavním adresáři projektu.</p>
+</div>
+</li>
+<li><p>Přidejte sekci linter</p>
+</li>
+</ol>
+<p>Pokud v souboru ještě není definovaná sekce linter, přidejte ji spolu s pravidly.</p>
+<p>Příklad:</p>
+<pre><code class="lang-yaml">linter:
+  rules:
+    no_logic_in_create_state: false
+</code></pre>
+<ol start="3">
+<li><p>Uložte soubor</p>
+</li>
+<li><p>Restartujte IDE</p>
+<p>Po restartu by mělo být pravidlo <code>no_logic_in_create_state</code> vypnuto a měli byste být schopni používat logiku v metodě <code>createState()</code> bez varování.</p>
+</li>
+</ol>
+</details>
+<h5 id="spuštění-aplikace">Spuštění aplikace</h5>
 <details>
 <summary><span style="color:#1E90FF;">Building with plugins requires symlink support.</span></summary>
 <p>Pokud se vyskytne chyba <code>Building with plugins requires symlink support.</code> při spuštění aplikace, je potřeba povolit

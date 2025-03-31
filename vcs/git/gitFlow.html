@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>Git Flow - Jak spr&#225;vně pracovat s větvemi | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="Git Flow - Jak spr&#225;vně pracovat s větvemi | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/operatingSystem/windows/cmd.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/gitFlow.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -85,77 +85,66 @@
         </div>
 
         <article data-uid="">
+<h1 id="git-flow---jak-správně-pracovat-s-větvemi">Git Flow - Jak správně pracovat s větvemi</h1>
 
-<h2 id="příkazový-řádek">Příkazový řádek</h2>
-<p>Batch skript obvykle obsahuje příponu <code>.bat</code> nebo <code>.cmd</code>.</p>
-<h3 id="sql">SQL</h3>
-<details>
-<summary><span style="color:#1E90FF;">Spuštění všech sql skriptů ze složky</span></summary>
-<pre><code class="lang-bash">for %%G in (*.sql) do sqlcmd /S serverTest /d CT46 -U userName -P password123 -i&quot;%%G&quot;
+<p>Git Flow je strategie pro správu větví v Gitu, která usnadňuje práci v týmech a řízení verzí softwaru.</p>
+<h2 id="hlavní-větve">Hlavní větve</h2>
+<ul>
+<li><strong><code>main</code> (nebo <code>master</code>)</strong>: Obsahuje produkční verzi kódu</li>
+<li><strong><code>develop</code></strong>: Obsahuje připravované změny pro příští vydání</li>
+</ul>
+<h2 id="pomocné-větve">Pomocné větve</h2>
+<ul>
+<li><strong><code>feature/*</code></strong>: Pro vývoj nových funkcí</li>
+<li><strong><code>release/*</code></strong>: Pro přípravu vydání</li>
+<li><strong><code>hotfix/*</code></strong>: Pro rychlé opravy chyb v produkci</li>
+</ul>
+<h2 id="jak-pracovat-s-git-flow">Jak pracovat s Git Flow</h2>
+<h3 id="1-vývoj-nové-funkce">1. Vývoj nové funkce</h3>
+<pre><code class="lang-bash"># Vytvoření nové feature větve
+git checkout develop
+git checkout -b feature/nova-funkce
 
-pause
+# Po dokončení vývoje
+git checkout develop
+git merge feature/nova-funkce
 </code></pre>
-<div class="NOTE">
-<h5>Note</h5>
-<p><code>for %%G</code></p>
-<p>Používá se k iteraci přes všechny soubory v adresáři, které odpovídají vzoru v závorce.</p>
-<p><code>in (*.sql)</code></p>
-<p>Označuje, že smyčka projde všechny soubory s příponou <code>.sql</code> v aktuálním adresáři.</p>
-<p><code>do sqlcmd</code></p>
-<p>Při každém průchodu smyčkou se provede příkaz <code>sqlcmd</code>, což je příkazový nástroj pro spouštění SQL příkazů na serveru
-Microsoft SQL Server.</p>
-<p><code>/S serverTest</code></p>
-<p>Tento parametr určuje název nebo IP adresu SQL serveru, ke kterému se připojuješ.</p>
-<p>(V tomto případě je to <code>serverTest</code>.)</p>
-<p><code>/d CT46</code></p>
-<p>Určuje databázi, ke které se chcete připojit.</p>
-<p>(Zde je to <code>CT46</code>.)</p>
-<p><code>-U userName</code></p>
-<p>Určuje uživatelské jméno pro připojení k SQL serveru.</p>
-<p>(Zde je to <code>userName</code>.)</p>
-<p><code>-P password123</code></p>
-<p>Určuje heslo pro uživatele <code>userName</code>.</p>
-<p>(Zde je to <code>password123</code>.)</p>
-<p><code>-i &quot;%%G&quot;</code></p>
-<p>Označuje, že soubor SQL (který je uložen v proměnné <code>%%G</code> – každý <code>.sql</code> soubor) bude použit jako vstup pro <code>sqlcmd</code>.</p>
-<p>Tento příkaz tedy vykoná SQL skript v daném souboru.</p>
-<p><code>pause</code>, zastaví provedení skriptu a čeká na stisknutí libovolné klávesy.</p>
-<p>(To umožňuje uživateli vidět výsledky před tím, než se okno zavře.)</p>
-</div>
-</details>
-<h3 id="defragmentace-disku">Defragmentace disku</h3>
-<p>Tento příkaz <strong>optimalizuje disky &quot;C:&quot; a &quot;D:&quot; podle jejich typu</strong>.</p>
-<pre><code class="lang-cmd">defrag C: D: /O
+<h3 id="2-příprava-vydání">2. Příprava vydání</h3>
+<pre><code class="lang-bash"># Vytvoření release větve
+git checkout develop
+git checkout -b release/1.0.0
+
+# Po dokončení příprav
+git checkout main
+git merge release/1.0.0
+git checkout develop
+git merge release/1.0.0
 </code></pre>
-<p>🔍 Rozbor příkazu:</p>
-<ul>
-<li><strong><code>defrag</code></strong> – Spustí nástroj pro optimalizaci disků ve Windows.</li>
-<li><strong><code>C: D:</code></strong> – Říká, že chceme optimalizovat <strong>disk C:</strong> (SSD) a <strong>disk D:</strong> (HDD).</li>
-<li><strong><code>/O</code></strong> – Znamená <strong>&quot;Optimize&quot;</strong>, což znamená, že Windows <strong>automaticky zjistí typ disku a použije správnou metodu optimalizace</strong>:
-<ul>
-<li><strong>Pokud je disk HDD → spustí defragmentaci</strong></li>
-<li><strong>Pokud je disk SSD → spustí TRIM</strong></li>
-</ul>
-</li>
-</ul>
+<h3 id="3-oprava-chyby-v-produkci">3. Oprava chyby v produkci</h3>
+<pre><code class="lang-bash"># Vytvoření hotfix větve
+git checkout main
+git checkout -b hotfix/oprava-chyby
+
+# Po dokončení opravy
+git checkout main
+git merge hotfix/oprava-chyby
+git checkout develop
+git merge hotfix/oprava-chyby
+</code></pre>
+<h2 id="pravidla-pro-práci">Pravidla pro práci</h2>
+<ol>
+<li>Nikdy nepracujte přímo v <code>main</code> ani <code>develop</code> větvích</li>
+<li>Každá funkce má vlastní feature větev</li>
+<li>Před sloučením proveďte code review (to znamená, že někdo zkontroluje váš kód a schválí ho před sloučením)</li>
+<li>Po sloučení release nebo hotfix větve označte verzi pomocí Git tagu</li>
+</ol>
 <hr>
-<p><strong>🔹 Co přesně se stane po spuštění?</strong>
-1️⃣ <strong>SSD (C:)</strong></p>
-<ul>
-<li>Nástroj zjistí, že jde o SSD a místo klasické defragmentace spustí <strong>TRIM</strong>.</li>
-<li><strong>TRIM vymaže nepoužívané bloky a pomůže SSD efektivněji zapisovat nová data.</strong></li>
-</ul>
-<p>2️⃣ <strong>HDD (D:)</strong></p>
-<ul>
-<li>Nástroj zjistí, že jde o HDD a spustí klasickou <strong>defragmentaci</strong>.</li>
-<li><strong>Defragmentace přesune roztříštěné soubory tak, aby byly uloženy pohromadě.</strong></li>
-<li>Výsledkem je rychlejší čtení dat a plynulejší chod disku.</li>
-</ul>
+<p>Pro více informací navštivte <a href="https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow">oficiální dokumentaci Git Flow</a></p>
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/operatingSystem/windows/cmd.md/#L1" class="edit-link">Edit this page</a>
+          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/gitFlow.md/#L1" class="edit-link">Edit this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>
