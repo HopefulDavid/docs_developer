@@ -62,3 +62,31 @@ pause
 > (To umožňuje uživateli vidět výsledky před tím, než se okno zavře.)
 
 </details>
+
+### Defragmentace disku
+
+Tento příkaz **optimalizuje disky "C:" a "D:" podle jejich typu**.
+
+```cmd
+defrag C: D: /O
+```
+
+🔍 Rozbor příkazu:
+
+- **`defrag`** – Spustí nástroj pro optimalizaci disků ve Windows.  
+- **`C: D:`** – Říká, že chceme optimalizovat **disk C:** (SSD) a **disk D:** (HDD).  
+- **`/O`** – Znamená **"Optimize"**, což znamená, že Windows **automaticky zjistí typ disku a použije správnou metodu optimalizace**:  
+  - **Pokud je disk HDD → spustí defragmentaci**  
+  - **Pokud je disk SSD → spustí TRIM**  
+
+---
+
+**🔹 Co přesně se stane po spuštění?**
+1️⃣ **SSD (C:)**  
+- Nástroj zjistí, že jde o SSD a místo klasické defragmentace spustí **TRIM**.  
+- **TRIM vymaže nepoužívané bloky a pomůže SSD efektivněji zapisovat nová data.**  
+
+2️⃣ **HDD (D:)**  
+- Nástroj zjistí, že jde o HDD a spustí klasickou **defragmentaci**.  
+- **Defragmentace přesune roztříštěné soubory tak, aby byly uloženy pohromadě.**  
+- Výsledkem je rychlejší čtení dat a plynulejší chod disku.
