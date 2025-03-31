@@ -93,6 +93,22 @@ flutter run
 #### Záloha a obnova
 
 <details>
+<summary><span style="color:#1E90FF;">Umístění aplikačních dat</span></summary>
+
+Aplikační data jsou uložena v následujících lokacích:
+
+- **shared_preferences.json**: `%APPDATA%\com.example\xxx_app`
+
+  > [!NOTE]
+  > Soubor se nachází v následující struktuře složek:
+  > - `%APPDATA%` - složka s uživatelskými daty (`C:\Users\<uživatel>\AppData\Roaming`)
+  > - `com.example` - identifikátor aplikace
+  > - `xxx_app` - název aplikace
+  > - `shared_preferences.json` - soubor s uloženými daty
+
+</details>
+
+<details>
 <summary><span style="color:#1E90FF;">Záloha závislostí</span></summary>
 
 Pro zálohování všech balíčků projektu při použití `flutter pub get`, můžete zálohovat složku `.pub-cache`, která obsahuje všechny stažené závislosti.
