@@ -487,6 +487,34 @@ Expanded(
 ```
 
 </details>
+<details>
+<summary><span style="color:#1E90FF;">Vypnutí pravida "no_logic_in_create_state"</span></summary>
+
+1. Otevřete soubor `analysis_options.yaml`
+
+   Tento soubor by měl být umístěn v kořenovém adresáři vašeho projektu.
+
+   > [!NOTE]
+   > Pokud soubor nemáte, můžete ho vytvořit v hlavním adresáři projektu.
+
+2. Přidejte sekci linter
+
+Pokud v souboru ještě není definovaná sekce linter, přidejte ji spolu s pravidly.
+
+Příklad:
+
+```yaml
+linter:
+  rules:
+    no_logic_in_create_state: false
+```
+
+3. Uložte soubor
+
+4. Restartujte IDE
+
+   Po restartu by mělo být pravidlo `no_logic_in_create_state` vypnuto a měli byste být schopni používat logiku v metodě `createState()` bez varování.
+</details>
 
 <details>
 <summary><span style="color:#1E90FF;">Building with plugins requires symlink support.</span></summary>
