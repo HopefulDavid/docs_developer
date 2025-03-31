@@ -4,6 +4,8 @@
     href: git/gitConfig.md
   - name: Úložiště
     href: git/repository.md
+  - name: Git Flow
+    href: git/gitFlow.md
   - name: Historie
     items:
     - name: .gitignore
