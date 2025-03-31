@@ -14,8 +14,10 @@ Changelog
   - ✨ přidání řešení pro automatické zmenšení textu (Flutter)
   - 📝 úprava nadpisu sekce zálohy a obnovy (Flutter)
   - ✨ Zahrnuje detaily o struktuře složek a souboru `shared_preferences.json`. (Flutter)
+  - 📝 odstranění nadbytečné sekce o příkazech
   - ✨ přidání dokumentace k submodulům pro Git
   - ✨ přidání dokumentace pro Git Flow
+  - 🔧 update changelog
   - 🔧 update changelog
   - 📝 vylepšení struktury dokumentace Doxygen
 ## 2025-03-24
