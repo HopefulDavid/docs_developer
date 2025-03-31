@@ -6,6 +6,9 @@ Podporuje širokou škálu formátů, včetně Markdown, HTML, LaTeX a mnoha dal
 
 ## Přehled Příkazů
 
+<details>
+<summary><span style="color:#1E90FF;">Přehled příkazů</span></summary>
+
 | **Vstupní Formát**            | **Výstupní Formát**            | **Příkaz**                                                             | **Poznámka**                                                                                      | **Užitečné Možnosti (Parametry)**                                                                                                |
 |-------------------------------|--------------------------------|------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|
 | 📝 **Markdown (.md)**          | 📄 **DOCX (.docx)**            | `pandoc soubor.md -o soubor.docx`                                       | Převod z Markdownu do Word dokumentu.                                                              | `--standalone`, `--template=moje-sablona.tex`, `--metadata title="Název dokumentu"`                                             |
@@ -34,9 +37,12 @@ Podporuje širokou škálu formátů, včetně Markdown, HTML, LaTeX a mnoha dal
 | 📄 **RTF (.rtf)**             | 🌐 **HTML (.html)**            | `pandoc soubor.rtf -o soubor.html`                                      | Generování HTML z RTF souboru.                                                                   | `--self-contained`, `--standalone`, `--metadata`                                                                                  |
 | 📄 **RTF (.rtf)**             | 📑 **PDF (.pdf)**              | `pandoc soubor.rtf -o soubor.pdf`                                       | Generování PDF z RTF souboru (vyžaduje LaTeX nebo jiný engine).                                  | `--pdf-engine=xelatex`, `--template=moje-sablona.tex`, `--toc`, `--output=output.pdf`                                            |
 
+</details>
+
 ---
 
-### **Užitečné Možnosti pro Konfiguraci Výstupů:**
+<details>
+<summary><span style="color:#1E90FF;">Užitečné Možnosti pro Konfiguraci Výstupů</span></summary>
 
 - **Nastavení metadat (title, author, date)**:  
   ```sh
@@ -72,3 +78,5 @@ Podporuje širokou škálu formátů, včetně Markdown, HTML, LaTeX a mnoha dal
   ```sh
   pandoc soubor.md -o soubor.pdf --pdf-engine=xelatex
   ```
+
+</details>
