@@ -472,6 +472,7 @@ Každý widget je buď `StatelessWidget` nebo `StatefulWidget`.
 
 #### Řešení problémů
 
+##### Zlepšení chování v kódi
 <details>
 <summary><span style="color:#1E90FF;">Automaticky zmenšit text bez použití doplňků</span></summary>
 
@@ -487,6 +488,8 @@ Expanded(
 ```
 
 </details>
+
+##### Analýza kódu napříč IDE
 <details>
 <summary><span style="color:#1E90FF;">Vypnutí pravida "no_logic_in_create_state"</span></summary>
 
@@ -516,6 +519,7 @@ linter:
    Po restartu by mělo být pravidlo `no_logic_in_create_state` vypnuto a měli byste být schopni používat logiku v metodě `createState()` bez varování.
 </details>
 
+##### Spuštění aplikace
 <details>
 <summary><span style="color:#1E90FF;">Building with plugins requires symlink support.</span></summary>
 
