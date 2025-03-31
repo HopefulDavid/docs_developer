@@ -63,7 +63,10 @@ pause
 
 </details>
 
-### Defragmentace disku
+### Windows optimalizace
+
+<details>
+<summary><span style="color:#1E90FF;">Optimalizace disků</span></summary>
 
 > [!NOTE]
 > Windows 10 a novější automaticky spouští TRIM na SSD discích jednou týdně. Ruční optimalizace SSD není běžně potřeba, pokud je zapnuté automatické plánování (výchozí nastavení).
@@ -96,3 +99,5 @@ defrag C: D: /O
 - Nástroj zjistí, že jde o HDD a spustí klasickou **defragmentaci**.  
 - **Defragmentace přesune roztříštěné soubory tak, aby byly uloženy pohromadě.**  
 - Výsledkem je rychlejší čtení dat a plynulejší chod disku.
+
+</details>
