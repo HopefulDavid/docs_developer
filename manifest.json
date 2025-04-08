@@ -1013,6 +1013,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "programming/cleanArchitecture.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/cleanArchitecture.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "programming/developmentPatterns.md",
       "output": {
         ".html": {

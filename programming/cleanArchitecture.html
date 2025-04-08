@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title> | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/cleanArchitecture.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
+            Dokumentace pro v&#253;voj&#225;ře
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p><strong>🏗️ Kompletní návrhový návod – Clean Architecture</strong></p>
+<details>
+<summary><span style="color:#1E90FF;"> Workflow</span></summary>
+<pre><code class="lang-mermaid">flowchart TB
+    A[&quot;🧑‍💻 Uživatel (UI)&lt;br&gt;/src/ui/&lt;br&gt;&lt;small&gt;Uživatelská akce&lt;br&gt;např. kliknutí tlačítka 'Objednat'&lt;/small&gt;&quot;]
+    B[&quot;💻 Aplikace (Use Case)&lt;br&gt;/src/application/&lt;br&gt;&lt;small&gt;Zpracování požadavku&lt;br&gt;např. vytvoření objednávky&lt;/small&gt;&quot;]
+    C[&quot;⚙️ Doménová logika&lt;br&gt;/src/domain/&lt;br&gt;&lt;small&gt;Business pravidla&lt;br&gt;např. výpočet ceny objednávky&lt;/small&gt;&quot;]
+    D[&quot;🌐 Infrastruktura&lt;br&gt;/src/infrastructure/&lt;br&gt;&lt;small&gt;Externí systémy&lt;br&gt;např. databáze, emaily, API&lt;/small&gt;&quot;]
+    E[&quot;📁 Sdílené&lt;br&gt;/src/shared/&lt;br&gt;&lt;small&gt;Společné utility a typy&lt;br&gt;pro celý systém&lt;/small&gt;&quot;]
+
+    subgraph flow
+        direction TB
+        A --&gt; B
+        B --&gt; C
+        C --&gt; D
+    end
+
+    E --- A
+    E --- B
+    E --- C
+    E --- D
+</code></pre>
+</details>
+<hr>
+<p>Postup:</p>
+<details>
+<summary><span style="color:#1E90FF;"> 🌐 1. Architektonické vrstvy – přehled </span></summary>
+<p>Struktura složek by měla být co nejvíce intuitivní a reflektovat jednotlivé vrstvy architektury.</p>
+<pre><code class="lang-text">📦 /src
+├── ui/                ← Kód pro UI (React, Flutter, SwiftUI…)
+├── application/       ← Orchestrace, služby, use-cases
+├── domain/            ← Business logika, modely, pravidla
+├── infrastructure/    ← Databáze, API, emailing, úložiště
+└── shared/            ← Utility, types, společné věci
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;"> 📚 2. Doménový návrh – Srdce aplikace </span></summary>
+<p>Cíl: Oddělit business logiku (pravidla a procesy aplikace) od technické implementace (konkrétní technologie a frameworky, které je realizují).</p>
+<p>Umístění v projektu📦: <code>/domain/</code></p>
+<details>
+<summary><span style="color:#E95A84;">✅ Entity</span></summary>
+<p>Představují jedinečné objekty s vlastní identitou (ID) a specifickým chováním v systému.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Mějte na paměti, že <strong>entity</strong> by měly být pojmenovány jasně podle doménového významu.</p>
+</div>
+<p><strong>Příklad:</strong> <code>src/domain/entities/order.cs</code>, <code>src/domain/entities/user.cs</code></p>
+<pre><code class="lang-csharp">public class Order
+{
+    public Order(OrderId id, List&lt;OrderItem&gt; items, UserId userId)
+    {
+        Id = id;
+        Items = items;
+        UserId = userId;
+    }
+
+    public OrderId Id { get; }
+    public List&lt;OrderItem&gt; Items { get; }
+    public UserId UserId { get; }
+
+    public Money GetTotal()
+    {
+        return Items.Aggregate(Money.Zero(), (sum, item) =&gt; sum.Add(item.GetSubtotal()));
+    }
+
+    public bool IsEmpty() =&gt; Items.Count == 0;
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#E95A84;">🧩 Value objekty</span></summary>
+<p>Value objekty mají tyto hlavní vlastnosti:</p>
+<ul>
+<li>Jsou neměnné (immutable) - po vytvoření je nelze změnit</li>
+<li>Nemají identitu (ID) - jsou definovány svými vlastnostmi</li>
+<li>Při stejných vlastnostech jsou považovány za stejné objekty</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Pojmenování je klíčové pro rozpoznání jejich role.</p>
+</div>
+<p><strong>Příklad:</strong> <code>src/domain/valueObjects/email.cs</code>, <code>src/domain/valueObjects/money.cs</code></p>
+<pre><code class="lang-csharp">public class Email
+{
+    private readonly string value;
+
+    public Email(string value)
+    {
+        if (!value.Contains(&quot;@&quot;)) throw new InvalidEmailException();
+        this.value = value;
+    }
+
+    public string GetValue() =&gt; value;
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#E95A84;">🧠 Doménové služby</span></summary>
+<p>Doménové služby použijte, když potřebujete logiku, která:</p>
+<ul>
+<li>pracuje s více entitami najednou</li>
+<li>nepatří přímo do žádné entity</li>
+<li>provádí komplexní operace mezi entitami</li>
+</ul>
+<p><strong>Příklad:</strong> <code>src/domain/services/shippingCost.cs</code></p>
+<pre><code class="lang-csharp">public class ShippingCostService
+{
+    public Money Calculate(Order order)
+    {
+        return order.GetTotal().GreaterThan(new Money(1000)) ? Money.Zero() : new Money(99);
+    }
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#E95A84;">⚖️ Policy objekty</span></summary>
+<p>Jedná se o pravidla, která říkají, co je povoleno a co ne pro entity.</p>
+<p><strong>Příklad:</strong> <code>src/domain/policies/orderPolicy.cs</code></p>
+<pre><code class="lang-csharp">public class OrderPolicy
+{
+    public static bool CanCancel(Order order, User user)
+    {
+        return order.BelongsTo(user) &amp;&amp; order.Status == &quot;NEW&quot;;
+    }
+}
+</code></pre>
+</details>
+<hr>
+</details>
+<details>
+<summary><span style="color:#1E90FF;"> 🧭 3. Application Layer – Orchestrace akcí </span></summary>
+<p><strong>Cíl:</strong> Tento layer slouží k orchestrace akcí bez znalosti implementace (tzn. bez závislosti na konkrétní technologii).</p>
+<p>🛠 <strong>UseCase / Service</strong></p>
+<p>UseCases slouží k vykonávání logiky v aplikaci a jsou zaměřeny na konkrétní funkce systému.</p>
+<p><strong>Vytvoření Interface pro použití v Application Layer:</strong> Vytvoříme <strong>interface</strong>, který je implementován konkrétními službami (např. <code>PlaceOrder</code>).</p>
+<p><strong>Umístění:</strong> <code>/src/application/usecases/</code></p>
+<pre><code class="lang-csharp">public interface IPlaceOrder
+{
+    Task Execute(PlaceOrderInput input);
+}
+</code></pre>
+<p><strong>Implementace interface v konkrétní službě:</strong></p>
+<pre><code class="lang-csharp">public class PlaceOrder : IPlaceOrder
+{
+    private readonly IOrderRepository orderRepo;
+    private readonly IEmailService emailService;
+
+    public PlaceOrder(IOrderRepository orderRepo, IEmailService emailService)
+    {
+        this.orderRepo = orderRepo;
+        this.emailService = emailService;
+    }
+
+    public async Task Execute(PlaceOrderInput input)
+    {
+        var order = new Order(input.UserId, input.Items);
+        if (order.IsEmpty()) throw new EmptyCartException();
+        await orderRepo.Save(order);
+        await emailService.SendConfirmation(input.UserId, order);
+    }
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🔌 &nbsp;4. Infrastructure Layer – Implementace závislostí</span></summary>
+<p>Tato vrstva obsahuje implementace externích systémů, jako je databáze, emailové služby nebo API třetích stran atd.</p>
+<p>Příklady:</p>
+<details>
+<summary><span style="color:#E95A84;">📦 Repozitáře (DB)</span></summary>
+<p><strong>Vytvoření interface pro práci s daty – IOrderRepository</strong></p>
+<p>Tento interface definuje operace, které budou prováděny na entitách jako <code>Order</code>. Jakmile máme tento interface, můžeme implementovat různé způsoby uložení (např. do Postgres, MongoDB, nebo jiné databáze).</p>
+<p><strong>Umístění:</strong> <code>/src/infrastructure/db/</code><br>
+<strong>Interface:</strong> <code>/src/application/interfaces/IOrderRepository.cs</code></p>
+<pre><code class="lang-csharp">public interface IOrderRepository
+{
+    Task Save(Order order);
+    Task&lt;Order&gt; FindById(OrderId id);
+}
+</code></pre>
+<p><strong>Implementace interface v konkrétní službě:</strong></p>
+<pre><code class="lang-csharp">public class PostgresOrderRepository : IOrderRepository
+{
+    public async Task Save(Order order)
+    {
+        // implementace uložení do Postgres DB
+    }
+
+    public async Task&lt;Order&gt; FindById(OrderId id)
+    {
+        // implementace načítání objednávky z Postgres DB
+        return null;
+    }
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#E95A84;">📧 Služby (API, emailing, třetí strany)</span></summary>
+<p><strong>Vytvoření interface pro emailovou službu – IEmailService</strong></p>
+<p><strong>Umístění:</strong> <code>/src/application/interfaces/IEmailService.cs</code></p>
+<pre><code class="lang-csharp">public interface IEmailService
+{
+    Task SendConfirmation(string userId, Order order);
+}
+</code></pre>
+<p><strong>Implementace emailové služby:</strong></p>
+<pre><code class="lang-csharp">public class SendgridEmailService : IEmailService
+{
+    public async Task SendConfirmation(string userId, Order order)
+    {
+        // Zavolání SendGrid API pro odeslání potvrzení
+    }
+}
+</code></pre>
+</details>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🎨  &nbsp5. UI Layer – Vstupy & Výstupy</span></summary>
+<p>UI pouze volá <strong>UseCase</strong> nebo <strong>Service</strong>.</p>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>UI nikdy neobsahuje business logiku.</p>
+</div>
+<p><strong>Umístění:</strong> <code>/src/Presentation/</code></p>
+<h3 id="příklad-pro-react"><strong>Příklad pro React:</strong></h3>
+<pre><code class="lang-tsx">const CheckoutPage = () =&gt; {
+  const placeOrder = async () =&gt; {
+    await placeOrderUseCase.execute({
+      userId: auth.user.id,
+      items: cart.items.map(i =&gt; ({ productId: i.id, quantity: i.qty })),
+    })
+  }
+
+  return &lt;button onClick={placeOrder}&gt;Objednat&lt;/button&gt;
+}
+</code></pre>
+</details>
+<hr>
+<details>
+<summary><span style="color:#1E90FF;">🧪Testování</span></summary>
+<ul>
+<li><p>🧪 <strong>Jednotkové testy domény</strong></p>
+<p>Jednotkové testy by měly být zaměřeny na testování business logiky bez závislosti na technologiích.</p>
+<pre><code class="lang-csharp">[Test]
+public void TestOrderTotalCalculation()
+{
+    var order = new Order(&quot;user1&quot;, new List&lt;OrderItem&gt; { new OrderItem(&quot;p1&quot;, 100, 2) });
+    Assert.AreEqual(200, order.GetTotal().Value);
+}
+</code></pre>
+</li>
+<li><p>🧪 <strong>Test UseCase</strong></p>
+<p>Tyto testy by měly ověřit, že UseCase správně volá potřebné závislosti a provádí očekávané akce.</p>
+<pre><code class="lang-csharp">[Test]
+public async Task TestPlaceOrderEmailSent()
+{
+    var emailService = new FakeEmailService();
+    var useCase = new PlaceOrder(fakeRepo, emailService);
+    await useCase.Execute(new PlaceOrderInput { UserId = &quot;user1&quot;, Items = ... });
+    Assert.IsTrue(emailService.WasCalled);
+}
+</code></pre>
+</li>
+</ul>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">📁 základní univerzální struktura</span></summary>
+<pre><code class="lang-text">📦 Solution/
+│   Řešení
+│
+├── 📂 src/
+│   Zdrojový kód
+│   
+│   ├── 📂 Domain/
+│   │   Doména - jádro aplikace obsahující business logiku a pravidla systému. Zachycuje základní koncepty, procesy
+│   │   a jejich vzájemné vztahy nezávisle na technologických detailech implementace
+│   │   
+│   │   ├── 📂 Entities/
+│   │   │   Entity - třídy s identitou reprezentující hlavní objekty systému, např. Uživatel, Objednávka, Produkt,
+│   │   │   nesou svá data a business logiku, mají jedinečné ID a životní cyklus v systému
+│   │   │
+│   │   ├── 📂 ValueObjects/
+│   │   │   Hodnotové objekty - neměnné objekty definované svými vlastnostmi bez vlastní identity, např. EmailAddress,
+│   │   │   Money, PhoneNumber, kde dvě instance se stejnými hodnotami jsou považovány za identické
+│   │   │
+│   │   ├── 📂 Events/
+│   │   │   Události - zachycení a publikování významných změn v doméně jako je dokončení objednávky,
+│   │   │   změna stavu zboží nebo notifikace o důležitých operacích
+│   │   │
+│   │   ├── 📂 Exceptions/
+│   │   │   Výjimky - vlastní chybové stavy specifické pro doménu, např. NedostatekZboziException,
+│   │   │   NeplatnaObjednavkaException, slouží k zachycení a správě chyb v business logice
+│   │   │
+│   │   ├── 📂 Services/
+│   │   │   Služby - zajišťují operace napříč více entitami a implementují business logiku,
+│   │   │   která nepatří do konkrétní entity, např. výpočet celkové ceny objednávky nebo sestavení fakturace
+│   │   │
+│   │   └── 📂 Policies/
+│   │       Pravidla - třídy definující obchodní pravidla a omezení, např. OrderCancellationPolicy,
+│   │       DiscountEligibilityPolicy
+│   │
+│   ├── 📂 Application/
+│   │   Aplikační vrstva - obsahuje orchestraci business procesů, koordinuje tok dat mezi UI a doménou,
+│   │   implementuje aplikační logiku a use-cases
+│   │   
+│   │   ├── 📂 Interfaces/
+│   │   │   Rozhraní - definice kontraktů pro komunikaci mezi vrstvami, abstraktní deklarace metod
+│   │   │   a vlastností bez konkrétní implementace
+│   │   │
+│   │   ├── 📂 UseCases/
+│   │   │   Případy užití - zpracování konkrétních funkcí systému jako odeslání objednávky,
+│   │   │   registrace uživatele, zobrazení detailu produktu
+│   │   │   
+│   │   │   ├── 📂 Commands/
+│   │   │   │   Příkazy - akce měnící stav systému, např. vytvoření objednávky, aktualizace uživatele,
+│   │   │   │   smazání produktu
+│   │   │   │
+│   │   │   └── 📂 Queries/
+│   │   │       Dotazy - operace pro čtení dat z databáze nebo jiných zdrojů, které nemění stav systému
+│   │   │
+│   │   └── 📂 DTOs/
+│   │       Data Transfer Objects - objekty pro přenos dat mezi vrstvami, zjednodušené verze entit
+│   │       bez business logiky
+│   │
+│   ├── 📂 Infrastructure/
+│   │   Infrastruktura - obsahuje implementace externích systémů jako databáze, API, emailing,
+│   │   logování, komunikace s externími službami
+│   │
+│   ├── 📂 Presentation/
+│   │   Prezentační vrstva - uživatelské rozhraní, kontrolery a další komponenty pro interakci s uživatelem
+│   │
+│   └── 📂 Common/
+│       Společné
+│       
+│       ├── 📂 Constants/
+│       │   Konstanty - konstanty např. pro API
+│       │
+│       └── 📂 Utils/
+│           Utility - zjednodušené pomocné třídy a rozšíření
+│
+└── 📂 tests/
+    Testy
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🧠 Extra tipy pro Clean Architecture</span></summary>
+<ol>
+<li><p><strong>SOLID pravidla</strong> 📝</p>
+<p><strong>📌 Jedna odpovědnost</strong>: Každá třída by měla mít jen jednu odpovědnost (mít jen jednu věc, kterou dělá).</p>
+<p><strong>📌 Rozšíření bez změny</strong>: Nové funkce by měly být přidávány, aniž by bylo potřeba měnit stávající kód.</p>
+<p><strong>📌 Nahraditelnost</strong>: Třídy by měly být snadno nahraditelné bez toho, že by to narušilo zbytek aplikace.</p>
+<p><strong>📌 Jednoduchá rozhraní</strong>: Rozhraní by měla být malá a jednoduchá, ne složitá.</p>
+<p><strong>📌 Závislost na rozhraní</strong>: Třídy by měly záviset na rozhraní (což definuje, jak se třída používá), ne na konkrétních implementacích.</p>
+</li>
+<li><p><strong>Inverze závislostí 🔄</strong></p>
+<p>Když programátor píše kód, třídy by neměly záviset přímo na konkrétních technologiích (např. databáze nebo knihovny). ➡️ místo toho by měly používat rozhraní.</p>
+<p>To usnadňuje změny a umožňuje snadněji vyměnit technologii, aniž by bylo nutné měnit celý kód.</p>
+</li>
+<li><p><strong>Doména nikdy neimportuje infrastrukturu 🚫</strong></p>
+<p>Logika aplikace (např. výpočty a pravidla) by měla být nezávislá na technologiích jako databáze, API nebo jiných externích systémech.</p>
+<p>Tak se zajistí, že změna technologie nebude mít vliv na hlavní část aplikace.</p>
+</li>
+<li><p><strong>Testování bez závislosti na technologiích 🧪</strong></p>
+<p>Při testování logiky aplikace (např. výpočtů) není potřeba mít připojení k databázi nebo externím API.</p>
+<p>Testy by měly běžet rychle a jednoduše, bez nutnosti zavádění složitých systémů.</p>
+</li>
+<li><p><strong>Dobré pojmenování 🏷️</strong></p>
+<p>Třídy a metody by měly být pojmenovány jasně a srozumitelně, aby každý, kdo čte kód, věděl, co daná třída nebo metoda dělá.</p>
+<p>Například <code>OrderProcessor</code> pro třídu, která zpracovává objednávky.</p>
+</li>
+</ol>
+</details>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/programming/cleanArchitecture.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
