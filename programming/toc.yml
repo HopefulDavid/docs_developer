@@ -2,6 +2,8 @@
   items:
     - name: Vývojové vzory
       href: developmentPatterns.md
+    - name: Clean Architecture
+      href: cleanArchitecture.md
     - name: Techniky
       href: techniques.md
     - name: Výběr pro vývoj
