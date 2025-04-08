@@ -1,4 +1,6 @@
 Changelog
+## 2025-04-08
+  - 📝 přidání dokumentace k Clean Architecture
 ## 2025-03-31
   - 📝 aktualizace dokumentace Git Flow
   - 📝 aktualizace dokumentace pro Git submoduly
@@ -17,6 +19,7 @@ Changelog
   - 📝 odstranění nadbytečné sekce o příkazech
   - ✨ přidání dokumentace k submodulům pro Git
   - ✨ přidání dokumentace pro Git Flow
+  - 🔧 update changelog
   - 🔧 update changelog
   - 🔧 update changelog
   - 📝 vylepšení struktury dokumentace Doxygen
