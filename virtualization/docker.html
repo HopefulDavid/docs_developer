@@ -87,8 +87,9 @@
         <article data-uid="">
 
 <h2 id="docker">Docker</h2>
+<p>Základní informace</p>
 <details>
-<summary><span style="color:#1E90FF;">Co je Docker?</span></summary>
+<summary><span style="color:#1E90FF;">Vysvětlení dockeru</span></summary>
 <ul>
 <li><p><strong>Docker</strong> je platforma pro vývoj, doručování a běh aplikací pomocí kontejnerizace.</p>
 </li>
@@ -103,11 +104,13 @@
 <div class="TIP">
 <h5>Tip</h5>
 <ul>
-<li><p>Kontejnerizace je virtualizací jádra operačního systému.</p>
-<p>Všechny kontejnery běží v rámci jednoho operačního systému a sdílejí paměť, knihovny a další zdroje.</p>
+<li><p>Kontejnerizace je virtualizací jádra operačního systému.
+&gt;
+&gt;    Všechny kontejnery běží v rámci jednoho operačního systému a sdílejí paměť, knihovny a další zdroje.</p>
 </li>
-<li><p>Zdroje se tímto způsobem využívají efektivnější než klasická virtualizace.</p>
-<p>Spuštění kontejneru je navíc mnohem rychlejší než spuštění virtuálního stroje s instalací operačního systému.</p>
+<li><p>Zdroje se tímto způsobem využívají efektivnější než klasická virtualizace.
+&gt;
+&gt;    Spuštění kontejneru je navíc mnohem rychlejší než spuštění virtuálního stroje s instalací operačního systému.</p>
 </li>
 <li><p>Malá režie a na stejném hardwaru můžete spustit více docker kontejnerů než virtuálních strojů</p>
 </li>
@@ -132,11 +135,13 @@
 <details>
 <summary><span style="color:#E95A84;">docker-compose.exe</span></summary>
 <p>Umožňuje definovat a spouštět více Docker kontejnerů jako součásti jedné aplikace.</p>
-<p>Pomocí souboru <code>docker-compose.yml</code> můžete definovat všechny služby (kontejnery), které mají běžet, včetně jejich konfigurací, závislostí a propojení mezi nimi.</p>
+<p>Pomocí souboru <code>docker-compose.yml</code> můžete definovat všechny služby (kontejnery), které mají běžet, včetně jejich
+konfigurací, závislostí a propojení mezi nimi.</p>
 </details>
 <details>
 <summary><span style="color:#E95A84;">docker-compose.yml</span></summary>
-<p>Konfigurační soubor, který popisuje, jaké kontejnery (služby) mají být spuštěny, jaké obrazové soubory mají používat, jaké porty mají být mapovány a jaké další nastavení kontejnery potřebují.</p>
+<p>Konfigurační soubor, který popisuje, jaké kontejnery (služby) mají být spuštěny, jaké obrazové soubory mají používat,
+jaké porty mají být mapovány a jaké další nastavení kontejnery potřebují.</p>
 <p>Tento soubor je zpracován příkazem <code>docker-compose up</code>, který automaticky spustí všechny definované kontejnery.</p>
 </details>
 </li>
@@ -154,7 +159,8 @@
 <details>
 <summary><span style="color:#E95A84;">docker image</span></summary>
 <p>Komprimovaná, samostatná část softwaru vytvořená příkazy v <code>Dockerfile</code>.</p>
-<p>Je to &quot;šablona&quot; (aplikace plus požadované knihovny a binární soubory) potřebná k vytvoření a spuštění Docker kontejneru.</p>
+<p>Je to &quot;šablona&quot; (aplikace plus požadované knihovny a binární soubory) potřebná k vytvoření a spuštění Docker
+kontejneru.</p>
 </details>
 <details>
 <summary><span style="color:#E95A84;">docker run</span></summary>
@@ -185,38 +191,50 @@
 </li>
 </ul>
 </details>
+<hr>
+<p>Práce s dockerem</p>
 <details>
 <summary><span style="color:#1E90FF;">Příkazy</span></summary>
-<ul>
-<li><p>Seznam příkazů:</p>
-<h4 id="stažení">Stažení</h4>
-<details>
-<summary><span style="color:#E95A84;">Stáhnout docker image</span></summary>
+<hr>
+<p>Stažení</p>
+  <details>
+  <summary><span style="color:#E95A84;">Stáhnout docker image</span></summary>
 <pre><code class="lang-Docker">docker pull &lt;Image name&gt;
 </code></pre>
 <div class="NOTE">
 <h5>Note</h5>
 <p><code>&lt;Image name&gt;</code> = Je název <code>docker image</code>. (Například: <code>mcr.microsoft.com/dotnet/core/sdk:3.1</code>)</p>
 </div>
-<p>Umístění docker image po stažení:</p>
-<ul>
-<li><p>Linux:</p>
-<pre><code class="lang-Bash">/var/lib/docker/
+  </details>
+<hr>
+<p>Záloha</p>
+  <details>
+  <summary><span style="color:#E95A84;">Zálohovat docker image</span></summary>
+<pre><code class="lang-Docker">docker save -o &lt;path to tar file&gt; &lt;docker image name&gt;
 </code></pre>
-</li>
-<li><p>Windows:</p>
-<pre><code class="lang-Bash">C:\ProgramData\DockerDesktop
+<div class="NOTE">
+<h5>Note</h5>
+<p><code>&lt;path to tar file&gt;</code> = Cesta k souboru, kam chcete zálohu uložit.
+<code>&lt;docker image name&gt;</code> = Název docker image, který chcete zálohovat.</p>
+<p>Například: <code>docker save -o dotnet-sdk.tar mcr.microsoft.com/dotnet/core/sdk:3.1</code></p>
+</div>
+  </details>
+<hr>
+<p>Obnova</p>
+  <details>
+  <summary><span style="color:#E95A84;">Obnova docker image</span></summary>
+<pre><code class="lang-Docker">docker load -i &lt;path to tar file&gt;
 </code></pre>
-</li>
-<li><p>macOS:</p>
-<pre><code class="lang-Bash">~/Library/Containers/com.docker.docker/Data/vms/0/
-</code></pre>
-</li>
-</ul>
-</details>
-<h4 id="vytoření">Vytoření</h4>
-<details>
-<summary><span style="color:#E95A84;">Sestavení docker image</span></summary>
+<div class="NOTE">
+<h5>Note</h5>
+<p><code>&lt;path to tar file&gt;</code> = Cesta k souboru, který chcete obnovit.</p>
+<p>Příklad: <code>docker load-i dotnet-sdk.tar</code></p>
+</div>
+  </details>
+<hr>
+<p>Vytoření</p>
+  <details>
+  <summary><span style="color:#E95A84;">Sestavení docker image</span></summary>
 <ul>
 <li><p><code>docker build [-t] customFolder</code></p>
 <p>Sestaví kontejner pro docker image ve vybraném adresáři.</p>
@@ -239,12 +257,13 @@
 <p><code>myapp</code> = Název pro nově sestavený kontejner. (Může být jakýkoli.)</p>
 <p><code>.</code> = Pracovní adresář v dockeru. (V tomto příkladu kořenový adresář.)</p>
 </div>
-</li>
-</ul>
-</details>
-<h4 id="spuštění">Spuštění</h4>
-<details>
-<summary><span style="color:#E95A84;">Spuštění kontejneru z docker image</span></summary>
+</li></ul></details>
+
+
+<hr>
+<p>Spuštění</p>
+  <details>
+  <summary><span style="color:#E95A84;">Spuštění kontejneru z docker image</span></summary>
 <ul>
 <li><p><code>docker run &lt;docker image&gt;</code></p>
 <p>Spustí kontejner pro docker image.</p>
@@ -254,34 +273,50 @@
 <h5>Tip</h5>
 <p>Spustí docker kontejner s docker image: <code>kitematic/hello-world-nginx</code></p>
 </div>
-</li>
-</ul>
-</details>
+</li></ul></details>
 <details>
 <summary><span style="color:#E95A84;">Spustit na jiném portu</span></summary>
 <pre><code class="lang-Docker">docker run -p 70:80 kitematic/hello-world-nginx 
 </code></pre>
+
+
 <div class="NOTE">
 <h5>Note</h5>
-<p><code>-p</code> = Mapuje port 70 na hostitelském stroji na port 80 uvnitř kontejneru. (To znamená, že pokud aplikace uvnitř kontejneru poslouchá na portu 80, bude přístupná na portu 70 hostitelského stroje.)</p>
+<p><code>-p</code> = Mapuje port 70 na hostitelském stroji na port 80 uvnitř kontejneru. (To znamená, že pokud aplikace uvnitř
+kontejneru poslouchá na portu 80, bude přístupná na portu 70 hostitelského stroje.)</p>
 <p><code>kitematic/hello-world-nginx</code> = Název docker image ke spuštění.</p>
 </div>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Spustit v interaktivním módu</span></summary>
+  </details>
+  <details>
+  <summary><span style="color:#E95A84;">Spustí a smaže container po ukončení</span></summary>
+<pre><code class="lang-Docker">docker run --rm kitematic/hello-world-nginx 
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p><code>--rm</code></p>
+<p>Docker automaticky odstraní kontejner, když je běh kontejneru přerušení.</p>
+</div>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Užitečné, pokud nechcete, aby se vaše lokální úložiště naplnilo zastavenými kontejnery.</p>
+</div>
+  </details>
+  <details>
+  <summary><span style="color:#E95A84;">Spustit v interaktivním módu</span></summary>
 <pre><code class="lang-Docker">docker run -it kitematic/hello-world-nginx 
 </code></pre>
 <div class="NOTE">
 <h5>Note</h5>
 <p>Užitečné, pokud chcete spustit kontejner a poté v něm spustit další příkazy, například při ladění nebo vývoji.</p>
 </div>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Spuštění více kontejnerů z docker image najednou</span></summary>
+  </details>
+  <details>
+  <summary><span style="color:#E95A84;">Spuštění více kontejnerů z docker image najednou</span></summary>
 <div class="NOTE">
 <h5>Note</h5>
 <p>Musíte použít soubor YAML k definování služeb vaší aplikace.</p>
-<p>Následně pomocí jediného příkazu <code>docker-compose up</code> můžete vytvořit a spustit všechny služby definované ve vašem souboru <code>docker-compose.yml</code>.</p>
+<p>Následně pomocí jediného příkazu <code>docker-compose up</code> můžete vytvořit a spustit všechny služby definované ve vašem
+souboru <code>docker-compose.yml</code>.</p>
 </div>
 <div class="TIP">
 <h5>Tip</h5>
@@ -310,24 +345,15 @@ services:
     ports:
       - &quot;8000:80&quot;
 </code></pre>
-</details>
-<h4 id="odstranění">Odstranění</h4>
-<details>
-<summary><span style="color:#E95A84;">Odstranit po zastavení</span></summary>
-<pre><code class="lang-Docker">docker run --rm kitematic/hello-world-nginx 
+  </details>
+<hr>
+<p>Odstranění</p>
+  <details>
+  <summary><span style="color:#E95A84;">Odstranění kontejneru</span></summary>
+<pre><code class="lang-Docker">docker rmi &lt;docker image name or id&gt;
 </code></pre>
-<div class="NOTE">
-<h5>Note</h5>
-<p><code>--rm</code></p>
-<p>Docker automaticky odstraní kontejner, když je běh kontejneru přerušení.</p>
-</div>
-<div class="TIP">
-<h5>Tip</h5>
-<p>Užitečné, pokud nechcete, aby se vaše lokální úložiště naplnilo zastavenými kontejnery.</p>
-</div>
-</details>
-</li>
-</ul>
+  </details>
+<hr>
 </details>
 <details>
 <summary><span style="color:#1E90FF;">Dockerfile</span></summary>
@@ -430,7 +456,7 @@ ENTRYPOINT [&quot;dotnet&quot;, &quot;out/myapp.dll&quot;]
 </details>
 <details>
 <summary><span style="color:#1E90FF;">Zachování dat z kontejneru na lokálním disku</span></summary>
-<img src="/../images/dockerKeepDataOnLocal.png" altr="dockerKeepDataOnLocal.png" width="800px">
+<img src="/../images/dockerKeepDataOnLocal.png" alt="dockerKeepDataOnLocal.png" width="800px">
 </details>
 
 </article>
