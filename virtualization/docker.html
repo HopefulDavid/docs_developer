@@ -87,6 +87,13 @@
         <article data-uid="">
 
 <h2 id="docker">Docker</h2>
+<p>Instalace</p>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Pro instalaci Dockeru na Windows potřebujete mít nainstalovaný WSL (Windows Subsystem for Linux).</p>
+<p>Návod na instalaci WSL najdete v sekci <a href="wsl.html">WSL</a>.</p>
+</div>
+<hr>
 <p>Základní informace</p>
 <details>
 <summary><span style="color:#1E90FF;">Vysvětlení dockeru</span></summary>
@@ -196,6 +203,13 @@ kontejneru.</p>
 <details>
 <summary><span style="color:#1E90FF;">Příkazy</span></summary>
 <hr>
+<p>Zobrazení</p>
+  <details>
+  <summary><span style="color:#E95A84;">Zobrazit všechny docker image</span></summary>
+<pre><code class="lang-Docker">docker images
+</code></pre>
+  </details>
+<hr>
 <p>Stažení</p>
   <details>
   <summary><span style="color:#E95A84;">Stáhnout docker image</span></summary>
@@ -210,7 +224,7 @@ kontejneru.</p>
 <p>Záloha</p>
   <details>
   <summary><span style="color:#E95A84;">Zálohovat docker image</span></summary>
-<pre><code class="lang-Docker">docker save -o &lt;path to tar file&gt; &lt;docker image name&gt;
+<pre><code class="lang-Docker">docker save -o &lt;path to tar file&gt; &lt;docker image name or id&gt;
 </code></pre>
 <div class="NOTE">
 <h5>Note</h5>
@@ -347,9 +361,23 @@ services:
 </code></pre>
   </details>
 <hr>
+<p>Zastavení</p>
+  <details>
+  <summary><span style="color:#E95A84;">Zastavit kontejner</span></summary>
+<pre><code class="lang-Docker">docker stop &lt;docker container name or id&gt;
+</code></pre>
+  </details>
+<hr>
 <p>Odstranění</p>
   <details>
   <summary><span style="color:#E95A84;">Odstranění kontejneru</span></summary>
+  
+  ```Docker
+  docker rm <container name or id>
+  ```
+  </container></details>
+  <details>
+  <summary><span style="color:#E95A84;">Odstranění image</span></summary>
 <pre><code class="lang-Docker">docker rmi &lt;docker image name or id&gt;
 </code></pre>
   </details>

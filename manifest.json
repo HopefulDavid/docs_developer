@@ -467,6 +467,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/LNHIGgBhcb.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/LNHIGgBhcb.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/NqjNbekRF2.png",
       "output": {
         "resource": {
@@ -541,6 +551,16 @@
       "output": {
         "resource": {
           "relative_path": "images/Z4EPv2avqi.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/cADNNtfdn8.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/cADNNtfdn8.png"
         }
       },
       "version": ""
@@ -657,6 +677,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/mei8XmPaWt.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/mei8XmPaWt.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/o5mZ6uXeRR.png",
       "output": {
         "resource": {
@@ -711,6 +741,16 @@
       "output": {
         "resource": {
           "relative_path": "images/outlook_calendarBeforeOverlay.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/pnAzi0NFm3.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/pnAzi0NFm3.png"
         }
       },
       "version": ""
@@ -881,6 +921,16 @@
       "output": {
         "resource": {
           "relative_path": "images/wqiRRNNKOT.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/wv1G8UBxvy.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/wv1G8UBxvy.png"
         }
       },
       "version": ""
@@ -1505,6 +1555,16 @@
         },
         ".html": {
           "relative_path": "virtualization/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "virtualization/wsl.md",
+      "output": {
+        ".html": {
+          "relative_path": "virtualization/wsl.html"
         }
       },
       "version": ""

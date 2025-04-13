@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title> | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/virtualization/wsl.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
+            Dokumentace pro v&#253;voj&#225;ře
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<h2 id="wsl-windows-subsystem-for-linux">WSL (Windows Subsystem for Linux)</h2>
+<p>Wsl slouží k instalaci linuxových distribucí na Windows.</p>
+<p>Umožňuje spouštět linuxové aplikace přímo na Windows bez potřeby virtuálního stroje.</p>
+<p>Instalace</p>
+<details> 
+<summary><span style="color:#1E90FF;">Windows</span></summary>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Pro správnou funkci WSL je nutné v BIOSu/UEFI povolit následující nastavení:</p>
+<ul>
+<li><p><strong>Podpora CPU virtualizace</strong></p>
+<ul>
+<li>U procesorů Intel: <strong>Intel VT-x</strong></li>
+<li>U procesorů AMD: <strong>AMD-V</strong> nebo <strong>SVM (Secure Virtual Machine)</strong></li>
+</ul>
+</li>
+<li><p><strong>Virtualizační technologie</strong></p>
+<ul>
+<li><p>U procesorů Intel: <strong>VT-d</strong> (pokud je k dispozici)</p>
+</li>
+<li><p>U procesorů AMD: <strong>AMD-Vi</strong> (pokud je k dispozici)</p>
+<p>Toto nastavení může být označeno jako <strong>&quot;Hardware Virtualization&quot;</strong></p>
+</li>
+</ul>
+</li>
+<li><p><strong>Vnořená virtualizace (Nested Virtualization)</strong></p>
+<ul>
+<li>Toto nastavení je potřebné pouze v případě, že chcete používat virtualizaci uvnitř WSL, což není běžné pro všechny uživatele.</li>
+<li>V některých verzích BIOSu/UEFI je označeno jako <strong>&quot;VT-x/AMD-V Virtualization&quot;</strong>.</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Kontrola povolení virtualizace:</p>
+<ul>
+<li><p>Stiskněte <code>Ctrl + Shift + Esc</code></p>
+</li>
+<li><p>Přejděte na záložku &quot;Performance&quot; (Výkon)</p>
+</li>
+<li><p>Dole by mělo být &quot;Virtualization: Enabled&quot;</p>
+</li>
+</ul>
+<p>Viz zde na obrázku:</p>
+<p><img src="../images/wv1G8UBxvy.png" alt="Zobrazení virtualization:Enabled">]</p>
+<ol>
+<li><p>Povolení WSL na vašem počítači</p>
+<p>Ve výchozím nastavení je WSL na vašem PC deaktivovaný.</p>
+<p>(WSL = Windows Subsystem for Linux, umožňuje spouštět Linuxové distribuce na Windows.)</p>
+<p>Spustťte jako správce &quot;PowerShell&quot;</p>
+<p><img src="../images/pnAzi0NFm3.png" alt="Spuštění PowerShellu jako správce"></p>
+<p>Nyní povolíme WSL vložením následujícího příkazu:</p>
+<pre><code class="lang-bash">dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Pokud vše proběhlo v pořádku, výstup bude vypadat takto:</p>
+<p><img src="../images/mei8XmPaWt.png" alt="Povolení WSL"></p>
+</div>
+</li>
+<li><p>Povolení platformy Virtual Machine a WSL 2 na Windows</p>
+<p>Pro spuštění nejnovější verze WSL, což je WSL 2, musíte povolit &quot;Windows Virtual Machine Platform&quot;.</p>
+<p>Použijte tento příkaz:</p>
+<pre><code>dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Výstup bude podobný tomuto:</p>
+<p><img src="../images/cADNNtfdn8.png" alt="Povolení WSL 2"></p>
+</div>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Aby se všechny nové změny a povolené funkce projevily, musíte restartovat počítač.</p>
+</div>
+</li>
+<li><p>Stažení aktualizace Linux jádra</p>
+<p>Nyní je čas <a href="https://github.com/Microsoft/WSL/releases">stáhnout a nainstalovat</a> aktualizační balíček linuxového jádra.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Narazil jsem na problém, kdy WSL nefungoval správně s Dockerem, dokud jsem nenainstaloval poslední aktualizaci, která vše opravila.</p>
+<p>Proto doporučuji stáhnout a nainstalovat poslední aktualizaci jádra.</p>
+</div>
+</li>
+<li><p>Nastavení WSL 2 jako výchozí</p>
+<p>Nyní je čas nastavit nejnovější verzi WSL, tedy WSL 2, jako výchozí.</p>
+<p>Toho dosáhnete otevřením dalšího PowerShell terminálu jako správce (jak bylo ukázáno dříve) a spuštěním následujícího příkazu:</p>
+<pre><code>wsl --set-default-version 2
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Výstup bude vypadat takto:</p>
+<p><img src="../images/LNHIGgBhcb.png" alt="Nastavení výchozí verze WSL"></p>
+</div>
+</li>
+<li><p>Instalace linuxové distribuce podle vašeho výběru pomocí WSL</p>
+<p>Nyní, když jsme plně připravili systém a nainstalovali všechny požadavky, můžeme konečně pokračovat s instalací linuxového subsystému na náš počítač.</p>
+<p>Stáhneme si libovolnou linuxovou distribuci podle našeho výběru &quot;RootFS&quot; (Root File System) a nainstalujeme ji pomocí WSL.</p>
+<p>Například pro <a href="https://cloud-images.ubuntu.com/wsl/jammy/current/">Ubuntu</a></p>
+<pre><code class="lang-bash">wsl --import Ubuntu-22.04 C:\WSL\Ubuntu2204 C:\UbuntuRootFS\ubuntu-jammy-wsl-amd64-ubuntu22.04lts.rootfs.tar.gz --version 2
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p><code>Ubuntu-22.04</code> = Název distribuce,který chcete použít.</p>
+<p><code>C:\WSL\Ubuntu2204</code> = Cesta, kde chcete mít nainstalovanou distribuci.</p>
+<p><code>C:\UbuntuRootFS\ubuntu-jammy-wsl-amd64-ubuntu22.04lts.rootfs.tar.gz</code> = Cesta k souboru, který jste stáhli.</p>
+<p><code>--version 2</code> = Použití WSL 2 jako výchozí verze pro tuto distribuci.</p>
+</div>
+<p>Nyní ověříme, zda je distribuce nainstalována správně pomocí příkazu:</p>
+<pre><code class="lang-bash">wsl --list
+</code></pre>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Pokud ste nainstalovali špatně distribuci, můžete ji odstranit pomocí příkazu:</p>
+<pre><code class="lang-bash">wsl --unregister &lt;distro name&gt;
+</code></pre>
+<p>Například: <code>wsl --unregister Ubuntu-22.04</code></p>
+</div>
+</li>
+</ol>
+<p>To je vše, nyní máte nainstalovaný WSL na vašem počítači včetně linuxové distribuce.</p>
+<blockquote>
+<p>Pro detailní informace o instalaci WSL2 najdete kompletní návod na <a href="https://contabo.com/blog/how-to-install-wsl2-on-windows-10/">blogu Contabo</a>.</p>
+</blockquote>
+</details>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/virtualization/wsl.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
