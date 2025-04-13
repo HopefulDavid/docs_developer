@@ -277,6 +277,25 @@ kontejneru.</p>
 <hr>
 <p>Spuštění</p>
   <details>
+  <summary><span style="color:#E95A84;">Spustit služby definované v docker-compose.yml</span></summary>
+<pre><code>```Docker
+docker-compose up
+```
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Spustí všechny služby definované v souboru <code>docker-compose.yml</code> v aktuálním adresáři.</p>
+</div>
+<div class="TIP">
+<h5>Tip</h5>
+<ul>
+<li>Použijte <code>-d</code> pro spuštění na pozadí: <code>docker-compose up -d</code></li>
+<li>Pro sestavení a spuštění použijte: <code>docker-compose up --build</code></li>
+<li>Pro zastavení služeb použijte: <code>docker-compose down</code></li>
+</ul>
+</div>
+  </details>
+  <details>
   <summary><span style="color:#E95A84;">Spuštění kontejneru z docker image</span></summary>
 <ul>
 <li><p><code>docker run &lt;docker image&gt;</code></p>
