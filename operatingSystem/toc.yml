@@ -1,0 +1,7 @@
+- name: Windows
+  href: windows.md
+  items:
+  - name: Command Line
+    href: windows/cmd.md
+  - name: PowerShell
+    href: windows/powerShell.md

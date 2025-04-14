@@ -1,0 +1,6 @@
+- name: JetBrains
+  href: jetBrains.md
+- name: Visual Studio
+  href: visualStudio.md
+- name: Komponenty
+  href: components.md

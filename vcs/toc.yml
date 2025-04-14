@@ -1,0 +1,20 @@
+- name: Git
+  items:
+  - name: Konfigurace
+    href: git/gitConfig.md
+  - name: Úložiště
+    href: git/repository.md
+  - name: Vnořené úložiště
+    href: git/submodules.md
+  - name: Git Flow
+    href: git/gitFlow.md
+  - name: Historie
+    items:
+    - name: .gitignore
+      href: git/history/updateGitignore.md
+    - name: Přesunutí
+      href: git/history/moveCommits.md
+    - name: Oprava
+      href: git/history/fixCommits.md
+    - name: Odstranění
+      href: git/history/deleteCommits.md
