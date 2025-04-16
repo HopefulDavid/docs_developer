@@ -1,41 +1,88 @@
-﻿**🏗️ Kompletní návrhový návod – Clean Architecture**
+﻿# Clean Architecture: Kompletní průvodce
 
-<details>
-<summary><span style="color:#1E90FF;"> Workflow</span></summary>
+## 👨‍💻 Úvod: Co je Clean Architecture?
+
+**Clean Architecture** je metodika návrhu softwaru, která klade důraz na **oddělení byznys logiky** od technických detailů. 
+
+Veškerý kód, který se zabývá obchodními pravidly, by měl být **nezávislý** na technologiích jako databáze, frameworky nebo externí služby.
+
+Tato metoda podporuje:
+- **Modularitu**: Kód je rozdělený do **vrstev** podle jeho odpovědnosti
+- **Testovatelnost**: Díky oddělení logiky a implementací je snadné psát **jednotkové testy**
+- **Údržbu**: Díky jasnému rozdělení odpovědností se aplikace lépe udržuje a rozšiřuje
+
+Základem této architektury je, že **vnitřní vrstvy** aplikace (byznys logika, doménové modely) nesmí záviset na **vnějších vrstvách** (databáze, API, UI). 
+
+To znamená, že můžeš snadno změnit technologii vnější vrstvy bez ovlivnění vnitřní logiky.
 
 ```mermaid
-flowchart TB
-    A["🧑‍💻 Uživatel (UI)<br>/src/ui/<br><small>Uživatelská akce<br>např. kliknutí tlačítka 'Objednat'</small>"]
-    B["💻 Aplikace (Use Case)<br>/src/application/<br><small>Zpracování požadavku<br>např. vytvoření objednávky</small>"]
-    C["⚙️ Doménová logika<br>/src/domain/<br><small>Business pravidla<br>např. výpočet ceny objednávky</small>"]
-    D["🌐 Infrastruktura<br>/src/infrastructure/<br><small>Externí systémy<br>např. databáze, emaily, API</small>"]
-    E["📁 Sdílené<br>/src/shared/<br><small>Společné utility a typy<br>pro celý systém</small>"]
-
-    subgraph flow
-        direction TB
-        A --> B
-        B --> C
-        C --> D
+graph TB
+    subgraph Externí["Externí systémy"]
+        UI["UI vrstva<br>(Komponenty, Stránky)"]
+        DB["Databáze"]
+        API["Externí API"]
     end
 
-    E --- A
-    E --- B
-    E --- C
-    E --- D
+    subgraph Aplikační["Aplikační vrstva"]
+        UseCases["Use Cases<br>Služby"]
+        DTOs["DTO objekty"]
+    end
+
+    subgraph Doménová["Doménová vrstva (Jádro)"]
+        Entity["Entity"]
+        HodnotyObj["Hodnotové objekty"]
+        DomenovéSlužby["Doménové služby"]
+        Pravidla["Pravidla"]
+    end
+
+    subgraph Infrastruktura["Infrastrukturní vrstva"]
+        Repozitáře["Repozitáře"]
+        ExtSlužby["Externí služby"]
+        Konfigurace["Konfigurace"]
+    end
+
+    subgraph Sdílené["Sdílená vrstva"]
+        Utility["Utility"]
+        Typy["Typy"]
+        Konstanty["Konstanty"]
+    end
+
+    %% Závislosti
+    UI --> UseCases
+    UseCases --> Doménová
+    Repozitáře --> Doménová
+    ExtSlužby --> Doménová
+    DB --> Repozitáře
+    API --> ExtSlužby
+
+    %% Sdílené závislosti
+    Utility --> UI
+    Utility --> Aplikační
+    Utility --> Doménová
+    Utility --> Infrastruktura
+
+    %% Stylování pro light/dark mode
+    classDef default fill:#f8f9fa,stroke:#495057,stroke-width:2px,color:#212529;
+    classDef core fill:#198754,stroke:#495057,stroke-width:2px,color:#fff;
+    classDef external fill:#dc3545,stroke:#495057,stroke-width:2px,color:#fff;
+
+    class Doménová core;
+    class Externí external;
 ```
 
-</details>
+## 🌐 1. Architektonické vrstvy – Přehled
 
----
+Vrstvy jsou základem **Clean Architecture** a každá vrstva má svůj specifický účel:
 
-Postup:
+- **UI Layer**: Uživatelské rozhraní (UI), které zobrazuje data uživatelům a získává jejich vstupy
+- **Application Layer**: Zajišťuje orchestraci akcí mezi UI a doménovou logikou, slouží pro byznys procesy
+- **Domain Layer**: Obsahuje všechny obchodní logiky, entity a pravidla aplikace
+- **Infrastructure Layer**: Implementace komunikace s externími systémy (databáze, API, služby třetích stran)
+- **Shared Layer**: Sdílené komponenty, utility a typy, které jsou použitelné v celém projektu
 
-<details>
-<summary><span style="color:#1E90FF;"> 🌐 1. Architektonické vrstvy – přehled </span></summary>
+### Struktura složek
 
-Struktura složek by měla být co nejvíce intuitivní a reflektovat jednotlivé vrstvy architektury.
-
-```text
+```
 📦 /src
 ├── ui/                ← Kód pro UI (React, Flutter, SwiftUI…)
 ├── application/       ← Orchestrace, služby, use-cases
@@ -44,24 +91,25 @@ Struktura složek by měla být co nejvíce intuitivní a reflektovat jednotliv�
 └── shared/            ← Utility, types, společné věci
 ```
 
-</details>
+### Směr závislostí
 
-<details>
-<summary><span style="color:#1E90FF;"> 📚 2. Doménový návrh – Srdce aplikace </span></summary>
+Důležité pravidlo je, že závislosti směřují dovnitř:
 
-Cíl: Oddělit business logiku (pravidla a procesy aplikace) od technické implementace (konkrétní technologie a frameworky, které je realizují).
+- UI závisí na Application
+- Application závisí na Domain
+- Infrastructure implementuje rozhraní definované v Domain
+- Domain nezávisí na žádné jiné vrstvě!
 
-Umístění v projektu📦: `/domain/`
+## 📚 2. Doménový návrh – Srdce aplikace
 
-<details>
-<summary><span style="color:#E95A84;">✅ Entity</span></summary>
+Cílem doménového návrhu je **oddělit byznys logiku** od technické implementace. Toto oddělení usnadňuje změny v technologických detailech, aniž by to ovlivnilo samotnou logiku aplikace.
 
-Představují jedinečné objekty s vlastní identitou (ID) a specifickým chováním v systému.
+### ✅ Entity
 
->[!NOTE]
-> Mějte na paměti, že **entity** by měly být pojmenovány jasně podle doménového významu.
+Entity jsou objekty s vlastní identitou a specifickým chováním v systému.
 
-**Příklad:** `src/domain/entities/order.cs`, `src/domain/entities/user.cs`
+**Kam patří**: `/src/domain/entities/`  
+**Příklady souborů**: `Order.js`, `User.js`, `Product.js`
 
 ```csharp
 public class Order
@@ -81,32 +129,21 @@ public class Order
     {
         return Items.Aggregate(Money.Zero(), (sum, item) => sum.Add(item.GetSubtotal()));
     }
-
-    public bool IsEmpty() => Items.Count == 0;
 }
 ```
 
-</details>
+### 🧩 Value objekty
 
-<details>
-<summary><span style="color:#E95A84;">🧩 Value objekty</span></summary>
+Value objekty jsou objekty, které jsou neměnné a nemají identitu. Jsou definovány svými hodnotami.
 
-Value objekty mají tyto hlavní vlastnosti:
-
-- Jsou neměnné (immutable) - po vytvoření je nelze změnit
-- Nemají identitu (ID) - jsou definovány svými vlastnostmi
-- Při stejných vlastnostech jsou považovány za stejné objekty
-
->[!NOTE]
-> Pojmenování je klíčové pro rozpoznání jejich role.
-
-**Příklad:** `src/domain/valueObjects/email.cs`, `src/domain/valueObjects/money.cs`
+**Kam patří**: `/src/domain/valueObjects/`  
+**Příklady souborů**: `Email.js`, `Money.js`, `Address.js`
 
 ```csharp
 public class Email
 {
     private readonly string value;
-
+    
     public Email(string value)
     {
         if (!value.Contains("@")) throw new InvalidEmailException();
@@ -117,37 +154,31 @@ public class Email
 }
 ```
 
-</details>
+### 🧠 Doménové služby
 
-<details>
-<summary><span style="color:#E95A84;">🧠 Doménové služby</span></summary>
+Doménové služby implementují logiku, která nepatří přímo do žádné entity a pracuje s více entitami.
 
-Doménové služby použijte, když potřebujete logiku, která:
-
-- pracuje s více entitami najednou
-- nepatří přímo do žádné entity
-- provádí komplexní operace mezi entitami
-
-**Příklad:** `src/domain/services/shippingCost.cs`
+**Kam patří**: `/src/domain/services/`  
+**Příklady souborů**: `ShippingCostService.js`, `DiscountCalculator.js`
 
 ```csharp
 public class ShippingCostService
 {
     public Money Calculate(Order order)
     {
-        return order.GetTotal().GreaterThan(new Money(1000)) ? Money.Zero() : new Money(99);
+        return order.GetTotal().GreaterThan(new Money(1000)) 
+            ? Money.Zero() 
+            : new Money(99);
     }
 }
 ```
 
-</details>
+### ⚖️ Policy objekty
 
-<details>
-<summary><span style="color:#E95A84;">⚖️ Policy objekty</span></summary>
+Policy objekty definují pravidla, která určují, co je možné dělat s entitami.
 
-Jedná se o pravidla, která říkají, co je povoleno a co ne pro entity.
-
-**Příklad:** `src/domain/policies/orderPolicy.cs`
+**Kam patří**: `/src/domain/policies/`  
+**Příklady souborů**: `OrderPolicy.js`, `AccessPolicy.js`
 
 ```csharp
 public class OrderPolicy
@@ -159,35 +190,23 @@ public class OrderPolicy
 }
 ```
 
-</details>
+## 🧭 3. Application Layer – Orchestrace akcí
 
----
+Tato vrstva je zodpovědná za orchestraci akcí mezi ostatními vrstvami. Komunikuje s doménovou logikou a zajišťuje provádění konkrétních úkolů, jako je například vytvoření objednávky.
 
-</details>
+### 🛠 UseCase / Service
 
-<details>
-<summary><span style="color:#1E90FF;"> 🧭 3. Application Layer – Orchestrace akcí </span></summary>
+UseCases definují konkrétní funkce, které aplikace nabízí. Například **vytvoření objednávky**.
 
-**Cíl:** Tento layer slouží k orchestrace akcí bez znalosti implementace (tzn. bez závislosti na konkrétní technologii).
-
-🛠 **UseCase / Service**
-
-UseCases slouží k vykonávání logiky v aplikaci a jsou zaměřeny na konkrétní funkce systému.
-
-**Vytvoření Interface pro použití v Application Layer:** Vytvoříme **interface**, který je implementován konkrétními službami (např. `PlaceOrder`).
-
-**Umístění:** `/src/application/usecases/`
+**Kam patří**: `/src/application/useCases/` nebo `/src/application/services/`  
+**Příklady souborů**: `PlaceOrder.js`, `RegisterUser.js`, `GenerateReport.js`
 
 ```csharp
 public interface IPlaceOrder
 {
     Task Execute(PlaceOrderInput input);
 }
-```
 
-**Implementace interface v konkrétní službě:**
-
-```csharp
 public class PlaceOrder : IPlaceOrder
 {
     private readonly IOrderRepository orderRepo;
@@ -203,30 +222,30 @@ public class PlaceOrder : IPlaceOrder
     {
         var order = new Order(input.UserId, input.Items);
         if (order.IsEmpty()) throw new EmptyCartException();
+        
         await orderRepo.Save(order);
         await emailService.SendConfirmation(input.UserId, order);
     }
 }
 ```
 
-</details>
+### 📋 DTO (Data Transfer Objects)
 
-<details>
-<summary><span style="color:#1E90FF;">🔌 &nbsp;4. Infrastructure Layer – Implementace závislostí</span></summary>
+DTO objekty slouží k přenosu dat mezi vrstvami, zejména mezi Application a UI.
 
-Tato vrstva obsahuje implementace externích systémů, jako je databáze, emailové služby nebo API třetích stran atd.
+**Kam patří**: `/src/application/dtos/`  
+**Příklady souborů**: `OrderDto.js`, `UserProfileDto.js`
 
-Příklady:
+## 🔌 4. Infrastructure Layer – Implementace závislostí
 
-<details>
-<summary><span style="color:#E95A84;">📦 Repozitáře (DB)</span></summary>
+V této vrstvě implementujeme konkrétní technologické detaily, jako jsou připojení k databázi, emailové služby nebo API třetích stran.
 
-**Vytvoření interface pro práci s daty – IOrderRepository**
+### 📦 Repozitáře (DB)
 
-Tento interface definuje operace, které budou prováděny na entitách jako `Order`. Jakmile máme tento interface, můžeme implementovat různé způsoby uložení (např. do Postgres, MongoDB, nebo jiné databáze).
+Repozitáře poskytují abstrakci nad databází a umožňují interakci s entitami.
 
-**Umístění:** `/src/infrastructure/db/`  
-**Interface:** `/src/application/interfaces/IOrderRepository.cs`
+**Kam patří**: `/src/infrastructure/repositories/`  
+**Příklady souborů**: `PostgresOrderRepository.js`, `MongoUserRepository.js`
 
 ```csharp
 public interface IOrderRepository
@@ -234,11 +253,7 @@ public interface IOrderRepository
     Task Save(Order order);
     Task<Order> FindById(OrderId id);
 }
-```
 
-**Implementace interface v konkrétní službě:**
-
-```csharp
 public class PostgresOrderRepository : IOrderRepository
 {
     public async Task Save(Order order)
@@ -253,25 +268,20 @@ public class PostgresOrderRepository : IOrderRepository
     }
 }
 ```
-</details>
 
-<details>
-<summary><span style="color:#E95A84;">📧 Služby (API, emailing, třetí strany)</span></summary>
+### 📧 Služby (API, emailing, třetí strany)
 
-**Vytvoření interface pro emailovou službu – IEmailService**
+Externí služby, jako je odesílání emailů nebo volání API třetí strany.
 
-**Umístění:** `/src/application/interfaces/IEmailService.cs`
+**Kam patří**: `/src/infrastructure/services/`  
+**Příklady souborů**: `SendgridEmailService.js`, `StripePaymentService.js`
 
 ```csharp
 public interface IEmailService
 {
     Task SendConfirmation(string userId, Order order);
 }
-```
 
-**Implementace emailové služby:**
-
-```csharp
 public class SendgridEmailService : IEmailService
 {
     public async Task SendConfirmation(string userId, Order order)
@@ -280,192 +290,81 @@ public class SendgridEmailService : IEmailService
     }
 }
 ```
-</details>
 
-</details>
+### ⚙️ Konfigurace
 
-<details>
-<summary><span style="color:#1E90FF;">🎨  &nbsp5. UI Layer – Vstupy & Výstupy</span></summary>
+Konfigurace a nastavení aplikace, včetně integrace závislostí (dependency injection).
 
-UI pouze volá **UseCase** nebo **Service**.
+**Kam patří**: `/src/infrastructure/config/`  
+**Příklady souborů**: `dependencyInjection.js`, `dbConfig.js`
 
-> [!IMPORTANT]
-> UI nikdy neobsahuje business logiku.
+## 🎨 5. UI Layer – Vstupy & Výstupy
 
-**Umístění:** `/src/Presentation/`
+UI vrstva je zodpovědná pouze za interakci s uživatelem a volání příslušného use case nebo služby. Nikdy neobsahuje byznys logiku!
 
-### **Příklad pro React:**
+### 🔲 Kontrolery, Komponenty a Presentery
 
-```tsx
-const CheckoutPage = () => {
-  const placeOrder = async () => {
-    await placeOrderUseCase.execute({
-      userId: auth.user.id,
-      items: cart.items.map(i => ({ productId: i.id, quantity: i.qty })),
-    })
-  }
+UI vrstva zajišťuje interakci s uživatelem pro zadání objednávky.
 
-  return <button onClick={placeOrder}>Objednat</button>
+**Kam patří**: `/src/ui/controllers/`, `/src/ui/components/`, `/src/ui/pages/`  
+**Příklady souborů**: `OrderController.js`, `ProductList.jsx`, `CheckoutPage.vue`
+
+```csharp
+public class OrderController : Controller
+{
+    private readonly IPlaceOrder placeOrder;
+
+    public OrderController(IPlaceOrder placeOrder)
+    {
+        this.placeOrder = placeOrder;
+    }
+
+    public async Task<IActionResult> CreateOrder(OrderInputModel input)
+    {
+        await placeOrder.Execute(input);
+        return Ok();
+    }
 }
 ```
-</details>
 
----
+### 📱 Modely a Validátory
 
-<details>
-<summary><span style="color:#1E90FF;">🧪Testování</span></summary>
+Modely pro příjem dat od uživatele a jejich validace.
 
+**Kam patří**: `/src/ui/models/`, `/src/ui/validators/`  
+**Příklady souborů**: `OrderInputModel.js`, `UserFormValidator.js`
 
-- 🧪 **Jednotkové testy domény**
+## 🔄 6. Shared Layer – Sdílená funkcionalita
 
-    Jednotkové testy by měly být zaměřeny na testování business logiky bez závislosti na technologiích.
+Shared vrstva obsahuje kód, který je používán napříč celou aplikací a nepatří do jedné konkrétní vrstvy.
 
-    ```csharp
-    [Test]
-    public void TestOrderTotalCalculation()
-    {
-        var order = new Order("user1", new List<OrderItem> { new OrderItem("p1", 100, 2) });
-        Assert.AreEqual(200, order.GetTotal().Value);
-    }
-    ```
+**Kam patří**: `/src/shared/`  
+**Příklady souborů**: `types.js`, `constants.js`, `utils.js`, `logger.js`
 
-- 🧪 **Test UseCase**
+### 🧰 Utility a pomocné funkce
 
-    Tyto testy by měly ověřit, že UseCase správně volá potřebné závislosti a provádí očekávané akce.
+Univerzální pomocné funkce používané v celém projektu.
 
-    ```csharp
-    [Test]
-    public async Task TestPlaceOrderEmailSent()
-    {
-        var emailService = new FakeEmailService();
-        var useCase = new PlaceOrder(fakeRepo, emailService);
-        await useCase.Execute(new PlaceOrderInput { UserId = "user1", Items = ... });
-        Assert.IsTrue(emailService.WasCalled);
-    }
-    ```
+```javascript
+export function formatDate(date) {
+  return new Intl.DateTimeFormat('cs-CZ').format(date);
+}
 
-</details>
-
-<details>
-<summary><span style="color:#1E90FF;">📁 základní univerzální struktura</span></summary>
-
-```text
-📦 Solution/
-│   Řešení
-│
-├── 📂 src/
-│   Zdrojový kód
-│   
-│   ├── 📂 Domain/
-│   │   Doména - jádro aplikace obsahující business logiku a pravidla systému. Zachycuje základní koncepty, procesy
-│   │   a jejich vzájemné vztahy nezávisle na technologických detailech implementace
-│   │   
-│   │   ├── 📂 Entities/
-│   │   │   Entity - třídy s identitou reprezentující hlavní objekty systému, např. Uživatel, Objednávka, Produkt,
-│   │   │   nesou svá data a business logiku, mají jedinečné ID a životní cyklus v systému
-│   │   │
-│   │   ├── 📂 ValueObjects/
-│   │   │   Hodnotové objekty - neměnné objekty definované svými vlastnostmi bez vlastní identity, např. EmailAddress,
-│   │   │   Money, PhoneNumber, kde dvě instance se stejnými hodnotami jsou považovány za identické
-│   │   │
-│   │   ├── 📂 Events/
-│   │   │   Události - zachycení a publikování významných změn v doméně jako je dokončení objednávky,
-│   │   │   změna stavu zboží nebo notifikace o důležitých operacích
-│   │   │
-│   │   ├── 📂 Exceptions/
-│   │   │   Výjimky - vlastní chybové stavy specifické pro doménu, např. NedostatekZboziException,
-│   │   │   NeplatnaObjednavkaException, slouží k zachycení a správě chyb v business logice
-│   │   │
-│   │   ├── 📂 Services/
-│   │   │   Služby - zajišťují operace napříč více entitami a implementují business logiku,
-│   │   │   která nepatří do konkrétní entity, např. výpočet celkové ceny objednávky nebo sestavení fakturace
-│   │   │
-│   │   └── 📂 Policies/
-│   │       Pravidla - třídy definující obchodní pravidla a omezení, např. OrderCancellationPolicy,
-│   │       DiscountEligibilityPolicy
-│   │
-│   ├── 📂 Application/
-│   │   Aplikační vrstva - obsahuje orchestraci business procesů, koordinuje tok dat mezi UI a doménou,
-│   │   implementuje aplikační logiku a use-cases
-│   │   
-│   │   ├── 📂 Interfaces/
-│   │   │   Rozhraní - definice kontraktů pro komunikaci mezi vrstvami, abstraktní deklarace metod
-│   │   │   a vlastností bez konkrétní implementace
-│   │   │
-│   │   ├── 📂 UseCases/
-│   │   │   Případy užití - zpracování konkrétních funkcí systému jako odeslání objednávky,
-│   │   │   registrace uživatele, zobrazení detailu produktu
-│   │   │   
-│   │   │   ├── 📂 Commands/
-│   │   │   │   Příkazy - akce měnící stav systému, např. vytvoření objednávky, aktualizace uživatele,
-│   │   │   │   smazání produktu
-│   │   │   │
-│   │   │   └── 📂 Queries/
-│   │   │       Dotazy - operace pro čtení dat z databáze nebo jiných zdrojů, které nemění stav systému
-│   │   │
-│   │   └── 📂 DTOs/
-│   │       Data Transfer Objects - objekty pro přenos dat mezi vrstvami, zjednodušené verze entit
-│   │       bez business logiky
-│   │
-│   ├── 📂 Infrastructure/
-│   │   Infrastruktura - obsahuje implementace externích systémů jako databáze, API, emailing,
-│   │   logování, komunikace s externími službami
-│   │
-│   ├── 📂 Presentation/
-│   │   Prezentační vrstva - uživatelské rozhraní, kontrolery a další komponenty pro interakci s uživatelem
-│   │
-│   └── 📂 Common/
-│       Společné
-│       
-│       ├── 📂 Constants/
-│       │   Konstanty - konstanty např. pro API
-│       │
-│       └── 📂 Utils/
-│           Utility - zjednodušené pomocné třídy a rozšíření
-│
-└── 📂 tests/
-    Testy
+export function generateId() {
+  return Math.random().toString(36).substr(2, 9);
+}
 ```
 
-</details>
+### 🏷️ Typy a konstanty
 
-<details>
-<summary><span style="color:#1E90FF;">🧠 Extra tipy pro Clean Architecture</span></summary>
+Sdílené typy a konstanty pro celou aplikaci.
 
-1. **SOLID pravidla** 📝
-
-    **📌 Jedna odpovědnost**: Každá třída by měla mít jen jednu odpovědnost (mít jen jednu věc, kterou dělá).
-
-    **📌 Rozšíření bez změny**: Nové funkce by měly být přidávány, aniž by bylo potřeba měnit stávající kód.
-
-    **📌 Nahraditelnost**: Třídy by měly být snadno nahraditelné bez toho, že by to narušilo zbytek aplikace.
-
-    **📌 Jednoduchá rozhraní**: Rozhraní by měla být malá a jednoduchá, ne složitá.
-
-    **📌 Závislost na rozhraní**: Třídy by měly záviset na rozhraní (což definuje, jak se třída používá), ne na konkrétních implementacích.
-
-2. **Inverze závislostí 🔄**
-
-    Když programátor píše kód, třídy by neměly záviset přímo na konkrétních technologiích (např. databáze nebo knihovny). ➡️ místo toho by měly používat rozhraní. 
-
-    To usnadňuje změny a umožňuje snadněji vyměnit technologii, aniž by bylo nutné měnit celý kód.
-
-3. **Doména nikdy neimportuje infrastrukturu 🚫**
-
-    Logika aplikace (např. výpočty a pravidla) by měla být nezávislá na technologiích jako databáze, API nebo jiných externích systémech. 
-
-    Tak se zajistí, že změna technologie nebude mít vliv na hlavní část aplikace.
-
-4. **Testování bez závislosti na technologiích 🧪**
-
-    Při testování logiky aplikace (např. výpočtů) není potřeba mít připojení k databázi nebo externím API. 
-
-    Testy by měly běžet rychle a jednoduše, bez nutnosti zavádění složitých systémů.
-
-5. **Dobré pojmenování 🏷️**
-
-    Třídy a metody by měly být pojmenovány jasně a srozumitelně, aby každý, kdo čte kód, věděl, co daná třída nebo metoda dělá. 
-
-    Například `OrderProcessor` pro třídu, která zpracovává objednávky.
-
-</details>
+```javascript
+export const ORDER_STATUS = {
+  NEW: 'NEW',
+  PENDING: 'PENDING',
+  SHIPPED: 'SHIPPED',
+  DELIVERED: 'DELIVERED',
+  CANCELLED: 'CANCELLED'
+};
+```
