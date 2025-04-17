@@ -47,19 +47,21 @@ graph TB
         Konstanty["Konstanty"]
     end
 
-    %% Závislosti
+    %% Správné závislosti - směrem dovnitř k doméně
     UI --> UseCases
     UseCases --> Doménová
-    Repozitáře --> Doménová
-    ExtSlužby --> Doménová
-    DB --> Repozitáře
-    API --> ExtSlužby
-
+    Repozitáře ---> Doménová
+    ExtSlužby ---> Doménová
+    
+    %% Implementační závislosti
+    Repozitáře --> DB
+    ExtSlužby --> API
+    
     %% Sdílené závislosti
-    Utility --> UI
-    Utility --> Aplikační
-    Utility --> Doménová
-    Utility --> Infrastruktura
+    Sdílené -.-> UI
+    Sdílené -.-> Aplikační
+    Sdílené -.-> Doménová
+    Sdílené -.-> Infrastruktura
 
     %% Stylování pro light/dark mode
     classDef default fill:#f8f9fa,stroke:#495057,stroke-width:2px,color:#212529;
