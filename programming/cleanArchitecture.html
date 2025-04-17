@@ -129,19 +129,21 @@
         Konstanty[&quot;Konstanty&quot;]
     end
 
-    %% Závislosti
+    %% Správné závislosti - směrem dovnitř k doméně
     UI --&gt; UseCases
     UseCases --&gt; Doménová
-    Repozitáře --&gt; Doménová
-    ExtSlužby --&gt; Doménová
-    DB --&gt; Repozitáře
-    API --&gt; ExtSlužby
-
+    Repozitáře ---&gt; Doménová
+    ExtSlužby ---&gt; Doménová
+    
+    %% Implementační závislosti
+    Repozitáře --&gt; DB
+    ExtSlužby --&gt; API
+    
     %% Sdílené závislosti
-    Utility --&gt; UI
-    Utility --&gt; Aplikační
-    Utility --&gt; Doménová
-    Utility --&gt; Infrastruktura
+    Sdílené -.-&gt; UI
+    Sdílené -.-&gt; Aplikační
+    Sdílené -.-&gt; Doménová
+    Sdílené -.-&gt; Infrastruktura
 
     %% Stylování pro light/dark mode
     classDef default fill:#f8f9fa,stroke:#495057,stroke-width:2px,color:#212529;
