@@ -441,3 +441,50 @@ FROM table1 t1
 
 Tento dotaz vrátí všechny řádky z `table1` a pro každý řádek provede poddotaz, který vrátí odpovídající hodnotu z `table2`.
 </details>
+
+</details>
+
+<details>
+<summary><span style="color:#1E90FF;">Spojování Hodnot ze sloupce do řetězce</span></summary>
+
+```sql
+SELECT STRING_AGG(column_name, ';') AS concatenated_values
+FROM table_name
+GROUP BY grouping_column
+```
+
+Spojí hodnoty ze sloupce `column_name` do jednoho řetězce odděleného středníkem `;` a seskupí je podle
+`grouping_column`.
+
+> [!NOTE]
+> Příklad:
+>
+> Mějme tabulku `zamestnanci`:
+> ```text
+>   jmeno     | oddeleni
+>   ----------|----------
+>   Jan       | IT
+>   Petr      | IT
+>   Marie     | HR
+>   Eva       | HR
+>   Pavel     | IT
+> ```
+>
+> Po spuštění dotazu:
+> ```sql
+> SELECT 
+>     oddeleni,
+>     STRING_AGG(jmeno, ';') AS seznam
+> FROM zamestnanci
+> GROUP BY oddeleni
+> ```
+>
+> Dostaneme výsledek:
+> ```text
+>   oddeleni  | seznam
+>   ----------|---------------
+>   IT        | Jan;Petr;Pavel
+>   HR        | Marie;Eva
+> ```
+
+</details>
