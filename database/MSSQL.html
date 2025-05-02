@@ -360,10 +360,11 @@ RECONFIGURE;
 </code></pre>
 </div>
 </details>
-<h4 id="spojování-tabulek">Spojování tabulek</h4>
+<h4 id="spojování">Spojování</h4>
 <details>
-<summary><span style="color:#1E90FF;">left join</span></summary>
-<p><code>left join</code></p>
+<summary><span style="color:#1E90FF;">Spojování Tabulek</span></summary>
+<details>
+<summary><span style="color:#E95A84;">left join</span></summary>
 <p>Vrátí všechny řádky z první tabulky.</p>
 <div class="NOTE">
 <h5>Note</h5>
@@ -378,8 +379,7 @@ FROM employees LEFT JOIN departments ON employees.department_id = departments.id
 <p>Tento dotaz vrátí všechny zaměstnance a odpovídající oddělení (pokud existuje a pokud ne, bude hodnota <code>DepartmentName</code> <code>NULL</code>).</p>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">right join</span></summary>
-<p><code>right join</code></p>
+<summary><span style="color:#E95A84;">right join</span></summary>
 <p>Vrátí všechny řádky z druhé tabulky</p>
 <div class="NOTE">
 <h5>Note</h5>
@@ -394,11 +394,11 @@ FROM
     RIGHT JOIN
   departments ON employees.department_id = departments.id;
 </code></pre>
-<p>Tento dotaz vrátí všechny oddělení a odpovídající zaměstnance (pokud existuje a pokud ne, bude hodnota <code>EmployeeName</code> <code>NULL</code>).</p>
+<p>Tento dotaz vrátí všechny oddělení a odpovídající zaměstnance (pokud existuje a pokud ne, bude hodnota <code>EmployeeName</code>
+<code>NULL</code>).</p>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">full outter join</span></summary>
-<p><code>full outter join</code></p>
+<summary><span style="color:#E95A84;">full outter join</span></summary>
 <p>Vrátí všechny řádky z obou tabulek.</p>
 <div class="NOTE">
 <h5>Note</h5>
@@ -414,8 +414,7 @@ FULL OUTER JOIN departments ON employees.department_id = departments.id;
 <p>Příkaz vrátí všechny zaměstnance a oddělení (pokud existují a pokud ne, budou hodnoty <code>NULL</code>).</p>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">inner join</span></summary>
-<p><code>inner join</code></p>
+<summary><span style="color:#E95A84;">inner join</span></summary>
 <p>Vrátí pouze řádky, které mají odpovídající hodnoty v obou tabulkách.</p>
 <div class="NOTE">
 <h5>Note</h5>
@@ -431,8 +430,9 @@ INNER JOIN departments ON employees.department_id = departments.id;
 <p>Tento dotaz vrátí pouze zaměstnance, kteří mají odpovídající oddělení.</p>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">cross apply</span></summary>
-<p><code>cross apply</code> je užitečný, když potřebujete provést poddotaz pro každý řádek z první tabulky, což nelze snadno dosáhnout pomocí INNER JOIN.</p>
+<summary><span style="color:#E95A84;">cross apply</span></summary>
+<p>Je užitečný, když potřebujete provést poddotaz pro každý řádek z první tabulky, což nelze snadno dosáhnout
+pomocí INNER JOIN.</p>
 <pre><code class="lang-sql">SELECT t1.column1, t2.column2
 FROM table1 t1
   CROSS APPLY (
@@ -441,7 +441,44 @@ FROM table1 t1
     WHERE t1.column1 = table2.column2
 ) t2;
 </code></pre>
-<p>Tento dotaz vrátí všechny řádky z <code>table1</code> a pro každý řádek provede poddotaz, který vrátí odpovídající hodnotu z <code>table2</code>.</p>
+<p>Tento dotaz vrátí všechny řádky z <code>table1</code> a pro každý řádek provede poddotaz, který vrátí odpovídající hodnotu z
+<code>table2</code>.</p>
+</details>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Spojování Hodnot ze sloupce do řetězce</span></summary>
+<pre><code class="lang-sql">SELECT STRING_AGG(column_name, ';') AS concatenated_values
+FROM table_name
+GROUP BY grouping_column
+</code></pre>
+<p>Spojí hodnoty ze sloupce <code>column_name</code> do jednoho řetězce odděleného středníkem <code>;</code> a seskupí je podle
+<code>grouping_column</code>.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Příklad:</p>
+<p>Mějme tabulku <code>zamestnanci</code>:</p>
+<pre><code class="lang-text">  jmeno     | oddeleni
+  ----------|----------
+  Jan       | IT
+  Petr      | IT
+  Marie     | HR
+  Eva       | HR
+  Pavel     | IT
+</code></pre>
+<p>Po spuštění dotazu:</p>
+<pre><code class="lang-sql">SELECT 
+    oddeleni,
+    STRING_AGG(jmeno, ';') AS seznam
+FROM zamestnanci
+GROUP BY oddeleni
+</code></pre>
+<p>Dostaneme výsledek:</p>
+<pre><code class="lang-text">  oddeleni  | seznam
+  ----------|---------------
+  IT        | Jan;Petr;Pavel
+  HR        | Marie;Eva
+</code></pre>
+</div>
 </details>
 
 </article>

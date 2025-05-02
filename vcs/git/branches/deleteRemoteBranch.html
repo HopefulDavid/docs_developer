@@ -7,16 +7,16 @@
       <meta name="title" content=" | V&#253;voj&#225;ř ">
       
       
-      <link rel="icon" href="favicon.ico">
-      <link rel="stylesheet" href="public/docfx.min.css">
-      <link rel="stylesheet" href="public/main.css">
-      <meta name="docfx:navrel" content="toc.html">
-      <meta name="docfx:tocrel" content="toc.html">
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
       
-      <meta name="docfx:rel" content="">
+      <meta name="docfx:rel" content="../../../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/index.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/branches/deleteRemoteBranch.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -30,7 +30,7 @@
       <meta name="loc:copy" content="Copy">
       <meta name="loc:downloadPdf" content="Download PDF">
 
-      <script type="module" src="./public/docfx.min.js"></script>
+      <script type="module" src="./../../../public/docfx.min.js"></script>
 
       <script>
         const theme = localStorage.getItem('theme') || 'auto'
@@ -43,8 +43,8 @@
     <header class="bg-body border-bottom">
       <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
         <div class="container-xxl flex-nowrap">
-          <a class="navbar-brand" href="index.html">
-            <img id="logo" class="svg" src="logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
             Dokumentace pro v&#253;voj&#225;ře
           </a>
           <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,40 +63,64 @@
     </header>
 
     <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
 
       <div class="content">
         <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
 
           <nav id="breadcrumb"></nav>
         </div>
 
         <article data-uid="">
 
-<p>Změny</p>
-<h2 id="2025-05-02">2025-05-02</h2>
-<ul>
-<li>📚 Změny v dokumentaci: kdy použít Pull Request a kdy použít <code>git merge</code>. (Git)</li>
-<li>📚 Změny v dokumentaci: postupy pro vytváření a mazání vzdálených větví v Gitu. (Git)</li>
-<li>📚 Změny v dokumentaci: přidání použití funkce STRING_AGG pro spojování hodnot ze sloupce do řetězce. (MSSQL)</li>
-<li>🎨 Změny formátování: upravení formátování SQL dotazů v dokumentaci (MSSQL)</li>
-</ul>
-<h2 id="2025-04-17">2025-04-17</h2>
-<ul>
-<li>🐛 Opravy chyb: opraven graf závyslostí (Clean Architecture)</li>
-</ul>
-<h2 id="2025-04-16">2025-04-16</h2>
-<ul>
-<li>📚 Změny v dokumentaci: aktualizace průvodce Clean Architecture (Clean Architecture)</li>
-</ul>
-<h2 id="2025-04-14">2025-04-14</h2>
-<ul>
-<li>Vyčištění změn</li>
-</ul>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Smazání vzdálené větve je nevratná operace.</p>
+<p>Ujisti se, že větev už nepotřebuješ a že všechny potřebné změny byly začleněny do jiných větví.</p>
+</div>
+<p>Pro smazání vzdálené větve z Git serveru (např. GitHub, GitLab) postupuj takto:</p>
+<ol>
+<li><p>Zobraz si seznam všech větví (lokální i vzdálené):</p>
+<pre><code class="lang-bash">git branch -a
+</code></pre>
+</li>
+<li><p>Smaž vzdálenou větev jedním z těchto příkazů:</p>
+<pre><code class="lang-bash">git push origin --delete &lt;nazev-vetve&gt;
+# nebo kratší varianta
+git push origin :&lt;nazev-vetve&gt;
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Nahraď <code>&lt;nazev-vetve&gt;</code> skutečným názvem větve, kterou chceš smazat.</p>
+</div>
+</li>
+<li><p>Vyčisti lokální reference na smazané vzdálené větve:</p>
+<pre><code class="lang-bash">git fetch --prune
+</code></pre>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Tento krok není povinný, ale pomáhá udržet lokální repozitář čistý.</p>
+</div>
+</li>
+</ol>
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/index.md/#L1" class="edit-link">Edit this page</a>
+          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/branches/deleteRemoteBranch.md/#L1" class="edit-link">Edit this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>

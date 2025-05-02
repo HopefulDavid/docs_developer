@@ -7,16 +7,16 @@
       <meta name="title" content=" | V&#253;voj&#225;ř ">
       
       
-      <link rel="icon" href="favicon.ico">
-      <link rel="stylesheet" href="public/docfx.min.css">
-      <link rel="stylesheet" href="public/main.css">
-      <meta name="docfx:navrel" content="toc.html">
-      <meta name="docfx:tocrel" content="toc.html">
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
       
-      <meta name="docfx:rel" content="">
+      <meta name="docfx:rel" content="../../../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/index.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/branches/createRemoteBranch.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -30,7 +30,7 @@
       <meta name="loc:copy" content="Copy">
       <meta name="loc:downloadPdf" content="Download PDF">
 
-      <script type="module" src="./public/docfx.min.js"></script>
+      <script type="module" src="./../../../public/docfx.min.js"></script>
 
       <script>
         const theme = localStorage.getItem('theme') || 'auto'
@@ -43,8 +43,8 @@
     <header class="bg-body border-bottom">
       <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
         <div class="container-xxl flex-nowrap">
-          <a class="navbar-brand" href="index.html">
-            <img id="logo" class="svg" src="logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
             Dokumentace pro v&#253;voj&#225;ře
           </a>
           <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,40 +63,60 @@
     </header>
 
     <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
 
       <div class="content">
         <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
 
           <nav id="breadcrumb"></nav>
         </div>
 
         <article data-uid="">
 
-<p>Změny</p>
-<h2 id="2025-05-02">2025-05-02</h2>
-<ul>
-<li>📚 Změny v dokumentaci: kdy použít Pull Request a kdy použít <code>git merge</code>. (Git)</li>
-<li>📚 Změny v dokumentaci: postupy pro vytváření a mazání vzdálených větví v Gitu. (Git)</li>
-<li>📚 Změny v dokumentaci: přidání použití funkce STRING_AGG pro spojování hodnot ze sloupce do řetězce. (MSSQL)</li>
-<li>🎨 Změny formátování: upravení formátování SQL dotazů v dokumentaci (MSSQL)</li>
-</ul>
-<h2 id="2025-04-17">2025-04-17</h2>
-<ul>
-<li>🐛 Opravy chyb: opraven graf závyslostí (Clean Architecture)</li>
-</ul>
-<h2 id="2025-04-16">2025-04-16</h2>
-<ul>
-<li>📚 Změny v dokumentaci: aktualizace průvodce Clean Architecture (Clean Architecture)</li>
-</ul>
-<h2 id="2025-04-14">2025-04-14</h2>
-<ul>
-<li>Vyčištění změn</li>
-</ul>
+<p>Pro umístění (pushnutí) nové větve <code>develop</code> na Git server (např. GitHub, GitLab) postupuj takto:</p>
+<ol>
+<li><p>Vytvoř branch <code>develop</code> (pokud ji ještě nemáš):</p>
+<pre><code class="lang-bash">git checkout -b develop
+</code></pre>
+</li>
+<li><p>Ujisti se, že máš vzdálený repozitář:</p>
+<pre><code class="lang-bash">git remote -v
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Pokud není nastaven, použij např. <code>git remote add origin &lt;url&gt;</code></p>
+</div>
+</li>
+<li><p>Pushni větev <code>develop</code> na remote:</p>
+<pre><code class="lang-bash">git push -u origin develop
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Parametr <code>-u</code> nastaví <code>develop</code> jako výchozí sledovanou větev vůči <code>origin/develop</code>.</p>
+</div>
+</li>
+<li><p>Ověř, že větev je online:</p>
+<p>Lze se nyní podívat na webové rozhraní (GitHub, GitLab apod.), jestli se větev vzdáleně objevila.</p>
+</li>
+</ol>
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/index.md/#L1" class="edit-link">Edit this page</a>
+          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/branches/createRemoteBranch.md/#L1" class="edit-link">Edit this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>
