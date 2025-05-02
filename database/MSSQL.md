@@ -325,18 +325,19 @@ Pokud zadáte číslo, použije přesné porovnání, a pokud zadáte text, pou�
 
 </details>
 
-#### Spojování tabulek
+#### Spojování
 
 <details>
-<summary><span style="color:#1E90FF;">left join</span></summary>
+<summary><span style="color:#1E90FF;">Spojování Tabulek</span></summary>
 
-`left join` 
+<details>
+<summary><span style="color:#E95A84;">left join</span></summary>
 
 Vrátí všechny řádky z první tabulky.
 
 > [!NOTE]
 > Pokud existuje odpovídající řádek v druhé tabulce, budou vráceny hodnoty z obou tabulek.
-> 
+>
 > Pokud neexistuje odpovídající řádek v druhé tabulce, budou hodnoty z druhé tabulky `NULL`.
 
 ```sql
@@ -351,15 +352,13 @@ Tento dotaz vrátí všechny zaměstnance a odpovídající oddělení (pokud ex
 </details>
 
 <details>
-<summary><span style="color:#1E90FF;">right join</span></summary>
-
-`right join`
+<summary><span style="color:#E95A84;">right join</span></summary>
 
 Vrátí všechny řádky z druhé tabulky
 
 > [!NOTE]
 > Pokud existuje odpovídající řádek v první tabulce, budou vráceny hodnoty z obou tabulek.
-> 
+>
 > Pokud neexistuje odpovídající řádek v první tabulce, budou hodnoty z první tabulky `NULL`.
 
 ```sql
@@ -372,20 +371,19 @@ FROM
   departments ON employees.department_id = departments.id;
 ```
 
-Tento dotaz vrátí všechny oddělení a odpovídající zaměstnance (pokud existuje a pokud ne, bude hodnota `EmployeeName` `NULL`).
+Tento dotaz vrátí všechny oddělení a odpovídající zaměstnance (pokud existuje a pokud ne, bude hodnota `EmployeeName`
+`NULL`).
 
 </details>
 
 <details>
-<summary><span style="color:#1E90FF;">full outter join</span></summary>
-
-`full outter join`
+<summary><span style="color:#E95A84;">full outter join</span></summary>
 
 Vrátí všechny řádky z obou tabulek.
 
 > [!NOTE]
 > Pokud dojde k shodě, budou vráceny hodnoty z obou tabulek.
-> 
+>
 > Pokud nedojde k shodě, řádek nebude vrácen.
 
 ```sql
@@ -401,13 +399,11 @@ Příkaz vrátí všechny zaměstnance a oddělení (pokud existují a pokud ne,
 </details>
 
 <details>
-<summary><span style="color:#1E90FF;">inner join</span></summary>
-
-`inner join`
+<summary><span style="color:#E95A84;">inner join</span></summary>
 
 Vrátí pouze řádky, které mají odpovídající hodnoty v obou tabulkách.
 
->[!NOTE]
+> [!NOTE]
 > Pokud dojde k shodě, budou vráceny hodnoty z obou tabulek.
 >
 > Pokud nedojde k shodě, řádek nebude vrácen.
@@ -425,9 +421,10 @@ Tento dotaz vrátí pouze zaměstnance, kteří mají odpovídající oddělení
 </details>
 
 <details>
-<summary><span style="color:#1E90FF;">cross apply</span></summary>
+<summary><span style="color:#E95A84;">cross apply</span></summary>
 
-`cross apply` je užitečný, když potřebujete provést poddotaz pro každý řádek z první tabulky, což nelze snadno dosáhnout pomocí INNER JOIN.
+Je užitečný, když potřebujete provést poddotaz pro každý řádek z první tabulky, což nelze snadno dosáhnout
+pomocí INNER JOIN.
 
 ```sql
 SELECT t1.column1, t2.column2
@@ -439,7 +436,8 @@ FROM table1 t1
 ) t2;
 ```
 
-Tento dotaz vrátí všechny řádky z `table1` a pro každý řádek provede poddotaz, který vrátí odpovídající hodnotu z `table2`.
+Tento dotaz vrátí všechny řádky z `table1` a pro každý řádek provede poddotaz, který vrátí odpovídající hodnotu z
+`table2`.
 </details>
 
 </details>
