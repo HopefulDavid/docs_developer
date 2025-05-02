@@ -8,6 +8,12 @@
     href: git/submodules.md
   - name: Git Flow
     href: git/gitFlow.md
+  - name: Větve
+    items:
+    - name: Vytvoření vzdálené větve
+      href: git/branches/createRemoteBranch.md
+    - name: Smazání vzdálené větve
+      href: git/branches/deleteRemoteBranch.md
   - name: Historie
     items:
     - name: .gitignore
