@@ -1,4 +1,7 @@
 Změny
+## 2025-05-10
+  - ✨ Nové funkcionality: přidána nová dokumentace pro nastavení Duplicati a spuštění Portaineru v Dockeru. (docs)
+  - 📚 Změny v dokumentaci: přidání sekce pro propojení složky z Windows s kontejnerem v dockeru
 ## 2025-05-02
   - 📚 Změny v dokumentaci: kdy použít Pull Request a kdy použít `git merge`. (Git)
   - 📚 Změny v dokumentaci: postupy pro vytváření a mazání vzdálených větví v Gitu. (Git)
