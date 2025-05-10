@@ -2,5 +2,10 @@
   href: wsl.md
 - name: Docker
   href: docker.md
+  items:
+    - name: Portainer
+      href: docker_portainer.md
+    - name: Duplicati
+      href: docker_duplicati.md
 - name: Kubernetes
   href: kubernetes.md
