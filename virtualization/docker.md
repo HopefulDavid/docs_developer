@@ -4,7 +4,7 @@ Instalace
 
 > [!IMPORTANT]
 > Pro instalaci Dockeru na Windows potřebujete mít nainstalovaný WSL (Windows Subsystem for Linux).
-> 
+>
 > Návod na instalaci WSL najdete v sekci [WSL](wsl.md).
 
 ---
@@ -257,14 +257,14 @@ Spuštění
   ```Docker
   docker-compose up
   ```
-  
-  > [!NOTE]
-  > Spustí všechny služby definované v souboru `docker-compose.yml` v aktuálním adresáři.
-  
-  > [!TIP]
-  > - Použijte `-d` pro spuštění na pozadí: `docker-compose up -d`
-  > - Pro sestavení a spuštění použijte: `docker-compose up --build`
-  > - Pro zastavení služeb použijte: `docker-compose down`
+
+> [!NOTE]
+> Spustí všechny služby definované v souboru `docker-compose.yml` v aktuálním adresáři.
+
+> [!TIP]
+> - Použijte `-d` pro spuštění na pozadí: `docker-compose up -d`
+> - Pro sestavení a spuštění použijte: `docker-compose up --build`
+> - Pro zastavení služeb použijte: `docker-compose down`
 
   </details>
 
@@ -386,7 +386,7 @@ Odstranění
 
   <details>
   <summary><span style="color:#E95A84;">Odstranění kontejneru</span></summary>
-  
+
   ```Docker
   docker rm <container name or id>
   ```
@@ -520,5 +520,23 @@ V dockeru **není žádná výchozí složka**.
 <summary><span style="color:#1E90FF;">Zachování dat z kontejneru na lokálním disku</span></summary>
 
 <img src="/../images/dockerKeepDataOnLocal.png" alt="dockerKeepDataOnLocal.png" width="800px"/>
+
+</details>
+
+---
+
+Volumes
+
+<details>
+<summary><span style="color:#1E90FF;">Propojení složky z Windows s kontejnerem v dockeru</span></summary>
+
+| Nastavení         | Cesta                                                                       | Popis                              |
+|-------------------|-----------------------------------------------------------------------------|------------------------------------|
+| Host/Volume       | `/run/desktop/mnt/host/c/Program Files/Unity/Hub/Editor/6000.0.33f1/Editor` | Cesta ke složce na hostitelském PC |
+| Path in container | `/app/unity`                                                                | Cesta uvnitř Docker kontejneru     |
+
+> [!NOTE]
+> - Host/Volume určuje cestu k existující složce na vašem počítači
+> - Path in container definuje, kde bude složka dostupná uvnitř kontejneru
 
 </details>
