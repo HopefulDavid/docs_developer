@@ -388,11 +388,9 @@ services:
 <p>Odstranění</p>
   <details>
   <summary><span style="color:#E95A84;">Odstranění kontejneru</span></summary>
-  
-  ```Docker
-  docker rm <container name or id>
-  ```
-  </container></details>
+<pre><code class="lang-Docker">docker rm &lt;container name or id&gt;
+</code></pre>
+  </details>
   <details>
   <summary><span style="color:#E95A84;">Odstranění image</span></summary>
 <pre><code class="lang-Docker">docker rmi &lt;docker image name or id&gt;
@@ -502,6 +500,39 @@ ENTRYPOINT [&quot;dotnet&quot;, &quot;out/myapp.dll&quot;]
 <details>
 <summary><span style="color:#1E90FF;">Zachování dat z kontejneru na lokálním disku</span></summary>
 <img src="/../images/dockerKeepDataOnLocal.png" alt="dockerKeepDataOnLocal.png" width="800px">
+</details>
+<hr>
+<p>Volumes</p>
+<details>
+<summary><span style="color:#1E90FF;">Propojení složky z Windows s kontejnerem v dockeru</span></summary>
+<table>
+<thead>
+<tr>
+<th>Nastavení</th>
+<th>Cesta</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Host/Volume</td>
+<td><code>/run/desktop/mnt/host/c/Program Files/Unity/Hub/Editor/6000.0.33f1/Editor</code></td>
+<td>Cesta ke složce na hostitelském PC</td>
+</tr>
+<tr>
+<td>Path in container</td>
+<td><code>/app/unity</code></td>
+<td>Cesta uvnitř Docker kontejneru</td>
+</tr>
+</tbody>
+</table>
+<div class="NOTE">
+<h5>Note</h5>
+<ul>
+<li>Host/Volume určuje cestu k existující složce na vašem počítači</li>
+<li>Path in container definuje, kde bude složka dostupná uvnitř kontejneru</li>
+</ul>
+</div>
 </details>
 
 </article>
