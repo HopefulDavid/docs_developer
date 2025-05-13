@@ -1,4 +1,6 @@
 Změny
+## 2025-05-13
+  - 📚 Změny v dokumentaci: přidání sekcí pro zobrazení běžících kontejnerů a aktualizaci nastavení automatického spouštění kontejneru.
 ## 2025-05-10
   - ✨ Nové funkcionality: přidána nová dokumentace pro nastavení Duplicati a spuštění Portaineru v Dockeru. (docs)
   - 📚 Změny v dokumentaci: přidání sekce pro propojení složky z Windows s kontejnerem v dockeru
