@@ -205,8 +205,25 @@ kontejneru.</p>
 <hr>
 <p>Zobrazení</p>
   <details>
+    <summary><span style="color:#E95A84;">Zobrazit běžící kontejnery</span></summary>
+<pre><code class="lang-Docker">docker ps
+</code></pre>
+  </details>
+  <details>
   <summary><span style="color:#E95A84;">Zobrazit všechny docker image</span></summary>
 <pre><code class="lang-Docker">docker images
+</code></pre>
+  </details>
+<hr>
+<p>Aktualizace nastavení</p>
+  <details>
+  <summary><span style="color:#E95A84;">Zapnout automatické spouštění kontejneru</span></summary>
+<pre><code class="lang-Docker">docker update --restart=yes &lt;container name or id&gt;
+</code></pre>
+  </details>
+  <details>
+  <summary><span style="color:#E95A84;">Vypnout automatické spouštění kontejneru</span></summary>
+<pre><code class="lang-Docker">docker update --restart=no &lt;container name or id&gt;
 </code></pre>
   </details>
 <hr>
