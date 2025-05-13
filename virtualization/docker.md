@@ -155,11 +155,41 @@ Práce s dockerem
 ---
 
 Zobrazení
+
+  <details>
+    <summary><span style="color:#E95A84;">Zobrazit běžící kontejnery</span></summary>
+
+  ```Docker
+  docker ps
+  ```
+
+  </details>
+
   <details>
   <summary><span style="color:#E95A84;">Zobrazit všechny docker image</span></summary>
 
   ```Docker
   docker images
+  ```
+
+  </details>
+
+---
+Aktualizace nastavení
+  <details>
+  <summary><span style="color:#E95A84;">Zapnout automatické spouštění kontejneru</span></summary>
+
+  ```Docker
+  docker update --restart=yes <container name or id>
+  ```
+
+  </details>
+
+  <details>
+  <summary><span style="color:#E95A84;">Vypnout automatické spouštění kontejneru</span></summary>
+
+  ```Docker
+  docker update --restart=no <container name or id>
   ```
 
   </details>
