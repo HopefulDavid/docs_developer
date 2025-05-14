@@ -570,3 +570,24 @@ Volumes
 > - Path in container definuje, kde bude složka dostupná uvnitř kontejneru
 
 </details>
+
+---
+
+Řešení problémů
+
+<details>
+<summary><span style="color:#1E90FF;">Port není dostupný</span></summary>
+
+Pro řešení chyb jako "Ports are not available" nebo "bind: An attempt was made to access a socket"
+
+```cmd
+net stop winnat
+net start winnat
+```
+
+> [!NOTE]
+> Příkazy restartují službu Windows NAT (Network Address Translation), která spravuje síťovou komunikaci mezi hostitelským systémem a Docker kontejnery.
+> 
+> Restart služby tak uvolní případné zablokované síťové porty.
+
+</details>
