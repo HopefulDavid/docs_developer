@@ -1,4 +1,4 @@
-1. Vytvoření a nastavení složky pro zálohy Duplicati
+1. Vytvoření a nastavení složky pro zálohy
 
     ```bash
     mkdir /cesta/k/tvojí/složce

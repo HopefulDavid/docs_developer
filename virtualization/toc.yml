@@ -3,9 +3,9 @@
 - name: Docker
   href: docker.md
   items:
-    - name: Portainer
+    - name: Portainer (správa Dockeru)
       href: docker_portainer.md
-    - name: Duplicati
+    - name: Duplicati (zálohování)
       href: docker_duplicati.md
 - name: Kubernetes
   href: kubernetes.md
