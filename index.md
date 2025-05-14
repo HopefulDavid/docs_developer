@@ -1,4 +1,8 @@
 Změny
+## 2025-05-14
+  - 📚 Změny v dokumentaci: aktualizace názvů v obsahu dokumentace (docker)
+  - 📚 Změny v dokumentaci: přidána nová sekce s postupem pro řešení problémů s nedostupnými porty v Dockeru. (docker)
+  - 📚 Změny v dokumentaci: přidání dokumentace pro Busybox (docker)
 ## 2025-05-13
   - 📚 Změny v dokumentaci: přidání sekcí pro zobrazení běžících kontejnerů a aktualizaci nastavení automatického spouštění kontejneru.
 ## 2025-05-10
