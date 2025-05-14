@@ -551,6 +551,20 @@ ENTRYPOINT [&quot;dotnet&quot;, &quot;out/myapp.dll&quot;]
 </ul>
 </div>
 </details>
+<hr>
+<p>Řešení problémů</p>
+<details>
+<summary><span style="color:#1E90FF;">Port není dostupný</span></summary>
+<p>Pro řešení chyb jako &quot;Ports are not available&quot; nebo &quot;bind: An attempt was made to access a socket&quot;</p>
+<pre><code class="lang-cmd">net stop winnat
+net start winnat
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Příkazy restartují službu Windows NAT (Network Address Translation), která spravuje síťovou komunikaci mezi hostitelským systémem a Docker kontejnery.</p>
+<p>Restart služby tak uvolní případné zablokované síťové porty.</p>
+</div>
+</details>
 
 </article>
 

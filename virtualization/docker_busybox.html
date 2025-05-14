@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/virtualization/docker_duplicati.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/virtualization/docker_busybox.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -87,63 +87,48 @@
         <article data-uid="">
 
 <ol>
-<li><p>Vytvoření a nastavení složky pro zálohy</p>
-<pre><code class="lang-bash">mkdir /cesta/k/tvojí/složce
+<li><p>Zjistěte, jaké máte docker volumes:</p>
+<pre><code class="lang-bash">docker volume ls
 </code></pre>
+</li>
+<li><p>Přenést data z docker volumes do počítače:</p>
+<pre><code class="lang-bash">docker run --rm -v projekty_planka_config:/volume -v C:\Users\xxx\Docker_Volumes\planka:/backup busybox:1.37.0-glibc sh -c &quot;cp -r /volume/. /backup/&quot;
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>Základní parametry:</strong></p>
+<p><code>--rm</code></p>
 <ul>
-<li><p>Přístup pro všechny:</p>
-<pre><code class="lang-bash">chmod 777 /cesta/k/tvojí/složce
-</code></pre>
-<div class="TIP">
-<h5>Tip</h5>
-<p>Přístup pouze pro root.</p>
-<pre><code class="lang-bash">chmod 700 /cesta/k/tvojí/složce
-</code></pre>
-</div>
-</li>
+<li>automaticky odstraní kontejner po dokončení operace</li>
+<li>šetří místo na disku a udržuje systém čistý</li>
 </ul>
-</li>
-<li><p>Nastavení oprávnění pro Docker volumes</p>
-<p>Pro zálohu je zapotřebí povolit přístup k souborům a ke složkám v dockeru.</p>
+<p><strong>Připojení volumes:</strong></p>
+<p><code>-v projekty_planka_config:/volume</code></p>
 <ul>
-<li><p>Povolit rekurzivně pro složky:</p>
-<pre><code class="lang-bash">find /docker_XX -type d -exec chmod 755 {} \;
-</code></pre>
-</li>
-<li><p>Povolit rekurzivně pro soubory:</p>
-<pre><code class="lang-bash">find /docker_XX -type f -exec chmod 644 {} \;
-</code></pre>
-</li>
+<li>připojí Docker volume <code>projekty_planka_config</code></li>
+<li>v kontejneru bude dostupný jako adresář <code>/volume</code></li>
+<li>slouží jako zdroj dat pro zálohu</li>
 </ul>
-<table>
-<thead>
-<tr>
-<th>Popis</th>
-<th>Cesta</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Host/volume</td>
-<td><code>/var/lib/docker/volumes</code> (cesta k diskům)</td>
-</tr>
-<tr>
-<td>Path in container</td>
-<td><code>/docker_XX</code> (vlastní cesta v kontejneru pro Volume)</td>
-</tr>
-</tbody>
-</table>
-<div class="IMPORTANT">
-<h5>Important</h5>
-<p>V kontejneru duplicati musí být nastaveno na &quot;Bind&quot;.</p>
-</div>
-<div class="TIP">
-<h5>Tip</h5>
-<p>Chcete-li vrátit zpět oprávnění na výchozí hodnoty, použijte následující příkaz:</p>
-<pre><code class="lang-bash">chown -R root:root/docker_XX
-</code></pre>
-<p>Tento příkaz změní vlastníka a skupinu všech souborů a adresářů v <code>/docker_XX</code> na <code>root</code>, což je výchozí nastavení pro
-většinu systémů.</p>
+<p><code>-v C:\Users\xxx\Docker_Volumes\planka:/backup</code></p>
+<ul>
+<li>připojí lokální složku z hostitelského systému</li>
+<li>v kontejneru bude dostupná jako <code>/backup</code></li>
+<li>cílové umístění pro zálohu dat</li>
+</ul>
+<p><strong>Použitý image a příkaz:</strong></p>
+<p><code>busybox:1.37.0-glibc</code></p>
+<ul>
+<li>minimalistický Linux image</li>
+<li>obsahuje základní Unix nástroje</li>
+<li>verze s glibc pro lepší kompatibilitu</li>
+</ul>
+<p><code>sh -c &quot;cp -r /volume/. /backup/&quot;</code></p>
+<ul>
+<li><code>sh -c</code>: spustí shell s následujícím příkazem</li>
+<li><code>cp -r</code>: rekurzivní kopírování včetně podsložek</li>
+<li><code>/volume/.</code>: kopíruje obsah složky volume</li>
+<li><code>/backup/</code>: cílová složka pro zálohu</li>
+</ul>
 </div>
 </li>
 </ol>
@@ -151,7 +136,7 @@ většinu systémů.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/virtualization/docker_duplicati.md/#L1" class="edit-link">Edit this page</a>
+          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/virtualization/docker_busybox.md/#L1" class="edit-link">Edit this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>
