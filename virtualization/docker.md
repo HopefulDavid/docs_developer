@@ -582,6 +582,9 @@ Pro řešení chyb jako "Ports are not available" nebo "bind: An attempt was mad
 
 ```cmd
 net stop winnat
+```
+
+```cmd
 net start winnat
 ```
 
