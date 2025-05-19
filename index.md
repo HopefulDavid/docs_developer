@@ -1,4 +1,6 @@
 Změny
+## 2025-05-19
+  - 📚 Změny v dokumentaci: aktualizace příkazů pro správu služby Winnat (docker)
 ## 2025-05-14
   - 📚 Změny v dokumentaci: aktualizace názvů v obsahu dokumentace (docker)
   - 📚 Změny v dokumentaci: přidána nová sekce s postupem pro řešení problémů s nedostupnými porty v Dockeru. (docker)
