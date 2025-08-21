@@ -1,4 +1,6 @@
 Změny
+## 2025-08-21
+  - ✨ Nové funkcionality: přidání dokumentace pro nastavení a přístup v XAMPP.
 ## 2025-05-19
   - 📚 Změny v dokumentaci: aktualizace příkazů pro správu služby Winnat (docker)
 ## 2025-05-14
