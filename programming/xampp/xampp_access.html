@@ -2,21 +2,21 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>Př&#237;stup k projektům | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="Př&#237;stup k projektům | V&#253;voj&#225;ř ">
       
       
-      <link rel="icon" href="favicon.ico">
-      <link rel="stylesheet" href="public/docfx.min.css">
-      <link rel="stylesheet" href="public/main.css">
-      <meta name="docfx:navrel" content="toc.html">
-      <meta name="docfx:tocrel" content="toc.html">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
       
-      <meta name="docfx:rel" content="">
+      <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/index.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/xampp/xampp_access.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -30,7 +30,7 @@
       <meta name="loc:copy" content="Copy">
       <meta name="loc:downloadPdf" content="Download PDF">
 
-      <script type="module" src="./public/docfx.min.js"></script>
+      <script type="module" src="./../../public/docfx.min.js"></script>
 
       <script>
         const theme = localStorage.getItem('theme') || 'auto'
@@ -43,8 +43,8 @@
     <header class="bg-body border-bottom">
       <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
         <div class="container-xxl flex-nowrap">
-          <a class="navbar-brand" href="index.html">
-            <img id="logo" class="svg" src="logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
             Dokumentace pro v&#253;voj&#225;ře
           </a>
           <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,63 +63,54 @@
     </header>
 
     <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
 
       <div class="content">
         <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
 
           <nav id="breadcrumb"></nav>
         </div>
 
         <article data-uid="">
+<h1 id="přístup-k-projektům">Přístup k projektům</h1>
 
-<p>Změny</p>
-<h2 id="2025-08-21">2025-08-21</h2>
+<p>Tento dokument ukazuje, jak mít více projektů v XAMPP a přistupovat k nim přes prohlížeč.</p>
+<h2 id="1-spuštění-apache">1. Spuštění Apache</h2>
+<p>Ujistěte se, že máte spuštěný <code>Apache</code> server v <strong>XAMPP Control Panel</strong> (přes administrátora).</p>
+<h2 id="2-vytvoření-složek-pro-projekty">2. Vytvoření složek pro projekty</h2>
+<p>Vložte každý projekt do vlastní složky v <code>htdocs</code>, například:</p>
+<pre><code>C:\xampp\htdocs\project1\
+C:\xampp\htdocs\project2\
+C:\xampp\htdocs\project3
+</code></pre>
+<h2 id="3-přístup-k-projektům-přes-prohlížeč">3. Přístup k projektům přes prohlížeč</h2>
+<p>Otevřete prohlížeč a přejděte na:</p>
 <ul>
-<li>✨ Nové funkcionality: přidání dokumentace pro nastavení a přístup v XAMPP.</li>
+<li><code>http://localhost/project1/</code></li>
+<li><code>http://localhost/project2/</code></li>
+<li><code>http://localhost/project3/</code></li>
 </ul>
-<h2 id="2025-05-19">2025-05-19</h2>
-<ul>
-<li>📚 Změny v dokumentaci: aktualizace příkazů pro správu služby Winnat (docker)</li>
-</ul>
-<h2 id="2025-05-14">2025-05-14</h2>
-<ul>
-<li>📚 Změny v dokumentaci: aktualizace názvů v obsahu dokumentace (docker)</li>
-<li>📚 Změny v dokumentaci: přidána nová sekce s postupem pro řešení problémů s nedostupnými porty v Dockeru. (docker)</li>
-<li>📚 Změny v dokumentaci: přidání dokumentace pro Busybox (docker)</li>
-</ul>
-<h2 id="2025-05-13">2025-05-13</h2>
-<ul>
-<li>📚 Změny v dokumentaci: přidání sekcí pro zobrazení běžících kontejnerů a aktualizaci nastavení automatického spouštění kontejneru.</li>
-</ul>
-<h2 id="2025-05-10">2025-05-10</h2>
-<ul>
-<li>✨ Nové funkcionality: přidána nová dokumentace pro nastavení Duplicati a spuštění Portaineru v Dockeru. (docs)</li>
-<li>📚 Změny v dokumentaci: přidání sekce pro propojení složky z Windows s kontejnerem v dockeru</li>
-</ul>
-<h2 id="2025-05-02">2025-05-02</h2>
-<ul>
-<li>📚 Změny v dokumentaci: kdy použít Pull Request a kdy použít <code>git merge</code>. (Git)</li>
-<li>📚 Změny v dokumentaci: postupy pro vytváření a mazání vzdálených větví v Gitu. (Git)</li>
-<li>📚 Změny v dokumentaci: přidání použití funkce STRING_AGG pro spojování hodnot ze sloupce do řetězce. (MSSQL)</li>
-<li>🎨 Změny formátování: upravení formátování SQL dotazů v dokumentaci (MSSQL)</li>
-</ul>
-<h2 id="2025-04-17">2025-04-17</h2>
-<ul>
-<li>🐛 Opravy chyb: opraven graf závyslostí (Clean Architecture)</li>
-</ul>
-<h2 id="2025-04-16">2025-04-16</h2>
-<ul>
-<li>📚 Změny v dokumentaci: aktualizace průvodce Clean Architecture (Clean Architecture)</li>
-</ul>
-<h2 id="2025-04-14">2025-04-14</h2>
-<ul>
-<li>Vyčištění změn</li>
-</ul>
+<blockquote>
+<p>Každý projekt má vlastní URL pod <code>localhost</code>.</p>
+</blockquote>
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/index.md/#L1" class="edit-link">Edit this page</a>
+          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/programming/xampp/xampp_access.md/#L1" class="edit-link">Edit this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>

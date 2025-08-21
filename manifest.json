@@ -1376,6 +1376,26 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "programming/xampp/xampp_access.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/xampp/xampp_access.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/xampp/xampp_virtualhosts.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/xampp/xampp_virtualhosts.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "teamwork/outlook.md",
       "output": {
         ".html": {
