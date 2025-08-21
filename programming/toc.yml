@@ -91,3 +91,9 @@
       items:
         - name: Appcast Feed XML
           href: appcast.md
+    - name: Lokální vývoj (XAMPP)
+      items:
+        - name: Přístup k projektům přes prohlížeč
+          href: xampp/xampp_access.md
+        - name: Virtual Hosts
+          href: xampp/xampp_virtualhosts.md
