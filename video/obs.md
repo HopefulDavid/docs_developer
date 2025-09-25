@@ -1,12 +1,29 @@
-## OBS (Open Broadcast Software)
+# 🗂️ OBS Studio – Praktický průvodce & tipy
+
+> 🚀 Moderní přehled argumentů, příkladů spuštění a doporučení pro práci s OBS Studio.
+
+---
+
+## 📖 Co je OBS Studio?
+
+- **Open-source software pro nahrávání a streamování videa**
+- Umožňuje pokročilou správu scén, zdrojů, zvuku a výstupů
+- Podporuje Windows, macOS, Linux
+
+> [!NOTE]  
+> OBS je ideální pro tvorbu streamů, záznamů a virtuálních kamer.
+
+---
+
+## 🛠️ Argumenty příkazové řádky
 
 <details>
-<summary><span style="color:#1E90FF;">Argumenty</span></summary>
+<summary><span style="color:#1E90FF;">🔹 Přehled argumentů</span></summary>
 
 | **Argument**                    | **Popis**                                                                                        |
 |---------------------------------|--------------------------------------------------------------------------------------------------|
 | `--help`, `-h`                  | Získat seznam dostupných parametrů.                                                              |
-| `--version`, `-v`               | Získat verzi OBS.*                                                                               |
+| `--version`, `-v`               | Získat verzi OBS.                                                                                |
 | `--startstreaming`              | Automaticky spustí streamování.                                                                  |
 | `--startrecording`              | Automaticky spustí nahrávání.                                                                    |
 | `--startvirtualcam`             | Automaticky spustí virtuální kameru.                                                             |
@@ -24,15 +41,20 @@
 | `--disable-updater`             | Zakáže vestavěný updater (pouze Windows/macOS).                                                  |
 | `--allow-opengl`                | Povolit OpenGL renderer na Windows.                                                              |
 | `--only-bundled-plugins`        | Spustí pouze s vestavěnými moduly.                                                               |
-| `--safe-mode`                   | Donutí OBS spustit v nouzovém režimu, zakáže všechny třetí strany pluginy, skripty a websockety. |
+| `--safe-mode`                   | Spustí v nouzovém režimu, zakáže všechny třetí strany pluginy, skripty a websockety.             |
 | `--disable-shutdown-check`      | Zakáže detekci neuklizeného vypnutí, které by vyvolalo spuštění v nouzovém režimu.               |
-| `--disable-missing-files-check` | Zakáže dialog o chybějících souborech, který se může objevit při spuštění.                       |
+| `--disable-missing-files-check` | Zakáže dialog o chybějících souborech při spuštění.                                              |
 
-> [!TIP]
-> Příklad automatického nahrávání skrze batch:
->
-> ```bash
-> start /d "C:\Program Files\obs-studio\bin\64bit" obs64.exe --startrecording 
-> ```
+</details>
 
+---
+
+## 📝 Příklad automatického spuštění nahrávání
+
+<details>
+<summary><span style="color:#1E90FF;">⚡ Spuštění OBS s nahráváním (Windows)</span></summary>
+
+```bash
+start /d "C:\Program Files\obs-studio\bin\64bit" obs64.exe --startrecording
+```
 </details>

@@ -1,61 +1,76 @@
-﻿### Implicitní a Explicitní operátory
+﻿# 🔄 .NET – Implicitní & Explicitní operátory
 
-Rozdíly:
-- Implicitní: 
+> 🚀 Praktické rady pro převody typů v .NET, rozdíly mezi implicitními a explicitními operátory, ukázky použití.
 
-  Automatický převod (žádný `cast` není potřeba)
-- Explicitní: 
+---
 
-  Vyžaduje `cast` (musíte převod jasně napsat)
+## 🧩 Co jsou implicitní a explicitní operátory?
+
+<details>
+<summary><span style="color:#1E90FF;">🔍 Základní principy převodů</span></summary>
+
+- **Implicitní operátor**: Automatický převod, není potřeba psát `cast`.
+- **Explicitní operátor**: Vyžaduje použití `cast` – převod je nutné napsat ručně.
 
 > [!NOTE]
 > Implicitní je pohodlnější, ale explicitní je bezpečnější pro složité nebo nejednoznačné převody.
 
-<details>
-<summary><span style="color:#1E90FF;">Implicitní operátor</span></summary>
+![](../../images/net_conversion_intro.png)
 
-- Automatický převod mezi typy. (Není potřeba nic speciálně psát, převod se provede sám.)
-
-    Příklad:
-    
-    ```csharp
-    public struct Money
-    {
-        private double _value;
-        public Money(double value) { _value = value; }
-    
-        public static implicit operator double(Money money)
-        {
-            return money._value;
-        }
-    }
-    
-    // Použití
-    Money m = new Money(10.50);
-    double d = m * 2;  // Automaticky převede Money na double
-    ```
 </details>
 
+---
+
+## 🔄 Implicitní operátor
+
 <details>
-<summary><span style="color:#1E90FF;">Explicitní operátor</span></summary>
+<summary><span style="color:#1E90FF;">⚡ Automatický převod</span></summary>
 
-- Vyžaduje použití **castu**, například: `(double)`. (Převod není automatický, musíte ho sami zadat.)
+- Převod mezi typy probíhá automaticky, bez nutnosti psát `cast`.
 
-    Příklad:
-    ```csharp
-    public struct Temperature
+**Příklad:**
+```csharp
+public struct Money
+{
+    private double _value;
+    public Money(double value) { _value = value; }
+
+    public static implicit operator double(Money money)
     {
-        private double _value;
-        public Temperature(double value) { _value = value; }
-    
-        public static explicit operator double(Temperature temperature)
-        {
-            return temperature._value;
-        }
+        return money._value;
     }
-    
-    // Použití
-    Temperature t = new Temperature(70.0);
-    double d = (double)t + 32.0;  // Explicitně převedete Temperature na double
-    ```
-    </details>
+}
+
+// Použití
+Money m = new Money(10.50);
+double d = m * 2;  // Automaticky převede Money na double
+```
+</details>
+
+---
+
+## 🛡️ Explicitní operátor
+
+<details>
+<summary><span style="color:#1E90FF;">🔒 Převod s použitím castu</span></summary>
+
+- Převod je nutné napsat ručně pomocí `(typ)`.
+
+**Příklad:**
+```csharp
+public struct Temperature
+{
+    private double _value;
+    public Temperature(double value) { _value = value; }
+
+    public static explicit operator double(Temperature temperature)
+    {
+        return temperature._value;
+    }
+}
+
+// Použití
+Temperature t = new Temperature(70.0);
+double d = (double)t + 32.0;  // Explicitně převedete Temperature na double
+```
+</details>

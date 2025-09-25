@@ -1,38 +1,62 @@
-## UI
+# 🖥️ Unity – UI systém & Tipy
 
-Původní systém pro vytváření uživatelského rozhraní v Unity.
+> 🚀 Praktické rady pro práci s UI v Unity, včetně nastavení tlačítek, detekce kliknutí a užitečných vlastností komponent.
+
+---
+
+## 🧩 Co je UI systém v Unity?
 
 <details>
-<summary><span style="color:#1E90FF;">Tlačítko (Button)</span></summary>
+<summary><span style="color:#1E90FF;">🔍 Základní principy UI</span></summary>
+
+- Umožňuje vytvářet interaktivní prvky (tlačítka, texty, obrázky).
+- Prvky UI jsou spravovány pomocí **Canvas**.
+- Podporuje animace, eventy a dynamické změny.
+
+![](../../images/unity_ui_intro.png)
+
+</details>
+
+---
+
+## 🔘 Tlačítko (Button)
 
 <details>
-<summary><span style="color:#E95A84;">Rozsah detekce kliknutí (dle průhlednosti obrázku)</span></summary>
+<summary><span style="color:#1E90FF;">🖱️ Vlastnosti tlačítka</span></summary>
 
-`alphaHitTestMinimumThreshold` je používána u komponenty `Image`
+- Tlačítko je základní interaktivní prvek UI.
+- Lze mu přiřadit akce na kliknutí.
+- Podporuje různé vizuální styly a animace.
 
-Určuje minimální prahovou hodnotu alfa (průhlednosti), při které bude kliknutí na tento obrázek zaregistrováno.
+![](../../images/unity_ui_button.png)
 
-Nabývá rozsah hodnoty (0 až 1)
+</details>
 
-- Hodnota `0` znamená, že kliknutí bude zaregistrováno i na úplně průhledných částech obrázku.
+---
 
-- Hodnota `1` znamená, že kliknutí bude zaregistrováno pouze na zcela neprůhledných částech obrázku.
+## 🟣 Rozsah detekce kliknutí podle průhlednosti
 
-Například, pokud nastavíme `alphaHitTestMinimumThreshold` na `0.5`, kliknutí bude zaregistrováno pouze na částech
-obrázku, které mají alfa hodnotu alespoň 0.5 (tedy nejsou příliš průhledné).
+<details>
+<summary><span style="color:#E95A84;">🩸 `alphaHitTestMinimumThreshold`</span></summary>
 
-Příklad použití:
+| 🏷️ Vlastnost                | 💡 Popis                                                                 |
+|-----------------------------|--------------------------------------------------------------------------|
+| `alphaHitTestMinimumThreshold` | Určuje minimální alfa hodnotu pro detekci kliknutí na obrázek.           |
+| Rozsah hodnot                | 0 (klik i na průhledné části) až 1 (jen zcela neprůhledné části)         |
+| Použití                      | Ideální pro kruhová nebo nepravidelná tlačítka                           |
 
-```c#
+> 📌 Nastav hodnotu podle požadované citlivosti na průhlednost.
+
+### Příklad použití v C#:
+
+```csharp
 using UnityEngine;
-using System.Collections;
-using UnityEngine.UI; // Required when Using UI elements.
+using UnityEngine.UI;
 
 public class ExampleClass : MonoBehaviour
 {
     public Image theButton;
 
-    // Use this for initialization
     void Start()
     {
         theButton.alphaHitTestMinimumThreshold = 0.5f;
@@ -41,7 +65,6 @@ public class ExampleClass : MonoBehaviour
 ```
 
 > [!TIP]
-> Lze použít například při tvorbě kruhového tlačítka.
+> Vhodné například pro kruhová tlačítka, kde nechceme registrovat kliknutí na průhledné okraje.
 
-</details>
 </details>

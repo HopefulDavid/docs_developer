@@ -1,29 +1,59 @@
-﻿Pro umístění (pushnutí) nové větve `develop` na Git server (např. GitHub, GitLab) postupuj takto:
+﻿# 🗂️ Git – Vytvoření & push nové větve na remote
 
-1. Vytvoř branch `develop` (pokud ji ještě nemáš):
+> 🚀 Praktické rady pro založení a umístění nové větve (`develop`) na Git server (např. GitHub, GitLab).
 
-    ```bash
-    git checkout -b develop
-    ```
+---
 
-2. Ujisti se, že máš vzdálený repozitář:
+## 🌱 Vytvoření nové větve
 
-    ```bash
-    git remote -v
-    ```
+<details>
+<summary><span style="color:#1E90FF;">🛠️ Krok 1: Založení větve</span></summary>
 
-   > [!NOTE]
-   > Pokud není nastaven, použij např. `git remote add origin <url>`
+```bash
+git checkout -b develop
+```
+- Vytvoří novou větev `develop` a přepne na ni.
+</details>
 
-3. Pushni větev `develop` na remote:
+---
 
-    ```bash
-    git push -u origin develop
-    ```
+## 🌐 Nastavení vzdáleného repozitáře
 
-   > [!NOTE]
-   > Parametr `-u` nastaví `develop` jako výchozí sledovanou větev vůči `origin/develop`.
+<details>
+<summary><span style="color:#1E90FF;">🔗 Krok 2: Ověření remote</span></summary>
 
-4. Ověř, že větev je online:
+```bash
+git remote -v
+```
+- Zobrazí nastavené vzdálené repozitáře.
 
-   Lze se nyní podívat na webové rozhraní (GitHub, GitLab apod.), jestli se větev vzdáleně objevila.
+> [!NOTE]  
+> Pokud není remote nastaven, použij:  
+> `git remote add origin <url>`
+</details>
+
+---
+
+## 🚀 Push větve na server
+
+<details>
+<summary><span style="color:#1E90FF;">📤 Krok 3: Push větve na remote</span></summary>
+
+```bash
+git push -u origin develop
+```
+- Nahraje větev `develop` na server a nastaví ji jako sledovanou vůči `origin/develop`.
+
+> [!NOTE]  
+> Parametr `-u` zajistí automatické sledování větve.
+</details>
+
+---
+
+## 🖥️ Ověření online
+
+<details>
+<summary><span style="color:#1E90FF;">🔎 Krok 4: Kontrola na webu</span></summary>
+
+- Otevři webové rozhraní (GitHub, GitLab apod.) a ověř, že se větev objevila mezi vzdálenými větvemi.
+</details>

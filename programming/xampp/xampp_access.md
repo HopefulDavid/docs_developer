@@ -1,27 +1,56 @@
-# Přístup k projektům
+# 🚀 Přístup k projektům v XAMPP
 
-Tento dokument ukazuje, jak mít více projektů v XAMPP a přistupovat k nim přes prohlížeč.
+> 🛠️ Tento návod ukazuje, jak spravovat více projektů v XAMPP a pohodlně k nim přistupovat přes prohlížeč.
 
-## 1. Spuštění Apache
+---
 
-Ujistěte se, že máte spuštěný `Apache` server v **XAMPP Control Panel** (přes administrátora).
+## 🔥 1. Spuštění Apache
 
-## 2. Vytvoření složek pro projekty
+<details>
+<summary><span style="color:#1E90FF;">🖥️ Jak spustit Apache server?</span></summary>
 
-Vložte každý projekt do vlastní složky v `htdocs`, například:
+1. Otevřete **XAMPP Control Panel**.
+2. Klikněte na tlačítko <kbd>Start</kbd> u služby **Apache**.
+3. Ujistěte se, že běží (zelený stav).
 
-```
-C:\xampp\htdocs\project1\
-C:\xampp\htdocs\project2\
-C:\xampp\htdocs\project3
-```
+> 💡 Doporučení: Spouštějte XAMPP jako administrátor pro správné oprávnění.
 
-## 3. Přístup k projektům přes prohlížeč
+</details>
 
-Otevřete prohlížeč a přejděte na:
+---
 
-- `http://localhost/project1/`
-- `http://localhost/project2/`
-- `http://localhost/project3/`
+## 📁 2. Vytvoření složek pro projekty
 
-> Každý projekt má vlastní URL pod `localhost`.
+<details>
+<summary><span style="color:#1E90FF;">📦 Jak organizovat projekty?</span></summary>
+
+Každý projekt vložte do vlastní složky v `htdocs`:
+
+| 🏷️ Projekt   | 📂 Umístění složky                |
+|--------------|-----------------------------------|
+| project1     | `C:\xampp\htdocs\project1\`        |
+| project2     | `C:\xampp\htdocs\project2\`        |
+| project3     | `C:\xampp\htdocs\project3\`        |
+
+> 📌 Složka `htdocs` je výchozí webový adresář Apache v XAMPP.
+
+</details>
+
+---
+
+## 🌐 3. Přístup k projektům přes prohlížeč
+
+<details>
+<summary><span style="color:#1E90FF;">🔗 Jak zobrazit projekty v prohlížeči?</span></summary>
+
+Otevřete prohlížeč a zadejte URL podle názvu složky:
+
+| 🏷️ Projekt   | 🌍 URL adresa                    |
+|--------------|----------------------------------|
+| project1     | `http://localhost/project1/`      |
+| project2     | `http://localhost/project2/`      |
+| project3     | `http://localhost/project3/`      |
+
+> 💡 Každý projekt má vlastní URL pod `localhost`.
+
+</details>

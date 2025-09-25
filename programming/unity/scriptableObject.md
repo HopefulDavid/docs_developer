@@ -1,12 +1,72 @@
-## Skriptovatelné Objekty
+# 📦 Unity – ScriptableObject & Tipy
 
-Nemusí se vytvářet ve scéně, jsou namísto toho vytvořeny již v projektu.
+> 🚀 Praktické rady pro použití ScriptableObject v Unity, jejich výhody, omezení a moderní patterny.
 
-> [!IMPORTANT]
-> ScriptableObjects se po zavření a opětovném otevření hry obnoví na výchozí hodnoty.
+---
 
+## 🧩 Co je ScriptableObject?
 
 <details>
-<summary><span style="color:#1E90FF;">Singleton</span></summary>
+<summary><span style="color:#1E90FF;">🔍 Základní principy</span></summary>
+
+- **ScriptableObject** je speciální typ assetu v Unity.
+- Umožňuje ukládat data mimo scénu – přímo v projektu.
+- Vhodné pro konfigurace, globální data, nastavení, inventáře, atd.
+
+![](../../images/unity_scriptableobject_intro.png)
+
+</details>
+
+---
+
+## 🗂️ Vytvoření ScriptableObject
+
+<details>
+<summary><span style="color:#1E90FF;">🛠️ Jak vytvořit ScriptableObject?</span></summary>
+
+1. Vytvoř novou C# třídu dědící ze `ScriptableObject`.
+2. Přidej atribut `[CreateAssetMenu]` pro snadné vytvoření assetu.
+3. Vytvoř asset přes **Assets > Create** v Unity.
+
+```csharp
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "NewConfig", menuName = "Config/Example")]
+public class ExampleConfig : ScriptableObject
+{
+    public int value;
+    public string description;
+}
+```
+
+</details>
+
+---
+
+## 💾 Ukládání & Obnovení dat
+
+<details>
+<summary><span style="color:#1E90FF;">⚠️ Omezení ScriptableObject</span></summary>
+
+- Data v ScriptableObject se **neukládají** mezi spuštěními hry.
+- Po zavření a opětovném otevření hry se obnoví na výchozí hodnoty assetu.
+- Pro trvalé ukládání použij **PlayerPrefs**, soubory nebo databázi.
+
+> [!IMPORTANT]
+> ScriptableObjects slouží hlavně pro **konfiguraci** a **sdílení dat** v rámci projektu, ne pro runtime ukládání.
+
+</details>
+
+---
+
+## 🦄 Singleton pattern se ScriptableObject
+
+<details>
+<summary><span style="color:#1E90FF;">🔑 Jak na singleton ScriptableObject?</span></summary>
+
+- Umožňuje globální přístup k datům bez nutnosti vytvářet instanci ve scéně.
+- Vhodné pro nastavení, globální konfigurace, eventy.
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/O7ziNEzanWI?si=oymyfqzq4v0hDHn6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
- </details>
+
+</details>

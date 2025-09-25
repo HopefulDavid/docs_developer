@@ -1,103 +1,60 @@
-## Příkazový řádek
+# 🗂️ Windows CMD & optimalizace – Praktický průvodce & tipy
 
-Batch skript obvykle obsahuje příponu `.bat` nebo `.cmd`.
+> 🚀 Moderní přehled práce s příkazovým řádkem, dávkovými skripty a optimalizací disků ve Windows.
 
-### SQL
+---
+
+## 📖 Příkazový řádek & dávkové skripty
+
+- **Batch skript** má příponu `.bat` nebo `.cmd`.
+- Umožňuje automatizovat úlohy ve Windows.
+
+---
+
+## 🛠️ Spouštění SQL skriptů ze složky
 
 <details>
-<summary><span style="color:#1E90FF;">Spuštění všech sql skriptů ze složky</span></summary>
+<summary><span style="color:#1E90FF;">📂 Hromadné spuštění všech SQL skriptů</span></summary>
 
-```bash
+```cmd
 for %%G in (*.sql) do sqlcmd /S serverTest /d CT46 -U userName -P password123 -i"%%G"
-
 pause
 ```
 
-> [!NOTE]
-> `for %%G`
->
-> Používá se k iteraci přes všechny soubory v adresáři, které odpovídají vzoru v závorce.
->
-> `in (*.sql)`
->
-> Označuje, že smyčka projde všechny soubory s příponou `.sql` v aktuálním adresáři.
->
-> `do sqlcmd`
->
-> Při každém průchodu smyčkou se provede příkaz `sqlcmd`, což je příkazový nástroj pro spouštění SQL příkazů na serveru
-> Microsoft SQL Server.
->
-> `/S serverTest`
->
-> Tento parametr určuje název nebo IP adresu SQL serveru, ke kterému se připojuješ.
->
-> (V tomto případě je to `serverTest`.)
->
-> `/d CT46`
->
-> Určuje databázi, ke které se chcete připojit.
->
-> (Zde je to `CT46`.)
->
-> `-U userName`
->
-> Určuje uživatelské jméno pro připojení k SQL serveru.
->
-> (Zde je to `userName`.)
->
-> `-P password123`
->
-> Určuje heslo pro uživatele `userName`.
->
-> (Zde je to `password123`.)
->
-> `-i "%%G"`
->
-> Označuje, že soubor SQL (který je uložen v proměnné `%%G` – každý `.sql` soubor) bude použit jako vstup pro `sqlcmd`.
->
-> Tento příkaz tedy vykoná SQL skript v daném souboru.
->
-> `pause`, zastaví provedení skriptu a čeká na stisknutí libovolné klávesy.
->
-> (To umožňuje uživateli vidět výsledky před tím, než se okno zavře.)
+> [!NOTE]  
+> Smyčka `for %%G in (*.sql)` projde všechny `.sql` soubory v adresáři a spustí je pomocí `sqlcmd` na zadaném SQL serveru.  
+> `pause` umožní zobrazit výsledek před zavřením okna.
 
 </details>
 
-### Windows optimalizace
+---
+
+## 🛠️ Optimalizace disků ve Windows
 
 <details>
-<summary><span style="color:#1E90FF;">Optimalizace disků</span></summary>
+<summary><span style="color:#1E90FF;">💾 Automatická optimalizace SSD & HDD</span></summary>
 
-> [!NOTE]
-> Windows 10 a novější automaticky spouští TRIM na SSD discích jednou týdně. Ruční optimalizace SSD není běžně potřeba, pokud je zapnuté automatické plánování (výchozí nastavení).
->
-> U HDD je doporučeno provádět defragmentaci jednou měsíčně.
-
-Tento příkaz **optimalizuje disky "C:" a "D:" podle jejich typu**.
+> [!NOTE]  
+> Windows 10+ automaticky spouští TRIM na SSD jednou týdně. U HDD je doporučena defragmentace jednou měsíčně.
 
 ```cmd
 defrag C: D: /O
 ```
 
-🔍 Rozbor příkazu:
+🔍 **Rozbor příkazu:**
+- `defrag` – Spustí optimalizaci disků.
+- `C: D:` – Vybere disky C: (SSD) a D: (HDD).
+- `/O` – Automaticky použije správnou metodu (TRIM pro SSD, defragmentaci pro HDD).
 
-- **`defrag`** – Spustí nástroj pro optimalizaci disků ve Windows.  
-- **`C: D:`** – Říká, že chceme optimalizovat **disk C:** (SSD) a **disk D:** (HDD).  
-- **`/O`** – Znamená **"Optimize"**, což znamená, že Windows **automaticky zjistí typ disku a použije správnou metodu optimalizace**:  
-  - **Pokud je disk HDD → spustí defragmentaci**  
-  - **Pokud je disk SSD → spustí TRIM**  
+</details>
 
----
+<details>
+<summary><span style="color:#1E90FF;">📝 Co se stane po spuštění?</span></summary>
 
-**🔹 Co přesně se stane po spuštění?**
+1️⃣ **SSD (C:)**
+- Spustí se TRIM, který vymaže nepoužívané bloky a zlepší výkon SSD.
 
-1️⃣ **SSD (C:)**  
-- Nástroj zjistí, že jde o SSD a místo klasické defragmentace spustí **TRIM**.  
-- **TRIM vymaže nepoužívané bloky a pomůže SSD efektivněji zapisovat nová data.**  
-
-2️⃣ **HDD (D:)**  
-- Nástroj zjistí, že jde o HDD a spustí klasickou **defragmentaci**.  
-- **Defragmentace přesune roztříštěné soubory tak, aby byly uloženy pohromadě.**  
-- Výsledkem je rychlejší čtení dat a plynulejší chod disku.
+2️⃣ **HDD (D:)**
+- Spustí se defragmentace, která přesune roztříštěné soubory a zrychlí čtení dat.
 
 </details>

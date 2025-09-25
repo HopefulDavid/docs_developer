@@ -1,32 +1,50 @@
-﻿> [!WARNING]
-> Smazání vzdálené větve je nevratná operace.
->
-> Ujisti se, že větev už nepotřebuješ a že všechny potřebné změny byly začleněny do jiných větví.
+﻿# 🗂️ Git – Smazání vzdálené větve
 
-Pro smazání vzdálené větve z Git serveru (např. GitHub, GitLab) postupuj takto:
+> 🚀 Praktické rady pro bezpečné odstranění větve z Git serveru (např. GitHub, GitLab).
 
-1. Zobraz si seznam všech větví (lokální i vzdálené):
+---
 
-    ```bash
-    git branch -a
-    ```
+## ⚠️ Upozornění
 
-2. Smaž vzdálenou větev jedním z těchto příkazů:
+> [!WARNING]  
+> Smazání vzdálené větve je **nevratná operace**.  
+> Ujisti se, že větev už nepotřebuješ a všechny důležité změny jsou začleněny jinde.
 
-    ```bash
-    git push origin --delete <nazev-vetve>
-    # nebo kratší varianta
-    git push origin :<nazev-vetve>
-    ```
+---
 
-   > [!NOTE]
-   > Nahraď `<nazev-vetve>` skutečným názvem větve, kterou chceš smazat.
+## 📋 Postup krok za krokem
 
-3. Vyčisti lokální reference na smazané vzdálené větve:
+<details>
+<summary><span style="color:#1E90FF;">🔎 Krok 1: Zobrazení všech větví</span></summary>
 
-    ```bash
-    git fetch --prune
-    ```
+```bash
+git branch -a
+```
+- Zobrazí seznam lokálních i vzdálených větví.
+</details>
 
-   > [!TIP]
-   > Tento krok není povinný, ale pomáhá udržet lokální repozitář čistý.
+<details>
+<summary><span style="color:#1E90FF;">🗑️ Krok 2: Smazání vzdálené větve</span></summary>
+
+```bash
+git push origin --delete <nazev-vetve>
+# nebo kratší varianta
+git push origin :<nazev-vetve>
+```
+- Nahraď `<nazev-vetve>` skutečným názvem větve, kterou chceš smazat.
+
+> [!NOTE]  
+> Obě varianty provedou totéž – smažou větev na serveru.
+</details>
+
+<details>
+<summary><span style="color:#1E90FF;">🧹 Krok 3: Vyčištění lokálních referencí</span></summary>
+
+```bash
+git fetch --prune
+```
+- Odstraní lokální reference na smazané vzdálené větve.
+
+> [!TIP]  
+> Tento krok není povinný, ale pomáhá udržet repozitář přehledný.
+</details>

@@ -1,186 +1,200 @@
-﻿# Git Submodules
+﻿# 🗂️ Git – Submoduly: Přehled & použití
 
-Umožňuje vložit jeden Git repozitář do jiného jako podadresář, přičemž si oba repozitáře zachovávají nezávislost.
+> 🚀 Praktické rady pro správu externích repozitářů pomocí submodulů v Git.
 
-Submoduly řeší problém, kdy potřebujete:
+---
 
-- Zahrnout externí kód do svého projektu
-- Udržovat přesnou verzi závislostí
-- Pracovat na více souvisejících projektech současně
+## 🔎 Co jsou submoduly?
+
+- Umožňují vložit jeden Git repozitář do jiného jako podadresář.
+- Zachovávají nezávislost obou repozitářů.
+- Vhodné pro správu závislostí, sdílený kód nebo více projektů najednou.
+
+---
+
+## 🏗️ Struktura projektu se submodulem
 
 <details>
-<summary><span style="color:#1E90FF;">Základní struktura</span></summary>
+<summary><span style="color:#1E90FF;">📁 Ukázková struktura</span></summary>
 
 ```plaintext
 HlavniProjekt/
-  ├── .git/                  # Git repozitář hlavního projektu
-  ├── .gitmodules            # Konfigurace submodulů
-  ├── BeznyAdresar/          # Běžný adresář v hlavním projektu
-  └── Submodul/              # Podadresář obsahující submodul
-      └── .git/              # Samostatný git repozitář
+  ├── .git/
+  ├── .gitmodules
+  ├── BeznyAdresar/
+  └── Submodul/
+      └── .git/
 ```
-
 </details>
 
 ---
 
-<details>
-<summary><span style="color:#1E90FF;">Základní příkazy</span></summary>
+## ⚙️ Základní příkazy
 
-### Přidání submodulu
+<details>
+<summary><span style="color:#1E90FF;">➕ Přidání submodulu</span></summary>
 
 ```bash
-# Syntaxe: git submodule add [URL] [cesta]
 git submodule add https://github.com/uzivatel/knihovna libs/knihovna
 ```
+</details>
 
-### Klonování projektu se submoduly
+<details>
+<summary><span style="color:#1E90FF;">📥 Klonování projektu se submoduly</span></summary>
 
-```bash
-# Způsob 1: Vše najednou
-git clone --recursive https://github.com/uzivatel/projekt
+- Vše najednou:
+  ```bash
+  git clone --recursive https://github.com/uzivatel/projekt
+  ```
+- Postupně:
+  ```bash
+  git clone https://github.com/uzivatel/projekt
+  git submodule init
+  git submodule update
+  ```
+</details>
 
-# Způsob 2: Nejprve projekt, pak inicializace submodulů
-git clone https://github.com/uzivatel/projekt
-git submodule init
-git submodule update
-```
+<details>
+<summary><span style="color:#1E90FF;">🔄 Aktualizace submodulů</span></summary>
 
-### Aktualizace submodulů
-
-```bash
-# Aktualizace všech submodulů na nejnovější commit z remote
-git submodule update --remote
-
-# Aktualizace konkrétního submodulu
-cd cesta/k/submodulu
-git checkout main
-git pull
-cd ../..
-git add cesta/k/submodulu
-git commit -m "Aktualizován submodul na nejnovější verzi"
-```
-
+- Všechny submoduly:
+  ```bash
+  git submodule update --remote
+  ```
+- Konkrétní submodul:
+  ```bash
+  cd cesta/k/submodulu
+  git checkout main
+  git pull
+  cd ../..
+  git add cesta/k/submodulu
+  git commit -m "Aktualizován submodul na nejnovější verzi"
+  ```
 </details>
 
 ---
 
-<details>
-<summary><span style="color:#1E90FF;">Praktický příklad použití v Unity projektu</span></summary>
+## 🎮 Praktický příklad v Unity projektu
 
-### Vhodná struktura
+<details>
+<summary><span style="color:#1E90FF;">🧩 Struktura & přidání submodulů</span></summary>
 
 ```plaintext
 UnityProjekt/
   ├── .git/
   ├── .gitmodules
   └── Assets/
-      ├── Game/             # Váš herní kód (součást hlavního repozitáře)
-      └── Plugins/          # Složka pro externí knihovny
-          ├── UI-Framework/ # Submodul s UI frameworkem
-          │   └── .git/
-          └── Network/      # Submodul s síťovou knihovnou
-              └── .git/
+      ├── Game/
+      └── Plugins/
+          ├── UI-Framework/
+          └── Network/
 ```
-
-### Vytvoření této struktury
 
 ```bash
-# Vytvoření hlavního repozitáře
 cd UnityProjekt
 git init
-
-# Přidání UI frameworku jako submodulu
 git submodule add https://github.com/author/ui-framework Assets/Plugins/UI-Framework
-
-# Přidání síťové knihovny jako submodulu
 git submodule add https://github.com/author/network-lib Assets/Plugins/Network
 ```
-
 </details>
 
 ---
 
+## 💡 Tipy pro práci se submoduly
+
 <details>
-<summary><span style="color:#1E90FF;">Tipy pro práci se submoduly</span></summary>
+<summary><span style="color:#1E90FF;">🔀 Přepínání verzí submodulu</span></summary>
 
-1. **Přepínání mezi verzemi**
-   ```bash
-   cd cesta/k/submodulu
-   git checkout v2.0.0
-   cd ../..
-   git add cesta/k/submodulu
-   git commit -m "Změněna verze submodulu na v2.0.0"
-   ```
+```bash
+cd cesta/k/submodulu
+git checkout v2.0.0
+cd ../..
+git add cesta/k/submodulu
+git commit -m "Změněna verze submodulu na v2.0.0"
+```
+</details>
 
-2. **Úpravy v submodulu**
-   ```bash
-   # Změny v submodulu
-   cd cesta/k/submodulu
-   git checkout -b oprava-chyby
-   # proveďte změny
-   git commit -am "Oprava chyby"
-   git push origin oprava-chyby
-   # vytvořte pull request v repozitáři submodulu
-   ```
+<details>
+<summary><span style="color:#1E90FF;">✏️ Úpravy v submodulu</span></summary>
 
-3. **Odstranění submodulu**
-   ```bash
-   # 1. Odebrat z .gitmodules
-   git submodule deinit cesta/k/submodulu
-   # 2. Odebrat z .git/config
-   git rm --cached cesta/k/submodulu
-   # 3. Smazat adresář
-   rm -rf cesta/k/submodulu
-   rm -rf .git/modules/cesta/k/submodulu
-   # 4. Commit
-   git commit -m "Odstraněn submodul"
-   ```
+```bash
+cd cesta/k/submodulu
+git checkout -b oprava-chyby
+# proveďte změny
+git commit -am "Oprava chyby"
+git push origin oprava-chyby
+# vytvořte pull request v repozitáři submodulu
+```
+</details>
 
+<details>
+<summary><span style="color:#1E90FF;">🗑️ Odstranění submodulu</span></summary>
+
+```bash
+git submodule deinit cesta/k/submodulu
+git rm --cached cesta/k/submodulu
+rm -rf cesta/k/submodulu
+rm -rf .git/modules/cesta/k/submodulu
+git commit -m "Odstraněn submodul"
+```
 </details>
 
 ---
 
+## 🛠️ Řešení častých problémů
+
 <details>
-<summary><span style="color:#1E90FF;">Časté problémy a řešení</span></summary>
+<summary><span style="color:#1E90FF;">🧩 Submodul v "detached HEAD" stavu</span></summary>
 
-1. **Submodul v "detached HEAD" stavu**
-   ```bash
-   cd cesta/k/submodulu
-   git checkout main
-   ```
+```bash
+cd cesta/k/submodulu
+git checkout main
+```
+</details>
 
-2. **Submodul ukazuje změny i když žádné nemáte**
-   ```bash
-   git submodule update
-   ```
+<details>
+<summary><span style="color:#1E90FF;">🔄 Submodul ukazuje změny i když žádné nemáte</span></summary>
 
-3. **Změna URL submodulu**
-   ```bash
-   git config --file=.gitmodules submodule.nazev.url NOVA_URL
-   git submodule sync
-   ```
+```bash
+git submodule update
+```
+</details>
 
-4. **Kontrola stavu submodulů**
-   ```bash
-   git submodule status
-   ```
+<details>
+<summary><span style="color:#1E90FF;">🔗 Změna URL submodulu</span></summary>
 
+```bash
+git config --file=.gitmodules submodule.nazev.url NOVA_URL
+git submodule sync
+```
+</details>
+
+<details>
+<summary><span style="color:#1E90FF;">📋 Kontrola stavu submodulů</span></summary>
+
+```bash
+git submodule status
+```
 </details>
 
 ---
 
-<details>
-<summary><span style="color:#1E90FF;">Výhody a nevýhody</span></summary>
+## ⚖️ Výhody & nevýhody submodulů
 
-### Výhody submodulů
+<details>
+<summary><span style="color:#1E90FF;">✅ Výhody</span></summary>
+
 - Přesná kontrola verzí externích knihoven
-- Možnost přímo upravovat a přispívat do závislostí
-- Lepší organizace kódu v komplexních projektech
+- Možnost přímých úprav závislostí
+- Lepší organizace v komplexních projektech
 
-### Nevýhody submodulů
-- Vyšší složitost správy repozitáře
-- Nutnost vždy aktualizovat hlavní repozitář po změnách v submodulech
+</details>
+
+<details>
+<summary><span style="color:#E95A84;">❌ Nevýhody</span></summary>
+
+- Vyšší složitost správy
+- Nutnost synchronizace hlavního repozitáře po změnách v submodulech
 - Strmější učící křivka pro nové členy týmu
 
 </details>

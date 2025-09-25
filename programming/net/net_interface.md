@@ -1,74 +1,86 @@
-Interface = rozhraní
+# 🧩 .NET – Interface (Rozhraní)
+
+> 🚀 Praktické rady pro použití rozhraní v .NET, rozdíl mezi mělkým a hlubokým klonováním, ukázky implementace.
+
+---
+
+## 🧑‍💻 Co je Interface?
 
 <details>
-<summary><span style="color:#1E90FF;">ICloneable</span></summary>
+<summary><span style="color:#1E90FF;">🔍 Základní principy rozhraní</span></summary>
 
-- Vytvoří kopii objektu
+- **Interface** definuje smlouvu, kterou musí třída implementovat.
+- Umožňuje polymorfismus a oddělení implementace od definice.
 
-  <details>
-  <summary><span style="color:#E95A84;">Mělká</span></summary>
-  
-  ```c#
-  public object Clone ()
-  {
-      // Pro referenční typy se kopíruje reference (odkaz), nikoli objekt
-      return this.MemberwiseClone(); 
-  }
-  ```
-  
-  </details>
-  
-  <details>
-  <summary><span style="color:#E95A84;">Hluboká</span></summary>
-  
-  Kopírování referencí jako objekt
-  
-  > [!WARNING]
-  > Může mít vliv na výkon
-  
-  - Automaticky:
-  
-       ```c#
-      public static T DeepClone<T>(T obj)
-      {
-          using (var ms = new MemoryStream())
-          {
-              var formatter = new BinaryFormatter();
-              formatter.Serialize(ms, obj);
-              ms.Position = 0;
-      
-              return (T) formatter.Deserialize(ms);
-          }
-      }
-       ```
-  
-    - Ručně:
-  
-       ```c#
-       public class Record : ICloneable
+![](../../images/net_interface_intro.png)
+
+</details>
+
+---
+
+## 🌀 ICloneable – Klonování objektů
+
+<details>
+<summary><span style="color:#1E90FF;">🧬 Mělká kopie</span></summary>
+
+- Kopíruje pouze odkazy na objekty, ne jejich obsah.
+
+```csharp
+public object Clone()
+{
+    // Pro referenční typy se kopíruje reference (odkaz), nikoli objekt
+    return this.MemberwiseClone();
+}
+```
+</details>
+
+<details>
+<summary><span style="color:#1E90FF;">🌊 Hluboká kopie</span></summary>
+
+- Kopíruje celý objekt včetně vnořených dat.
+- Může mít vliv na výkon.
+
+> [!WARNING]
+> Hluboké klonování je náročnější na výkon, používej s rozmyslem.
+
+**Automaticky (serializace):**
+```csharp
+public static T DeepClone<T>(T obj)
+{
+    using (var ms = new MemoryStream())
+    {
+        var formatter = new BinaryFormatter();
+        formatter.Serialize(ms, obj);
+        ms.Position = 0;
+        return (T)formatter.Deserialize(ms);
+    }
+}
+```
+
+**Ručně (vlastní implementace):**
+```csharp
+public class Record : ICloneable
+{
+    // ... další vlastnosti ...
+
+    public List<string> Tnr { get; set; }
+    public List<string> Ean { get; set; }
+    // ... další vlastnosti ...
+
+    public object Clone()
+    {
+        return new Record
         {
-            // ... other properties ...
-      
-            public List<string> Tnr { get; set; }
-            public List<string> Ean { get; set; }
-            // ... other properties ...
-      
-            public object Clone()
-            {
-                return new Record
-                {
-                    // ... clone other properties ...
-      
-                    Tnr = this.Tnr != null ? new List<string>(this.Tnr) : null,
-                    Ean = this.Ean != null ? new List<string>(this.Ean) : null,
-                    // ... clone other properties ...
-                };
-            }
-        }
-       ```
-  
-    >   [!NOTE]
-    >   Stejným způsob pro klonování vnořených objektů
-  
-  </details>
+            // ... klonování dalších vlastností ...
+            Tnr = this.Tnr != null ? new List<string>(this.Tnr) : null,
+            Ean = this.Ean != null ? new List<string>(this.Ean) : null,
+            // ... klonování dalších vlastností ...
+        };
+    }
+}
+```
+
+> [!NOTE]
+> Stejný postup použij pro klonování vnořených objektů.
+
 </details>

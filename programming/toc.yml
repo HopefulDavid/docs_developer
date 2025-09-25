@@ -2,8 +2,6 @@
   items:
     - name: Vývojové vzory
       href: developmentPatterns.md
-    - name: Clean Architecture
-      href: cleanArchitecture.md
     - name: Techniky
       href: techniques.md
     - name: Výběr pro vývoj
@@ -40,10 +38,6 @@
           items:
             - name: Testy Nunit
               href: net/net_nunit.md
-    - name: JavaScript
-      href: javascript.md
-    - name: Python
-      href: python.md
 
 - name: Aplikační vývoj
   items:
@@ -53,7 +47,33 @@
 - name: Mobilní vývoj
   items:
     - name: Flutter
-      href: mobile/flutter.md
+      items:
+        - name: Instalace a nastavení
+          href: flutter/setupAndConfiguration.md
+        - name: Projekty
+          items:
+            - name: Vytvoření nového projektu
+              href: flutter/create_project.md
+            - name: Záloha, obnova a ukládání dat
+              href: flutter/backupAndRestore.md
+        - name: Balíčky
+          items:
+            - name: Lokalizace
+              href: flutter/localization.md
+        - name: Základní znalosti
+          href: flutter/basics.md
+        - name: Příkazy
+          href: flutter/commands.md
+        - name: Testování a pokrytí kódu
+          items:
+            - name: Pokrytí kódu
+              href: flutter/codeCoverage.md
+        - name: Řešení problémů
+          items:
+            - name: Tipy a řešení
+              href: flutter/troubleshooting.md
+
+
 
 - name: Herní vývoj
   items:
@@ -84,9 +104,13 @@
     - name: Balíčky
       items:
         - name: .NET CLI
-          href: netCLI.md
+          href: packages/netCLI.md
         - name: Nuget Package
-          href: nugetPackage.md
+          href: packages/nugetPackage.md
+        - name: Node Package Manager (NPM)
+          href: packages/npm.md
+        - name: Python
+          href: packages/pythonPackage.md
     - name: Aktualizace aplikací
       items:
         - name: Appcast Feed XML

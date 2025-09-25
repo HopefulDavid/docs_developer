@@ -1,49 +1,65 @@
-﻿## Doxygen
+﻿# 🗂️ Doxygen – Praktický průvodce & tipy
 
-Slouží k automatickému generování dokumentace z komentářů v kódu. 
-
-Je to velmi užitečný nástroj pro vývojáře, kteří chtějí mít přehlednou a strukturovanou dokumentaci ke kódu.
-
-<details>
-<summary><span style="color:#1E90FF;">Instalace</span></summary>
-
-#### **🔹 Krok 1: Instalace potřebných nástrojů**
-1. **Nainstalovat Doxygen**  
-   - Stáhněte a nainstalujte z [doxygen.nl](https://www.doxygen.nl/download.html).  
-   - Po instalaci ověřte, že funguje, spuštěním příkazu v terminálu nebo příkazovém řádku:
-     ```sh
-     doxygen --version
-     ```
-   
-2. **Nainstalujte Graphviz** (pro generování diagramů)  
-   - Stáhněte z [Graphviz Download](https://graphviz.gitlab.io/download/) a nainstalujte.  
-   - Přidejte cestu ke složce **Graphviz/bin** do **systémové PATH**, aby Doxygen našel `dot.exe`.  
-   - Ověřte, že Graphviz funguje:
-     ```sh
-     dot -version
-     ```
-
-3. **Nainstaluj TeX Live nebo MiKTeX** (pro PDF)  
-   - **Windows**: Stáhněte si **MiKTeX** [miktex.org/download](https://miktex.org/download)  
-   - **Linux**:  
-     ```sh
-     sudo apt install texlive-full
-     ```
-   - **Mac**:  
-     ```sh
-     brew install mactex
-     ```
+> 🚀 Moderní přehled základních pojmů, instalace, konfigurace a doporučení pro práci s Doxygen.
 
 ---
 
-#### **🔹 Krok 2: Vytvoření konfiguračního souboru Doxygen**
-1. **Otevřete terminál / CMD v adresáři projektu** a vytvořte `Doxyfile`:
+## 📖 Co je Doxygen?
+
+- **Nástroj pro automatické generování dokumentace z komentářů v kódu**
+- Podporuje různé jazyky (C, C++, C#, Java, Python, atd.)
+- Umožňuje generovat dokumentaci ve formátech HTML, LaTeX (PDF), RTF, XML
+
+> [!NOTE]  
+> Doxygen je ideální pro udržení přehledné a strukturované dokumentace ke kódu.
+
+---
+
+## 🛠️ Instalace
+
+<details>
+<summary><span style="color:#1E90FF;">🔹 Krok 1: Instalace potřebných nástrojů</span></summary>
+
+1. **Nainstalovat Doxygen**
+    - Stáhněte z [doxygen.nl/download.html](https://www.doxygen.nl/download.html)
+    - Ověřte instalaci:
+      ```sh
+      doxygen --version
+      ```
+
+2. **Nainstalovat Graphviz** (pro diagramy)
+    - Stáhněte z [Graphviz Download](https://graphviz.gitlab.io/download/)
+    - Přidejte cestu ke složce `Graphviz/bin` do systémové `PATH`
+    - Ověřte instalaci:
+      ```sh
+      dot -version
+      ```
+
+3. **Nainstalovat TeX Live nebo MiKTeX** (pro PDF)
+    - **Windows:** [miktex.org/download](https://miktex.org/download)
+    - **Linux:**
+      ```sh
+      sudo apt install texlive-full
+      ```
+    - **Mac:**
+      ```sh
+      brew install mactex
+      ```
+</details>
+
+---
+
+## ⚙️ Konfigurace
+
+<details>
+<summary><span style="color:#1E90FF;">🔹 Krok 2: Vytvoření konfiguračního souboru</span></summary>
+
+1. **Vytvořte `Doxyfile` v adresáři projektu:**
    ```sh
    doxygen -g Doxyfile
    ```
-   **Tím se vytvoří soubor `Doxyfile`, který bude obsahovat všechna nastavení.**
 
-2. **Otevřete `Doxyfile` v textovém editoru a upravte klíčové parametry:**
+2. **Upravte klíčové parametry v `Doxyfile`:**
    ```
    INPUT                  = ../../
    PROJECT_NAME           = "Moje C# dokumentace"
@@ -60,39 +76,41 @@ Je to velmi užitečný nástroj pro vývojáře, kteří chtějí mít přehled
    SHOW_NAMESPACES        = NO
    DOT_IMAGE_FORMAT       = svg
    ```
-   
-    > [!IMPORTANT]
-    > Tyto parametry ovlivňují generování dokumentace
-    > 
-    > Obsahuje spoustu dalších nastavení, které můžeš upravit podle potřeby.
-
----
-
-#### **🔹 Krok 3: Generování dokumentace**
-1. **Spusťte Doxygen** a vygeneruj výstupní soubory:
-   ```sh
-   doxygen Doxyfile
-   ```
-Doxygen vytvoří složku s názvem `docs` (nebo jiným dle `OUTPUT_DIRECTORY`), která obsahuje vygenerovanou dokumentaci.
-
+   > [!IMPORTANT]  
+   > Tyto parametry ovlivňují generování dokumentace.  
+   > Další nastavení lze upravit dle potřeby.
 </details>
 
 ---
 
+## 📄 Generování dokumentace
+
 <details>
-<summary><span style="color:#1E90FF;">Vynechat private a protected z dokumentace</span></summary>
+<summary><span style="color:#1E90FF;">🔹 Krok 3: Generování výstupních souborů</span></summary>
 
-V souboru `DoxyFile` upravit:
+- Spusťte Doxygen:
+  ```sh
+  doxygen Doxyfile
+  ```
+- Výstupní složka bude dle `OUTPUT_DIRECTORY` (např. `docs`)
+</details>
 
-```plaintext
-Along with EXTRACT_PRIVATE = NO, use the following additional settings:
+---
 
+## 🚫 Vynechání private a protected členů
+
+<details>
+<summary><span style="color:#1E90FF;">Jak vynechat private a protected z dokumentace</span></summary>
+
+V souboru `Doxyfile` nastavte:
+
+```
+EXTRACT_PRIVATE      = NO
 ENABLE_PREPROCESSING = YES
-MACRO_EXPANSION = YES
-EXPAND_ONLY_PREDEF = YES
-PREDEFINED = protected=private
+MACRO_EXPANSION      = YES
+EXPAND_ONLY_PREDEF   = YES
+PREDEFINED           = protected=private
 ```
 
 Tímto způsobem Doxygen vynechá private a protected členy z dokumentace.
-
 </details>

@@ -1,6 +1,20 @@
-## Vyhledat oddělovač
+# 🗂️ .NET – Práce se soubory: Oddělovače & Escape sekvence
 
-```c#
+> 🚀 Praktické rady pro detekci oddělovače v souboru, práci s BOM a speciálními znaky v .NET.
+
+---
+
+## 🔎 Vyhledání oddělovače v souboru
+
+<details>
+<summary><span style="color:#1E90FF;">🧩 Algoritmus detekce oddělovače</span></summary>
+
+- Prochází řádky souboru a počítá výskyt oddělovačů (`;`, `,`).
+- Vybere nejčastější oddělovač, pokud je jednoznačný.
+- Pokud není jednoznačný (jiný oddělovač se vyskytuje alespoň v 70% případů), vyhodí chybu.
+
+**Příklad kódu:**
+```csharp
 public static StreamReader FindDelimiter(StreamReader reader, out char delimiter, int? linesToRead = null)
 {
     const char semicolon = ';';
@@ -8,8 +22,8 @@ public static StreamReader FindDelimiter(StreamReader reader, out char delimiter
 
     Dictionary<char, int> delimiters = new Dictionary<char, int>
     {
-        { semicolon, default(int) },
-        { comma, default(int) },
+        { semicolon, 0 },
+        { comma, 0 },
     };
 
     string line;
@@ -20,16 +34,10 @@ public static StreamReader FindDelimiter(StreamReader reader, out char delimiter
         {
             switch (c)
             {
-                case semicolon:
-                    delimiters[semicolon]++;
-                    break;
-
-                case comma:
-                    delimiters[comma]++;
-                    break;
+                case semicolon: delimiters[semicolon]++; break;
+                case comma: delimiters[comma]++; break;
             }
         }
-
         linesRead++;
     }
 
@@ -40,12 +48,11 @@ public static StreamReader FindDelimiter(StreamReader reader, out char delimiter
 
     var highest = delimiters.Aggregate((item1, item2) => item1.Value > item2.Value ? item1 : item2);
 
-	// Kontrola, zda existuje jiný oddělovač, který se vyskytuje alespoň v 70% případů jako nejčastější oddělovač
     const int failPercentage = 70;
     if ((from val in delimiters
          where val.Key != highest.Key
          select new decimal(val.Value) / new decimal(highest.Value) * 100).Any(diff => diff >= failPercentage))
-        throw new Exception("Typ oddělovače se nepodařilo jednoznačne identifikovat.");
+        throw new Exception("Typ oddělovače se nepodařilo jednoznačně identifikovat.");
 
     delimiter = highest.Key;
 
@@ -54,23 +61,22 @@ public static StreamReader FindDelimiter(StreamReader reader, out char delimiter
     return reader;
 }
 ```
+</details>
 
-## Escape sekvence
+---
 
-- `\uFEFF` 
- 
-    = **Byte Order Mark (BOM)**. 
+## 🏷️ Escape sekvence v souborech
 
-    BOM nám říká, jak číst data v souboru - od začátku nebo od konce. 
-	
-    > [!WARNING]
-    > Může způsobit problémy s některými nástroji a knihovnami, které jej neočekávají.
+<details>
+<summary><span style="color:#1E90FF;">🔍 Nejčastější speciální znaky</span></summary>
 
-- `\u0000` 
+| Sekvence   | Název                    | Popis                                                                 |
+|------------|--------------------------|-----------------------------------------------------------------------|
+| `\uFEFF`   | Byte Order Mark (BOM)    | Určuje pořadí bajtů, může způsobit problémy při čtení souborů.        |
+| `\u0000`   | Null znak                | Označuje konec řetězce, může komplikovat parsování dat.               |
 
-  = **null znak**. 
+> [!WARNING]
+> BOM i null znak mohou způsobit potíže s některými knihovnami a nástroji.  
+> Doporučuje se je odstraňovat nebo správně ošetřit při zpracování dat.
 
-  Null znak je speciální znak, který se často používá k označení konce řetězce v některých programovacích jazycích a systémech. 
-
-  > [!WARNING]
-  > Je obvykle nepotřebný a může způsobit problémy při parsování nebo zpracování dat.
+</details>

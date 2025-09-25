@@ -1,22 +1,47 @@
-## Úložiště
+# 🗂️ Git – Práce s úložištěm
 
-### Vytvořit na lokálním prostředí
+> 🚀 Praktické rady pro vytvoření a použití Git úložiště na lokálním i online prostředí.
 
-```bash
-git init --bare <cesta>
-```
+---
 
-> [!WARNING]
-> ` <cesta>` = vytvoří úložiště do cesty, musí mít na konci cesty `.git`
+## 🏗️ Vytvoření úložiště
 
-### Použít do pracovního prostředí
+<details>
+<summary><span style="color:#1E90FF;">🛠️ Kompletní postup</span></summary>
 
-```bash
-git clone <cesta>
-```
+1. **Inicializace bare úložiště**  
+   Spusťte v terminálu:
 
-> [!WARNING]
-> ` <cesta>` = adresa k úložišti, musí mít na konci cesty `.git`
+   ```bash
+   git init --bare <cesta>
+   ```
 
-> [!TIP]
-> Cesta může být lokální i online.
+    - `<cesta>` = cílová složka, musí končit `.git`  
+      *Např.:* `C:\projekty\moje-repozitar.git`
+
+> [!WARNING]  
+> Cesta musí mít na konci `.git`, jinak nebude úložiště správně rozpoznáno.
+
+</details>
+
+---
+
+## 📥 Klonování úložiště
+
+<details>
+<summary><span style="color:#1E90FF;">🔗 Použití v pracovním prostředí</span></summary>
+
+1. **Klonování úložiště**  
+   Spusťte v terminálu:
+
+   ```bash
+   git clone <cesta>
+   ```
+
+    - `<cesta>` = adresa k úložišti (lokální nebo online), musí končit `.git`  
+      *Např.:* `C:\projekty\moje-repozitar.git` nebo `https://github.com/uzivatel/projekt.git`
+
+> [!TIP]  
+> Cestu lze použít jak lokální, tak online (např. GitHub, GitLab).
+
+</details>

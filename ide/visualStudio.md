@@ -1,22 +1,35 @@
-﻿## Visual Studio
+﻿# 🖥️ Visual Studio – Offline instalace & tipy
+
+> 🚀 Praktické rady pro stažení a instalaci Visual Studio Community offline.
+
+---
+
+## 📥 Stažení instalátoru pro offline použití
 
 <details>
-<summary><span style="color:#1E90FF;">Stažení instalátoru pro offline použití</span></summary>
+<summary><span style="color:#1E90FF;">🔽 Kompletní postup stažení</span></summary>
 
-1. Stáhněte si instalátor Visual Studio Community
-   z [oficiálních stránek](https://visualstudio.microsoft.com/cs/downloads/).
-2. Přesuňte se do složky, kde je uložen instalační program (např. vs_community.exe).
-3. Otevřete příkazový řádek a spusťte následující příkaz:
+1. **Stáhněte instalátor**  
+   Získejte `vs_community.exe` z [oficiálních stránek Visual Studio](https://visualstudio.microsoft.com/cs/downloads/).
 
-    ```bash
-    vs_community.exe --layout C:\visualstudio_offline --lang cs-CZ en-US --all
-    ```
+2. **Přesuňte se do složky s instalátorem**  
+   Například:  
+   `C:\Users\<VašeJméno>\Stažené\`
 
-    - `--layout` určuje složku, kam se mají stáhnout všechny potřebné soubory.
-    - `--lang` určuje jazyky, které se mají stáhnout. (V tomto případě se stáhnou jazyky čeština a angličtina.)
-    - `--all` zajistí, že se stáhnou všechny dostupné komponenty, včetně volitelných modulů a specifických nástrojů.
+3. **Otevřete příkazový řádek**  
+   Spusťte `cmd` jako správce.
 
-> [!NOTE]
-> Po dokončení stahování se vytvoří složka `visualstudio_offline` s kompletními instalačními soubory.
+4. **Spusťte příkaz pro offline stažení:**
+
+   ```bash
+   vs_community.exe --layout C:\visualstudio_offline --lang cs-CZ en-US --all
+   ```
+
+   - `--layout` určuje cílovou složku pro instalační soubory.
+   - `--lang` nastavuje jazyky (čeština, angličtina).
+   - `--all` stáhne všechny dostupné komponenty včetně volitelných modulů.
+
+> [!NOTE]  
+> Po dokončení se vytvoří složka `visualstudio_offline` s kompletními instalačními soubory.
 
 </details>

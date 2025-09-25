@@ -1,381 +1,168 @@
-# PowerShell
+# 🗂️ PowerShell – Praktický průvodce & tipy
+
+> 🚀 Moderní přehled instalace, nastavení, správy balíčků, oprávnění, práce se soubory a sítě v PowerShellu.
+
+---
+
+## 📦 Správa balíčků
 
 <details>
-<summary><span style="color:#1E90FF;">Balíčky</span></summary>
+<summary><span style="color:#1E90FF;">📁 Umístění modulů</span></summary>
 
-Umístění
-
-- Windows: `C:\Users\{xxx}\Documents\PowerShell\Modules`
+- Windows:  
+  `C:\Users\{xxx}\Documents\PowerShell\Modules`
 
 </details>
 
-<details>
-<summary><span style="color:#1E90FF;">Změna designu</span></summary>
+---
 
-Původní:
-
-<img src="https://miro.medium.com/v2/resize:fit:4800/format:webp/1*lelcpOyX-WuXlYR5oy2g4Q.png" alt="oldPowerShell.png"/>
-
-Nový:
-
-<img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*SI0w1Cg7iVzG6mZMtBfWqQ.png" alt="newPowerShell.png"/>
+## 🎨 Změna designu PowerShellu
 
 <details>
-<summary><span style="color:#E95A84;">Postup</span></summary>
+<summary><span style="color:#1E90FF;">🖌️ Modernizace vzhledu</span></summary>
 
-> [!TIP]
-> Nainstalujte si verzi `PowerShell` 7.0 a vyšší.
->
-> Zjištění verze:
->
-> ```bash 
-> $PSVersionTable
-> ```
->
-> Ke stažení <a href="https://github.com/PowerShell/PowerShell">zde</a>.
+- **Původní vzhled:**  
+  <img src="https://miro.medium.com/v2/resize:fit:4800/format:webp/1*lelcpOyX-WuXlYR5oy2g4Q.png" alt="oldPowerShell.png" width="500px"/>
 
-> [!IMPORTANT]
-> Musíte mít nainstalovaný `windows terminal`.
->
-> Ke stažení <a href="https://github.com/microsoft/terminal">zde</a>.
+- **Nový vzhled:**  
+  <img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*SI0w1Cg7iVzG6mZMtBfWqQ.png" alt="newPowerShell.png" width="500px"/>
 
-<ol>
-<li>
+<details>
+<summary><span style="color:#E95A84;">🛠️ Postup modernizace</span></summary>
 
-Spustit PowerShell v administrátorském modu.
-<br/>
-<img src="/../../images/runAsAdministatorPowerShell.png" alt="runAsAdministatorPowerShell.png" width="800px"/>
+1. **Instalace PowerShell 7+**
+    - Zjistěte verzi:
+      ```bash
+      $PSVersionTable
+      ```
+    - [Stáhnout PowerShell](https://github.com/PowerShell/PowerShell)
 
-</li>
-<li>
+2. **Instalace Windows Terminal**
+    - [Stáhnout Windows Terminal](https://github.com/microsoft/terminal)
 
-Otevřít novou záložku.
+3. **Spusťte PowerShell jako administrátor**  
+   <img src="/../../images/runAsAdministatorPowerShell.png" alt="runAsAdministatorPowerShell.png" width="500px"/>
 
-To nás vyzve do administrátorského režimu -> `Yes`.
-</li>
-<li>
+4. **Nastavte oprávnění na Bypass**
+   ```bash
+   Set-ExecutionPolicy -Scope CurrentUser Bypass
+   ```
 
-Zjistíme si aktuální oprávnění na uživateli.
+5. **Rozdělte okno na části**
+    - Klávesová zkratka: `Alt` + `Left Click`
+      <img src="/../../images/optionsPowerShell.png" alt="optionsPowerShell.png" width="500px"/>
 
-```bash
-Get-ExecutionPolicy -Scope CurrentUser
-```
+6. **Instalace modulů**
+   ```bash
+   Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://ohmyposh.dev/install.ps1'))
+   Install-Module posh-git
+   ```
 
-</li>
-<li>
+7. **Změna vzhledu příkazové řádky**
+   ```bash
+   oh-my-posh init pwsh --config 'C:\Users\{xxx}\Themes\PowerShell\aliens.omp.json' | Invoke-Expression
+   ```
 
-Nastavit oprávnění na `Bypass`.
+8. **Import modulu**
+   ```bash
+   Import-Module posh-git
+   ```
 
-```bash
-Set-ExecutionPolicy -Scope CurrentUser Bypass
-```
+9. **Nastavení trvalého vzhledu**
+    - Zjistěte cestu k profilu:
+      ```bash
+      $PROFILE
+      ```
+    - Otevřete nebo vytvořte soubor:
+      ```bash
+      notepad $PROFILE
+      ```
+    - Vložte:
+      ```bash
+      Import-Module posh-git
+      oh-my-posh init pwsh --config 'C:\Users\{xxx}\themes\aliens.omp.json' | Invoke-Expression
+      ```
 
-> [!TIP]
-> Oprávnění `Bypass` znamená, že PowerShell spustí jakýkoliv skript bez jakýchkoliv omezení.
-</li>
-<li>
-
-Ověřit, že nastavení proběhlo v pořádku.
-
-```bash
-Get-ExecutionPolicy -Scope CurrentUser
-```
-
-> [!NOTE]
-> Pokud znovu provedeme příkaz `Get-ExecutionPolicy -Scope CurrentUser`, mělo by nám to vrátit `Bypass`.
-</li>
-<li>Nyní rozdělíme okno na části. 
-
-Toho docílíme skrze klávesovou zkratku `Alt` + `Left Click`.
-
-<img src="/../../images/optionsPowerShell.png" alt="optionsPowerShell.png" width="800px"/>
-</li>
-<li>V každém oknu spustíme jednotlivé PowerShell příkazy.
-
-```bash
-Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://ohmyposh.dev/install.ps1'))
-```
-
-```bash
-Install-Module posh-git
-```
-
-> [!NOTE]
-> Potvrdíme instalovat všechno skrze `a`.
-
-> [!TIP]
-> Pokud chcete přepsat již nainstalované moduly, použijte parametr: `-AllowClobber`
-</li>
-<li> 
-
-Nyní máme nainstalované moduly `posh-git` a aplikaci `oh-my-posh`.
-</li>
-<li> 
-
-Změníme vzhled příkazové řádky.
-
-> [!WARNING]
-> Cesta nesmí obsahovat mezery, háčky, ani speciální znaky!
-
-```bash
-oh-my-posh init pwsh --config 'C:\Users\{xxx}\Themes\PowerShell\aliens.omp.json' | Invoke-Expression
-```
-
-> [!WARNING]
-> Změní se projeví pouze pro aktivní okno.
-
-> [!NOTE]
-> V dalších krocích si nastavíme změnu vzhledu do konfiguračního souboru, aby po každém spuštění PowerShellu se vzhled
-> změnil.
-
-> [!TIP]
-> Cesta k souboru se <a href="https://github.com/JanDeDobbeleer/oh-my-posh/tree/main/themes">šablonami stylů (
-> themes)</a>: `C:\Users\{xxx}\themes\aliens.omp.json`
->
-> `aliens.omp.json` = název šablony v tomto příkladu.
-
-> [!TIP]
-> Pokud nezafunguje změna stylu konzolové řádky pro `oh-my-posh`
->
-> Zkuste se podívat do `Environment Variables` a přidat cestu: `C:\Users\user\AppData\Local\Programs\oh-my-posh\bin`.
-</li>
-<li>
-
-Modul si naimportujeme.
-
-```bash
-Import-Module posh-git
-```
-
-> [!WARNING]
-> Změní se projeví pouze pro aktivní okno.
-
-> [!NOTE]
-> V dalších krocích si nastavíme změnu vzhledu do konfiguračního souboru, aby po každém spuštění PowerShellu se vzhled
-> změnil.
-</li>
-<li>
-
-Nyní zjistíme soubor s nastavením pro PowerShell.
-
-```bash
-$PROFILE
-```
-
-Vrátí se cesta k souboru s nastavením.
-
-Toto nastavení se poté již spouští při každém spuštění PowerShell a tedy do jakéhokoli okna.
-</li>
-<li>
-
-Nastavíme si soubor s nastavením pro PowerShell.
-
-- Pokud **soubor existuje**, tak otevřeme v textovém editoru.
-
-- Pokud **soubor neexistuje**, tak jej vytvoříme.
-
+10. **Nastavte oprávnění na RemoteSigned**
     ```bash
-    notepad $PROFILE
+    Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
     ```
 
-  Potvrdíme, že chceme vytvořit nový soubor -> `Yes`.
-
-</li>
-<li>
-
-Do souboru s nastavením vložíme následující kód.
-
-```bash
-Import-Module posh-git # Zobrazí aktuální větev a stav
-
-oh-my-posh init pwsh --config 'C:\Users\{xxx}\themes\aliens.omp.json' | Invoke-Expression # Změní vzhled příkazové řádky 
-```
-
-</li>
-<li> 
-
-Uložíme a zavřeme soubor.
-</li>
-<li> 
-
-Nastavíme oprávnění na spouštění pouze vlastních skriptů.
-
-```bash
-Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
-```
-
-> [!TIP]
-> Nastavit oprávnění na `RemoteSigned`, aby se neoprávněné osoby nemohly pokoušet spouštět virové skripty na Vašem
-> zařízení.
-
-</li>
-<li> 
-
-Vypneme spuštění v administrátorském režimu.
-
-<img src="/../../images/runAsAdministatorPowerShell.png" alt="runAsAdministatorPowerShell.png" width="800px"/>
-</li>
-</ol>
-
-Pokud nyní otevřeme PowerShell, nebo nové okno v již stávajícím, tak by vše mělo fungovat.
+11. **Vypněte administrátorský režim**  
+    <img src="/../../images/runAsAdministatorPowerShell.png" alt="runAsAdministatorPowerShell.png" width="500px"/>
 
 </details>
+</details>
+
+---
+
+## 🎭 Nastavení vzhledů (themes)
 
 <details>
-<summary><span style="color:#E95A84;">Nastavit theme</span></summary>
+<summary><span style="color:#E95A84;">🎨 Výběr a změna vzhledu</span></summary>
 
-Navigovat do složky s vzhledy (themes).
-
-Například:
-
-`C:\Users\{xxx}\themes\`
-
-Nyní stačí spustit příkaz níže a zobrazí se nám všechny dostupné vzhledy.
-
-```bash
-Get-PoshThemes
-```
-
-> [!TIP]
-> Tyto vzhledy pak lze snadno změnit v konfiguračním souboru PowerShellu.
->
->```bash
->$PROFILE # Zobrazí cestu k souboru s nastavením 
->```
->
-> Například změníme vzhled na `catppuccino`.:
->
->```bash
-> Import-Module posh-git # Zobrazí aktuální větev a stav
->
-> oh-my-posh init pwsh --config 'C:\Users\{xxx}\Documents\themes\catppuccin.omp.json' | Invoke-Expression # Změní vzhled příkazové řádky 
->```
->
-> Šablony je možné stáhnout <a href="https://github.com/JanDeDobbeleer/oh-my-posh/tree/main/themes">zde</a>.
-
-<a href="https://levelup.gitconnected.com/windows-terminal-making-powershell-better-561f2cab27f3">Zdroj</a>.
-</details>
+- Navigujte do složky s tématy:  
+  `C:\Users\{xxx}\themes\`
+- Zobrazte dostupné vzhledy:
+  ```bash
+  Get-PoshThemes
+  ```
+- Změna vzhledu v profilu:
+  ```bash
+  Import-Module posh-git
+  oh-my-posh init pwsh --config 'C:\Users\{xxx}\Documents\themes\catppuccin.omp.json' | Invoke-Expression
+  ```
+- [Šablony ke stažení](https://github.com/JanDeDobbeleer/oh-my-posh/tree/main/themes)
 
 </details>
 
-## Historie
+---
+
+## 🕑 Historie příkazů
 
 <details>
-<summary><span style="color:#1E90FF;">Umístění historie</span></summary>
+<summary><span style="color:#1E90FF;">📜 Umístění historie</span></summary>
 
-```Bash
+```bash
 (Get-PSReadlineOption).HistorySavePath
 ```
 
 </details>
 
-## Oprávnění
+---
+
+## 🔐 Oprávnění
 
 <details>
-<summary><span style="color:#1E90FF;">Zjistit oprávnění</span></summary>
+<summary><span style="color:#1E90FF;">🔎 Zjištění oprávnění</span></summary>
 
-```Bash
+```bash
 Get-ExecutionPolicy -Scope CurrentUser
 ```
 
-> Zjistí jaké je nastavení pro spouštění skriptů aktuálního uživatele.
->
->- `Restricted` = Omezené
-   >
-   >   Skripty nejsou povoleny.
->
->- `AllSigned`
-   >
-   >   Podepsané skripty mohou být spuštěny pouze pokud jsou podepsány důvěryhodným vydavatelem.
->
->- `RemoteSigned`
-   >
-   >   Podepsané skripty mohou být spuštěny, ale skripty stažené z internetu musí být podepsány.
->
->- `Unrestricted`
-   >
-   >   Všechny skripty mohou být spuštěny.
->
->- `Undefined`
-   >
-   >   Není nastaveno žádné omezení.
-   >
-   >   V takovém případě se pro Windows klienta použije `Restricted` a pro Windows server `RemoteSigned`.
+- `Restricted` – Skripty nejsou povoleny
+- `AllSigned` – Pouze podepsané skripty
+- `RemoteSigned` – Skripty z internetu musí být podepsané
+- `Unrestricted` – Všechny skripty povoleny
+- `Undefined` – Výchozí nastavení podle typu systému
 
 </details>
 
 <details>
-<summary><span style="color:#1E90FF;">Nastavit oprávnění</span></summary>
+<summary><span style="color:#1E90FF;">⚙️ Nastavení oprávnění</span></summary>
 
-Nastavení oprávnění pro spouštění skriptů v PowerShellu se provádí pomocí příkazu `Set-ExecutionPolicy`.
-
-Příklad:
-
-```Bash
+```bash
 Set-ExecutionPolicy -Scope CurrentUser Bypass
 ```
 
-> [!TIP]
-> Odeberete předchozí oprávnění a nastavíte nové.
+- `AllSigned`, `Bypass`, `Default`, `RemoteSigned`, `Restricted`, `Undefined`, `Unrestricted`
 
-- AllSigned
-
-  Vyžaduje, aby všechny skripty a konfigurační soubory byly podepsány důvěryhodným vydavatelem, včetně skriptů napsaných
-  v místním počítači.
-
-- Bypass
-
-  Žádné omezení, všechny skripty mohou být spuštěny.
-
-- Default
-
-  Nastaví výchozí zásady provádění.
-
-  > [!NOTE]
-  > Klienti windows: `Restricted`
-  >
-  > Servery windows: `RemoteSigned`
-
-- RemoteSigned
-
-  Vyžaduje, aby všechny skripty a konfigurační soubory stažené z Internetu byly podepsány důvěryhodným vydavatelem.
-
-  > [!NOTE]
-  > Výchozí zásada spouštění pro počítače se serverem Windows.
-
-- Restricted
-
-  Nenačítá konfigurační soubory ani nespouští skripty.
-
-  > [!NOTE]
-  > Výchozí zásady spouštění pro klientské počítače se systémem Windows.
-
-- Undefined
-
-  Není nastaveno žádné omezení.
-
-  > [!WARNING]
-  > V tomto případě je oprávnění jako pro `Restricted`.
-
-- Unrestricted
-
-  Načte všechny konfigurační soubory a spustí všechny skripty.
-
-  > [!WARNING]
-  > Pokud spustíte nepodepsaný skript, který byl stažen z internetu, budete před jeho spuštěním vyzváni k získání
-  povolení.
-  >
-  > Počínaje verzí `PowerShell 6.0` se jedná o výchozí zásadu spouštění pro počítače s jiným systémem než Windows,
-  kterou nelze změnit.
-
-Více
-info <a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.4#-executionpolicy">
-zde</a>.
+[Více info](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.4#-executionpolicy)
 
 </details>
 
 <details>
-<summary><span style="color:#1E90FF;">Spustit skript bez změny oprávnění</span></summary>
+<summary><span style="color:#1E90FF;">🚀 Spuštění skriptu bez změny oprávnění</span></summary>
 
 ```bash
 powershell -ExecutionPolicy Bypass -File "C:\{xxx}\Downloads\WSL-Offline-Install.ps1"
@@ -383,82 +170,62 @@ powershell -ExecutionPolicy Bypass -File "C:\{xxx}\Downloads\WSL-Offline-Install
 
 </details>
 
-## Práce se soubory
+---
+
+## 📁 Práce se soubory
 
 <details>
-<summary><span style="color:#1E90FF;">Změna metadat</span></summary>
+<summary><span style="color:#1E90FF;">🕒 Změna metadat souboru</span></summary>
 
-- Změna času posledního zápisu do souboru
-
-    ```bash
-    (Get-Item "C:\Users\{xxx}\FileA.docx").LastWriteTime = "2024.10.10 17:00:00"
-    ```
-
-> [!TIP]
-> Pokud chcete změnit i celkový čas v dokumentu Word, postup je následovný:
->
-> Přejmenujte **.docx** soubor na **.zip**.
->
-> Rozbalte soubor.
->
-> V souboru **docProps/app.xml** najděte řádek obsahující `<TotalTime>` a upravte hodnotu v minutách.
->
-> Zazipujte soubory zpět a změňte příponu zpět na **.docx**.
+- Změna času posledního zápisu:
+  ```bash
+  (Get-Item "C:\Users\{xxx}\FileA.docx").LastWriteTime = "2024.10.10 17:00:00"
+  ```
+- Úprava celkového času v dokumentu Word:
+    1. Přejmenujte `.docx` na `.zip`
+    2. Rozbalte soubor
+    3. V souboru `docProps/app.xml` upravte `<TotalTime>`
+    4. Zazipujte zpět a změňte příponu na `.docx`
 
 </details>
 
 <details>
-<summary><span style="color:#1E90FF;">Kopírování</span></summary>
+<summary><span style="color:#1E90FF;">📋 Kopírování souborů</span></summary>
 
-- Ze zdroje na cílové umístění
-
-    ```bash
-    xcopy /y /z "\\192.xxx.xx.xx\files\module.xml" "C:\Users\Test\Downloads\*"`
-    ```
-
-- Do podsložek
-
-    ```bash
-    for /D %%G in ("C:\Users\Test\Downloads\*") 
-    DO (xcopy /y /z  "C:\Users\Test\Downloads\module.xml" "%%G\SubDirectory\*")
-    ```
-
-  > `for /D`
-  >
-  > Prochází podsložky
-  >
-  > `%%G`
-  >
-  > Proměnná pro každou podsložku
-
-> [!TIP]
-> Nakonec přidejte příkaz `pause` pro zobrazení výsledků.
+- Kopírování ze zdroje:
+  ```bash
+  xcopy /y /z "\\192.xxx.xx.xx\files\module.xml" "C:\Users\Test\Downloads\*"
+  ```
+- Kopírování do podsložek:
+  ```bash
+  for /D %%G in ("C:\Users\Test\Downloads\*") DO (xcopy /y /z  "C:\Users\Test\Downloads\module.xml" "%%G\SubDirectory\*")
+  ```
+- Přidejte `pause` pro zobrazení výsledků.
 
 </details>
 
-## Síť
+---
+
+## 🌐 Síť
 
 <details>
-<summary><span style="color:#1E90FF;">Získat název hostitele (webové adresy)</span></summary>
+<summary><span style="color:#1E90FF;">🔍 Získání názvu hostitele</span></summary>
 
-```Bash
+```bash
 Resolve-DnsName -Name <IP adresa> -Type PTR
 ```
 
 </details>
 
 <details>
-<summary><span style="color:#1E90FF;">Získat síťové adaptéry (interfaces)</span></summary>
+<summary><span style="color:#1E90FF;">🌐 Získání síťových adaptérů</span></summary>
 
-- Všechny
-
-  ```Bash
+- Všechny:
+  ```bash
   Get-NetAdapter -physical
   ```
-
-- Aktuálně aktivní
-
-  ```Bash
+- Aktivní:
+  ```bash
   Get-NetAdapter -physical | where status -eq 'up'
   ```
 

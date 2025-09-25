@@ -1,51 +1,86 @@
-## URP
+# 🖌️ Unity – Universal Render Pipeline (URP) & Tipy
 
-= Universal Renderer Pipeline
+> 🚀 Praktické rady pro nastavení URP, globální konfigurace, Volume efekty a optimalizaci renderování v Unity.
+
+---
+
+## 🌈 Co je Universal Render Pipeline (URP)?
 
 <details>
-<summary><span style="color:#1E90FF;">DefaultVolumeProfile</span></summary>
+<summary><span style="color:#1E90FF;">🔍 Základní principy URP</span></summary>
 
-Sada výchozích nastavení pro Volume efekty.
+- Moderní renderovací pipeline pro Unity.
+- Vysoký výkon na různých platformách.
+- Podpora pokročilých efektů a optimalizací.
 
-Definuje základní vizuální efekty a post-processing efekty, které jsou použity v rámci projektu.
+![](../../images/unity_urp_intro.png)
 
-> [!NOTE]
-> Obsahuje standardní efekty, jako jsou bloom, chromatic aberration, a další, které mohou být použity jako výchozí
-> profil.
 </details>
 
+---
+
+## 🧩 Default Volume Profile
+
 <details>
-<summary><span style="color:#1E90FF;">UniversalRenderPipelineGlobalSettings</span></summary>
+<summary><span style="color:#1E90FF;">✨ Výchozí efekty Volume</span></summary>
 
-Globální nastavení pro Universal Render Pipeline (URP).
+- Sada výchozích nastavení pro **Volume efekty**.
+- Obsahuje efekty jako **Bloom**, **Chromatic Aberration** a další.
+- Slouží jako základní profil pro post-processing.
 
-> [!NOTE]
-> Určuje základní chování a vlastnosti URP v projektu, jako jsou například nastavení pro HDRP nebo další globální
-> nastavení pipeline.
+![](../../images/unity_urp_volume.png)
+
+> 📌 Upravuj Volume profily podle vizuálních potřeb projektu.
+
 </details>
 
+---
+
+## ⚙️ UniversalRenderPipelineGlobalSettings
+
 <details>
-<summary><span style="color:#1E90FF;">URP Render Pipeline Asset</span></summary>
+<summary><span style="color:#1E90FF;">🌐 Globální nastavení URP</span></summary>
 
-Hlavní asset pro konfiguraci Universal Render Pipeline (URP).
+- Určuje chování a vlastnosti URP v projektu.
+- Nastavení pro HDR, barevné prostory, globální efekty.
+- Ovlivňuje všechny scény v projektu.
 
-Umožňuje nastavit konkrétní parametry render pipeline, jako jsou kvalita, efekty a optimizace pro rendering.
+![](../../images/unity_urp_global.png)
 
-> [!NOTE]
-> Obsahuje konfigurace pro renderování a zpracování obrazu, jako jsou nastavení pro antialiasing, renderování stínů a
-> další.
+> 📌 Spravuj globální nastavení pro konzistentní vizuální styl.
+
 </details>
 
+---
+
+## 🗂️ URP Render Pipeline Asset
+
 <details>
-<summary><span style="color:#1E90FF;">URP Renderer Data</span></summary>
+<summary><span style="color:#1E90FF;">🛠️ Hlavní konfigurace URP</span></summary>
 
-Konfigurace specifická pro jednotlivé renderery v rámci URP.
+- Asset pro detailní nastavení render pipeline.
+- Nastavení kvality, efektů, optimalizace.
+- Konfigurace antialiasingu, stínů, renderování obrazu.
 
-> [!NOTE]
-> Definuje specifické nastavení pro různé renderery (např. Forward Renderer), jako jsou nastavení pro stíny, efekty a
-> post-processing na úrovni renderování.
->
->Může obsahovat specifická nastavení pro různé renderování (např. různé typy renderovaných objektů, různé metody
-> renderování atd.).
+![](../../images/unity_urp_asset.png)
+
+> 📌 Vytvoř a přiřaď URP asset v **Graphics Settings**.
+
+</details>
+
+---
+
+## 🖼️ URP Renderer Data
+
+<details>
+<summary><span style="color:#1E90FF;">🎨 Specifická nastavení rendereru</span></summary>
+
+- Konfigurace pro jednotlivé renderery (např. **Forward Renderer**).
+- Nastavení stínů, efektů, post-processingu na úrovni rendereru.
+- Možnost různých rendererů pro různé typy objektů.
+
+![](../../images/unity_urp_renderer.png)
+
+> 📌 Využij různé renderer data pro specifické vizuální efekty.
 
 </details>

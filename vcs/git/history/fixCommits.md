@@ -1,56 +1,62 @@
-### `fixup!`
+# 🗂️ Git – `fixup!` & `squash!` commity
 
-= Nepoužije zprávu z commitu do opravy
+> 🚀 Praktické rady, jak efektivně opravovat a slučovat commity pomocí `fixup!` a `squash!` v Gitu.
 
-```bash
-git commit --fixup <hashId>
-```
+---
 
-nebo
+## 🛠️ Co znamená `fixup!` a `squash!`?
 
-```bash
-git commit -m "fixup! <hashId> notUsedMessage"
-```
+- **`fixup!`** – vytvoří commit, který opravuje předchozí commit bez změny jeho zprávy.
+- **`squash!`** – vytvoří commit, který sloučí zprávu s původním commitem.
 
-### `squash!`
+---
 
-= Sloučí zprávu z commitu do opravy
-
-```bash
-git commit -m "squash! <hashId> optionalCustomMessage"
-```
+## 📋 Postup krok za krokem
 
 <details>
-<summary>Příklad</summary>
+<summary><span style="color:#1E90FF;">🔧 Krok 1: Vytvoření opravného commitu</span></summary>
 
-- Vytvořit nový commit:
+- **Použití `fixup!`:**
 
     ```bash
     git commit --fixup <hashId>
     ```
-
-  > [!NOTE]
-  > `<hashId>` = id commitu na který chcete aplikovat opravu
-
-- Provedení rebase
+  nebo
     ```bash
-    git rebase -i --autosquash head~<n>
+    git commit -m "fixup! <hashId> notUsedMessage"
     ```
 
-  > [!NOTE]
-  > `--autosquash` = setřídí commity pro opravu s označením `fixup!` či `squash!`
-  >
-  > `<n>` = počet posledních commitů
+  > [!NOTE]  
+  > `<hashId>` je ID commitu, který chcete opravit.
 
-- Otevře se textový editor
+- **Použití `squash!`:**
 
-  Pokud jsme zde provedli změny, tak musíme uložit soubor.
+    ```bash
+    git commit -m "squash! <hashId> optionalCustomMessage"
+    ```
 
-  Nakonec zavřít soubor
+  > [!TIP]  
+  > `squash!` umožňuje přidat vlastní zprávu ke sloučení.
+</details>
 
-  > [!NOTE]
-  > Po zavření souboru se začne vykonávat rebase.
+<details>
+<summary><span style="color:#1E90FF;">🔄 Krok 2: Rebase s automatickým sloučením</span></summary>
 
-Pokud proběhl rebase dokonce, veškeré opravy budou aplikovány.
+```bash
+git rebase -i --autosquash HEAD~<n>
+```
+- Spustí interaktivní rebase s automatickým zařazením `fixup!` a `squash!` commitů.
 
+> [!NOTE]  
+> `<n>` je počet posledních commitů, které chcete upravit.
+</details>
+
+<details>
+<summary><span style="color:#1E90FF;">📝 Krok 3: Úprava v editoru</span></summary>
+
+- Otevře se textový editor s přehledem commitů.
+- Proveďte potřebné změny, uložte soubor a zavřete editor.
+
+> [!TIP]  
+> Po zavření editoru se rebase automaticky dokončí a opravy/sloučení se aplikují.
 </details>
