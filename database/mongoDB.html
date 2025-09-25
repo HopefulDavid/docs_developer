@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#128450;️ MongoDB – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128450;️ MongoDB – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,284 +85,198 @@
         </div>
 
         <article data-uid="">
+<h1 id="-mongodb--praktický-průvodce--tipy">🗂️ MongoDB – Praktický průvodce &amp; tipy</h1>
 
-<h2 id="co-je-mongodb">Co je MongoDB</h2>
-<p>= Dokumentová databáze</p>
+<blockquote>
+<p>🚀 Moderní přehled základních pojmů, příkazů a doporučení pro práci s MongoDB.</p>
+</blockquote>
+<hr>
+<h2 id="-co-je-mongodb">📖 Co je MongoDB?</h2>
 <ul>
-<li><p>NoSQL (typ databáze)</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Nevyužívá tabulkový formát, který je běžný u SQL databází.</p>
-</div>
-</li>
-<li><p>Data ukládá ve formátu zvaném <strong><code>BSON</code></strong>. (Binární verze formátu <code>JSON</code>)</p>
-<div class="TIP">
-<h5>Tip</h5>
-<p>Formát <code>BSON</code> podporuje více datových typů.</p>
-<p>Efektivnější při encoding a decoding než <code>JSON</code>.</p>
-</div>
-</li>
+<li><strong>Dokumentová databáze</strong></li>
+<li><strong>NoSQL</strong> – nevyužívá tabulkový formát jako SQL databáze</li>
+<li>Data ukládá ve formátu <strong>BSON</strong> (binární JSON)</li>
 </ul>
-<h2 id="klíčové-pojmy">Klíčové pojmy</h2>
-<details>
-<summary><span style="color:#1E90FF;">Dokumenty</span></summary>
-<p>Záznamy v MongoDB.</p>
 <div class="NOTE">
 <h5>Note</h5>
-<p>Každý dokument je struktura dat podobná JSON.</p>
+<p>BSON podporuje více datových typů a je efektivnější při kódování/dekódování než JSON.</p>
 </div>
+<hr>
+<h2 id="-klíčové-pojmy">🧩 Klíčové pojmy</h2>
+<details>
+<summary><span style="color:#1E90FF;">📄 Dokumenty</span></summary>
+Záznamy v MongoDB, struktura podobná JSON.
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Kolekce</span></summary>
-<ul>
-<li><p>Data jsou organizována do <strong><code>kolekce</code></strong></p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Jsou to ekvivalenty tabulek v SQL.</p>
-</div>
-</li>
-<li><p>Každá kolekce obsahuje <strong><code>dokumenty</code></strong>, což jsou jednotlivé záznamy dat.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Na rozdíl od řádků v tabulce SQL nemusí mít dokumenty v MongoDB stejnou strukturu.</p>
-<p>To znamená, že různé dokumenty ve stejné kolekci mohou mít různé sady polí.</p>
-<p>Příklad:</p>
-<pre><code class="lang-Javascript">var document1 = { name: &quot;Peter&quot;, age: 30, residence: &quot;Prague&quot; };
+<summary><span style="color:#1E90FF;">📚 Kolekce</span></summary>
+- Ekvivalent tabulky v SQL.
+- Obsahuje dokumenty, které nemusí mít stejnou strukturu.
+<pre><code class="lang-javascript">var document1 = { name: &quot;Peter&quot;, age: 30, residence: &quot;Prague&quot; };
 db.myPeople.insert(document1);
 
 var document2 = { name: &quot;Anna&quot;, age: 25, occupation: &quot;Engineer&quot; };
 db.myPeople.insert(document2);
 </code></pre>
-</div>
-</li>
-</ul>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">BSON</span></summary>
-<p>Formát ve kterém jsou data uložena.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Je to binární verze JSON.</p>
-</div>
+<summary><span style="color:#1E90FF;">🗃️ BSON</span></summary>
+Binární verze JSON, formát pro ukládání dat v MongoDB.
 </details>
-<h2 id="kód">Kód</h2>
-<h3 id="vytvořit">Vytvořit</h3>
+<hr>
+<h2 id="-základní-operace">🛠️ Základní operace</h2>
+<h3 id="vytvoření">Vytvoření</h3>
 <details>
-<summary><span style="color:#1E90FF;">Databázi</span></summary>
-<pre><code class="lang-Javascript">use mydb
+<summary><span style="color:#1E90FF;">🗄️ Databáze</span></summary>
+<pre><code class="lang-javascript">use mydb
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Kolekci</span></summary>
-<pre><code class="lang-Javascript">mydb.createCollection('mycollection')
+<summary><span style="color:#1E90FF;">📁 Kolekce</span></summary>
+<pre><code class="lang-javascript">mydb.createCollection('mycollection')
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Vložit dokument do kolekce</span></summary>
-<pre><code class="lang-Javascript">mydb.mycollection.insert({name: 'test'})
+<summary><span style="color:#1E90FF;">➕ Vložit dokument</span></summary>
+<pre><code class="lang-javascript">mydb.mycollection.insert({name: 'test'})
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Vložit více dokumentů do kolekce</span></summary>
-<pre><code class="lang-Javascript">mydb.mycollection.insertMany([{name: 'test1'}, {name: 'test2'}])
+<summary><span style="color:#1E90FF;">➕ Vložit více dokumentů</span></summary>
+<pre><code class="lang-javascript">mydb.mycollection.insertMany([{name: 'test1'}, {name: 'test2'}])
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Vytvořit index</span></summary>
-<pre><code class="lang-Javascript">mydb.mycollection.createIndex({name: 1})
+<summary><span style="color:#1E90FF;">🔎 Vytvořit index</span></summary>
+<pre><code class="lang-javascript">mydb.mycollection.createIndex({name: 1})
 </code></pre>
 <div class="TIP">
 <h5>Tip</h5>
-<p>Index je vytvořen na pole <code>name</code></p>
-<p>Vzestupný = 1</p>
-<p>Sestupný = -1</p>
-<p>Vzestupné a sestupné indexy určují pořadí, ve kterém jsou data v indexu uložena, což může ovlivnit výkon a rychlost
-dotazů, které vyžadují řazení</p>
+<p>1 = vzestupně, -1 = sestupně</p>
 </div>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Vytvoření více indexů</span></summary>
-<pre><code class="lang-Javascript">mydb.mycollection.createIndexes([{ key: { name: 1 } }, { key: { age: -1 } }])
+<summary><span style="color:#1E90FF;">🔎 Vytvoření více indexů</span></summary>
+<pre><code class="lang-javascript">mydb.mycollection.createIndexes([{ key: { name: 1 } }, { key: { age: -1 } }])
 </code></pre>
 </details>
-<h3 id="hledat">Hledat</h3>
+<hr>
+<h3 id="hledání">Hledání</h3>
 <details>
-<summary><span style="color:#1E90FF;">Výpis databází</span></summary>
-<pre><code class="lang-Javascript">show dbs
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">Výpis dokumentů</span></summary>
-<pre><code class="lang-Javascript">mydb.mycollection.find()
+<summary><span style="color:#1E90FF;">📋 Výpis databází</span></summary>
+<pre><code class="lang-javascript">show dbs
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Výpis kolekcí</span></summary>
-<pre><code class="lang-Javascript">show collections
+<summary><span style="color:#1E90FF;">📄 Výpis dokumentů</span></summary>
+<pre><code class="lang-javascript">mydb.mycollection.find()
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Hledání dokumentu</span></summary>
-<pre><code class="lang-Javascript">mydb.mycollection.find({name: 'test'})
+<summary><span style="color:#1E90FF;">📁 Výpis kolekcí</span></summary>
+<pre><code class="lang-javascript">show collections
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Hledání dokumentu s určitými poli</span></summary>
-<pre><code class="lang-Javascript">mydb.mycollection.find({name: 'test'}, {name: 1})
+<summary><span style="color:#1E90FF;">🔍 Hledání dokumentu</span></summary>
+<pre><code class="lang-javascript">mydb.mycollection.find({name: 'test'})
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Hledání dokumentu s regulárním výrazem</span></summary>
-<pre><code class="lang-Javascript">mydb.mycollection.find({name: {$regex: 'te.*'}})
-</code></pre>
-</details>
-<h3 id="aktualizovat">Aktualizovat</h3>
-<details>
-<summary><span style="color:#1E90FF;">Aktualizace dokumentu</span></summary>
-<pre><code class="lang-Javascript">mydb.mycollection.update({name: 'test'}, {$set: {name: 'newTest'}})
+<summary><span style="color:#1E90FF;">🔍 Hledání s určitými poli</span></summary>
+<pre><code class="lang-javascript">mydb.mycollection.find({name: 'test'}, {name: 1})
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Aktualizace více dokumentů</span></summary>
-<pre><code class="lang-Javascript">mydb.mycollection.updateMany({}, {$set: {name: 'newTest'}})
+<summary><span style="color:#1E90FF;">🔍 Hledání s regulárním výrazem</span></summary>
+<pre><code class="lang-javascript">mydb.mycollection.find({name: {$regex: 'te.*'}})
+</code></pre>
+</details>
+<hr>
+<h3 id="aktualizace">Aktualizace</h3>
+<details>
+<summary><span style="color:#1E90FF;">✏️ Aktualizace dokumentu</span></summary>
+<pre><code class="lang-javascript">mydb.mycollection.update({name: 'test'}, {$set: {name: 'newTest'}})
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Aktualizace dokumentu s upsert</span></summary>
-<pre><code class="lang-Javascript">mydb.mycollection.update({name: 'test'}, {$set: {name: 'newTest'}}, {upsert: true})
+<summary><span style="color:#1E90FF;">✏️ Aktualizace více dokumentů</span></summary>
+<pre><code class="lang-javascript">mydb.mycollection.updateMany({}, {$set: {name: 'newTest'}})
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">✏️ Aktualizace s upsert</span></summary>
+<pre><code class="lang-javascript">mydb.mycollection.update({name: 'test'}, {$set: {name: 'newTest'}}, {upsert: true})
 </code></pre>
 <div class="NOTE">
 <h5>Note</h5>
-<p>&quot;upsert&quot; <strong>je kombinací &quot;update&quot; a &quot;insert&quot;</strong></p>
-<p>Aktualizuje existující dokument, nebo pokud dokument neexistuje, vloží nový dokument.</p>
+<p>Upsert = update nebo insert, pokud dokument neexistuje.</p>
 </div>
 </details>
-<h3 id="smazat">Smazat</h3>
+<hr>
+<h3 id="smazání">Smazání</h3>
 <details>
-<summary><span style="color:#1E90FF;">Smazání databáze</span></summary>
-<pre><code class="lang-Javascript">db.dropDatabase()
+<summary><span style="color:#1E90FF;">🗑️ Smazání databáze</span></summary>
+<pre><code class="lang-javascript">db.dropDatabase()
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Smazání kolekce</span></summary>
-<pre><code class="lang-Javascript">mydb.mycollection.drop()
+<summary><span style="color:#1E90FF;">🗑️ Smazání kolekce</span></summary>
+<pre><code class="lang-javascript">mydb.mycollection.drop()
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Smazání dokumentu</span></summary>
-<pre><code class="lang-Javascript">mydb.mycollection.remove({name: 'test'})
+<summary><span style="color:#1E90FF;">🗑️ Smazání dokumentu</span></summary>
+<pre><code class="lang-javascript">mydb.mycollection.remove({name: 'test'})
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Smazání všech dokumentů</span></summary>
-<pre><code class="lang-Javascript">mydb.mycollection.remove({})
+<summary><span style="color:#1E90FF;">🗑️ Smazání všech dokumentů</span></summary>
+<pre><code class="lang-javascript">mydb.mycollection.remove({})
 </code></pre>
 </details>
+<hr>
 <h3 id="počet">Počet</h3>
 <details>
-<summary><span style="color:#1E90FF;">Počet dokumentů v kolekci</span></summary>
-<pre><code class="lang-Javascript">mydb.mycollection.count()
+<summary><span style="color:#1E90FF;">🔢 Počet dokumentů v kolekci</span></summary>
+<pre><code class="lang-javascript">mydb.mycollection.count()
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Počet dokumentů odpovídajících určitému dotazu</span></summary>
-<pre><code class="lang-Javascript">mydb.mycollection.count({name: 'test'})
+<summary><span style="color:#1E90FF;">🔢 Počet dokumentů podle dotazu</span></summary>
+<pre><code class="lang-javascript">mydb.mycollection.count({name: 'test'})
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Počet unikátních hodnot v určitém poli</span></summary>
-<pre><code class="lang-Javascript">mydb.mycollection.distinct('name').length
+<summary><span style="color:#1E90FF;">🔢 Počet unikátních hodnot</span></summary>
+<pre><code class="lang-javascript">mydb.mycollection.distinct('name').length
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Počet dokumentů odpovídajících regulárnímu výrazu</span></summary>
-<pre><code class="lang-Javascript">mydb.mycollection.count({name: {$regex: 'te.*'}})
+<summary><span style="color:#1E90FF;">🔢 Počet podle regulárního výrazu</span></summary>
+<pre><code class="lang-javascript">mydb.mycollection.count({name: {$regex: 'te.*'}})
 </code></pre>
 </details>
-<h3 id="setřídit">Setřídit</h3>
+<hr>
+<h3 id="řazení">Řazení</h3>
 <details>
-<summary><span style="color:#1E90FF;">Seřazení dokumentů podle pole</span></summary>
-<pre><code class="lang-Javascript">mydb.mycollection.find().sort({name: 1})
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">Seřazení dokumentů podle více políí</span></summary>
-<pre><code class="lang-Javascript">mydb.mycollection.find().sort({name: 1, age: -1})
+<summary><span style="color:#1E90FF;">↕️ Řazení podle pole</span></summary>
+<pre><code class="lang-javascript">mydb.mycollection.find().sort({name: 1})
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Seřazení a omezení počtu dokumentů</span></summary>
-<pre><code class="lang-Javascript">mydb.mycollection.find().sort({name: 1}).limit(5)
+<summary><span style="color:#1E90FF;">↕️ Řazení podle více polí</span></summary>
+<pre><code class="lang-javascript">mydb.mycollection.find().sort({name: 1, age: -1})
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Seřazení a přeskočení dokumentů</span></summary>
-<pre><code class="lang-Javascript">mydb.mycollection.find().sort({name: 1}).skip(5)
+<summary><span style="color:#1E90FF;">↕️ Řazení a limit</span></summary>
+<pre><code class="lang-javascript">mydb.mycollection.find().sort({name: 1}).limit(5)
 </code></pre>
 </details>
-<h2 id="rady-a-tipy">Rady a Tipy</h2>
 <details>
-<summary><span style="color:#1E90FF;">Povolení autorizace</span></summary>
-<ul>
-<li><p>MongoDB má vestavěný systém pro správu uživatelů a rolí.</p>
-<p>Pro povolení autorizace upravte konfigurační soubor MongoDB a nastavte <code>security.authorization</code> na <code>enabled</code>.</p>
-<pre><code class="lang-bash">security:
-  authorization: &quot;enabled&quot;
+<summary><span style="color:#1E90FF;">↕️ Řazení a skip</span></summary>
+<pre><code class="lang-javascript">mydb.mycollection.find().sort({name: 1}).skip(5)
 </code></pre>
-</li>
-</ul>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">Využití indexů</span></summary>
-<ul>
-<li><p>Indexy v MongoDB vytváříte pomocí metody <code>createIndex()</code>.</p>
-<p>Například pro vytvoření vzestupného indexu na pole <code>name</code> v kolekci <code>mycollection</code> použijete následující příkaz:</p>
-<pre><code class="lang-Javascript">db.mycollection.createIndex({name: 1})
-</code></pre>
-</li>
-</ul>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">Optimalizace dotazů</span></summary>
-<ul>
-<li><p>MongoDB poskytuje operátor <code>explain()</code>, který vám umožní zjistit, jak databáze vykonává váš dotaz.</p>
-<p>Tímto způsobem můžete identifikovat, které části dotazu je třeba optimalizovat.</p>
-<pre><code class="lang-Javascript">db.mycollection.find({name: 'test'}).explain()
-</code></pre>
-</li>
-</ul>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">Správné modelování dat</span></summary>
-<ul>
-<li><p>MongoDB je dokumentová databáze, která umožňuje velmi flexibilní modelování dat.</p>
-<p>Při návrhu vašeho datového modelu zvažte, jak budou data dotazována a jaké budou pracovní zátěže.</p>
-</li>
-</ul>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">Škálování</span></summary>
-<ul>
-<li><p>MongoDB podporuje horizontální škálování pomocí replikačních sad a sharding.</p>
-<p>Pro větší aplikace zvažte použití těchto funkcí pro zlepšení výkonu a dostupnosti.</p>
-</li>
-</ul>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">Paměť</span></summary>
-<ul>
-<li><p>MongoDB využívá paměť pro ukládání pracovní sady, což zlepšuje výkon dotazů.</p>
-<p>Ujistěte se, že váš server má dostatek RAM pro vaše pracovní zátěže.</p>
-</li>
-</ul>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">Šetření prostředky</span></summary>
-<ul>
-<li><p>Pokud máte dotazy, které se často opakují, zvažte ukládání výsledků těchto dotazů pro pozdější použití.</p>
-<p>To může šetřit výpočetní prostředky a zlepšit výkon vaší aplikace.</p>
-</li>
-</ul>
 </details>
 
 </article>

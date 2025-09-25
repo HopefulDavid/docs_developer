@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#129489;‍&#128187; JetBrains Rider – Tipy, propojen&#237; &amp; n&#225;stroje | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#129489;‍&#128187; JetBrains Rider – Tipy, propojen&#237; &amp; n&#225;stroje | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,99 +85,80 @@
         </div>
 
         <article data-uid="">
+<h1 id="-jetbrains-rider--tipy-propojení--nástroje">🧑‍💻 JetBrains Rider – Tipy, propojení &amp; nástroje</h1>
 
-<h4 id="propojení-s-mobilním-zařízením">Propojení s mobilním zařízením</h4>
+<blockquote>
+<p>🚀 Praktické rady pro efektivní práci v JetBrains Rider, propojení s Androidem, XML komentáře, klávesové zkratky a regulární výrazy.</p>
+</blockquote>
+<hr>
+<h2 id="-propojení-s-mobilním-zařízením-android">📱 Propojení s mobilním zařízením (Android)</h2>
 <details>
-<summary><span style="color:#1E90FF;">Android</span></summary>
-<div class="IMPORTANT">
-<h5>Important</h5>
-<p>Týká se těch, co mají CPU procesor od AMD</p>
-<p>Otevřít <code>BIOS</code> a najít konfiguraci pro CPU (advance settings) a změnit <code>SVM</code> na <code>Enabled</code></p>
-</div>
+<summary><span style="color:#1E90FF;">🔗 Kompletní postup propojení</span></summary>
 <ol>
-<li><p>Než začneme nastavovat Android SDK</p>
- <img src="../images/737ee01108d04cb9b0ebcfac84835eda.png">
-<p>Umožňuje spravovat SDK uvnitř IDE a umožní následně i propojení s <code>Android Studio</code></p>
-</li>
-<li><p>Nastavit Android SDK</p>
-<p>Uvnitř JetBrains IDE otevřete: <code>File</code> -&gt; <code>Project Structure</code> -&gt; <code>SDKs</code> -&gt; <code>Project</code> a zde nastavíte SDK pro Android</p>
-<div class="TIP">
-<h5>Tip</h5>
-<p>SDK pro android můžete stáhnout otevřením: <code>Android Studio</code> -&gt; <code>More Actions</code> -&gt; <code>SDK Manager</code></p>
-</div>
-</li>
-<li><p>Ověřte, že máte nainstalované základní komponenty pro práci v Androidu</p>
-<p>V sekci <code>SDK Tools</code> by měly být nainstalovány následující komponenty:</p>
-<table>
-<thead>
-<tr>
-<th>Komponenta</th>
-<th>Popis</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>Android SDK Built-Tools</code></td>
-<td>Nástroje pro sestavení Android aplikací.</td>
-</tr>
-<tr>
-<td><code>Android SDK Command-Line Tools</code></td>
-<td>Příkazové nástroje pro správu Android SDK.</td>
-</tr>
-<tr>
-<td><code>Android Emulator</code></td>
-<td>Emulátor pro testování Android aplikací na různých zařízeních.</td>
-</tr>
-<tr>
-<td><code>Android Emulator hypervisor driver</code></td>
-<td>Ovladač pro zlepšení výkonu emulátoru na počítačích s Intel a AMD procesory.</td>
-</tr>
-<tr>
-<td><code>Android SDK Platform-Tools</code></td>
-<td>Nástroje pro komunikaci s Android zařízeními, jako je <code>adb</code>.</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li><p>Nastavení AVD</p>
-<p>= AVD (Android Virtual Device) je emulátor, který umožňuje spouštět aplikace na různých zařízeních</p>
-<p>Přidat do proměnné prostředí: <code>C:\Users\&lt;YourUsername&gt;\AppData\Local\Android\Sdk\platform-tools</code></p>
-<p>ADB (Android Debug Bridge) je nástroj, který umožňuje komunikaci mezi počítačem a Android zařízením</p>
+<li><p><strong>Nastavení BIOSu (AMD CPU)</strong></p>
 <ul>
-<li><p>Nyní zkontrolujte, zda je emulátor správně nastavený</p>
-  <details>
-  <summary><span style="color:#E95A84;">Zkontrolovat status emulátorů</span></summary>
+<li>Otevřete <code>BIOS</code> → najděte konfiguraci CPU → nastavte <code>SVM</code> na <code>Enabled</code>.</li>
+</ul>
+</li>
+<li><p><strong>Správa Android SDK v Rideru</strong></p>
+<ul>
+<li>Otevřete: <code>File</code> → <code>Project Structure</code> → <code>SDKs</code> → <code>Project</code> → nastavte Android SDK.</li>
+<li>SDK lze stáhnout v <code>Android Studio</code> → <code>More Actions</code> → <code>SDK Manager</code>.</li>
+</ul>
+</li>
+<li><p><strong>Ověření základních komponent SDK</strong></p>
+<ul>
+<li>V sekci <code>SDK Tools</code> zkontrolujte:
+| Komponenta | Popis |
+|------------|-------|
+| <code>Android SDK Built-Tools</code> | Sestavení aplikací |
+| <code>Android SDK Command-Line Tools</code> | Správa SDK |
+| <code>Android Emulator</code> | Testování aplikací |
+| <code>Android Emulator hypervisor driver</code> | Výkon emulátoru (Intel/AMD) |
+| <code>Android SDK Platform-Tools</code> | Komunikace s zařízeními (<code>adb</code>) |</li>
+</ul>
+</li>
+<li><p><strong>Nastavení AVD (Android Virtual Device)</strong></p>
+<ul>
+<li>Přidejte do proměnné prostředí:<br>
+<code>C:\Users\&lt;YourUsername&gt;\AppData\Local\Android\Sdk\platform-tools</code></li>
+<li>ADB umožňuje komunikaci mezi PC a Androidem.</li>
+</ul>
+<details>
+<summary><span style="color:#E95A84;">📋 Zkontrolovat status emulátorů</span></summary>
 <pre><code class="lang-bash">adb devices
 </code></pre>
-  </details>
-  <details>
-  <summary><span style="color:#E95A84;">Restart ADB služby (v případě potřeby)</span></summary>
+</details>
+<details>
+<summary><span style="color:#E95A84;">🔄 Restart ADB služby</span></summary>
 <pre><code class="lang-bash">adb kill-server
 adb start-server
 </code></pre>
-  </details>    
+</details>
 </li>
+<li><p><strong>Propojení s mobilním zařízením</strong></p>
+<ul>
+<li>Otevřete <code>Android Studio</code> → <code>More Actions</code> → <code>Virtual Device Manager</code>.</li>
+<li>Vytvořte nové virtuální zařízení a spusťte jej.</li>
+<li>V Rideru vyberte zařízení a spusťte aplikaci.</li>
 </ul>
-</li>
-<li><p>Propojení s mobilním zařízením</p>
-<p>Otevřít <code>Android Studio</code> -&gt; <code>More Actions</code> -&gt; <code>Virtual Device Manager</code></p>
-<p>Vytvořit nové virtuální zařízení a spustit</p>
-<p>Vybrat zařízení v JetBrains IDE, na kterém chcete aplikaci spustit a aplikaci spustit</p>
 </li>
 </ol>
 </details>
-<h4 id="xml-komentáře">XML komentáře</h4>
+<hr>
+<h2 id="-xml-komentáře">📝 XML komentáře</h2>
 <details>
-<summary><span style="color:#1E90FF;">Zalomení řádku</span></summary>
+<summary><span style="color:#1E90FF;">💬 Zalomení řádku v XML komentáři</span></summary>
 <ul>
-<li><p>Použijte:</p>
-<p><strong><code>&lt;para&gt;&amp;#160;&lt;/para&gt;</code></strong></p>
+<li>Použijte:<br>
+<strong><code>&lt;para&gt;&amp;#160;&lt;/para&gt;</code></strong></li>
+</ul>
 <div class="WARNING">
 <h5>Warning</h5>
-<p><code>&lt;para&gt;&lt;/para&gt;</code> a <code>&lt;br/&gt;</code> nefungují pro zalomení řádku</p>
+<p><code>&lt;para&gt;&lt;/para&gt;</code> a <code>&lt;br/&gt;</code> nefungují pro zalomení řádku.</p>
 </div>
-<p>Příklad použití:</p>
-<pre><code class="lang-c#">/// &lt;summary&gt;
+<p><strong>Příklad:</strong></p>
+<pre><code class="lang-csharp">/// &lt;summary&gt;
 ///     This sentence shows up when the type is hovered
 ///     &lt;para&gt;&amp;#160;&lt;/para&gt;
 ///     &lt;para&gt;int PrimaryKey&lt;/para&gt;
@@ -185,58 +166,55 @@ adb start-server
 ///     &lt;para&gt;virtual Relation Relation&lt;/para&gt;
 /// &lt;/summary&gt;
 </code></pre>
-<p>Pro více
-informací: <a href="https://stackoverflow.com/questions/7279108/how-to-add-a-line-break-in-c-sharp-net-documentation">XML zalomení komentáře</a></p>
-</li>
-</ul>
+<p>Více info: <a href="https://stackoverflow.com/questions/7279108/how-to-add-a-line-break-in-c-sharp-net-documentation">XML zalomení komentáře</a></p>
 </details>
-<h4 id="klávesové-zkratky">Klávesové zkratky</h4>
+<hr>
+<h2 id="-klávesové-zkratky">⌨️ Klávesové zkratky</h2>
 <details>
-<summary><span style="color:#1E90FF;">Parametry metody</span></summary>
+<summary><span style="color:#1E90FF;">🔤 Parametry metody</span></summary>
 <ul>
-<li><p>Informace o parametrech metody</p>
-<p><code>Ctrl</code> + <code>Shift</code> + <code>Space</code></p>
-</li>
+<li>Zobrazení informací o parametrech:<br>
+<code>Ctrl</code> + <code>Shift</code> + <code>Space</code></li>
 </ul>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Procházení seznamu</span></summary>
+<summary><span style="color:#1E90FF;">🔄 Procházení seznamu</span></summary>
 <ul>
-<li><p>Vpřed</p>
-<p><code>Ctrl</code> + <code>Shift</code> + <code>Space</code></p>
-</li>
-<li><p>Zpět</p>
-<p><code>Ctrl</code> + <code>Shift</code> + <code>P</code></p>
-</li>
+<li>Vpřed:<br>
+<code>Ctrl</code> + <code>Shift</code> + <code>Space</code></li>
+<li>Zpět:<br>
+<code>Ctrl</code> + <code>Shift</code> + <code>P</code></li>
 </ul>
 </details>
-<h4 id="regulární-výrazy">Regulární výrazy</h4>
+<hr>
+<h2 id="-regulární-výrazy">🔍 Regulární výrazy</h2>
 <details>
-<summary><span style="color:#1E90FF;">Použití proměnné</span></summary>
-<p>Zkusíme naleznout proměnnou v textu, uložit ji do proměnné a následně použít k nahrazení.</p>
+<summary><span style="color:#1E90FF;">💡 Použití proměnné v regexu</span></summary>
 <details>
-<summary><span style="color:#E95A84;">Čiselná proměnná</span></summary>
-<p>Vyhledávání proměnné v textu:</p>
+<summary><span style="color:#E95A84;">🔢 Číselná proměnná</span></summary>
+<ul>
+<li><p>Vyhledání proměnné v textu:</p>
 <pre><code class="lang-regex">&lt;h2&gt;(.*?)&lt;/h2&gt;
 </code></pre>
-<p>Tento výraz vyhledá všechny nadpisy druhé úrovně a uloží je do proměnné.</p>
-<p>Uložení do proměnné je možné pomocí závorek <code>()</code> a následně se na proměnnou odkazuje pomocí <code>$1</code>, <code>$2</code>, <code>$3</code> atd.</p>
-<p>Nahrazení proměnné v textu:</p>
+</li>
+<li><p>Nahrazení proměnné v textu:</p>
 <pre><code class="lang-regex">&lt;h2&gt;Test $1&lt;/h2&gt;
 </code></pre>
-<p>Tento výraz nahradí nalezené nadpisy druhé úrovně za nadpis <code>Test</code> a proměnnou, která byla uložena v prvním výrazu.</p>
+</li>
+</ul>
 </details>
 <details>
-<summary><span style="color:#E95A84;">Pojmenovanná proměnná</span></summary>
-<p>Vyhledávání proměnné v textu:</p>
+<summary><span style="color:#E95A84;">🏷️ Pojmenovaná proměnná</span></summary>
+<ul>
+<li><p>Vyhledání proměnné v textu:</p>
 <pre><code class="lang-regex">&lt;h2&gt;(?&lt;customName&gt;.*?)&lt;/h2&gt;
 </code></pre>
-<p>Tento výraz vyhledá všechny nadpisy druhé úrovně a uloží je do proměnné s názvem <code>customName</code>.</p>
-<p>Uložení do proměnné je možné pomocí závorek <code>(?&lt;customName&gt;)</code> a následně se na proměnnou odkazuje pomocí <code>(?&lt;customName&gt;)</code>.</p>
-<p>Nahrazení proměnné v textu:</p>
+</li>
+<li><p>Nahrazení proměnné v textu:</p>
 <pre><code class="lang-regex">&lt;h2&gt;Test ${customName}&lt;/h2&gt;
 </code></pre>
-<p>Tento výraz nahradí nalezené nadpisy druhé úrovně za nadpis <code>Test</code> a proměnnou, která byla uložena v prvním výrazu.</p>
+</li>
+</ul>
 </details>
 </details>
 

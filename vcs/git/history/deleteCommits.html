@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#128450;️ Git – Nahrazen&#237; vzd&#225;len&#233; větve z lok&#225;ln&#237; větve | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128450;️ Git – Nahrazen&#237; vzd&#225;len&#233; větve z lok&#225;ln&#237; větve | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../../favicon.ico">
@@ -85,61 +85,88 @@
         </div>
 
         <article data-uid="">
+<h1 id="-git--nahrazení-vzdálené-větve-z-lokální-větve">🗂️ Git – Nahrazení vzdálené větve z lokální větve</h1>
 
-<h3 id="nahrazení-vzdálené-branch-z-lokální-branch">Nahrazení Vzdálené Branch z Lokální Branch</h3>
-<ol>
-<li>
-<p>Přepnout se na novou branch</p>
+<blockquote>
+<p>🚀 Praktický návod, jak kompletně nahradit historii vzdálené větve pomocí nové lokální větve.</p>
+</blockquote>
+<hr>
+<h2 id="-kdy-použít-tento-postup">📝 Kdy použít tento postup?</h2>
+<ul>
+<li>Chceš začít s čistou historií commitů (např. po refaktoringu).</li>
+<li>Potřebuješ odstranit veškerou předchozí historii z hlavní větve (<code>main</code>/<code>master</code>).</li>
+<li>Vhodné pro projekty, kde je nutné kompletní &quot;reset&quot; repozitáře.</li>
+</ul>
+<hr>
+<h2 id="-postup-krok-za-krokem">📋 Postup krok za krokem</h2>
+<details>
+<summary><span style="color:#1E90FF;">🌱 Krok 1: Vytvoření nové větve bez historie</span></summary>
 <pre><code class="lang-bash">git checkout --orphan latest_branch
 </code></pre>
+<ul>
+<li>Vytvoří novou větev bez historie commitů.</li>
+</ul>
 <div class="NOTE">
 <h5>Note</h5>
-<p><code>--orphan</code> znamená, že vytvoří branch bez historie commitů</p>
+<p><code>--orphan</code> znamená, že větev nemá žádné předchozí commity.</p>
 </div>
-</li>
-<li>
-<p>Přidat všechny soubory.</p>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">📥 Krok 2: Přidání všech souborů</span></summary>
 <pre><code class="lang-bash">git add -A
 </code></pre>
-</li>
-<li>
-<p>Provedení commitu.</p>
+<ul>
+<li>Přidá všechny soubory do stage.</li>
+</ul>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">✅ Krok 3: První commit</span></summary>
 <pre><code class="lang-bash">git commit -am &quot;Initialize commit&quot;
 </code></pre>
+<ul>
+<li>Vytvoří první commit v nové větvi.</li>
+</ul>
 <div class="TIP">
 <h5>Tip</h5>
-<p><code>-am</code> je zkrácený zápis</p>
-<p>Je to stejné jako zápis: <code>--all</code> <code>--message &quot;commit message&quot;</code></p>
+<p><code>-am</code> je zkrácený zápis pro <code>--all</code> a <code>--message</code>.</p>
 </div>
-</li>
-<li>
-<p>Smazat hlavní branch.</p>
-<div class="WARNING">
-<h5>Warning</h5>
-<p>Zjistěte název hlavní větve. (Většinou se jmenuje <code>master</code> nebo <code>main</code>)</p>
-</div>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🗑️ Krok 4: Smazání původní hlavní větve</span></summary>
 <pre><code class="lang-bash">git branch -D main
 </code></pre>
-</li>
-<li>
-<p>Přejmenovat aktivní branch na branch z předchozího kroku.</p>
+<ul>
+<li>Smaže hlavní větev (<code>main</code> nebo <code>master</code>).</li>
+</ul>
 <div class="WARNING">
 <h5>Warning</h5>
-<p>Zjistěte název hlavní větve. (Většinou se jmenuje <code>master</code> nebo <code>main</code>)</p>
+<p>Ověř název hlavní větve před smazáním!</p>
 </div>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🔄 Krok 5: Přejmenování nové větve na hlavní</span></summary>
 <pre><code class="lang-bash">git branch -m main
 </code></pre>
-</li>
-<li>
-<p>Odeslat změny z pracovního adresáře do centrálního úložiště</p>
+<ul>
+<li>Přejmenuje aktuální větev na <code>main</code>.</li>
+</ul>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Použij správný název hlavní větve.</p>
+</div>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🚀 Krok 6: Force push do vzdáleného repozitáře</span></summary>
 <pre><code class="lang-bash">git push -f origin main
 </code></pre>
+<ul>
+<li>Nahraje novou historii do vzdáleného repozitáře.</li>
+</ul>
 <div class="TIP">
 <h5>Tip</h5>
-<p><code>-f</code> (force) = Historie commitů v centrálním úložišti je nahrazena historií z pracovního adresáře</p>
+<p><code>-f</code> (force) přepíše historii na serveru.</p>
 </div>
-</li>
-</ol>
+</details>
 
 </article>
 

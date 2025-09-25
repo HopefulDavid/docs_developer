@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#128240; Appcast Feed XML | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128240; Appcast Feed XML | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,529 +85,294 @@
         </div>
 
         <article data-uid="">
+<h1 id="-appcast-feed-xml">📰 Appcast Feed XML</h1>
 
-<h3 id="appcast-feed-xml">Appcast Feed XML</h3>
-<p>Appcast je RSS feed ve formátu XML.</p>
-<p>Poskytuje informace o dostupných verzích aplikace.</p>
-<p>Podporuje aktualizace aplikací pomocí technologie <a href="https://sparkle-project.org/"><code>Sparkle</code></a>.</p>
+<blockquote>
+<p>🚀 Appcast je RSS feed ve formátu XML pro distribuci aktualizací aplikací pomocí technologie <a href="https://sparkle-project.org/">Sparkle</a>.</p>
+</blockquote>
 <hr>
-<p>Struktura:</p>
-<details>
-<summary><span style="color:#1E90FF;">Hlavní komponenty</span></summary>
+<h2 id="-hlavní-komponenty">🧩 Hlavní komponenty</h2>
 <table>
 <thead>
 <tr>
-<th>Element</th>
-<th>Popis</th>
+<th>🏷️ Element</th>
+<th>💡 Popis</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>&lt;rss&gt;</code></td>
-<td>Kořenový element obsahující informaci o verzi a namespace.</td>
+<td>Kořenový element, verze a namespace.</td>
 </tr>
 <tr>
 <td><code>&lt;channel&gt;</code></td>
-<td>Hlavní sekce feedu obsahující informace o kanálu aktualizací.</td>
+<td>Hlavní sekce feedu, metadata kanálu aktualizací.</td>
 </tr>
 <tr>
 <td><code>&lt;item&gt;</code></td>
-<td>Každý jednotlivý záznam pro jednu verzi aplikace.</td>
+<td>Jednotlivý záznam pro jednu verzi aplikace.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="-struktura-feedu">📦 Struktura feedu</h2>
+<details>
+<summary><span style="color:#1E90FF;">🔍 Příklad feedu</span></summary>
+<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;rss version=&quot;2.0&quot; xmlns:sparkle=&quot;http://www.andymatuschak.org/xml-namespaces/sparkle&quot;&gt;
+  &lt;channel&gt;
+    &lt;title&gt;Aktualizace pro MyApp&lt;/title&gt;
+    &lt;link&gt;https://example.com/updates.xml&lt;/link&gt;
+    &lt;description&gt;Aktualizace pro aplikaci MyApp&lt;/description&gt;
+    &lt;pubDate&gt;Thu, 18 Jan 2025 10:00:00 +0000&lt;/pubDate&gt;
+    &lt;language&gt;cs-cz&lt;/language&gt;
+    &lt;item&gt;
+      &lt;title&gt;Verze 1.0&lt;/title&gt;
+      &lt;link&gt;https://example.com/release/1.0&lt;/link&gt;
+      &lt;description&gt;První verze aplikace MyApp.&lt;/description&gt;
+      &lt;pubDate&gt;Fri, 17 Jan 2025 10:00:00 +0000&lt;/pubDate&gt;
+      &lt;enclosure
+        url=&quot;https://example.com/files/MyApp-1.0.zip&quot;
+        sparkle:version=&quot;1.0&quot;
+        length=&quot;102400&quot;
+        type=&quot;application/octet-stream&quot;/&gt;
+    &lt;/item&gt;
+  &lt;/channel&gt;
+&lt;/rss&gt;
+</code></pre>
+</details>
+<hr>
+<h2 id="-rss--kořenový-element">🏷️ <code>&lt;rss&gt;</code> – Kořenový element</h2>
+<details>
+<summary><span style="color:#1E90FF;">📖 Detaily & příklad</span></summary>
+<table>
+<thead>
+<tr>
+<th>⚙️ Atribut</th>
+<th>💡 Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>version</code></td>
+<td>Verze RSS specifikace, obvykle <code>2.0</code>.</td>
+</tr>
+<tr>
+<td><code>xmlns:sparkle</code></td>
+<td>Namespace pro Sparkle, např. <code>http://www.andymatuschak.org/xml-namespaces/sparkle</code>.</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="lang-xml">&lt;rss version=&quot;2.0&quot; xmlns:sparkle=&quot;http://www.andymatuschak.org/xml-namespaces/sparkle&quot;&gt;
+  &lt;!-- ... --&gt;
+&lt;/rss&gt;
+</code></pre>
+</details>
+<hr>
+<h2 id="-channel--metadata-kanálu">📡 <code>&lt;channel&gt;</code> – Metadata kanálu</h2>
+<details>
+<summary><span style="color:#1E90FF;">📋 Elementy & atributy</span></summary>
+<table>
+<thead>
+<tr>
+<th>🏷️ Element</th>
+<th>💡 Popis</th>
+<th>⚙️ Atributy / Vnořené elementy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;title&gt;</code></td>
+<td>Název kanálu</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>&lt;link&gt;</code></td>
+<td>URL adresa feedu</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>&lt;description&gt;</code></td>
+<td>Stručný popis kanálu</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>&lt;language&gt;</code></td>
+<td>Jazyk feedu</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>&lt;copyright&gt;</code></td>
+<td>Informace o autorských právech</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>&lt;managingEditor&gt;</code></td>
+<td>Email správce kanálu</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>&lt;webMaster&gt;</code></td>
+<td>Email webového správce</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>&lt;pubDate&gt;</code></td>
+<td>Datum vydání kanálu</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>&lt;lastBuildDate&gt;</code></td>
+<td>Datum poslední aktualizace</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>&lt;category&gt;</code></td>
+<td>Kategorie kanálu</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>&lt;generator&gt;</code></td>
+<td>Software použitý k vytvoření kanálu</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>&lt;docs&gt;</code></td>
+<td>URL adresa specifikace RSS</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>&lt;cloud&gt;</code></td>
+<td>Specifikace pro cloudové služby</td>
+<td>domain, port, path, registerProcedure, protocol</td>
+</tr>
+<tr>
+<td><code>&lt;ttl&gt;</code></td>
+<td>Čas cache v minutách</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>&lt;image&gt;</code></td>
+<td>Logo/obrázek kanálu</td>
+<td>url, title, link</td>
+</tr>
+<tr>
+<td><code>&lt;textInput&gt;</code></td>
+<td>Formulář pro zadávání textu</td>
+<td>title, description, name, link</td>
+</tr>
+<tr>
+<td><code>&lt;skipHours&gt;</code></td>
+<td>Hodiny bez aktualizací</td>
+<td>hour</td>
+</tr>
+<tr>
+<td><code>&lt;skipDays&gt;</code></td>
+<td>Dny bez aktualizací</td>
+<td>day</td>
 </tr>
 </tbody>
 </table>
 </details>
+<hr>
+<h2 id="-item--jednotlivá-aktualizace">📝 <code>&lt;item&gt;</code> – Jednotlivá aktualizace</h2>
 <details>
-<summary><span style="color:#1E90FF;">Příklad feedu</span></summary>
-<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;rss version=&quot;2.0&quot; xmlns:sparkle=&quot;http://www.andymatuschak.org/xml-namespaces/sparkle&quot;&gt;
-    &lt;channel&gt;
-        &lt;!-- Název kanálu aktualizací --&gt;
-        &lt;title&gt;Aktualizace pro MyApp&lt;/title&gt;
-
-        &lt;!-- URL adresa feedu --&gt;
-        &lt;link&gt;https://example.com/updates.xml&lt;/link&gt;
-
-        &lt;!-- Popis kanálu aktualizací --&gt;
-        &lt;description&gt;Aktualizace pro aplikaci MyApp&lt;/description&gt;
-
-        &lt;!-- Datum vydání kanálu v RFC 822 formátu --&gt;
-        &lt;pubDate&gt;Thu, 18 Jan 2025 10:00:00 +0000&lt;/pubDate&gt;
-
-        &lt;!-- Jazyk feedu (např. cs-cz, en-us) --&gt;
-        &lt;language&gt;cs-cz&lt;/language&gt;
-
-        &lt;item&gt;
-            &lt;!-- Název verze aplikace --&gt;
-            &lt;title&gt;Verze 1.0&lt;/title&gt;
-
-            &lt;!-- URL adresa s více informacemi o verzi --&gt;
-            &lt;link&gt;https://example.com/release/1.0&lt;/link&gt;
-
-            &lt;!-- Popis verze aplikace --&gt;
-            &lt;description&gt;První verze aplikace MyApp.&lt;/description&gt;
-
-            &lt;!-- Datum vydání verze v RFC 822 formátu --&gt;
-            &lt;pubDate&gt;Fri, 17 Jan 2025 10:00:00 +0000&lt;/pubDate&gt;
-
-            &lt;!-- Odkaz na instalační balíček --&gt;
-            &lt;!-- url = odkaz na instalační balíček --&gt;
-            &lt;!-- sparkle:version = verze aplikace --&gt;
-            &lt;!-- length = velikost souboru v bajtech --&gt;
-            &lt;!-- type = MIME typ souboru --&gt;
-            &lt;enclosure
-                    url=&quot;https://example.com/files/MyApp-1.0.zip&quot;
-                    sparkle:version=&quot;1.0&quot;
-                    length=&quot;102400&quot;
-                    type=&quot;application/octet-stream&quot;/&gt;
-        &lt;/item&gt;
-    &lt;/channel&gt;
-&lt;/rss&gt;
-</code></pre>
+<summary><span style="color:#1E90FF;">📋 Elementy & atributy</span></summary>
+<table>
+<thead>
+<tr>
+<th>🏷️ Element</th>
+<th>💡 Popis</th>
+<th>⚙️ Atributy / Vnořené elementy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;title&gt;</code></td>
+<td>Název položky</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>&lt;link&gt;</code></td>
+<td>URL adresa položky</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>&lt;description&gt;</code></td>
+<td>Stručný popis položky</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>&lt;author&gt;</code></td>
+<td>Email autora</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>&lt;category&gt;</code></td>
+<td>Kategorie položky</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>&lt;comments&gt;</code></td>
+<td>URL komentářů</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>&lt;enclosure&gt;</code></td>
+<td>Mediální objekt (instalační balíček)</td>
+<td>url, length, type, sparkle:version</td>
+</tr>
+<tr>
+<td><code>&lt;guid&gt;</code></td>
+<td>Jedinečný identifikátor položky</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>&lt;pubDate&gt;</code></td>
+<td>Datum publikace</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>&lt;source&gt;</code></td>
+<td>RSS kanál původu</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>&lt;sparkle:tags&gt;</code></td>
+<td>Sparkle tagy (kritická aktualizace, min/max OS, poznámky k vydání)</td>
+<td>vnořené elementy</td>
+</tr>
+</tbody>
+</table>
 </details>
 <hr>
-<p>Hlavni komponenty:</p>
+<h2 id="-delta-aktualizace">🧩 Delta aktualizace</h2>
+<blockquote>
+<p>⚠️ Delta soubory obsahují pouze rozdíly mezi verzemi aplikace a šetří šířku pásma.</p>
+</blockquote>
 <details>
-<summary><span style="color:#1E90FF;">&lt;rss&gt;</span></summary>
-<p>Označuje začátek feedu a specifikuje verzi RSS a použité namespace pro Sparkle.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>RSS je zkratka pro &quot;Rich Site Summary&quot; nebo &quot;Really Simple Syndication&quot;.</p>
-<p>To je formát pro distribuci obsahu na webu.</p>
-</div>
-<p>Atributy:</p>
-<table>
-  <tr>
-    <th>Atribut</th>
-    <th>Popis</th>
-  </tr>
-  <tr>
-    <td style="background-color:rgba(255,0,0,0.78); color:white;">version</td>
-    <td>Verze RSS specifikace, obvykle "2.0".</td>
-  </tr>
-  <tr>
-    <td style="background-color:rgba(255,0,0,0.78); color:white;">xmlns:sparkle</td>
-    <td>Namespace pro Sparkle, obvykle "http://www.andymatuschak.org/xml-namespaces/sparkle".</td>
-  </tr>
-</table>
-<p>Příklad:</p>
-<pre><code class="lang-xml">&lt;rss version=&quot;2.0&quot; xmlns:sparkle=&quot;http://www.andymatuschak.org/xml-namespaces/sparkle&quot;&gt;
-    &lt;!-- Obsah feedu viz. níže --&gt;
-   &lt;channel&gt;
-      &lt;item&gt;
-         &lt;enclosure
-                 url=&quot;https://example.com/files/MyApp-1.0.zip&quot;
-                 sparkle:version=&quot;1.0&quot;
-                 length=&quot;102400&quot;
-                 type=&quot;application/octet-stream&quot;/&gt;
-      &lt;/item&gt;
-   &lt;/channel&gt;
-&lt;/rss&gt;
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">&lt;channel&gt;</span></summary>
-<p>Popisuje kanál feedu a obsahuje metadata, která se vztahují k celému feedu.</p>
-<p>Elementy a atributy:</p>
-<table>
-  <tr>
-    <th>Element</th>
-    <th>Popis</th>
-    <th>Atributy</th>
-  </tr>
-  <tr>
-    <td style="background-color:rgba(255,0,0,0.78); color:white;">&lt;title&gt;</td>
-    <td>Název kanálu, např. „Aktualizace pro MyApp“.</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <td style="background-color:rgba(255,0,0,0.78); color:white;">&lt;link&gt;</td>
-    <td>URL adresa feedu (přímý odkaz na XML soubor).</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <td style="background-color:rgba(255,0,0,0.78); color:white;">&lt;description&gt;</td>
-    <td>Stručný popis kanálu.</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <td style="background-color:#575656; color:white;">&lt;language&gt;</td>
-    <td>Jazyk feedu (např. `en-us`, `cs-cz`).</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <td style="background-color:#575656; color:white;">&lt;copyright&gt;</td>
-    <td>Informace o autorských právech.</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <td style="background-color:#575656; color:white;">&lt;managingEditor&gt;</td>
-    <td>Emailová adresa správce kanálu.</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <td style="background-color:#575656; color:white;">&lt;webMaster&gt;</td>
-    <td>Emailová adresa webového správce.</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <td style="background-color:#575656; color:white;">&lt;pubDate&gt;</td>
-    <td>Datum vydání kanálu v RFC 822 formátu.</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <td style="background-color:#575656; color:white;">&lt;lastBuildDate&gt;</td>
-    <td>Datum poslední aktualizace kanálu.</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <td style="background-color:#575656; color:white;">&lt;category&gt;</td>
-    <td>Kategorie kanálu.</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <td style="background-color:#575656; color:white;">&lt;generator&gt;</td>
-    <td>Software použitý k vytvoření kanálu.</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <td style="background-color:#575656; color:white;">&lt;docs&gt;</td>
-    <td>URL adresa specifikace RSS.</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <td style="background-color:#575656; color:white;">&lt;cloud&gt;</td>
-    <td>Specifikace pro cloudové služby.</td>
-    <td>
-      <ul>
-        <li>domain: Doména služby</li>
-        <li>port: Port služby</li>
-        <li>path: Cesta k RPC</li>
-        <li>registerProcedure: Název procedury</li>
-        <li>protocol: Protokol (např. `xml-rpc`)</li>
-      </ul>
-    </td>
-  </tr>
-  <tr>
-    <td style="background-color:#575656; color:white;">&lt;ttl&gt;</td>
-    <td>Čas v minutách, po který má být kanál cachován.</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <td style="background-color:#575656; color:white;">&lt;image&gt;</td>
-    <td>Obsahuje logo nebo obrázek související s kanálem.</td>
-    <td>
-      <ul>
-        <li>url: URL adresa obrázku</li>
-        <li>title: Titulek obrázku</li>
-        <li>link: URL adresa, kam odkazuje obrázek</li>
-      </ul>
-    </td>
-  </tr>
-  <tr>
-    <td style="background-color:#575656; color:white;">&lt;textInput&gt;</td>
-    <td>Formulář pro zadávání textu.</td>
-    <td>
-      <ul>
-        <li>title: Titulek formuláře</li>
-        <li>description: Popis formuláře</li>
-        <li>name: Název vstupního pole</li>
-        <li>link: URL adresa, kam formulář odesílá data</li>
-      </ul>
-    </td>
-  </tr>
-  <tr>
-    <td style="background-color:#575656; color:white;">&lt;skipHours&gt;</td>
-    <td>Hodiny, během kterých nemá být kanál aktualizován.</td>
-    <td>
-      <ul>
-        <li>hour: Hodina (0-23)</li>
-      </ul>
-    </td>
-  </tr>
-  <tr>
-    <td style="background-color:#575656; color:white;">&lt;skipDays&gt;</td>
-    <td>Dny, během kterých nemá být kanál aktualizován.</td>
-    <td>
-      <ul>
-        <li>day: Den (např. `Monday`, `Tuesday`)</li>
-      </ul>
-    </td>
-  </tr>
-</table>
-<p>Příklad:</p>
-<pre><code class="lang-xml">
-&lt;channel&gt;
-    &lt;!-- Název kanálu aktualizací --&gt;
-    &lt;title&gt;Aktualizace pro MyApp&lt;/title&gt;
-
-    &lt;!-- URL adresa feedu --&gt;
-    &lt;link&gt;https://example.com/updates.xml&lt;/link&gt;
-
-    &lt;!-- Popis kanálu aktualizací --&gt;
-    &lt;description&gt;Aktualizace pro aplikaci MyApp&lt;/description&gt;
-
-    &lt;!-- Datum vydání kanálu v RFC 822 formátu --&gt;
-    &lt;pubDate&gt;Thu, 18 Jan 2025 10:00:00 +0000&lt;/pubDate&gt;
-
-    &lt;!-- Jazyk feedu (např. cs-cz, en-us) --&gt;
-    &lt;language&gt;cs-cz&lt;/language&gt;
-
-    &lt;!-- Informace o autorských právech --&gt;
-    &lt;copyright&gt;© 2025 MyApp&lt;/copyright&gt;
-
-    &lt;!-- Emailová adresa správce kanálu --&gt;
-    &lt;managingEditor&gt;editor@example.com&lt;/managingEditor&gt;
-
-    &lt;!-- Emailová adresa webového správce --&gt;
-    &lt;webMaster&gt;webmaster@example.com&lt;/webMaster&gt;
-
-    &lt;!-- Datum poslední aktualizace kanálu --&gt;
-    &lt;lastBuildDate&gt;Thu, 18 Jan 2025 10:00:00 +0000&lt;/lastBuildDate&gt;
-
-    &lt;!-- Kategorie kanálu --&gt;
-    &lt;category&gt;Software Updates&lt;/category&gt;
-
-    &lt;!-- Software použitý k vytvoření kanálu --&gt;
-    &lt;generator&gt;MyApp Generator&lt;/generator&gt;
-
-    &lt;!-- URL adresa specifikace RSS --&gt;
-    &lt;docs&gt;https://www.rssboard.org/rss-draft-1&lt;/docs&gt;
-
-    &lt;!-- Specifikace pro cloudové služby --&gt;
-    &lt;cloud domain=&quot;rpc.example.com&quot; port=&quot;80&quot; path=&quot;/rpc&quot; registerProcedure=&quot;myAppUpdate&quot; protocol=&quot;xml-rpc&quot;/&gt;
-
-    &lt;!-- Čas v minutách, po který má být kanál cachován --&gt;
-    &lt;ttl&gt;60&lt;/ttl&gt;
-
-    &lt;!-- Obrázek související s kanálem --&gt;
-    &lt;image&gt;
-        &lt;!-- URL adresa obrázku --&gt;
-        &lt;url&gt;https://example.com/logo.png&lt;/url&gt;
-
-        &lt;!-- Titulek obrázku --&gt;
-        &lt;title&gt;MyApp Logo&lt;/title&gt;
-
-        &lt;!-- URL adresa, kam odkazuje obrázek --&gt;
-        &lt;link&gt;https://example.com&lt;/link&gt;
-    &lt;/image&gt;
-
-    &lt;!-- Formulář pro zadávání textu --&gt;
-    &lt;textInput&gt;
-        &lt;title&gt;Search&lt;/title&gt;
-        &lt;description&gt;Search MyApp updates&lt;/description&gt;
-        &lt;name&gt;search&lt;/name&gt;
-        &lt;link&gt;https://example.com/search&lt;/link&gt;
-    &lt;/textInput&gt;
-
-    &lt;!-- Hodiny, během kterých nemá být kanál aktualizován --&gt;
-    &lt;skipHours&gt;
-        &lt;hour&gt;0&lt;/hour&gt;
-        &lt;hour&gt;1&lt;/hour&gt;
-    &lt;/skipHours&gt;
-
-    &lt;!-- Dny, během kterých nemá být kanál aktualizován --&gt;
-    &lt;skipDays&gt;
-        &lt;day&gt;Saturday&lt;/day&gt;
-        &lt;day&gt;Sunday&lt;/day&gt;
-    &lt;/skipDays&gt;
-&lt;/channel&gt;
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">&lt;item&gt;</span></summary>
-<p>Každý <code>&lt;item&gt;</code> představuje jednu verzi aplikace a její aktualizaci.</p>
-<p>Elementy a atributy:</p>
-<table>
-  <tr>
-    <th>Element</th>
-    <th>Popis</th>
-    <th>Atributy</th>
-    <th>Vnořené elementy</th>
-  </tr>
-  <tr>
-    <td style="background-color:rgba(255,0,0,0.78); color:white;">&lt;title&gt;</td>
-    <td>Název položky.</td>
-    <td>N/A</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <td style="background-color:rgba(255,0,0,0.78); color:white;">&lt;link&gt;</td>
-    <td>URL adresa položky.</td>
-    <td>N/A</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <td style="background-color:rgba(255,0,0,0.78); color:white;">&lt;description&gt;</td>
-    <td>Stručný popis položky.</td>
-    <td>N/A</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <td style="background-color:#575656; color:white;">&lt;author&gt;</td>
-    <td>Emailová adresa autora položky.</td>
-    <td>N/A</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <td style="background-color:#575656; color:white;">&lt;category&gt;</td>
-    <td>Kategorie, do které položka patří.</td>
-    <td>N/A</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <td style="background-color:#575656; color:white;">&lt;comments&gt;</td>
-    <td>URL adresa stránky s komentáři k položce.</td>
-    <td>N/A</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <td style="background-color:#575656; color:white;">&lt;enclosure&gt;</td>
-    <td>Popisuje mediální objekt připojený k položce.</td>
-    <td>
-      <ul>
-        <li>url<br>URL adresa mediálního objektu</li>
-        <li>length<br>Velikost souboru v bajtech</li>
-        <li>type<br>MIME typ souboru</li>
-        <li>sparkle:version<br>Verze aplikace</li>
-      </ul>
-    </td>
-    <td>
-      <ul>
-        <li>&lt;sparkle:criticalUpdate&gt;<br>Označuje kritickou aktualizaci</li>
-        <li>&lt;sparkle:minimumSystemVersion&gt;<br>Minimální verze OS</li>
-        <li>&lt;sparkle:maximumSystemVersion&gt;<br>Maximální verze OS</li>
-        <li>&lt;sparkle:releaseNotesLink&gt;<br>Odkaz na poznámky k vydání</li>
-      </ul>
-    </td>
-  </tr>
-  <tr>
-    <td style="background-color:#575656; color:white;">&lt;guid&gt;</td>
-    <td>Jedinečný identifikátor položky.</td>
-    <td>N/A</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <td style="background-color:#575656; color:white;">&lt;pubDate&gt;</td>
-    <td>Datum publikace položky.</td>
-    <td>N/A</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <td style="background-color:#575656; color:white;">&lt;source&gt;</td>
-    <td>RSS kanál, ze kterého položka pochází.</td>
-    <td>N/A</td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <td style="background-color:#575656; color:white;">&lt;sparkle:tags&gt;</td>
-    <td>Sparkle-specifické tagy pro kritické aktualizace.</td>
-    <td>N/A</td>
-    <td>
-      <ul>
-        <li>&lt;sparkle:criticalUpdate&gt;<br>Označuje kritickou aktualizaci</li>
-        <li>&lt;sparkle:minimumSystemVersion&gt;<br>Minimální verze OS</li>
-        <li>&lt;sparkle:maximumSystemVersion&gt;<br>Maximální verze OS</li>
-        <li>&lt;sparkle:releaseNotesLink&gt;<br>Odkaz na poznámky k vydání</li>
-      </ul>
-    </td>
-  </tr>
-</table>
-<p>Příklad:</p>
-<pre><code class="lang-xml">
-&lt;item&gt;
-    &lt;!-- Název položky --&gt;
-    &lt;title&gt;Verze 1.0&lt;/title&gt;
-
-    &lt;!-- URL adresa položky --&gt;
-    &lt;link&gt;https://example.com/release/1.0&lt;/link&gt;
-
-    &lt;!-- Stručný popis položky --&gt;
-    &lt;description&gt;První verze aplikace MyApp.&lt;/description&gt;
-
-    &lt;!-- Emailová adresa autora položky --&gt;
-    &lt;author&gt;author@example.com&lt;/author&gt;
-
-    &lt;!-- Kategorie, do které položka patří --&gt;
-    &lt;category&gt;Software&lt;/category&gt;
-
-    &lt;!-- URL adresa stránky s komentáři k položce --&gt;
-    &lt;comments&gt;https://example.com/release/1.0/comments&lt;/comments&gt;
-
-    &lt;!-- Popisuje mediální objekt připojený k položce --&gt;
-    &lt;enclosure
-            url=&quot;https://example.com/files/MyApp-1.0.zip&quot;
-            sparkle:version=&quot;1.0&quot;
-            length=&quot;102400&quot;
-            type=&quot;application/octet-stream&quot;/&gt;
-
-    &lt;!-- Jedinečný identifikátor položky --&gt;
-    &lt;guid&gt;https://example.com/release/1.0&lt;/guid&gt;
-
-    &lt;!-- Datum publikace položky --&gt;
-    &lt;pubDate&gt;Fri, 17 Jan 2025 10:00:00 +0000&lt;/pubDate&gt;
-
-    &lt;!-- RSS kanál, ze kterého položka pochází --&gt;
-    &lt;source&gt;https://example.com/updates.xml&lt;/source&gt;
-
-    &lt;!-- Sparkle-specifické tagy pro kritické aktualizace --&gt;
-    &lt;sparkle:tags&gt;
-        &lt;sparkle:criticalUpdate/&gt;
-    &lt;/sparkle:tags&gt;
-&lt;/item&gt;
-</code></pre>
-</details>
-<hr>
-<p>Delta aktualizace:</p>
-<div class="WARNING">
-<h5>Warning</h5>
-<p>Delta soubory je zapotřebí vytvořit pomocí nástroje pro generování delta souborů.</p>
-</div>
-<p>Delta soubory obsahují pouze rozdíly mezi verzemi aplikace.</p>
-<p>Tento typ souboru šetří šířku pásma a urychluje proces aktualizace.</p>
-<details>
-<summary><span style="color:#1E90FF;">Příklad</span></summary>
+<summary><span style="color:#1E90FF;">🧪 Příklad delta aktualizace</span></summary>
 <pre><code class="lang-xml">&lt;item&gt;
-    &lt;!-- Název verze aplikace --&gt;
-    &lt;title&gt;Verze 3.0&lt;/title&gt;
-
-    &lt;!-- Popis delta aktualizace --&gt;
-    &lt;description&gt;Delta aktualizace pro přechod z verze 2.0.&lt;/description&gt;
-
-    &lt;!-- Datum vydání verze v RFC 822 formátu --&gt;
-    &lt;pubDate&gt;Wed, 23 Jan 2025 10:00:00 +0000&lt;/pubDate&gt;
-
-    &lt;!-- Odkaz na instalační balíček --&gt;
-        &lt;!-- url = odkaz na instalační balíček --&gt;
-        &lt;!-- sparkle:version = verze aplikace --&gt;
-        &lt;!-- length = velikost souboru v bajtech --&gt;
-        &lt;!-- type = MIME typ souboru --&gt;
-    &lt;enclosure
-            url=&quot;https://example.com/files/MyApp-3.0.zip&quot;
-            sparkle:version=&quot;3.0&quot;
-            length=&quot;512000&quot;
-            type=&quot;application/octet-stream&quot;/&gt;
-
-    &lt;!-- Delta aktualizace --&gt;
-    &lt;sparkle:deltas&gt;
-        &lt;!-- Odkaz na delta soubor --&gt;
-            &lt;!-- url = odkaz na delta soubor --&gt;
-            &lt;!-- sparkle:version = verze aplikace --&gt;
-            &lt;!-- sparkle:deltaFrom = verze, ze které se aktualizuje --&gt;
-            &lt;!-- length = velikost delta souboru v bajtech --&gt;
-            &lt;!-- type = MIME typ souboru --&gt;
-        &lt;enclosure url=&quot;https://example.com/files/3.0_from_2.0.patch&quot;
-                   sparkle:version=&quot;3.0&quot;
-                   sparkle:deltaFrom=&quot;2.0&quot;
-                   length=&quot;51200&quot;
-                   type=&quot;application/octet-stream&quot;/&gt;
-        &lt;enclosure url=&quot;https://example.com/files/3.0_from_2.1.patch&quot;
-                   sparkle:version=&quot;3.0&quot;
-                   sparkle:deltaFrom=&quot;2.1&quot;
-                   length=&quot;51200&quot;
-                   type=&quot;application/octet-stream&quot;/&gt;
-        &lt;enclosure/&gt;
-    &lt;/sparkle:deltas&gt;
+  &lt;title&gt;Verze 3.0&lt;/title&gt;
+  &lt;description&gt;Delta aktualizace pro přechod z verze 2.0.&lt;/description&gt;
+  &lt;pubDate&gt;Wed, 23 Jan 2025 10:00:00 +0000&lt;/pubDate&gt;
+  &lt;enclosure
+    url=&quot;https://example.com/files/MyApp-3.0.zip&quot;
+    sparkle:version=&quot;3.0&quot;
+    length=&quot;512000&quot;
+    type=&quot;application/octet-stream&quot;/&gt;
+  &lt;sparkle:deltas&gt;
+    &lt;enclosure url=&quot;https://example.com/files/3.0_from_2.0.patch&quot;
+               sparkle:version=&quot;3.0&quot;
+               sparkle:deltaFrom=&quot;2.0&quot;
+               length=&quot;51200&quot;
+               type=&quot;application/octet-stream&quot;/&gt;
+    &lt;enclosure url=&quot;https://example.com/files/3.0_from_2.1.patch&quot;
+               sparkle:version=&quot;3.0&quot;
+               sparkle:deltaFrom=&quot;2.1&quot;
+               length=&quot;51200&quot;
+               type=&quot;application/octet-stream&quot;/&gt;
+  &lt;/sparkle:deltas&gt;
 &lt;/item&gt;
 </code></pre>
 </details>

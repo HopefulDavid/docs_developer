@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Virtual Hosts | V&#253;voj&#225;ř </title>
+      <title>&#127760; Virtual Hosts v XAMPP | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Virtual Hosts | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#127760; Virtual Hosts v XAMPP | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,10 +85,15 @@
         </div>
 
         <article data-uid="">
-<h1 id="virtual-hosts">Virtual Hosts</h1>
+<h1 id="-virtual-hosts-v-xampp">🌐 Virtual Hosts v XAMPP</h1>
 
-<p>Pomocí Virtual Hosts můžete přiřadit každému projektu vlastní lokální doménu, např. <code>project1.local</code>.</p>
-<h2 id="1-konfigurace-apache">1. Konfigurace Apache</h2>
+<blockquote>
+<p>🚀 Virtual Hosts umožňují přiřadit každému projektu vlastní doménu, např. <code>project1.local</code>, pro pohodlnější přístup a testování.</p>
+</blockquote>
+<hr>
+<h2 id="-1-konfigurace-apache">🛠️ 1. Konfigurace Apache</h2>
+<details>
+<summary><span style="color:#1E90FF;">🔧 Jak nastavit Virtual Hosts?</span></summary>
 <p>Otevřete soubor:</p>
 <pre><code>C:\xampp\apache\conf\extra\httpd-vhosts.conf
 </code></pre>
@@ -108,26 +113,60 @@
     ServerName project3.local
 &lt;/VirtualHost&gt;
 </code></pre>
-<h2 id="2-úprava-hosts-souboru">2. Úprava hosts souboru</h2>
-<p>Otevřete soubor <code>hosts</code> (Windows: <code>C:\Windows\System32\drivers\etc\hosts</code>) jako administrátor a přidejte:</p>
+</details>
+<hr>
+<h2 id="-2-úprava-hosts-souboru">📝 2. Úprava hosts souboru</h2>
+<details>
+<summary><span style="color:#1E90FF;">🖥️ Jak přidat domény do hosts?</span></summary>
+<p>Otevřete soubor <code>hosts</code> jako administrátor:</p>
+<pre><code>C:\Windows\System32\drivers\etc\hosts
+</code></pre>
+<p>Přidejte řádky:</p>
 <pre><code>127.0.0.1 project1.local
 127.0.0.1 project2.local
 127.0.0.1 project3.local
 </code></pre>
-<h2 id="3-restart-apache">3. Restart Apache</h2>
-<p>Po úpravách restartujte <code>Apache</code> v XAMPP Control Panel.</p>
-<h2 id="4-přístup-k-projektům">4. Přístup k projektům</h2>
-<ul>
-<li><p><code>http://project1.local</code></p>
-</li>
-<li><p><code>http://project2.local</code></p>
-</li>
-<li><p><code>http://project3.local</code></p>
-</li>
-</ul>
+</details>
+<hr>
+<h2 id="-3-restart-apache">🔄 3. Restart Apache</h2>
+<details>
+<summary><span style="color:#1E90FF;">♻️ Jak restartovat Apache?</span></summary>
+<ol>
+<li>Otevřete <strong>XAMPP Control Panel</strong>.</li>
+<li>Klikněte na <kbd>Stop</kbd> a poté <kbd>Start</kbd> u služby <strong>Apache</strong>.</li>
+<li>Ujistěte se, že server běží (zelený stav).</li>
+</ol>
+</details>
+<hr>
+<h2 id="-4-přístup-k-projektům">🌍 4. Přístup k projektům</h2>
+<details>
+<summary><span style="color:#1E90FF;">🔗 Jak přistupovat k projektům?</span></summary>
+<table>
+<thead>
+<tr>
+<th>🏷️ Projekt</th>
+<th>🌐 URL adresa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>project1</td>
+<td><code>http://project1.local</code></td>
+</tr>
+<tr>
+<td>project2</td>
+<td><code>http://project2.local</code></td>
+</tr>
+<tr>
+<td>project3</td>
+<td><code>http://project3.local</code></td>
+</tr>
+</tbody>
+</table>
 <blockquote>
 <p>Každý projekt má vlastní &quot;friendly URL&quot; místo <code>localhost/projectX</code>.</p>
 </blockquote>
+</details>
 
 </article>
 

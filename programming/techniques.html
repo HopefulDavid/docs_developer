@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#129489;‍&#128187; V&#253;vojov&#233; metodiky &amp; Konvence pojmenov&#225;n&#237; | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#129489;‍&#128187; V&#253;vojov&#233; metodiky &amp; Konvence pojmenov&#225;n&#237; | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,301 +85,194 @@
         </div>
 
         <article data-uid="">
+<h1 id="-vývojové-metodiky--konvence-pojmenování">🧑‍💻 Vývojové metodiky &amp; Konvence pojmenování</h1>
 
-<h2 id="vývojové-metodiky">Vývojové metodiky</h2>
-<p>Techniky vývoje softwaru jsou postupy, které určují, jakým způsobem se vyvíjí software.</p>
+<blockquote>
+<p>🚀 Praktické rady pro vývoj softwaru, metodiky řízení projektů, rychlé prototypování a pojmenování v kódu.</p>
+</blockquote>
+<hr>
+<h2 id="-vývojové-metodiky">🗂️ Vývojové metodiky</h2>
 <details>
-<summary><span style="color:#1E90FF;">Agilní metodika (Scrum)</span></summary>
+<summary><span style="color:#1E90FF;">⚡ Agilní metodika (Scrum)</span></summary>
+<ul>
+<li>Zaměření na spolupráci, zákaznickou spokojenost a rychlou reakci na změny.</li>
+<li>Práce v krátkých iteracích – <strong>sprinty</strong> (2-4 týdny).</li>
+<li>Průběžné testování a zpětná vazba.</li>
+</ul>
 <div class="WARNING">
 <h5>Warning</h5>
-<p>Není vhodná pro projekty, které vyžadují pevný plán a jasně definované výstupy.</p>
+<p>Nevhodné pro projekty s pevným plánem a jasně definovanými výstupy.</p>
 </div>
+<p><strong>Kroky Scrum:</strong></p>
+<details>
+<summary><span style="color:#E95A84;">📝 Plánování sprintu</span></summary>
+Tým vybírá úkoly z backlogu a plánuje jejich provedení.
+</details>
+<details>
+<summary><span style="color:#E95A84;">💻 Vývoj & Daily Scrum</span></summary>
+Denní schůzky, průběžné testování, řešení překážek.
+</details>
+<details>
+<summary><span style="color:#E95A84;">🔍 Revize sprintu</span></summary>
+Prezentace výsledků zákazníkovi, získání zpětné vazby.
+</details>
+<details>
+<summary><span style="color:#E95A84;">🔄 Retrospektiva</span></summary>
+Zhodnocení procesu, návrhy na zlepšení.
+</details>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">💧 Vodopádová metodika</span></summary>
 <ul>
-<li><p>Zaměřuje se na spolupráci, zákaznickou spokojenost a schopnost reagovat na změny.</p>
-</li>
-<li><p>V praxi tým pracuje v krátkých iteracích zvaných <code>sprinty</code>, které trvají obvykle <strong>2-4 týdny</strong>.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Na konci každého sprintu tým prezentuje hotové funkce zákazníkovi a získává zpětnou vazbu.</p>
-</div>
-</li>
-<li><p>Podrobný postup:</p>
-<details>
-<summary><span style="color:#E95A84;">Plánování sprintu (Sprint Planning)</span></summary>
-<p>Týmová schůzka na začátku sprintu, která se koná jednou.</p>
-<p>Výběr úkolů (z backlogu) pro daný sprint k provedení.</p>
-<p>Diskutování o tom, jak budou tyto úkoly provedeny.</p>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Vývoj</span></summary>
-<p>Každodenní práce na úkolech, které byly vybrány během plánování sprintu.</p>
-<p>Každodenní týmová schůzka zvaná: <code>Daily Scrum</code>, kde se diskutuje o pokroku a případných překážkách na úkolech.</p>
-<p>Testování je součástí této sekce vývoje.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Jakmile je úkol nebo funkce vyvinuta, je ihned testována, aby se zajistilo, že funguje správně a splňuje požadavky.</p>
-<p>Toto průběžné testování umožňuje rychlé odhalení a opravu chyb.</p>
-</div>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Revize sprintu (Sprint Review)</span></summary>
-<p>Týmová schůzka na konci sprintu, která se koná jednou.</p>
-<p>Prezentuje se práce zákazníkovi a získává se zpětná vazba.</p>
-<div class="TIP">
-<h5>Tip</h5>
-<p>Tato schůzka je také příležitostí k diskusi o tom, co se v sprintu povedlo a co ne.</p>
-</div>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Retrospektiva sprintu (Sprint Retrospective)</span></summary>
-<p>Týmová schůzka obvykle hned po revizi sprintu.</p>
-<p>Diskutuje se o tom, co se v průběhu sprintu povedlo, co se nepovedlo a jak se mohou věci zlepšit v dalším sprintu.</p>
-</details></li>
+<li>Postupné dokončování fází: analýza, návrh, implementace, testování, nasazení, údržba.</li>
+<li>Každá fáze musí být dokončena před začátkem další.</li>
 </ul>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">Vodopádová metodika</span></summary>
 <div class="WARNING">
 <h5>Warning</h5>
-<p>Délka každé fáze závisí na velikosti a složitosti projektu, počtu lidí v týmu a mnoha dalších faktorech.</p>
+<p>Délka fází závisí na velikosti projektu a týmu.</p>
 </div>
-<p>Každá fáze musí být dokončena, než může začít další.</p>
+<p><strong>Kroky Vodopádu:</strong></p>
+<details>
+<summary><span style="color:#E95A84;">🔎 Analýza požadavků</span></summary>
+Shromažďování a analýza potřeb zákazníka.
+</details>
+<details>
+<summary><span style="color:#E95A84;">📝 Návrh</span></summary>
+Plánování struktury a funkcí systému.
+</details>
+<details>
+<summary><span style="color:#E95A84;">💻 Implementace</span></summary>
+Převod návrhu do zdrojového kódu.
+</details>
+<details>
+<summary><span style="color:#E95A84;">🧪 Testování</span></summary>
+Ověření funkčnosti a hledání chyb.
+</details>
+<details>
+<summary><span style="color:#E95A84;">🚀 Nasazení</span></summary>
+Přechod do produkčního prostředí.
+</details>
+<details>
+<summary><span style="color:#E95A84;">🔧 Údržba</span></summary>
+Opravy, vylepšení, sledování výkonu.
+</details>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🗃️ Kanban</span></summary>
 <ul>
-<li><p>Podrobný postup:</p>
-<details>
-<summary><span style="color:#E95A84;">Analýza požadavků</span></summary>
-<p>Na začátku projektu se shromažďují a analyzují požadavky.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Toto zahrnuje porozumění potřebám zákazníka a definování, co bude systém dělat.</p>
-</div>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Návrh</span></summary>
-<p>Vytváří se podrobný plán toho, jak bude systém fungovat a jak bude vypadat.</p>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Implementace</span></summary>
-<p>Návrh se převede na zdrojový kód.</p>
-<p>Programátoři píší kód, který realizuje návrh systému.</p>
-  </details>
-  <details>
-  <summary><span style="color:#E95A84;">Testování</span></summary>
-<p>Kontroluje se, zda systém splňuje požadavky definované v první fázi a zda neobsahuje chyby.</p>
-  </details>
-  <details>
-  <summary><span style="color:#E95A84;">Nasazení</span></summary>
-<p>Jakmile je systém otestován a schválen, je nasazen do produkčního prostředí.</p>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Údržba</span></summary>
-<p>Sleduje se výkon systému, opravují se chyby a přidávají se nové funkce podle potřeb zákazníka.</p>
-</details>
-</li>
+<li>Vizuální řízení práce pomocí tabule a karet.</li>
+<li>Průběžná dodávka, omezení práce v průběhu (WIP).</li>
 </ul>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">Kanban</span></summary>
-<p>Vizuální systém řízení práce, který se zaměřuje na dokončení úkolů.</p>
 <div class="WARNING">
 <h5>Warning</h5>
-<p>Není vhodný pro projekty, které vyžadují pevné plány a termíny</p>
+<p>Nevhodné pro projekty s pevnými termíny.</p>
 </div>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Zaměřuje se na průběžnou dodávku a minimalizaci času stráveného na úkolech.</p>
-</div>
-<ul>
-<li><p>Podrobný postup:</p>
+<p><strong>Kroky Kanban:</strong></p>
 <details>
-<summary><span style="color:#1E90FF;">Definování úkolů</span></summary>
-<p>Na začátku se vytvoří seznam úkolů, které je třeba dokončit.</p>
-<div class="TIP">
-<h5>Tip</h5>
-<p>Tyto úkoly se zapisují na karty, které se umístí na Kanban tabuli.</p>
-</div>
+<summary><span style="color:#1E90FF;">📝 Definování úkolů</span></summary>
+Seznam úkolů na kartách.
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Vizualizace práce</span></summary>
-<p>Kanban tabule je rozdělena na několik sloupců, které reprezentují různé stavy úkolu.</p>
-<div class="TIP">
-<h5>Tip</h5>
-<p>Například: <code>Backlog</code>, <code>Todo</code>, <code>Done</code>, atd...</p>
-</div>
-<p>Karty s úkoly se přesouvají mezi těmito sloupci podle toho, v jakém stavu se nacházejí.</p>
+<summary><span style="color:#1E90FF;">📊 Vizualizace práce</span></summary>
+Tabule rozdělená na sloupce (Backlog, Todo, Done...).
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Práce na úkolech</span></summary>
-<p>Tým začne pracovat na úkolech, začínajíc u těch, které jsou nejvíce prioritní.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Jakmile je úkol dokončen, karta se přesune do dalšího sloupce.</p>
-<p>Například sloupec: <code>Done</code></p>
-</div>
+<summary><span style="color:#1E90FF;">💻 Práce na úkolech</span></summary>
+Přesouvání karet podle stavu.
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Omezení práce v průběhu (Work in Progress, WIP)</span></summary>
-<p>Kanban klade důraz na omezení množství práce, která se může dělat současně.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Zvyšuje se efektivita a snižuje se doba, kterou úkol stráví v systému.</p>
-</div>
+<summary><span style="color:#1E90FF;">🔄 Omezení WIP</span></summary>
+Omezení počtu rozpracovaných úkolů.
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Průběžné zlepšování</span></summary>
-<p>Tým pravidelně hodnotí svůj proces a hledá způsoby, jak ho zlepšit.</p>
-<div class="TIP">
-<h5>Tip</h5>
-<p>To může zahrnovat změnu počtu úkolů, prioratizaci úkolů atd...</p>
-</div>
+<summary><span style="color:#1E90FF;">📈 Průběžné zlepšování</span></summary>
+Pravidelné hodnocení procesu a úpravy.
 </details>
-</li>
-</ul>
 </details>
-
-<h2 id="rychlé-prototypování">Rychlé prototypování</h2>
-<p>Proces pro vytvoření funkčního modelu projektu co nejrychleji, aby bylo možné testovat a iterovat nápady.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>V kontextu Unity to znamená vytvoření základní verze hry nebo aplikace, která zahrnuje pouze klíčové mechaniky a
-funkce.</p>
-</div>
+<hr>
+<h2 id="-rychlé-prototypování">🚀 Rychlé prototypování</h2>
 <details>
-<summary><span style="color:#1E90FF;">Rychlá iterace</span></summary>
-<ul>
-<li>Rychle testovat a provádět nápady.</li>
-<li>Pokud vytvoříte prototyp, zkuste ho co nejdříve otestovat a získat zpětnou vazbu.</li>
-<li>Poté můžete na základě této zpětné vazby upravit a vylepšit svůj prototyp.</li>
-</ul>
+<summary><span style="color:#1E90FF;">🧩 Postup prototypování</span></summary>
+<ol>
+<li><strong>Definice konceptu</strong> – jasná představa, klíčové mechaniky a cíle.</li>
+<li><strong>Vytvoření základní scény</strong> – např. v Unity.</li>
+<li><strong>Přidání objektů</strong> – krychle, koule, válce pro reprezentaci prvků.</li>
+<li><strong>Implementace mechanik</strong> – skriptování, základní funkce.</li>
+<li><strong>Testování &amp; iterace</strong> – získání zpětné vazby, úpravy.</li>
+<li><strong>Opakování cyklu</strong> – iterativní vylepšování.</li>
+</ol>
 <div class="IMPORTANT">
 <h5>Important</h5>
-<p><strong>Cílem je vytvořit funkční model</strong> vašeho projektu, <strong>ne dokonalý produkt</strong>.
-Nebojte se udělat kompromisy v kvalitě, pokud to znamená, že můžete rychleji testovat a iterovat své nápady.</p>
+<p>Cílem je funkční model, ne dokonalý produkt. Rychlost a zpětná vazba jsou klíčové.</p>
 </div>
 </details>
+<hr>
+<h2 id="-pojmenování-bem--konvence-v-kódu">🏷️ Pojmenování BEM &amp; Konvence v kódu</h2>
 <details>
-<summary><span style="color:#1E90FF;">Postup</span></summary>
-<ol>
-<li><p><strong>Definice konceptu</strong></p>
-<p>Než se začne s prototypováním, měli byste mít jasnou představu o tom, co chcete vytvořit.</p>
-<div class="TIP">
-<h5>Tip</h5>
-<p>To může zahrnovat definování klíčových mechanik, funkcí a cílů vašeho projektu.</p>
-</div>
-</li>
-<li><p><strong>Vytvoření základní scény v Unity</strong></p>
-<div class="TIP">
-<h5>Tip</h5>
-<p>Tato scéna bude sloužit jako základ pro váš prototyp.</p>
-</div>
-</li>
-<li><p><strong>Přidání základních objektů</strong></p>
-<p>Přidejte do scény základní objekty, jako jsou krychle, koule a válce, které můžete použít k reprezentaci různých
-prvků ve vaší hře.</p>
-</li>
-<li><p><strong>Přidání mechanik a funkcí</strong></p>
-<p>Použijte skriptování a vestavěné nástroje Unity k přidání mechanik a funkcí do vašeho prototypu.</p>
-</li>
-<li><p><strong>Testování a iterace</strong></p>
-<p>Jakmile máte základní prototyp, začněte ho testovat.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Získejte zpětnou vazbu od ostatních a na základě této zpětné vazby upravte a vylepšujte svůj prototyp.</p>
-</div>
-</li>
-<li><p><strong>Opakování procesu</strong></p>
-<p>Po provedení změn na svém prototypu ho znovu otestujte a pokračujte v tomto cyklu, dokud nejste spokojeni s
-výsledkem.</p>
-<div class="TIP">
-<h5>Tip</h5>
-<p>Rychlé prototypování je iterativní proces.</p>
-</div>
-</li>
-</ol>
-</details>
-<h2 id="pojmenování-bem">Pojmenování BEM</h2>
-<p>BEM = &quot;Block Element Modifier&quot;</p>
-<p>Metodika pro pojmenování tříd v <code>HTML</code> a <code>CSS</code>.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Pomáhá udržet váš kód organizovaný a snadno pochopitelný, a to i pro ostatní vývojáře, kteří se na váš kód podívají.</p>
-</div>
-<p>Příklad:</p>
-<pre><code class="lang-html">&lt;div class=&quot;block&quot;&gt; &lt;!-- Block --&gt;
-  &lt;div class=&quot;block__element&quot;&gt; &lt;!-- Element --&gt;
-  &lt;/div&gt;
-  &lt;div class=&quot;block__element--modifier&quot;&gt; &lt;!-- Element with modifier --&gt;
-  &lt;/div&gt;
+<summary><span style="color:#1E90FF;">🧩 BEM metodika</span></summary>
+<ul>
+<li><strong>BEM = Block Element Modifier</strong> – strukturované pojmenování tříd v HTML/CSS.</li>
+</ul>
+<pre><code class="lang-html">&lt;div class=&quot;block&quot;&gt;
+  &lt;div class=&quot;block__element&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;block__element--modifier&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
 <pre><code class="lang-css">.block { ... }
 .block__element { ... }
 .block__element--modifier { ... }
 </code></pre>
-<details>
-<summary><span style="color:#1E90FF;">Block</span></summary>
-<p>Jedná se o samostatnou entitu, která má smysl sama o sobě.</p>
-<p>Například: <code>header</code>, <code>container</code>, <code>menu</code>, <code>checkbox</code>, atd.</p>
+<table>
+<thead>
+<tr>
+<th>Typ</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Block</td>
+<td>Samostatná entita (např. <code>header</code>, <code>menu</code>)</td>
+</tr>
+<tr>
+<td>Element</td>
+<td>Část bloku (<code>menu item</code>, <code>list item</code>)</td>
+</tr>
+<tr>
+<td>Modifier</td>
+<td>Varianta bloku/prvku (<code>disabled</code>, <code>checked</code>)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Blok/element: <code>__</code>, modifikátor: <code>--</code></li>
+</ul>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Element</span></summary>
-<p>Část bloku, která nemá samostatný význam.</p>
-<p>Je semanticky vázána na svůj blok.</p>
-<p>Například: <code>menu item</code>, <code>list item</code>, <code>checkbox caption</code>, atd.</p>
+<summary><span style="color:#1E90FF;">📝 Konvence pojmenování v kódu</span></summary>
+<details>
+<summary><span style="color:#E95A84;">🔤 Jasné názvy</span></summary>
+Používejte popisné názvy, vyhněte se zkratkám.
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Modifier</span></summary>
-<p>Varianta bloku nebo prvku, která mění vzhled nebo chování.</p>
-<p>Například: <code>disabled</code>, <code>highlighted</code>, <code>checked</code>, atd.</p>
+<summary><span style="color:#E95A84;">🔒 Boolovské proměnné</span></summary>
+Začínejte předponou: `is`, `has`, `can` (např. `isAvailable`).
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Syntax BEM</span></summary>
-<p>Názvy bloků a elementů jsou odděleny dvěma podtržítky: <strong><code>__</code></strong></p>
-<p>Názvy modifikátorů jsou odděleny dvěma pomlčkami: <strong><code>--</code></strong></p>
+<summary><span style="color:#E95A84;">⚡ Názvy funkcí</span></summary>
+Začínejte slovesem: `getUserName()`, `calculateTotalPrice()`.
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Použití v kódu</span></summary>
-<details>
-<summary><span style="color:#E95A84;">Jasné a popisné názvy</span></summary>
-<p>Názvy proměnných, funkcí, tříd atd. by měly být dostatečně popisné, aby bylo jasné, co dělají nebo co reprezentují.</p>
-<p>Například:</p>
-<p>Místo: <code>p</code>, <strong>použijte: <code>product</code></strong></p>
-<p>místo: <code>calc</code>, <strong>použijte: <code>calculateAverage</code></strong>.</p>
-<div class="TIP">
-<h5>Tip</h5>
-<p>Vyhněte se používání zkratek a akronymů.</p>
-</div>
+<summary><span style="color:#E95A84;">🔗 Konzistentní styl</span></summary>
+Dodržujte jednotný styl (např. `camelCase`).
 </details>
 <details>
-<summary><span style="color:#E95A84;">Boolovské proměnné</span></summary>
-<p>Boolovské proměnné by měly začínat předponou jako: <code>is</code>, <code>has</code>, <code>can</code> atd., které naznačují, že hodnota může být
-pravdivá nebo nepravdivá.</p>
-<p>Například: <code>isAvailable</code>, <code>hasPermission</code>, <code>canExecute</code>.</p>
+<summary><span style="color:#E95A84;">📚 Plurál pro kolekce</span></summary>
+Používejte množné číslo pro pole: `users`, `products`.
 </details>
 <details>
-<summary><span style="color:#E95A84;">Názvy funkcí</span></summary>
-<p>Funkce by měly začínat slovesem, které popisuje, co funkce dělá.</p>
-<p>Například: <code>getUserName()</code>, <code>calculateTotalPrice()</code>, <code>printReport()</code>.</p>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Konzistentní názvosloví</span></summary>
-<p>Pokud se rozhodnete pro určitý styl názvosloví, buďte konzistentní v jeho používání po celém kódu.</p>
-<p>Například: pokud používáte <code>camelCase</code> pro názvy proměnných, používejte je všude.</p>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Jednotné názvy pro stejné typy proměnných</span></summary>
-<p>Pokud máte více polí.</p>
-<p>Například:<code>firstArray</code>, <code>secondArray</code>.</p>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Množné čísla (plurál) pro kolekce</span></summary>
-<p>Pokud proměnná reprezentuje kolekci objektů, použijte množné číslo.</p>
-<p>Například:<code>users</code>, <code>products</code>, <code>items</code>.</p>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Konstanty pro "magické" hodnoty</span></summary>
-<p>Pokud kód obsahuje &quot;magické&quot; hodnoty, které nejsou okamžitě zřejmé, zvažte jejich nahrazení pojmenovanými konstantami.</p>
-<p>Například: místo: <code>if (status == 1)</code>, <strong>použijte: <code>if (status == STATUS_ACTIVE)</code></strong>.</p>
+<summary><span style="color:#E95A84;">🔢 Konstanty pro magické hodnoty</span></summary>
+Nahraďte magické hodnoty pojmenovanými konstantami.
 </details>
 </details>
 

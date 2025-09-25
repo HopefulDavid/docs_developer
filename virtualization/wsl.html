@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#128450;️ WSL (Windows Subsystem for Linux) – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128450;️ WSL (Windows Subsystem for Linux) – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,129 +85,118 @@
         </div>
 
         <article data-uid="">
+<h1 id="-wsl-windows-subsystem-for-linux--praktický-průvodce--tipy">🗂️ WSL (Windows Subsystem for Linux) – Praktický průvodce &amp; tipy</h1>
 
-<h2 id="wsl-windows-subsystem-for-linux">WSL (Windows Subsystem for Linux)</h2>
-<p>Wsl slouží k instalaci linuxových distribucí na Windows.</p>
-<p>Umožňuje spouštět linuxové aplikace přímo na Windows bez potřeby virtuálního stroje.</p>
-<p>Instalace</p>
-<details> 
-<summary><span style="color:#1E90FF;">Windows</span></summary>
+<blockquote>
+<p>🚀 Moderní přehled instalace, nastavení a doporučení pro práci s WSL na Windows.</p>
+</blockquote>
+<hr>
+<h2 id="-co-je-wsl">📖 Co je WSL?</h2>
+<ul>
+<li><strong>WSL</strong> umožňuje instalaci a provoz linuxových distribucí přímo na Windows.</li>
+<li>Umožňuje spouštět linuxové aplikace bez potřeby virtuálního stroje.</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Ideální pro vývojáře, kteří potřebují Linux nástroje na Windows.</p>
+</div>
+<hr>
+<h2 id="-instalace-wsl-na-windows">🛠️ Instalace WSL na Windows</h2>
+<details>
+<summary><span style="color:#1E90FF;">🔹 Krok 1: Povolení virtualizace v BIOS/UEFI</span></summary>
 <div class="IMPORTANT">
 <h5>Important</h5>
-<p>Pro správnou funkci WSL je nutné v BIOSu/UEFI povolit následující nastavení:</p>
+<p>V BIOSu/UEFI povolte:</p>
 <ul>
-<li><p><strong>Podpora CPU virtualizace</strong></p>
+<li><strong>Podpora CPU virtualizace</strong>
+&gt;   - Intel: <code>Intel VT-x</code>
 <ul>
-<li>U procesorů Intel: <strong>Intel VT-x</strong></li>
-<li>U procesorů AMD: <strong>AMD-V</strong> nebo <strong>SVM (Secure Virtual Machine)</strong></li>
+<li>AMD: <code>AMD-V</code> nebo <code>SVM</code></li>
 </ul>
 </li>
-<li><p><strong>Virtualizační technologie</strong></p>
+<li><strong>Virtualizační technologie</strong>
+&gt;   - Intel: <code>VT-d</code>
 <ul>
-<li><p>U procesorů Intel: <strong>VT-d</strong> (pokud je k dispozici)</p>
-</li>
-<li><p>U procesorů AMD: <strong>AMD-Vi</strong> (pokud je k dispozici)</p>
-<p>Toto nastavení může být označeno jako <strong>&quot;Hardware Virtualization&quot;</strong></p>
-</li>
+<li>AMD: <code>AMD-Vi</code></li>
 </ul>
 </li>
-<li><p><strong>Vnořená virtualizace (Nested Virtualization)</strong></p>
-<ul>
-<li>Toto nastavení je potřebné pouze v případě, že chcete používat virtualizaci uvnitř WSL, což není běžné pro všechny uživatele.</li>
-<li>V některých verzích BIOSu/UEFI je označeno jako <strong>&quot;VT-x/AMD-V Virtualization&quot;</strong>.</li>
-</ul>
-</li>
+<li><strong>Vnořená virtualizace</strong> (jen pokud potřebujete virtualizaci uvnitř WSL)</li>
 </ul>
 </div>
-<p>Kontrola povolení virtualizace:</p>
-<ul>
-<li><p>Stiskněte <code>Ctrl + Shift + Esc</code></p>
-</li>
-<li><p>Přejděte na záložku &quot;Performance&quot; (Výkon)</p>
-</li>
-<li><p>Dole by mělo být &quot;Virtualization: Enabled&quot;</p>
-</li>
-</ul>
-<p>Viz zde na obrázku:</p>
-<p><img src="../images/wv1G8UBxvy.png" alt="Zobrazení virtualization:Enabled">]</p>
+<p><strong>Kontrola povolení virtualizace:</strong></p>
 <ol>
-<li><p>Povolení WSL na vašem počítači</p>
-<p>Ve výchozím nastavení je WSL na vašem PC deaktivovaný.</p>
-<p>(WSL = Windows Subsystem for Linux, umožňuje spouštět Linuxové distribuce na Windows.)</p>
-<p>Spustťte jako správce &quot;PowerShell&quot;</p>
-<p><img src="../images/pnAzi0NFm3.png" alt="Spuštění PowerShellu jako správce"></p>
-<p>Nyní povolíme WSL vložením následujícího příkazu:</p>
+<li>Stiskněte <code>Ctrl + Shift + Esc</code></li>
+<li>Přejděte na záložku <strong>Výkon (Performance)</strong></li>
+<li>Dole najdete <strong>Virtualization: Enabled</strong></li>
+</ol>
+<img src="../images/wv1G8UBxvy.png">
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🔹 Krok 2: Povolení WSL v systému</span></summary>
+<ol>
+<li><p>Spusťte <strong>PowerShell jako správce</strong><br>
+<img src="../images/pnAzi0NFm3.png"></p>
+</li>
+<li><p>Aktivujte WSL:</p>
 <pre><code class="lang-bash">dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
 </code></pre>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Pokud vše proběhlo v pořádku, výstup bude vypadat takto:</p>
-<p><img src="../images/mei8XmPaWt.png" alt="Povolení WSL"></p>
-</div>
+<img src="../images/mei8XmPaWt.png">
 </li>
-<li><p>Povolení platformy Virtual Machine a WSL 2 na Windows</p>
-<p>Pro spuštění nejnovější verze WSL, což je WSL 2, musíte povolit &quot;Windows Virtual Machine Platform&quot;.</p>
-<p>Použijte tento příkaz:</p>
-<pre><code>dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+</ol>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🔹 Krok 3: Povolení Virtual Machine Platform & WSL 2</span></summary>
+<p>Aktivujte platformu pro WSL 2:</p>
+<pre><code class="lang-bash">dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
 </code></pre>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Výstup bude podobný tomuto:</p>
-<p><img src="../images/cADNNtfdn8.png" alt="Povolení WSL 2"></p>
-</div>
+<img src="../images/cADNNtfdn8.png">
 <div class="IMPORTANT">
 <h5>Important</h5>
-<p>Aby se všechny nové změny a povolené funkce projevily, musíte restartovat počítač.</p>
+<p>Po povolení funkcí <strong>restartujte počítač</strong>.</p>
 </div>
-</li>
-<li><p>Stažení aktualizace Linux jádra</p>
-<p>Nyní je čas <a href="https://github.com/Microsoft/WSL/releases">stáhnout a nainstalovat</a> aktualizační balíček linuxového jádra.</p>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🔹 Krok 4: Stažení aktualizace Linux jádra</span></summary>
+<ul>
+<li>Stáhněte a nainstalujte poslední <a href="https://github.com/Microsoft/WSL/releases">aktualizaci jádra</a>.</li>
+<li>Řeší kompatibilitu s Dockerem a dalšími nástroji.</li>
+</ul>
 <div class="NOTE">
 <h5>Note</h5>
-<p>Narazil jsem na problém, kdy WSL nefungoval správně s Dockerem, dokud jsem nenainstaloval poslední aktualizaci, která vše opravila.</p>
-<p>Proto doporučuji stáhnout a nainstalovat poslední aktualizaci jádra.</p>
+<p>Doporučuji vždy instalovat nejnovější verzi jádra.</p>
 </div>
-</li>
-<li><p>Nastavení WSL 2 jako výchozí</p>
-<p>Nyní je čas nastavit nejnovější verzi WSL, tedy WSL 2, jako výchozí.</p>
-<p>Toho dosáhnete otevřením dalšího PowerShell terminálu jako správce (jak bylo ukázáno dříve) a spuštěním následujícího příkazu:</p>
-<pre><code>wsl --set-default-version 2
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🔹 Krok 5: Nastavení WSL 2 jako výchozí</span></summary>
+<p>Nastavte WSL 2 jako výchozí:</p>
+<pre><code class="lang-bash">wsl --set-default-version 2
 </code></pre>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Výstup bude vypadat takto:</p>
-<p><img src="../images/LNHIGgBhcb.png" alt="Nastavení výchozí verze WSL"></p>
-</div>
-</li>
-<li><p>Instalace linuxové distribuce podle vašeho výběru pomocí WSL</p>
-<p>Nyní, když jsme plně připravili systém a nainstalovali všechny požadavky, můžeme konečně pokračovat s instalací linuxového subsystému na náš počítač.</p>
-<p>Stáhneme si libovolnou linuxovou distribuci podle našeho výběru &quot;RootFS&quot; (Root File System) a nainstalujeme ji pomocí WSL.</p>
-<p>Například pro <a href="https://cloud-images.ubuntu.com/wsl/jammy/current/">Ubuntu</a></p>
+<img src="../images/LNHIGgBhcb.png">
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🔹 Krok 6: Instalace linuxové distribuce</span></summary>
+<p>Stáhněte si RootFS (např. <a href="https://cloud-images.ubuntu.com/wsl/jammy/current/">Ubuntu</a>) a nainstalujte:</p>
 <pre><code class="lang-bash">wsl --import Ubuntu-22.04 C:\WSL\Ubuntu2204 C:\UbuntuRootFS\ubuntu-jammy-wsl-amd64-ubuntu22.04lts.rootfs.tar.gz --version 2
 </code></pre>
 <div class="NOTE">
 <h5>Note</h5>
-<p><code>Ubuntu-22.04</code> = Název distribuce,který chcete použít.</p>
-<p><code>C:\WSL\Ubuntu2204</code> = Cesta, kde chcete mít nainstalovanou distribuci.</p>
-<p><code>C:\UbuntuRootFS\ubuntu-jammy-wsl-amd64-ubuntu22.04lts.rootfs.tar.gz</code> = Cesta k souboru, který jste stáhli.</p>
-<p><code>--version 2</code> = Použití WSL 2 jako výchozí verze pro tuto distribuci.</p>
+<ul>
+<li><code>Ubuntu-22.04</code> = Název distribuce</li>
+<li><code>C:\WSL\Ubuntu2204</code> = Cesta k instalaci</li>
+<li><code>C:\UbuntuRootFS\...</code> = Cesta k RootFS souboru</li>
+<li><code>--version 2</code> = Použít WSL 2</li>
+</ul>
 </div>
-<p>Nyní ověříme, zda je distribuce nainstalována správně pomocí příkazu:</p>
+<p>Ověření instalace:</p>
 <pre><code class="lang-bash">wsl --list
 </code></pre>
 <div class="WARNING">
 <h5>Warning</h5>
-<p>Pokud ste nainstalovali špatně distribuci, můžete ji odstranit pomocí příkazu:</p>
+<p>Odstranění špatně nainstalované distribuce:</p>
 <pre><code class="lang-bash">wsl --unregister &lt;distro name&gt;
 </code></pre>
-<p>Například: <code>wsl --unregister Ubuntu-22.04</code></p>
+<p>Např.: <code>wsl --unregister Ubuntu-22.04</code></p>
 </div>
-</li>
-</ol>
-<p>To je vše, nyní máte nainstalovaný WSL na vašem počítači včetně linuxové distribuce.</p>
-<blockquote>
-<p>Pro detailní informace o instalaci WSL2 najdete kompletní návod na <a href="https://contabo.com/blog/how-to-install-wsl2-on-windows-10/">blogu Contabo</a>.</p>
-</blockquote>
 </details>
 
 </article>

@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#129489;‍&#128187; .NET – Modifik&#225;tory, Runtimes &amp; PInvoke | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#129489;‍&#128187; .NET – Modifik&#225;tory, Runtimes &amp; PInvoke | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,14 +85,20 @@
         </div>
 
         <article data-uid="">
+<h1 id="-net--modifikátory-runtimes--pinvoke">🧑‍💻 .NET – Modifikátory, Runtimes &amp; PInvoke</h1>
 
+<blockquote>
+<p>🚀 Praktické rady pro správu přístupu, multiplatformní nasazení, uvolnění zdrojů a volání nativních DLL v .NET.</p>
+</blockquote>
+<hr>
+<h2 id="-modifikátory-přístupu">🔐 Modifikátory přístupu</h2>
 <details>
-<summary><span style="color:#1E90FF;">Modifikátory přístupu</span></summary>
-<p>Určuje přístup k danému prvku.</p>
+<summary><span style="color:#1E90FF;">🗝️ Přehled modifikátorů</span></summary>
+<p>Určuje, kdo má přístup k danému prvku.</p>
 <table>
 <thead>
 <tr>
-<th>Caller's location</th>
+<th>📍 Odkud voláno</th>
 <th>public</th>
 <th>protected internal</th>
 <th>protected</th>
@@ -104,7 +110,7 @@
 </thead>
 <tbody>
 <tr>
-<td>Within the file</td>
+<td>V rámci souboru</td>
 <td>✔️</td>
 <td>✔️</td>
 <td>✔️</td>
@@ -114,7 +120,7 @@
 <td>✔️</td>
 </tr>
 <tr>
-<td>Within the class</td>
+<td>V rámci třídy</td>
 <td>✔️</td>
 <td>✔️</td>
 <td>✔️</td>
@@ -124,7 +130,7 @@
 <td>❌</td>
 </tr>
 <tr>
-<td>Derived class (same assembly)</td>
+<td>Odvozená třída (stejná assembly)</td>
 <td>✔️</td>
 <td>✔️</td>
 <td>✔️</td>
@@ -134,7 +140,7 @@
 <td>❌</td>
 </tr>
 <tr>
-<td>Non-derived class (same assembly)</td>
+<td>Neodvozená třída (stejná assembly)</td>
 <td>✔️</td>
 <td>✔️</td>
 <td>❌</td>
@@ -144,7 +150,7 @@
 <td>❌</td>
 </tr>
 <tr>
-<td>Derived class (different assembly)</td>
+<td>Odvozená třída (jiná assembly)</td>
 <td>✔️</td>
 <td>✔️</td>
 <td>✔️</td>
@@ -154,7 +160,7 @@
 <td>❌</td>
 </tr>
 <tr>
-<td>Non-derived class (different assembly)</td>
+<td>Neodvozená třída (jiná assembly)</td>
 <td>✔️</td>
 <td>❌</td>
 <td>❌</td>
@@ -165,155 +171,84 @@
 </tr>
 </tbody>
 </table>
-<p>Více podrobností <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/access-modifiers#summary-table">zde</a>.</p>
+<p>📖 Více podrobností <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/access-modifiers#summary-table">zde</a>.</p>
+</details>
+<hr>
+<h2 id="-složka-runtimes--multiplatformní-nasazení">📁 Složka <code>runtimes</code> &amp; multiplatformní nasazení</h2>
+<details>
+<summary><span style="color:#1E90FF;">🖥️ K čemu slouží složka `runtimes`?</span></summary>
+<ul>
+<li>Obsahuje <strong>platformově specifické knihovny a binární soubory</strong>.</li>
+<li>Umožňuje běh aplikace na různých OS a architekturách.</li>
+<li>V Unity obdobně slouží složka <code>Plugins</code>.</li>
+</ul>
+<p><img src="../../images/dotnet_runtimes.png" alt=""></p>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Složka 'runtimes' a multiplatformní nasazení</span></summary>
-<p>Slouží k ukládání <strong>platformově specifických knihoven a binárních souborů</strong>, které jsou nezbytné pro správné spuštění aplikace na různých operačních systémech a architekturách.</p>
-<p>Používá se v aplikacích:</p>
+<summary><span style="color:#1E90FF;">📦 Typy nasazení</span></summary>
+<h3 id="-self-contained-deployment">🏗️ Self-contained deployment</h3>
 <ul>
-<li>WPF aplikace</li>
-<li>Konzolové aplikace</li>
-<li>ASP.NET Core aplikace</li>
-<li>WinForms aplikace</li>
-<li>.NET knihovny a služby, které se nasazují na různé platformy (Windows, Linux, macOS, atd.)</li>
+<li>Aplikace obsahuje <strong>vlastní .NET runtime</strong>.</li>
+<li>Běží nezávisle na systému uživatele.</li>
+<li>Větší velikost, ale maximální kompatibilita.</li>
 </ul>
-<div class="TIP">
-<h5>Tip</h5>
-<p>V unity se používá složka <code>'Plugins'</code> k umístění knihoven (DLL), které jsou platformově specifické</p>
-<p>Tato složka může obsahovat nativní kód pro různé platformy (Windows, Android, iOS, macOS, atd.)</p>
-</div>
-<p>Tato složka <code>'runtime'</code> se automaticky generuje při publikaci aplikace a hraje zásadní roli zejména při použití dvou typů nasazení.</p>
-<p>Každý z těchto typů nasazení určuje, jakým způsobem aplikace zajišťuje dostupnost .NET runtime a dalších závislostí:</p>
-<h3 id="self-contained-deployment">self-contained deployment</h3>
-<p>Aplikace je distribuována společně s <strong>kompletním .NET runtime</strong></p>
-<p>To znamená, že aplikace si nese vlastní runtime a může běžet nezávisle na tom, zda má uživatel na svém systému nainstalovaný správný .NET runtime.</p>
-<div class="TIP">
-<h5>Tip</h5>
-<p>Toto nasazení je vhodné, pokud chcete zajistit, že aplikace poběží na jakémkoliv počítači, bez ohledu na její aktuální stav.</p>
-</div>
-<p>Výsledkem je větší velikost aplikace, protože obsahuje kompletní runtime pro cílové platformy, které jsou zahrnuty ve složce <code>'runtimes'</code>.</p>
-<p>V praxi složka <code>'runtimes'</code> obsahuje potřebné knihovny a binární soubory pro různé platformy, jako jsou Windows, Linux, macOS, nebo různé architektury (x64, x86, ARM).</p>
-<p>Díky tomu může aplikace běžet <strong>out-of-the-box</strong> bez nutnosti další instalace runtime na cílovém systému.</p>
-<h4 id="použití"><strong>Použití</strong></h4>
-<p>Nastavit v souboru projektu (.csproj):</p>
-<pre><code class="lang-xml">  &lt;PropertyGroup&gt;
-      &lt;SelfContained&gt;true&lt;/SelfContained&gt;
-      &lt;RuntimeIdentifier&gt;win-x64&lt;/RuntimeIdentifier&gt; &lt;!-- Nebo jiný RID podle platformy --&gt;
-  &lt;/PropertyGroup&gt;
-</code></pre>
-<p>nebo s více Runtime Identifiers (RID)</p>
 <pre><code class="lang-xml">&lt;PropertyGroup&gt;
     &lt;SelfContained&gt;true&lt;/SelfContained&gt;
     &lt;RuntimeIdentifiers&gt;win-x64;linux-x64;osx-x64&lt;/RuntimeIdentifiers&gt;
 &lt;/PropertyGroup&gt;
 </code></pre>
-<div class="NOTE">
-<h5>Note</h5>
-<p><strong>Runtime Identifiers (RID)</strong>
-Runtime Identifiers (RID) jsou klíčovou součástí procesu nasazení, protože určují, pro jaké platformy a architektury bude aplikace kompilována.</p>
-<p>Můžete specifikovat různé RID podle cílové platformy:</p>
+<h3 id="-framework-dependent-deployment">🧩 Framework-dependent deployment</h3>
 <ul>
-<li>win-x64 (Windows 64-bit)</li>
-<li>linux-x64 (Linux 64-bit)</li>
-<li>osx-x64 (macOS 64-bit)</li>
-<li>win-arm (Windows na ARM procesorech)</li>
+<li>Aplikace <strong>vyžaduje .NET runtime</strong> na cílovém systému.</li>
+<li>Menší velikost, závislost na prostředí.</li>
 </ul>
+<pre><code class="lang-xml">&lt;PropertyGroup&gt;
+    &lt;SelfContained&gt;false&lt;/SelfContained&gt;
+&lt;/PropertyGroup&gt;
+</code></pre>
+<div class="TIP">
+<h5>Tip</h5>
+<p><strong>Runtime Identifiers (RID)</strong> určují cílovou platformu (např. <code>win-x64</code>, <code>linux-x64</code>, <code>osx-x64</code>).</p>
 </div>
-<h3 id="framework-dependent-deployment-runtime-specific-deployment">framework-dependent deployment (runtime-specific deployment)</h3>
-<p>Aplikace <strong>závisí na přítomnosti .NET runtime</strong> na cílovém systému.</p>
-<p>Aplikace neobsahuje runtime v sobě, což zmenšuje její velikost, ale předpokládá, že uživatel má již správnou verzi .NET runtime nainstalovanou.</p>
-<div class="IMPORTANT">
-<h5>Important</h5>
-<p>Pokud runtime není přítomen, aplikace nefunguje, dokud uživatel runtime nedoinstaluje.</p>
-</div>
-<p>V tomto případě složka <code>&quot;runtimes&quot;</code> může obsahovat pouze platformově specifické knihovny a závislosti, které nejsou součástí základního .NET runtime, a zajistit kompatibilitu aplikace s různými platformami.</p>
-<h4 id="použití-1"><strong>Použití</strong></h4>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Nastavte <code>SelfContained</code> na <code>false</code>, nebo tuto vlastnost úplně vynechte (výchozí nastavení je totiž <code>framework-dependent</code>).</p>
-</div>
-<p>Nastavit v souboru projektu (.csproj):</p>
-<pre><code class="lang-xml">  &lt;PropertyGroup&gt;
-      &lt;SelfContained&gt;false&lt;/SelfContained&gt;
-  &lt;/PropertyGroup&gt;
+</details>
+<hr>
+<h2 id="-uvolnění-zdrojů">🧹 Uvolnění zdrojů</h2>
+<details>
+<summary><span style="color:#1E90FF;">🗑️ Řízené vs. neřízené zdroje</span></summary>
+<ul>
+<li><strong>Řízené zdroje</strong>: spravuje garbage collector, není nutné explicitně uvolňovat.</li>
+<li><strong>Neřízené zdroje</strong>: soubory, DB, síť – nutné explicitně uvolnit.</li>
+</ul>
+<p><img src="../../images/dotnet_resources.png" alt=""></p>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🧨 Destruktor & Dispose</span></summary>
+<h3 id="-destruktor">🧨 Destruktor</h3>
+<ul>
+<li>Syntaxe: <code>~ClassName()</code></li>
+<li>Volán automaticky GC, není deterministický.</li>
+</ul>
+<h3 id="-dispose">🧹 Dispose</h3>
+<ul>
+<li>Implementace <code>IDisposable</code>.</li>
+<li>Volán explicitně programátorem pro okamžité uvolnění zdrojů.</li>
+</ul>
+<pre><code class="lang-csharp">public class MyResource : IDisposable
+{
+    public void Dispose()
+    {
+        // Uvolnění zdrojů
+    }
+}
 </code></pre>
 </details>
+<hr>
+<h2 id="-volání-funkcí-z-externích-dll-pinvoke">🧬 Volání funkcí z externích DLL (PInvoke)</h2>
 <details>
-<summary><span style="color:#1E90FF;">Uvolnění zdrojů</span></summary>
+<summary><span style="color:#1E90FF;">🔗 Jak volat nativní kód?</span></summary>
 <ul>
-<li><p><strong>Řízené zdroje</strong></p>
-<p>= Objekty, které jsou spravovány garbage collectorem.</p>
-<p>Zahrnuje všechny objekty vytvořené pomocí klíčového slova <code>new</code>.</p>
-<p>Garbage collector automaticky sleduje tyto objekty a uvolňuje jejich paměť, když již nejsou potřebné.</p>
-<div class="TIP">
-<h5>Tip</h5>
-<p>Programátoři nemusí explicitně uvolňovat paměť pro tyto objekty.</p>
-</div>
-</li>
-<li><p><strong>Neřízené zdroje</strong></p>
-<p>= Objekty, které nejsou spravovány garbage collectorem.</p>
-<p>Zahrnuje soubory, databázové připojení, síťové zdroje, atd...</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Programátoři musí explicitně uvolnit tyto zdroje, aby zabránili úniku paměti.</p>
-<p>Uvolnění zdrojů je důležité pro správné fungování aplikace.</p>
-</div>
-</li>
+<li>Použij <code>DllImport</code> z <code>System.Runtime.InteropServices</code>.</li>
 </ul>
-<h3 id="destruktor">Destruktor</h3>
-<ul>
-<li><p>Automaticky volán, když je objekt zničen garbage collectorem.</p>
-</li>
-<li><p>Definuje se pomocí syntaxe <strong><code>~ClassName()</code></strong>.</p>
-</li>
-<li><p>Uvolňuje neřízené zdroje, které třída drží.</p>
-</li>
-<li><p>Destruktory nejsou deterministické.</p>
-<div class="TIP">
-<h5>Tip</h5>
-<p>Znamená, že nevíme přesně, kdy budou volány.</p>
-</div>
-</li>
-<li><p><strong>Jsou volány, když garbage collector rozhodne</strong>, že je objekt vhodný ke zničení.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Může to být kdykoliv po tom, co objekt přestane být používán.</p>
-</div>
-</li>
-</ul>
-<h3 id="dispose">Dispose</h3>
-<ul>
-<li><p>Součástí rozhraní <code>IDisposable</code> a je určen pro explicitní uvolnění zdrojů.</p>
-</li>
-<li><p>Metoda <strong><code>Dispose</code> je volána programátorem</strong>, když je známo, že objekt již nebude potřebný.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>To umožňuje okamžité uvolnění zdrojů a zajišťuje, že nebudou drženy déle, než je nutné.</p>
-</div>
-</li>
-<li><p>Metoda <code>Dispose</code> je určena pro uvolnění jak řízených, tak neřízených zdrojů.</p>
-</li>
-</ul>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">Volání funkcí z externích DLL</span></summary>
-<div class="NOTE">
-<h5>Note</h5>
-<p><strong>Platform Invocation Services (PInvoke)</strong> se používá pro volání knihoven z nativního kódu.</p>
-</div>
-<ul>
-<li><p>Nativní kód = Kód kompilován do strojového kódu pro konkrétní platformu.</p>
-</li>
-<li><p>Strojový kód = Kód přímo spustitelný na hardware dané platformy.</p>
-</li>
-</ul>
-<p>Postup:</p>
-<ol>
-<li>
-<p><strong>Importování funkce z DLL</strong></p>
-<p>Atribut <strong><code>DllImport</code></strong> z <code>System.Runtime.InteropServices</code> k importování funkce z DLL.</p>
-<p>Například:</p>
 <pre><code class="lang-csharp">using System.Runtime.InteropServices;
 
 public class MyProgram
@@ -322,172 +257,40 @@ public class MyProgram
     public static extern int MessageBox(IntPtr h, string m, string c, int type);
 }
 </code></pre>
-<div class="NOTE">
-<h5>Note</h5>
-<p><code>MessageBox</code> je funkce definovaná v knihovně: <code>User32.dll</code>.</p>
-<p>Tato funkce je nyní dostupná v rámci tohoto .NET kódu.</p>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Funkce z C++ DLL musí být exportována pomocí <code>extern &quot;C&quot;</code> a <code>__declspec(dllexport)</code>.</p>
 </div>
-<h3 id="příklad-knihovny-v-c">Příklad knihovny v c++</h3>
-<p>Knihovna v c++ by mohla vypadat takto:</p>
-<pre><code class="lang-c++">#include &lt;windows.h&gt;
-
-extern &quot;C&quot; __declspec(dllexport) int MessageBox(HWND h, LPCSTR m, LPCSTR c, int type)
+<pre><code class="lang-c++">extern &quot;C&quot; __declspec(dllexport) int MessageBox(HWND h, LPCSTR m, LPCSTR c, int type)
 {
     return MessageBoxA(h, m, c, type);
 }
 </code></pre>
-<h3 id="metody-a-argumenty-v-c">Metody a argumenty v c++</h3>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🧩 Speciální případ: `__Internal`</span></summary>
 <ul>
-<li><p><strong><code>extern &quot;C&quot;</code></strong></p>
-<div class="WARNING">
-<h5>Warning</h5>
-<p>Zajistí, že funkce jsou kompatibilní s C jazykem. (To je důležité pro interoperabilitu mezi C++ a jinými jazyky, jako je C#.)</p>
-</div>
-<div class="TIP">
-<h5>Tip</h5>
-<p>Když kompilátor narazí na funkci, změní její název na něco, co jednoznačně identifikuje nejen název funkce, ale také typy jejích parametrů.</p>
-<p>To znamená, že název funkce, jak je viděn v DLL, nebude stejný jako název funkce v původním kódu.</p>
-<p>Když použijete <code>extern &quot;C&quot;</code>, říkáte kompilátoru, aby tuto funkci nezměnil a zachoval její název tak, jak je. To umožňuje jiným jazykům, jako je C#, najít a volat tuto funkci správným názvem.</p>
-</div>
-</li>
-<li><p><strong><code>__declspec(dllexport)</code></strong></p>
-<p>Říka kompilátoru C++, že tato funkce nebo proměnná bude exportována z DLL, takže ji může volat jiný kód, který tuto DLL používá.</p>
-<div class="WARNING">
-<h5>Warning</h5>
-<p>Důležité k viditelnosti a dostupnosti pro <code>PInvoke</code></p>
-</div>
-</li>
-<li><p><strong><code>HWND</code></strong></p>
-<p>&quot;handle to a window&quot; (rukojeť okna)</p>
-</li>
-<li><p><strong><code>LPCTSTR</code></strong></p>
-<p>&quot;Long Pointer Constant String&quot;</p>
-<blockquote>
-<p>| Item           | 8-bitů (Ansi) | 16-bitů (Wide) | Různé   |
-&gt; |----------------|---------------|----------------|---------|
-| character      | CHAR          | WCHAR          | TCHAR   |
-| string         | LPSTR         | LPWSTR         | LPTSTR  |
-| string (const) | LPCSTR        | LPCWSTR        | LPCTSTR |</p>
-<p>Odkaz <a href="https://stackoverflow.com/questions/321413/lpcstr-lpctstr-and-lptstr"> zde</a></p>
-</blockquote>
-</li>
+<li>Funkce se hledá přímo v hlavním spustitelném souboru.</li>
 </ul>
-</li>
-<li>
-<p><strong>Volání importované funkce</strong></p>
-<pre><code class="lang-csharp">public class MyProgram
+<pre><code class="lang-csharp">[DllImport(&quot;__Internal&quot;)]
+public static extern int MyFunction();
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🍏 PInvoke v Unity (AppleAuth příklad)</span></summary>
+<pre><code class="lang-csharp">private static class PInvoke
 {
-    public static void Main()
-    {
-        MessageBox(IntPtr.Zero, &quot;Hello, World!&quot;, &quot;Test MessageBox&quot;, 0);
-    }
+#if UNITY_IOS || UNITY_TVOS
+    private const string DllName = &quot;__Internal&quot;;
+#elif UNITY_STANDALONE_OSX
+    private const string DllName = &quot;MacOSAppleAuthManager&quot;;
+#endif
+
+    [DllImport(DllName)]
+    public static extern bool AppleAuth_IsCurrentPlatformSupported();
 }
 </code></pre>
-<blockquote>
-<p><code>IntPtr.Zero</code></p>
-<p>Konstanta, která reprezentuje nulový ukazatel.</p>
-<p>Je to ekvivalent NULL v C++.</p>
-</blockquote>
-</li>
-</ol>
-<h3 id="__internal"><code>__Internal</code></h3>
-<p>Pokud se používá <strong><code>__Internal</code> jako název DLL v atributu <code>DllImport</code></strong>, znamená to, že funkce se hledá přímo v hlavním spustitelném souboru.</p>
-<div class="TIP">
-<h5>Tip</h5>
-<p>Hledá tedy v samotné aplikaci, pokud je to nativní kód, nebo v jedné z knihoven, na které aplikace odkazuje.</p>
-<ul>
-<li><p>Příklad použití v C#:
-&gt;
-&gt;       ```csharp
-public class MyProgram
-{
-[DllImport(&quot;__Internal&quot;)]
-public static extern int MyFunction();</p>
-<pre><code>  public static void Main()
-  {
-      MyFunction();
-  }
-</code></pre>
-<p>}</p>
-<pre><code>
-</code></pre>
-</li>
-<li><p>Příklad definice v C++
-&gt;
-&gt;       ```c++
-extern &quot;C&quot; __declspec(dllexport) int MyFunction()
-{
-// Implementace vaší funkce
-return 0;
-}</p>
-<pre><code></code></pre>
-</li>
-</ul>
-</div>
-<pre><code>  &gt;
-  &gt;       V tomto příkladu `MyFunction` je funkce definovaná v nativním kódu.
-  &gt;
-  &gt;       Je tedy součástí aplikace nebo jedné z jejích závislostí.
-</code></pre>
-<h3 id="tipy">Tipy</h3>
-<ul>
-<li><p><code>PInvoke</code></p>
-<p>= <strong>Platform Invocation Services</strong>, což je technika v <code>.NET</code>, která umožňuje volání funkcí, které jsou implementovány v neřízeném kódu.</p>
-<div class="TIP">
-<h5>Tip</h5>
-<p>To je obvykle používáno pro volání C API funkcí, které jsou definovány v DLL.</p>
-<p>Příklad:</p>
-<pre><code class="lang-csharp">      private static class PInvoke
-      {
-      #if UNITY_IOS || UNITY_TVOS
-           private const string DllName = &quot;__Internal&quot;;
-      #elif UNITY_STANDALONE_OSX
-           private const string DllName = &quot;MacOSAppleAuthManager&quot;;
-      #endif
-      
-          public delegate void NativeMessageHandlerCallbackDelegate(uint requestId, string payload);
-      
-          [AOT.MonoPInvokeCallback(typeof(NativeMessageHandlerCallbackDelegate))]
-          public static void NativeMessageHandlerCallback(uint requestId, string payload)
-          {   
-              try
-              {
-                  CallbackHandler.ScheduleCallback(requestId, payload);
-              }
-              catch (Exception exception)
-              {
-                  Console.WriteLine(&quot;Received exception while scheduling a callback for request ID &quot; + requestId);
-                  Console.WriteLine(&quot;Detailed payload:\n&quot; + payload);
-                  Console.WriteLine(&quot;Exception: &quot; + exception);
-              }
-          }
-      
-          [System.Runtime.InteropServices.DllImport(DllName)]
-          public static extern bool AppleAuth_IsCurrentPlatformSupported();
-      
-          [System.Runtime.InteropServices.DllImport(DllName)]
-          public static extern void AppleAuth_SetupNativeMessageHandlerCallback(NativeMessageHandlerCallbackDelegate callback);
-                  
-          [System.Runtime.InteropServices.DllImport(DllName)]
-          public static extern void AppleAuth_GetCredentialState(uint requestId, string userId);
-      
-          [System.Runtime.InteropServices.DllImport(DllName)]
-          public static extern void AppleAuth_LoginWithAppleId(uint requestId, int loginOptions, string nonceCStr, string stateCStr);
-                  
-          [System.Runtime.InteropServices.DllImport(DllName)]
-          public static extern void AppleAuth_QuickLogin(uint requestId, string nonceCStr, string stateCStr);
-                  
-          [System.Runtime.InteropServices.DllImport(DllName)]
-          public static extern void AppleAuth_RegisterCredentialsRevokedCallbackId(uint callbackId);
-      
-          [System.Runtime.InteropServices.DllImport(DllName)]
-          public static extern void AppleAuth_LogMessage(string messageCStr);
-      }
-</code></pre>
-</div>
-<p>Více info <a href="https://github.com/lupidan/apple-signin-unity/blob/master/AppleAuth/AppleAuthManager.cs">zde</a>.</p>
-</li>
-</ul>
+<p>📖 Více info <a href="https://github.com/lupidan/apple-signin-unity/blob/master/AppleAuth/AppleAuthManager.cs">zde</a>.</p>
 </details>
 
 </article>

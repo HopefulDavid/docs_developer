@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#129518; .NET – Enum (V&#253;čtov&#233; typy) | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#129518; .NET – Enum (V&#253;čtov&#233; typy) | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,30 +85,79 @@
         </div>
 
         <article data-uid="">
+<h1 id="-net--enum-výčtové-typy">🧮 .NET – Enum (Výčtové typy)</h1>
 
-<h2 id="enum">Enum</h2>
-<p>= <code>enum</code> je výčtový typ, který umožňuje definovat vlastní datový typ, který může nabývat jedné z předem definovaných hodnot.</p>
+<blockquote>
+<p>🚀 Praktické rady pro použití výčtových typů v .NET, volbu velikosti a tipy pro efektivní správu hodnot.</p>
+</blockquote>
+<hr>
+<h2 id="-co-je-enum">🧩 Co je Enum?</h2>
 <details>
-<summary><span style="color:#1E90FF;">Typy</span></summary>
+<summary><span style="color:#1E90FF;">🔍 Základní principy Enum</span></summary>
 <ul>
-<li><p><code>enum A {}</code>:</p>
-<ul>
-<li>Velký batoh, který může držet hodně věcí (čísel).</li>
-<li>Zabírá 4 bajty místa.</li>
+<li><strong>Enum</strong> je výčtový typ, který umožňuje definovat vlastní datový typ s pevně danými hodnotami.</li>
+<li>Zvyšuje čitelnost kódu a zabraňuje chybám při práci s hodnotami.</li>
 </ul>
-</li>
-<li><p><code>enum A : byte {}</code>:</p>
-<ul>
-<li>Malý batoh, který může držet jen pár věcí (čísel od 0 do 255).</li>
-<li>Zabírá jen 1 bajt místa.</li>
-</ul>
-</li>
-</ul>
+<p><img src="../../images/net_enum_intro.png" alt=""></p>
+</details>
+<hr>
+<h2 id="-typy-enum-podle-velikosti">🗂️ Typy Enum podle velikosti</h2>
+<details>
+<summary><span style="color:#1E90FF;">📦 Velikost a rozsah Enum</span></summary>
+<table>
+<thead>
+<tr>
+<th>Deklarace</th>
+<th>Popis</th>
+<th>Velikost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>enum A {}</code></td>
+<td>Velký batoh, může držet hodně čísel (defaultně <code>int</code>)</td>
+<td>4 bajty</td>
+</tr>
+<tr>
+<td><code>enum A : byte {}</code></td>
+<td>Malý batoh, jen pár čísel (0–255), vhodné pro úsporu místa</td>
+<td>1 bajt</td>
+</tr>
+</tbody>
+</table>
 <div class="TIP">
 <h5>Tip</h5>
-<p>Pokud potřebujete ušetřit místo a máte jen pár čísel, můžete použít <code>byte</code>.</p>
-<p>Pokud však potřebujete hodně čísel nebo negativní čísla, budete muset použít <code>int</code>.</p>
+<p>Pokud potřebujete ušetřit místo a máte jen pár hodnot, použijte <code>byte</code>.<br>
+Pro větší rozsah nebo záporná čísla použijte <code>int</code>.</p>
 </div>
+</details>
+<hr>
+<h2 id="-příklad-použití-enum">🧑‍💻 Příklad použití Enum</h2>
+<details>
+<summary><span style="color:#1E90FF;">📝 Ukázka deklarace a použití</span></summary>
+<pre><code class="lang-csharp">public enum Day
+{
+    Monday,
+    Tuesday,
+    Wednesday,
+    Thursday,
+    Friday,
+    Saturday,
+    Sunday
+}
+
+// Použití
+Day today = Day.Monday;
+Console.WriteLine(today); // Monday
+</code></pre>
+<p><strong>Enum s vlastní velikostí:</strong></p>
+<pre><code class="lang-csharp">public enum Status : byte
+{
+    Ok = 1,
+    Error = 2,
+    Unknown = 3
+}
+</code></pre>
 </details>
 
 </article>

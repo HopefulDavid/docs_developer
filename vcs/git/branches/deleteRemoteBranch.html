@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#128450;️ Git – Smaz&#225;n&#237; vzd&#225;len&#233; větve | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128450;️ Git – Smaz&#225;n&#237; vzd&#225;len&#233; větve | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../../favicon.ico">
@@ -85,37 +85,54 @@
         </div>
 
         <article data-uid="">
+<h1 id="-git--smazání-vzdálené-větve">🗂️ Git – Smazání vzdálené větve</h1>
 
+<blockquote>
+<p>🚀 Praktické rady pro bezpečné odstranění větve z Git serveru (např. GitHub, GitLab).</p>
+</blockquote>
+<hr>
+<h2 id="-upozornění">⚠️ Upozornění</h2>
 <div class="WARNING">
 <h5>Warning</h5>
-<p>Smazání vzdálené větve je nevratná operace.</p>
-<p>Ujisti se, že větev už nepotřebuješ a že všechny potřebné změny byly začleněny do jiných větví.</p>
+<p>Smazání vzdálené větve je <strong>nevratná operace</strong>.<br>
+Ujisti se, že větev už nepotřebuješ a všechny důležité změny jsou začleněny jinde.</p>
 </div>
-<p>Pro smazání vzdálené větve z Git serveru (např. GitHub, GitLab) postupuj takto:</p>
-<ol>
-<li><p>Zobraz si seznam všech větví (lokální i vzdálené):</p>
+<hr>
+<h2 id="-postup-krok-za-krokem">📋 Postup krok za krokem</h2>
+<details>
+<summary><span style="color:#1E90FF;">🔎 Krok 1: Zobrazení všech větví</span></summary>
 <pre><code class="lang-bash">git branch -a
 </code></pre>
-</li>
-<li><p>Smaž vzdálenou větev jedním z těchto příkazů:</p>
+<ul>
+<li>Zobrazí seznam lokálních i vzdálených větví.</li>
+</ul>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🗑️ Krok 2: Smazání vzdálené větve</span></summary>
 <pre><code class="lang-bash">git push origin --delete &lt;nazev-vetve&gt;
 # nebo kratší varianta
 git push origin :&lt;nazev-vetve&gt;
 </code></pre>
+<ul>
+<li>Nahraď <code>&lt;nazev-vetve&gt;</code> skutečným názvem větve, kterou chceš smazat.</li>
+</ul>
 <div class="NOTE">
 <h5>Note</h5>
-<p>Nahraď <code>&lt;nazev-vetve&gt;</code> skutečným názvem větve, kterou chceš smazat.</p>
+<p>Obě varianty provedou totéž – smažou větev na serveru.</p>
 </div>
-</li>
-<li><p>Vyčisti lokální reference na smazané vzdálené větve:</p>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🧹 Krok 3: Vyčištění lokálních referencí</span></summary>
 <pre><code class="lang-bash">git fetch --prune
 </code></pre>
+<ul>
+<li>Odstraní lokální reference na smazané vzdálené větve.</li>
+</ul>
 <div class="TIP">
 <h5>Tip</h5>
-<p>Tento krok není povinný, ale pomáhá udržet lokální repozitář čistý.</p>
+<p>Tento krok není povinný, ale pomáhá udržet repozitář přehledný.</p>
 </div>
-</li>
-</ol>
+</details>
 
 </article>
 

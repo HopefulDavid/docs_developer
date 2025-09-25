@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#128450;️ Git – Nastaven&#237; porovn&#225;v&#225;n&#237; &amp; slučov&#225;n&#237; přes Meld | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128450;️ Git – Nastaven&#237; porovn&#225;v&#225;n&#237; &amp; slučov&#225;n&#237; přes Meld | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,12 +85,26 @@
         </div>
 
         <article data-uid="">
+<h1 id="-git--nastavení-porovnávání--slučování-přes-meld">🗂️ Git – Nastavení porovnávání &amp; slučování přes Meld</h1>
 
-<h2 id="uživatelská-konfigurace">Uživatelská konfigurace</h2>
+<blockquote>
+<p>🚀 Praktické rady pro konfiguraci nástroje Meld jako diff/merge tool v Git na Windows i Linuxu.</p>
+</blockquote>
+<hr>
+<h2 id="-co-je-meld">🔍 Co je Meld?</h2>
+<ul>
+<li><strong>Meld</strong> je vizuální nástroj pro porovnávání a slučování souborů.</li>
+<li>Umožňuje přehledné zobrazení rozdílů a snadné řešení konfliktů.</li>
+</ul>
+<hr>
+<h2 id="-nastavení-meld-jako-diffmerge-tool">⚙️ Nastavení Meld jako diff/merge tool</h2>
 <details>
-<summary><span style="color:#1E90FF;">Porovnání souborů přes aplikaci Meld</span></summary>
-<details>
-<summary><span style="color:#E95A84;">Windows</span></summary>
+<summary><span style="color:#1E90FF;">💻 Windows – Kompletní postup</span></summary>
+<ol>
+<li><p><strong>Nainstalujte Meld</strong><br>
+<a href="https://meldmerge.org/">Stáhnout Meld pro Windows</a></p>
+</li>
+<li><p><strong>Nastavte Git pro použití Meld:</strong></p>
 <pre><code class="lang-bash">git config --global diff.tool meld
 git config --global difftool.meld.path &quot;C:\Program Files\Meld\Meld.exe&quot;
 git config --global difftool.prompt false
@@ -99,9 +113,21 @@ git config --global merge.tool meld
 git config --global mergetool.meld.path &quot;C:\Program Files\Meld\Meld.exe&quot;
 git config --global mergetool.prompt false
 </code></pre>
+</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Cestu k <code>Meld.exe</code> upravte podle umístění instalace.</p>
+</div>
 </details>
 <details>
-<summary><span style="color:#E95A84;">Linux</span></summary>
+<summary><span style="color:#1E90FF;">🐧 Linux – Kompletní postup</span></summary>
+<ol>
+<li><p><strong>Nainstalujte Meld</strong></p>
+<pre><code class="lang-bash">sudo apt install meld
+</code></pre>
+</li>
+<li><p><strong>Nastavte Git pro použití Meld:</strong></p>
 <pre><code class="lang-bash">git config --global diff.tool meld
 git config --global difftool.meld.path &quot;/usr/bin/meld&quot;
 git config --global difftool.prompt false
@@ -110,7 +136,28 @@ git config --global merge.tool meld
 git config --global mergetool.meld.path &quot;/usr/bin/meld&quot;
 git config --global mergetool.prompt false
 </code></pre>
+</li>
+</ol>
 </details>
+<hr>
+<h2 id="-použití-v-praxi">📝 Použití v praxi</h2>
+<details>
+<summary><span style="color:#1E90FF;">🔎 Porovnání změn</span></summary>
+<ul>
+<li>Spusťte porovnání souborů:
+<pre><code class="lang-bash">git difftool
+</code></pre>
+</li>
+</ul>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🔀 Řešení konfliktů při slučování</span></summary>
+<ul>
+<li>Spusťte nástroj pro slučování:
+<pre><code class="lang-bash">git mergetool
+</code></pre>
+</li>
+</ul>
 </details>
 
 </article>

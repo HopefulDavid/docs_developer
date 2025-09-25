@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#127991;️ .NET – Atributy, Datov&#233; anotace &amp; FileHelpers | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#127991;️ .NET – Atributy, Datov&#233; anotace &amp; FileHelpers | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,207 +85,192 @@
         </div>
 
         <article data-uid="">
+<h1 id="-net--atributy-datové-anotace--filehelpers">🏷️ .NET – Atributy, Datové anotace &amp; FileHelpers</h1>
 
-<p>Atributy obsahujá <strong>Metadata</strong></p>
-<h2 id="datové-anotace">Datové anotace</h2>
-<p>= System.ComponentModel.Annotations (namespace)</p>
+<blockquote>
+<p>🚀 Praktické rady pro práci s atributy v .NET, validaci dat pomocí anotací a zpracování souborů s FileHelpers.</p>
+</blockquote>
+<hr>
+<h2 id="-co-jsou-atributy">🧩 Co jsou atributy?</h2>
+<details>
+<summary><span style="color:#1E90FF;">🔍 Základní principy atributů</span></summary>
 <ul>
-<li><p>Nejvíce používané anotace:</p>
-  <details>
-  <summary><span style="color:#1E90FF;">[Required]</span></summary>
-<p>Hodnota je povinná</p>
-  </details>
-  <details>
-  <summary><span style="color:#1E90FF;">[Range]</span></summary>
-<p>Hodnota v číselném rozsahu</p>
-  </details>
-  <details>
-  <summary><span style="color:#1E90FF;">[MaxLength]</span></summary>
-<p>Hodnota s maximální délkou</p>
-  </details>
-  <details>
-  <summary><span style="color:#1E90FF;">[MinLength]</span></summary>
-<p>Hodnota s minimální délkou</p>
-  </details>
-  <details>
-  <summary><span style="color:#1E90FF;">[StringLength]</span></summary>
-<p>Hodnota s maximální a volitelnou minimální délkou</p>
-  </details>
-  <details>
-  <summary><span style="color:#1E90FF;">[RegularExpression]</span></summary>
-<p>Ověření hodnoty z regulárního výrazu</p>
-  </details>
-  <details>
-  <summary><span style="color:#1E90FF;">[DataType]</span></summary>
-<p>Specifikuje datový typ pro hodnotu</p>
-  </details>
-  <details>
-  <summary><span style="color:#1E90FF;">[Display]</span></summary>
-<p>Název a pořadí hodnoty</p>
-  </details>
-</li>
+<li>Atributy přidávají <strong>metadata</strong> ke třídám, metodám, vlastnostem nebo polím.</li>
+<li>Umožňují rozšířit chování kódu bez změny jeho logiky.</li>
+<li>Často se využívají pro validaci, serializaci, mapování dat apod.</li>
 </ul>
+<p><img src="../../images/net_attributes_intro.png" alt=""></p>
+</details>
+<hr>
+<h2 id="-datové-anotace">📝 Datové anotace</h2>
 <details>
-<summary><span style="color:#1E90FF;">Příklad</span></summary>
+<summary><span style="color:#1E90FF;">📚 Nejčastější datové anotace</span></summary>
+<table>
+<thead>
+<tr>
+<th>Anotace</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[Required]</code></td>
+<td>Hodnota je povinná</td>
+</tr>
+<tr>
+<td><code>[Range]</code></td>
+<td>Hodnota v číselném rozsahu</td>
+</tr>
+<tr>
+<td><code>[MaxLength]</code></td>
+<td>Maximální délka hodnoty</td>
+</tr>
+<tr>
+<td><code>[MinLength]</code></td>
+<td>Minimální délka hodnoty</td>
+</tr>
+<tr>
+<td><code>[StringLength]</code></td>
+<td>Maximální a volitelná minimální délka</td>
+</tr>
+<tr>
+<td><code>[RegularExpression]</code></td>
+<td>Ověření hodnoty regulárním výrazem</td>
+</tr>
+<tr>
+<td><code>[DataType]</code></td>
+<td>Specifikuje datový typ</td>
+</tr>
+<tr>
+<td><code>[Display]</code></td>
+<td>Název a pořadí hodnoty</td>
+</tr>
+</tbody>
+</table>
+</details>
 <details>
-<summary><span style="color:#E95A84;">Definice</span></summary>
-<pre><code class="lang-c#">public class Author
+<summary><span style="color:#1E90FF;">🧑‍💻 Příklad použití datových anotací</span></summary>
+<p><strong>Definice třídy:</strong></p>
+<pre><code class="lang-csharp">public class Author
 {
     [Required(ErrorMessage = &quot;{0} is required&quot;)]
-    [StringLength(50, MinimumLength = 3,
-    ErrorMessage = &quot;First Name should be minimum 3 characters and a maximum of 50 characters&quot;)]
+    [StringLength(50, MinimumLength = 3, ErrorMessage = &quot;First Name should be minimum 3 characters and a maximum of 50 characters&quot;)]
     [DataType(DataType.Text)]
     public string FirstName { get; set; }
-    
+
     [Required(ErrorMessage = &quot;{0} is required&quot;)]
-    [StringLength(50, MinimumLength = 3,
-    ErrorMessage = &quot;Last Name should be minimum 3 characters and a maximum of 50 characters&quot;)]
+    [StringLength(50, MinimumLength = 3, ErrorMessage = &quot;Last Name should be minimum 3 characters and a maximum of 50 characters&quot;)]
     [DataType(DataType.Text)]
     public string LastName { get; set; }
-    
+
     [DataType(DataType.PhoneNumber)]
     [Phone]
     public string PhoneNumber { get; set; }
-    
+
     [DataType(DataType.EmailAddress)]
     [EmailAddress]
     public string Email { get; set; }
 }
 </code></pre>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Použití</span></summary>
-<pre><code class="lang-c#">Author author = new Author();
+<p><strong>Validace dat:</strong></p>
+<pre><code class="lang-csharp">Author author = new Author();
 author.FirstName = &quot;Joydip&quot;;
 author.LastName = &quot;&quot;;
 author.PhoneNumber = &quot;1234567890&quot;;
 author.Email = &quot;joydipkanjilal@yahoo.com&quot;;
 
-// Provedení kontroly dat
 ValidationContext context = new ValidationContext(author, null, null);
 List&lt;ValidationResult&gt; validationResults = new List&lt;ValidationResult&gt;();
 bool valid = Validator.TryValidateObject(author, context, validationResults, true);
 if (!valid)
 {
-     foreach (ValidationResult validationResult in validationResults)
+    foreach (ValidationResult validationResult in validationResults)
     {
         Console.WriteLine(&quot;{0}&quot;, validationResult.ErrorMessage);
-     }
+    }
 }
 </code></pre>
-</details>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Vlastní datová anotace</span></summary>
+<summary><span style="color:#1E90FF;">🧬 Vlastní datová anotace</span></summary>
 <ol>
-<li><p>Vytvořit třídu a rozšířit ji o třídu <code>ValidationAttribute</code></p>
-</li>
-<li><p>Přepsat metodu <code>IsValid</code></p>
-<ul>
-<li><p>Definice</p>
-<pre><code class="lang-c#">[AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
+<li>Vytvoř třídu dědící z <code>ValidationAttribute</code>.</li>
+<li>Přepiš metodu <code>IsValid</code>.</li>
+</ol>
+<p><strong>Definice:</strong></p>
+<pre><code class="lang-csharp">[AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
 public class IsEmptyAttribute : ValidationAttribute
 {
-     public override bool IsValid(object value)
-     {
-         var inputValue = value as string;
-         return !string.IsNullOrEmpty(inputValue);
-     }
+    public override bool IsValid(object value)
+    {
+        var inputValue = value as string;
+        return !string.IsNullOrEmpty(inputValue);
+    }
 }
 </code></pre>
-</li>
-<li><p>Použití</p>
-<pre><code class="lang-c#">[IsEmpty(ErrorMessage = &quot;Should not be null or empty.&quot;)]
+<p><strong>Použití:</strong></p>
+<pre><code class="lang-csharp">[IsEmpty(ErrorMessage = &quot;Should not be null or empty.&quot;)]
 public string FirstName { get; set; }
 
 [IsEmpty(ErrorMessage = &quot;Should not be null or empty.&quot;)]
 public string LastName { get; set; }
 </code></pre>
-</li>
-</ul>
-</li>
-</ol>
 </details>
-<h2 id="filehelpers">FileHelpers</h2>
+<hr>
+<h2 id="-filehelpers--zpracování-souborů">📄 FileHelpers – Zpracování souborů</h2>
 <div class="IMPORTANT">
 <h5>Important</h5>
 <p>Nepodporuje:</p>
-<p>Záznamy s proměnnou délkou (každý záznam musí mít stejný počet polí)</p>
-<p>Změnu formátu za běhu ( každý záznam musí mít stejný formát po celou dobu běhu programu)</p>
-</div>
 <ul>
-<li><p>Nejvíce používané atributy:</p>
-<h2 id="třída">Třída</h2>
-  <details>
-  <summary><span style="color:#1E90FF;">[DelimitedRecord]</span></summary>
-<p>Záznamy s oddělovači.</p>
-  </details>
-  <details>
-  <summary><span style="color:#1E90FF;">[FixedLengthRecord]</span></summary>
-<p>Záznamy s pevnou délkou.</p>
-  </details>
-<h2 id="pole">Pole</h2>
-  <details>
-  <summary><span style="color:#1E90FF;">[FieldTrim]</span></summary>
-<p>Odstranění bílých znaků z hodnoty.</p>
-  </details>
-  <details>
-  <summary><span style="color:#1E90FF;">[FieldOptional]</span></summary>
-<p>Volitelný sloupec.</p>
-<p>Pokud sloupec v souboru chybí, nebude to považováno za chybu.</p>
-  </details>
-  <details>
-  <summary><span style="color:#1E90FF;">[FieldIgnore]</span></summary>
-<p>Ignoruje sloupec při čtení nebo zápisu souboru.</p>
-  </details>
-  <details>
-  <summary><span style="color:#1E90FF;">[FieldConverter]</span></summary>
-<p>Přiřazení konvertoru.</p>
-<p>Konvertor = třída, převádí hodnoty mezi textovou reprezentací v souboru a hodnotou v datech.</p>
-  </details>
-  <details>
-  <summary><span style="color:#1E90FF;">[FieldOrder]</span></summary>
-<p>Určuje pořadí sloupců pro čtení nebo zápis souboru.</p>
-  </details>
-  <details>
-  <summary><span style="color:#1E90FF;">[FieldQuoted]</span></summary>
-<p>Pokud je hodnota v souboru uvedena v uvozovkách.</p>
-  </details>
-</li>
+<li>Záznamy s proměnnou délkou (každý záznam musí mít stejný počet polí)</li>
+<li>Změnu formátu za běhu (formát musí být stejný po celou dobu běhu programu)</li>
 </ul>
+</div>
 <details>
-<summary><span style="color:#1E90FF;">Příklad</span></summary>
-<details>
-<summary><span style="color:#E95A84;">Definice třídy pro záznamy</span></summary>
-<p>Soubory s oddělovači: <code>[DelimitedRecord(&quot;,&quot;)]</code></p>
-<p>Soubory s pevnou délkou záznamu: <code>[FixedLengthRecord]</code></p>
+<summary><span style="color:#1E90FF;">🧩 Nejčastější atributy FileHelpers</span></summary>
+<h3 id="třída">Třída</h3>
+<ul>
+<li><code>[DelimitedRecord]</code> – Záznamy s oddělovači</li>
+<li><code>[FixedLengthRecord]</code> – Záznamy s pevnou délkou</li>
+</ul>
+<h3 id="pole">Pole</h3>
+<ul>
+<li><code>[FieldTrim]</code> – Odstranění bílých znaků</li>
+<li><code>[FieldOptional]</code> – Volitelný sloupec</li>
+<li><code>[FieldIgnore]</code> – Ignoruje sloupec</li>
+<li><code>[FieldConverter]</code> – Přiřazení konvertoru</li>
+<li><code>[FieldOrder]</code> – Pořadí sloupců</li>
+<li><code>[FieldQuoted]</code> – Hodnota v uvozovkách</li>
+</ul>
 </details>
 <details>
-<summary><span style="color:#E95A84;">Přečíst nebo zapsat soubor</span></summary>
-<ul>
-<li><p>Čtení ze souboru:</p>
-<pre><code class="lang-c#">var engine = new FileHelperEngine&lt;Order&gt;();
-Order[] result = engine.ReadFile(&quot;Input.txt&quot;);	
+<summary><span style="color:#1E90FF;">📝 Příklad použití FileHelpers</span></summary>
+<p><strong>Definice třídy:</strong></p>
+<pre><code class="lang-csharp">[DelimitedRecord(&quot;,&quot;)]
+public class Order
+{
+    [FieldConverter(typeof(MyCustomConverter))]
+    public int OrderID;
+    // ...
+}
 </code></pre>
-</li>
-<li><p>Zápis do souboru:</p>
-<pre><code class="lang-c#">var engine = new FileHelperEngine&lt;Order&gt;();
+<p><strong>Čtení souboru:</strong></p>
+<pre><code class="lang-csharp">var engine = new FileHelperEngine&lt;Order&gt;();
+Order[] result = engine.ReadFile(&quot;Input.txt&quot;);
+</code></pre>
+<p><strong>Zápis do souboru:</strong></p>
+<pre><code class="lang-csharp">var engine = new FileHelperEngine&lt;Order&gt;();
 engine.WriteFile(&quot;Output.txt&quot;, result);
 </code></pre>
-</li>
-</ul>
 </details>
-</details>
-<h3 id="vlastní-konvertor">Vlastní konvertor</h3>
-<ol>
-<li>Vytvořit třídu a rozšířit ji o třídu <code>ConverterBase</code>.</li>
-<li>Přepsat metody <code>StringToField</code> a <code>FieldToString.</code></li>
-</ol>
-<ul>
-<li><p>Příklad:</p>
 <details>
-<summary><span style="color:#1E90FF;">Definice</span></summary>
-<pre><code class="lang-c#">public class MyCustomConverter : ConverterBase
+<summary><span style="color:#1E90FF;">🧬 Vlastní konvertor</span></summary>
+<ol>
+<li>Vytvoř třídu dědící z <code>ConverterBase</code>.</li>
+<li>Přepiš metody <code>StringToField</code> a <code>FieldToString</code>.</li>
+</ol>
+<p><strong>Definice:</strong></p>
+<pre><code class="lang-csharp">public class MyCustomConverter : ConverterBase
 {
     public override object StringToField(string from)
     {
@@ -299,19 +284,6 @@ engine.WriteFile(&quot;Output.txt&quot;, result);
 }
 </code></pre>
 </details>
-<details>
-<summary><span style="color:#1E90FF;">Použití</span></summary>
-<pre><code class="lang-c#">[DelimitedRecord(&quot;,&quot;)]
-public class Order
-{
-    [FieldConverter(typeof(MyCustomConverter))]
-    public int OrderID;
-    // ...
-}
-</code></pre>
-</details>
-</li>
-</ul>
 
 </article>
 

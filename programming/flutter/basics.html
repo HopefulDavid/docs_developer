@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title> | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/flutter/basics.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
+            Dokumentace pro v&#253;voj&#225;ře
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<h2 id="základní-znalosti">Základní znalosti</h2>
+<h3 id="co-je-riverpod">Co je Riverpod?</h3>
+<ul>
+<li><strong>Riverpod</strong> je knihovna pro správu stavu ve Flutteru.</li>
+<li>Pomáhá jednoduše sdílet data (např. uživatele, nastavení, seznamy) mezi různými částmi aplikace.</li>
+<li>Místo toho, abys data tahal ručně, použiješ tzv. <strong>provider</strong> a data si &quot;vytáhneš&quot; kdekoliv v aplikaci.</li>
+</ul>
+<p><strong>Příklad:</strong><br>
+Chci vědět, kdo je přihlášený uživatel. Vytvořím provider a pak ho použiju v jakémkoliv widgetu.</p>
+<hr>
+<h2 id="1-co-je-statelesswidget">1. Co je <code>StatelessWidget</code>?</h2>
+<ul>
+<li><strong>Neumí si nic pamatovat.</strong></li>
+<li>Jen zobrazí UI podle vstupních dat.</li>
+<li>Nepoužívá žádný vnitřní stav, žádné změny, žádné reakce na události.</li>
+</ul>
+<p><strong>Použití:</strong><br>
+Když potřebuješ jen vykreslit něco jednoduchého, co se nemění.</p>
+<hr>
+<h2 id="2-co-je-statefulwidget">2. Co je <code>StatefulWidget</code>?</h2>
+<ul>
+<li><strong>Umí si pamatovat stav.</strong></li>
+<li>Může reagovat na změny, ukládat si data, spouštět kód při startu (<code>initState</code>) a při zavření (<code>dispose</code>).</li>
+<li>Hodí se, když potřebuješ např. načítat data, čekat na odpověď, reagovat na kliknutí, animace apod.</li>
+</ul>
+<p><strong>Použití:</strong><br>
+Když stránka potřebuje něco sledovat, měnit, nebo reagovat na události.</p>
+<hr>
+<h2 id="3-co-je-consumerwidget">3. Co je <code>ConsumerWidget</code>?</h2>
+<ul>
+<li><strong>Speciální typ StatelessWidgetu pro Riverpod.</strong></li>
+<li>Umožňuje jednoduše číst data z providerů (Riverpod).</li>
+<li>Nemá vlastní stav, ale umí reagovat na změny v datech z provideru.</li>
+</ul>
+<p><strong>Použití:</strong><br>
+Když chceš zobrazit data z Riverpod provideru, ale nepotřebuješ vlastní stav.</p>
+<hr>
+<h2 id="kdy-použít-co">Kdy použít co?</h2>
+<ul>
+<li><strong>StatelessWidget</strong> – jednoduché zobrazení, žádný stav, žádné změny.</li>
+<li><strong>StatefulWidget</strong> – složitější logika, potřeba pamatovat si stav, reagovat na změny, používat <code>initState</code>/<code>dispose</code>.</li>
+<li><strong>ConsumerWidget</strong> – jednoduché zobrazení dat z Riverpod provideru, bez vlastního stavu.</li>
+</ul>
+<hr>
+<h2 id="proč-není-všude-consumerwidget">Proč není všude <code>ConsumerWidget</code>?</h2>
+<ul>
+<li><code>ConsumerWidget</code> neumí mít vlastní stav ani životní cyklus (<code>initState</code>, <code>dispose</code>).</li>
+<li>Pokud potřebuješ vlastní stav nebo reagovat na start/zavření stránky, použij <code>StatefulWidget</code>.</li>
+<li>Pokud jen čteš data z provideru a nepotřebuješ stav, použij <code>ConsumerWidget</code>.</li>
+</ul>
+<hr>
+<h2 id="jednoduché-příklady">Jednoduché příklady</h2>
+<pre><code class="lang-dart">// 1. StatelessWidget – jen vykreslí text
+class JednoduchaStranka extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Text('Ahoj světe!');
+  }
+}
+
+// 2. ConsumerWidget – čte data z provideru (Riverpod)
+final userProvider = Provider((ref) =&gt; 'Pepa');
+
+class HomePage extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userProvider);
+    return Text('Ahoj, $user');
+  }
+}
+
+// 3. StatefulWidget – umí si pamatovat stav a reagovat na změny
+class PurchaseCodePage extends StatefulWidget {
+  @override
+  State&lt;PurchaseCodePage&gt; createState() =&gt; PurchaseCodePageState();
+}
+
+class PurchaseCodePageState extends State&lt;PurchaseCodePage&gt; {
+  bool _loading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Tady začíná sledování nákupu
+  }
+
+  @override
+  void dispose() {
+    // Tady končí sledování nákupu
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _loading ? CircularProgressIndicator() : Text('Koupit aplikaci');
+  }
+}
+</code></pre>
+<hr>
+<h2 id="shrnutí-v-jedné-větě">Shrnutí v jedné větě</h2>
+<ul>
+<li><strong>StatelessWidget</strong> = nic si nepamatuje, jen vykreslí.</li>
+<li><strong>StatefulWidget</strong> = umí si pamatovat, reaguje na změny, složitější logika.</li>
+<li><strong>ConsumerWidget</strong> = jednoduché zobrazení dat z Riverpod provideru.</li>
+<li><strong>Riverpod</strong> = knihovna na sdílení a správu dat v aplikaci.</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/programming/flutter/basics.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

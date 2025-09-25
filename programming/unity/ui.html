@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#128421;️ Unity – UI syst&#233;m &amp; Tipy | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128421;️ Unity – UI syst&#233;m &amp; Tipy | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,34 +85,70 @@
         </div>
 
         <article data-uid="">
+<h1 id="-unity--ui-systém--tipy">🖥️ Unity – UI systém &amp; Tipy</h1>
 
-<h2 id="ui">UI</h2>
-<p>Původní systém pro vytváření uživatelského rozhraní v Unity.</p>
+<blockquote>
+<p>🚀 Praktické rady pro práci s UI v Unity, včetně nastavení tlačítek, detekce kliknutí a užitečných vlastností komponent.</p>
+</blockquote>
+<hr>
+<h2 id="-co-je-ui-systém-v-unity">🧩 Co je UI systém v Unity?</h2>
 <details>
-<summary><span style="color:#1E90FF;">Tlačítko (Button)</span></summary>
-<details>
-<summary><span style="color:#E95A84;">Rozsah detekce kliknutí (dle průhlednosti obrázku)</span></summary>
-<p><code>alphaHitTestMinimumThreshold</code> je používána u komponenty <code>Image</code></p>
-<p>Určuje minimální prahovou hodnotu alfa (průhlednosti), při které bude kliknutí na tento obrázek zaregistrováno.</p>
-<p>Nabývá rozsah hodnoty (0 až 1)</p>
+<summary><span style="color:#1E90FF;">🔍 Základní principy UI</span></summary>
 <ul>
-<li><p>Hodnota <code>0</code> znamená, že kliknutí bude zaregistrováno i na úplně průhledných částech obrázku.</p>
-</li>
-<li><p>Hodnota <code>1</code> znamená, že kliknutí bude zaregistrováno pouze na zcela neprůhledných částech obrázku.</p>
-</li>
+<li>Umožňuje vytvářet interaktivní prvky (tlačítka, texty, obrázky).</li>
+<li>Prvky UI jsou spravovány pomocí <strong>Canvas</strong>.</li>
+<li>Podporuje animace, eventy a dynamické změny.</li>
 </ul>
-<p>Například, pokud nastavíme <code>alphaHitTestMinimumThreshold</code> na <code>0.5</code>, kliknutí bude zaregistrováno pouze na částech
-obrázku, které mají alfa hodnotu alespoň 0.5 (tedy nejsou příliš průhledné).</p>
-<p>Příklad použití:</p>
-<pre><code class="lang-c#">using UnityEngine;
-using System.Collections;
-using UnityEngine.UI; // Required when Using UI elements.
+<p><img src="../../images/unity_ui_intro.png" alt=""></p>
+</details>
+<hr>
+<h2 id="-tlačítko-button">🔘 Tlačítko (Button)</h2>
+<details>
+<summary><span style="color:#1E90FF;">🖱️ Vlastnosti tlačítka</span></summary>
+<ul>
+<li>Tlačítko je základní interaktivní prvek UI.</li>
+<li>Lze mu přiřadit akce na kliknutí.</li>
+<li>Podporuje různé vizuální styly a animace.</li>
+</ul>
+<p><img src="../../images/unity_ui_button.png" alt=""></p>
+</details>
+<hr>
+<h2 id="-rozsah-detekce-kliknutí-podle-průhlednosti">🟣 Rozsah detekce kliknutí podle průhlednosti</h2>
+<details>
+<summary><span style="color:#E95A84;">🩸 `alphaHitTestMinimumThreshold`</span></summary>
+<table>
+<thead>
+<tr>
+<th>🏷️ Vlastnost</th>
+<th>💡 Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>alphaHitTestMinimumThreshold</code></td>
+<td>Určuje minimální alfa hodnotu pro detekci kliknutí na obrázek.</td>
+</tr>
+<tr>
+<td>Rozsah hodnot</td>
+<td>0 (klik i na průhledné části) až 1 (jen zcela neprůhledné části)</td>
+</tr>
+<tr>
+<td>Použití</td>
+<td>Ideální pro kruhová nebo nepravidelná tlačítka</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>📌 Nastav hodnotu podle požadované citlivosti na průhlednost.</p>
+</blockquote>
+<h3 id="příklad-použití-v-c">Příklad použití v C#:</h3>
+<pre><code class="lang-csharp">using UnityEngine;
+using UnityEngine.UI;
 
 public class ExampleClass : MonoBehaviour
 {
     public Image theButton;
 
-    // Use this for initialization
     void Start()
     {
         theButton.alphaHitTestMinimumThreshold = 0.5f;
@@ -121,9 +157,8 @@ public class ExampleClass : MonoBehaviour
 </code></pre>
 <div class="TIP">
 <h5>Tip</h5>
-<p>Lze použít například při tvorbě kruhového tlačítka.</p>
+<p>Vhodné například pro kruhová tlačítka, kde nechceme registrovat kliknutí na průhledné okraje.</p>
 </div>
-</details>
 </details>
 
 </article>

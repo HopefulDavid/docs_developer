@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#128450;️ Git – Pull Request (PR) | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128450;️ Git – Pull Request (PR) | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../../favicon.ico">
@@ -85,63 +85,82 @@
         </div>
 
         <article data-uid="">
+<h1 id="-git--pull-request-pr">🗂️ Git – Pull Request (PR)</h1>
 
-<h3 id="-kdy-použít-pull-request-pr">🟩 <strong>Kdy použít Pull Request (PR):</strong></h3>
-<ul>
-<li><strong>Týmová spolupráce</strong> – ostatní vývojáři mají možnost kód zkontrolovat.</li>
-<li><strong>Code review</strong>, komentáře, schválení.</li>
-<li><strong>Automatizované testy a CI/CD pipeline</strong> se spustí před sloučením.</li>
-<li><strong>Audit a historie</strong> – vše je dohledatelné, kdo co schválil a proč.</li>
-</ul>
 <blockquote>
-<p>✅ <strong>Typické v profesionálních projektech</strong>, GitHub, GitLab, Bitbucket atd.</p>
+<p>🚀 Praktické rady, jak funguje <strong>Pull Request</strong>, kdy a proč ho použít.</p>
 </blockquote>
 <hr>
-<h3 id="-kdy-použít-přímo-git-merge">🟨 <strong>Kdy použít přímo <code>git merge</code>:</strong></h3>
+<h2 id="-co-je-pull-request">🔎 Co je Pull Request?</h2>
 <ul>
-<li><strong>Jsi sám na projektu</strong> nebo děláš rychlý merge bez potřeby review.</li>
-<li>Chceš rychle sloučit větev lokálně (např. <code>feature/login</code> do <code>develop</code>).</li>
-<li>Nepotřebuješ historii PR ani schvalovací proces.</li>
+<li><strong>Pull Request (PR)</strong> je žádost o začlenění změn z jedné větve do jiné (typicky z <code>feature</code> do <code>main</code> nebo <code>develop</code>).</li>
+<li>Umožňuje týmovou kontrolu, diskusi, testování a schválení změn před sloučením.</li>
 </ul>
-<pre><code class="lang-bash">git checkout develop
-git merge feature/login-page
+<hr>
+<h2 id="-typický-workflow-pr">🧩 Typický workflow PR</h2>
+<details>
+<summary><span style="color:#1E90FF;">📝 Krok 1: Vytvoření nové větve</span></summary>
+<pre><code class="lang-bash">git checkout -b feature/nova-funkce
+# Vývoj, commity...
+git push origin feature/nova-funkce
 </code></pre>
-<blockquote>
-<p>⚠️ Tento merge probíhá bez schválení a obvykle <strong>lokálně</strong> – pak je třeba pushnout změny.</p>
-</blockquote>
+<ul>
+<li>Větev pushni na remote, aby byla dostupná pro PR.</li>
+</ul>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🔗 Krok 2: Vytvoření PR na serveru</span></summary>
+<ul>
+<li>Otevři webové rozhraní (GitHub, GitLab, Bitbucket).</li>
+<li>Vyber zdrojovou (<code>feature/nova-funkce</code>) a cílovou (<code>main</code>/<code>develop</code>) větev.</li>
+<li>Přidej popis změn, případně označ recenzenty.</li>
+</ul>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Popiš stručně, co PR řeší a proč je důležitý.</p>
+</div>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">👀 Krok 3: Code review & testy</span></summary>
+<ul>
+<li>Tým provede <strong>code review</strong> – komentáře, návrhy, schválení.</li>
+<li>Automaticky se spustí <strong>CI/CD pipeline</strong> (testy, build).</li>
+<li>Případné úpravy proveď v původní větvi, PR se automaticky aktualizuje.</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Review zvyšuje kvalitu kódu a snižuje riziko chyb.</p>
+</div>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">✅ Krok 4: Schválení & merge PR</span></summary>
+<ul>
+<li>Po schválení a úspěšných testech lze PR sloučit (merge).</li>
+<li>Většina platforem nabízí různé typy merge:
+<ul>
+<li><strong>Merge commit</strong> (zachová historii)</li>
+<li><strong>Squash</strong> (sloučí commity do jednoho)</li>
+<li><strong>Rebase</strong> (přepíše historii)</li>
+</ul>
+</li>
+</ul>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Po merge PR se obvykle maže zdrojová větev.</p>
+</div>
+</details>
 <hr>
-<h3 id="-shrnutí">🧠 Shrnutí</h3>
-<table>
-<thead>
-<tr>
-<th>Scénář</th>
-<th>Použij PR?</th>
-<th>Použij Merge?</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Pracuješ sám</td>
-<td>❌</td>
-<td>✅</td>
-</tr>
-<tr>
-<td>Týmový projekt</td>
-<td>✅</td>
-<td>❌ <em>(většinou)</em></td>
-</tr>
-<tr>
-<td>Chceš review, testy, audit</td>
-<td>✅</td>
-<td>❌</td>
-</tr>
-<tr>
-<td>Lokální rychlé sloučení</td>
-<td>❌</td>
-<td>✅</td>
-</tr>
-</tbody>
-</table>
+<h2 id="-výhody-pull-requestu">📋 Výhody Pull Requestu</h2>
+<details>
+<summary><span style="color:#1E90FF;">✅ Proč používat PR?</span></summary>
+<ul>
+<li>Týmová kontrola a diskuse nad změnami</li>
+<li>Automatizované testy před sloučením</li>
+<li>Jasná historie, kdo co schválil</li>
+<li>Možnost auditovat změny zpětně</li>
+<li>Zvyšuje kvalitu a bezpečnost kódu</li>
+</ul>
+</details>
 
 </article>
 

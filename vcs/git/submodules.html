@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Git Submodules | V&#253;voj&#225;ř </title>
+      <title>&#128450;️ Git – Submoduly: Přehled &amp; použit&#237; | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Git Submodules | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128450;️ Git – Submoduly: Přehled &amp; použit&#237; | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,154 +85,158 @@
         </div>
 
         <article data-uid="">
-<h1 id="git-submodules">Git Submodules</h1>
+<h1 id="-git--submoduly-přehled--použití">🗂️ Git – Submoduly: Přehled &amp; použití</h1>
 
-<p>Umožňuje vložit jeden Git repozitář do jiného jako podadresář, přičemž si oba repozitáře zachovávají nezávislost.</p>
-<p>Submoduly řeší problém, kdy potřebujete:</p>
+<blockquote>
+<p>🚀 Praktické rady pro správu externích repozitářů pomocí submodulů v Git.</p>
+</blockquote>
+<hr>
+<h2 id="-co-jsou-submoduly">🔎 Co jsou submoduly?</h2>
 <ul>
-<li>Zahrnout externí kód do svého projektu</li>
-<li>Udržovat přesnou verzi závislostí</li>
-<li>Pracovat na více souvisejících projektech současně</li>
+<li>Umožňují vložit jeden Git repozitář do jiného jako podadresář.</li>
+<li>Zachovávají nezávislost obou repozitářů.</li>
+<li>Vhodné pro správu závislostí, sdílený kód nebo více projektů najednou.</li>
 </ul>
+<hr>
+<h2 id="-struktura-projektu-se-submodulem">🏗️ Struktura projektu se submodulem</h2>
 <details>
-<summary><span style="color:#1E90FF;">Základní struktura</span></summary>
+<summary><span style="color:#1E90FF;">📁 Ukázková struktura</span></summary>
 <pre><code class="lang-plaintext">HlavniProjekt/
-  ├── .git/                  # Git repozitář hlavního projektu
-  ├── .gitmodules            # Konfigurace submodulů
-  ├── BeznyAdresar/          # Běžný adresář v hlavním projektu
-  └── Submodul/              # Podadresář obsahující submodul
-      └── .git/              # Samostatný git repozitář
+  ├── .git/
+  ├── .gitmodules
+  ├── BeznyAdresar/
+  └── Submodul/
+      └── .git/
 </code></pre>
 </details>
 <hr>
+<h2 id="-základní-příkazy">⚙️ Základní příkazy</h2>
 <details>
-<summary><span style="color:#1E90FF;">Základní příkazy</span></summary>
-<h3 id="přidání-submodulu">Přidání submodulu</h3>
-<pre><code class="lang-bash"># Syntaxe: git submodule add [URL] [cesta]
-git submodule add https://github.com/uzivatel/knihovna libs/knihovna
+<summary><span style="color:#1E90FF;">➕ Přidání submodulu</span></summary>
+<pre><code class="lang-bash">git submodule add https://github.com/uzivatel/knihovna libs/knihovna
 </code></pre>
-<h3 id="klonování-projektu-se-submoduly">Klonování projektu se submoduly</h3>
-<pre><code class="lang-bash"># Způsob 1: Vše najednou
-git clone --recursive https://github.com/uzivatel/projekt
-
-# Způsob 2: Nejprve projekt, pak inicializace submodulů
-git clone https://github.com/uzivatel/projekt
+</details>
+<details>
+<summary><span style="color:#1E90FF;">📥 Klonování projektu se submoduly</span></summary>
+<ul>
+<li>Vše najednou:
+<pre><code class="lang-bash">git clone --recursive https://github.com/uzivatel/projekt
+</code></pre>
+</li>
+<li>Postupně:
+<pre><code class="lang-bash">git clone https://github.com/uzivatel/projekt
 git submodule init
 git submodule update
 </code></pre>
-<h3 id="aktualizace-submodulů">Aktualizace submodulů</h3>
-<pre><code class="lang-bash"># Aktualizace všech submodulů na nejnovější commit z remote
-git submodule update --remote
-
-# Aktualizace konkrétního submodulu
-cd cesta/k/submodulu
+</li>
+</ul>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🔄 Aktualizace submodulů</span></summary>
+<ul>
+<li>Všechny submoduly:
+<pre><code class="lang-bash">git submodule update --remote
+</code></pre>
+</li>
+<li>Konkrétní submodul:
+<pre><code class="lang-bash">cd cesta/k/submodulu
 git checkout main
 git pull
 cd ../..
 git add cesta/k/submodulu
 git commit -m &quot;Aktualizován submodul na nejnovější verzi&quot;
 </code></pre>
+</li>
+</ul>
 </details>
 <hr>
+<h2 id="-praktický-příklad-v-unity-projektu">🎮 Praktický příklad v Unity projektu</h2>
 <details>
-<summary><span style="color:#1E90FF;">Praktický příklad použití v Unity projektu</span></summary>
-<h3 id="vhodná-struktura">Vhodná struktura</h3>
+<summary><span style="color:#1E90FF;">🧩 Struktura & přidání submodulů</span></summary>
 <pre><code class="lang-plaintext">UnityProjekt/
   ├── .git/
   ├── .gitmodules
   └── Assets/
-      ├── Game/             # Váš herní kód (součást hlavního repozitáře)
-      └── Plugins/          # Složka pro externí knihovny
-          ├── UI-Framework/ # Submodul s UI frameworkem
-          │   └── .git/
-          └── Network/      # Submodul s síťovou knihovnou
-              └── .git/
+      ├── Game/
+      └── Plugins/
+          ├── UI-Framework/
+          └── Network/
 </code></pre>
-<h3 id="vytvoření-této-struktury">Vytvoření této struktury</h3>
-<pre><code class="lang-bash"># Vytvoření hlavního repozitáře
-cd UnityProjekt
+<pre><code class="lang-bash">cd UnityProjekt
 git init
-
-# Přidání UI frameworku jako submodulu
 git submodule add https://github.com/author/ui-framework Assets/Plugins/UI-Framework
-
-# Přidání síťové knihovny jako submodulu
 git submodule add https://github.com/author/network-lib Assets/Plugins/Network
 </code></pre>
 </details>
 <hr>
+<h2 id="-tipy-pro-práci-se-submoduly">💡 Tipy pro práci se submoduly</h2>
 <details>
-<summary><span style="color:#1E90FF;">Tipy pro práci se submoduly</span></summary>
-<ol>
-<li><p><strong>Přepínání mezi verzemi</strong></p>
+<summary><span style="color:#1E90FF;">🔀 Přepínání verzí submodulu</span></summary>
 <pre><code class="lang-bash">cd cesta/k/submodulu
 git checkout v2.0.0
 cd ../..
 git add cesta/k/submodulu
 git commit -m &quot;Změněna verze submodulu na v2.0.0&quot;
 </code></pre>
-</li>
-<li><p><strong>Úpravy v submodulu</strong></p>
-<pre><code class="lang-bash"># Změny v submodulu
-cd cesta/k/submodulu
+</details>
+<details>
+<summary><span style="color:#1E90FF;">✏️ Úpravy v submodulu</span></summary>
+<pre><code class="lang-bash">cd cesta/k/submodulu
 git checkout -b oprava-chyby
 # proveďte změny
 git commit -am &quot;Oprava chyby&quot;
 git push origin oprava-chyby
 # vytvořte pull request v repozitáři submodulu
 </code></pre>
-</li>
-<li><p><strong>Odstranění submodulu</strong></p>
-<pre><code class="lang-bash"># 1. Odebrat z .gitmodules
-git submodule deinit cesta/k/submodulu
-# 2. Odebrat z .git/config
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🗑️ Odstranění submodulu</span></summary>
+<pre><code class="lang-bash">git submodule deinit cesta/k/submodulu
 git rm --cached cesta/k/submodulu
-# 3. Smazat adresář
 rm -rf cesta/k/submodulu
 rm -rf .git/modules/cesta/k/submodulu
-# 4. Commit
 git commit -m &quot;Odstraněn submodul&quot;
 </code></pre>
-</li>
-</ol>
 </details>
 <hr>
+<h2 id="-řešení-častých-problémů">🛠️ Řešení častých problémů</h2>
 <details>
-<summary><span style="color:#1E90FF;">Časté problémy a řešení</span></summary>
-<ol>
-<li><p><strong>Submodul v &quot;detached HEAD&quot; stavu</strong></p>
+<summary><span style="color:#1E90FF;">🧩 Submodul v "detached HEAD" stavu</span></summary>
 <pre><code class="lang-bash">cd cesta/k/submodulu
 git checkout main
 </code></pre>
-</li>
-<li><p><strong>Submodul ukazuje změny i když žádné nemáte</strong></p>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🔄 Submodul ukazuje změny i když žádné nemáte</span></summary>
 <pre><code class="lang-bash">git submodule update
 </code></pre>
-</li>
-<li><p><strong>Změna URL submodulu</strong></p>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🔗 Změna URL submodulu</span></summary>
 <pre><code class="lang-bash">git config --file=.gitmodules submodule.nazev.url NOVA_URL
 git submodule sync
 </code></pre>
-</li>
-<li><p><strong>Kontrola stavu submodulů</strong></p>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">📋 Kontrola stavu submodulů</span></summary>
 <pre><code class="lang-bash">git submodule status
 </code></pre>
-</li>
-</ol>
 </details>
 <hr>
+<h2 id="-výhody--nevýhody-submodulů">⚖️ Výhody &amp; nevýhody submodulů</h2>
 <details>
-<summary><span style="color:#1E90FF;">Výhody a nevýhody</span></summary>
-<h3 id="výhody-submodulů">Výhody submodulů</h3>
+<summary><span style="color:#1E90FF;">✅ Výhody</span></summary>
 <ul>
 <li>Přesná kontrola verzí externích knihoven</li>
-<li>Možnost přímo upravovat a přispívat do závislostí</li>
-<li>Lepší organizace kódu v komplexních projektech</li>
+<li>Možnost přímých úprav závislostí</li>
+<li>Lepší organizace v komplexních projektech</li>
 </ul>
-<h3 id="nevýhody-submodulů">Nevýhody submodulů</h3>
+</details>
+<details>
+<summary><span style="color:#E95A84;">❌ Nevýhody</span></summary>
 <ul>
-<li>Vyšší složitost správy repozitáře</li>
-<li>Nutnost vždy aktualizovat hlavní repozitář po změnách v submodulech</li>
+<li>Vyšší složitost správy</li>
+<li>Nutnost synchronizace hlavního repozitáře po změnách v submodulech</li>
 <li>Strmější učící křivka pro nové členy týmu</li>
 </ul>
 </details>

@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#128450;️ Git – Vytvořen&#237; &amp; push nov&#233; větve na remote | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128450;️ Git – Vytvořen&#237; &amp; push nov&#233; větve na remote | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../../favicon.ico">
@@ -85,33 +85,58 @@
         </div>
 
         <article data-uid="">
+<h1 id="-git--vytvoření--push-nové-větve-na-remote">🗂️ Git – Vytvoření &amp; push nové větve na remote</h1>
 
-<p>Pro umístění (pushnutí) nové větve <code>develop</code> na Git server (např. GitHub, GitLab) postupuj takto:</p>
-<ol>
-<li><p>Vytvoř branch <code>develop</code> (pokud ji ještě nemáš):</p>
+<blockquote>
+<p>🚀 Praktické rady pro založení a umístění nové větve (<code>develop</code>) na Git server (např. GitHub, GitLab).</p>
+</blockquote>
+<hr>
+<h2 id="-vytvoření-nové-větve">🌱 Vytvoření nové větve</h2>
+<details>
+<summary><span style="color:#1E90FF;">🛠️ Krok 1: Založení větve</span></summary>
 <pre><code class="lang-bash">git checkout -b develop
 </code></pre>
-</li>
-<li><p>Ujisti se, že máš vzdálený repozitář:</p>
+<ul>
+<li>Vytvoří novou větev <code>develop</code> a přepne na ni.</li>
+</ul>
+</details>
+<hr>
+<h2 id="-nastavení-vzdáleného-repozitáře">🌐 Nastavení vzdáleného repozitáře</h2>
+<details>
+<summary><span style="color:#1E90FF;">🔗 Krok 2: Ověření remote</span></summary>
 <pre><code class="lang-bash">git remote -v
 </code></pre>
+<ul>
+<li>Zobrazí nastavené vzdálené repozitáře.</li>
+</ul>
 <div class="NOTE">
 <h5>Note</h5>
-<p>Pokud není nastaven, použij např. <code>git remote add origin &lt;url&gt;</code></p>
+<p>Pokud není remote nastaven, použij:<br>
+<code>git remote add origin &lt;url&gt;</code></p>
 </div>
-</li>
-<li><p>Pushni větev <code>develop</code> na remote:</p>
+</details>
+<hr>
+<h2 id="-push-větve-na-server">🚀 Push větve na server</h2>
+<details>
+<summary><span style="color:#1E90FF;">📤 Krok 3: Push větve na remote</span></summary>
 <pre><code class="lang-bash">git push -u origin develop
 </code></pre>
+<ul>
+<li>Nahraje větev <code>develop</code> na server a nastaví ji jako sledovanou vůči <code>origin/develop</code>.</li>
+</ul>
 <div class="NOTE">
 <h5>Note</h5>
-<p>Parametr <code>-u</code> nastaví <code>develop</code> jako výchozí sledovanou větev vůči <code>origin/develop</code>.</p>
+<p>Parametr <code>-u</code> zajistí automatické sledování větve.</p>
 </div>
-</li>
-<li><p>Ověř, že větev je online:</p>
-<p>Lze se nyní podívat na webové rozhraní (GitHub, GitLab apod.), jestli se větev vzdáleně objevila.</p>
-</li>
-</ol>
+</details>
+<hr>
+<h2 id="-ověření-online">🖥️ Ověření online</h2>
+<details>
+<summary><span style="color:#1E90FF;">🔎 Krok 4: Kontrola na webu</span></summary>
+<ul>
+<li>Otevři webové rozhraní (GitHub, GitLab apod.) a ověř, že se větev objevila mezi vzdálenými větvemi.</li>
+</ul>
+</details>
 
 </article>
 

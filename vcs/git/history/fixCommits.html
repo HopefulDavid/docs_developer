@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#128450;️ Git – fixup! &amp; squash! commity | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128450;️ Git – fixup! &amp; squash! commity | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../../favicon.ico">
@@ -85,48 +85,65 @@
         </div>
 
         <article data-uid="">
+<h1 id="-git--fixup--squash-commity">🗂️ Git – <code>fixup!</code> &amp; <code>squash!</code> commity</h1>
 
-<h3 id="fixup"><code>fixup!</code></h3>
-<p>= Nepoužije zprávu z commitu do opravy</p>
+<blockquote>
+<p>🚀 Praktické rady, jak efektivně opravovat a slučovat commity pomocí <code>fixup!</code> a <code>squash!</code> v Gitu.</p>
+</blockquote>
+<hr>
+<h2 id="-co-znamená-fixup-a-squash">🛠️ Co znamená <code>fixup!</code> a <code>squash!</code>?</h2>
+<ul>
+<li><strong><code>fixup!</code></strong> – vytvoří commit, který opravuje předchozí commit bez změny jeho zprávy.</li>
+<li><strong><code>squash!</code></strong> – vytvoří commit, který sloučí zprávu s původním commitem.</li>
+</ul>
+<hr>
+<h2 id="-postup-krok-za-krokem">📋 Postup krok za krokem</h2>
+<details>
+<summary><span style="color:#1E90FF;">🔧 Krok 1: Vytvoření opravného commitu</span></summary>
+<ul>
+<li><p><strong>Použití <code>fixup!</code>:</strong></p>
 <pre><code class="lang-bash">git commit --fixup &lt;hashId&gt;
 </code></pre>
 <p>nebo</p>
 <pre><code class="lang-bash">git commit -m &quot;fixup! &lt;hashId&gt; notUsedMessage&quot;
 </code></pre>
-<h3 id="squash"><code>squash!</code></h3>
-<p>= Sloučí zprávu z commitu do opravy</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p><code>&lt;hashId&gt;</code> je ID commitu, který chcete opravit.</p>
+</div>
+</li>
+<li><p><strong>Použití <code>squash!</code>:</strong></p>
 <pre><code class="lang-bash">git commit -m &quot;squash! &lt;hashId&gt; optionalCustomMessage&quot;
 </code></pre>
-<details>
-<summary>Příklad</summary>
-<ul>
-<li><p>Vytvořit nový commit:</p>
-<pre><code class="lang-bash">git commit --fixup &lt;hashId&gt;
-</code></pre>
-<div class="NOTE">
-<h5>Note</h5>
-<p><code>&lt;hashId&gt;</code> = id commitu na který chcete aplikovat opravu</p>
-</div>
-</li>
-<li><p>Provedení rebase</p>
-<pre><code class="lang-bash">git rebase -i --autosquash head~&lt;n&gt;
-</code></pre>
-<div class="NOTE">
-<h5>Note</h5>
-<p><code>--autosquash</code> = setřídí commity pro opravu s označením <code>fixup!</code> či <code>squash!</code></p>
-<p><code>&lt;n&gt;</code> = počet posledních commitů</p>
-</div>
-</li>
-<li><p>Otevře se textový editor</p>
-<p>Pokud jsme zde provedli změny, tak musíme uložit soubor.</p>
-<p>Nakonec zavřít soubor</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Po zavření souboru se začne vykonávat rebase.</p>
+<div class="TIP">
+<h5>Tip</h5>
+<p><code>squash!</code> umožňuje přidat vlastní zprávu ke sloučení.</p>
 </div>
 </li>
 </ul>
-<p>Pokud proběhl rebase dokonce, veškeré opravy budou aplikovány.</p>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🔄 Krok 2: Rebase s automatickým sloučením</span></summary>
+<pre><code class="lang-bash">git rebase -i --autosquash HEAD~&lt;n&gt;
+</code></pre>
+<ul>
+<li>Spustí interaktivní rebase s automatickým zařazením <code>fixup!</code> a <code>squash!</code> commitů.</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p><code>&lt;n&gt;</code> je počet posledních commitů, které chcete upravit.</p>
+</div>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">📝 Krok 3: Úprava v editoru</span></summary>
+<ul>
+<li>Otevře se textový editor s přehledem commitů.</li>
+<li>Proveďte potřebné změny, uložte soubor a zavřete editor.</li>
+</ul>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Po zavření editoru se rebase automaticky dokončí a opravy/sloučení se aplikují.</p>
+</div>
 </details>
 
 </article>

@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#129518; .NET – Metody &amp; Parametry | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#129518; .NET – Metody &amp; Parametry | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,819 +85,221 @@
         </div>
 
         <article data-uid="">
+<h1 id="-net--metody--parametry">🧮 .NET – Metody &amp; Parametry</h1>
 
+<blockquote>
+<p>🚀 Praktické rady pro práci s metodami v .NET, typy parametrů, delegáty, asynchronní a paralelní zpracování.</p>
+</blockquote>
+<hr>
+<h2 id="-základní-pojmy">🗂️ Základní pojmy</h2>
 <details>
-<summary><span style="color:#1E90FF;">Základní pojmy</span></summary>
+<summary><span style="color:#1E90FF;">🔍 Parametr vs. Argument</span></summary>
 <ul>
-<li><p>Parametr</p>
-<p>proměnná v definici metody</p>
-</li>
-<li><p>Argument</p>
-<p>skutečná hodnota této proměnné, která je předána při volání metody.</p>
-</li>
+<li><strong>Parametr</strong> – proměnná v definici metody.</li>
+<li><strong>Argument</strong> – skutečná hodnota předaná při volání metody.</li>
 </ul>
-<details>
-<summary><span style="color:#E95A84;">Předání reference či hodnoty do metody</span></summary>
-<li>**`Value`**</li>
-<pre><code>Pokud předáváte data hodnotou, **vytvoří se kopie dat** a ta se předá do metody.
-
-&gt; [!WARNING]
-&gt; Jakákoli změna dat v metodě **neovlivní původní data**.
-&gt;
-&gt; Pro velké struktury nebo třídy může být kopírování dat náročné na paměť a čas.
-
-&gt; [!NOTE]
-&gt; **Efektivní pro malé datové typy**
-&gt;
-&gt; Jako jsou `int`, `float`, `bool` atd...
-&gt;
-&gt; Kopírování těchto malých hodnot je rychlé.	
-</code></pre>
-<li>**`Reference`**</li>
-<pre><code>Pokud předáte data odkazem pomocí klíčových slov `ref`, `out` nebo `in`, místo kopírování dat se **předá odkaz na původní data**.
-
-&gt; [!WARNING]
-&gt; Metoda může přímo **manipulovat s původními daty**.
-&gt;
-&gt; **Neplatí pouze pro klíčové slovo `in`**, jelikož ta umožňuje pouze čtení dat.
-
-&gt; [!NOTE]
-&gt; **Efektivní pro velké struktury nebo třídy**, protože se vyhnete nákladnému kopírování dat.
-&gt;
-&gt;  Předá se jen malý odkaz na data.
-</code></pre>
 </details>
-</details>
+<hr>
+<h2 id="-předání-hodnoty-vs-reference">🔄 Předání hodnoty vs. reference</h2>
 <details>
-<summary><span style="color:#1E90FF;">Druhy metod</span></summary>
-<details>
-<summary><span style="color:#E95A84;">Indexátor</span></summary>
-<p>Speciální druh členské funkce v C#, která umožňuje objektům být indexovány jako pole.</p>
-<p>Příklad použití:</p>
+<summary><span style="color:#E95A84;">📦 Hodnota</span></summary>
 <ul>
-<li><p>Definice</p>
-<pre><code class="lang-c#">/// &lt;summary&gt; OAuth2 library configuration. &lt;/summary&gt;
-public interface IOAuth2Configuration
+<li>Vytvoří se kopie dat, změny v metodě neovlivní původní data.</li>
+<li>Efektivní pro malé typy (<code>int</code>, <code>float</code>, <code>bool</code>).</li>
+</ul>
+</details>
+<details>
+<summary><span style="color:#E95A84;">🔗 Reference</span></summary>
+<ul>
+<li>Předává se odkaz na původní data (<code>ref</code>, <code>out</code>, <code>in</code>).</li>
+<li>Metoda může manipulovat s původními daty (kromě <code>in</code> – pouze pro čtení).</li>
+<li>Efektivní pro velké struktury/třídy.</li>
+</ul>
+</details>
+<hr>
+<h2 id="-druhy-metod">🧑‍💻 Druhy metod</h2>
+<details>
+<summary><span style="color:#1E90FF;">📚 Přehled typů metod</span></summary>
+<table>
+<thead>
+<tr>
+<th>Typ metody</th>
+<th>Klíčové slovo</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Indexátor</td>
+<td><code>this[]</code></td>
+<td>Umožňuje objektům být indexovány jako pole.</td>
+</tr>
+<tr>
+<td>Statická</td>
+<td><code>static</code></td>
+<td>Volání bez instance třídy.</td>
+</tr>
+<tr>
+<td>Instanční</td>
+<td>—</td>
+<td>Vyžaduje instanci třídy.</td>
+</tr>
+<tr>
+<td>Virtuální</td>
+<td><code>virtual</code></td>
+<td>Lze přepsat v potomcích.</td>
+</tr>
+<tr>
+<td>Abstraktní</td>
+<td><code>abstract</code></td>
+<td>Bez implementace, nutná v potomcích.</td>
+</tr>
+<tr>
+<td>Přetížená</td>
+<td>—</td>
+<td>Stejný název, různé parametry.</td>
+</tr>
+<tr>
+<td>Výchozí hodnoty</td>
+<td><code>=</code></td>
+<td>Parametry s defaultní hodnotou.</td>
+</tr>
+<tr>
+<td>Params</td>
+<td><code>params</code></td>
+<td>Libovolný počet parametrů.</td>
+</tr>
+<tr>
+<td>Ref/Out/In</td>
+<td><code>ref/out/in</code></td>
+<td>Předání odkazem, různé chování.</td>
+</tr>
+<tr>
+<td>Rozšířené</td>
+<td><code>this</code></td>
+<td>Přidání metod existujícím typům.</td>
+</tr>
+<tr>
+<td>Asynchronní</td>
+<td><code>async</code></td>
+<td>Asynchronní operace.</td>
+</tr>
+</tbody>
+</table>
+</details>
+<hr>
+<h2 id="-ukázky-deklarace-metod">🧩 Ukázky deklarace metod</h2>
+<details>
+<summary><span style="color:#E95A84;">📑 Indexátor</span></summary>
+<pre><code class="lang-csharp">public interface IOAuth2Configuration
 {
-    /// &lt;summary&gt; Returns settings for service client with given name. &lt;/summary&gt;
     IClientConfiguration this[string clientTypeName] { get; }
 }
 </code></pre>
-</li>
-<li><p>Volání</p>
-<pre><code class="lang-c#">IOAuth2Configuration config = ...
-IClientConfiguration clientConfig = config[&quot;clientTypeName&quot;];
+</details>
+<details>
+<summary><span style="color:#E95A84;">⚡ Statická metoda</span></summary>
+<pre><code class="lang-csharp">public static void MyStaticMethod() { /* kód */ }
 </code></pre>
-</li>
+</details>
+<details>
+<summary><span style="color:#E95A84;">🧑‍💻 Instanční metoda</span></summary>
+<pre><code class="lang-csharp">public void MyInstanceMethod() { /* kód */ }
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#E95A84;">🔄 Virtuální metoda</span></summary>
+<pre><code class="lang-csharp">public virtual void MyVirtualMethod() { /* kód */ }
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#E95A84;">🌀 Abstraktní metoda</span></summary>
+<pre><code class="lang-csharp">public abstract void MyAbstractMethod();
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#E95A84;">🔁 Přetížené metody</span></summary>
+<pre><code class="lang-csharp">public void MyMethod(int param1) { }
+public void MyMethod(int param1, int param2) { }
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#E95A84;">📝 Výchozí hodnoty parametrů</span></summary>
+<pre><code class="lang-csharp">public void MyMethod(int param1, int param2 = 10) { }
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#E95A84;">🔢 Params</span></summary>
+<pre><code class="lang-csharp">public void MyMethod(params int[] numbers) { }
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#E95A84;">🔗 Ref/Out/In parametry</span></summary>
+<pre><code class="lang-csharp">public void AddTen(ref int number) { number += 10; }
+public void GetValues(out int x, out int y) { x = 5; y = 10; }
+public void PrintValue(in int number) { Console.WriteLine(number); }
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#E95A84;">🧩 Rozšířené metody</span></summary>
+<pre><code class="lang-csharp">public static class MyExtensionMethods
+{
+    public static void MyExtensionMethod(this MyType myType) { }
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#E95A84;">⚡ Asynchronní metoda</span></summary>
+<pre><code class="lang-csharp">public async Task MyAsyncMethod() { await Task.CompletedTask; }
+public async Task&lt;int&gt; MyAsyncMethod() { return await Task.FromResult(42); }
+</code></pre>
+</details>
+<hr>
+<h2 id="-ukazatel-na-metody--delegáti">🧭 Ukazatel na metody &amp; Delegáti</h2>
+<details>
+<summary><span style="color:#1E90FF;">🔗 Delegáti</span></summary>
+<ul>
+<li>Typově bezpečné odkazy na metody.</li>
+<li>Užitečné pro události, LINQ, asynchronní operace.</li>
 </ul>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Není zapotřebí vytvářet tedy novou funkci jako například: <code>GetClientConfiguration(string clientTypeName)</code>.</p>
-</div>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Statické metody</span></summary>
-<p>Deklarovány s klíčovým slovem <strong><code>static</code></strong>.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Mohou být volány bez vytváření instance třídy.</p>
-</div>
-<pre><code class="lang-cs">
-public static void MyStaticMethod() 
-{
-    // kód metody
-}
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Instanční metody</span></summary>
-<div class="WARNING">
-<h5>Warning</h5>
-<p>Vyžaduje vytvořenou instanci třídy pro jejich volání.</p>
-<p>Instance třídy = Objekt vytvořený z dané třídy.</p>
-</div>
-<pre><code class="lang-cs">
-public void MyInstanceMethod() 
-{
-    // kód metody
-}
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Virtuální metody</span></summary>
-<p>Deklarovány s klíčovým slovem <strong><code>virtual</code></strong></p>
-<p>Umožňuje potomkům třídy přepsat jejich implementaci.</p>
-<pre><code class="lang-cs">
-public virtual void MyVirtualMethod() 
-{
-    // kód metody
-}
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Abstraktní metody</span></summary>
-<p>Deklarovány s klíčovým slovem <strong><code>abstract</code></strong></p>
-<div class="WARNING">
-<h5>Warning</h5>
-<p><strong>Nemají žádnou vlastní implementaci</strong>.</p>
-<p><strong>Implementaci musí poskytnout třída</strong>, která dědí z abstraktní třídy.</p>
-</div>
-<pre><code class="lang-cs">
-public abstract void MyAbstractMethod();
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Přetížené metody</span></summary>
-<p>Metody se stejným názvem, které se liší v počtu nebo typu parametrů.</p>
-<pre><code class="lang-cs">
-public void MyMethod(int param1) 
-{
-    // kód metody
-}
-
-public void MyMethod(int param1, int param2) 
-{
-    // kód metody
-}
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Metody s výchozími hodnotami</span></summary>
-<p>Jedná se o parametry, které mohou být při volání metody vynechány.</p>
-<div class="WARNING">
-<h5>Warning</h5>
-<p>Parametry s výchozími hodnotami lze použít až po všech nevýchozích parametrech.</p>
-<p>Neplatí pro parametr s klíčovým slovem <code>params</code>, ten musí být vždy poslední v seznamu parametrů.</p>
-</div>
-<pre><code class="lang-cs">
-public void MyMethod(int param1, int param2 = 10) 
-{
-    // kód metody
-}
-</code></pre>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Při volání této metody by mohl být vynechán <code>param2</code>.</p>
-<p>Pokud by tento parametr byl vynechán, použila by se jeho výchozí hodnota tedy = 10.</p>
-</div>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Metody s parametry params</span></summary>
-<p>Mohou přijímat <strong>libovolný počet parametrů stejného typu</strong>.</p>
-<div class="WARNING">
-<h5>Warning</h5>
-<p>Musí být <strong>vždy poslední v seznamu parametrů</strong>.</p>
-</div>
-<pre><code class="lang-cs">
-public void MyMethod(params int[] numbers) 
-{
-    // kód metody
-}
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Metody s výstupními (out) a referenčními (ref) parametry</span></summary>
-<p>Mohou měnit hodnotu argumentů předaných do metody.</p>
-<pre><code class="lang-cs">
-public void MyMethod(out int param1, ref int param2) 
-{
-    // kód metody
-}
-</code></pre>
-<h4 id="ref">ref</h4>
-<p>Klíčové slovo <strong><code>ref</code></strong> se používá k označení parametru, který se má předat odkazem.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Pokud metoda změní hodnotu ref parametru, <strong>změna se projeví i na původní proměnné</strong>, která byla předána do metody.</p>
-</div>
-<div class="WARNING">
-<h5>Warning</h5>
-<p>Musí být inicializovány před jejich předáním do metody.</p>
-</div>
-<p>Příklad:</p>
-<pre><code class="lang-cs">
-public void AddTen(ref int number)
-{
-    number += 10;
-}
-
-int myNumber = 5;
-AddTen(ref myNumber);  // myNumber je nyní 15
-</code></pre>
-<h4 id="out">out</h4>
-<p>Klíčové slovo <strong><code>out</code></strong> se používá k označení parametru, který se má předat odkazem a bude použit k <strong>vrácení dat z
-metody</strong>.</p>
-<div class="WARNING">
-<h5>Warning</h5>
-<p>Musí být nastaveny v rámci metody před jejím ukončením.</p>
-</div>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Užitečné v situacích, kdy chcete, aby metoda vrátila více než jednu hodnotu.</p>
-<p>Nemusí být inicializovány před jejich předáním do metody.</p>
-</div>
-<p>Příklad:</p>
-<pre><code class="lang-cs">
-public void GetValues(out int x, out int y)
-{
-    x = 5;
-    y = 10;
-}
-
-int a, b;
-GetValues(out a, out b);  // a je nyní 5, b je nyní 10
-</code></pre>
-<h4 id="in">in</h4>
-<p>Klíčové slovo <strong><code>in</code></strong> se používá k označení parametru, který se má předat odkazem, ale <strong>nemůže být změněn metodou</strong>.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Užitečné pro předání velkých struktur nebo tříd, protože se předávají odkazem (efektivněji) a bez rizika, že by metoda
-změnila jejich hodnotu.</p>
-</div>
-<p>Příklad:</p>
-<pre><code class="lang-cs">
-public void PrintValue(in int number)
-{
-    Console.WriteLine(number);
-    // number = 10;  // Toto by způsobilo chybu kompilace
-}
-
-int myNumber = 5;
-PrintValue(in myNumber);  // Vypíše 5
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Rozšířené metody</span></summary>
-<p>Rozšiřují existující typy o nové metody bez nutnosti dědění nebo změny původního typu.</p>
-<pre><code class="lang-cs">
-public static class MyExtensionMethods 
-{
-    public static void MyExtensionMethod(this MyType myType) 
-    {
-        // kód metody
-    }
-}
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Asynchronní metody</span></summary>
-<p>Deklarovány s klíčovým slovem <strong><code>async</code></strong>.</p>
-<p>Umožňují asynchronní operace.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Asynchronní operace</p>
-<p>Běží nezávisle na hlavním programu.</p>
-<p>Umožňuje tedy hlavnímu programu pokračovat v práci, aniž by musel čekat na dokončení operace.</p>
-</div>
-<pre><code class="lang-cs">
-public async Task MyAsyncMethod() 
-{
-    // kód metody
-}
-</code></pre>
-<blockquote>
-<p>Je sepsána samostatná sekce, kde se lze dozvědět více.</p>
-</blockquote>
-</details>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">Ukazetel na metody</span></summary>
-<details>
-<summary><span style="color:#E95A84;">Delegáti</span></summary>
-<p>Drží <strong>odkazy na metody</strong>.</p>
-<p>Když je delegát volán, volá se metoda, na kterou odkazuje.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Typově bezpečný.</p>
-<p>Bezpečně tedy zapouzdřují metodu nebo sadu metod.</p>
-</div>
-<blockquote>
-<p>Užitečné pro implementaci událostí a zpětných volání.</p>
-<p>Jsou základem pro LINQ dotazy a asynchronní metody.</p>
-</blockquote>
-<p>Příklad:</p>
-<pre><code class="lang-cs">
-// Definice delegáta
-public delegate void MyDelegate(string message);
-
-// Metoda, která odpovídá signatuře delegáta
-public void MyMethod(string message)
-{
-    Console.WriteLine(message);
-}
-
-// Použití delegáta
+<pre><code class="lang-csharp">public delegate void MyDelegate(string message);
 MyDelegate del = MyMethod;
-del("Hello, World!");  // Vypíše "Hello, World!" na konzoli
+del(&quot;Hello, World!&quot;);
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#E95A84;">Delegáti - Generické</span></summary>
-<div class="WARNING">
-<h5>Warning</h5>
-<p>Je zapotřebí znalost základních delegátů</p>
-</div>
-<h4 id="func">Func</h4>
-<p>Delegát pro metody, který <strong>vrací hodnotu</strong>.</p>
+<summary><span style="color:#E95A84;">⚡ Generické delegáty</span></summary>
 <ul>
-<li><p><code>Func&lt;TResult&gt;</code></p>
-<p>Představuje metodu, která vrací hodnotu typu <code>TResult</code>.</p>
-</li>
-<li><p><code>Func&lt;T, TResult&gt;</code></p>
-<p>Představuje metodu, která přijímá jeden argument typu <code>T</code> a vrací hodnotu typu <code>TResult</code>.</p>
-</li>
+<li><strong>Func</strong> – vrací hodnotu.</li>
+<li><strong>Action</strong> – nevrací hodnotu.</li>
+<li><strong>Predicate</strong> – vrací bool.</li>
 </ul>
-<div class="NOTE">
-<h5>Note</h5>
-<p><code>Func&lt;T1,T2,T3...TResult&gt;</code> umožňuje až 16 vstupních parametrů.</p>
-</div>
-<p>Příklad:</p>
-<pre><code class="lang-c#">// Using Func delegate
-Func&lt;Player, int, int&gt; Attack = (p, damage) =&gt; 
-{
-    p.Health -= damage;
-    Console.WriteLine($&quot;{p.Name} is attacked and lost {damage} health.&quot;);
-    return p.Health;
-};
-
-int remainingHealth = Attack(player, 20);        
+<pre><code class="lang-csharp">Func&lt;int, int, int&gt; add = (x, y) =&gt; x + y;
+Action&lt;string&gt; print = msg =&gt; Console.WriteLine(msg);
+Predicate&lt;int&gt; isEven = x =&gt; x % 2 == 0;
 </code></pre>
-<h4 id="action">Action</h4>
-<p>Delegát, který <strong>nevrací hodnotu</strong>.</p>
+</details>
+<hr>
+<h2 id="-asynchronní--paralelní-metody">🚀 Asynchronní &amp; Paralelní metody</h2>
+<details>
+<summary><span style="color:#1E90FF;">⚡ Asynchronní volání</span></summary>
 <ul>
-<li><p><code>Action</code></p>
-<p>Představuje metodu bez parametrů.</p>
-</li>
-<li><p><code>Action&lt;T&gt;</code></p>
-<p>Představuje metodu, která přijímá jeden argument typu <code>T</code>.</p>
-</li>
+<li>Umožňuje neblokovat hlavní vlákno.</li>
+<li>Klíčová slova <code>async</code> a <code>await</code>.</li>
 </ul>
-<div class="NOTE">
-<h5>Note</h5>
-<p><code>Action&lt;T1,T2,T3...&gt;</code> umožňuje až 16 vstupních parametrů.</p>
-</div>
-<p>Příklad:</p>
-<pre><code class="lang-c#">Action&lt;string&gt; actionMethod = message =&gt; Console.WriteLine(message);
-
-// Použití delegáta k zobrazení zprávy 
-actionMethod(&quot;Hello, World!&quot;);
-</code></pre>
-<h4 id="predicate">Predicate</h4>
-<p>Reprezentuje metodu, která <strong>přijímá jeden argument typu <code>T</code></strong> a <strong>vrací <code>bool</code></strong>.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Je to speciální případ <code>Func&lt;T, bool&gt;</code>.</p>
-</div>
-<p>Příklad:</p>
-<pre><code class="lang-c#">Predicate&lt;int&gt; isEven = x =&gt; x % 2 == 0;
-bool result = isEven(4);  // result je true
+<pre><code class="lang-csharp">public async Task MethodA() { await MethodB(); }
+public async Task MethodB() { await Task.Delay(1000); }
 </code></pre>
 </details>
-</details>
 <details>
-<summary><span style="color:#1E90FF;">Asynchronní a Paralelní metody</span></summary>
-<p>Umožňuje vykonávání operací bez blokování (nebo &quot;zamrzání&quot;) hlavního vlákna aplikace.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Kód může pokračovat v dalších úlohách, zatímco asynchronní operace běží &quot;na pozadí&quot;.</p>
-<p>Mohou být přerušeny, aby uvolnily vlákno pro jiné úkoly.</p>
-</div>
-<div class="TIP">
-<h5>Tip</h5>
-<p>Klíčové slova <code>async</code> pro označení metod jako asynchronních a <code>await</code> pro čekání na dokončení asynchronních operací
-nebo úloh.</p>
-</div>
-<details>
-<summary><span style="color:#E95A84;">Příklady použití</span></summary>
+<summary><span style="color:#E95A84;">🧵 Paralelní zpracování (TPL)</span></summary>
 <ul>
-<li><p>I/O operace:</p>
-<p>Čtení/zápis souborů, síťové požadavky, přístup k databázi.</p>
-</li>
-<li><p>Časově náročné výpočty:</p>
-<p>Operace, které trvají dlouho a mohou být prováděny na pozadí.</p>
-</li>
-<li><p>Čekání na události:</p>
-<p>Čekání na uživatelský vstup nebo jiné události.</p>
-</li>
+<li><code>Task</code>, <code>Task&lt;T&gt;</code>, <code>Parallel.For</code>, <code>Parallel.ForEach</code>, <code>Parallel.Invoke</code>.</li>
 </ul>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Vytvoření metody</span></summary>
-<ul>
-<li><p>Bez návratové hodnoty</p>
-<pre><code class="lang-c#">public async Task MyAsyncMethod()
-{
-    // Zde můžete provést nějakou synchronní práci
-    int x = 10;
-    int y = 20;
-    int sum = x + y;
-
-    // Použijte Task.CompletedTask k naplnění smlouvy asynchronní metody
-    await Task.CompletedTask;
-}
-</code></pre>
-</li>
-<li><p>S návratovou hodnotou</p>
-<pre><code class="lang-c#">public async Task&lt;int&gt; MyAsyncMethod()
-{
-    // Zde můžete provést nějakou synchronní práci
-    int x = 10;
-    int y = 20;
-    int sum = x + y;
-       // Použijte Task.FromResult k naplnění smlouvy asynchronní metody
-    return await Task.FromResult(sum);
-}
-</code></pre>
-</li>
-</ul>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Volání v asynchronní metodě</span></summary>
-<pre><code class="lang-cs">
-public async Task MethodA()
-{
-    // Nějaký kód...
-
-    // Volání MethodB z MethodA
-    await MethodB();
-
-    // Další kód...
-}
-
-public async Task MethodB()
-{
-    // Nějaký kód...
-
-    // Simulace asynchronní operace
-    await Task.Delay(1000);
-
-    // Další kód...
-}
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Volání v synchronní metodě</span></summary>
-<div class="WARNING">
-<h5>Warning</h5>
-<p>Nedoporučuje se používat asynchronní metody v synchronní metodě pokud je to možné.</p>
-</div>
-<ul>
-<li><p>Zpracovat výsledek v novém vlákně</p>
-<pre><code class="lang-c#">public void MySyncMethod()
-{
-    // Zde můžete provést nějakou synchronní práci
-    int x = 10;
-    int y = 20;
-    int sum = x + y;
-
-    // Volání asynchronní metody ve vlákně ThreadPool
-    Task task = Task.Run(async () =&gt; await MyAsyncMethod());
-
-    // Počkejte na dokončení úkolu
-    task.Wait();
-}
-</code></pre>
-<pre><code class="lang-c#">private void OnEnable()
-{
-    // Spuštění asynchronní operace
-    Task&lt;T&gt; task = MyAsyncMethod();
-
-    // Zpracování výsledku po dokončení úlohy (také se spustí asynchronně)
-    task.ContinueWith(t =&gt;
-    {
-        if (t.IsFaulted)
-        {
-            // Zpracování všech výjimek
-            Debug.LogError(t.Exception);
-        }
-        else
-        {
-            // Použijte výsledek
-            T result = t.Result;
-            // ...
-        }
-    });
-}
-</code></pre>
-<div class="TIP">
-<h5>Tip</h5>
-<p>Metoda <code>ContinueWith</code> je použita pro plánování další operace, která se má vykonat po dokončení úlohy.</p>
-<p>Pokud metoda narazí na <code>ContinueWith</code>, vytvoří se nový úkol, který se spustí po dokončení původní úlohy.</p>
-<p>Obvykle se spustí na jiném vlákně, než je hlavní vlákno. (To je dáno tím, jak .NET spravuje svůj thread pool.)</p>
-</div>
-</li>
-<li><p>Zpracovat výsledek v hlavním vlákně</p>
-<div class="WARNING">
-<h5>Warning</h5>
-<p>Nedoporučuje se.</p>
-<p>Může to vést k problémům s výkonem a odezvou aplikace.</p>
-</div>
-<div class="TIP">
-<h5>Tip</h5>
-<p>Hlavní vlákno je obvykle vlákno, které zpracovává události uživatelského rozhraní (UI) a další kritické operace.</p>
-<p>Pokud hlavní vlákno zablokujete čekáním na dokončení asynchronní operace, může to způsobit, že se vaše aplikace &quot;
-zasekne&quot; nebo přestane reagovat na vstupy uživatele.</p>
-</div>
-<pre><code class="lang-c#">private void OnEnable()
-{
-    // Spuštění asynchronní operace
-    Task&lt;T&gt; task = MyAsyncMethod();
-
-    // Tím se zablokuje aktuální vlákno, dokud nebude asynchronní operace dokončena.
-    T result = task.GetAwaiter().GetResult();
-}
-</code></pre>
-</li>
-</ul>
-</details>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">Task Parallel Library (TPL)</span></summary>
-<p>TPL je sada API, které umožňují paralelní programování.</p>
-<div class="TIP">
-<h5>Tip</h5>
-<p>TPL zahrnuje <code>Task</code> a <code>Task&lt;T&gt;</code> třídy, které reprezentují jednotlivé operace, které mohou být asynchronní a mohou
-vrátit hodnotu.</p>
-<p>TPL také zahrnuje <code>Parallel</code> třídu pro paralelní iterace a regiony.</p>
-</div>
-<p>Typy metod k použití:</p>
-<details>
-<summary><span style="color:#E95A84;">asynchronní a paralelní</span></summary>
-<ul>
-<li><p>Vytváření a spouštění úloh</p>
-<pre><code class="lang-c#">Task task = Task.Run(async () =&gt; 
-{
-    // Kód úlohy
-    await SomeAsyncMethod();
-});
-</code></pre>
-</li>
-<li><p>Čekání na dokončení úlohy</p>
-<pre><code class="lang-c#">Task task = Task.Run(async () =&gt; 
-{
-    // Kód úlohy
-    await SomeAsyncMethod();
-});
-await task;
-</code></pre>
-</li>
-<li><p>Získání výsledku úlohy</p>
-<pre><code class="lang-c#">Task&lt;int&gt; task = Task.Run(async () =&gt; 
-{
-    // Kód úlohy
-    return await SomeAsyncMethodReturningInt();
-});
-int result = await task;
-</code></pre>
-</li>
-<li><p>Řetězení úloh</p>
-<pre><code class="lang-c#">Task&lt;int&gt; task = Task.Run(async () =&gt; 
-{
-    // Kód první úlohy
-    return await SomeAsyncMethodReturningInt();
-}).ContinueWith(async previousTask =&gt; 
-{
-    // Kód druhé úlohy
-    return await SomeOtherAsyncMethod(previousTask.Result);
-});
-int result = await task;
-</code></pre>
-</li>
-<li><p>Paralelní cykly</p>
-<pre><code class="lang-c#">var items = Enumerable.Range(0, 10);
-var tasks = items.Select(async i =&gt; 
-{
-    // Kód pro každou iteraci
-    await SomeAsyncMethod(i);
-});
-await Task.WhenAll(tasks);
-</code></pre>
-</li>
-<li><p>Paralelní zpracování kolekcí</p>
-<pre><code class="lang-c#">var items = new List&lt;int&gt; { 1, 2, 3, 4, 5 };
-var tasks = items.Select(async item =&gt; 
-{
-    // Kód pro každou položku
-    await SomeAsyncMethod(item);
-});
-await Task.WhenAll(tasks);
-</code></pre>
-</li>
-<li><p>Paralelní spuštění více operací</p>
-<pre><code class="lang-c#">var tasks = new[]
-{
-    Task.Run(async () =&gt; { await SomeAsyncMethod(); }),
-    Task.Run(async () =&gt; { await SomeOtherAsyncMethod(); }),
-    Task.Run(async () =&gt; { await YetAnotherAsyncMethod(); })
-};
-await Task.WhenAll(tasks);
-</code></pre>
-</li>
-<li><p>Asynchronní metody s <code>async</code> a <code>await</code></p>
-<pre><code class="lang-c#">public async Task DoWorkAsync()
-{
-    await Task.Run(async () =&gt; 
-    {
-        // Kód úlohy
-        await SomeAsyncMethod();
-    });
-}
-</code></pre>
-</li>
-</ul>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Synchronní a paralelní</span></summary>
-<ul>
-<li><p>Vytváření a spouštění úloh</p>
-<pre><code class="lang-c#">Task task = Task.Run(() =&gt;
-{
-    // Kód úlohy
-});
-</code></pre>
-</li>
-<li><p>Čekání na dokončení úlohy</p>
-<pre><code class="lang-c#">Task task = Task.Run(() =&gt;
-{
-    // Kód úlohy
-});
-task.Wait();
-</code></pre>
-</li>
-<li><p>Získání výsledku úlohy</p>
-<pre><code class="lang-c#">Task&lt;int&gt; task = Task.Run(() =&gt;
-{
-    // Kód úlohy
-    return 42;
-});
+<pre><code class="lang-csharp">Parallel.For(0, 10, i =&gt; { /* kód */ });
+Task&lt;int&gt; task = Task.Run(() =&gt; 42);
 int result = task.Result;
 </code></pre>
-</li>
-<li><p>Řetězení úloh</p>
-<pre><code class="lang-c#">Task&lt;int&gt; task = Task.Run(() =&gt;
-{
-    // Kód první úlohy
-    return 42;
-}).ContinueWith(previousTask =&gt;
-{
-    // Kód druhé úlohy
-    return previousTask.Result * 2;
-});
-int result = task.Result;
-</code></pre>
-</li>
-<li><p>Paralelní cykly</p>
-<pre><code class="lang-c#">Parallel.For(0, 10, i =&gt;
-{
-    // Kód pro každou iteraci
-});
-</code></pre>
-</li>
-<li><p>Paralelní zpracování kolekcí</p>
-<pre><code class="lang-c#">var items = new List&lt;int&gt; { 1, 2, 3, 4, 5 };
-Parallel.ForEach(items, item =&gt; 
-{
-    // Kód pro každou položku
-});
-</code></pre>
-</li>
-<li><p>Paralelní spuštění více operací</p>
-<pre><code class="lang-c#">Parallel.Invoke(
-    () =&gt; { /* Kód první operace */ },
-    () =&gt; { /* Kód druhé operace */ },
-    () =&gt; { /* Kód třetí operace */ }
-);
-</code></pre>
-</li>
-</ul>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Příklady</span></summary>
-<ul>
-<li><p>Spustit v asynchronním módu</p>
-<pre><code class="lang-c#">using System.Threading.Tasks;
-
-public class TPLExample
-{
-    public async Task RunTasksAsync()
-    {
-        // Vytvoření a spuštění úloh paralelně
-        Task task1 = DoWorkAsync(1);
-        Task task2 = DoWorkAsync(2);
-        Task task3 = DoWorkAsync(3);
-
-        // Čekání na dokončení všech úloh
-        await Task.WhenAll(task1, task2, task3);
-    }
-
-    private async Task DoWorkAsync(int taskNumber)
-    {
-        // Simulace nějaké práce
-        for (int i = 0; i &lt; 10; i++)
-        {
-            System.Console.WriteLine($&quot;Úloha {taskNumber}: iterace {i}&quot;);
-            await Task.Delay(1000); // Pauza 1 sekunda
-        }
-    }
-}
-</code></pre>
-</li>
-<li><p>Spustit v synchronním módu</p>
-<pre><code class="lang-c#">using System.Threading.Tasks;
-
-public class TPLExample
-{
-    public void RunTasks()
-    {
-        // Vytvoření a spuštění úloh paralelně
-        Task task1 = Task.Run(() =&gt; DoWork(1));
-        Task task2 = Task.Run(() =&gt; DoWork(2));
-        Task task3 = Task.Run(() =&gt; DoWork(3));
-
-        // Čekání na dokončení všech úloh
-        Task.WaitAll(task1, task2, task3);
-    }
-
-    private void DoWork(int taskNumber)
-    {
-        // Simulace nějaké práce
-        for (int i = 0; i &lt; 10; i++)
-        {
-            System.Console.WriteLine($&quot;Úloha {taskNumber}: iterace {i}&quot;);
-            System.Threading.Thread.Sleep(1000); // Pauza 1 sekunda
-        }
-    }
-}
-</code></pre>
-</li>
-</ul>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Zjištění kde se kód vykonává</span></summary>
-<p><code>Thread.CurrentThread</code> k získání odkazu na aktuální vlákno.</p>
-<p>Poté lze zkontrolovat jeho vlastnosti, jako je <code>IsThreadPoolThread</code> nebo <code>IsBackground</code>, které mohou poskytnout další
-informace.</p>
-</details>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">Tipy</span></summary>
-<details>
-<summary><span style="color:#E95A84;">Vytvořit vlastní LINQ</span></summary>
-<p>Lze toho dosáhnout skrze rozšíření metod a delegátů.</p>
-<p>Příklad:</p>
-<pre><code class="lang-c#">public static class MyExtensions
-{
-    public static IEnumerable&lt;T&gt; MyWhere&lt;T&gt;(this IEnumerable&lt;T&gt; collection, Func&lt;T, bool&gt; predicate)
-    {
-        foreach (var item in collection)
-        {
-            if (predicate(item))
-            {
-                yield return item;
-            }
-        }
-    }
-}
-</code></pre>
-<blockquote>
-<p>V tomto příkladu <code>MyWhere</code> je rozšíření metody pro <code>IEnumerable&lt;T&gt;</code>, což znamená, že ji můžete použít na jakoukoli
-kolekci.</p>
-<p>Metoda přijímá delegáta <code>Func&lt;T, bool&gt;</code>, který je použit k rozhodnutí, zda prvek splňuje danou podmínku.</p>
-</blockquote>
-<blockquote>
-<p>Můžete pak použít tuto metodu podobně jako metodu where v LINQ:</p>
-<pre><code class="lang-c#">List&lt;int&gt; numbers = new List&lt;int&gt; { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-var evenNumbers = numbers.MyWhere(x =&gt; x % 2 == 0); // filtruje sudá čísla v seznamu.
-</code></pre>
-</blockquote>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Synchronizace vláken pomocí lock</span></summary>
-<p>Zabrání vstupu jiného vlákna do bloku kódu.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Zajistí tedy, že blok kódu uvnitř <code>lock</code> může být v daném okamžiku spuštěn pouze jedním vláknem.</p>
-</div>
-<p>Příklad:</p>
-<pre><code class="lang-cs">
-
-object zamek = new object();
-
-lock (zamek)
-{
-    // Kód, který má být prováděn pouze jedním vláknem
-}
-</code></pre>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Když vlákno vstoupí do bloku <code>lock</code>, získá zámek na objektu <code>zamek</code>.</p>
-<p>Jakmile vlákno opustí <code>lock</code>, <code>zamek</code> je automaticky uvolněn.</p>
-</div>
-<div class="WARNING">
-<h5>Warning</h5>
-<p>Použití <code>lock(this)</code> je nebezpečné, protože jiné části kódu mohou také získat zámek na <code>this</code> a způsobit deadlock.</p>
-</div>
-</details>
 </details>
 
 </article>

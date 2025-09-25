@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#128450;️ SSH &amp; GitHub – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128450;️ SSH &amp; GitHub – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,108 +85,112 @@
         </div>
 
         <article data-uid="">
+<h1 id="-ssh--github--praktický-průvodce--tipy">🗂️ SSH &amp; GitHub – Praktický průvodce &amp; tipy</h1>
 
-<h2 id="ssh">SSH</h2>
-<p>SSH je bezpečnější než používání uživatelského jména a hesla, protože využívá veřejný a soukromý klíč.</p>
-<details>
-<summary><span style="color:#1E90FF;">Přípojení na GitHub</span></summary>
-<details>
-<summary><span style="color:#E95A84;">Generování SSH klíče</span></summary>
+<blockquote>
+<p>🚀 Moderní přehled nastavení SSH klíče, připojení ke GitHubu a správy URL repozitářů.</p>
+</blockquote>
+<hr>
+<h2 id="-co-je-ssh">📖 Co je SSH?</h2>
+<ul>
+<li><strong>Bezpečný protokol pro vzdálené připojení</strong></li>
+<li>Využívá veřejný a soukromý klíč místo hesla</li>
+<li>Zvyšuje bezpečnost při práci s GitHubem</li>
+</ul>
 <div class="NOTE">
 <h5>Note</h5>
-<p>Pokud již máte SSH klíč, můžete tento krok přeskočit.</p>
+<p>SSH je bezpečnější než používání uživatelského jména a hesla.</p>
 </div>
-<p>Pokud ještě nemáte SSH klíč, budete ho muset vytvořit. To provedete pomocí následujícího příkazu v terminálu:</p>
+<hr>
+<h2 id="-krok-1-generování-ssh-klíče">🛠️ Krok 1: Generování SSH klíče</h2>
+<details>
+<summary><span style="color:#1E90FF;">🔑 Vytvoření nového SSH klíče</span></summary>
 <pre><code class="lang-bash">ssh-keygen -t rsa -b 4096 -C &quot;&lt;your_email@example.com&gt;&quot;
 </code></pre>
-<p>Tento příkaz vygeneruje nový RSA klíč s 4096 bity, který bude spojen s vaším e-mailem.</p>
-<p>Po zadání příkazu budete vyzváni k zadání umístění pro uložení klíče (obvykle se uloží do ~/.ssh/id_rsa).</p>
-<p>Následně budete vyzváni k zadání hesla pro klíč. Pokud chcete klíč chránit heslem, zadejte ho. Pokud nechcete, klíč bude
-uložen bez hesla.</p>
-</details>
-<details>
-<summary><span style="color:#E95A84;">Přidání SSH klíče do GitHubu</span></summary>
-<p>Po vytvoření klíče ho musíte přidat na GitHub.</p>
-<ol>
-<li><p>Zkopírujte veřejný SSH klíč</p>
-<p>Obsah souboru:</p>
 <ul>
-<li>Windows:</li>
+<li>Zadejte umístění pro uložení klíče (obvykle <code>~/.ssh/id_rsa</code>)</li>
+<li>Volitelně nastavte heslo pro klíč</li>
 </ul>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Pokud již máte SSH klíč, tento krok přeskočte.</p>
+</div>
+</details>
+<hr>
+<h2 id="-krok-2-přidání-ssh-klíče-do-githubu">🛠️ Krok 2: Přidání SSH klíče do GitHubu</h2>
+<details>
+<summary><span style="color:#1E90FF;">📋 Zkopírování veřejného klíče</span></summary>
+<ul>
+<li><strong>Windows:</strong>
 <pre><code class="lang-bash">type %userprofile%\.ssh\id_rsa.pub
 </code></pre>
-<ul>
-<li>Linux/macOS:</li>
-</ul>
+</li>
+<li><strong>Linux/macOS:</strong>
 <pre><code class="lang-bash">cat ~/.ssh/id_rsa.pub
 </code></pre>
 </li>
-<li><p>Přihlaste se na GitHub a přejděte do Settings &gt; SSH and GPG keys.</p>
-</li>
-<li><p>Klikněte na New SSH key, zadejte název klíče a vložte obsah veřejného klíče do textového pole.</p>
-<p>Poté klikněte na Add SSH key.</p>
-</li>
-</ol>
+</ul>
 </details>
 <details>
-<summary><span style="color:#E95A84;">Testování SSH připojení</span></summary>
-<p>Po přidání SSH klíče na GitHub můžete ověřit, zda je vše správně nastaveno, pomocí následujícího příkazu:</p>
+<summary><span style="color:#1E90FF;">🔗 Přidání klíče na GitHub</span></summary>
+<ol>
+<li>Přihlaste se na GitHub</li>
+<li>Otevřete <strong>Settings → SSH and GPG keys</strong></li>
+<li>Klikněte na <strong>New SSH key</strong></li>
+<li>Vložte obsah veřejného klíče</li>
+<li>Potvrďte kliknutím na <strong>Add SSH key</strong></li>
+</ol>
+</details>
+<hr>
+<h2 id="-krok-3-testování-ssh-připojení">🛠️ Krok 3: Testování SSH připojení</h2>
+<details>
+<summary><span style="color:#1E90FF;">🧪 Ověření funkčnosti</span></summary>
 <pre><code class="lang-bash">ssh -T git@github.com
 </code></pre>
-<p>Pokud je vše v pořádku, uvidíte zprávu:</p>
+<p>Pokud je vše správně nastaveno, zobrazí se zpráva:</p>
 <pre><code class="lang-bash">Hi username! You've successfully authenticated, but GitHub does not provide shell access.
 </code></pre>
 </details>
+<hr>
+<h2 id="-krok-4-klonování-repozitáře-pomocí-ssh">🛠️ Krok 4: Klonování repozitáře pomocí SSH</h2>
 <details>
-<summary><span style="color:#E95A84;">Klónování repozitáře pomocí SSH</span></summary>
-<p>Když máte SSH nastavené, můžete klonovat repozitáře bez zadávání hesla pomocí SSH URL.</p>
-<p>Použijte tento příkaz:</p>
+<summary><span style="color:#1E90FF;">📦 Klonování bez hesla</span></summary>
 <pre><code class="lang-bash">git clone git@github.com:username/repository.git
 </code></pre>
-<p>Tímto způsobem zajistíte, že budete používat SSH místo HTTPS pro komunikaci s GitHubem.</p>
 </details>
+<hr>
+<h2 id="-krok-5-nastavení-ssh-url-pro-existující-repozitář">🛠️ Krok 5: Nastavení SSH URL pro existující repozitář</h2>
 <details>
-<summary><span style="color:#E95A84;">Nastavit SSH URL pro existující repozitář</span></summary>
-<p>Pokud jste již klonovali repozitář pomocí HTTPS URL, můžete změnit URL na SSH.</p>
-<p>Použijte tento příkaz:</p>
+<summary><span style="color:#1E90FF;">🔄 Změna URL z HTTPS na SSH</span></summary>
 <pre><code class="lang-bash">git remote set-url origin git@github.com:username/repository.git
 </code></pre>
-<p>Tímto způsobem zajistíte, že budete používat SSH místo HTTPS pro komunikaci s GitHubem. (Tento příkaz nastaví adresu pro
-fetch i push.)</p>
 <div class="TIP">
 <h5>Tip</h5>
-<p>Pokud nastavíte špatně URL, můžete ji znovu nastavit pomocí tohoto příkazu.</p>
+<p>Pokud nastavíte špatně URL, můžete ji znovu upravit stejným příkazem.</p>
 </div>
-<div class="TIP">
-<h5>Tip</h5>
-<p>Jak zjistit URL pro stahování (fetch) a nahrávání (push) v Git repozitáři:</p>
-<pre><code class="lang-bash">git remote -v  
-</code></pre>
-<p>Tento příkaz zobrazí aktuálně nastavené adresy pro fetch a push.</p>
-</div>
-<div class="TIP">
-<h5>Tip</h5>
+</details>
 <details>
-<summary><span style="color:#E95A84;">Způsob jak nastavit jednu URL pro fetch a jinou pro push</span></summary>
-<ol>
-<li>Nastavit URL pro fetch:</li>
-</ol>
-<pre><code class="lang-bash">git remote set-url origin &lt;fetch-url&gt;
-</code></pre>
-<ol start="2">
-<li>Nastavit URL pro push:</li>
-</ol>
-<pre><code class="lang-bash">git remote set-url origin https://github.com/username/repo.git
-</code></pre>
-<ol start="3">
-<li>Zkontrolujte nastavení:</li>
-</ol>
+<summary><span style="color:#E95A84;">Zobrazení aktuálních URL pro fetch a push</span></summary>
 <pre><code class="lang-bash">git remote -v
 </code></pre>
-</details></div>
 </details>
+<details>
+<summary><span style="color:#E95A84;">Nastavení odlišné URL pro fetch a push</span></summary>
+<ol>
+<li>Nastavit URL pro fetch:
+<pre><code class="lang-bash">git remote set-url origin &lt;fetch-url&gt;
+</code></pre>
+</li>
+<li>Nastavit URL pro push:
+<pre><code class="lang-bash">git remote set-url origin https://github.com/username/repo.git
+</code></pre>
+</li>
+<li>Zkontrolovat nastavení:
+<pre><code class="lang-bash">git remote -v
+</code></pre>
+</li>
+</ol>
 </details>
-
 
 </article>
 

@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#128450;️ Wireshark – Dešifrov&#225;n&#237; HTTPS (SSL/TLS) &amp; tipy | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128450;️ Wireshark – Dešifrov&#225;n&#237; HTTPS (SSL/TLS) &amp; tipy | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,25 +85,72 @@
         </div>
 
         <article data-uid="">
+<h1 id="-wireshark--dešifrování-https-ssltls--tipy">🗂️ Wireshark – Dešifrování HTTPS (SSL/TLS) &amp; tipy</h1>
 
-<h2 id="dešifrování-https-ssltls">Dešifrování HTTPS (SSL/TLS)</h2>
+<blockquote>
+<p>🚀 Moderní průvodce nastavením dešifrování SSL/TLS provozu ve Wiresharku.</p>
+</blockquote>
+<hr>
+<h2 id="-co-je-dešifrování-https">📖 Co je dešifrování HTTPS?</h2>
+<ul>
+<li><strong>Umožňuje analyzovat šifrovaný provoz</strong> mezi klientem a serverem.</li>
+<li>Využívá soubor s klíči pro dešifrování paketů v reálném čase.</li>
+<li>Klíčové pro ladění, bezpečnostní analýzu a vývoj webových aplikací.</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Pro dešifrování je nutné mít přístup k Pre-Master Secret klíčům.</p>
+</div>
+<hr>
+<h2 id="-krok-1-nastavení-proměnné-sslkeylogfile">🛠️ Krok 1: Nastavení proměnné SSLKEYLOGFILE</h2>
+<details>
+<summary><span style="color:#1E90FF;">🔑 Vytvoření souboru s klíči</span></summary>
 <ol>
-<li> 
-    
-Nastavit v proměnném prostředí SSLKEYLOGFILE:
-<p>Nastavte systémovou proměnnou s názvem <code>SSLKEYLOGFILE</code> na cestu k souboru, kam bude prohlížeč ukládat klíče.</p>
+<li>Nastavte systémovou proměnnou prostředí s názvem <code>SSLKEYLOGFILE</code> na cestu k souboru, kam bude prohlížeč ukládat klíče.
+<ul>
+<li><strong>Windows:</strong><br>
+Otevřete <code>Ovládací panely → Systém → Upřesnit nastavení systému → Proměnné prostředí</code>.</li>
+<li><strong>Příklad cesty:</strong><br>
+<code>C:\Users\&lt;uživatel&gt;\sslkeys.log</code></li>
+</ul>
 </li>
-<li>  
-<p>Konfigurace Wiresharku pro dešifrování SSL/TLS:</p>
-<p><code>Edit &gt; Preferences &gt; Protocols &gt; TLS</code>.</p>
-<p>Nastavte <code>Pre-Master-Secret log filename</code> na stejnou cestu, kterou jste použili pro <code>SSLKEYLOGFILE</code>.</p>
-</li>
-<li> 
-<p>Zachycení a analýza paketů:</p>
-<p>Spusťte zachycení paketů ve Wiresharku.</p>
-<p>Po ukončení zachycení paketů byste měli být schopni vidět dešifrovaný provoz.</p>
-</li>
+<li>Restartujte prohlížeč, aby začal klíče zapisovat.</li>
 </ol>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Podporují Chrome, Firefox, Edge. Safari a IE nikoliv.</p>
+</div>
+</details>
+<hr>
+<h2 id="-krok-2-konfigurace-wiresharku">🛠️ Krok 2: Konfigurace Wiresharku</h2>
+<details>
+<summary><span style="color:#1E90FF;">⚙️ Nastavení dešifrování TLS</span></summary>
+<ol>
+<li>Otevřete Wireshark</li>
+<li>Jděte do <code>Edit → Preferences → Protocols → TLS</code></li>
+<li>Nastavte <code>Pre-Master-Secret log filename</code> na stejnou cestu jako <code>SSLKEYLOGFILE</code></li>
+</ol>
+<img src="../images/wireshark_tls_settings.png" alt="wireshark_tls_settings" width="500px">
+<div class="NOTE">
+<h5>Note</h5>
+<p>Po nastavení Wireshark automaticky použije klíče k dešifrování provozu.</p>
+</div>
+</details>
+<hr>
+<h2 id="-krok-3-zachycení-a-analýza-paketů">🛠️ Krok 3: Zachycení a analýza paketů</h2>
+<details>
+<summary><span style="color:#1E90FF;">📦 Zachycení dešifrovaného provozu</span></summary>
+<ol>
+<li>Spusťte zachytávání paketů ve Wiresharku</li>
+<li>Proveďte požadovanou komunikaci v prohlížeči</li>
+<li>Po ukončení zachytávání byste měli vidět dešifrovaný HTTP provoz</li>
+</ol>
+<img src="../images/wireshark_decrypted.png" alt="wireshark_decrypted" width="500px">
+<div class="TIP">
+<h5>Tip</h5>
+<p>Filtrujte protokol <code>http</code> nebo <code>tls</code> pro lepší přehlednost.</p>
+</div>
+</details>
 
 </article>
 

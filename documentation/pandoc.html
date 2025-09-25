@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#128450;️ Pandoc – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128450;️ Pandoc – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,12 +85,26 @@
         </div>
 
         <article data-uid="">
+<h1 id="-pandoc--praktický-průvodce--tipy">🗂️ Pandoc – Praktický průvodce &amp; tipy</h1>
 
-<h2 id="pandoc">Pandoc</h2>
-<p>Pandoc je univerzální konvertor dokumentů, který dokáže převádět soubory z jednoho značkovacího formátu do jiného.</p>
-<p>Podporuje širokou škálu formátů, včetně Markdown, HTML, LaTeX a mnoha dalších.</p>
+<blockquote>
+<p>🚀 Moderní přehled základních pojmů, příkazů a doporučení pro práci s Pandoc.</p>
+</blockquote>
+<hr>
+<h2 id="-co-je-pandoc">📖 Co je Pandoc?</h2>
+<ul>
+<li><strong>Univerzální konvertor dokumentů</strong></li>
+<li>Podporuje širokou škálu formátů: Markdown, HTML, LaTeX, DOCX, PDF, EPUB, RTF a další</li>
+<li>Umožňuje převádět soubory mezi různými značkovacími formáty</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Pandoc je ideální pro automatizaci převodů dokumentů v projektech.</p>
+</div>
+<hr>
+<h2 id="-přehled-příkazů">🛠️ Přehled příkazů</h2>
 <details>
-<summary><span style="color:#1E90FF;">Přehled příkazů</span></summary>
+<summary><span style="color:#1E90FF;">📋 Tabulka převodů & možností</span></summary>
 <table>
 <thead>
 <tr>
@@ -98,217 +112,218 @@
 <th><strong>Výstupní Formát</strong></th>
 <th><strong>Příkaz</strong></th>
 <th><strong>Poznámka</strong></th>
-<th><strong>Užitečné Možnosti (Parametry)</strong></th>
+<th><strong>Užitečné Možnosti</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>📝 <strong>Markdown (.md)</strong></td>
-<td>📄 <strong>DOCX (.docx)</strong></td>
+<td>📝 Markdown (.md)</td>
+<td>📄 DOCX (.docx)</td>
 <td><code>pandoc soubor.md -o soubor.docx</code></td>
-<td>Převod z Markdownu do Word dokumentu.</td>
+<td>Markdown → Word</td>
 <td><code>--standalone</code>, <code>--template=moje-sablona.tex</code>, <code>--metadata title=&quot;Název dokumentu&quot;</code></td>
 </tr>
 <tr>
-<td>📝 <strong>Markdown (.md)</strong></td>
-<td>🌐 <strong>HTML (.html)</strong></td>
+<td>📝 Markdown (.md)</td>
+<td>🌐 HTML (.html)</td>
 <td><code>pandoc soubor.md -o soubor.html</code></td>
-<td>Generování HTML souboru z Markdownu.</td>
-<td><code>--self-contained</code>, <code>--standalone</code>, <code>--css=style.css</code>, <code>--metadata title=&quot;Titul stránky&quot;</code></td>
+<td>Markdown → HTML</td>
+<td><code>--self-contained</code>, <code>--css=style.css</code>, <code>--metadata title=&quot;Titul stránky&quot;</code></td>
 </tr>
 <tr>
-<td>📝 <strong>Markdown (.md)</strong></td>
-<td>📑 <strong>PDF (.pdf)</strong></td>
+<td>📝 Markdown (.md)</td>
+<td>📑 PDF (.pdf)</td>
 <td><code>pandoc soubor.md -o soubor.pdf</code></td>
-<td>Generování PDF souboru z Markdownu (vyžaduje LaTeX nebo jiný engine).</td>
-<td><code>--pdf-engine=xelatex</code>, <code>--template=moje-sablona.tex</code>, <code>--variable graphics=yes</code>, <code>--toc</code></td>
+<td>Markdown → PDF (vyžaduje LaTeX)</td>
+<td><code>--pdf-engine=xelatex</code>, <code>--template=moje-sablona.tex</code>, <code>--toc</code></td>
 </tr>
 <tr>
-<td>📝 <strong>Markdown (.md)</strong></td>
-<td>📚 <strong>EPUB (.epub)</strong></td>
+<td>📝 Markdown (.md)</td>
+<td>📚 EPUB (.epub)</td>
 <td><code>pandoc soubor.md -o soubor.epub</code></td>
-<td>Generování e-knihy z Markdownu.</td>
-<td><code>--epub-metadata=metadata.xml</code>, <code>--css=style.css</code>, <code>--epub-cover-image=image.jpg</code>, <code>--output=output.epub</code></td>
+<td>Markdown → e-kniha</td>
+<td><code>--epub-metadata=metadata.xml</code>, <code>--css=style.css</code>, <code>--epub-cover-image=image.jpg</code></td>
 </tr>
 <tr>
-<td>📄 <strong>DOCX (.docx)</strong></td>
-<td>📝 <strong>Markdown (.md)</strong></td>
+<td>📄 DOCX (.docx)</td>
+<td>📝 Markdown (.md)</td>
 <td><code>pandoc soubor.docx -o soubor.md</code></td>
-<td>Převod Word dokumentu na Markdown.</td>
-<td><code>--extract-media=.</code> (extrakce obrázků do složky <code>media/</code>), <code>--standalone</code></td>
-</tr>
-<tr>
-<td>📄 <strong>DOCX (.docx)</strong></td>
-<td>🌐 <strong>HTML (.html)</strong></td>
-<td><code>pandoc soubor.docx -o soubor.html</code></td>
-<td>Generování HTML z Word dokumentu.</td>
-<td><code>--self-contained</code>, <code>--standalone</code>, <code>--css=style.css</code>, <code>--output=output.html</code></td>
-</tr>
-<tr>
-<td>📄 <strong>DOCX (.docx)</strong></td>
-<td>📑 <strong>PDF (.pdf)</strong></td>
-<td><code>pandoc soubor.docx -o soubor.pdf</code></td>
-<td>Generování PDF z Word souboru (vyžaduje LaTeX).</td>
-<td><code>--pdf-engine=xelatex</code>, <code>--template=moje-sablona.tex</code>, <code>--toc</code>, <code>--output=output.pdf</code></td>
-</tr>
-<tr>
-<td>📄 <strong>DOCX (.docx)</strong></td>
-<td>📚 <strong>EPUB (.epub)</strong></td>
-<td><code>pandoc soubor.docx -o soubor.epub</code></td>
-<td>Generování e-knihy z Word souboru.</td>
-<td><code>--epub-metadata=metadata.xml</code>, <code>--css=style.css</code>, <code>--epub-cover-image=image.jpg</code></td>
-</tr>
-<tr>
-<td>🌐 <strong>HTML (.html)</strong></td>
-<td>📝 <strong>Markdown (.md)</strong></td>
-<td><code>pandoc soubor.html -o soubor.md</code></td>
-<td>Převod HTML do Markdownu.</td>
-<td><code>--standalone</code>, <code>--self-contained</code>, <code>--metadata</code></td>
-</tr>
-<tr>
-<td>🌐 <strong>HTML (.html)</strong></td>
-<td>📄 <strong>DOCX (.docx)</strong></td>
-<td><code>pandoc soubor.html -o soubor.docx</code></td>
-<td>Generování Word dokumentu z HTML.</td>
-<td><code>--self-contained</code>, <code>--standalone</code>, <code>--extract-media=.</code></td>
-</tr>
-<tr>
-<td>🌐 <strong>HTML (.html)</strong></td>
-<td>📑 <strong>PDF (.pdf)</strong></td>
-<td><code>pandoc soubor.html -o soubor.pdf</code></td>
-<td>Generování PDF z HTML souboru (vyžaduje LaTeX nebo jiný engine).</td>
-<td><code>--pdf-engine=xelatex</code>, <code>--template=moje-sablona.tex</code>, <code>--toc</code>, <code>--output=output.pdf</code></td>
-</tr>
-<tr>
-<td>🌐 <strong>HTML (.html)</strong></td>
-<td>📚 <strong>EPUB (.epub)</strong></td>
-<td><code>pandoc soubor.html -o soubor.epub</code></td>
-<td>Generování e-knihy z HTML souboru.</td>
-<td><code>--epub-metadata=metadata.xml</code>, <code>--css=style.css</code>, <code>--epub-cover-image=image.jpg</code></td>
-</tr>
-<tr>
-<td>📑 <strong>LaTeX (.tex)</strong></td>
-<td>📝 <strong>Markdown (.md)</strong></td>
-<td><code>pandoc soubor.tex -o soubor.md</code></td>
-<td>Převod LaTeX souboru na Markdown.</td>
-<td><code>--standalone</code>, <code>--self-contained</code></td>
-</tr>
-<tr>
-<td>📑 <strong>LaTeX (.tex)</strong></td>
-<td>📄 <strong>DOCX (.docx)</strong></td>
-<td><code>pandoc soubor.tex -o soubor.docx</code></td>
-<td>Generování Word dokumentu z LaTeX souboru.</td>
-<td><code>--pdf-engine=xelatex</code>, <code>--extract-media=.</code></td>
-</tr>
-<tr>
-<td>📑 <strong>LaTeX (.tex)</strong></td>
-<td>🌐 <strong>HTML (.html)</strong></td>
-<td><code>pandoc soubor.tex -o soubor.html</code></td>
-<td>Generování HTML z LaTeX souboru.</td>
-<td><code>--self-contained</code>, <code>--standalone</code>, <code>--metadata</code></td>
-</tr>
-<tr>
-<td>📑 <strong>LaTeX (.tex)</strong></td>
-<td>📑 <strong>PDF (.pdf)</strong></td>
-<td><code>pandoc soubor.tex -o soubor.pdf</code></td>
-<td>Kompilace LaTeX souboru do PDF.</td>
-<td><code>--pdf-engine=xelatex</code>, <code>--template=moje-sablona.tex</code>, <code>--toc</code>, <code>--output=output.pdf</code></td>
-</tr>
-<tr>
-<td>📑 <strong>LaTeX (.tex)</strong></td>
-<td>📚 <strong>EPUB (.epub)</strong></td>
-<td><code>pandoc soubor.tex -o soubor.epub</code></td>
-<td>Generování e-knihy z LaTeX souboru.</td>
-<td><code>--epub-metadata=metadata.xml</code>, <code>--css=style.css</code>, <code>--epub-cover-image=image.jpg</code></td>
-</tr>
-<tr>
-<td>📚 <strong>EPUB (.epub)</strong></td>
-<td>📝 <strong>Markdown (.md)</strong></td>
-<td><code>pandoc soubor.epub -o soubor.md</code></td>
-<td>Převod EPUB knihy na Markdown.</td>
-<td><code>--standalone</code>, <code>--self-contained</code>, <code>--metadata</code></td>
-</tr>
-<tr>
-<td>📚 <strong>EPUB (.epub)</strong></td>
-<td>📄 <strong>DOCX (.docx)</strong></td>
-<td><code>pandoc soubor.epub -o soubor.docx</code></td>
-<td>Generování Word dokumentu z EPUB knihy.</td>
-<td><code>--epub-metadata=metadata.xml</code>, <code>--css=style.css</code>, <code>--extract-media=.</code></td>
-</tr>
-<tr>
-<td>📚 <strong>EPUB (.epub)</strong></td>
-<td>🌐 <strong>HTML (.html)</strong></td>
-<td><code>pandoc soubor.epub -o soubor.html</code></td>
-<td>Generování HTML z EPUB knihy.</td>
-<td><code>--self-contained</code>, <code>--standalone</code>, <code>--metadata</code></td>
-</tr>
-<tr>
-<td>📚 <strong>EPUB (.epub)</strong></td>
-<td>📑 <strong>PDF (.pdf)</strong></td>
-<td><code>pandoc soubor.epub -o soubor.pdf</code></td>
-<td>Generování PDF z EPUB knihy (vyžaduje LaTeX nebo jiný engine).</td>
-<td><code>--pdf-engine=xelatex</code>, <code>--template=moje-sablona.tex</code>, <code>--toc</code>, <code>--output=output.pdf</code></td>
-</tr>
-<tr>
-<td>📄 <strong>RTF (.rtf)</strong></td>
-<td>📝 <strong>Markdown (.md)</strong></td>
-<td><code>pandoc soubor.rtf -o soubor.md</code></td>
-<td>Převod RTF do Markdownu.</td>
-<td><code>--standalone</code>, <code>--self-contained</code>, <code>--metadata</code></td>
-</tr>
-<tr>
-<td>📄 <strong>RTF (.rtf)</strong></td>
-<td>📄 <strong>DOCX (.docx)</strong></td>
-<td><code>pandoc soubor.rtf -o soubor.docx</code></td>
-<td>Generování Word dokumentu z RTF.</td>
+<td>Word → Markdown</td>
 <td><code>--extract-media=.</code></td>
 </tr>
 <tr>
-<td>📄 <strong>RTF (.rtf)</strong></td>
-<td>🌐 <strong>HTML (.html)</strong></td>
-<td><code>pandoc soubor.rtf -o soubor.html</code></td>
-<td>Generování HTML z RTF souboru.</td>
-<td><code>--self-contained</code>, <code>--standalone</code>, <code>--metadata</code></td>
+<td>📄 DOCX (.docx)</td>
+<td>🌐 HTML (.html)</td>
+<td><code>pandoc soubor.docx -o soubor.html</code></td>
+<td>Word → HTML</td>
+<td><code>--self-contained</code>, <code>--css=style.css</code></td>
 </tr>
 <tr>
-<td>📄 <strong>RTF (.rtf)</strong></td>
-<td>📑 <strong>PDF (.pdf)</strong></td>
+<td>📄 DOCX (.docx)</td>
+<td>📑 PDF (.pdf)</td>
+<td><code>pandoc soubor.docx -o soubor.pdf</code></td>
+<td>Word → PDF</td>
+<td><code>--pdf-engine=xelatex</code>, <code>--template=moje-sablona.tex</code>, <code>--toc</code></td>
+</tr>
+<tr>
+<td>📄 DOCX (.docx)</td>
+<td>📚 EPUB (.epub)</td>
+<td><code>pandoc soubor.docx -o soubor.epub</code></td>
+<td>Word → e-kniha</td>
+<td><code>--epub-metadata=metadata.xml</code>, <code>--css=style.css</code></td>
+</tr>
+<tr>
+<td>🌐 HTML (.html)</td>
+<td>📝 Markdown (.md)</td>
+<td><code>pandoc soubor.html -o soubor.md</code></td>
+<td>HTML → Markdown</td>
+<td><code>--standalone</code>, <code>--self-contained</code></td>
+</tr>
+<tr>
+<td>🌐 HTML (.html)</td>
+<td>📄 DOCX (.docx)</td>
+<td><code>pandoc soubor.html -o soubor.docx</code></td>
+<td>HTML → Word</td>
+<td><code>--self-contained</code>, <code>--extract-media=.</code></td>
+</tr>
+<tr>
+<td>🌐 HTML (.html)</td>
+<td>📑 PDF (.pdf)</td>
+<td><code>pandoc soubor.html -o soubor.pdf</code></td>
+<td>HTML → PDF</td>
+<td><code>--pdf-engine=xelatex</code>, <code>--template=moje-sablona.tex</code>, <code>--toc</code></td>
+</tr>
+<tr>
+<td>🌐 HTML (.html)</td>
+<td>📚 EPUB (.epub)</td>
+<td><code>pandoc soubor.html -o soubor.epub</code></td>
+<td>HTML → e-kniha</td>
+<td><code>--epub-metadata=metadata.xml</code>, <code>--css=style.css</code></td>
+</tr>
+<tr>
+<td>📑 LaTeX (.tex)</td>
+<td>📝 Markdown (.md)</td>
+<td><code>pandoc soubor.tex -o soubor.md</code></td>
+<td>LaTeX → Markdown</td>
+<td><code>--standalone</code>, <code>--self-contained</code></td>
+</tr>
+<tr>
+<td>📑 LaTeX (.tex)</td>
+<td>📄 DOCX (.docx)</td>
+<td><code>pandoc soubor.tex -o soubor.docx</code></td>
+<td>LaTeX → Word</td>
+<td><code>--pdf-engine=xelatex</code>, <code>--extract-media=.</code></td>
+</tr>
+<tr>
+<td>📑 LaTeX (.tex)</td>
+<td>🌐 HTML (.html)</td>
+<td><code>pandoc soubor.tex -o soubor.html</code></td>
+<td>LaTeX → HTML</td>
+<td><code>--self-contained</code>, <code>--standalone</code></td>
+</tr>
+<tr>
+<td>📑 LaTeX (.tex)</td>
+<td>📑 PDF (.pdf)</td>
+<td><code>pandoc soubor.tex -o soubor.pdf</code></td>
+<td>LaTeX → PDF</td>
+<td><code>--pdf-engine=xelatex</code>, <code>--template=moje-sablona.tex</code>, <code>--toc</code></td>
+</tr>
+<tr>
+<td>📑 LaTeX (.tex)</td>
+<td>📚 EPUB (.epub)</td>
+<td><code>pandoc soubor.tex -o soubor.epub</code></td>
+<td>LaTeX → e-kniha</td>
+<td><code>--epub-metadata=metadata.xml</code>, <code>--css=style.css</code></td>
+</tr>
+<tr>
+<td>📚 EPUB (.epub)</td>
+<td>📝 Markdown (.md)</td>
+<td><code>pandoc soubor.epub -o soubor.md</code></td>
+<td>EPUB → Markdown</td>
+<td><code>--standalone</code>, <code>--self-contained</code></td>
+</tr>
+<tr>
+<td>📚 EPUB (.epub)</td>
+<td>📄 DOCX (.docx)</td>
+<td><code>pandoc soubor.epub -o soubor.docx</code></td>
+<td>EPUB → Word</td>
+<td><code>--extract-media=.</code></td>
+</tr>
+<tr>
+<td>📚 EPUB (.epub)</td>
+<td>🌐 HTML (.html)</td>
+<td><code>pandoc soubor.epub -o soubor.html</code></td>
+<td>EPUB → HTML</td>
+<td><code>--self-contained</code>, <code>--standalone</code></td>
+</tr>
+<tr>
+<td>📚 EPUB (.epub)</td>
+<td>📑 PDF (.pdf)</td>
+<td><code>pandoc soubor.epub -o soubor.pdf</code></td>
+<td>EPUB → PDF</td>
+<td><code>--pdf-engine=xelatex</code>, <code>--template=moje-sablona.tex</code>, <code>--toc</code></td>
+</tr>
+<tr>
+<td>📄 RTF (.rtf)</td>
+<td>📝 Markdown (.md)</td>
+<td><code>pandoc soubor.rtf -o soubor.md</code></td>
+<td>RTF → Markdown</td>
+<td><code>--standalone</code>, <code>--self-contained</code></td>
+</tr>
+<tr>
+<td>📄 RTF (.rtf)</td>
+<td>📄 DOCX (.docx)</td>
+<td><code>pandoc soubor.rtf -o soubor.docx</code></td>
+<td>RTF → Word</td>
+<td><code>--extract-media=.</code></td>
+</tr>
+<tr>
+<td>📄 RTF (.rtf)</td>
+<td>🌐 HTML (.html)</td>
+<td><code>pandoc soubor.rtf -o soubor.html</code></td>
+<td>RTF → HTML</td>
+<td><code>--self-contained</code>, <code>--standalone</code></td>
+</tr>
+<tr>
+<td>📄 RTF (.rtf)</td>
+<td>📑 PDF (.pdf)</td>
 <td><code>pandoc soubor.rtf -o soubor.pdf</code></td>
-<td>Generování PDF z RTF souboru (vyžaduje LaTeX nebo jiný engine).</td>
-<td><code>--pdf-engine=xelatex</code>, <code>--template=moje-sablona.tex</code>, <code>--toc</code>, <code>--output=output.pdf</code></td>
+<td>RTF → PDF</td>
+<td><code>--pdf-engine=xelatex</code>, <code>--template=moje-sablona.tex</code>, <code>--toc</code></td>
 </tr>
 </tbody>
 </table>
 </details>
 <hr>
+<h2 id="-užitečné-možnosti-pro-konfiguraci-výstupů">⚙️ Užitečné možnosti pro konfiguraci výstupů</h2>
 <details>
-<summary><span style="color:#1E90FF;">Užitečné Možnosti pro Konfiguraci Výstupů</span></summary>
+<summary><span style="color:#1E90FF;">🔧 Nastavení metadat, šablon a výstupů</span></summary>
 <ul>
-<li><p><strong>Nastavení metadat (title, author, date)</strong>:</p>
+<li><p><strong>Nastavení metadat (title, author, date):</strong></p>
 <pre><code class="lang-sh">pandoc soubor.md -o soubor.pdf --metadata title=&quot;Titul dokumentu&quot; --metadata author=&quot;Autor&quot;
 </code></pre>
 </li>
-<li><p><strong>Použití vlastní šablony pro PDF/HTML</strong>:</p>
+<li><p><strong>Použití vlastní šablony pro PDF/HTML:</strong></p>
 <pre><code class="lang-sh">pandoc soubor.md -o soubor.pdf --template=moje-sablona.tex
 </code></pre>
 </li>
-<li><p><strong>Generování samostatného souboru pro HTML/PDF (včetně obrázků)</strong>:</p>
+<li><p><strong>Generování samostatného souboru pro HTML/PDF (včetně obrázků):</strong></p>
 <pre><code class="lang-sh">pandoc soubor.md -o soubor.html --standalone
 </code></pre>
 </li>
-<li><p><strong>Přidání obrázků přímo do HTML (base64)</strong>:</p>
+<li><p><strong>Přidání obrázků přímo do HTML (base64):</strong></p>
 <pre><code class="lang-sh">pandoc soubor.md -o soubor.html --self-contained
 </code></pre>
 </li>
-<li><p><strong>Vložení obrázků (s externími cestami)</strong>:</p>
+<li><p><strong>Vložení obrázků (s externími cestami):</strong></p>
 <pre><code class="lang-sh">pandoc soubor.md -o soubor.html --extract-media=./media
 </code></pre>
 </li>
-<li><p><strong>Zobrazení obsahu (TOC)</strong>:</p>
+<li><p><strong>Zobrazení obsahu (TOC):</strong></p>
 <pre><code class="lang-sh">pandoc soubor.md -o soubor.pdf --toc
 </code></pre>
 </li>
-<li><p><strong>Výběr formátu pro PDF engine (xelatex, pdflatex, etc.)</strong>:</p>
+<li><p><strong>Výběr formátu pro PDF engine (xelatex, pdflatex, etc.):</strong></p>
 <pre><code class="lang-sh">pandoc soubor.md -o soubor.pdf --pdf-engine=xelatex
 </code></pre>
 </li>

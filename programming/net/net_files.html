@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#128450;️ .NET – Pr&#225;ce se soubory: Oddělovače &amp; Escape sekvence | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128450;️ .NET – Pr&#225;ce se soubory: Oddělovače &amp; Escape sekvence | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,17 +85,30 @@
         </div>
 
         <article data-uid="">
+<h1 id="-net--práce-se-soubory-oddělovače--escape-sekvence">🗂️ .NET – Práce se soubory: Oddělovače &amp; Escape sekvence</h1>
 
-<h2 id="vyhledat-oddělovač">Vyhledat oddělovač</h2>
-<pre><code class="lang-c#">public static StreamReader FindDelimiter(StreamReader reader, out char delimiter, int? linesToRead = null)
+<blockquote>
+<p>🚀 Praktické rady pro detekci oddělovače v souboru, práci s BOM a speciálními znaky v .NET.</p>
+</blockquote>
+<hr>
+<h2 id="-vyhledání-oddělovače-v-souboru">🔎 Vyhledání oddělovače v souboru</h2>
+<details>
+<summary><span style="color:#1E90FF;">🧩 Algoritmus detekce oddělovače</span></summary>
+<ul>
+<li>Prochází řádky souboru a počítá výskyt oddělovačů (<code>;</code>, <code>,</code>).</li>
+<li>Vybere nejčastější oddělovač, pokud je jednoznačný.</li>
+<li>Pokud není jednoznačný (jiný oddělovač se vyskytuje alespoň v 70% případů), vyhodí chybu.</li>
+</ul>
+<p><strong>Příklad kódu:</strong></p>
+<pre><code class="lang-csharp">public static StreamReader FindDelimiter(StreamReader reader, out char delimiter, int? linesToRead = null)
 {
     const char semicolon = ';';
     const char comma = ',';
 
     Dictionary&lt;char, int&gt; delimiters = new Dictionary&lt;char, int&gt;
     {
-        { semicolon, default(int) },
-        { comma, default(int) },
+        { semicolon, 0 },
+        { comma, 0 },
     };
 
     string line;
@@ -106,16 +119,10 @@
         {
             switch (c)
             {
-                case semicolon:
-                    delimiters[semicolon]++;
-                    break;
-
-                case comma:
-                    delimiters[comma]++;
-                    break;
+                case semicolon: delimiters[semicolon]++; break;
+                case comma: delimiters[comma]++; break;
             }
         }
-
         linesRead++;
     }
 
@@ -126,12 +133,11 @@
 
     var highest = delimiters.Aggregate((item1, item2) =&gt; item1.Value &gt; item2.Value ? item1 : item2);
 
-	// Kontrola, zda existuje jiný oddělovač, který se vyskytuje alespoň v 70% případů jako nejčastější oddělovač
     const int failPercentage = 70;
     if ((from val in delimiters
          where val.Key != highest.Key
          select new decimal(val.Value) / new decimal(highest.Value) * 100).Any(diff =&gt; diff &gt;= failPercentage))
-        throw new Exception(&quot;Typ oddělovače se nepodařilo jednoznačne identifikovat.&quot;);
+        throw new Exception(&quot;Typ oddělovače se nepodařilo jednoznačně identifikovat.&quot;);
 
     delimiter = highest.Key;
 
@@ -140,25 +146,38 @@
     return reader;
 }
 </code></pre>
-<h2 id="escape-sekvence">Escape sekvence</h2>
-<ul>
-<li><p><code>\uFEFF</code></p>
-<p>= <strong>Byte Order Mark (BOM)</strong>.</p>
-<p>BOM nám říká, jak číst data v souboru - od začátku nebo od konce.</p>
+</details>
+<hr>
+<h2 id="-escape-sekvence-v-souborech">🏷️ Escape sekvence v souborech</h2>
+<details>
+<summary><span style="color:#1E90FF;">🔍 Nejčastější speciální znaky</span></summary>
+<table>
+<thead>
+<tr>
+<th>Sekvence</th>
+<th>Název</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\uFEFF</code></td>
+<td>Byte Order Mark (BOM)</td>
+<td>Určuje pořadí bajtů, může způsobit problémy při čtení souborů.</td>
+</tr>
+<tr>
+<td><code>\u0000</code></td>
+<td>Null znak</td>
+<td>Označuje konec řetězce, může komplikovat parsování dat.</td>
+</tr>
+</tbody>
+</table>
 <div class="WARNING">
 <h5>Warning</h5>
-<p>Může způsobit problémy s některými nástroji a knihovnami, které jej neočekávají.</p>
+<p>BOM i null znak mohou způsobit potíže s některými knihovnami a nástroji.<br>
+Doporučuje se je odstraňovat nebo správně ošetřit při zpracování dat.</p>
 </div>
-</li>
-<li><p><code>\u0000</code></p>
-<p>= <strong>null znak</strong>.</p>
-<p>Null znak je speciální znak, který se často používá k označení konce řetězce v některých programovacích jazycích a systémech.</p>
-<div class="WARNING">
-<h5>Warning</h5>
-<p>Je obvykle nepotřebný a může způsobit problémy při parsování nebo zpracování dat.</p>
-</div>
-</li>
-</ul>
+</details>
 
 </article>
 

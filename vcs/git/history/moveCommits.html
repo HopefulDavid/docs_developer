@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#128450;️ Git – Přesun commitů do nov&#233; nebo existuj&#237;c&#237; větve | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128450;️ Git – Přesun commitů do nov&#233; nebo existuj&#237;c&#237; větve | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../../favicon.ico">
@@ -85,23 +85,80 @@
         </div>
 
         <article data-uid="">
+<h1 id="-git--přesun-commitů-do-nové-nebo-existující-větve">🗂️ Git – Přesun commitů do nové nebo existující větve</h1>
 
-<h3 id="nová-branch">Nová Branch</h3>
-<pre><code class="lang-bash">git checkout master       # Přepne se do zdrojové branch
-git branch newbranch      # Vytvoří branch a tím se uloží stejné commity z předchozí aktivní branch
-git checkout master       # Přepne se do zdrojové branch
-git reset --hard HEAD~3   # Odstraní 3 commity zpět.
-git checkout newbranch    # Přepne se do cílové branch
+<blockquote>
+<p>🚀 Praktické rady, jak přesunout poslední commity ze jedné větve do nové nebo existující větve.</p>
+</blockquote>
+<hr>
+<h2 id="-přesun-commitů-do-nové-větve">🌱 Přesun commitů do <strong>nové větve</strong></h2>
+<details>
+<summary><span style="color:#1E90FF;">🛠️ Krok 1: Vytvoření nové větve z aktuální</span></summary>
+<pre><code class="lang-bash">git checkout master
+git branch newbranch
+git checkout master
 </code></pre>
-<p>Více info <a href="https://stackoverflow.com/questions/1628563/move-the-most-recent-commits-to-a-new-branch-with-git">zde</a>.</p>
-<h3 id="existující-branch">Existující Branch</h3>
-<pre><code class="lang-bash">git checkout existingbranch # Přepne se do cílové existující branch
-git merge branchToMoveCommitFrom # Přesune commity ze zdrojové branch
-git checkout branchToMoveCommitFrom # Přepne se do zdrojové branch
-git reset --hard HEAD~3 # Odstraní 3 commity zpět
-git checkout existingbranch # Přepne se do cílové existující branch
+<ul>
+<li>Přepne se do zdrojové větve (<code>master</code>), vytvoří novou větev (<code>newbranch</code>) se stejnou historií.</li>
+</ul>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🧹 Krok 2: Odstranění commitů ze zdrojové větve</span></summary>
+<pre><code class="lang-bash">git reset --hard HEAD~3
 </code></pre>
-<p>Více info <a href="https://stackoverflow.com/questions/1628563/move-the-most-recent-commits-to-a-new-branch-with-git">zde</a>.</p>
+<ul>
+<li>Odstraní poslední 3 commity ze zdrojové větve (<code>master</code>).</li>
+</ul>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Tento krok je <strong>nevratný</strong> – commity budou ze zdrojové větve smazány.</p>
+</div>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🔀 Krok 3: Přepnutí do nové větve</span></summary>
+<pre><code class="lang-bash">git checkout newbranch
+</code></pre>
+<ul>
+<li>Nová větev obsahuje původní commity, které byly odstraněny ze zdrojové větve.</li>
+</ul>
+</details>
+<hr>
+<h2 id="-přesun-commitů-do-existující-větve">🔄 Přesun commitů do <strong>existující větve</strong></h2>
+<details>
+<summary><span style="color:#1E90FF;">🔗 Krok 1: Merge commitů do cílové větve</span></summary>
+<pre><code class="lang-bash">git checkout existingbranch
+git merge branchToMoveCommitFrom
+</code></pre>
+<ul>
+<li>Přepne se do cílové větve (<code>existingbranch</code>) a sloučí commity ze zdrojové větve (<code>branchToMoveCommitFrom</code>).</li>
+</ul>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🧹 Krok 2: Odstranění commitů ze zdrojové větve</span></summary>
+<pre><code class="lang-bash">git checkout branchToMoveCommitFrom
+git reset --hard HEAD~3
+</code></pre>
+<ul>
+<li>Odstraní poslední 3 commity ze zdrojové větve.</li>
+</ul>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Tento krok je <strong>nevratný</strong> – commity budou ze zdrojové větve smazány.</p>
+</div>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🔀 Krok 3: Přepnutí do cílové větve</span></summary>
+<pre><code class="lang-bash">git checkout existingbranch
+</code></pre>
+<ul>
+<li>Pokračuj v práci na cílové větvi s přesunutými commity.</li>
+</ul>
+</details>
+<hr>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Více informací najdeš v <a href="https://stackoverflow.com/questions/1628563/move-the-most-recent-commits-to-a-new-branch-with-git">diskuzi na Stack Overflow</a>.</p>
+</div>
 
 </article>
 

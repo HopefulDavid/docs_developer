@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#129517; Unity – Navigačn&#237; syst&#233;m &amp; Tipy | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#129517; Unity – Navigačn&#237; syst&#233;m &amp; Tipy | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,10 +85,72 @@
         </div>
 
         <article data-uid="">
+<h1 id="-unity--navigační-systém--tipy">🧭 Unity – Navigační systém &amp; Tipy</h1>
 
-<h2 id="navigační-systém-pro-pohyb">Navigační systém pro pohyb</h2>
+<blockquote>
+<p>🚀 Praktické rady pro nastavení navigace, pohyb postav a využití NavMesh v Unity.</p>
+</blockquote>
+<hr>
+<h2 id="-co-je-navigační-systém">🗺️ Co je Navigační systém?</h2>
 <details>
-<summary><span style="color:#1E90FF;">Novinky</span></summary>
+<summary><span style="color:#1E90FF;">🔍 Základní principy</span></summary>
+<ul>
+<li>Umožňuje postavám najít cestu v herním světě.</li>
+<li>Využívá <strong>NavMesh</strong> – speciální mapu pro navigaci.</li>
+<li>Řeší překážky, optimalizuje trasu a umožňuje dynamický pohyb.</li>
+</ul>
+<p><img src="../../images/unity_navmesh_intro.png" alt=""></p>
+</details>
+<hr>
+<h2 id="-nastavení-navmesh-v-unity">🛠️ Nastavení NavMesh v Unity</h2>
+<details>
+<summary><span style="color:#1E90FF;">⚙️ Jak vytvořit NavMesh?</span></summary>
+<ol>
+<li>Označ objekty, po kterých se má chodit (<strong>Walkable</strong>).</li>
+<li>Přidej komponentu <strong>NavMesh Surface</strong>.</li>
+<li>Klikni na <strong>Bake</strong> pro vygenerování navigační mapy.</li>
+</ol>
+<p><img src="../../images/unity_navmesh_bake.png" alt=""></p>
+<blockquote>
+<p>📌 Pro dynamické prostředí použij <strong>NavMesh Obstacle</strong>.</p>
+</blockquote>
+</details>
+<hr>
+<h2 id="-pohyb-postavy-pomocí-navmesh-agent">🚶‍♂️ Pohyb postavy pomocí NavMesh Agent</h2>
+<details>
+<summary><span style="color:#1E90FF;">👣 Jak nastavit pohyb?</span></summary>
+<ol>
+<li>Přidej komponentu <strong>NavMesh Agent</strong> na postavu.</li>
+<li>Nastav parametry (rychlost, akcelerace, radius).</li>
+<li>Pro pohyb použij skript:</li>
+</ol>
+<pre><code class="lang-csharp">using UnityEngine;
+using UnityEngine.AI;
+
+public class MoveToTarget : MonoBehaviour
+{
+    public Transform target;
+    private NavMeshAgent agent;
+
+    void Start()
+    {
+        agent = GetComponent&lt;NavMeshAgent&gt;();
+    }
+
+    void Update()
+    {
+        agent.SetDestination(target.position);
+    }
+}
+</code></pre>
+<blockquote>
+<p>🗝️ Postava automaticky najde cestu k cíli.</p>
+</blockquote>
+</details>
+<hr>
+<h2 id="-novinky--video">🆕 Novinky &amp; Video</h2>
+<details>
+<summary><span style="color:#1E90FF;">🎬 Co je nového v navigaci?</span></summary>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/sOIQCHNJbCs?si=Hd4186amhBQiQ_tX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </details>
 

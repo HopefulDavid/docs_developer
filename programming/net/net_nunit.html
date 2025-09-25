@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#129514; .NET – NUnit (Testovac&#237; framework) | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#129514; .NET – NUnit (Testovac&#237; framework) | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,21 +85,33 @@
         </div>
 
         <article data-uid="">
+<h1 id="-net--nunit-testovací-framework">🧪 .NET – NUnit (Testovací framework)</h1>
 
-<h2 id="nunit">NUnit</h2>
-<p>= Testovací framework</p>
+<blockquote>
+<p>🚀 Praktické rady pro psaní unit testů v .NET pomocí NUnit, práce s více asserty a odkazy na video prezentaci.</p>
+</blockquote>
+<hr>
+<h2 id="-co-je-nunit">🧩 Co je NUnit?</h2>
 <details>
-<summary><span style="color:#1E90FF;">Multiple Asserts</span></summary>
-<p>Nechceme, aby se test ukončil, jakmile první <code>assert</code> selže uvnitř metody.</p>
+<summary><span style="color:#1E90FF;">🔍 Základní principy NUnit</span></summary>
 <ul>
-<li><p>Ve standardním případě, pokud první test selže, tak následující testy již nejsou spuštěny z této metody.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Stane se pouze v případě, že máme více <code>assert</code> v jedné metodě.</p>
-</div>
-</li>
-<li><p>Příklad použití:</p>
-<pre><code class="lang-C#">[Test]
+<li><strong>NUnit</strong> je populární open-source framework pro unit testování v .NET.</li>
+<li>Umožňuje psát automatizované testy, ověřovat chování kódu a zvyšovat jeho kvalitu.</li>
+<li>Podporuje různé typy asertů, parametrizované testy, setup/teardown metody a další.</li>
+</ul>
+<p><img src="../../images/net_nunit_intro.png" alt=""></p>
+</details>
+<hr>
+<h2 id="-multiple-asserts">🧑‍💻 Multiple Asserts</h2>
+<details>
+<summary><span style="color:#1E90FF;">🧩 Jak fungují Multiple Asserts?</span></summary>
+<ul>
+<li>Ve standardním případě, pokud první <code>assert</code> selže, následující testy v metodě už nejsou spuštěny.</li>
+<li>Pomocí <code>Assert.Multiple</code> lze provést více ověření najednou a zobrazit všechny chyby najednou.</li>
+<li>Vhodné pro komplexní ověřování výsledků.</li>
+</ul>
+<p><strong>Ukázka použití:</strong></p>
+<pre><code class="lang-csharp">[Test]
 public void MultipleAssertsDemo()
 {
     var situationUnderTest = new SomeCalculator();
@@ -111,20 +123,29 @@ public void MultipleAssertsDemo()
         Assert.That(result.ImaginaryPart, Is.EqualTo(3.9));
     });
 
-    // Can also work with the classic assertion syntax
+    // Lze použít i klasickou syntaxi
     Assert.Multiple(() =&gt;
     {
         ClassicAssert.AreEqual(5.2, result.RealPart, &quot;Real Part&quot;);
         ClassicAssert.AreEqual(3.9, result.ImaginaryPart, &quot;Imaginary Part&quot;);
     });
 }
-
 </code></pre>
-</li>
-</ul>
-<h2 id="video-prezentace">Video prezentace</h2>
-<p><a href="https://download.wug.cz/videos/wug/WUGBrno_WUG-Days-2018_Trendy-v-unit-testovani-a-mockovani/WUGBrno_WUG-Days-2018_Trendy-v-unit-testovani-a-mockovani_1080p.mp4"> Trendy v unit testování a mockování (WUG Days 2018)</a></p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Multiple asserts využij, pokud chceš v jednom testu ověřit více vlastností najednou.</p>
+</div>
 </details>
+<hr>
+<h2 id="-video-prezentace">🎬 Video prezentace</h2>
+<details>
+<summary><span style="color:#1E90FF;">📺 Trendy v unit testování a mockování</span></summary>
+<ul>
+<li>Doporučené video:<br>
+<a href="https://download.wug.cz/videos/wug/WUGBrno_WUG-Days-2018_Trendy-v-unit-testovani-a-mockovani/WUGBrno_WUG-Days-2018_Trendy-v-unit-testovani-a-mockovani_1080p.mp4">Trendy v unit testování a mockování (WUG Days 2018)</a></li>
+</ul>
+</details>
+
 </article>
 
         <div class="contribution d-print-none">

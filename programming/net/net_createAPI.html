@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#127760; .NET – Vytvořen&#237; REST API v ASP.NET Core | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#127760; .NET – Vytvořen&#237; REST API v ASP.NET Core | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,21 +85,28 @@
         </div>
 
         <article data-uid="">
+<h1 id="-net--vytvoření-rest-api-v-aspnet-core">🌐 .NET – Vytvoření REST API v ASP.NET Core</h1>
 
-<h2 id="vytvoření-api">Vytvoření API</h2>
-<p>Vlastní REST API v C# s využitím frameworku <code>ASP.NET Core</code>.</p>
+<blockquote>
+<p>🚀 Praktické rady pro založení, strukturu, konfiguraci a rozšíření vlastního API v C# s ASP.NET Core.</p>
+</blockquote>
+<hr>
+<h2 id="-vytvoření-projektu">🏗️ Vytvoření projektu</h2>
 <details>
-<summary><span style="color:#1E90FF;">Vytvoření projektu</span></summary>
+<summary><span style="color:#1E90FF;">🛠️ Krok za krokem</span></summary>
 <ol>
-<li>Otevřete <code>Visual Studio</code>.</li>
-<li>Vyberte možnost <code>Create a new project</code>.</li>
-<li>Zvolte šablonu <code>ASP.NET Core Web API</code>.</li>
-<li>Pojmenujte projekt a klikněte na <code>Create</code>.</li>
-<li>Vyberte <code>.NET 6 (Long-term support)</code> nebo nejnovější dostupnou verzi .NET a potvrďte.</li>
+<li>Otevři <strong>Visual Studio</strong>.</li>
+<li>Zvol <strong>Create a new project</strong>.</li>
+<li>Vyber šablonu <strong>ASP.NET Core Web API</strong>.</li>
+<li>Pojmenuj projekt a klikni na <strong>Create</strong>.</li>
+<li>Vyber <strong>.NET 6 (LTS)</strong> nebo nejnovější verzi.</li>
 </ol>
+<p><img src="../../images/net_api_create.png" alt=""></p>
 </details>
+<hr>
+<h2 id="-struktura-projektu">📁 Struktura projektu</h2>
 <details>
-<summary><span style="color:#1E90FF;">Struktura projektu</span></summary>
+<summary><span style="color:#1E90FF;">🗂️ Přehled složek a souborů</span></summary>
 <table>
 <thead>
 <tr>
@@ -122,80 +129,57 @@
 </tr>
 </tbody>
 </table>
+<p><img src="../../images/net_api_structure.png" alt=""></p>
 </details>
+<hr>
+<h2 id="-přidání-kontroleru">🧑‍💻 Přidání kontroleru</h2>
 <details>
-<summary><span style="color:#1E90FF;">Přidání kontroleru</span></summary>
-<ol>
-<li>Klikněte pravým tlačítkem na složku <code>Add</code> → <code>Controller...</code>.</li>
-<li>Vyberte <code>MVC Controller - Empty</code> a pojmenujte ho např. <code>MyController</code>.</li>
-</ol>
+<summary><span style="color:#1E90FF;">🔌 Ukázka kontroleru</span></summary>
 <pre><code class="lang-csharp">using Microsoft.AspNetCore.Mvc;
 
 namespace MyAPI.Controllers
 {
-    // Třída MyController je použita jako &quot;my&quot; v URL trasách
-    // To je způsobeno tím, že atribut [Route(&quot;api/[controller]&quot;)] používá název třídy kontroleru (bez přípony &quot;Controller&quot;) jako prefix trasy.
-    [ApiController] // Definuje třídu jako API kontroler.
-    [Route(&quot;api/[controller]&quot;)] // Definuje prefix URL pro kontroler.
+    [ApiController]
+    [Route(&quot;api/[controller]&quot;)]
     public class MyController : ControllerBase
     {
-        // GET: api/my
-        [HttpGet] // Definuje metodu jako GET.
-        public IActionResult Get()
+        [HttpGet]
+        public IActionResult Get() =&gt; Ok(new { message = &quot;Vítejte v mém API!&quot; });
+
+        [HttpPost]
+        public IActionResult Post([FromBody] MyModel model)
         {
-            return Ok(new { message = &quot;Vítejte v mém API!&quot; }); // Vrátí HTTP 200 OK s objektem.
+            if (model == null) return BadRequest(&quot;Model je null&quot;);
+            return CreatedAtAction(nameof(Get), new { id = model.Id }, model);
         }
 
-        // POST: api/my
-        [HttpPost] // Definuje metodu jako POST.
-        public IActionResult Post([FromBody] MyModel model) // Označuje, že parametr metody je z těla požadavku.
+        [HttpPut(&quot;{id}&quot;)]
+        public IActionResult Put(int id, [FromBody] MyModel model)
         {
-            if (model == null)
-            {
-                return BadRequest(&quot;Model je null&quot;); // Vrátí HTTP 400 Bad Request s objektem.
-            }
-            return CreatedAtAction(nameof(Get), new { id = model.Id }, model); // Vrátí HTTP 201 Created s objektem.
+            if (id != model.Id) return BadRequest(&quot;ID neodpovídá&quot;);
+            return Ok(model);
         }
 
-        // PUT: api/my/{id}
-        [HttpPut(&quot;{id}&quot;)] // Definuje metodu jako PUT.
-        public IActionResult Put(int id, [FromBody] MyModel model) // Označuje, že parametr metody je z těla požadavku.
-        {
-            if (id != model.Id)
-            {
-                return BadRequest(&quot;ID neodpovídá&quot;); // Vrátí HTTP 400 Bad Request s objektem.
-            }
-            // Aktualizace logiky zde
-            return Ok(model); // Vrátí HTTP 200 OK s objektem.
-        }
-
-        // DELETE: api/my/{id}
-        [HttpDelete(&quot;{id}&quot;)] // Definuje metodu jako DELETE.
+        [HttpDelete(&quot;{id}&quot;)]
         public IActionResult Delete(int id)
         {
             // Smazání logiky zde
-            return NoContent(); // Vrátí HTTP 204 No Content.
+            return NoContent();
         }
 
-        // GET: api/my/search?query={query}
-        [HttpGet(&quot;search&quot;)] // Definuje metodu jako GET.
-        public IActionResult Search([FromQuery] string query) // Označuje, že parametr metody je z dotazu URL.
+        [HttpGet(&quot;search&quot;)]
+        public IActionResult Search([FromQuery] string query)
         {
             // Vyhledávací logika zde
-            return Ok(new { query }); // Vrátí HTTP 200 OK s objektem.
+            return Ok(new { query });
         }
 
-        // GET: api/my/{id}
-        [HttpGet(&quot;{id}&quot;)] // Definuje metodu jako GET.
-        public IActionResult GetById([FromRoute] int id) // Označuje, že parametr metody je z cesty URL.
+        [HttpGet(&quot;{id}&quot;)]
+        public IActionResult GetById([FromRoute] int id)
         {
-            // Získání logiky zde
             var model = new MyModel { Id = id, Name = &quot;Example&quot; };
-            if (model == null)
-            {
-                return NotFound(); // Vrátí HTTP 404 Not Found.
-            }
-            return Ok(model); // Vrátí HTTP 200 OK s objektem.
+            if (model == null) return NotFound();
+            return Ok(model);
         }
     }
 
@@ -207,215 +191,118 @@ namespace MyAPI.Controllers
 }
 </code></pre>
 </details>
+<hr>
+<h2 id="-konfigurace-závislostí">⚙️ Konfigurace závislostí</h2>
 <details>
-<summary><span style="color:#1E90FF;">Konfigurace závislostí</span></summary>
-<p>Soubor <code>Startup.cs</code> slouží k nastavení a konfiguraci aplikace.</p>
-<details>
-<summary><span style="color:#E95A84;">`Startup.cs`</span></summary>
+<summary><span style="color:#1E90FF;">🔧 Nastavení v `Startup.cs`</span></summary>
 <pre><code class="lang-csharp">using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
 namespace MyAPI
 {
     public class Startup
     {
-        /// &lt;summary&gt; Obsahuje konfiguraci aplikace. &lt;/summary&gt;
         private readonly IConfiguration _configuration;
+        public Startup(IConfiguration configuration) =&gt; _configuration = configuration;
 
-        /// &lt;summary&gt; Inicializuje novou instanci třídy &lt;see cref=&quot;Startup&quot;/&gt;. &lt;/summary&gt;
-        public Startup(IConfiguration configuration)
-        {
-            _configuration = configuration; // Uloží konfiguraci do privátní proměnné.
-        }
-        
-        /// &lt;summary&gt;
-        /// Konfiguruje služby pro aplikaci.
-        ///
-        /// Zde se přidávají služby do kontejneru služeb, které jsou následně použíty v &lt;see cref=&quot;Configure&quot;/&gt;.
-        /// &lt;/summary&gt;
-        /// &lt;param name=&quot;services&quot;&gt;Kolekce služeb pro aplikaci.&lt;/param&gt;
         public void ConfigureServices(IServiceCollection services)
         {
-            // Přidává službu MVC.
-            // MVC = Model-View-Controller, architektura pro vytváření webových aplikací.
             services.AddControllers();
-            
-            // Příklad použití konfigurace z appsettings.json
-
-            // Přidává podporu pro CORS. 
-            // (CORS = Cross-Origin Resource Sharing, umožňuje webům získat data ze serverů na jiné doméně, pokud to server povolí.)
             services.AddCors();
-
-            // Přidává podporu pro autentizaci.
-            // Aplikace může používat různé způsoby autentizace, např. OAuth, OpenID Connect, Cookies, JWT atd.
             services.AddAuthentication();
-
-            // Přidává podporu pro autorizaci.
-            // Autorizace určuje, kdo může přistupovat k různým částem aplikace.
             services.AddAuthorization();
-
-            // Přidává podporu pro Swagger (dokumentace API).
-            // Swagger je nástroj pro vytváření, dokumentaci a testování API.
             services.AddSwaggerGen();
-            
-            // Příklad použití konfigurace v třídě služby.
             services.AddSingleton&lt;MyService&gt;();
         }
 
-        /// &lt;summary&gt;
-        /// Konfiguruje middleware a další nastavení aplikace.
-        /// &lt;/summary&gt;
-        /// &lt;param name=&quot;app&quot;&gt;Aplikace pro konfiguraci middleware.&lt;/param&gt;
-        /// &lt;param name=&quot;env&quot;&gt;Poskytuje informace o prostředí, ve kterém aplikace běží.&lt;/param&gt;
-        /// &lt;param name=&quot;logger&quot;&gt;Poskytuje funkce pro logování.&lt;/param&gt;
-        /// &lt;param name=&quot;myService&quot;&gt;Poskytuje službu pro konfiguraci.&lt;/param&gt;
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger&lt;Startup&gt; logger, MyService myService)
         {
-            // Přidává middleware pro logování chyb.
-            if (env.IsDevelopment())
-            {
-                // Povoluje stránku s chybami pro vývojové prostředí.
-                app.UseDeveloperExceptionPage();
-            }
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
             else
             {
-                // Používá stránku s chybami pro produkční prostředí.
                 app.UseExceptionHandler(&quot;/Home/Error&quot;);
-                app.UseHsts(); // HSTS = HTTP Strict Transport Security, zajišťuje, že prohlížeči budou komunikovat pouze přes HTTPS.
+                app.UseHsts();
             }
 
-            // Přidává podporu pro HTTPS.
             app.UseHttpsRedirection();
-
-            // Přidává podporu pro statické soubory.
             app.UseStaticFiles();
-
-            // Přidává podporu pro CORS.
-            app.UseCors(builder =&gt; 
-                builder.AllowAnyOrigin() // Povoluje všechny zdroje.
-                       .AllowAnyMethod() // Povoluje všechny metody.
-                       .AllowAnyHeader()); // Povoluje všechny hlavičky.
-
-            // Přidává podporu pro routování.
-            // Routování určuje, jaké akce budou provedeny pro různé URL adresy.
+            app.UseCors(builder =&gt; builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseRouting();
-
-            // Přidává podporu pro autentizaci.
             app.UseAuthentication();
-
-            // Přidává podporu pro autorizaci.
             app.UseAuthorization();
-
-            // Přidává podporu pro Swagger.
             app.UseSwagger();
             app.UseSwaggerUI(c =&gt;
-            {                
-                // Nastavuje prefix URL pro Swagger.
-                // Pokud je nastaveno na prázdný řetězec, Swagger UI bude dostupné na kořenové URL (např. https://localhost:5001/).
+            {
                 c.RoutePrefix = string.Empty;
-                
-                // Přidává endpoint pro Swagger.
-                // Definuje URL, kde bude dostupná specifikace Swagger (např. https://localhost:5001/v1/swagger.json).
                 c.SwaggerEndpoint(&quot;v1/swagger.json&quot;, &quot;My API V1&quot;);
             });
 
-            // Přidává middleware pro logování požadavků.
             app.Use(async (context, next) =&gt;
             {
-                // Příklad použití služby s konfigurací.
                 myService.LogInformation();
                 myService.UseApiKeys();
-                
-                // Loguje informace o požadavku.
                 logger.LogInformation(&quot;Handling request: &quot; + context.Request.Path);
-                
-                // Předává řízení dalšímu middleware.
                 await next.Invoke();
-                
-                // Loguje informace o dokončení požadavku.
                 logger.LogInformation(&quot;Finished handling request.&quot;);
             });
 
-            // Přidává middleware pro routování pro kontrolery.
-            app.UseEndpoints(endpoints =&gt;
-            {
-                // Přidává routování pro kontrolery.
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints =&gt; endpoints.MapControllers());
         }
     }
 }
 </code></pre>
 </details>
-<p>Soubor <code>Program.cs</code> obsahuje vstupní bod aplikace.</p>
+<hr>
+<h2 id="-vstupní-bod-aplikace">🚀 Vstupní bod aplikace</h2>
 <details>
-<summary><span style="color:#E95A84;"> `Program.cs`</span></summary>
+<summary><span style="color:#E95A84;">📝 `Program.cs`</span></summary>
 <pre><code class="lang-csharp">public class Program
 {
-    public static void Main(string[] args)
-    {
-        // Vytvoří a spustí hostitele aplikace.
-        CreateHostBuilder(args).Build().Run();
-    }
+    public static void Main(string[] args) =&gt; CreateHostBuilder(args).Build().Run();
 
-    /// &lt;summary&gt;
-    /// Vytvoří hostitele pro aplikaci.
-    /// &lt;/summary&gt;
-    /// &lt;param name=&quot;args&quot;&gt;Argumenty příkazového řádku.&lt;/param&gt;
-    public static IHostBuilder CreateHostBuilder(string[] args)
-    {
-        // Vytvoří hostitele pro aplikaci.
-        return Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder =&gt;
-            {
-                // Konfiguruje hostitele pro aplikaci.
-                webBuilder.UseStartup&lt;Startup&gt;();
-            });
-    }
+    public static IHostBuilder CreateHostBuilder(string[] args) =&gt;
+        Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =&gt; webBuilder.UseStartup&lt;Startup&gt;());
 }
 </code></pre>
 </details>
-<p>Soubor <code>appsettings.json</code> obsahuje konfiguraci aplikace.</p>
+<hr>
+<h2 id="-konfigurace-v-appsettingsjson">⚙️ Konfigurace v <code>appsettings.json</code></h2>
 <details>
-<summary><span style="color:#E95A84;">`appsettings.json`</span></summary>
+<summary><span style="color:#E95A84;">🗂️ Ukázka konfigurace</span></summary>
 <pre><code class="lang-json">{
-  // Pevné konfigurace
-  &quot;Logging&quot;: { 
-    &quot;LogLevel&quot;: {
-      &quot;Default&quot;: &quot;Information&quot;, // Výchozí úroveň logování
-    },
-    &quot;Console&quot;: {
-      &quot;IncludeScopes&quot;: true // Zahrnuje rozsahy logování. (Zahrnuje informace o třídě, která loguje zprávu.)
-    }
+  &quot;Logging&quot;: {
+    &quot;LogLevel&quot;: { &quot;Default&quot;: &quot;Information&quot; },
+    &quot;Console&quot;: { &quot;IncludeScopes&quot;: true }
   },
-  &quot;AllowedHosts&quot;: &quot;*&quot;,  // Povolené hostitelské adresy
-  &quot;ConnectionStrings&quot;: { 
-    // Konfigurace připojení k databázi
-    &quot;DefaultConnection&quot;: &quot;Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;&quot;, // Custom
-    // Další připojení k databázi
-    &quot;AnotherConnection&quot;: &quot;Server=anotherServerAddress;Database=anotherDataBase;User Id=anotherUsername;Password=anotherPassword;&quot; // Custom
+  &quot;AllowedHosts&quot;: &quot;*&quot;,
+  &quot;ConnectionStrings&quot;: {
+    &quot;DefaultConnection&quot;: &quot;Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;&quot;,
+    &quot;AnotherConnection&quot;: &quot;Server=anotherServerAddress;Database=anotherDataBase;User Id=anotherUsername;Password=anotherPassword;&quot;
   },
-  // Příklad vlastní konfigurace pro modely a služby
-  &quot;CustomSettings&quot;: { 
-    &quot;EmailSettings&quot;: { 
+  &quot;CustomSettings&quot;: {
+    &quot;EmailSettings&quot;: {
       &quot;SmtpServer&quot;: &quot;smtp.example.com&quot;,
-      &quot;SmtpPort&quot;: 587, 
+      &quot;SmtpPort&quot;: 587,
       &quot;SenderName&quot;: &quot;Example App&quot;,
       &quot;SenderEmail&quot;: &quot;noreply@example.com&quot;,
-      &quot;Username&quot;: &quot;smtpUser&quot;, 
-      &quot;Password&quot;: &quot;smtpPassword&quot; 
+      &quot;Username&quot;: &quot;smtpUser&quot;,
+      &quot;Password&quot;: &quot;smtpPassword&quot;
     },
-    &quot;ThirdPartyApiKeys&quot;: { 
+    &quot;ThirdPartyApiKeys&quot;: {
       &quot;GoogleMaps&quot;: &quot;your-google-maps-api-key&quot;,
-      &quot;SendGrid&quot;: &quot;your-sendgrid-api-key&quot; 
+      &quot;SendGrid&quot;: &quot;your-sendgrid-api-key&quot;
     }
   }
 }
 </code></pre>
-<p>Příklad použití konfigurace v třídě služby.</p>
+</details>
+<hr>
+<h2 id="-příklad-služby-s-konfigurací">🧩 Příklad služby s konfigurací</h2>
+<details>
+<summary><span style="color:#1E90FF;">🔑 Třída služby</span></summary>
 <pre><code class="lang-csharp">public class MyService
 {
     private readonly IConfiguration _configuration;
@@ -429,12 +316,8 @@ namespace MyAPI
     {
         _configuration = configuration;
         _logger = logger;
-
-        // Načtení připojovacích řetězců
         _defaultConnectionString = _configuration.GetConnectionString(&quot;DefaultConnection&quot;);
         _anotherConnectionString = _configuration.GetConnectionString(&quot;AnotherConnection&quot;);
-
-        // Načtení vlastních nastavení
         _emailSettings = _configuration.GetSection(&quot;CustomSettings:EmailSettings&quot;).Get&lt;EmailSettings&gt;();
         _apiKeys = _configuration.GetSection(&quot;CustomSettings:ThirdPartyApiKeys&quot;).Get&lt;ThirdPartyApiKeys&gt;();
     }
@@ -447,7 +330,6 @@ namespace MyAPI
 
     public void SendEmail()
     {
-        // Příklad použití EmailSettings
         var smtpClient = new SmtpClient(_emailSettings.SmtpServer, _emailSettings.SmtpPort)
         {
             Credentials = new NetworkCredential(_emailSettings.Username, _emailSettings.Password),
@@ -466,7 +348,6 @@ namespace MyAPI
 
     public void UseApiKeys()
     {
-        // Příklad použití ThirdPartyApiKeys
         var googleMapsApiKey = _apiKeys.GoogleMaps;
         var sendGridApiKey = _apiKeys.SendGrid;
         _logger.LogInformation(&quot;Google Maps API Key: {ApiKey}&quot;, googleMapsApiKey);
@@ -490,7 +371,6 @@ public class ThirdPartyApiKeys
     public string SendGrid { get; set; }
 }
 </code></pre>
-</details>
 </details>
 
 </article>

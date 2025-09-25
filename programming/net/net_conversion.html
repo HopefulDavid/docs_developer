@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#128260; .NET – Implicitn&#237; &amp; Explicitn&#237; oper&#225;tory | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128260; .NET – Implicitn&#237; &amp; Explicitn&#237; oper&#225;tory | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,26 +85,33 @@
         </div>
 
         <article data-uid="">
+<h1 id="-net--implicitní--explicitní-operátory">🔄 .NET – Implicitní &amp; Explicitní operátory</h1>
 
-<h3 id="implicitní-a-explicitní-operátory">Implicitní a Explicitní operátory</h3>
-<p>Rozdíly:</p>
+<blockquote>
+<p>🚀 Praktické rady pro převody typů v .NET, rozdíly mezi implicitními a explicitními operátory, ukázky použití.</p>
+</blockquote>
+<hr>
+<h2 id="-co-jsou-implicitní-a-explicitní-operátory">🧩 Co jsou implicitní a explicitní operátory?</h2>
+<details>
+<summary><span style="color:#1E90FF;">🔍 Základní principy převodů</span></summary>
 <ul>
-<li><p>Implicitní:</p>
-<p>Automatický převod (žádný <code>cast</code> není potřeba)</p>
-</li>
-<li><p>Explicitní:</p>
-<p>Vyžaduje <code>cast</code> (musíte převod jasně napsat)</p>
-</li>
+<li><strong>Implicitní operátor</strong>: Automatický převod, není potřeba psát <code>cast</code>.</li>
+<li><strong>Explicitní operátor</strong>: Vyžaduje použití <code>cast</code> – převod je nutné napsat ručně.</li>
 </ul>
 <div class="NOTE">
 <h5>Note</h5>
 <p>Implicitní je pohodlnější, ale explicitní je bezpečnější pro složité nebo nejednoznačné převody.</p>
 </div>
+<p><img src="../../images/net_conversion_intro.png" alt=""></p>
+</details>
+<hr>
+<h2 id="-implicitní-operátor">🔄 Implicitní operátor</h2>
 <details>
-<summary><span style="color:#1E90FF;">Implicitní operátor</span></summary>
+<summary><span style="color:#1E90FF;">⚡ Automatický převod</span></summary>
 <ul>
-<li><p>Automatický převod mezi typy. (Není potřeba nic speciálně psát, převod se provede sám.)</p>
-<p>Příklad:</p>
+<li>Převod mezi typy probíhá automaticky, bez nutnosti psát <code>cast</code>.</li>
+</ul>
+<p><strong>Příklad:</strong></p>
 <pre><code class="lang-csharp">public struct Money
 {
     private double _value;
@@ -120,14 +127,15 @@
 Money m = new Money(10.50);
 double d = m * 2;  // Automaticky převede Money na double
 </code></pre>
-</li>
-</ul>
 </details>
+<hr>
+<h2 id="-explicitní-operátor">🛡️ Explicitní operátor</h2>
 <details>
-<summary><span style="color:#1E90FF;">Explicitní operátor</span></summary>
+<summary><span style="color:#1E90FF;">🔒 Převod s použitím castu</span></summary>
 <ul>
-<li><p>Vyžaduje použití <strong>castu</strong>, například: <code>(double)</code>. (Převod není automatický, musíte ho sami zadat.)</p>
-<p>Příklad:</p>
+<li>Převod je nutné napsat ručně pomocí <code>(typ)</code>.</li>
+</ul>
+<p><strong>Příklad:</strong></p>
 <pre><code class="lang-csharp">public struct Temperature
 {
     private double _value;
@@ -143,9 +151,7 @@ double d = m * 2;  // Automaticky převede Money na double
 Temperature t = new Temperature(70.0);
 double d = (double)t + 32.0;  // Explicitně převedete Temperature na double
 </code></pre>
-  </li></ul></details>
-
-
+</details>
 
 </article>
 

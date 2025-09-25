@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#129513; .NET – Interface (Rozhran&#237;) | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#129513; .NET – Interface (Rozhran&#237;) | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,76 +85,82 @@
         </div>
 
         <article data-uid="">
+<h1 id="-net--interface-rozhraní">🧩 .NET – Interface (Rozhraní)</h1>
 
-<p>Interface = rozhraní</p>
+<blockquote>
+<p>🚀 Praktické rady pro použití rozhraní v .NET, rozdíl mezi mělkým a hlubokým klonováním, ukázky implementace.</p>
+</blockquote>
+<hr>
+<h2 id="-co-je-interface">🧑‍💻 Co je Interface?</h2>
 <details>
-<summary><span style="color:#1E90FF;">ICloneable</span></summary>
+<summary><span style="color:#1E90FF;">🔍 Základní principy rozhraní</span></summary>
 <ul>
-<li><p>Vytvoří kopii objektu</p>
+<li><strong>Interface</strong> definuje smlouvu, kterou musí třída implementovat.</li>
+<li>Umožňuje polymorfismus a oddělení implementace od definice.</li>
+</ul>
+<p><img src="../../images/net_interface_intro.png" alt=""></p>
+</details>
+<hr>
+<h2 id="-icloneable--klonování-objektů">🌀 ICloneable – Klonování objektů</h2>
 <details>
-<summary><span style="color:#E95A84;">Mělká</span></summary>
-<pre><code class="lang-c#">public object Clone ()
+<summary><span style="color:#1E90FF;">🧬 Mělká kopie</span></summary>
+<ul>
+<li>Kopíruje pouze odkazy na objekty, ne jejich obsah.</li>
+</ul>
+<pre><code class="lang-csharp">public object Clone()
 {
     // Pro referenční typy se kopíruje reference (odkaz), nikoli objekt
-    return this.MemberwiseClone(); 
+    return this.MemberwiseClone();
 }
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#E95A84;">Hluboká</span></summary>
-<p>Kopírování referencí jako objekt</p>
+<summary><span style="color:#1E90FF;">🌊 Hluboká kopie</span></summary>
+<ul>
+<li>Kopíruje celý objekt včetně vnořených dat.</li>
+<li>Může mít vliv na výkon.</li>
+</ul>
 <div class="WARNING">
 <h5>Warning</h5>
-<p>Může mít vliv na výkon</p>
+<p>Hluboké klonování je náročnější na výkon, používej s rozmyslem.</p>
 </div>
-<ul>
-<li><p>Automaticky:</p>
-<pre><code class="lang-c#">public static T DeepClone&lt;T&gt;(T obj)
+<p><strong>Automaticky (serializace):</strong></p>
+<pre><code class="lang-csharp">public static T DeepClone&lt;T&gt;(T obj)
 {
-   using (var ms = new MemoryStream())
-   {
-       var formatter = new BinaryFormatter();
-       formatter.Serialize(ms, obj);
-       ms.Position = 0;
-
-       return (T) formatter.Deserialize(ms);
-   }
+    using (var ms = new MemoryStream())
+    {
+        var formatter = new BinaryFormatter();
+        formatter.Serialize(ms, obj);
+        ms.Position = 0;
+        return (T)formatter.Deserialize(ms);
+    }
 }
 </code></pre>
-<ul>
-<li><p>Ručně:</p>
-<pre><code class="lang-c#">public class Record : ICloneable
-  {
-      // ... other properties ...
+<p><strong>Ručně (vlastní implementace):</strong></p>
+<pre><code class="lang-csharp">public class Record : ICloneable
+{
+    // ... další vlastnosti ...
 
-      public List&lt;string&gt; Tnr { get; set; }
-      public List&lt;string&gt; Ean { get; set; }
-      // ... other properties ...
+    public List&lt;string&gt; Tnr { get; set; }
+    public List&lt;string&gt; Ean { get; set; }
+    // ... další vlastnosti ...
 
-      public object Clone()
-      {
-          return new Record
-          {
-              // ... clone other properties ...
-
-              Tnr = this.Tnr != null ? new List&lt;string&gt;(this.Tnr) : null,
-              Ean = this.Ean != null ? new List&lt;string&gt;(this.Ean) : null,
-              // ... clone other properties ...
-          };
-      }
-  }
+    public object Clone()
+    {
+        return new Record
+        {
+            // ... klonování dalších vlastností ...
+            Tnr = this.Tnr != null ? new List&lt;string&gt;(this.Tnr) : null,
+            Ean = this.Ean != null ? new List&lt;string&gt;(this.Ean) : null,
+            // ... klonování dalších vlastností ...
+        };
+    }
+}
 </code></pre>
-</li>
-</ul>
-<blockquote>
-<p>[!NOTE]
-Stejným způsob pro klonování vnořených objektů</p>
-</blockquote>
-</li>
-</ul>
-</details>
-</li>
-</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Stejný postup použij pro klonování vnořených objektů.</p>
+</div>
 </details>
 
 </article>

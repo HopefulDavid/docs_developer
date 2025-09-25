@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title> | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/flutter/commands.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
+            Dokumentace pro v&#253;voj&#225;ře
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<h2 id="-flutter--přehled-příkazů">🚀 Flutter – Přehled příkazů</h2>
+<table>
+<thead>
+<tr>
+<th>🗂️ <strong>Kategorie</strong></th>
+<th>💻 <strong>Příkaz</strong></th>
+<th>📝 <strong>Popis</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🏷️ <strong>Verze a kanály</strong></td>
+<td><code>flutter --version</code></td>
+<td>Zobrazí verzi Flutter SDK, Dart SDK a aktivní kanál.</td>
+</tr>
+<tr>
+<td></td>
+<td><code>flutter upgrade</code></td>
+<td>Aktualizuje Flutter SDK.</td>
+</tr>
+<tr>
+<td></td>
+<td><code>flutter downgrade</code></td>
+<td>Vrátí Flutter SDK na předchozí verzi.</td>
+</tr>
+<tr>
+<td></td>
+<td><code>flutter channel</code></td>
+<td>Zobrazí dostupné kanály (<code>stable</code>, <code>beta</code>, <code>dev</code>, <code>master</code>).</td>
+</tr>
+<tr>
+<td></td>
+<td><code>flutter channel stable</code></td>
+<td>Přepne na stabilní kanál.</td>
+</tr>
+<tr>
+<td></td>
+<td><code>flutter channel beta</code></td>
+<td>Přepne na beta kanál.</td>
+</tr>
+<tr>
+<td>🩺 <strong>Diagnostika</strong></td>
+<td><code>flutter doctor</code></td>
+<td>Zkontroluje nastavení Flutteru.</td>
+</tr>
+<tr>
+<td></td>
+<td><code>flutter doctor -v</code></td>
+<td>Detailní výstup diagnostiky.</td>
+</tr>
+<tr>
+<td>📦 <strong>Závislosti</strong></td>
+<td><code>flutter pub get</code></td>
+<td>Stáhne závislosti z <code>pubspec.yaml</code>.</td>
+</tr>
+<tr>
+<td></td>
+<td><code>flutter pub upgrade</code></td>
+<td>Aktualizuje závislosti.</td>
+</tr>
+<tr>
+<td></td>
+<td><code>flutter pub cache repair</code></td>
+<td>Opraví cache závislostí.</td>
+</tr>
+<tr>
+<td>🛠️ <strong>Projekt</strong></td>
+<td><code>flutter create project_name</code></td>
+<td>Vytvoří nový projekt.</td>
+</tr>
+<tr>
+<td></td>
+<td><code>flutter run</code></td>
+<td>Spustí aplikaci.</td>
+</tr>
+<tr>
+<td></td>
+<td><code>flutter build apk</code></td>
+<td>Vytvoří produkční APK.</td>
+</tr>
+<tr>
+<td></td>
+<td><code>flutter build ios</code></td>
+<td>Vytvoří build pro iOS (vyžaduje macOS a Xcode).</td>
+</tr>
+<tr>
+<td></td>
+<td><code>flutter clean</code></td>
+<td>Vyčistí build cache.</td>
+</tr>
+<tr>
+<td></td>
+<td><code>flutter test</code></td>
+<td>Spustí testy.</td>
+</tr>
+<tr>
+<td>📱 <strong>Zařízení</strong></td>
+<td><code>flutter devices</code></td>
+<td>Zobrazí dostupná zařízení.</td>
+</tr>
+<tr>
+<td></td>
+<td><code>flutter emulators</code></td>
+<td>Zobrazí dostupné emulátory.</td>
+</tr>
+<tr>
+<td></td>
+<td><code>flutter emulators --launch emulator_id</code></td>
+<td>Spustí emulátor podle ID.</td>
+</tr>
+<tr>
+<td></td>
+<td><code>flutter install</code></td>
+<td>Nainstaluje aplikaci na zařízení.</td>
+</tr>
+<tr>
+<td>🧑‍💻 <strong>Analýza a opravy</strong></td>
+<td><code>dart analyze</code></td>
+<td>Spustí analýzu kódu.</td>
+</tr>
+<tr>
+<td></td>
+<td><code>dart fix --apply</code></td>
+<td>Aplikuje doporučené opravy.</td>
+</tr>
+<tr>
+<td>📋 <strong>Logy</strong></td>
+<td><code>flutter logs</code></td>
+<td>Zobrazí logy aplikace.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<blockquote>
+<p><strong>Tip:</strong><br>
+Pro více informací ke konkrétnímu příkazu použij <code>--help</code> (např. <code>flutter run --help</code>).</p>
+</blockquote>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/programming/flutter/commands.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

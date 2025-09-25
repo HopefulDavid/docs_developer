@@ -1063,16 +1063,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "programming/cleanArchitecture.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/cleanArchitecture.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "programming/developmentPatterns.md",
       "output": {
         ".html": {
@@ -1083,30 +1073,90 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "programming/flutter/backupAndRestore.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/flutter/backupAndRestore.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/flutter/basics.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/flutter/basics.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/flutter/codeCoverage.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/flutter/codeCoverage.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/flutter/commands.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/flutter/commands.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/flutter/create_project.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/flutter/create_project.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/flutter/localization.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/flutter/localization.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/flutter/setupAndConfiguration.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/flutter/setupAndConfiguration.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/flutter/troubleshooting.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/flutter/troubleshooting.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "programming/index.md",
       "output": {
         ".html": {
           "relative_path": "programming/index.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "programming/javascript.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/javascript.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "programming/mobile/flutter.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/mobile/flutter.html"
         }
       },
       "version": ""
@@ -1233,30 +1283,40 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "programming/netCLI.md",
+      "source_relative_path": "programming/packages/netCLI.md",
       "output": {
         ".html": {
-          "relative_path": "programming/netCLI.html"
+          "relative_path": "programming/packages/netCLI.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "programming/nugetPackage.md",
+      "source_relative_path": "programming/packages/npm.md",
       "output": {
         ".html": {
-          "relative_path": "programming/nugetPackage.html"
+          "relative_path": "programming/packages/npm.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "programming/python.md",
+      "source_relative_path": "programming/packages/nugetPackage.md",
       "output": {
         ".html": {
-          "relative_path": "programming/python.html"
+          "relative_path": "programming/packages/nugetPackage.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/packages/pythonPackage.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/packages/pythonPackage.html"
         }
       },
       "version": ""

@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#128450;️ Portainer – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128450;️ Portainer – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,29 +85,100 @@
         </div>
 
         <article data-uid="">
+<h1 id="-portainer--praktický-průvodce--tipy">🗂️ Portainer – Praktický průvodce &amp; tipy</h1>
 
-<h2 id="spuštění">Spuštění</h2>
-<pre><code class="lang-cmd">docker run -d -p 9000:9000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:2.27.5
-</code></pre>
+<blockquote>
+<p>🚀 Moderní přehled spuštění, parametrů a doporučení pro práci s Portainerem v Dockeru.</p>
+</blockquote>
+<hr>
+<h2 id="-co-je-portainer">📖 Co je Portainer?</h2>
+<ul>
+<li><strong>Webové rozhraní pro správu Docker kontejnerů</strong></li>
+<li>Umožňuje snadnou správu, monitoring a konfiguraci kontejnerů, image, volume a sítí</li>
+<li>Podporuje Docker, Docker Swarm, Kubernetes</li>
+</ul>
 <div class="NOTE">
 <h5>Note</h5>
+<p>Portainer výrazně zjednodušuje správu Docker prostředí.</p>
+</div>
+<hr>
+<h2 id="-spuštění-portaineru">🛠️ Spuštění Portaineru</h2>
+<details>
+<summary><span style="color:#1E90FF;">🔹 Krok 1: Spuštění kontejneru</span></summary>
+<pre><code class="lang-cmd">docker run -d -p 9000:9000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:2.27.5
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Parametr</th>
+<th>Význam</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-d</code></td>
+<td>Spustí kontejner na pozadí</td>
+</tr>
+<tr>
+<td><code>-p 9000:9000</code></td>
+<td>Mapuje port 9000 hostitele na port 9000 v kontejneru</td>
+</tr>
+<tr>
+<td><code>--name portainer</code></td>
+<td>Pojmenuje kontejner jako &quot;portainer&quot;</td>
+</tr>
+<tr>
+<td><code>--restart always</code></td>
+<td>Automatický restart při chybě nebo restartu hostitele</td>
+</tr>
+<tr>
+<td><code>-v /var/run/docker.sock:/var/run/docker.sock</code></td>
+<td>Umožňuje Portaineru komunikovat s Docker daemonem</td>
+</tr>
+<tr>
+<td><code>-v portainer_data:/data</code></td>
+<td>Ukládá data Portaineru do trvalého úložiště (Volume)</td>
+</tr>
+<tr>
+<td><code>portainer/portainer-ce:2.27.5</code></td>
+<td>Použitý Docker image Portaineru</td>
+</tr>
+</tbody>
+</table>
+</details>
+<hr>
+<h2 id="-přístup-k-portaineru">🌐 Přístup k Portaineru</h2>
+<details>
+<summary><span style="color:#1E90FF;">🔹 Krok 2: Otevření webového rozhraní</span></summary>
 <ul>
-<li><p><code>-d</code> = Spustí kontejner na pozadí.</p>
+<li>Po spuštění kontejneru otevřete prohlížeč a zadejte:<br>
+<code>http://localhost:9000</code></li>
+<li>Nastavte administrátorské heslo a připojte se k Docker endpointu.</li>
+</ul>
+<img src="../images/portainer_login.png" alt="Portainer login" width="600px">
+</details>
+<hr>
+<h2 id="-řešení-problémů">🛡️ Řešení problémů</h2>
+<details>
+<summary><span style="color:#1E90FF;">Port 9000 je obsazený</span></summary>
+<ul>
+<li>Změňte port v příkazu, např.:
+<pre><code class="lang-cmd">docker run -d -p 9100:9000 ...
+</code></pre>
 </li>
-<li><p><code>-p 9000:9000</code> = Mapuje port 9000 na hostitelském stroji na port 9000 v kontejneru.</p>
-</li>
-<li><p><code>--name portainer</code> = Pojmenuje kontejner &quot;portainer&quot;.</p>
-</li>
-<li><p><code>--restart always</code> = Kontejner se automaticky restartuje, pokud dojde k chybě nebo po restartu hostitelského stroje.</p>
-</li>
-<li><p><code>-v /var/run/docker.sock:/var/run/docker.sock</code> = Umožňuje portaineru komunikovat s docker daemonem.</p>
-</li>
-<li><p><code>-v portainer_data:/data</code> = Ukládá data portaineru do trvalého úložiště (Volume)</p>
-</li>
-<li><p><code>portainer/portainer-ce:2.27.5</code> = Název docker image pro portainer.</p>
+<li>Ověřte, zda není jiný kontejner na stejném portu:
+<pre><code class="lang-cmd">docker ps
+</code></pre>
 </li>
 </ul>
-</div>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">Chyba při připojení k Docker daemonu</span></summary>
+<ul>
+<li>Ověřte, že Docker běží a máte správně namapovaný <code>docker.sock</code>.</li>
+<li>Zkontrolujte oprávnění k souboru <code>/var/run/docker.sock</code>.</li>
+</ul>
+</details>
 
 </article>
 

@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#128450;️ Docker Duplicati – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128450;️ Docker Duplicati – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,26 +85,46 @@
         </div>
 
         <article data-uid="">
+<h1 id="-docker-duplicati--praktický-průvodce--tipy">🗂️ Docker Duplicati – Praktický průvodce &amp; tipy</h1>
 
-<ol>
-<li><p>Vytvoření a nastavení složky pro zálohy</p>
+<blockquote>
+<p>🚀 Moderní přehled nastavení složek, oprávnění a doporučení pro zálohování s Duplicati v Dockeru.</p>
+</blockquote>
+<hr>
+<h2 id="-co-je-duplicati">📖 Co je Duplicati?</h2>
+<ul>
+<li><strong>Open-source nástroj pro zálohování dat</strong></li>
+<li>Umožňuje šifrované, komprimované a inkrementální zálohy</li>
+<li>Snadná integrace s Dockerem</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Ideální pro automatizované zálohy v kontejnerizovaném prostředí.</p>
+</div>
+<hr>
+<h2 id="-krok-1-vytvoření-a-nastavení-složky-pro-zálohy">🛠️ Krok 1: Vytvoření a nastavení složky pro zálohy</h2>
+<details>
+<summary><span style="color:#1E90FF;">📁 Vytvoření složky</span></summary>
 <pre><code class="lang-bash">mkdir /cesta/k/tvojí/složce
 </code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🔒 Nastavení oprávnění</span></summary>
 <ul>
 <li><p>Přístup pro všechny:</p>
 <pre><code class="lang-bash">chmod 777 /cesta/k/tvojí/složce
 </code></pre>
-<div class="TIP">
-<h5>Tip</h5>
-<p>Přístup pouze pro root.</p>
+</li>
+<li><p>Přístup pouze pro root:</p>
 <pre><code class="lang-bash">chmod 700 /cesta/k/tvojí/složce
 </code></pre>
-</div>
 </li>
 </ul>
-</li>
-<li><p>Nastavení oprávnění pro Docker volumes</p>
-<p>Pro zálohu je zapotřebí povolit přístup k souborům a ke složkám v dockeru.</p>
+</details>
+<hr>
+<h2 id="-krok-2-nastavení-oprávnění-pro-docker-volumes">🛠️ Krok 2: Nastavení oprávnění pro Docker volumes</h2>
+<details>
+<summary><span style="color:#1E90FF;">📂 Rekurzivní nastavení složek a souborů</span></summary>
 <ul>
 <li><p>Povolit rekurzivně pro složky:</p>
 <pre><code class="lang-bash">find /docker_XX -type d -exec chmod 755 {} \;
@@ -115,6 +135,7 @@
 </code></pre>
 </li>
 </ul>
+</details>
 <table>
 <thead>
 <tr>
@@ -135,18 +156,16 @@
 </table>
 <div class="IMPORTANT">
 <h5>Important</h5>
-<p>V kontejneru duplicati musí být nastaveno na &quot;Bind&quot;.</p>
+<p>V kontejneru Duplicati musí být typ svazku nastaven na <strong>Bind</strong>.</p>
 </div>
-<div class="TIP">
-<h5>Tip</h5>
-<p>Chcete-li vrátit zpět oprávnění na výchozí hodnoty, použijte následující příkaz:</p>
-<pre><code class="lang-bash">chown -R root:root/docker_XX
+<hr>
+<h2 id="-obnovení-výchozích-oprávnění">🔄 Obnovení výchozích oprávnění</h2>
+<details>
+<summary><span style="color:#1E90FF;">Vrácení oprávnění na výchozí hodnoty</span></summary>
+<pre><code class="lang-bash">chown -R root:root /docker_XX
 </code></pre>
-<p>Tento příkaz změní vlastníka a skupinu všech souborů a adresářů v <code>/docker_XX</code> na <code>root</code>, což je výchozí nastavení pro
-většinu systémů.</p>
-</div>
-</li>
-</ol>
+<p>Tímto příkazem nastavíte vlastníka a skupinu všech souborů a složek v <code>/docker_XX</code> na <code>root</code>.</p>
+</details>
 
 </article>
 

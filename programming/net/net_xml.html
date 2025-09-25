@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#128450;️ .NET – XML: Serializace, CDATA, Namespace &amp; Konvence | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128450;️ .NET – XML: Serializace, CDATA, Namespace &amp; Konvence | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,67 +85,98 @@
         </div>
 
         <article data-uid="">
+<h1 id="-net--xml-serializace-cdata-namespace--konvence">🗂️ .NET – XML: Serializace, CDATA, Namespace &amp; Konvence</h1>
 
+<blockquote>
+<p>🚀 Praktické rady pro práci s XML v .NET, náhradu znaků, CDATA, serializaci/deserializaci objektů, namespace a konvence.</p>
+</blockquote>
+<hr>
+<h2 id="-náhrada-znaků-v-xml">🔤 Náhrada znaků v XML</h2>
 <details>
-<summary><span style="color:#1E90FF;">Náhrada znaků</span></summary>
-<p>Základní znaky:</p>
-<ul>
-<li><p><code>&lt;</code> (levá ostrá závorka)</p>
-<p><code>&amp;lt;</code></p>
-</li>
-<li><p><code>&gt;</code> (pravá ostrá závorka)</p>
-<p><code>&amp;gt;</code></p>
-</li>
-<li><p><code>&amp;</code> (ampersand)</p>
-<p><code>&amp;amp;</code></p>
-</li>
-<li><p><code>'</code> (apostrof)</p>
-<p><code>&amp;apos;</code></p>
-</li>
-<li><p><code>&quot;</code> (uvozovky)</p>
-<p><code>&amp;quot;</code></p>
-</li>
-</ul>
-<p>Znaky s diakritikou:</p>
-<ul>
-<li><p>Á</p>
-<p><code>&amp;Aacute;</code></p>
-</li>
-<li><p>á</p>
-<p><code>&amp;aacute;</code></p>
-</li>
-<li><p>Č</p>
-<p><code>&amp;Ccaron;</code></p>
-</li>
-<li><p>č</p>
-<p><code>&amp;ccaron;</code></p>
-</li>
-</ul>
+<summary><span style="color:#1E90FF;">🧩 Základní a speciální znaky</span></summary>
+<table>
+<thead>
+<tr>
+<th>Znak</th>
+<th>Náhrada</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;</code></td>
+<td><code>&amp;lt;</code></td>
+<td>Levá ostrá závorka</td>
+</tr>
+<tr>
+<td><code>&gt;</code></td>
+<td><code>&amp;gt;</code></td>
+<td>Pravá ostrá závorka</td>
+</tr>
+<tr>
+<td><code>&amp;</code></td>
+<td><code>&amp;amp;</code></td>
+<td>Ampersand</td>
+</tr>
+<tr>
+<td><code>'</code></td>
+<td><code>&amp;apos;</code></td>
+<td>Apostrof</td>
+</tr>
+<tr>
+<td><code>&quot;</code></td>
+<td><code>&amp;quot;</code></td>
+<td>Uvozovky</td>
+</tr>
+<tr>
+<td>Á</td>
+<td><code>&amp;Aacute;</code></td>
+<td>Á s čárkou</td>
+</tr>
+<tr>
+<td>á</td>
+<td><code>&amp;aacute;</code></td>
+<td>á s čárkou</td>
+</tr>
+<tr>
+<td>Č</td>
+<td><code>&amp;Ccaron;</code></td>
+<td>Č s háčkem</td>
+</tr>
+<tr>
+<td>č</td>
+<td><code>&amp;ccaron;</code></td>
+<td>č s háčkem</td>
+</tr>
+</tbody>
+</table>
 <div class="NOTE">
 <h5>Note</h5>
-<p>Stejným způsobem lze následně nahradit i další znaky s diakritikou.</p>
-<p>s prefixem <code>caron</code> (uvozovky) nebo <code>acute</code> (čárka nad písmenem).</p>
+<p>Stejným způsobem lze nahradit i další znaky s diakritikou pomocí prefixů <code>acute</code> (čárka) nebo <code>caron</code> (háček).</p>
 </div>
 </details>
+<hr>
+<h2 id="-cdata-sekce">📝 CDATA sekce</h2>
 <details>
-<summary><span style="color:#1E90FF;">CDATA</span></summary>
-<p>CDATA (Character Data) je způsob, jak vložit data do XML souboru, která by jinak byla interpretována jako XML.</p>
+<summary><span style="color:#1E90FF;">🔍 Co je CDATA?</span></summary>
+<ul>
+<li>Umožňuje vložit do XML libovolný text, včetně speciálních znaků.</li>
+<li>Vše uvnitř CDATA není interpretováno jako XML.</li>
+</ul>
+<p><strong>Ukázka:</strong></p>
 <pre><code class="lang-xml">&lt;exampleOfACDATA&gt;
   &lt;![CDATA[
-    Protože se jedná o sekci CDATA
-    mohu použít všechny druhy vyhrazených znaků jako:
-    &gt; &lt; „ &amp;
-    nebo psát věci jako:
-    &lt;foo&gt;&lt;/bar&gt;
-    a dokument je stále dobře zformátovaný!
-]]&gt;
+    Můžete použít &gt; &lt; „ &amp; nebo vkládat elementy &lt;foo&gt;&lt;/bar&gt;
+    bez narušení formátu XML.
+  ]]&gt;
 &lt;/exampleOfACDATA&gt;
 </code></pre>
 </details>
+<hr>
+<h2 id="-serializace--deserializace-objektů">🔄 Serializace &amp; Deserializace objektů</h2>
 <details>
-<summary><span style="color:#1E90FF;">Serializace a Deserializace objektu</span></summary>
-<h3 id="serializace">Serializace</h3>
-<p>Proces, kdy se objekt převede na XML soubor.</p>
+<summary><span style="color:#1E90FF;">🧩 Jak převést objekt na XML a zpět?</span></summary>
+<h3 id="serializace-objektu-do-xml">Serializace objektu do XML</h3>
 <pre><code class="lang-csharp">public string SerializeObject(MyObject myObject)
 {
     var serializer = new XmlSerializer(typeof(MyObject));
@@ -156,8 +187,7 @@
     }
 }
 </code></pre>
-<h3 id="deserializace">Deserializace</h3>
-<p>Proces, kdy se XML soubor převede zpět na objekt.</p>
+<h3 id="deserializace-xml-na-objekt">Deserializace XML na objekt</h3>
 <pre><code class="lang-csharp">public MyObject DeserializeObject(string xml)
 {
     var serializer = new XmlSerializer(typeof(MyObject));
@@ -168,237 +198,126 @@
 }
 </code></pre>
 </details>
+<hr>
+<h2 id="-namespace-v-xml">🏷️ Namespace v XML</h2>
 <details>
-<summary><span style="color:#1E90FF;">Namespace</span></summary>
-<p>Způsob jak zabránit konfliktu jmen v XML souborech.</p>
+<summary><span style="color:#1E90FF;">🔍 Jak fungují jmenné prostory?</span></summary>
+<ul>
+<li>Zabraňují konfliktu názvů v XML.</li>
+<li>Poznáte podle atributu <code>xmlns</code>.</li>
+</ul>
 <div class="NOTE">
 <h5>Note</h5>
-<p>Poznáme podle klíčového slova <strong><code>xmlns</code></strong> u atributu.</p>
+<p>URL namespace nemusí být skutečná adresa, slouží jen jako identifikátor.</p>
 </div>
-<div class="WARNING">
-<h5>Warning</h5>
-<p>Pokud je namespace použit, musí se uvést i při zpracování souboru.</p>
-</div>
-<div class="NOTE">
-<h5>Note</h5>
-<p>URL namespace v XML dokumentu nemusí být skutečná existující URL adresa.</p>
-<p>Je to pouze jedinečný identifikátor, který se používá k rozlišení názvů elementů a atributů v XML dokumentu.</p>
-<p>Tento identifikátor je často ve formě URL pro snadnou identifikaci a jedinečnost, ale nemusí to být nutně platná URL adresa, kterou byste mohli otevřít v prohlížeči.</p>
-<p>Například:</p>
-<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;
-&lt;p:Person xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:p=&quot;test&quot;&gt;
+<p><strong>Příklad s prefixem:</strong></p>
+<pre><code class="lang-xml">&lt;p:Person xmlns:p=&quot;test&quot;&gt;
     &lt;p:FirstName&gt;John&lt;/p:FirstName&gt;
-    &lt;p:LastName&gt;Doe&lt;/p:LastName&gt;
-    &lt;p:Age&gt;30&lt;/p:Age&gt;
 &lt;/p:Person&gt;
 </code></pre>
-<pre><code class="lang-csharp">XmlSerializer s = new XmlSerializer(person.GetType());
-StringBuilder sb = new StringBuilder();
-using (StringWriter writer = new StringWriter(sb))
-{
-    XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-    ns.Add(&quot;p&quot;, &quot;test&quot;);
-    s.Serialize(writer, person, ns);
-}
+<p><strong>Serializace s namespace:</strong></p>
+<pre><code class="lang-csharp">XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+ns.Add(&quot;p&quot;, &quot;test&quot;);
+s.Serialize(writer, person, ns);
 </code></pre>
-</div>
-<h3 id="xml-soubor-bez-namespace">XML soubor bez namespace</h3>
+<p><strong>Bez namespace:</strong></p>
 <pre><code class="lang-xml">&lt;person&gt;
     &lt;name&gt;John Doe&lt;/name&gt;
-    &lt;age&gt;30&lt;/age&gt;
 &lt;/person&gt;
+</code></pre>
+<pre><code class="lang-csharp">ns.Add(&quot;&quot;, &quot;&quot;);
+s.Serialize(writer, person, ns);
 </code></pre>
 <div class="WARNING">
 <h5>Warning</h5>
-<p>Vlastnosti na objektu <strong>nesmí mít atribut <code>XmlElement</code> s namespace</strong>.</p>
+<p>Vlastnosti nesmí mít atribut <code>XmlElement</code> s namespace, pokud serializujete bez namespace.</p>
 </div>
-<pre><code class="lang-csharp">XmlSerializer s = new XmlSerializer(person.GetType());
-XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-ns.Add(&quot;&quot;, &quot;&quot;);
-StringBuilder sb = new StringBuilder();
-using (StringWriter writer = new StringWriter(sb))
-{
-    s.Serialize(writer, person, ns);
-}
-</code></pre>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Řešením jak odebrat namespace úplně všude a nebere v potaz atributy <code>XmlElement</code> s namespace.</p>
+<p><strong>Odebrání namespace z XML:</strong></p>
 <pre><code class="lang-csharp">XDocument document = XDocument.Parse(dataOutput);
-if (document.Root == null) return;
 foreach (var element in document.Root.DescendantsAndSelf())
 {
     element.Name = element.Name.LocalName;
     element.ReplaceAttributes(element.Attributes()
-           .Where(x =&gt; !x.IsNamespaceDeclaration)
-           .Select(x =&gt; new XAttribute(x.Name.LocalName, x.Value)));
+        .Where(x =&gt; !x.IsNamespaceDeclaration)
+        .Select(x =&gt; new XAttribute(x.Name.LocalName, x.Value)));
 }
 dataOutput = document.ToString();
 </code></pre>
-<p>Pro více info <a href="https://stackoverflow.com/questions/10438284/how-to-strip-namespaces-from-xml-document">zde</a>.</p>
-</div>
-<h3 id="xml-soubor-s-namespace">XML soubor s namespace</h3>
-<p>Příklad 1:</p>
-<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;
-&lt;Person xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
-    &lt;FirstName&gt;John&lt;/FirstName&gt;
-    &lt;LastName&gt;Doe&lt;/LastName&gt;
-    &lt;Age&gt;30&lt;/Age&gt;
-&lt;/Person&gt;
-</code></pre>
-<pre><code class="lang-csharp">XmlSerializer s = new XmlSerializer(person.GetType());
-StringBuilder sb = new StringBuilder();
-using (StringWriter writer = new StringWriter(sb))
-{
-    s.Serialize(writer, person);
-}
-</code></pre>
-<p>Příklad 2:</p>
-<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;
-&lt;p:Person xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:p=&quot;http://www.example.com&quot;&gt;
-    &lt;p:FirstName&gt;John&lt;/p:FirstName&gt;
-    &lt;p:LastName&gt;Doe&lt;/p:LastName&gt;
-    &lt;p:Age&gt;30&lt;/p:Age&gt;
-&lt;/p:Person&gt;
-</code></pre>
-<pre><code class="lang-csharp">XmlSerializer s = new XmlSerializer(person.GetType());
-StringBuilder sb = new StringBuilder();
-using (StringWriter writer = new StringWriter(sb))
-{
-    XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-    ns.Add(&quot;p&quot;, &quot;http://www.example.com&quot;);
-    s.Serialize(writer, person, ns);
-}
-</code></pre>
+</details>
+<hr>
+<h2 id="-konvence-serializace-xml">🧩 Konvence serializace XML</h2>
+<details>
+<summary><span style="color:#1E90FF;">📚 Přizpůsobení serializace tříd a vlastností</span></summary>
+<table>
+<thead>
+<tr>
+<th>Attribut/Metoda</th>
+<th>Použití</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[XmlRoot(&quot;MyClass&quot;)]</code></td>
+<td>Pojmenuje kořenový element</td>
+</tr>
+<tr>
+<td><code>[XmlIgnore]</code></td>
+<td>Ignoruje vlastnost při serializaci</td>
+</tr>
+<tr>
+<td><code>[XmlNamespaceDeclarations]</code></td>
+<td>Povolit jmenné prostory jako atributy</td>
+</tr>
+<tr>
+<td><code>ShouldSerialize{Property}</code></td>
+<td>Metoda rozhodující o serializaci vlastnosti</td>
+</tr>
+<tr>
+<td><code>{Property}Specified</code></td>
+<td>Bool vlastnost určující serializaci</td>
+</tr>
+<tr>
+<td><code>[XmlArray(&quot;MyCollection&quot;)]</code></td>
+<td>Pojmenuje kolekci</td>
+</tr>
+<tr>
+<td><code>[XmlArrayItem(&quot;Item&quot;)]</code></td>
+<td>Pojmenuje položky v kolekci</td>
+</tr>
+<tr>
+<td><code>[XmlAttribute]</code></td>
+<td>Serializuje vlastnost jako XML atribut</td>
+</tr>
+<tr>
+<td><code>[XmlText]</code></td>
+<td>Serializuje vlastnost jako textový obsah elementu</td>
+</tr>
+<tr>
+<td><code>[XmlEnum(&quot;Value1&quot;)]</code></td>
+<td>Pojmenuje hodnotu enumu v XML</td>
+</tr>
+<tr>
+<td><code>[XmlType(&quot;MyClass&quot;)]</code></td>
+<td>Pojmenuje třídu jako XML element</td>
+</tr>
+<tr>
+<td><code>[XmlInclude(typeof(...))]</code></td>
+<td>Umožní serializaci děděných tříd</td>
+</tr>
+<tr>
+<td><code>[XmlAnyElement]</code></td>
+<td>Libovolný XML element (typ XmlElement[])</td>
+</tr>
+<tr>
+<td><code>[XmlAnyAttribute]</code></td>
+<td>Libovolný XML atribut (typ XmlAttribute[])</td>
+</tr>
+</tbody>
+</table>
 <div class="NOTE">
 <h5>Note</h5>
-<p>V tomto kódu &quot;p&quot; je prefix pro namespace a &quot;http://www.example.com&quot; je URL namespace.</p>
+<p>Pro detailní nastavení serializace využijte kombinaci atributů a metod.</p>
 </div>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">Konvence serializace XML</span></summary>
-<p>Umožňuje přizpůsobit jak se třídy a vlastnosti serializují do XML.</p>
-<h3 id="kořenový-element">Kořenový element</h3>
-<p>Označí třídu, která se má serializovat jako kořenový element</p>
-<p>Pojmenuje kořenový element.</p>
-<pre><code class="lang-csharp">[XmlRoot(&quot;MyClass&quot;)]
-public class MyClass
-{
-    // ...
-}
-</code></pre>
-<h3 id="ignorovat-vlastnosti">Ignorovat vlastnosti</h3>
-<p>Označuje vlastnosti, která se nemají serializovat.</p>
-<pre><code class="lang-csharp">[XmlIgnore]
-public string MyProperty { get; set; }
-</code></pre>
-<h3 id="povolit-jmenné-prostory">Povolit jmenné prostory</h3>
-<p>Označuje, že se mají jmenné prostory serializovat jako atributy.</p>
-<pre><code class="lang-csharp">[XmlNamespaceDeclarations]
-public class MyClass
-{
-    // ...
-}
-</code></pre>
-<h3 id="povolitzakázat-přes-metodu">Povolit/Zakázat přes metodu</h3>
-<p>ShouldSerialize{PropertyName} je metoda, která se volá při serializaci objektu.</p>
-<p>Tato metoda se používá k rozhodnutí, zda se daná vlastnost má serializovat.</p>
-<ul>
-<li><p>Pokud metoda vrátí <code>true</code></p>
-<p>vlastnost <code>{PropertyName}</code> se serializuje</p>
-</li>
-<li><p>Pokud metoda vrátí <code>false</code></p>
-<p>vlastnost <code>{PropertyName}</code> se neserializuje</p>
-</li>
-</ul>
-<pre><code class="lang-csharp">public bool ShouldSerializeMyProperty()
-{
-    // logika rozhodnutí zda serializovat MyProperty
-}
-</code></pre>
-<h3 id="povolitzakázat-přes-vlastnost-bool">Povolit/Zakázat přes vlastnost bool</h3>
-<p><code>{PropertyName}Specified</code> je vlastnost typu <code>bool</code>, která se používá k rozhodnutí, zda se má vlastnost serializovat.</p>
-<p>Toto je alternativa k <code>ShouldSerialize{PropertyName}</code>.</p>
-<ul>
-<li><p><code>{PropertyName}Specified</code> pokud je <code>true</code></p>
-<p>vlastnost <code>{PropertyName}</code> se serializuje</p>
-</li>
-<li><p><code>{PropertyName}Specified</code> pokud je <code>false</code></p>
-<p>vlastnost <code>{PropertyName}</code> se neserializuje</p>
-</li>
-</ul>
-<pre><code class="lang-csharp">public bool MyPropertySpecified { get; set; }
-</code></pre>
-<h3 id="pojmenování-kolekce-a-položek-v-kolekci">Pojmenování kolekce a položek v kolekci</h3>
-<p>Používá se k pojmenování kolekce a položek v kolekci.</p>
-<pre><code class="lang-csharp">[XmlArray(&quot;MyCollection&quot;), XmlArrayItem(&quot;Item&quot;)]
-public List&lt;string&gt; MyProperty { get; set; }
-</code></pre>
-<h3 id="xml-element--xml-atribut">Xml element ➡ xml atribut</h3>
-<p>Vlastnost, ktera se serializují jako &quot;XML atribut&quot; místo jako &quot;XML element&quot;.</p>
-<pre><code class="lang-csharp">[XmlAttribute]
-public string MyProperty { get; set; }
-</code></pre>
-<h3 id="xml-element--textový-obsah">Xml element ➡ textový obsah</h3>
-<p>Označuje vlastnosti, která má serializovat jako obsah XML elementu.</p>
-<blockquote>
-<p>To znamená, že vlastnost se serializuje jako textový obsah XML elementu, nikoli jako samostatný element.</p>
-</blockquote>
-<pre><code class="lang-csharp">[XmlText]
-public string MyProperty { get; set; }
-</code></pre>
-<h3 id="enum--xml-element">Enum ➡ xml element</h3>
-<p>Označuje výčtový typ, který se má serializovat jako XML element.</p>
-<pre><code class="lang-csharp">public enum MyEnum
-{
-    [XmlEnum(&quot;Value1&quot;)]
-    Value1,
-    [XmlEnum(&quot;Value2&quot;)]
-    Value2
-}
-</code></pre>
-<h3 id="třída--xml-element">Třída ➡ xml element</h3>
-<p>Označí třídu, která se má serializovat jako XML element.</p>
-<pre><code class="lang-csharp">[XmlType(&quot;MyClass&quot;)]
-public class MyClass
-{
-    // ...
-}
-</code></pre>
-<h3 id="třída-ze-které-se-dědí--xml-element">Třída ze které se dědí ➡ xml element</h3>
-<p>Označuje třídy, které se mají serializovat jako potomky rodičovské třídy.</p>
-<blockquote>
-<p>To znamená, že pokud máte třídu <code>MyBaseClass</code> a od ní odvozenou třídu <code>MyDerivedClass</code>, musíte označit <code>MyBaseClass</code> pomocí <code>XmlIncludeAttribute</code>.</p>
-</blockquote>
-<pre><code class="lang-csharp">[XmlInclude(typeof(MyDerivedClass))]
-public class MyBaseClass
-{
-    // ...
-}
-
-public class MyDerivedClass : MyBaseClass
-{
-    // ...
-}
-</code></pre>
-<h3 id="libovolný-xml-element">Libovolný xml element</h3>
-<p>Označuje vlastnost, která může obsahovat libovolný XML element.</p>
-<div class="WARNING">
-<h5>Warning</h5>
-<p>Musí být typu <code>XmlElement[]</code>, nebo <code>XmlElement</code></p>
-</div>
-<pre><code class="lang-csharp">[XmlAnyElement]
-public XmlElement[] MyProperty { get; set; }
-</code></pre>
-<h3 id="libovolný-xml-atribut">Libovolný xml atribut</h3>
-<p>Označuje vlastnost, která může obsahovat libovolný XML atribut.</p>
-<div class="WARNING">
-<h5>Warning</h5>
-<p>Musí být typu <code>XmlAttribute[]</code>, nebo <code>XmlAttribute</code></p>
-</div>
-<pre><code class="lang-csharp">[XmlAnyAttribute]
-public XmlAttribute[] MyProperty { get; set; }
-</code></pre>
 </details>
 
 </article>

@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#128421;️ Visual Studio – Offline instalace &amp; tipy | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128421;️ Visual Studio – Offline instalace &amp; tipy | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,29 +85,39 @@
         </div>
 
         <article data-uid="">
+<h1 id="-visual-studio--offline-instalace--tipy">🖥️ Visual Studio – Offline instalace &amp; tipy</h1>
 
-<h2 id="visual-studio">Visual Studio</h2>
+<blockquote>
+<p>🚀 Praktické rady pro stažení a instalaci Visual Studio Community offline.</p>
+</blockquote>
+<hr>
+<h2 id="-stažení-instalátoru-pro-offline-použití">📥 Stažení instalátoru pro offline použití</h2>
 <details>
-<summary><span style="color:#1E90FF;">Stažení instalátoru pro offline použití</span></summary>
+<summary><span style="color:#1E90FF;">🔽 Kompletní postup stažení</span></summary>
 <ol>
-<li><p>Stáhněte si instalátor Visual Studio Community
-z <a href="https://visualstudio.microsoft.com/cs/downloads/">oficiálních stránek</a>.</p>
+<li><p><strong>Stáhněte instalátor</strong><br>
+Získejte <code>vs_community.exe</code> z <a href="https://visualstudio.microsoft.com/cs/downloads/">oficiálních stránek Visual Studio</a>.</p>
 </li>
-<li><p>Přesuňte se do složky, kde je uložen instalační program (např. vs_community.exe).</p>
+<li><p><strong>Přesuňte se do složky s instalátorem</strong><br>
+Například:<br>
+<code>C:\Users\&lt;VašeJméno&gt;\Stažené\</code></p>
 </li>
-<li><p>Otevřete příkazový řádek a spusťte následující příkaz:</p>
+<li><p><strong>Otevřete příkazový řádek</strong><br>
+Spusťte <code>cmd</code> jako správce.</p>
+</li>
+<li><p><strong>Spusťte příkaz pro offline stažení:</strong></p>
 <pre><code class="lang-bash">vs_community.exe --layout C:\visualstudio_offline --lang cs-CZ en-US --all
 </code></pre>
 <ul>
-<li><code>--layout</code> určuje složku, kam se mají stáhnout všechny potřebné soubory.</li>
-<li><code>--lang</code> určuje jazyky, které se mají stáhnout. (V tomto případě se stáhnou jazyky čeština a angličtina.)</li>
-<li><code>--all</code> zajistí, že se stáhnou všechny dostupné komponenty, včetně volitelných modulů a specifických nástrojů.</li>
+<li><code>--layout</code> určuje cílovou složku pro instalační soubory.</li>
+<li><code>--lang</code> nastavuje jazyky (čeština, angličtina).</li>
+<li><code>--all</code> stáhne všechny dostupné komponenty včetně volitelných modulů.</li>
 </ul>
 </li>
 </ol>
 <div class="NOTE">
 <h5>Note</h5>
-<p>Po dokončení stahování se vytvoří složka <code>visualstudio_offline</code> s kompletními instalačními soubory.</p>
+<p>Po dokončení se vytvoří složka <code>visualstudio_offline</code> s kompletními instalačními soubory.</p>
 </div>
 </details>
 

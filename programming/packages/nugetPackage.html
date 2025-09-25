@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>&#128230; NuGet Packages | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="&#128230; NuGet Packages | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/packages/nugetPackage.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
+            Dokumentace pro v&#253;voj&#225;ře
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="-nuget-packages">📦 NuGet Packages</h1>
+
+<blockquote>
+<p>🛠️ Pro správu balíčků je potřeba mít nainstalovaný <strong>NuGet CLI</strong> nebo používat integrované nástroje v IDE.</p>
+</blockquote>
+<hr>
+<h2 id="-správa-balíčků">🗂️ Správa balíčků</h2>
+<details>
+<summary><span style="color:#1E90FF;">🔧 Způsoby správy balíčků</span></summary>
+<table>
+<thead>
+<tr>
+<th>💡 Typ</th>
+<th>📄 Popis</th>
+<th>🕒 Používáno od/do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span style="color:#E95A84;">packages.config</span></td>
+<td>Ukládá seznam všech balíčků v projektu <strong>včetně závislostí</strong>.<br>Balíčky jsou kopírovány do složky projektu.<br>Pomalejší buildy, větší repozitář.</td>
+<td>&lt; 2017</td>
+</tr>
+<tr>
+<td><span style="color:#E95A84;">PackageReference</span></td>
+<td>Balíčky se načítají přímo z <strong>globální složky</strong>.<br>Závislosti se spravují automaticky.<br>Rychlejší buildy, menší repozitář.</td>
+<td>2017+</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="-detaily">📜 Detaily</h3>
+<h4 id="packagesconfig"><span style="color:#E95A84;">packages.config</span></h4>
+<ul>
+<li>Balíčky jsou uloženy v projektu (<code>packages</code> složka).</li>
+<li>Závislosti jsou explicitně uvedeny.</li>
+<li>Pomalejší buildy, větší velikost repozitáře.</li>
+<li>Používané před rokem 2017.</li>
+</ul>
+<blockquote>
+<p>ℹ️ Každý projekt má vlastní složku s balíčky, <code>.csproj</code> obsahuje pouze cesty.</p>
+</blockquote>
+<hr>
+<h4 id="packagereference"><span style="color:#E95A84;">PackageReference</span></h4>
+<ul>
+<li>Balíčky se nestahují do projektu, ale do <strong>globální složky</strong>.</li>
+<li>Závislosti se spravují automaticky.</li>
+<li>Rychlejší buildy, menší nároky na prostor.</li>
+<li>Výchozí formát od roku 2017.</li>
+</ul>
+<blockquote>
+<p>ℹ️ Balíčky jsou spravovány centrálně, projekt využívá globální umístění.</p>
+</blockquote>
+</details>
+<hr>
+<h2 id="-globální-složka-balíčků">🌍 Globální složka balíčků</h2>
+<details>
+<summary><span style="color:#1E90FF;">📁 Umístění globální složky</span></summary>
+<table>
+<thead>
+<tr>
+<th>🖥️ Operační systém</th>
+<th>📂 Cesta k balíčkům</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🪟 Windows</td>
+<td><code>%userprofile%\.nuget\packages</code></td>
+</tr>
+<tr>
+<td>🐧 Mac/Linux</td>
+<td><code>~/.nuget/packages</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 Výchozí umístění lze změnit pomocí proměnné prostředí <code>NUGET_PACKAGES</code>.</p>
+</blockquote>
+</details>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/programming/packages/nugetPackage.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

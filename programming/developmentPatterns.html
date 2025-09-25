@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#129513; V&#253;vojov&#233; vzory – Kompletn&#237; přehled &amp; použit&#237; | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#129513; V&#253;vojov&#233; vzory – Kompletn&#237; přehled &amp; použit&#237; | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,13 +85,263 @@
         </div>
 
         <article data-uid="">
+<h1 id="-vývojové-vzory--kompletní-přehled--použití">🧩 Vývojové vzory – Kompletní přehled &amp; použití</h1>
 
-<p>Vytvořil jsem tento dokument, abych si zopakoval a zároveň si ujasnil, jaké existují vývojové vzory a k čemu slouží.</p>
-<p><a href="../pdf/dev_design_patterns.pdf"> <strong>dokument vývojových vzorů</strong> </a></p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Neobsahuje všechny vývojové vzory, ale obsahuje ty nejčastěji používané.</p>
-</div>
+<blockquote>
+<p>🚀 Praktické rady pro opakovaně použitelné návrhové vzory v softwarovém vývoji.</p>
+</blockquote>
+<hr>
+<h2 id="-co-jsou-vývojové-vzory">📚 Co jsou vývojové vzory?</h2>
+<details>
+<summary><span style="color:#1E90FF;">🔍 Definice & význam</span></summary>
+<ul>
+<li><strong>Vývojové vzory</strong> jsou osvědčená řešení opakujících se problémů v návrhu softwaru.</li>
+<li>Zlepšují čitelnost, údržbu a rozšiřitelnost kódu.</li>
+<li>Vzory nejsou konkrétní kód, ale obecné postupy a struktury.</li>
+</ul>
+</details>
+<hr>
+<h2 id="-klasifikace-návrhových-vzorů">🗂️ Klasifikace návrhových vzorů</h2>
+<details>
+<summary><span style="color:#1E90FF;">🧩 Přehled kategorií</span></summary>
+<table>
+<thead>
+<tr>
+<th>Typ vzoru</th>
+<th>Popis</th>
+<th>Příklad použití</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Creational</strong></td>
+<td>Vytváření objektů</td>
+<td>Singleton, Factory, Builder, Prototype, Abstract Factory</td>
+</tr>
+<tr>
+<td><strong>Structural</strong></td>
+<td>Skládání objektů a tříd</td>
+<td>Adapter, Decorator, Facade, Composite, Bridge, Proxy, Flyweight</td>
+</tr>
+<tr>
+<td><strong>Behavioral</strong></td>
+<td>Komunikace a chování objektů</td>
+<td>Observer, Strategy, Command, State, Chain of Responsibility, Mediator, Memento, Iterator, Template Method, Visitor, Interpreter</td>
+</tr>
+</tbody>
+</table>
+</details>
+<hr>
+<h2 id="-ukázky-hlavních-vzorů">📝 Ukázky hlavních vzorů</h2>
+<details>
+<summary><span style="color:#1E90FF;">🔧 Creational vzory</span></summary>
+<table>
+<thead>
+<tr>
+<th>Vzor</th>
+<th>Popis</th>
+<th>Ukázka (JavaScript)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Singleton</strong></td>
+<td>Jediná instance třídy</td>
+<td><code>class Singleton { ... }</code></td>
+</tr>
+<tr>
+<td><strong>Factory Method</strong></td>
+<td>Vytváření objektů přes tovární metodu</td>
+<td><code>class CarFactory { ... }</code></td>
+</tr>
+<tr>
+<td><strong>Abstract Factory</strong></td>
+<td>Vytváření rodin objektů</td>
+<td><code>class GUIFactory { ... }</code></td>
+</tr>
+<tr>
+<td><strong>Builder</strong></td>
+<td>Složené vytváření objektů</td>
+<td><code>class CarBuilder { ... }</code></td>
+</tr>
+<tr>
+<td><strong>Prototype</strong></td>
+<td>Klonování existujícího objektu</td>
+<td><code>const clone = Object.create(proto);</code></td>
+</tr>
+</tbody>
+</table>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🏗️ Structural vzory</span></summary>
+<table>
+<thead>
+<tr>
+<th>Vzor</th>
+<th>Popis</th>
+<th>Ukázka (JavaScript)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Adapter</strong></td>
+<td>Přizpůsobení rozhraní</td>
+<td><code>class NewApiAdapter { ... }</code></td>
+</tr>
+<tr>
+<td><strong>Decorator</strong></td>
+<td>Přidání funkcionality</td>
+<td><code>function decorate(obj) { ... }</code></td>
+</tr>
+<tr>
+<td><strong>Facade</strong></td>
+<td>Zjednodušené rozhraní pro složitý systém</td>
+<td><code>class Facade { ... }</code></td>
+</tr>
+<tr>
+<td><strong>Composite</strong></td>
+<td>Skládání objektů do stromu</td>
+<td><code>class Component { ... }</code></td>
+</tr>
+<tr>
+<td><strong>Bridge</strong></td>
+<td>Oddělení abstrakce od implementace</td>
+<td><code>class Bridge { ... }</code></td>
+</tr>
+<tr>
+<td><strong>Proxy</strong></td>
+<td>Zástupce objektu</td>
+<td><code>class Proxy { ... }</code></td>
+</tr>
+<tr>
+<td><strong>Flyweight</strong></td>
+<td>Sdílení dat mezi objekty</td>
+<td><code>class FlyweightFactory { ... }</code></td>
+</tr>
+</tbody>
+</table>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🤝 Behavioral vzory</span></summary>
+<table>
+<thead>
+<tr>
+<th>Vzor</th>
+<th>Popis</th>
+<th>Ukázka (JavaScript)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Observer</strong></td>
+<td>Sledování změn objektu</td>
+<td><code>class Subject { ... }</code></td>
+</tr>
+<tr>
+<td><strong>Strategy</strong></td>
+<td>Zaměnitelné algoritmy</td>
+<td><code>class Strategy { ... }</code></td>
+</tr>
+<tr>
+<td><strong>Command</strong></td>
+<td>Zapouzdření požadavku jako objektu</td>
+<td><code>class Command { ... }</code></td>
+</tr>
+<tr>
+<td><strong>State</strong></td>
+<td>Změna chování podle stavu</td>
+<td><code>class State { ... }</code></td>
+</tr>
+<tr>
+<td><strong>Chain of Responsibility</strong></td>
+<td>Řetězení zpracovatelů</td>
+<td><code>class Handler { ... }</code></td>
+</tr>
+<tr>
+<td><strong>Mediator</strong></td>
+<td>Zprostředkování komunikace</td>
+<td><code>class Mediator { ... }</code></td>
+</tr>
+<tr>
+<td><strong>Memento</strong></td>
+<td>Uložení a obnovení stavu</td>
+<td><code>class Memento { ... }</code></td>
+</tr>
+<tr>
+<td><strong>Iterator</strong></td>
+<td>Procházení kolekcí</td>
+<td><code>class Iterator { ... }</code></td>
+</tr>
+<tr>
+<td><strong>Template Method</strong></td>
+<td>Definice kostry algoritmu</td>
+<td><code>class Template { ... }</code></td>
+</tr>
+<tr>
+<td><strong>Visitor</strong></td>
+<td>Přidání operací objektům</td>
+<td><code>class Visitor { ... }</code></td>
+</tr>
+<tr>
+<td><strong>Interpreter</strong></td>
+<td>Interpretace jazyků</td>
+<td><code>class Interpreter { ... }</code></td>
+</tr>
+</tbody>
+</table>
+</details>
+<hr>
+<h2 id="-ukázky-implementace">📄 Ukázky implementace</h2>
+<details>
+<summary><span style="color:#1E90FF;">🔧 Singleton</span></summary>
+<pre><code class="lang-javascript">class Singleton {
+  static instance;
+  constructor() {
+    if (!Singleton.instance) {
+      Singleton.instance = this;
+    }
+    return Singleton.instance;
+  }
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🏭 Factory Method</span></summary>
+<pre><code class="lang-javascript">class CarFactory {
+  createCar(type) {
+    if (type === 'electric') return new ElectricCar();
+    if (type === 'diesel') return new DieselCar();
+  }
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🎭 Adapter</span></summary>
+<pre><code class="lang-javascript">class OldApi {
+  getData() { return 'old data'; }
+}
+class NewApiAdapter {
+  constructor(oldApi) { this.oldApi = oldApi; }
+  fetch() { return this.oldApi.getData(); }
+}
+</code></pre>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">👀 Observer</span></summary>
+<pre><code class="lang-javascript">class Subject {
+  constructor() { this.observers = []; }
+  subscribe(obs) { this.observers.push(obs); }
+  notify(data) { this.observers.forEach(o =&gt; o.update(data)); }
+}
+</code></pre>
+</details>
+<hr>
+<h2 id="-další-zdroje">📄 Další zdroje</h2>
+<ul>
+<li><a href="../pdf/dev_design_patterns.pdf">📄 Dokument vývojových vzorů (PDF)</a></li>
+<li><a href="https://refactoring.guru/design-patterns">💡 Design Patterns – Refactoring Guru</a></li>
+<li><a href="https://www.patterns.dev/">📝 Přehled vzorů v JavaScriptu</a></li>
+</ul>
 
 </article>
 

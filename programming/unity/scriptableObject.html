@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#128230; Unity – ScriptableObject &amp; Tipy | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128230; Unity – ScriptableObject &amp; Tipy | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,17 +85,65 @@
         </div>
 
         <article data-uid="">
+<h1 id="-unity--scriptableobject--tipy">📦 Unity – ScriptableObject &amp; Tipy</h1>
 
-<h2 id="skriptovatelné-objekty">Skriptovatelné Objekty</h2>
-<p>Nemusí se vytvářet ve scéně, jsou namísto toho vytvořeny již v projektu.</p>
+<blockquote>
+<p>🚀 Praktické rady pro použití ScriptableObject v Unity, jejich výhody, omezení a moderní patterny.</p>
+</blockquote>
+<hr>
+<h2 id="-co-je-scriptableobject">🧩 Co je ScriptableObject?</h2>
+<details>
+<summary><span style="color:#1E90FF;">🔍 Základní principy</span></summary>
+<ul>
+<li><strong>ScriptableObject</strong> je speciální typ assetu v Unity.</li>
+<li>Umožňuje ukládat data mimo scénu – přímo v projektu.</li>
+<li>Vhodné pro konfigurace, globální data, nastavení, inventáře, atd.</li>
+</ul>
+<p><img src="../../images/unity_scriptableobject_intro.png" alt=""></p>
+</details>
+<hr>
+<h2 id="-vytvoření-scriptableobject">🗂️ Vytvoření ScriptableObject</h2>
+<details>
+<summary><span style="color:#1E90FF;">🛠️ Jak vytvořit ScriptableObject?</span></summary>
+<ol>
+<li>Vytvoř novou C# třídu dědící ze <code>ScriptableObject</code>.</li>
+<li>Přidej atribut <code>[CreateAssetMenu]</code> pro snadné vytvoření assetu.</li>
+<li>Vytvoř asset přes <strong>Assets &gt; Create</strong> v Unity.</li>
+</ol>
+<pre><code class="lang-csharp">using UnityEngine;
+
+[CreateAssetMenu(fileName = &quot;NewConfig&quot;, menuName = &quot;Config/Example&quot;)]
+public class ExampleConfig : ScriptableObject
+{
+    public int value;
+    public string description;
+}
+</code></pre>
+</details>
+<hr>
+<h2 id="-ukládání--obnovení-dat">💾 Ukládání &amp; Obnovení dat</h2>
+<details>
+<summary><span style="color:#1E90FF;">⚠️ Omezení ScriptableObject</span></summary>
+<ul>
+<li>Data v ScriptableObject se <strong>neukládají</strong> mezi spuštěními hry.</li>
+<li>Po zavření a opětovném otevření hry se obnoví na výchozí hodnoty assetu.</li>
+<li>Pro trvalé ukládání použij <strong>PlayerPrefs</strong>, soubory nebo databázi.</li>
+</ul>
 <div class="IMPORTANT">
 <h5>Important</h5>
-<p>ScriptableObjects se po zavření a opětovném otevření hry obnoví na výchozí hodnoty.</p>
+<p>ScriptableObjects slouží hlavně pro <strong>konfiguraci</strong> a <strong>sdílení dat</strong> v rámci projektu, ne pro runtime ukládání.</p>
 </div>
+</details>
+<hr>
+<h2 id="-singleton-pattern-se-scriptableobject">🦄 Singleton pattern se ScriptableObject</h2>
 <details>
-<summary><span style="color:#1E90FF;">Singleton</span></summary>
+<summary><span style="color:#1E90FF;">🔑 Jak na singleton ScriptableObject?</span></summary>
+<ul>
+<li>Umožňuje globální přístup k datům bez nutnosti vytvářet instanci ve scéně.</li>
+<li>Vhodné pro nastavení, globální konfigurace, eventy.</li>
+</ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/O7ziNEzanWI?si=oymyfqzq4v0hDHn6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
- </details>
+</details>
 
 </article>
 

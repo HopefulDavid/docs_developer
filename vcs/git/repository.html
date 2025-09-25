@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#128450;️ Git – Pr&#225;ce s &#250;ložištěm | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128450;️ Git – Pr&#225;ce s &#250;ložištěm | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,26 +85,51 @@
         </div>
 
         <article data-uid="">
+<h1 id="-git--práce-s-úložištěm">🗂️ Git – Práce s úložištěm</h1>
 
-<h2 id="úložiště">Úložiště</h2>
-<h3 id="vytvořit-na-lokálním-prostředí">Vytvořit na lokálním prostředí</h3>
+<blockquote>
+<p>🚀 Praktické rady pro vytvoření a použití Git úložiště na lokálním i online prostředí.</p>
+</blockquote>
+<hr>
+<h2 id="-vytvoření-úložiště">🏗️ Vytvoření úložiště</h2>
+<details>
+<summary><span style="color:#1E90FF;">🛠️ Kompletní postup</span></summary>
+<ol>
+<li><p><strong>Inicializace bare úložiště</strong><br>
+Spusťte v terminálu:</p>
 <pre><code class="lang-bash">git init --bare &lt;cesta&gt;
 </code></pre>
+<ul>
+<li><code>&lt;cesta&gt;</code> = cílová složka, musí končit <code>.git</code><br>
+<em>Např.:</em> <code>C:\projekty\moje-repozitar.git</code></li>
+</ul>
+</li>
+</ol>
 <div class="WARNING">
 <h5>Warning</h5>
-<p><code> &lt;cesta&gt;</code> = vytvoří úložiště do cesty, musí mít na konci cesty <code>.git</code></p>
+<p>Cesta musí mít na konci <code>.git</code>, jinak nebude úložiště správně rozpoznáno.</p>
 </div>
-<h3 id="použít-do-pracovního-prostředí">Použít do pracovního prostředí</h3>
+</details>
+<hr>
+<h2 id="-klonování-úložiště">📥 Klonování úložiště</h2>
+<details>
+<summary><span style="color:#1E90FF;">🔗 Použití v pracovním prostředí</span></summary>
+<ol>
+<li><p><strong>Klonování úložiště</strong><br>
+Spusťte v terminálu:</p>
 <pre><code class="lang-bash">git clone &lt;cesta&gt;
 </code></pre>
-<div class="WARNING">
-<h5>Warning</h5>
-<p><code> &lt;cesta&gt;</code> = adresa k úložišti, musí mít na konci cesty <code>.git</code></p>
-</div>
+<ul>
+<li><code>&lt;cesta&gt;</code> = adresa k úložišti (lokální nebo online), musí končit <code>.git</code><br>
+<em>Např.:</em> <code>C:\projekty\moje-repozitar.git</code> nebo <code>https://github.com/uzivatel/projekt.git</code></li>
+</ul>
+</li>
+</ol>
 <div class="TIP">
 <h5>Tip</h5>
-<p>Cesta může být lokální i online.</p>
+<p>Cestu lze použít jak lokální, tak online (např. GitHub, GitLab).</p>
 </div>
+</details>
 
 </article>
 

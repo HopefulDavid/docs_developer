@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#128450;️ Windows – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128450;️ Windows – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,95 +85,69 @@
         </div>
 
         <article data-uid="">
+<h1 id="-windows--praktický-průvodce--tipy">🗂️ Windows – Praktický průvodce &amp; tipy</h1>
 
-<h2 id="instalace">Instalace</h2>
+<blockquote>
+<p>🚀 Moderní přehled instalace, nastavení, klávesových zkratek a řešení problémů ve Windows.</p>
+</blockquote>
+<hr>
+<h2 id="-instalace-windows--řešení-neviditelného-disku">🛠️ Instalace Windows &amp; řešení neviditelného disku</h2>
 <details>
-<summary><span style="color:#1E90FF;">Řešení problému s neviditelným diskem při instalaci Windows</span></summary>
+<summary><span style="color:#1E90FF;">💾 Řešení problému s neviditelným diskem při instalaci</span></summary>
 <ol>
-<li><p>Stáhněte si ovladač pro diskovou jednotku</p>
+<li><p><strong>Stáhněte si ovladač pro diskovou jednotku</strong></p>
 <ul>
-<li><p>Získejte informace o diskových ovladačích:</p>
-<p>Zadejte: <code>Shift</code> + <code>F10</code></p>
-<p>Otevře se příkazový řádek. Zadejte: <code>wmic diskdrive list brief</code></p>
-</li>
+<li>Otevřete příkazový řádek:<br>
+<code>Shift</code> + <code>F10</code></li>
+<li>Zobrazte informace o discích:<br>
+<code>wmic diskdrive list brief</code></li>
+<li>Pokud používáte <strong>Intel RST (RAID)</strong> nebo <strong>Intel Optane</strong>, stáhněte odpovídající ovladač:
+<ul>
+<li><strong>Intel RST VMD Managed Controller</strong> / <strong>Intel RST VMD Controller</strong> pro RAID/NVMe/SATA</li>
+<li><strong>Intel Optane Memory and Storage Management</strong> pro Optane</li>
 </ul>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Pokud používáte Intel RST (RAID) nebo Intel Optane, může se zobrazit Intel RAID Controller nebo Intel Optane v
-popisu.</p>
+</li>
+<li>Ovladač rozbalte na <strong>USB disk</strong>.</li>
+</ul>
+</li>
+<li><p><strong>Načtení ovladače během instalace</strong></p>
+<ul>
+<li>Spusťte instalaci Windows.</li>
+<li>Na obrazovce s výběrem disků klikněte na <strong>Načíst ovladač (Load Driver)</strong>.</li>
+<li>Vložte USB disk s ovladačem a vyberte správný soubor.</li>
+<li>Novější verzi poznáte podle vyššího hexadecimálního čísla v názvu (např. 09AB je novější než 08AB).</li>
+</ul>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Po načtení ovladače by měl být disk viditelný a připravený pro instalaci.</p>
 </div>
-<ul>
-<li><p><strong>Intel RST (Rapid Storage Technology)</strong>:</p>
-<ul>
-<li>Použijte <strong>&quot;Intel RST VMD Managed Controller&quot;</strong> nebo <strong>&quot;Intel RST VMD Controller&quot;</strong>, pokud používáte
-technologii RAID nebo Intel RST.</li>
-<li>Tento ovladač bude fungovat pro většinu běžných konfigurací disků (SATA, NVMe).</li>
-</ul>
-</li>
-<li><p><strong>Intel Optane</strong>:</p>
-<ul>
-<li>Pokud máte v notebooku <strong>Intel Optane Memory</strong>, stáhněte ovladač **Intel Optane Memory and Storage Management
-**.</li>
-<li>Tento ovladač je potřebný pro správu Optane paměti a jejích disků.</li>
-</ul>
-</li>
-</ul>
-<p>Ovladače by měly být ve formátu <code>.zip</code>.</p>
-<p>Ujistěte se, že máte rozbalený obsah souboru na <strong>USB disku</strong> (rozbalení souboru je nezbytné).</p>
-</li>
-<li><p>Načtení ovladač během instalace</p>
-<ul>
-<li>Postup:</li>
-</ul>
-<ol>
-<li><p>Spusťte instalaci Windows.</p>
-</li>
-<li><p>Na obrazovce, kde se výběr disků nezobrazuje nebo je omezený, klikněte na <strong>Načíst ovladač (Load Driver)</strong>.</p>
-</li>
-<li><p>Vložte <strong>USB disk</strong>, na kterém máte rozbalený ovladač.</p>
-</li>
-<li><p>Vyberte správný ovladač.</p>
-<pre><code>  &gt; [!IMPORTANT]
-  &gt; Poznat novější verzi lze za pomoci čísla verze v názvu souboru.
-  &gt; 
-  &gt; Čísla jako **09AB**, **467F** atd. jsou zde jako **hexadecimální čísla**
-  &gt;
-  &gt; Například: 
-  &gt; - Intel RST VMD Managed Controller (09AB) - 9AB je verze ovladače.
-  &gt;    Jedná se o novější verzi než Intel RST VMD Managed Controller (08AB).
-  &gt; 
-  &gt; - Intel RST VMD Controller (467F)
-  &gt;
-  &gt;     Tento ovladač má nižší číselný kód (467F), což znamená, že je starší verze.
-</code></pre>
-</li>
-<li><p>Po načtení ovladače by měl být váš disk viditelný a připravený pro instalaci.</p>
-</li>
-</ol>
 </li>
 </ol>
 </details>
-<h2 id="základní-nastavení">Základní nastavení</h2>
+<hr>
+<h2 id="-základní-nastavení">⚙️ Základní nastavení</h2>
 <details>
-<summary><span style="color:#1E90FF;">Zobrazení sekund v dolním panelu</span></summary>
-<img src="../images/t9hZzZp1FO.png">
+<summary><span style="color:#1E90FF;">⏱️ Zobrazení sekund v dolním panelu</span></summary>
+<img src="../images/t9hZzZp1FO.png" alt="windows_taskbar_seconds" width="500px">
 </details>
-<h2 id="klávesnicové-zkratky">Klávesnicové zkratky</h2>
+<hr>
+<h2 id="-klávesnicové-zkratky">⌨️ Klávesnicové zkratky</h2>
 <details>
-<summary><span style="color:#1E90FF;">Minimalizace/Maximalizace všech oken</span></summary>
+<summary><span style="color:#1E90FF;">🗔 Minimalizace/Maximalizace všech oken</span></summary>
 <p><code>Win</code> + <code>D</code></p>
 </details>
 <details>
-<summary><span style="color:#1E90FF;"> Skočení na adresní řádek</span></summary>
+<summary><span style="color:#1E90FF;">🔗 Skočení na adresní řádek</span></summary>
 <p><code>Alt</code> + <code>D</code></p>
 <img src="../images/windows_keyboard_explorerAddressBar.png" alt="windows_explorer_addressBar.png" width="800px">
 </details>
-<h2 id="chybějící-klávesy-na-klávesnici">Chybějící klávesy na klávesnici</h2>
+<hr>
+<h2 id="-chybějící-klávesy-na-klávesnici">🖱️ Chybějící klávesy na klávesnici</h2>
 <details>
-<summary><span style="color:#1E90FF;">Kontextová klávesa</span></summary>
+<summary><span style="color:#1E90FF;">🗂️ Kontextová klávesa</span></summary>
 <img src="https://filestore.community.support.microsoft.com/api/images/d42eb865-8390-4aa3-af19-e7272d95121e" alt="windows_missingKeyboardContextMenu.png" width="800px">
-<p>Řešení:</p>
-<p><code>Shift</code> + <code>F10</code></p>
+<p><strong>Řešení:</strong><br>
+<code>Shift</code> + <code>F10</code></p>
 </details>
 
 </article>

@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#128450;️ Docker BusyBox – Praktick&#253; průvodce z&#225;lohov&#225;n&#237;m volumes | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128450;️ Docker BusyBox – Praktick&#253; průvodce z&#225;lohov&#225;n&#237;m volumes | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,53 +85,53 @@
         </div>
 
         <article data-uid="">
+<h1 id="-docker-busybox--praktický-průvodce-zálohováním-volumes">🗂️ Docker BusyBox – Praktický průvodce zálohováním volumes</h1>
 
-<ol>
-<li><p>Zjistěte, jaké máte docker volumes:</p>
+<blockquote>
+<p>🚀 Moderní přehled zálohování dat z Docker volumes do lokální složky pomocí BusyBox.</p>
+</blockquote>
+<hr>
+<h2 id="-co-je-busybox">📖 Co je BusyBox?</h2>
+<ul>
+<li><strong>Minimalistický Linux image s základními Unix nástroji</strong></li>
+<li>Ideální pro jednoduché operace v Docker kontejnerech (kopírování, skripty, testování)</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>BusyBox je často využíván pro rychlé utility v kontejnerizovaném prostředí.</p>
+</div>
+<hr>
+<h2 id="-krok-1-zjištění-dostupných-docker-volumes">🛠️ Krok 1: Zjištění dostupných Docker volumes</h2>
+<details>
+<summary><span style="color:#1E90FF;">🔍 Zobrazit seznam volumes</span></summary>
 <pre><code class="lang-bash">docker volume ls
 </code></pre>
-</li>
-<li><p>Přenést data z docker volumes do počítače:</p>
+</details>
+<hr>
+<h2 id="-krok-2-záloha-dat-z-docker-volume-do-počítače">🛠️ Krok 2: Záloha dat z Docker volume do počítače</h2>
+<details>
+<summary><span style="color:#1E90FF;">📦 Přenesení dat pomocí BusyBox</span></summary>
 <pre><code class="lang-bash">docker run --rm -v projekty_planka_config:/volume -v C:\Users\xxx\Docker_Volumes\planka:/backup busybox:1.37.0-glibc sh -c &quot;cp -r /volume/. /backup/&quot;
 </code></pre>
 <div class="NOTE">
 <h5>Note</h5>
 <p><strong>Základní parametry:</strong></p>
-<p><code>--rm</code></p>
 <ul>
-<li>automaticky odstraní kontejner po dokončení operace</li>
+<li><code>--rm</code> – automaticky odstraní kontejner po dokončení</li>
 <li>šetří místo na disku a udržuje systém čistý</li>
 </ul>
 <p><strong>Připojení volumes:</strong></p>
-<p><code>-v projekty_planka_config:/volume</code></p>
 <ul>
-<li>připojí Docker volume <code>projekty_planka_config</code></li>
-<li>v kontejneru bude dostupný jako adresář <code>/volume</code></li>
-<li>slouží jako zdroj dat pro zálohu</li>
-</ul>
-<p><code>-v C:\Users\xxx\Docker_Volumes\planka:/backup</code></p>
-<ul>
-<li>připojí lokální složku z hostitelského systému</li>
-<li>v kontejneru bude dostupná jako <code>/backup</code></li>
-<li>cílové umístění pro zálohu dat</li>
+<li><code>-v projekty_planka_config:/volume</code> – připojí Docker volume jako <code>/volume</code></li>
+<li><code>-v C:\Users\xxx\Docker_Volumes\planka:/backup</code> – připojí lokální složku jako <code>/backup</code></li>
 </ul>
 <p><strong>Použitý image a příkaz:</strong></p>
-<p><code>busybox:1.37.0-glibc</code></p>
 <ul>
-<li>minimalistický Linux image</li>
-<li>obsahuje základní Unix nástroje</li>
-<li>verze s glibc pro lepší kompatibilitu</li>
-</ul>
-<p><code>sh -c &quot;cp -r /volume/. /backup/&quot;</code></p>
-<ul>
-<li><code>sh -c</code>: spustí shell s následujícím příkazem</li>
-<li><code>cp -r</code>: rekurzivní kopírování včetně podsložek</li>
-<li><code>/volume/.</code>: kopíruje obsah složky volume</li>
-<li><code>/backup/</code>: cílová složka pro zálohu</li>
+<li><code>busybox:1.37.0-glibc</code> – minimalistický image s glibc</li>
+<li><code>sh -c &quot;cp -r /volume/. /backup/&quot;</code> – rekurzivní kopírování obsahu volume do zálohy</li>
 </ul>
 </div>
-</li>
-</ol>
+</details>
 
 </article>
 

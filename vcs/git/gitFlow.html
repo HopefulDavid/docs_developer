@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#128450;️ Git Flow – Strategie větven&#237; &amp; workflow | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128450;️ Git Flow – Strategie větven&#237; &amp; workflow | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,33 +85,41 @@
         </div>
 
         <article data-uid="">
+<h1 id="-git-flow--strategie-větvení--workflow">🗂️ Git Flow – Strategie větvení &amp; workflow</h1>
 
-<h2 id="git-flow">Git Flow</h2>
-<p>Git Flow je strategie pro správu větví v Gitu, která usnadňuje práci v týmech a řízení verzí softwaru.</p>
-<details>
-<summary><span style="color:#1E90FF;">Základní větve v Git Flow</span></summary>
+<blockquote>
+<p>🚀 Praktické rady pro efektivní správu větví v týmu pomocí Git Flow.</p>
+</blockquote>
+<hr>
+<h2 id="-co-je-git-flow">🔎 Co je Git Flow?</h2>
 <ul>
-<li><strong><code>main</code> (nebo <code>master</code>)</strong>: Obsahuje produkční verzi kódu</li>
-<li><strong><code>develop</code></strong>: Obsahuje připravované změny pro příští vydání</li>
+<li><strong>Git Flow</strong> je osvědčená strategie pro řízení verzí a vývoj v týmech.</li>
+<li>Umožňuje jasně oddělit vývoj, přípravu vydání a opravy chyb.</li>
+</ul>
+<hr>
+<h2 id="-hlavní-větve">🌳 Hlavní větve</h2>
+<details>
+<summary><span style="color:#1E90FF;">🟢 Základní větve</span></summary>
+<ul>
+<li><strong><code>main</code> (nebo <code>master</code>)</strong>: Produkční verze kódu</li>
+<li><strong><code>develop</code></strong>: Připravované změny pro další vydání</li>
+</ul>
+</details>
+<details>
+<summary><span style="color:#1E90FF;">🛠️ Pomocné větve</span></summary>
+<ul>
+<li><strong><code>feature/*</code></strong>: Vývoj nových funkcí</li>
+<li><strong><code>release/*</code></strong>: Příprava vydání</li>
+<li><strong><code>hotfix/*</code></strong>: Rychlé opravy v produkci</li>
 </ul>
 </details>
 <hr>
+<h2 id="-typické-workflow">🏗️ Typické workflow</h2>
 <details>
-<summary><span style="color:#1E90FF;">Pomocné větve</span></summary>
-<ul>
-<li><strong><code>feature/*</code></strong>: Pro vývoj nových funkcí</li>
-<li><strong><code>release/*</code></strong>: Pro přípravu vydání</li>
-<li><strong><code>hotfix/*</code></strong>: Pro rychlé opravy chyb v produkci</li>
-</ul>
-</details>
-<hr>
-<details>
-<summary><span style="color:#1E90FF;">Vývoj nové funkce</span></summary>
-<pre><code class="lang-bash"># Vytvoření nové feature větve
-git checkout develop
+<summary><span style="color:#1E90FF;">✨ Vývoj nové funkce</span></summary>
+<pre><code class="lang-bash">git checkout develop
 git checkout -b feature/nova-funkce
-
-# Po dokončení vývoje
+# Vývoj...
 git checkout develop
 git merge feature/nova-funkce
 </code></pre>
@@ -120,14 +128,11 @@ git merge feature/nova-funkce
 <p>Vždy vytvářejte feature větve z aktuální <code>develop</code> větve.</p>
 </div>
 </details>
-<hr>
 <details>
-<summary><span style="color:#1E90FF;">Příprava vydání</span></summary>
-<pre><code class="lang-bash"># Vytvoření release větve
-git checkout develop
+<summary><span style="color:#1E90FF;">🚀 Příprava vydání</span></summary>
+<pre><code class="lang-bash">git checkout develop
 git checkout -b release/1.0.0
-
-# Po dokončení příprav
+# Finalizace...
 git checkout main
 git merge release/1.0.0
 git checkout develop
@@ -136,17 +141,14 @@ git tag -a v1.0.0 -m &quot;Verze 1.0.0&quot;
 </code></pre>
 <div class="TIP">
 <h5>Tip</h5>
-<p>V release větvích se typicky provádí pouze opravy chyb, finální úpravy dokumentace a příprava metadat verze.</p>
+<p>V release větvích provádějte pouze opravy chyb, úpravy dokumentace a metadat.</p>
 </div>
 </details>
-<hr>
 <details>
-<summary><span style="color:#1E90FF;">Oprava chyby v produkci</span></summary>
-<pre><code class="lang-bash"># Vytvoření hotfix větve
-git checkout main
+<summary><span style="color:#1E90FF;">🩹 Oprava chyby v produkci</span></summary>
+<pre><code class="lang-bash">git checkout main
 git checkout -b hotfix/oprava-chyby
-
-# Po dokončení opravy
+# Oprava...
 git checkout main
 git merge hotfix/oprava-chyby
 git tag -a v1.0.1 -m &quot;Oprava 1.0.1&quot;
@@ -155,24 +157,26 @@ git merge hotfix/oprava-chyby
 </code></pre>
 <div class="IMPORTANT">
 <h5>Important</h5>
-<p>Hotfixy se vždy slučují jak do <code>main</code>, tak do <code>develop</code> větve!</p>
+<p>Hotfixy vždy slučujte do <code>main</code> i <code>develop</code>!</p>
 </div>
 </details>
 <hr>
+<h2 id="-pravidla-pro-práci-s-git-flow">📋 Pravidla pro práci s Git Flow</h2>
 <details>
-<summary><span style="color:#1E90FF;">Pravidla pro práci s Git Flow</span></summary>
+<summary><span style="color:#1E90FF;">📝 Doporučené postupy</span></summary>
 <ol>
-<li>Nikdy nepracujte přímo v <code>main</code> ani <code>develop</code> větvích</li>
+<li>Nikdy nepracujte přímo v <code>main</code> ani <code>develop</code></li>
 <li>Každá funkce má vlastní feature větev</li>
 <li>Před sloučením proveďte code review</li>
-<li>Po sloučení release nebo hotfix větve označte verzi pomocí Git tagu</li>
-<li>Používejte smysluplné názvy větví (např. <code>feature/user-authentication</code>)</li>
+<li>Po sloučení release/hotfix větve označte verzi pomocí tagu</li>
+<li>Používejte smysluplné názvy větví (např. <code>feature/user-auth</code>)</li>
 <li>Udržujte commit zprávy jasné a popisné</li>
 </ol>
 </details>
 <hr>
+<h2 id="-vizualizace-workflow">🗺️ Vizualizace workflow</h2>
 <details>
-<summary><span style="color:#1E90FF;">Vizualizace Git Flow</span></summary>
+<summary><span style="color:#1E90FF;">📈 Schéma větvení</span></summary>
 <pre><code>main       ●────────●─────────●────────●
             \        \         \        \
 develop     ●─────●───●─────●───●───●────●
@@ -184,9 +188,6 @@ release                  ●─────●
 hotfix                       ●
 </code></pre>
 </details>
-<hr>
-<p>Pro více informací navštivte <a href="https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow">oficiální dokumentaci Git Flow</a></p>
-<pre><code></code></pre>
 
 </article>
 

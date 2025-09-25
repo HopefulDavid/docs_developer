@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>&#127909; Unity – Kamera &amp; Tipy | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#127909; Unity – Kamera &amp; Tipy | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,54 +85,105 @@
         </div>
 
         <article data-uid="">
+<h1 id="-unity--kamera--tipy">🎥 Unity – Kamera &amp; Tipy</h1>
 
-<h2 id="kamera">Kamera</h2>
-<div class="IMPORTANT">
-<h5>Important</h5>
-<p>Pro 2D hry musí být přidána komponenta &quot;Pixel Perfect Camera&quot;, která zabrání deformacím, trhání obrazu atd..</p>
-</div>
+<blockquote>
+<p>🚀 Praktické rady pro nastavení kamery v Unity, rozdíly mezi ortografickou a perspektivní kamerou, a proč používat Pixel Perfect Camera v 2D hrách.</p>
+</blockquote>
+<hr>
+<h2 id="-pixel-perfect-camera">🖼️ Pixel Perfect Camera</h2>
 <details>
-<summary><span style="color:#1E90FF;">Ortografická Kamera</span></summary>
+<summary><span style="color:#1E90FF;">🟢 Proč ji použít v 2D?</span></summary>
 <ul>
-<li><p>Zobrazení:</p>
-<p>Objektivní (bez perspektivního zkreslení).</p>
-</li>
-<li><p>Velikost objektů:</p>
-<p>Všechny objekty vypadají stejně velké bez ohledu na jejich vzdálenost od kamery.</p>
-</li>
-<li><p>Použití:</p>
-<p>Ideální pro 2D hry, izometrické zobrazení, architektonické vizualizace.</p>
-</li>
-<li><p>Nastavení:</p>
-<p>Používá Orthographic Size k určení velikosti záběru kamery.</p>
-</li>
-<li><p>Zobrazení linie:</p>
-<p>Rovnoběžné linie zůstávají rovnoběžné.</p>
-</li>
+<li>Zabrání deformacím a trhání obrazu.</li>
+<li>Zajistí ostré vykreslení pixelové grafiky.</li>
+<li>Doporučeno pro všechny 2D projekty.</li>
 </ul>
+<p><img src="../../images/pixel_perfect_camera.png" alt=""></p>
+<blockquote>
+<p>📌 Přidej komponentu <strong>Pixel Perfect Camera</strong> na hlavní kameru v Inspectoru.</p>
+</blockquote>
 </details>
+<hr>
+<h2 id="-ortografická-kamera">🟦 Ortografická Kamera</h2>
 <details>
-<summary><span style="color:#1E90FF;">Perspektivní Kamera</span></summary>
-<ul>
-<li><p>Zobrazení:</p>
-<p>Simuluje reálnou perspektivu (s perspektivním zkreslením).</p>
-</li>
-<li><p>Velikost objektů:</p>
-<p>Objekty se jeví menší, jak se vzdálí od kamery.</p>
-</li>
-<li><p>Použití:</p>
-<p>Vhodné pro 3D hry, kde je důležitý realistický pocit hloubky.</p>
-</li>
-<li><p>Nastavení:</p>
-<p>Používá Field of View (FOV) k určení šířky záběru kamery.</p>
-</li>
-<li><p>Zobrazení linie:</p>
-<p>Rovnoběžné linie se sbíhají do jednoho bodu (vanishing point).</p>
-</li>
-</ul>
+<summary><span style="color:#1E90FF;">📏 Vlastnosti & použití</span></summary>
+<table>
+<thead>
+<tr>
+<th>🏷️ Vlastnost</th>
+<th>💡 Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Zobrazení</td>
+<td>Objektivní, bez perspektivního zkreslení</td>
+</tr>
+<tr>
+<td>Velikost objektů</td>
+<td>Stejná bez ohledu na vzdálenost</td>
+</tr>
+<tr>
+<td>Použití</td>
+<td>2D hry, izometrie, architektura</td>
+</tr>
+<tr>
+<td>Nastavení</td>
+<td><strong>Orthographic Size</strong> určuje záběr</td>
+</tr>
+<tr>
+<td>Linie</td>
+<td>Rovnoběžné linie zůstávají rovnoběžné</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Ideální pro 2D projekty!</p>
+</blockquote>
 </details>
+<hr>
+<h2 id="-perspektivní-kamera">🟩 Perspektivní Kamera</h2>
 <details>
-<summary><span style="color:#1E90FF;">Novinky</span></summary>
+<summary><span style="color:#1E90FF;">🔭 Vlastnosti & použití</span></summary>
+<table>
+<thead>
+<tr>
+<th>🏷️ Vlastnost</th>
+<th>💡 Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Zobrazení</td>
+<td>Simuluje reálnou perspektivu</td>
+</tr>
+<tr>
+<td>Velikost objektů</td>
+<td>Menší s rostoucí vzdáleností</td>
+</tr>
+<tr>
+<td>Použití</td>
+<td>3D hry, realistická hloubka</td>
+</tr>
+<tr>
+<td>Nastavení</td>
+<td><strong>Field of View (FOV)</strong> určuje šířku záběru</td>
+</tr>
+<tr>
+<td>Linie</td>
+<td>Rovnoběžné linie se sbíhají do jednoho bodu</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Vhodné pro 3D projekty!</p>
+</blockquote>
+</details>
+<hr>
+<h2 id="-novinky--video">🆕 Novinky &amp; Video</h2>
+<details>
+<summary><span style="color:#1E90FF;">🎬 Co je nového v Unity kamerách?</span></summary>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/OL0bLrb8DV4?si=cYRtPAg8tjvLExw6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </details>
 
