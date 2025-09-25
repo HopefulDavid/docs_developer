@@ -1,4 +1,6 @@
 Změny
+## 2025-09-25
+  - výrazné zlepšení dokumentace a její zjednodušení
 ## 2025-08-21
   - ✨ Nové funkcionality: přidání dokumentace pro nastavení a přístup v XAMPP.
 ## 2025-05-19
