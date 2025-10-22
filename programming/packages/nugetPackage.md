@@ -53,3 +53,39 @@
 > 💡 Výchozí umístění lze změnit pomocí proměnné prostředí `NUGET_PACKAGES`.
 
 </details>
+
+Doplnil jsem příklad a tabulky příkazů pro práci s NuGet balíčky v .NET. Vložte následující úsek do souboru `programming/packages/nugetPackage.md` na vhodné místo (např. pod sekci "Správa balíčků").
+
+---
+
+## 🧑‍💻 Příklady použití balíčku
+
+```bash
+dotnet add package SixLabors.ImageSharp.Drawing --version 2.1.7
+```
+
+---
+
+## 📋 Přehled základních příkazů
+
+### 🗂️ Správa balíčků
+
+| Příkaz                                         | Popis                                                                                   |
+|------------------------------------------------|----------------------------------------------------------------------------------------|
+| `dotnet add package <název> --version <verze>` | Přidá nebo aktualizuje konkrétní NuGet balíček na zadanou verzi v projektu.             |
+| `dotnet remove package <název>`                | Odebere balíček z projektu.                                                            |
+| `dotnet restore`                               | Obnoví všechny závislosti projektu podle souboru `csproj` nebo `packages.config`.      |
+
+### 🔍 Kontrola a aktualizace
+
+| Příkaz                                         | Popis                                                                                   |
+|------------------------------------------------|----------------------------------------------------------------------------------------|
+| `dotnet outdated`                              | Zobrazí seznam zastaralých NuGet balíčků v projektu a navrhne novější verze.           |
+| `dotnet outdated --upgrade`                    | Automaticky aktualizuje všechny zastaralé NuGet balíčky na nejnovější verze.           |
+
+### 🗄️ Správa zdrojů a cache
+
+| Příkaz                                         | Popis                                                                                   |
+|------------------------------------------------|----------------------------------------------------------------------------------------|
+| `dotnet nuget list source`                     | Zobrazí seznam zdrojů NuGet balíčků (repozitářů).                                      |
+| `dotnet nuget locals all --clear`              | Vyčistí lokální cache NuGet balíčků (odstraní staré verze ze složky s balíčky).         |
