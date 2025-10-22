@@ -75,121 +75,26 @@ Konfigurační soubor pro definici služeb, obrazů, portů a nastavení kontejn
 
 ## 🛠️ Základní příkazy
 
-<details>
-<summary><span style="color:#1E90FF;">🔍 Zobrazení</span></summary>
-
-- Zobrazit běžící kontejnery
-  ```Docker
-  docker ps
-  ```
-- Zobrazit všechny docker image
-  ```Docker
-  docker images
-  ```
-</details>
-
-<details>
-<summary><span style="color:#1E90FF;">🔄 Aktualizace nastavení</span></summary>
-
-- Zapnout automatické spouštění
-  ```Docker
-  docker update --restart=yes <container name or id>
-  ```
-- Vypnout automatické spouštění
-  ```Docker
-  docker update --restart=no <container name or id>
-  ```
-</details>
-
-<details>
-<summary><span style="color:#1E90FF;">⬇️ Stažení</span></summary>
-
-- Stáhnout docker image
-  ```Docker
-  docker pull <Image name>
-  ```
-</details>
-
-<details>
-<summary><span style="color:#1E90FF;">💾 Záloha & obnova</span></summary>
-
-- Zálohovat image
-  ```Docker
-  docker save -o <path to tar file> <docker image name or id>
-  ```
-- Obnovit image
-  ```Docker
-  docker load -i <path to tar file>
-  ```
-</details>
-
-<details>
-<summary><span style="color:#1E90FF;">🛠️ Vytvoření image</span></summary>
-
-- Sestavit image
-  ```Docker
-  docker build -t myapp .
-  ```
-</details>
-
-<details>
-<summary><span style="color:#1E90FF;">🚀 Spuštění kontejneru</span></summary>
-
-- Spustit služby z docker-compose
-  ```Docker
-  docker-compose up
-  ```
-- Spustit kontejner z image
-  ```Docker
-  docker run kitematic/hello-world-nginx
-  ```
-- Spustit na jiném portu
-  ```Docker
-  docker run -p 70:80 kitematic/hello-world-nginx
-  ```
-- Spustit a smazat po ukončení
-  ```Docker
-  docker run --rm kitematic/hello-world-nginx
-  ```
-- Spustit v interaktivním módu
-  ```Docker
-  docker run -it kitematic/hello-world-nginx
-  ```
-</details>
-
-<details>
-<summary><span style="color:#1E90FF;">🧩 Spuštění více kontejnerů</span></summary>
-
-Příklad souboru `docker-compose.yaml`:
-```yaml
-version: '3.4'
-services:
-  webapp:
-    image: mcr.microsoft.com/dotnet/core/samples:aspnetapp
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8000:80"
-```
-</details>
-
-<details>
-<summary><span style="color:#1E90FF;">⏹️ Zastavení & odstranění</span></summary>
-
-- Zastavit kontejner
-  ```Docker
-  docker stop <docker container name or id>
-  ```
-- Odstranit kontejner
-  ```Docker
-  docker rm <container name or id>
-  ```
-- Odstranit image
-  ```Docker
-  docker rmi <docker image name or id>
-  ```
-</details>
+| 🟦 Kategorie                | 🛠️ Příkaz                                      | 📄 Popis                                               |
+|-----------------------------|------------------------------------------------|--------------------------------------------------------|
+| 🔍 Zobrazení                | `docker ps`                                    | Zobrazí běžící kontejnery                              |
+|                             | `docker images`                                | Zobrazí všechny docker image                           |
+| 🔄 Aktualizace nastavení    | `docker update --restart=yes <jméno/id>`       | Zapne automatické spouštění kontejneru                 |
+|                             | `docker update --restart=no <jméno/id>`        | Vypne automatické spouštění kontejneru                 |
+| ⬇️ Stažení                  | `docker pull <image>`                          | Stáhne docker image                                    |
+| 💾 Záloha & obnova          | `docker save -o <cesta>.tar <image/id>`        | Zálohuje image do souboru                              |
+|                             | `docker load -i <cesta>.tar`                   | Obnoví image ze souboru                                |
+| 🛠️ Vytvoření image          | `docker build -t <jméno> .`                    | Sestaví image z Dockerfile                             |
+| 🚀 Spuštění kontejneru      | `docker run <image>`                           | Spustí kontejner z image                               |
+|                             | `docker run -p 70:80 <image>`                  | Spustí kontejner na jiném portu                        |
+|                             | `docker run --rm <image>`                      | Spustí kontejner a smaže ho po ukončení                |
+|                             | `docker run -it <image>`                       | Spustí kontejner v interaktivním módu                  |
+| 🧩 Docker Compose           | `docker-compose up`                            | Spustí služby z docker-compose (běží v terminálu)      |
+|                             | `docker compose up -d`                         | Spustí služby z docker-compose na pozadí               |
+|                             | `docker compose down`                          | Zastaví a odstraní všechny kontejnery z docker-compose |
+| ⏹️ Zastavení & odstranění   | `docker stop <jméno/id>`                       | Zastaví kontejner                                      |
+|                             | `docker rm <jméno/id>`                         | Odstraní kontejner                                     |
+|                             | `docker rmi <image/id>`                        | Odstraní image                                         |
 
 ---
 
