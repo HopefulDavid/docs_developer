@@ -3,6 +3,7 @@ Změny
   - aktualizace git konfigurace pro Meld a povolení dlouhých cest pro git
   - aktualizace konvencí pro komentáře v kódu
   - aktualizace nadpisu pro instalaci Windows
+  - drobné úpravy
   - přidání instrukcí pro instalaci Windows bez účtu
   - přidání komentářových konvencí v kódu
   - přidání příkladů a příkazů pro NuGet balíčky
