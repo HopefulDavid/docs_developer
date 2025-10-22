@@ -4,7 +4,7 @@
 
 ---
 
-## Instalace Windows bez Microsoft účtu
+## 🪟 Instalace Windows bez Microsoft účtu
 
 Na začátku instalace při výběru jazyka stiskněte:
 
