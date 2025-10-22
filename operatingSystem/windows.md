@@ -4,6 +4,20 @@
 
 ---
 
+## Instalace Windows bez Microsoft účtu
+
+Na začátku instalace při výběru jazyka stiskněte:
+
+1. `Shift` + `F10` pro otevření příkazového řádku.
+2. Zadejte příkaz:
+
+   `start ms-cxh:localonly`
+
+   > [!TIP]
+   > Pokud nezafunguje, zkuste místo toho:
+   >
+   > `OOBE\BYPASSNRO`
+
 ## 🛠️ Instalace Windows & řešení neviditelného disku
 
 <details>
