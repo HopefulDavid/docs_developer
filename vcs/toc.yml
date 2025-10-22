@@ -8,6 +8,8 @@
     href: git/submodules.md
   - name: Git Flow
     href: git/gitFlow.md
+  - name: Použití v praxi
+    href: git/inPractice.md
   - name: Větve
     items:
     - name: Vytvoření vzdálené větve
