@@ -1,5 +1,7 @@
 - name: Techniky a koncepty
   items:
+    - name: Komentáře v kódu
+    - href: codeComments.md
     - name: Vývojové vzory
       href: developmentPatterns.md
     - name: Techniky
@@ -72,8 +74,6 @@
           items:
             - name: Tipy a řešení
               href: flutter/troubleshooting.md
-
-
 
 - name: Herní vývoj
   items:
