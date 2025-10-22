@@ -1,7 +1,7 @@
 - name: Techniky a koncepty
   items:
     - name: Komentáře v kódu
-    - href: codeComments.md
+      href: codeComments.md
     - name: Vývojové vzory
       href: developmentPatterns.md
     - name: Techniky

@@ -18,7 +18,7 @@ Na začátku instalace při výběru jazyka stiskněte:
    >
    > `OOBE\BYPASSNRO`
 
-## 🛠️ Instalace Windows & řešení neviditelného disku
+## 🛠️ Řešení neviditelného disku při instalaci Windows
 
 <details>
 <summary><span style="color:#1E90FF;">💾 Řešení problému s neviditelným diskem při instalaci</span></summary>
