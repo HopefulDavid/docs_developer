@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#128450;️ Git – Nastaven&#237; porovn&#225;v&#225;n&#237; &amp; slučov&#225;n&#237; přes Meld | V&#253;voj&#225;ř </title>
+      <title>Git - Uživatelsk&#225; konfigurace | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#128450;️ Git – Nastaven&#237; porovn&#225;v&#225;n&#237; &amp; slučov&#225;n&#237; přes Meld | V&#253;voj&#225;ř ">
+      <meta name="title" content="Git - Uživatelsk&#225; konfigurace | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,19 +85,32 @@
         </div>
 
         <article data-uid="">
-<h1 id="-git--nastavení-porovnávání--slučování-přes-meld">🗂️ Git – Nastavení porovnávání &amp; slučování přes Meld</h1>
+<h1 id="git---uživatelská-konfigurace">Git - Uživatelská konfigurace</h1>
 
+<h2 id="-povolení-dlouhých-cest-ve-windows">🛣️ Povolení dlouhých cest ve Windows</h2>
+<pre><code class="lang-bash">git config --system core.longpaths true
+</code></pre>
+<p>povolí v Git podporu dlouhých cest na Windows, což často řeší chybu <strong>„Filename too long“</strong>.</p>
 <blockquote>
-<p>🚀 Praktické rady pro konfiguraci nástroje Meld jako diff/merge tool v Git na Windows i Linuxu.</p>
-</blockquote>
-<hr>
-<h2 id="-co-je-meld">🔍 Co je Meld?</h2>
+<p>⚠️ <strong>Pozor:</strong></p>
 <ul>
-<li><strong>Meld</strong> je vizuální nástroj pro porovnávání a slučování souborů.</li>
-<li>Umožňuje přehledné zobrazení rozdílů a snadné řešení konfliktů.</li>
+<li><p>Tento příkaz se musí spustit s administrátorskými právy, protože mění systémovou konfiguraci Gitu.</p>
+</li>
+<li><p>Musí mít ve Windows povolenou podporu dlouhých cest. (Pokud to není povolené, Git to nezvládne.)</p>
+</li>
 </ul>
+</blockquote>
+<p>Pokud ještě nemáte povolené dlouhé cesty v systému, lze to udělat takto:</p>
+<ol>
+<li>Spusť <code>regedit</code></li>
+<li>Najdi klíč: <code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem</code></li>
+<li>Najdi nebo vytvoř DWORD hodnotu <code>LongPathsEnabled</code> a nastav ji na <code>1</code>.</li>
+<li>Restartuj počítač.</li>
+</ol>
 <hr>
 <h2 id="-nastavení-meld-jako-diffmerge-tool">⚙️ Nastavení Meld jako diff/merge tool</h2>
+<p><strong>Meld</strong> je vizuální nástroj pro porovnávání a slučování souborů.</p>
+<p>Umožňuje přehledné zobrazení rozdílů a snadné řešení konfliktů.</p>
 <details>
 <summary><span style="color:#1E90FF;">💻 Windows – Kompletní postup</span></summary>
 <ol>
@@ -140,7 +153,7 @@ git config --global mergetool.prompt false
 </ol>
 </details>
 <hr>
-<h2 id="-použití-v-praxi">📝 Použití v praxi</h2>
+<h3 id="-použití-v-praxi">📝 Použití v praxi</h3>
 <details>
 <summary><span style="color:#1E90FF;">🔎 Porovnání změn</span></summary>
 <ul>

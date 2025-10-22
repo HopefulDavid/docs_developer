@@ -1063,6 +1063,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "programming/codeComments.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/codeComments.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "programming/developmentPatterns.md",
       "output": {
         ".html": {
@@ -1576,6 +1586,16 @@
       "output": {
         ".html": {
           "relative_path": "vcs/git/history/updateGitignore.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/git/inPractice.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/inPractice.html"
         }
       },
       "version": ""

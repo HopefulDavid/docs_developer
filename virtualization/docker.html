@@ -147,119 +147,107 @@ Konfigurační soubor pro definici služeb, obrazů, portů a nastavení kontejn
 </details>
 <hr>
 <h2 id="-základní-příkazy">🛠️ Základní příkazy</h2>
-<details>
-<summary><span style="color:#1E90FF;">🔍 Zobrazení</span></summary>
-<ul>
-<li>Zobrazit běžící kontejnery
-<pre><code class="lang-Docker">docker ps
-</code></pre>
-</li>
-<li>Zobrazit všechny docker image
-<pre><code class="lang-Docker">docker images
-</code></pre>
-</li>
-</ul>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🔄 Aktualizace nastavení</span></summary>
-<ul>
-<li>Zapnout automatické spouštění
-<pre><code class="lang-Docker">docker update --restart=yes &lt;container name or id&gt;
-</code></pre>
-</li>
-<li>Vypnout automatické spouštění
-<pre><code class="lang-Docker">docker update --restart=no &lt;container name or id&gt;
-</code></pre>
-</li>
-</ul>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">⬇️ Stažení</span></summary>
-<ul>
-<li>Stáhnout docker image
-<pre><code class="lang-Docker">docker pull &lt;Image name&gt;
-</code></pre>
-</li>
-</ul>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">💾 Záloha & obnova</span></summary>
-<ul>
-<li>Zálohovat image
-<pre><code class="lang-Docker">docker save -o &lt;path to tar file&gt; &lt;docker image name or id&gt;
-</code></pre>
-</li>
-<li>Obnovit image
-<pre><code class="lang-Docker">docker load -i &lt;path to tar file&gt;
-</code></pre>
-</li>
-</ul>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🛠️ Vytvoření image</span></summary>
-<ul>
-<li>Sestavit image
-<pre><code class="lang-Docker">docker build -t myapp .
-</code></pre>
-</li>
-</ul>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🚀 Spuštění kontejneru</span></summary>
-<ul>
-<li>Spustit služby z docker-compose
-<pre><code class="lang-Docker">docker-compose up
-</code></pre>
-</li>
-<li>Spustit kontejner z image
-<pre><code class="lang-Docker">docker run kitematic/hello-world-nginx
-</code></pre>
-</li>
-<li>Spustit na jiném portu
-<pre><code class="lang-Docker">docker run -p 70:80 kitematic/hello-world-nginx
-</code></pre>
-</li>
-<li>Spustit a smazat po ukončení
-<pre><code class="lang-Docker">docker run --rm kitematic/hello-world-nginx
-</code></pre>
-</li>
-<li>Spustit v interaktivním módu
-<pre><code class="lang-Docker">docker run -it kitematic/hello-world-nginx
-</code></pre>
-</li>
-</ul>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🧩 Spuštění více kontejnerů</span></summary>
-<p>Příklad souboru <code>docker-compose.yaml</code>:</p>
-<pre><code class="lang-yaml">version: '3.4'
-services:
-  webapp:
-    image: mcr.microsoft.com/dotnet/core/samples:aspnetapp
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - &quot;8000:80&quot;
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">⏹️ Zastavení & odstranění</span></summary>
-<ul>
-<li>Zastavit kontejner
-<pre><code class="lang-Docker">docker stop &lt;docker container name or id&gt;
-</code></pre>
-</li>
-<li>Odstranit kontejner
-<pre><code class="lang-Docker">docker rm &lt;container name or id&gt;
-</code></pre>
-</li>
-<li>Odstranit image
-<pre><code class="lang-Docker">docker rmi &lt;docker image name or id&gt;
-</code></pre>
-</li>
-</ul>
-</details>
+<table>
+<thead>
+<tr>
+<th>🟦 Kategorie</th>
+<th>🛠️ Příkaz</th>
+<th>📄 Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🔍 Zobrazení</td>
+<td><code>docker ps</code></td>
+<td>Zobrazí běžící kontejnery</td>
+</tr>
+<tr>
+<td></td>
+<td><code>docker images</code></td>
+<td>Zobrazí všechny docker image</td>
+</tr>
+<tr>
+<td>🔄 Aktualizace nastavení</td>
+<td><code>docker update --restart=yes &lt;jméno/id&gt;</code></td>
+<td>Zapne automatické spouštění kontejneru</td>
+</tr>
+<tr>
+<td></td>
+<td><code>docker update --restart=no &lt;jméno/id&gt;</code></td>
+<td>Vypne automatické spouštění kontejneru</td>
+</tr>
+<tr>
+<td>⬇️ Stažení</td>
+<td><code>docker pull &lt;image&gt;</code></td>
+<td>Stáhne docker image</td>
+</tr>
+<tr>
+<td>💾 Záloha &amp; obnova</td>
+<td><code>docker save -o &lt;cesta&gt;.tar &lt;image/id&gt;</code></td>
+<td>Zálohuje image do souboru</td>
+</tr>
+<tr>
+<td></td>
+<td><code>docker load -i &lt;cesta&gt;.tar</code></td>
+<td>Obnoví image ze souboru</td>
+</tr>
+<tr>
+<td>🛠️ Vytvoření image</td>
+<td><code>docker build -t &lt;jméno&gt; .</code></td>
+<td>Sestaví image z Dockerfile</td>
+</tr>
+<tr>
+<td>🚀 Spuštění kontejneru</td>
+<td><code>docker run &lt;image&gt;</code></td>
+<td>Spustí kontejner z image</td>
+</tr>
+<tr>
+<td></td>
+<td><code>docker run -p 70:80 &lt;image&gt;</code></td>
+<td>Spustí kontejner na jiném portu</td>
+</tr>
+<tr>
+<td></td>
+<td><code>docker run --rm &lt;image&gt;</code></td>
+<td>Spustí kontejner a smaže ho po ukončení</td>
+</tr>
+<tr>
+<td></td>
+<td><code>docker run -it &lt;image&gt;</code></td>
+<td>Spustí kontejner v interaktivním módu</td>
+</tr>
+<tr>
+<td>🧩 Docker Compose</td>
+<td><code>docker-compose up</code></td>
+<td>Spustí služby z docker-compose (běží v terminálu)</td>
+</tr>
+<tr>
+<td></td>
+<td><code>docker compose up -d</code></td>
+<td>Spustí služby z docker-compose na pozadí</td>
+</tr>
+<tr>
+<td></td>
+<td><code>docker compose down</code></td>
+<td>Zastaví a odstraní všechny kontejnery z docker-compose</td>
+</tr>
+<tr>
+<td>⏹️ Zastavení &amp; odstranění</td>
+<td><code>docker stop &lt;jméno/id&gt;</code></td>
+<td>Zastaví kontejner</td>
+</tr>
+<tr>
+<td></td>
+<td><code>docker rm &lt;jméno/id&gt;</code></td>
+<td>Odstraní kontejner</td>
+</tr>
+<tr>
+<td></td>
+<td><code>docker rmi &lt;image/id&gt;</code></td>
+<td>Odstraní image</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <h2 id="-dockerfile--příklady">📄 Dockerfile – Příklady</h2>
 <details>

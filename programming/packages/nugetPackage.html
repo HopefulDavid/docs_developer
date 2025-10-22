@@ -165,6 +165,74 @@
 <p>💡 Výchozí umístění lze změnit pomocí proměnné prostředí <code>NUGET_PACKAGES</code>.</p>
 </blockquote>
 </details>
+<p>Doplnil jsem příklad a tabulky příkazů pro práci s NuGet balíčky v .NET. Vložte následující úsek do souboru <code>programming/packages/nugetPackage.md</code> na vhodné místo (např. pod sekci &quot;Správa balíčků&quot;).</p>
+<hr>
+<h2 id="-příklady-použití-balíčku">🧑‍💻 Příklady použití balíčku</h2>
+<pre><code class="lang-bash">dotnet add package SixLabors.ImageSharp.Drawing --version 2.1.7
+</code></pre>
+<hr>
+<h2 id="-přehled-základních-příkazů">📋 Přehled základních příkazů</h2>
+<h3 id="-správa-balíčků-1">🗂️ Správa balíčků</h3>
+<table>
+<thead>
+<tr>
+<th>Příkaz</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dotnet add package &lt;název&gt; --version &lt;verze&gt;</code></td>
+<td>Přidá nebo aktualizuje konkrétní NuGet balíček na zadanou verzi v projektu.</td>
+</tr>
+<tr>
+<td><code>dotnet remove package &lt;název&gt;</code></td>
+<td>Odebere balíček z projektu.</td>
+</tr>
+<tr>
+<td><code>dotnet restore</code></td>
+<td>Obnoví všechny závislosti projektu podle souboru <code>csproj</code> nebo <code>packages.config</code>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="-kontrola-a-aktualizace">🔍 Kontrola a aktualizace</h3>
+<table>
+<thead>
+<tr>
+<th>Příkaz</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dotnet outdated</code></td>
+<td>Zobrazí seznam zastaralých NuGet balíčků v projektu a navrhne novější verze.</td>
+</tr>
+<tr>
+<td><code>dotnet outdated --upgrade</code></td>
+<td>Automaticky aktualizuje všechny zastaralé NuGet balíčky na nejnovější verze.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="-správa-zdrojů-a-cache">🗄️ Správa zdrojů a cache</h3>
+<table>
+<thead>
+<tr>
+<th>Příkaz</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dotnet nuget list source</code></td>
+<td>Zobrazí seznam zdrojů NuGet balíčků (repozitářů).</td>
+</tr>
+<tr>
+<td><code>dotnet nuget locals all --clear</code></td>
+<td>Vyčistí lokální cache NuGet balíčků (odstraní staré verze ze složky s balíčky).</td>
+</tr>
+</tbody>
+</table>
 
 </article>
 
