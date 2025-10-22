@@ -1,5 +1,7 @@
 # ✍️ Komentářové konvence v kódu
 
+Definuje sadu konvencí pro komentáře v kódu, které pomáhají vývojářům rychle identifikovat různé typy poznámek a úkolů.
+
 ---
 
 ### ✅ // TODO: Co je potřeba dodělat
