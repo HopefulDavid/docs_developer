@@ -1,4 +1,11 @@
 Změny
+## 2025-10-22
+  - aktualizace git konfigurace pro Meld a povolení dlouhých cest pro git
+  - přidání instrukcí pro instalaci Windows bez účtu
+  - přidání komentářových konvencí v kódu
+  - přidání příkladů a příkazů pro NuGet balíčky
+  - sekce o praktickém použití gitu
+  - úprava příkazů pro Docker v dokumentaci
 ## 2025-09-25
   - výrazné zlepšení dokumentace a její zjednodušení
 ## 2025-08-21
