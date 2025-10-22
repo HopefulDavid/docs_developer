@@ -1,17 +1,32 @@
-# 🗂️ Git – Nastavení porovnávání & slučování přes Meld
+# Git - Uživatelská konfigurace
 
-> 🚀 Praktické rady pro konfiguraci nástroje Meld jako diff/merge tool v Git na Windows i Linuxu.
+## 🛣️ Povolení dlouhých cest ve Windows
 
----
+```bash
+git config --system core.longpaths true
+```
 
-## 🔍 Co je Meld?
+povolí v Git podporu dlouhých cest na Windows, což často řeší chybu **„Filename too long“**.
 
-- **Meld** je vizuální nástroj pro porovnávání a slučování souborů.
-- Umožňuje přehledné zobrazení rozdílů a snadné řešení konfliktů.
+> ⚠️ **Pozor:**
+> - Tento příkaz se musí spustit s administrátorskými právy, protože mění systémovou konfiguraci Gitu.
+> 
+> - Musí mít ve Windows povolenou podporu dlouhých cest. (Pokud to není povolené, Git to nezvládne.)
+
+Pokud ještě nemáte povolené dlouhé cesty v systému, lze to udělat takto:
+
+1. Spusť `regedit`
+2. Najdi klíč: `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem`
+3. Najdi nebo vytvoř DWORD hodnotu `LongPathsEnabled` a nastav ji na `1`.
+4. Restartuj počítač.
 
 ---
 
 ## ⚙️ Nastavení Meld jako diff/merge tool
+
+**Meld** je vizuální nástroj pro porovnávání a slučování souborů.
+
+Umožňuje přehledné zobrazení rozdílů a snadné řešení konfliktů.
 
 <details>
 <summary><span style="color:#1E90FF;">💻 Windows – Kompletní postup</span></summary>
@@ -60,7 +75,7 @@
 
 ---
 
-## 📝 Použití v praxi
+### 📝 Použití v praxi
 
 <details>
 <summary><span style="color:#1E90FF;">🔎 Porovnání změn</span></summary>
@@ -69,6 +84,7 @@
   ```bash
   git difftool
   ```
+
 </details>
 
 <details>
@@ -78,4 +94,5 @@
   ```bash
   git mergetool
   ```
+
 </details>
