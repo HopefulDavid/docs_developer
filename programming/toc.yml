@@ -41,6 +41,11 @@
             - name: Testy Nunit
               href: net/net_nunit.md
 
+- name: Serverový vývoj
+  items:
+    - name: Go (Golang)
+      href: server/golang.md
+
 - name: Aplikační vývoj
   items:
     - name: WPF
