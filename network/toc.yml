@@ -1,6 +1,4 @@
-- name: SSH
-  href: ssh.md
+- name: Certifikáty
+  href: certificates.md
 - name: VPN (Virtual Private Network)
   href: vpn.md
-- name: WireShark
-  href: wireshark.md
