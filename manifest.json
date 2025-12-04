@@ -957,10 +957,10 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "network/ssh.md",
+      "source_relative_path": "network/certificates.md",
       "output": {
         ".html": {
-          "relative_path": "network/ssh.html"
+          "relative_path": "network/certificates.html"
         }
       },
       "version": ""
@@ -984,16 +984,6 @@
       "output": {
         ".html": {
           "relative_path": "network/vpn.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "network/wireshark.md",
-      "output": {
-        ".html": {
-          "relative_path": "network/wireshark.html"
         }
       },
       "version": ""
@@ -1333,6 +1323,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "programming/server/golang.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/server/golang.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "programming/techniques.md",
       "output": {
         ".html": {
@@ -1546,6 +1546,16 @@
       "output": {
         ".html": {
           "relative_path": "vcs/git/gitFlow.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/git/history/assumeUnchanged.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/history/assumeUnchanged.html"
         }
       },
       "version": ""

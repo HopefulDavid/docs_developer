@@ -309,6 +309,23 @@ ENTRYPOINT [&quot;dotnet&quot;, &quot;out/myapp.dll&quot;]
 <img src="/../images/dockerKeepDataOnLocal.png" alt="dockerKeepDataOnLocal.png" width="800px">
 </details>
 <hr>
+<h2 id="-získání-dat-z-dockeru">🗂️ Získání dat z Dockeru</h2>
+<details>
+<summary><span style="color:#1E90FF;">Export databázového schématu</span></summary>
+<pre><code class="lang-cmd">docker exec -t supabase-db pg_dump -U postgres -s postgres &gt; D:\schema.sql
+</code></pre>
+<p>Tento příkaz otevře terminál pro Docker kontejner s názvem <strong>supabase-db</strong> a vyexportuje schema databáze do souboru:</p>
+<pre><code>D:\schema.sql
+</code></pre>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Pro <code>sqlc generate</code>, je potřeba upravit obsah (viz níže).</p>
+<p>Odstraň nebo zakomentuj řádek v souboru <code>schema.sql</code> začínající na:</p>
+<pre><code>\unrestrict
+</code></pre>
+</div>
+</details>
+<hr>
 <h2 id="-řešení-problémů">🛡️ Řešení problémů</h2>
 <details>
 <summary><span style="color:#1E90FF;">Port není dostupný</span></summary>

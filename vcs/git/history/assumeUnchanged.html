@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>&#128450;️ Git – Lok&#225;ln&#237; ignorov&#225;n&#237; změn (assume-unchanged) | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="&#128450;️ Git – Lok&#225;ln&#237; ignorov&#225;n&#237; změn (assume-unchanged) | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/history/assumeUnchanged.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
+            Dokumentace pro v&#253;voj&#225;ře
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p>Zde je moderní návod v 3. osobě pro soubor <code>vcs/git/history/assumeUnchanged.md</code>:</p>
+<h1 id="-git--lokální-ignorování-změn-assume-unchanged">🗂️ Git – Lokální ignorování změn (<code>assume-unchanged</code>)</h1>
+<blockquote>
+<p>🚀 Praktické rady, jak lze <strong>lokálně ignorovat změny</strong> ve složce nebo souborech, aniž by se to projevilo na vzdáleném repozitáři.</p>
+</blockquote>
+<hr>
+<h2 id="-kdy-použít">🧐 Kdy použít?</h2>
+<ul>
+<li>Pokud je potřeba <strong>fyzicky smazat</strong> nebo upravit soubory/složku pouze lokálně, ale <strong>neovlivnit remote</strong> při push.</li>
+<li>Když má Git <strong>ignorovat změny</strong> v konkrétních souborech/složkách pouze na daném počítači.</li>
+</ul>
+<hr>
+<h2 id="-postup-krok-za-krokem">📋 Postup krok za krokem</h2>
+<details>
+<summary><span style="color:#1E90FF;">🧹 Ignorování změn ve složce/souborech</span></summary>
+<pre><code class="lang-bash">git ls-files cesta/xxx/Directory | xargs git update-index --assume-unchanged
+</code></pre>
+<ul>
+<li>Git přestane sledovat změny v zadaných souborech/složce <strong>jen lokálně</strong>.</li>
+<li>Soubory lze smazat nebo upravit, ale při push se remote <strong>nezmění</strong>.</li>
+</ul>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Je nutné spustit tento příkaz v bashovém prostředí (např. Git Bash).</p>
+</div>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Pokud se necommituje smazání, remote zůstane nedotčený i při <code>git push -f</code>.</p>
+</div>
+</details>
+<hr>
+<details>
+<summary><span style="color:#1E90FF;">🔄 Vrácení zpět (opětovné sledování změn)</span></summary>
+<pre><code class="lang-bash">git ls-files cesta/xxx/Directory | xargs git update-index --no-assume-unchanged
+</code></pre>
+<ul>
+<li>Git začne opět sledovat změny v souborech/složce.</li>
+</ul>
+</details>
+<hr>
+<h2 id="-upozornění-na-rizika">⚠️ Upozornění na rizika</h2>
+<ul>
+<li><strong>Změny jsou pouze lokální</strong> – ostatní členové týmu je nevidí.</li>
+<li>Pokud se commitne smazání nebo úprava souborů, push už remote ovlivní.</li>
+<li>Vhodné pro dočasné úpravy, testování, nebo když je potřeba něco skrýt před Gitem.</li>
+</ul>
+<hr>
+<h2 id="-slovníček-pojmů">🏷️ Slovníček pojmů</h2>
+<ul>
+<li><strong>assume-unchanged</strong>: Git ignoruje změny v souboru/složce pouze na daném počítači.</li>
+<li><strong>no-assume-unchanged</strong>: Git opět začne změny sledovat.</li>
+</ul>
+<hr>
+<h2 id="-shrnutí">💡 Shrnutí</h2>
+<ul>
+<li>Lokální ignorování změn je <strong>bezpečné</strong> pro push, dokud se necommitne smazání nebo úprava.</li>
+<li>Remote repozitář zůstane <strong>beze změny</strong>.</li>
+</ul>
+<hr>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Pro trvalé ignorování se používá <code>.gitignore</code>, pro dočasné lokální ignorování slouží <code>assume-unchanged</code>.</p>
+</div>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/history/assumeUnchanged.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
