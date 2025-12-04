@@ -102,6 +102,12 @@ Ověření instalace:
 wsl --list
 ```
 
+## Vypnutí všech WSL instancí
+
+```bash
+wsl --shutdown
+```
+
 > [!WARNING]  
 > Odstranění špatně nainstalované distribuce:
 > ```bash
