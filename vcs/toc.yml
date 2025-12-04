@@ -20,11 +20,13 @@
       href: git/branches/pullRequest.md
   - name: Historie
     items:
-    - name: .gitignore
-      href: git/history/updateGitignore.md
-    - name: Přesunutí
-      href: git/history/moveCommits.md
-    - name: Oprava
-      href: git/history/fixCommits.md
-    - name: Odstranění
-      href: git/history/deleteCommits.md
+      - name: .gitignore
+        href: git/history/updateGitignore.md
+      - name: Přesunutí
+        href: git/history/moveCommits.md
+      - name: Oprava
+        href: git/history/fixCommits.md
+      - name: Odstranění
+        href: git/history/deleteCommits.md
+      - name: Lokální ignorování změn
+        href: git/history/assumeUnchanged.md
