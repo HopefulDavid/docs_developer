@@ -1,4 +1,12 @@
 Změny
+## 2025-12-04
+  - 📚 Změny v dokumentaci: aktualizace dokumentace o certifikátech a klíčích
+  - ✨ Nové funkcionality: získání dat z dockeru (docker)
+  - ✨ Nové funkcionality: přidání návodu pro lokální ignorování změn (git)
+  - 🔨 Správa projektu: odstranění zastaralých dokumentů a přepsání z ssh na certifikáty
+  - 📚 Změny v dokumentaci: přidání sekce pro vypnutí WSL instancí (virtualization)
+## 2025-10-29
+  - ✨ Nové funkcionality: přidání dokumentace pro Go (Golang) (docs)
 ## 2025-10-22
   - aktualizace git konfigurace pro Meld a povolení dlouhých cest pro git
   - aktualizace konvencí pro komentáře v kódu
