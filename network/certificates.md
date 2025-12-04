@@ -1,126 +1,236 @@
-﻿# 🗂️ Certifikáty
+﻿## 🗂️ Klíče a certifikáty
 
-> 🚀 Moderní přehled nastavení certifikátů, SSH klíčů, připojení ke GitHubu a správy URL repozitářů.
-
----
-
-## 🔐 Certifikáty
-
-Certifikáty se používají pro šifrovanou komunikaci (např. HTTPS).
-
-- V GitHub workflow se obvykle řeší automaticky (např. přes HTTPS klonování).
-- Pro pokročilé scénáře lze spravovat vlastní CA, TLS certifikáty apod.
+> 🚀 Kompletní přehled pro generování bezpečnostních klíčů, práce s TLS certifikáty, správou SSH přístupu a Git URL.
 
 ---
 
-### 🗝️ SSH – Bezpečné připojení
+## Generování klíčů & bezpečných hodnot
 
-> 📖 **Co je SSH?**  
-> Bezpečný protokol pro vzdálené připojení, který využívá veřejný a soukromý klíč místo hesla.
+> Základní nástroje pro bezpečné šifrování, tokeny, secrets a root keys.
 
-> [!NOTE]  
-> SSH je bezpečnější než používání uživatelského jména a hesla.
-
----
-
-#### 📋 Postup krok za krokem
+### OpenSSL – (Pro generování náhodných hodnot)
 
 <details>
-<summary><span style="color:#1E90FF;">🔑 Krok 1: Generování SSH klíče</span></summary>
+<summary><span style="color:#1E90FF;">🔐 Base64 secret (např. JWT, API keys)</span></summary>
+
+```bash
+openssl rand -base64 32
+```
+
+</details>
+
+<details>
+<summary><span style="color:#1E90FF;">🔐 HEX secret (konfigurační klíče apod.)</span></summary>
+
+```bash
+openssl rand -hex 64
+```
+
+</details>
+
+---
+
+## Certifikáty & TLS
+
+> Moderní způsoby generování certifikátů pro vývoj i servery.
+
+---
+
+### 🛡️ mkcert – Lokální důvěryhodné certifikáty
+
+#### 1. Instalace mkcert
+
+1. Stáhnout `mkcert.exe` z [https://github.com/FiloSottile/mkcert/releases](https://github.com/FiloSottile/mkcert/releases).
+2. Ulož například do `C:\mkcert`.
+3. (Volitelné) Přidej tuto složku do systémové proměnné `PATH` pro snadné spouštění z libovolného místa.
+
+---
+
+#### 2. Instalace lokální certifikační autority (CA)
+
+```
+mkcert -install
+```
+
+**Výsledek:**
+
+* CA je nainstalována ve Windows + v prohlížečích (Chrome, Edge…)
+* Firefox se musí nastavit ručně (viz níže)
+
+##### Firefox – ruční přidání CA
+
+1. Otevři Firefox
+2. `about:preferences#privacy`
+3. **Certificates → View Certificates**
+4. Tab **Authorities → Import**
+5. Importuj:
+
+```
+C:\Users\<User>\AppData\Local\mkcert\rootCA.pem
+```
+
+6. Zaškrtni *Trust this CA to identify websites*
+
+---
+
+#### 3. Vytvoření certifikátu pro doménu
+
+```
+mkcert localhost
+```
+
+Výstup:
+
+* `localhost.pem`
+* `localhost-key.pem`
+
+Více domén:
+
+```
+mkcert localhost 127.0.0.1 myapp.local
+```
+
+---
+
+#### 4. Použití certifikátů
+
+##### Obvykle použitelné přímo (`.pem`)
+
+* Go
+* Node.js
+* Nginx
+* Caddy
+* Docker containers
+
+---
+
+#### 5. Převod na PFX (.NET / Windows)
+
+```
+openssl pkcs12 -export -out server.pfx -inkey localhost-key.pem -in localhost.pem
+```
+
+---
+
+#### 6. Převod na CRT/KEY (Apache, Nginx)
+
+Pouhé přejmenování:
+
+```
+localhost.pem → server.crt
+localhost-key.pem → server.key
+```
+
+---
+
+### 📘 Příklad použití v Go
+
+```go
+e.StartTLS(":8080", "server.crt", "server.key")
+```
+
+---
+
+## SSH – Bezpečné připojení pro GitHub
+
+### 🗝️ Co je SSH?
+
+Protokol využívající veřejný a soukromý klíč, bezpečnější než heslo.
+
+---
+
+### 📋 Kompletní postup nastavení SSH pro GitHub
+
+<details>
+<summary><span style="color:#1E90FF;">1️⃣ Generování SSH klíče</span></summary>
 
 ```bash
 ssh-keygen -t rsa -b 4096 -C "<your_email@example.com>"
 ```
 
-- Lze zadat umístění pro uložení klíče (obvykle `~/.ssh/id_rsa`)
-- Volitelně se nastaví heslo pro klíč
-
-> [!TIP]  
-> Pokud již existuje SSH klíč, tento krok lze přeskočit.
 </details>
 
 <details>
-<summary><span style="color:#1E90FF;">📋 Krok 2: Zkopírování veřejného klíče</span></summary>
+<summary><span style="color:#1E90FF;">2️⃣ Zobrazení veřejného klíče</span></summary>
 
-- **Windows:**
-  ```bash
-  type %userprofile%\.ssh\id_rsa.pub
-  ```
-- **Linux/macOS:**
-  ```bash
-  cat ~/.ssh/id_rsa.pub
-  ```
+**Windows**
+
+```bash
+type %userprofile%\.ssh\id_rsa.pub
+```
+
+**Linux/macOS**
+
+```bash
+cat ~/.ssh/id_rsa.pub
+```
+
 </details>
 
 <details>
-<summary><span style="color:#1E90FF;">🔗 Krok 3: Přidání klíče na GitHub</span></summary>
+<summary><span style="color:#1E90FF;">3️⃣ Přidání klíče na GitHub</span></summary>
 
-1. Přihlášení na GitHub
-2. Otevření **Settings → SSH and GPG keys**
-3. Kliknutí na **New SSH key**
-4. Vložení obsahu veřejného klíče
-5. Potvrzení kliknutím na **Add SSH key**
+GitHub → **Settings → SSH and GPG keys → New SSH key**
+
 </details>
 
 <details>
-<summary><span style="color:#1E90FF;">🧪 Krok 4: Testování SSH připojení</span></summary>
+<summary><span style="color:#1E90FF;">4️⃣ Test připojení</span></summary>
 
 ```bash
 ssh -T git@github.com
 ```
 
-Pokud je vše správně nastaveno, zobrazí se zpráva:
-
-```bash
-Hi username! You've successfully authenticated, but GitHub does not provide shell access.
-```
 </details>
 
 <details>
-<summary><span style="color:#1E90FF;">📦 Krok 5: Klonování repozitáře pomocí SSH</span></summary>
+<summary><span style="color:#1E90FF;">5️⃣ Klonování pomocí SSH</span></summary>
 
 ```bash
 git clone git@github.com:username/repository.git
 ```
+
 </details>
 
 <details>
-<summary><span style="color:#1E90FF;">🔄 Krok 6: Změna URL z HTTPS na SSH</span></summary>
+<summary><span style="color:#1E90FF;">6️⃣ Změna remote URL na SSH</span></summary>
 
 ```bash
 git remote set-url origin git@github.com:username/repository.git
 ```
 
-> [!TIP]  
-> URL lze upravit opakovaně stejným příkazem.
 </details>
 
 <details>
-<summary><span style="color:#1E90FF;">👀 Krok 7: Zobrazení aktuálních URL</span></summary>
+<summary><span style="color:#1E90FF;">7️⃣ Zobrazení URL</span></summary>
 
 ```bash
 git remote -v
 ```
+
 </details>
 
 <details>
-<summary><span style="color:#1E90FF;">⚙️ Krok 8: Nastavení odlišné URL pro fetch a push</span></summary>
+<summary><span style="color:#1E90FF;">8️⃣ Oddělené URL pro fetch/push</span></summary>
 
-1. Nastavení URL pro fetch:
-   ```bash
-   git remote set-url origin <fetch-url>
-   ```
-2. Nastavení URL pro push:
-   ```bash
-   git remote set-url --push origin <push-url>
-   ```
-3. Kontrola nastavení:
-   ```bash
-   git remote -v
-   ```
+**Fetch**
+
+```bash
+git remote set-url origin <fetch-url>
+```
+
+**Push**
+
+```bash
+git remote set-url --push origin <push-url>
+```
+
+**Kontrola:**
+
+```bash
+git remote -v
+```
+
 </details>
 
 ---
-
-> [!TIP]  
-> Pro běžné workflow na GitHubu stačí SSH klíč, certifikáty řeší HTTPS automaticky.
