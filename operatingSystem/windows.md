@@ -32,6 +32,9 @@ Na začátku instalace při výběru jazyka stiskněte:
         - **Intel RST VMD Managed Controller** / **Intel RST VMD Controller** pro RAID/NVMe/SATA
         - **Intel Optane Memory and Storage Management** pro Optane
     - Ovladač rozbalte na **USB disk**.
+    
+   > [!NOTE]
+   > Ovladač stáhnete z oficiálních stránek u výrobce (např. acer, dell, hp, atd.)
 
 2. **Načtení ovladače během instalace**
     - Spusťte instalaci Windows.
