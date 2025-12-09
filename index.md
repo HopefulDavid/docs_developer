@@ -1,4 +1,6 @@
 Změny
+## 2025-12-09
+  - 📚 Změny v dokumentaci: přidání poznámky o ovladačích (operatingSystem)
 ## 2025-12-04
   - 📚 Změny v dokumentaci: aktualizace dokumentace o certifikátech a klíčích
   - ✨ Nové funkcionality: získání dat z dockeru (docker)
