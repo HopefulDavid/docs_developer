@@ -339,6 +339,91 @@ php artisan optimize:clear
 </li>
 </ul>
 <hr>
+<h2 id="instalace-xdebugu-volitelné">Instalace XDebugu (volitelné)</h2>
+<p>Pokud chcete ladit aplikaci, můžete doinstalovat XDebug.</p>
+<h3 id="vytvoření-konfiguračního-souboru">Vytvoření konfiguračního souboru</h3>
+<p>Konfiguraci vytvořte v <code>/apache/conf.d/xdebug.ini</code></p>
+<pre><code class="lang-ini">xdebug.mode=debug
+xdebug.start_with_request=yes
+
+xdebug.client_host=host.docker.internal
+xdebug.client_port=9003
+
+xdebug.idekey=PHPSTORM
+</code></pre>
+<h3 id="připojení-konfigurace-do-kontejneru">Připojení konfigurace do kontejneru</h3>
+<p>V <code>docker-compose.yaml</code> u služby <code>app</code> přidej volume:</p>
+<pre><code class="lang-yaml">services:
+  app:
+    volumes:
+      - ./apache/conf.d/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+</code></pre>
+<h3 id="instalace-xdebugu-přes-dockerfile">Instalace XDebugu přes Dockerfile</h3>
+<p>V <code>Dockerfile</code> přidáme instalaci XDebugu:</p>
+<pre><code class="lang-dockerfile"># Využíváme oficiální PHP image s Apache
+FROM php:8.2-apache
+
+# Instalace požadovaných PHP rozšíření a nástrojů
+RUN apt-get update &amp;&amp; apt-get install -y \
+    git \
+    zip \
+    unzip \
+    libzip-dev \
+    libonig-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libxml2-dev \
+    libicu-dev \
+    &amp;&amp; docker-php-ext-configure intl \
+    &amp;&amp; docker-php-ext-install \
+        pdo_mysql \
+        mbstring \
+        zip \
+        exif \
+        pcntl \
+        bcmath \
+        gd \
+        intl \
+        calendar
+
+# ZDE PŘIDAT: Instalace Xdebug
+RUN pecl install xdebug \
+    &amp;&amp; docker-php-ext-enable xdebug
+
+# Povolení mod_rewrite pro Apache
+RUN a2enmod rewrite
+
+# Kopírování vlastní Apache konfigurace
+COPY apache/vhost.conf /etc/apache2/sites-available/000-default.conf
+
+# Instalace Composeru
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Nastavení pracovního adresáře
+WORKDIR /var/www/html
+
+# Nastavení časové zóny na UTC
+RUN echo &quot;date.timezone=UTC&quot; &gt; /usr/local/etc/php/conf.d/timezone.ini
+</code></pre>
+<p>Nyní provedeme rebuild kontejneru:</p>
+<pre><code class="lang-bash">docker-compose down
+docker-compose build --no-cache
+docker-compose up -d
+</code></pre>
+<p>Protože jsme změnili Dockerfile (přidali instalaci Xdebugu), Docker automaticky znovu sestaví potřebné vrstvy a Xdebug se nainstaluje.</p>
+<p>Parametr <code>--no-cache</code> není v tomto případě nutný, ale lze ho použít jako pojistku, pokud si chceme být 100 % jisti, že se nepoužije žádná stará cache.</p>
+<h3 id="ověření-xdebugu">Ověření XDebugu</h3>
+<pre><code class="lang-bash">docker-compose exec app php -v
+</code></pre>
+<p>Měli byste vidět řádek s XDebugem jako je tento:</p>
+<pre><code>PHP 8.2.30 (cli) (built: Dec 29 2025 23:32:41) (NTS)
+Copyright (c) The PHP Group
+Zend Engine v4.2.30, Copyright (c) Zend Technologies
+with Zend OPcache v8.2.30, Copyright (c), by Zend Technologies
+with Xdebug v3.5.0, Copyright (c) 2002-2025, by Derick Rethans
+</code></pre>
+<hr>
 <h2 id="běžné-příkazy">Běžné příkazy</h2>
 <p>Spuštění:</p>
 <pre><code class="lang-bash">docker compose up -d
