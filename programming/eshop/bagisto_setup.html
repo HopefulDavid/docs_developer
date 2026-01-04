@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Bagisto instalace za pomoc&#237; dockeru | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Bagisto instalace za pomoc&#237; dockeru | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/eshop/bagisto_setup.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
+            Dokumentace pro v&#253;voj&#225;ře
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="bagisto-instalace-za-pomocí-dockeru">Bagisto instalace za pomocí dockeru</h1>
+
+<h2 id="základní-informace">Základní informace</h2>
+<p>Na hostitelském systému musí být nainstalováno:</p>
+<ul>
+<li>Docker Engine</li>
+<li>Docker Compose v2</li>
+</ul>
+<p>Ověření:</p>
+<pre><code class="lang-bash">docker --version
+docker compose version
+</code></pre>
+<hr>
+<h2 id="architektura-řešení">Architektura řešení</h2>
+<ul>
+<li>PHP 8.2 + Apache běží v kontejneru</li>
+<li>MySQL běží v samostatném kontejneru</li>
+<li>Bagisto (Laravel) je uložen lokálně</li>
+<li>Apache servíruje aplikaci z adresáře <code>public</code></li>
+<li>Databázová data jsou uložena v Docker volume</li>
+</ul>
+<hr>
+<h2 id="struktura-projektu">Struktura projektu</h2>
+<pre><code>bagisto-docker/
+├─ apache/
+│  └─ vhost.conf
+├─ workspace/
+├─ Dockerfile
+└─ docker-compose.yml
+</code></pre>
+<p>Složka <code>workspace</code> musí být při prvním spuštění prázdná.</p>
+<hr>
+<h2 id="vytvoření-souborů-před-instalací">Vytvoření souborů před instalací</h2>
+<h3 id="apache-virtualhost-konfigurace">Apache VirtualHost konfigurace</h3>
+<p>Laravel (a Bagisto) musí být servírován z adresáře <code>public</code>.</p>
+<p>📄 <strong>apache/vhost.conf</strong></p>
+<pre><code class="lang-apache">&lt;VirtualHost *:80&gt;
+    # Název serveru
+    ServerName localhost
+    
+    # Kořenový adresář aplikace
+    DocumentRoot /var/www/html/public
+
+    # Nastavení přístupu ke složce public
+    &lt;Directory /var/www/html/public&gt;
+        # Povolit .htaccess soubory (např. pro Laravel
+        AllowOverride All
+        
+        # Povolit přístup všem ke složce
+        Require all granted
+    &lt;/Directory&gt;
+
+    # Cesta k logům chyb
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    
+    # Cesta k přístupovým logům
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+&lt;/VirtualHost&gt;
+</code></pre>
+<hr>
+<h3 id="dockerfile-php-82--požadované-extensions">Dockerfile (PHP 8.2 + požadované extensions)</h3>
+<p>Tento soubor vytvoříte v rootu projektu jako <code>Dockerfile</code>.</p>
+<pre><code class="lang-dockerfile"># Využíváme oficiální PHP image s Apache
+FROM php:8.2-apache
+
+# Instalace požadovaných PHP rozšíření a nástrojů
+RUN apt-get update &amp;&amp; apt-get install -y \
+    git \
+    zip \
+    unzip \
+    libzip-dev \
+    libonig-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libxml2-dev \
+    libicu-dev \
+    &amp;&amp; docker-php-ext-configure intl \
+    &amp;&amp; docker-php-ext-install \
+        pdo_mysql \
+        mbstring \
+        zip \
+        exif \
+        pcntl \
+        bcmath \
+        gd \
+        intl \
+        calendar
+
+# Povolení mod_rewrite pro Apache
+RUN a2enmod rewrite
+
+# Kopírování vlastní Apache konfigurace
+COPY apache/vhost.conf /etc/apache2/sites-available/000-default.conf
+
+# Instalace Composeru
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Nastavení pracovního adresáře
+WORKDIR /var/www/html
+
+# Nastavení časové zóny na UTC
+RUN echo &quot;date.timezone=UTC&quot; &gt; /usr/local/etc/php/conf.d/timezone.ini
+</code></pre>
+<hr>
+<h3 id="docker-environment-konfigurace">Docker environment konfigurace</h3>
+<p>Tento soubor vytvoříte v rootu projektu jako <code>.env</code>.</p>
+<pre><code class="lang-yaml"># =====================
+# Aplikace
+# =====================
+APP_ENV=local
+APP_DEBUG=true
+APP_URL=http://localhost:8000
+
+# =====================
+# Databáze
+# =====================
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=bagisto
+DB_USERNAME=bagisto
+DB_PASSWORD=secret
+
+# =====================
+# MySQL nastavení
+# =====================
+MYSQL_ROOT_PASSWORD=root
+MYSQL_DATABASE=bagisto
+MYSQL_USER=bagisto
+MYSQL_PASSWORD=secret
+
+# =====================
+# Porty
+# =====================
+APP_PORT=8000
+PHPMYADMIN_PORT=8081
+MYSQL_PORT=3306
+</code></pre>
+<h3 id="docker-compose-konfigurace">Docker Compose konfigurace</h3>
+<p>Tento soubor vytvoříte v rootu projektu jako <code>docker-compose.yml</code>.</p>
+<pre><code class="lang-yaml">services:
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bagisto-app
+    container_name: bagisto_app
+    ports:
+      - &quot;${APP_PORT}:80&quot;
+    volumes:
+      - ./workspace:/var/www/html
+    environment:
+      APP_ENV: ${APP_ENV}
+      APP_DEBUG: ${APP_DEBUG}
+      APP_URL: ${APP_URL}
+
+      DB_CONNECTION: ${DB_CONNECTION}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0
+    container_name: bagisto_mysql
+    restart: unless-stopped
+    ports:
+      - &quot;${MYSQL_PORT}:3306&quot;
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - ./Volumes/mysql-data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: bagisto_phpmyadmin
+    restart: unless-stopped
+    ports:
+      - &quot;${PHPMYADMIN_PORT}:80&quot;
+    environment:
+      PMA_HOST: ${DB_HOST}
+      PMA_PORT: ${DB_PORT}
+      PMA_USER: ${DB_USERNAME}
+      PMA_PASSWORD: ${DB_PASSWORD}
+    depends_on:
+      - mysql
+</code></pre>
+<hr>
+<h2 id="spuštění-docker-prostředí">Spuštění Docker prostředí</h2>
+<p>Uvnitř root složky projektu spusťte:</p>
+<pre><code class="lang-bash">docker compose up -d --build
+</code></pre>
+<p>Po dokončení běží:</p>
+<ul>
+<li>PHP/Apache kontejner</li>
+<li>MySQL kontejner</li>
+</ul>
+<hr>
+<h2 id="vytvoření-bagisto-projektu">Vytvoření Bagisto projektu</h2>
+<p>Projekt se vytváří <strong>výhradně uvnitř PHP kontejneru</strong>.</p>
+<pre><code class="lang-bash">docker exec -it bagisto_app bash
+composer create-project bagisto/bagisto .
+</code></pre>
+<p>Po dokončení jsou soubory okamžitě dostupné ve složce <code>workspace</code>.</p>
+<hr>
+<h2 id="instalace-bagista">Instalace Bagista</h2>
+<pre><code class="lang-bash">php artisan bagisto:install
+</code></pre>
+<p>Instalátor vás provede několika kroky.</p>
+<h3 id="správné-databázové-hodnoty">Správné databázové hodnoty</h3>
+<pre><code>Database connection: mysql
+Database host: mysql
+Database port: 3306
+Database name: bagisto
+Database username: bagisto
+Database password: secret
+</code></pre>
+<p>Instalátor:</p>
+<ul>
+<li>vytvoří <code>.env</code> soubor pro Laravel s potřebnými hodnotami</li>
+<li>vytvoří databázové tabulky</li>
+<li>naplní výchozí data</li>
+<li>vytvoří admin účet</li>
+</ul>
+<hr>
+<h2 id="nastavení-oprávnění-nutné">Nastavení oprávnění (NUTNÉ)</h2>
+<p>Laravel vyžaduje zapisovat do <code>storage</code> a <code>bootstrap/cache</code>.</p>
+<pre><code class="lang-bash">chown -R www-data:www-data storage bootstrap/cache
+chmod -R 775 storage bootstrap/cache
+php artisan optimize:clear
+</code></pre>
+<p>Tento krok je zásadní zejména na Windows a macOS.</p>
+<p>Nyní restartujte kontejner:</p>
+<pre><code class="lang-bash">docker compose restart app
+</code></pre>
+<hr>
+<h2 id="přístup-k-aplikaci">Přístup k aplikaci</h2>
+<ul>
+<li><p>Frontend:
+<a href="http://localhost:8000">http://localhost:8000</a></p>
+</li>
+<li><p>Administrace:
+<a href="http://localhost:8000/admin">http://localhost:8000/admin</a></p>
+</li>
+</ul>
+<hr>
+<h2 id="běžné-příkazy">Běžné příkazy</h2>
+<p>Spuštění:</p>
+<pre><code class="lang-bash">docker compose up -d
+</code></pre>
+<p>Zastavení:</p>
+<pre><code class="lang-bash">docker compose down
+</code></pre>
+<p>Migrace databáze:</p>
+<pre><code class="lang-bash">docker exec -it bagisto_app php artisan migrate
+</code></pre>
+<p>Instalace nového balíčku přes Composer:</p>
+<pre><code class="lang-bash">docker exec -it bagisto_app composer require vendor/package
+</code></pre>
+<hr>
+<h2 id="best-practices">Best practices</h2>
+<ul>
+<li>Composer se spouští pouze v kontejneru</li>
+<li>Zdrojový kód se edituje lokálně</li>
+<li>Databázový host je vždy název služby (<code>mysql</code>)</li>
+<li>Laravel se servíruje pouze z <code>public</code></li>
+<li>Docker řeší infrastrukturu, Laravel aplikační logiku</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/programming/eshop/bagisto_setup.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

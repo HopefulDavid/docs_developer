@@ -1073,6 +1073,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "programming/eshop/bagisto_setup.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/eshop/bagisto_setup.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "programming/flutter/backupAndRestore.md",
       "output": {
         ".html": {
