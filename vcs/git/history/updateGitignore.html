@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#128450;️ Git – Aktualizace .gitignore &amp; odstraněn&#237; mezipaměti | V&#253;voj&#225;ř </title>
+      <title>&#128450;️ Git – Jak spr&#225;vně aktualizovat .gitignore a odstranit sledovan&#233; soubory | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#128450;️ Git – Aktualizace .gitignore &amp; odstraněn&#237; mezipaměti | V&#253;voj&#225;ř ">
+      <meta name="title" content="&#128450;️ Git – Jak spr&#225;vně aktualizovat .gitignore a odstranit sledovan&#233; soubory | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../../favicon.ico">
@@ -85,56 +85,58 @@
         </div>
 
         <article data-uid="">
-<h1 id="-git--aktualizace-gitignore--odstranění-mezipaměti">🗂️ Git – Aktualizace <code>.gitignore</code> &amp; odstranění mezipaměti</h1>
+<h1 id="-git--jak-správně-aktualizovat-gitignore-a-odstranit-sledované-soubory">🗂️ Git – Jak správně aktualizovat <code>.gitignore</code> a odstranit sledované soubory</h1>
 
 <blockquote>
-<p>🚀 Praktické rady, jak správně aktualizovat <code>.gitignore</code> a odstranit již sledované soubory z Git mezipaměti.</p>
+<p>🚀 Praktický průvodce, jak zajistit, aby Git ignoroval i soubory, které už dříve sledoval.</p>
 </blockquote>
 <hr>
 <h2 id="-proč-aktualizovat-gitignore">📝 Proč aktualizovat <code>.gitignore</code>?</h2>
 <ul>
-<li><code>.gitignore</code> určuje, které soubory Git nemá sledovat.</li>
-<li>Po změně je nutné odstranit již sledované soubory z mezipaměti, aby se ignorovaly.</li>
-</ul>
-<hr>
-<h2 id="-postup-krok-za-krokem">📋 Postup krok za krokem</h2>
-<details>
-<summary><span style="color:#1E90FF;">🧹 Krok 1: Odstranění mezipaměti sledovaných souborů</span></summary>
-<pre><code class="lang-bash">git rm -r --cached .
-</code></pre>
-<ul>
-<li>Odstraní všechny soubory z mezipaměti (ne z disku).</li>
-<li>Git začne respektovat nové pravidla v <code>.gitignore</code>.</li>
-</ul>
-<div class="WARNING">
-<h5>Warning</h5>
-<p>Soubory zůstanou na disku, pouze se přestanou sledovat v Gitu.</p>
-</div>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">📥 Krok 2: Přidání změn do stage</span></summary>
-<pre><code class="lang-bash">git add .
-</code></pre>
-<ul>
-<li>Přidá změny (včetně aktualizovaného <code>.gitignore</code>) do stage.</li>
-</ul>
-<div class="TIP">
-<h5>Tip</h5>
-<p>Ověřte, že <code>.gitignore</code> obsahuje vše potřebné.</p>
-</div>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">✅ Krok 3: Commit změn</span></summary>
-<pre><code class="lang-bash">git commit -m &quot;Aktualizace .gitignore&quot;
-</code></pre>
-<ul>
-<li>Potvrďte změny v repozitáři.</li>
+<li>Soubor <code>.gitignore</code> říká Gitu, které soubory nemá sledovat.</li>
+<li>Pravidla <code>.gitignore</code> se aplikují pouze na soubory, které Git zatím nesleduje (untracked).</li>
 </ul>
 <div class="NOTE">
 <h5>Note</h5>
-<p>Po commitu budou ignorované soubory skutečně ignorovány.</p>
+<p>Soubory, které už Git sleduje, je potřeba odebrat z indexu ručně.</p>
 </div>
-</details>
+<hr>
+<h2 id="-postup-krok-za-krokem">📋 Postup krok za krokem</h2>
+<h3 id="varianta-a-odebrání-konkrétní-složky">Varianta A: Odebrání konkrétní složky</h3>
+<ol>
+<li><p><strong>Zkontroluj, že v <code>.gitignore</code> máš řádek:</strong></p>
+<pre><code class="lang-gitignore">.idea/
+</code></pre>
+</li>
+<li><p><strong>Odeber složku z Git indexu (ale ne z disku):</strong></p>
+<pre><code class="lang-bash">git rm -r --cached .idea
+</code></pre>
+</li>
+<li><p><strong>Ulož změny:</strong></p>
+<pre><code class="lang-bash">git commit -m &quot;Remove .idea from tracking&quot;
+</code></pre>
+</li>
+</ol>
+<hr>
+<h3 id="varianta-b-hromadné-odebrání-všech-sledovaných-souborů-a-znovu-přidání-podle-gitignore">Varianta B: Hromadné odebrání všech sledovaných souborů a znovu přidání podle <code>.gitignore</code></h3>
+<ol>
+<li><p><strong>Odeber všechny soubory z indexu:</strong></p>
+<pre><code class="lang-bash">git rm -r --cached .
+</code></pre>
+</li>
+<li><p><strong>Znovu přidej soubory podle <code>.gitignore</code>:</strong></p>
+<pre><code class="lang-bash">git add .
+</code></pre>
+</li>
+<li><p><strong>Commitni změny:</strong></p>
+<pre><code class="lang-bash">git commit -m &quot;Refresh .gitignore rules&quot;
+</code></pre>
+</li>
+</ol>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Tento postup odstraní všechny soubory z Git indexu a znovu je přidá.</p>
+</div>
 
 </article>
 
