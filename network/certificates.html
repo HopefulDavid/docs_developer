@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>Kl&#237;če a certifik&#225;ty | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="Kl&#237;če a certifik&#225;ty | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,155 +85,94 @@
         </div>
 
         <article data-uid="">
+<h1 id="klíče-a-certifikáty">Klíče a certifikáty</h1>
 
-<h2 id="-klíče-a-certifikáty">🗂️ Klíče a certifikáty</h2>
 <blockquote>
-<p>🚀 Kompletní přehled pro generování bezpečnostních klíčů, práce s TLS certifikáty, správou SSH přístupu a Git URL.</p>
+<p>Generování bezpečnostních klíčů, práce s TLS certifikáty a nastavení SSH přístupu.</p>
 </blockquote>
 <hr>
-<h2 id="generování-klíčů--bezpečných-hodnot">Generování klíčů &amp; bezpečných hodnot</h2>
-<blockquote>
-<p>Základní nástroje pro bezpečné šifrování, tokeny, secrets a root keys.</p>
-</blockquote>
-<h3 id="openssl--pro-generování-náhodných-hodnot">OpenSSL – (Pro generování náhodných hodnot)</h3>
-<details>
-<summary><span style="color:#1E90FF;">🔐 Base64 secret (např. JWT, API keys)</span></summary>
-<pre><code class="lang-bash">openssl rand -base64 32
+<img src="/images/a36b0a0f-361c-4d7d-994e-eeef74bebaec.png" alt="" style="width: 20%; display: block; border-radius: 8px;">
+<h2 id="generování-klíčů">Generování klíčů</h2>
+<h3 id="openssl">OpenSSL</h3>
+<pre><code class="lang-bash"># Base64 secret (JWT, API keys)
+openssl rand -base64 32
+
+# HEX secret (konfigurační klíče)
+openssl rand -hex 64
 </code></pre>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🔐 HEX secret (konfigurační klíče apod.)</span></summary>
-<pre><code class="lang-bash">openssl rand -hex 64
-</code></pre>
-</details>
 <hr>
-<h2 id="certifikáty--tls">Certifikáty &amp; TLS</h2>
-<blockquote>
-<p>Moderní způsoby generování certifikátů pro vývoj i servery.</p>
-</blockquote>
-<hr>
-<h3 id="-mkcert--lokální-důvěryhodné-certifikáty">🛡️ mkcert – Lokální důvěryhodné certifikáty</h3>
-<h4 id="1-instalace-mkcert">1. Instalace mkcert</h4>
+<h2 id="tls-certifikáty--mkcert">TLS certifikáty – mkcert</h2>
+<p><code>mkcert</code> vytváří lokálně důvěryhodné certifikáty pro vývoj bez nutnosti akceptovat bezpečnostní varování prohlížeče.</p>
+<h3 id="instalace">Instalace</h3>
 <ol>
-<li>Stáhnout <code>mkcert.exe</code> z <a href="https://github.com/FiloSottile/mkcert/releases">https://github.com/FiloSottile/mkcert/releases</a>.</li>
+<li>Stáhni <code>mkcert.exe</code> z <a href="https://github.com/FiloSottile/mkcert/releases">github.com/FiloSottile/mkcert/releases</a>.</li>
 <li>Ulož například do <code>C:\mkcert</code>.</li>
-<li>(Volitelné) Přidej tuto složku do systémové proměnné <code>PATH</code> pro snadné spouštění z libovolného místa.</li>
+<li>Volitelně přidej složku do systémové proměnné <code>PATH</code>.</li>
 </ol>
-<hr>
-<h4 id="2-instalace-lokální-certifikační-autority-ca">2. Instalace lokální certifikační autority (CA)</h4>
-<pre><code>mkcert -install
+<h3 id="instalace-lokální-ca">Instalace lokální CA</h3>
+<pre><code class="lang-bash">mkcert -install
 </code></pre>
-<p><strong>Výsledek:</strong></p>
-<ul>
-<li>CA je nainstalována ve Windows + v prohlížečích (Chrome, Edge…)</li>
-<li>Firefox se musí nastavit ručně (viz níže)</li>
-</ul>
-<h5 id="firefox--ruční-přidání-ca">Firefox – ruční přidání CA</h5>
+<p>CA se nainstaluje do Windows a do Chrome/Edge. Firefox vyžaduje ruční přidání:</p>
 <ol>
-<li>Otevři Firefox</li>
-<li><code>about:preferences#privacy</code></li>
-<li><strong>Certificates → View Certificates</strong></li>
-<li>Tab <strong>Authorities → Import</strong></li>
-<li>Importuj:</li>
-</ol>
-<pre><code>C:\Users\&lt;User&gt;\AppData\Local\mkcert\rootCA.pem
-</code></pre>
-<ol start="6">
+<li>Otevři <code>about:preferences#privacy</code></li>
+<li><strong>Certificates → View Certificates → Authorities → Import</strong></li>
+<li>Importuj soubor: <code>C:\Users\&lt;User&gt;\AppData\Local\mkcert\rootCA.pem</code></li>
 <li>Zaškrtni <em>Trust this CA to identify websites</em></li>
 </ol>
-<hr>
-<h4 id="3-vytvoření-certifikátu-pro-doménu">3. Vytvoření certifikátu pro doménu</h4>
-<pre><code>mkcert localhost
+<h3 id="vytvoření-certifikátu">Vytvoření certifikátu</h3>
+<pre><code class="lang-bash"># Jeden host
+mkcert localhost
+
+# Více hostů
+mkcert localhost 127.0.0.1 myapp.local
 </code></pre>
-<p>Výstup:</p>
-<ul>
-<li><code>localhost.pem</code></li>
-<li><code>localhost-key.pem</code></li>
-</ul>
-<p>Více domén:</p>
-<pre><code>mkcert localhost 127.0.0.1 myapp.local
+<p>Výstup: <code>localhost.pem</code> a <code>localhost-key.pem</code></p>
+<h3 id="použití-certifikátů">Použití certifikátů</h3>
+<p>Soubory <code>.pem</code> lze použít přímo v:
+Go, Node.js, Nginx, Caddy, Docker kontejnerech.</p>
+<p><strong>Převod na PFX (.NET / Windows):</strong></p>
+<pre><code class="lang-bash">openssl pkcs12 -export -out server.pfx -inkey localhost-key.pem -in localhost.pem
 </code></pre>
-<hr>
-<h4 id="4-použití-certifikátů">4. Použití certifikátů</h4>
-<h5 id="obvykle-použitelné-přímo-pem">Obvykle použitelné přímo (<code>.pem</code>)</h5>
-<ul>
-<li>Go</li>
-<li>Node.js</li>
-<li>Nginx</li>
-<li>Caddy</li>
-<li>Docker containers</li>
-</ul>
-<hr>
-<h4 id="5-převod-na-pfx-net--windows">5. Převod na PFX (.NET / Windows)</h4>
-<pre><code>openssl pkcs12 -export -out server.pfx -inkey localhost-key.pem -in localhost.pem
+<p><strong>Převod na CRT/KEY (Apache, Nginx):</strong></p>
+<pre><code>localhost.pem     →  server.crt
+localhost-key.pem →  server.key
 </code></pre>
-<hr>
-<h4 id="6-převod-na-crtkey-apache-nginx">6. Převod na CRT/KEY (Apache, Nginx)</h4>
-<p>Pouhé přejmenování:</p>
-<pre><code>localhost.pem → server.crt
-localhost-key.pem → server.key
-</code></pre>
-<hr>
-<h3 id="-příklad-použití-v-go">📘 Příklad použití v Go</h3>
+<p><strong>Použití v Go:</strong></p>
 <pre><code class="lang-go">e.StartTLS(&quot;:8080&quot;, &quot;server.crt&quot;, &quot;server.key&quot;)
 </code></pre>
 <hr>
-<h2 id="ssh--bezpečné-připojení-pro-github">SSH – Bezpečné připojení pro GitHub</h2>
-<h3 id="-co-je-ssh">🗝️ Co je SSH?</h3>
-<p>Protokol využívající veřejný a soukromý klíč, bezpečnější než heslo.</p>
-<hr>
-<h3 id="-kompletní-postup-nastavení-ssh-pro-github">📋 Kompletní postup nastavení SSH pro GitHub</h3>
-<details>
-<summary><span style="color:#1E90FF;">1️⃣ Generování SSH klíče</span></summary>
-<pre><code class="lang-bash">ssh-keygen -t rsa -b 4096 -C &quot;&lt;your_email@example.com&gt;&quot;
+<h2 id="ssh--nastavení-pro-github">SSH – nastavení pro GitHub</h2>
+<p>SSH využívá pár klíčů (veřejný + soukromý) místo hesla. Je bezpečnější a pohodlnější pro každodenní práci s Gitem.</p>
+<h3 id="nastavení-krok-za-krokem">Nastavení krok za krokem</h3>
+<p><strong>1. Generování SSH klíče</strong></p>
+<pre><code class="lang-bash">ssh-keygen -t rsa -b 4096 -C &quot;tvuj@email.com&quot;
 </code></pre>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">2️⃣ Zobrazení veřejného klíče</span></summary>
-<p><strong>Windows</strong></p>
-<pre><code class="lang-bash">type %userprofile%\.ssh\id_rsa.pub
+<p><strong>2. Zobrazení veřejného klíče</strong></p>
+<pre><code class="lang-bash"># Windows
+type %userprofile%\.ssh\id_rsa.pub
+
+# Linux / macOS
+cat ~/.ssh/id_rsa.pub
 </code></pre>
-<p><strong>Linux/macOS</strong></p>
-<pre><code class="lang-bash">cat ~/.ssh/id_rsa.pub
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">3️⃣ Přidání klíče na GitHub</span></summary>
+<p><strong>3. Přidání klíče na GitHub</strong></p>
 <p>GitHub → <strong>Settings → SSH and GPG keys → New SSH key</strong></p>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">4️⃣ Test připojení</span></summary>
+<p><strong>4. Test připojení</strong></p>
 <pre><code class="lang-bash">ssh -T git@github.com
 </code></pre>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">5️⃣ Klonování pomocí SSH</span></summary>
+<p><strong>5. Klonování přes SSH</strong></p>
 <pre><code class="lang-bash">git clone git@github.com:username/repository.git
 </code></pre>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">6️⃣ Změna remote URL na SSH</span></summary>
+<p><strong>6. Změna remote URL na SSH</strong></p>
 <pre><code class="lang-bash">git remote set-url origin git@github.com:username/repository.git
 </code></pre>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">7️⃣ Zobrazení URL</span></summary>
+<p><strong>7. Zobrazení remote URL</strong></p>
 <pre><code class="lang-bash">git remote -v
 </code></pre>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">8️⃣ Oddělené URL pro fetch/push</span></summary>
-<p><strong>Fetch</strong></p>
+<p><strong>8. Oddělené URL pro fetch a push</strong></p>
 <pre><code class="lang-bash">git remote set-url origin &lt;fetch-url&gt;
+git remote set-url --push origin &lt;push-url&gt;
+git remote -v
 </code></pre>
-<p><strong>Push</strong></p>
-<pre><code class="lang-bash">git remote set-url --push origin &lt;push-url&gt;
-</code></pre>
-<p><strong>Kontrola:</strong></p>
-<pre><code class="lang-bash">git remote -v
-</code></pre>
-</details>
-<hr>
 
 </article>
 

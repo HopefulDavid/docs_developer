@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#128450;️ Kubernetes – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř </title>
+      <title>Kubernetes – Průvodce a přehled | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#128450;️ Kubernetes – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř ">
+      <meta name="title" content="Kubernetes – Průvodce a přehled | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,70 +85,83 @@
         </div>
 
         <article data-uid="">
-<h1 id="-kubernetes--praktický-průvodce--tipy">🗂️ Kubernetes – Praktický průvodce &amp; tipy</h1>
+<h1 id="kubernetes--průvodce-a-přehled">Kubernetes – Průvodce a přehled</h1>
 
 <blockquote>
-<p>🚀 Moderní přehled základních pojmů, principů a doporučení pro práci s Kubernetes.</p>
+<p>Přehled základních pojmů, principů a doporučení pro práci s Kubernetes.</p>
 </blockquote>
 <hr>
-<h2 id="-co-je-kubernetes">📖 Co je Kubernetes?</h2>
+<img src="/images/7073cab7-0b16-47e4-b0c1-55129ef02687.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
+<h2 id="co-je-kubernetes">Co je Kubernetes?</h2>
+<p>Kubernetes je orchestrátor kontejnerů pro automatizované nasazování, správu, škálování a aktualizaci aplikací.</p>
+<p>Hlavní přínosy:</p>
 <ul>
-<li><strong>Orchestrátor kontejnerů</strong> pro automatizované zavádění, správu, škálování a aktualizaci aplikací v kontejnerech.</li>
-<li>Umožňuje efektivně využívat kapacitu serverů, dynamicky spouštět nové verze služeb a vypínat staré.</li>
-<li>Klíčový nástroj pro správu microservices architektury.</li>
+<li>Efektivně využívá kapacitu serverů.</li>
+<li>Dynamicky spouští nové verze a zastavuje staré.</li>
+<li>Automaticky reaguje na selhání (restart kontejnerů).</li>
+<li>Klíčový nástroj pro správu microservices architektur.</li>
 </ul>
 <div class="IMPORTANT">
 <h5>Important</h5>
-<p>Pro práci s Kubernetes je zapotřebí znalost Dockeru.</p>
+<p>Pro práci s Kubernetes je předpokládána znalost Dockeru.</p>
 </div>
 <hr>
-<h2 id="-základní-pojmy">🧩 Základní pojmy</h2>
-<details>
-<summary><span style="color:#1E90FF;">📦 Kontejner</span></summary>
-Izolovaná jednotka aplikace s vlastními závislostmi.
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🗃️ Pod</span></summary>
-Nejmenší nasaditelná jednotka v Kubernetes, může obsahovat jeden nebo více kontejnerů.
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🔗 Service</span></summary>
-Abstrakce pro přístup ke skupině podů, zajišťuje síťovou komunikaci.
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🛠️ Deployment</span></summary>
-Definuje, jak a kolik podů má běžet, umožňuje automatické aktualizace.
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🌐 Cluster</span></summary>
-Skupina serverů (node), na kterých běží Kubernetes a spravuje kontejnery.
-</details>
+<h2 id="základní-pojmy">Základní pojmy</h2>
+<table>
+<thead>
+<tr>
+<th>Pojem</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Kontejner</strong></td>
+<td>Izolovaná jednotka aplikace se svými závislostmi</td>
+</tr>
+<tr>
+<td><strong>Pod</strong></td>
+<td>Nejmenší nasaditelná jednotka – obsahuje jeden nebo více kontejnerů</td>
+</tr>
+<tr>
+<td><strong>Service</strong></td>
+<td>Abstrakce pro přístup ke skupině Podů; zajišťuje síťovou komunikaci</td>
+</tr>
+<tr>
+<td><strong>Deployment</strong></td>
+<td>Definuje, kolik Podů má běžet a jak se aktualizují</td>
+</tr>
+<tr>
+<td><strong>Cluster</strong></td>
+<td>Skupina serverů (nodes), na kterých Kubernetes běží a spravuje kontejnery</td>
+</tr>
+<tr>
+<td><strong>Node</strong></td>
+<td>Jednotlivý server v Kubernetes clusteru</td>
+</tr>
+<tr>
+<td><strong>Namespace</strong></td>
+<td>Logická izolace zdrojů v rámci jednoho clusteru</td>
+</tr>
+</tbody>
+</table>
 <hr>
-<h2 id="-orchestrátory">🛠️ Orchestrátory</h2>
-<details>
-<summary><span style="color:#1E90FF;">🔹 Co dělá orchestrátor?</span></summary>
-<p>Software nad kontejnerovou sítí, automaticky se stará o zavádění, údržbu a škálování kontejnerizovaných aplikací.</p>
+<h2 id="co-dělá-orchestrátor">Co dělá orchestrátor?</h2>
+<p>Orchestrátor je software, který automaticky řídí celý životní cyklus kontejnerizovaných aplikací:</p>
 <ul>
-<li>Efektivně využívá kapacitu serverů</li>
-<li>Reaguje na podněty (např. selhání služby)</li>
-<li>Dynamicky spouští nové verze, vypíná staré</li>
+<li>Rozhoduje, na kterém serveru kontejner poběží.</li>
+<li>Restartuje kontejnery při selhání.</li>
+<li>Škáluje počet instancí podle zátěže.</li>
+<li>Aktualizuje verze bez výpadku (rolling update).</li>
 </ul>
 <div class="NOTE">
 <h5>Note</h5>
-<p>Manuální správa stovek kontejnerů je nad lidské síly, proto se využívají orchestrátory jako Kubernetes.</p>
+<p>Manuální správa stovek kontejnerů na více serverech je prakticky nemožná bez orchestrátoru.</p>
 </div>
-</details>
-<details>
-<summary><span style="color:#E95A84;">🖼️ Ukázka orchestrátoru</span></summary>
-<img src="../images/lkjf3DXNjN.png" alt="Kubernetes_kontejnery">
-<div class="NOTE">
-<h5>Note</h5>
-<p>Orchestrátory usnadnily práci především vývojářům microservices.</p>
-<ul>
-<li><strong>Microservices</strong>: Architektura, kde aplikace je rozdělena na menší, nezávislé služby komunikující přes API.</li>
-</ul>
-</div>
-</details>
+<hr>
+<h2 id="kubernetes-a-microservices">Kubernetes a microservices</h2>
+<p>Kubernetes se nejčastěji používá s architekturou <strong>microservices</strong> – aplikace je rozdělena na nezávislé služby komunikující přes API.</p>
+<img src="../images/lkjf3DXNjN.png" alt="Ukázka orchestrátoru kontejnerů">
 
 </article>
 

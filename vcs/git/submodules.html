@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#128450;️ Git – Submoduly: Přehled &amp; použit&#237; | V&#253;voj&#225;ř </title>
+      <title>Git – Submoduly | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#128450;️ Git – Submoduly: Přehled &amp; použit&#237; | V&#253;voj&#225;ř ">
+      <meta name="title" content="Git – Submoduly | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,102 +85,59 @@
         </div>
 
         <article data-uid="">
-<h1 id="-git--submoduly-přehled--použití">🗂️ Git – Submoduly: Přehled &amp; použití</h1>
+<h1 id="git--submoduly">Git – Submoduly</h1>
 
 <blockquote>
-<p>🚀 Praktické rady pro správu externích repozitářů pomocí submodulů v Git.</p>
+<p>Správa externích repozitářů jako podadresářů v Git projektu.</p>
 </blockquote>
 <hr>
-<h2 id="-co-jsou-submoduly">🔎 Co jsou submoduly?</h2>
+<img src="/images/bcf90266-2493-4e1c-8f54-8d37b4e4e4a7.png" alt="Ollama" style="width: 100%; display: block; border-radius: 8px;">
+<h2 id="co-jsou-submoduly">Co jsou submoduly?</h2>
 <ul>
 <li>Umožňují vložit jeden Git repozitář do jiného jako podadresář.</li>
-<li>Zachovávají nezávislost obou repozitářů.</li>
-<li>Vhodné pro správu závislostí, sdílený kód nebo více projektů najednou.</li>
+<li>Oba repozitáře zůstávají nezávislé.</li>
+<li>Vhodné pro správu závislostí, sdílený kód nebo rozdělené projekty.</li>
 </ul>
-<hr>
-<h2 id="-struktura-projektu-se-submodulem">🏗️ Struktura projektu se submodulem</h2>
-<details>
-<summary><span style="color:#1E90FF;">📁 Ukázková struktura</span></summary>
-<pre><code class="lang-plaintext">HlavniProjekt/
+<pre><code>HlavniProjekt/
   ├── .git/
   ├── .gitmodules
   ├── BeznyAdresar/
   └── Submodul/
       └── .git/
 </code></pre>
-</details>
 <hr>
-<h2 id="-základní-příkazy">⚙️ Základní příkazy</h2>
-<details>
-<summary><span style="color:#1E90FF;">➕ Přidání submodulu</span></summary>
+<h2 id="základní-příkazy">Základní příkazy</h2>
+<h3 id="přidání-submodulu">Přidání submodulu</h3>
 <pre><code class="lang-bash">git submodule add https://github.com/uzivatel/knihovna libs/knihovna
 </code></pre>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">📥 Klonování projektu se submoduly</span></summary>
-<ul>
-<li>Vše najednou:
-<pre><code class="lang-bash">git clone --recursive https://github.com/uzivatel/projekt
-</code></pre>
-</li>
-<li>Postupně:
-<pre><code class="lang-bash">git clone https://github.com/uzivatel/projekt
+<h3 id="klonování-projektu-se-submoduly">Klonování projektu se submoduly</h3>
+<pre><code class="lang-bash"># Vše najednou
+git clone --recursive https://github.com/uzivatel/projekt
+
+# Postupně (pokud projekt byl klonován bez --recursive)
 git submodule init
 git submodule update
 </code></pre>
-</li>
-</ul>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🔄 Aktualizace submodulů</span></summary>
-<ul>
-<li>Všechny submoduly:
-<pre><code class="lang-bash">git submodule update --remote
-</code></pre>
-</li>
-<li>Konkrétní submodul:
-<pre><code class="lang-bash">cd cesta/k/submodulu
+<h3 id="aktualizace-submodulů">Aktualizace submodulů</h3>
+<pre><code class="lang-bash"># Všechny submoduly na nejnovější verzi
+git submodule update --remote
+
+# Konkrétní submodul ručně
+cd cesta/k/submodulu
 git checkout main
 git pull
 cd ../..
 git add cesta/k/submodulu
 git commit -m &quot;Aktualizován submodul na nejnovější verzi&quot;
 </code></pre>
-</li>
-</ul>
-</details>
-<hr>
-<h2 id="-praktický-příklad-v-unity-projektu">🎮 Praktický příklad v Unity projektu</h2>
-<details>
-<summary><span style="color:#1E90FF;">🧩 Struktura & přidání submodulů</span></summary>
-<pre><code class="lang-plaintext">UnityProjekt/
-  ├── .git/
-  ├── .gitmodules
-  └── Assets/
-      ├── Game/
-      └── Plugins/
-          ├── UI-Framework/
-          └── Network/
-</code></pre>
-<pre><code class="lang-bash">cd UnityProjekt
-git init
-git submodule add https://github.com/author/ui-framework Assets/Plugins/UI-Framework
-git submodule add https://github.com/author/network-lib Assets/Plugins/Network
-</code></pre>
-</details>
-<hr>
-<h2 id="-tipy-pro-práci-se-submoduly">💡 Tipy pro práci se submoduly</h2>
-<details>
-<summary><span style="color:#1E90FF;">🔀 Přepínání verzí submodulu</span></summary>
+<h3 id="přepnutí-na-konkrétní-verzi">Přepnutí na konkrétní verzi</h3>
 <pre><code class="lang-bash">cd cesta/k/submodulu
 git checkout v2.0.0
 cd ../..
 git add cesta/k/submodulu
 git commit -m &quot;Změněna verze submodulu na v2.0.0&quot;
 </code></pre>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">✏️ Úpravy v submodulu</span></summary>
+<h3 id="úpravy-v-submodulu">Úpravy v submodulu</h3>
 <pre><code class="lang-bash">cd cesta/k/submodulu
 git checkout -b oprava-chyby
 # proveďte změny
@@ -188,58 +145,67 @@ git commit -am &quot;Oprava chyby&quot;
 git push origin oprava-chyby
 # vytvořte pull request v repozitáři submodulu
 </code></pre>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🗑️ Odstranění submodulu</span></summary>
+<h3 id="změna-url-submodulu">Změna URL submodulu</h3>
+<pre><code class="lang-bash">git config --file=.gitmodules submodule.nazev.url NOVA_URL
+git submodule sync
+</code></pre>
+<h3 id="odstranění-submodulu">Odstranění submodulu</h3>
 <pre><code class="lang-bash">git submodule deinit cesta/k/submodulu
 git rm --cached cesta/k/submodulu
 rm -rf cesta/k/submodulu
 rm -rf .git/modules/cesta/k/submodulu
 git commit -m &quot;Odstraněn submodul&quot;
 </code></pre>
-</details>
+<h3 id="kontrola-stavu">Kontrola stavu</h3>
+<pre><code class="lang-bash">git submodule status
+</code></pre>
 <hr>
-<h2 id="-řešení-častých-problémů">🛠️ Řešení častých problémů</h2>
-<details>
-<summary><span style="color:#1E90FF;">🧩 Submodul v "detached HEAD" stavu</span></summary>
+<h2 id="příklad-unity-projekt-se-submoduly">Příklad: Unity projekt se submoduly</h2>
+<pre><code>UnityProjekt/
+  ├── .git/
+  ├── .gitmodules
+  └── Assets/
+      └── Plugins/
+          ├── UI-Framework/
+          └── Network/
+</code></pre>
+<pre><code class="lang-bash">cd UnityProjekt
+git submodule add https://github.com/author/ui-framework Assets/Plugins/UI-Framework
+git submodule add https://github.com/author/network-lib Assets/Plugins/Network
+</code></pre>
+<hr>
+<h2 id="řešení-problémů">Řešení problémů</h2>
+<p><strong>Submodul je v &quot;detached HEAD&quot; stavu:</strong></p>
 <pre><code class="lang-bash">cd cesta/k/submodulu
 git checkout main
 </code></pre>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🔄 Submodul ukazuje změny i když žádné nemáte</span></summary>
+<p><strong>Submodul ukazuje změny i když žádné nemáš:</strong></p>
 <pre><code class="lang-bash">git submodule update
 </code></pre>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🔗 Změna URL submodulu</span></summary>
-<pre><code class="lang-bash">git config --file=.gitmodules submodule.nazev.url NOVA_URL
-git submodule sync
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">📋 Kontrola stavu submodulů</span></summary>
-<pre><code class="lang-bash">git submodule status
-</code></pre>
-</details>
 <hr>
-<h2 id="-výhody--nevýhody-submodulů">⚖️ Výhody &amp; nevýhody submodulů</h2>
-<details>
-<summary><span style="color:#1E90FF;">✅ Výhody</span></summary>
-<ul>
-<li>Přesná kontrola verzí externích knihoven</li>
-<li>Možnost přímých úprav závislostí</li>
-<li>Lepší organizace v komplexních projektech</li>
-</ul>
-</details>
-<details>
-<summary><span style="color:#E95A84;">❌ Nevýhody</span></summary>
-<ul>
-<li>Vyšší složitost správy</li>
-<li>Nutnost synchronizace hlavního repozitáře po změnách v submodulech</li>
-<li>Strmější učící křivka pro nové členy týmu</li>
-</ul>
-</details>
+<h2 id="výhody-a-nevýhody">Výhody a nevýhody</h2>
+<table>
+<thead>
+<tr>
+<th>Výhody</th>
+<th>Nevýhody</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Přesná kontrola verzí závislostí</td>
+<td>Složitější správa oproti přímému kódu</td>
+</tr>
+<tr>
+<td>Možnost přímých úprav závislostí</td>
+<td>Nutnost synchronizace po změnách</td>
+</tr>
+<tr>
+<td>Lepší organizace komplexních projektů</td>
+<td>Strmější učící křivka pro nové členy</td>
+</tr>
+</tbody>
+</table>
 
 </article>
 

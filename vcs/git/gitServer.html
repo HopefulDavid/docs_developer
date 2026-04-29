@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Git – Server s Gitem (např. Forgejo, Gitea, Github, Gitlab, atd.) | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git – Server s Gitem (např. Forgejo, Gitea, Github, Gitlab, atd.) | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/gitServer.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
+            Dokumentace pro v&#253;voj&#225;ře
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git--server-s-gitem-např-forgejo-gitea-github-gitlab-atd">Git – Server s Gitem (např. Forgejo, Gitea, Github, Gitlab, atd.)</h1>
+
+<blockquote>
+<p>Praktické rady pro práci s Git repozitářem na serveru.</p>
+</blockquote>
+<hr>
+<img src="/images/2356729c-7942-4f2c-8ecc-f2b712c6e5ad.png" alt="Ollama" style="width: 100%; max-width: 950px; display: block; border-radius: 8px;">
+<h2 id="správa-remote-url">Správa remote URL</h2>
+<h3 id="přepnutí-z-http-na-ssh">Přepnutí z HTTP na SSH</h3>
+<details>
+<summary>Změna remote URL na SSH</summary>
+<pre><code class="lang-bash">git remote set-url origin ssh://git@127.0.0.1:2222/dslavik29/Unity_UITK-MMA.git
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>SSH přístup vyžaduje správně nakonfigurovaný SSH klíč na Gitea serveru (viz sekce SSH níže).</p>
+</div>
+</details>
+<h3 id="přepnutí-ze-ssh-na-http">Přepnutí ze SSH na HTTP</h3>
+<details>
+<summary>Změna remote URL na HTTP</summary>
+<pre><code class="lang-bash">git remote set-url origin http://localhost:3010/dslavik29/Unity_UITK-MMA.git
+</code></pre>
+<div class="TIP">
+<h5>Tip</h5>
+<p>HTTP je vhodné pro situace, kdy SSH není dostupné nebo při problémech s klíči.</p>
+</div>
+</details>
+<h3 id="zobrazení-aktuální-url">Zobrazení aktuální URL</h3>
+<details>
+<summary>Kontrola remote URL</summary>
+<pre><code class="lang-bash">git remote -v
+</code></pre>
+</details>
+<hr>
+<h2 id="hromadný-mirror-repozitářů-na-gitea-ssh">Hromadný mirror repozitářů na Gitea (SSH)</h2>
+<blockquote>
+<p>Přesune všechny lokální <code>.git</code> repozitáře na SSH remote na Gitea serveru.</p>
+</blockquote>
+<details>
+<summary>Bash skript pro hromadný mirror</summary>
+<pre><code class="lang-bash">for repo in *.git; do
+  name=${repo%.git}
+  echo &quot;=== $name ===&quot;
+  cd &quot;$repo&quot;
+  git remote remove origin 2&gt;/dev/null
+  git remote add origin ssh://git@127.0.0.1:2222/dslavik29/$name.git
+  git push --mirror origin
+  cd ..
+done
+</code></pre>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Skript je nutné spustit v Bash prostředí (např. Git Bash nebo WSL).</p>
+<p>Ujisti se, že máš SSH klíč přidán do svého účtu na Gitea serveru.</p>
+</div>
+<div class="WARNING">
+<h5>Warning</h5>
+<p><code>git push --mirror</code> přepíše vzdálený repozitář kompletně – včetně všech větví a tagů.
+Použij pouze při inicializaci nového remote nebo záměrném přepisu.</p>
+</div>
+</details>
+<hr>
+<h2 id="git-lfs-s-lokálním-serverem">Git LFS s lokálním serverem</h2>
+<blockquote>
+<p>Git LFS (Large File Storage) umožňuje verzovat velké soubory mimo Git historii.</p>
+</blockquote>
+<details>
+<summary>LFS a SSH – důležité omezení</summary>
+<p>Git LFS <strong>nepodporuje SSH</strong> pro přenos dat na vlastních serverech.
+I pokud je Git remote nastaven na SSH, LFS musí komunikovat přes HTTP.</p>
+<p>Pokud narazíš na chyby při <code>git push</code> se soubory LFS, nastav LFS URL ručně:</p>
+<pre><code class="lang-bash">git config lfs.url http://localhost:3020/dslavik29/Unity_MMA.git/info/lfs
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<ul>
+<li>Port LFS serveru (<code>3020</code>) se může lišit od Git HTTP portu (<code>3010</code>).</li>
+<li>Tato konfigurace je <strong>lokální</strong> pro daný repozitář – uloží se do <code>.git/config</code>.</li>
+</ul>
+</div>
+</details>
+<details>
+<summary>Ověření LFS konfigurace</summary>
+<pre><code class="lang-bash">git lfs env
+</code></pre>
+<p>Výstup zobrazí aktuální LFS endpoint a stav konfigurace.</p>
+</details>
+<hr>
+<h2 id="ssh-přístup-ke-gitea">SSH přístup ke Gitea</h2>
+<details>
+<summary>Nastavení SSH klíče pro Gitea</summary>
+<ol>
+<li><p><strong>Vygeneruj SSH klíč</strong> (pokud ještě nemáš):</p>
+<pre><code class="lang-bash">ssh-keygen -t rsa -b 4096 -C &quot;tvuj@email.com&quot;
+</code></pre>
+</li>
+<li><p><strong>Zobraz veřejný klíč:</strong></p>
+<p><strong>Windows:</strong></p>
+<pre><code class="lang-bash">type %userprofile%\.ssh\id_rsa.pub
+</code></pre>
+<p><strong>Linux/macOS:</strong></p>
+<pre><code class="lang-bash">cat ~/.ssh/id_rsa.pub
+</code></pre>
+</li>
+<li><p><strong>Přidej klíč do Gitea:</strong></p>
+<ul>
+<li>Otevři Gitea → <strong>Settings → SSH / GPG Keys → Add Key</strong></li>
+</ul>
+</li>
+<li><p><strong>Otestuj připojení:</strong></p>
+<pre><code class="lang-bash">ssh -T git@127.0.0.1 -p 2222
+</code></pre>
+</li>
+</ol>
+</details>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/gitServer.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#128450;️ Git Flow – Strategie větven&#237; &amp; workflow | V&#253;voj&#225;ř </title>
+      <title>Git Flow – Strategie větven&#237; &amp; workflow | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#128450;️ Git Flow – Strategie větven&#237; &amp; workflow | V&#253;voj&#225;ř ">
+      <meta name="title" content="Git Flow – Strategie větven&#237; &amp; workflow | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,28 +85,29 @@
         </div>
 
         <article data-uid="">
-<h1 id="-git-flow--strategie-větvení--workflow">🗂️ Git Flow – Strategie větvení &amp; workflow</h1>
+<h1 id="git-flow--strategie-větvení--workflow">Git Flow – Strategie větvení &amp; workflow</h1>
 
 <blockquote>
-<p>🚀 Praktické rady pro efektivní správu větví v týmu pomocí Git Flow.</p>
+<p>Praktické rady pro efektivní správu větví v týmu pomocí Git Flow.</p>
 </blockquote>
 <hr>
-<h2 id="-co-je-git-flow">🔎 Co je Git Flow?</h2>
+<img src="/images/43ae90ca-b78a-405d-bf23-06f2be45eb83.png" alt="Ollama" style="width: 100%; display: block; border-radius: 8px;">
+<h2 id="co-je-git-flow">Co je Git Flow?</h2>
 <ul>
 <li><strong>Git Flow</strong> je osvědčená strategie pro řízení verzí a vývoj v týmech.</li>
 <li>Umožňuje jasně oddělit vývoj, přípravu vydání a opravy chyb.</li>
 </ul>
 <hr>
-<h2 id="-hlavní-větve">🌳 Hlavní větve</h2>
+<h2 id="hlavní-větve">Hlavní větve</h2>
 <details>
-<summary><span style="color:#1E90FF;">🟢 Základní větve</span></summary>
+<summary>Základní větve</summary>
 <ul>
 <li><strong><code>main</code> (nebo <code>master</code>)</strong>: Produkční verze kódu</li>
 <li><strong><code>develop</code></strong>: Připravované změny pro další vydání</li>
 </ul>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🛠️ Pomocné větve</span></summary>
+<summary>Pomocné větve</summary>
 <ul>
 <li><strong><code>feature/*</code></strong>: Vývoj nových funkcí</li>
 <li><strong><code>release/*</code></strong>: Příprava vydání</li>
@@ -114,9 +115,9 @@
 </ul>
 </details>
 <hr>
-<h2 id="-typické-workflow">🏗️ Typické workflow</h2>
+<h2 id="typické-workflow">Typické workflow</h2>
 <details>
-<summary><span style="color:#1E90FF;">✨ Vývoj nové funkce</span></summary>
+<summary>Vývoj nové funkce</summary>
 <pre><code class="lang-bash">git checkout develop
 git checkout -b feature/nova-funkce
 # Vývoj...
@@ -129,7 +130,7 @@ git merge feature/nova-funkce
 </div>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🚀 Příprava vydání</span></summary>
+<summary>Příprava vydání</summary>
 <pre><code class="lang-bash">git checkout develop
 git checkout -b release/1.0.0
 # Finalizace...
@@ -145,7 +146,7 @@ git tag -a v1.0.0 -m &quot;Verze 1.0.0&quot;
 </div>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🩹 Oprava chyby v produkci</span></summary>
+<summary>Oprava chyby v produkci</summary>
 <pre><code class="lang-bash">git checkout main
 git checkout -b hotfix/oprava-chyby
 # Oprava...
@@ -161,9 +162,9 @@ git merge hotfix/oprava-chyby
 </div>
 </details>
 <hr>
-<h2 id="-pravidla-pro-práci-s-git-flow">📋 Pravidla pro práci s Git Flow</h2>
+<h2 id="pravidla-pro-práci-s-git-flow">Pravidla pro práci s Git Flow</h2>
 <details>
-<summary><span style="color:#1E90FF;">📝 Doporučené postupy</span></summary>
+<summary>Doporučené postupy</summary>
 <ol>
 <li>Nikdy nepracujte přímo v <code>main</code> ani <code>develop</code></li>
 <li>Každá funkce má vlastní feature větev</li>
@@ -174,9 +175,9 @@ git merge hotfix/oprava-chyby
 </ol>
 </details>
 <hr>
-<h2 id="-vizualizace-workflow">🗺️ Vizualizace workflow</h2>
+<h2 id="vizualizace-workflow">Vizualizace workflow</h2>
 <details>
-<summary><span style="color:#1E90FF;">📈 Schéma větvení</span></summary>
+<summary>Schéma větvení</summary>
 <pre><code>main       ●────────●─────────●────────●
             \        \         \        \
 develop     ●─────●───●─────●───●───●────●

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>OpenTofu – Infrastructure as Code | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="OpenTofu – Infrastructure as Code | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/devops/opentofu.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
+            Dokumentace pro v&#253;voj&#225;ře
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="opentofu--infrastructure-as-code">OpenTofu – Infrastructure as Code</h1>
+
+<blockquote>
+<p>Průvodce nástrojem OpenTofu pro popis a správu infrastruktury jako kódu (IaC).</p>
+</blockquote>
+<hr>
+<img src="/images/a188d4ef-a7b4-4028-9107-0bd99f101e30.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
+<h2 id="co-je-opentofu">Co je OpenTofu?</h2>
+<p>OpenTofu je nástroj pro <strong>Infrastructure as Code</strong> – místo ručního klikání v cloudovém rozhraní popíšeš infrastrukturu v souborech a OpenTofu ji podle toho vytvoří nebo upraví.</p>
+<p>OpenTofu se používá na:</p>
+<ul>
+<li>vytváření serverů a sítí,</li>
+<li>zakládání databází,</li>
+<li>správu cloudové infrastruktury,</li>
+<li>opakovatelné a předvídatelné nasazování.</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>OpenTofu je open-source fork Terraformu. Syntaxe a příkazy jsou prakticky identické.</p>
+</div>
+<hr>
+<h2 id="co-opentofu-není">Co OpenTofu není</h2>
+<p>OpenTofu <strong>nevytváří</strong> ani <strong>nespravuje</strong>:</p>
+<ul>
+<li>samotnou aplikaci (to řeší Docker, CI/CD),</li>
+<li>prostředí pro běh kódu – jen infrastrukturu pro něj.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Nástroj</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>OpenTofu</strong></td>
+<td>Postaví infrastrukturu (servery, sítě, databáze)</td>
+</tr>
+<tr>
+<td><strong>Docker</strong></td>
+<td>Zabalí aplikaci do kontejneru</td>
+</tr>
+<tr>
+<td><strong>CI/CD</strong></td>
+<td>Nasadí kód do prostředí</td>
+</tr>
+<tr>
+<td><strong>Aplikace</strong></td>
+<td>Samotný produkt (Next.js, .NET, Go…)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="instalace">Instalace</h2>
+<ol>
+<li>Stáhni z <a href="https://opentofu.org/docs/intro/install/">opentofu.org/docs/intro/install</a>.</li>
+<li>Rozbal archiv a přidej do <code>PATH</code>.</li>
+<li>Ověř:</li>
+</ol>
+<pre><code class="lang-bash">tofu version
+</code></pre>
+<hr>
+<h2 id="první-test--bez-cloudu">První test – bez cloudu</h2>
+<p>Nejjednodušší ověření funkčnosti bez cloudového účtu.</p>
+<p><strong>1. Vytvoř složku projektu:</strong></p>
+<pre><code>C:\tofu-test
+</code></pre>
+<p><strong>2. Vytvoř soubor <code>main.tf</code>:</strong></p>
+<pre><code class="lang-hcl">terraform {
+  required_providers {
+    local = {
+      source  = &quot;hashicorp/local&quot;
+      version = &quot;~&gt; 2.5&quot;
+    }
+  }
+}
+
+provider &quot;local&quot; {}
+
+resource &quot;local_file&quot; &quot;example&quot; {
+  content  = &quot;Ahoj, OpenTofu funguje.&quot;
+  filename = &quot;${path.module}/vystup.txt&quot;
+}
+</code></pre>
+<p><strong>3. Inicializuj projekt:</strong></p>
+<pre><code class="lang-bash">tofu init
+</code></pre>
+<p><strong>4. Zkontroluj plán:</strong></p>
+<pre><code class="lang-bash">tofu plan
+</code></pre>
+<p><strong>5. Použij změny:</strong></p>
+<pre><code class="lang-bash">tofu apply   # potvrď 'yes'
+</code></pre>
+<p>Ve složce se vytvoří soubor <code>vystup.txt</code>.</p>
+<p><strong>6. Úklid:</strong></p>
+<pre><code class="lang-bash">tofu destroy   # potvrď 'yes'
+</code></pre>
+<hr>
+<h2 id="přehled-příkazů">Přehled příkazů</h2>
+<table>
+<thead>
+<tr>
+<th>Příkaz</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tofu init</code></td>
+<td>Připraví projekt a stáhne pluginy</td>
+</tr>
+<tr>
+<td><code>tofu plan</code></td>
+<td>Zobrazí, co se změní</td>
+</tr>
+<tr>
+<td><code>tofu apply</code></td>
+<td>Provede změny v infrastruktuře</td>
+</tr>
+<tr>
+<td><code>tofu destroy</code></td>
+<td>Smaže vytvořené zdroje</td>
+</tr>
+<tr>
+<td><code>tofu fmt</code></td>
+<td>Naformátuje <code>.tf</code> soubory</td>
+</tr>
+<tr>
+<td><code>tofu validate</code></td>
+<td>Ověří syntaxi konfigurace</td>
+</tr>
+<tr>
+<td><code>tofu output</code></td>
+<td>Zobrazí výstupní hodnoty</td>
+</tr>
+<tr>
+<td><code>tofu version</code></td>
+<td>Zobrazí nainstalovanou verzi</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="doporučená-struktura-projektu">Doporučená struktura projektu</h2>
+<pre><code>projekt/
+├── main.tf          # Hlavní konfigurace zdrojů
+├── variables.tf     # Definice proměnných
+├── outputs.tf       # Výstupní hodnoty po apply
+├── terraform.tfvars # Konkrétní hodnoty proměnných
+└── README.md        # Popis projektu
+</code></pre>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Soubor <code>terraform.tfvars</code> přidej do <code>.gitignore</code>, pokud obsahuje hesla nebo tokeny.</p>
+</div>
+<hr>
+<h2 id="základní-syntaxe-hcl">Základní syntaxe HCL</h2>
+<pre><code class="lang-hcl"># Definice proměnné
+variable &quot;prostedi&quot; {
+  type    = string
+  default = &quot;dev&quot;
+}
+
+# Použití proměnné
+resource &quot;local_file&quot; &quot;konfig&quot; {
+  content  = &quot;Prostředí: ${var.prostedi}&quot;
+  filename = &quot;config.txt&quot;
+}
+
+# Výstup po apply
+output &quot;cesta_souboru&quot; {
+  value = local_file.konfig.filename
+}
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>HCL je deklarativní jazyk – popisuješ <strong>co</strong> chceš mít, ne <strong>jak</strong> to vytvořit.</p>
+</div>
+<hr>
+<h2 id="užitečné-odkazy">Užitečné odkazy</h2>
+<ul>
+<li><a href="https://opentofu.org/docs/">Dokumentace OpenTofu</a></li>
+<li><a href="https://registry.opentofu.org/">Registry providerů</a></li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/devops/opentofu.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

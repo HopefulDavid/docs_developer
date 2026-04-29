@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Git - Uživatelsk&#225; konfigurace | V&#253;voj&#225;ř </title>
+      <title>Git – Uživatelsk&#225; konfigurace | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Git - Uživatelsk&#225; konfigurace | V&#253;voj&#225;ř ">
+      <meta name="title" content="Git – Uživatelsk&#225; konfigurace | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,14 +85,19 @@
         </div>
 
         <article data-uid="">
-<h1 id="git---uživatelská-konfigurace">Git - Uživatelská konfigurace</h1>
+<h1 id="git--uživatelská-konfigurace">Git – Uživatelská konfigurace</h1>
 
-<h2 id="-povolení-dlouhých-cest-ve-windows">🛣️ Povolení dlouhých cest ve Windows</h2>
+<blockquote>
+<p>Praktické rady pro globální nastavení Gitu, dlouhé cesty na Windows a konfiguraci vizuálních nástrojů.</p>
+</blockquote>
+<hr>
+<img src="/images/e159d23c-f2b8-4884-bc0b-800bae9db096.png" alt="Ollama" style="width: 100%; max-width: 950px; display: block; border-radius: 8px;">
+<h2 id="povolení-dlouhých-cest-ve-windows">Povolení dlouhých cest ve Windows</h2>
 <pre><code class="lang-bash">git config --system core.longpaths true
 </code></pre>
 <p>povolí v Git podporu dlouhých cest na Windows, což často řeší chybu <strong>„Filename too long“</strong>.</p>
 <blockquote>
-<p>⚠️ <strong>Pozor:</strong></p>
+<p><strong>Pozor:</strong></p>
 <ul>
 <li><p>Tento příkaz se musí spustit s administrátorskými právy, protože mění systémovou konfiguraci Gitu.</p>
 </li>
@@ -108,13 +113,13 @@
 <li>Restartuj počítač.</li>
 </ol>
 <hr>
-<h2 id="-nastavení-meld-jako-diffmerge-tool">⚙️ Nastavení Meld jako diff/merge tool</h2>
+<h2 id="nastavení-meld-jako-diffmerge-tool">Nastavení Meld jako diff/merge tool</h2>
 <p><strong>Meld</strong> je vizuální nástroj pro porovnávání a slučování souborů.</p>
 <p>Umožňuje přehledné zobrazení rozdílů a snadné řešení konfliktů.</p>
 <details>
-<summary><span style="color:#1E90FF;">💻 Windows – Kompletní postup</span></summary>
+<summary>Windows – Kompletní postup</summary>
 <ol>
-<li><p><strong>Nainstalujte Meld</strong><br>
+<li><p><strong>Nainstalujte Meld</strong>
 <a href="https://meldmerge.org/">Stáhnout Meld pro Windows</a></p>
 </li>
 <li><p><strong>Nastavte Git pro použití Meld:</strong></p>
@@ -134,7 +139,7 @@ git config --global mergetool.prompt false
 </div>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🐧 Linux – Kompletní postup</span></summary>
+<summary>Linux – Kompletní postup</summary>
 <ol>
 <li><p><strong>Nainstalujte Meld</strong></p>
 <pre><code class="lang-bash">sudo apt install meld
@@ -153,9 +158,9 @@ git config --global mergetool.prompt false
 </ol>
 </details>
 <hr>
-<h3 id="-použití-v-praxi">📝 Použití v praxi</h3>
+<h3 id="použití-v-praxi">Použití v praxi</h3>
 <details>
-<summary><span style="color:#1E90FF;">🔎 Porovnání změn</span></summary>
+<summary>Porovnání změn</summary>
 <ul>
 <li>Spusťte porovnání souborů:
 <pre><code class="lang-bash">git difftool
@@ -164,7 +169,7 @@ git config --global mergetool.prompt false
 </ul>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🔀 Řešení konfliktů při slučování</span></summary>
+<summary>Řešení konfliktů při slučování</summary>
 <ul>
 <li>Spusťte nástroj pro slučování:
 <pre><code class="lang-bash">git mergetool

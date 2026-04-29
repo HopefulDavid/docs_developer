@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#128444;️ WPF – Modern&#237; UI &amp; Tipy | V&#253;voj&#225;ř </title>
+      <title>WPF – Modern&#237; UI &amp; Tipy | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#128444;️ WPF – Modern&#237; UI &amp; Tipy | V&#253;voj&#225;ř ">
+      <meta name="title" content="WPF – Modern&#237; UI &amp; Tipy | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,30 +85,27 @@
         </div>
 
         <article data-uid="">
-<h1 id="-wpf--moderní-ui--tipy">🖼️ WPF – Moderní UI &amp; Tipy</h1>
+<h1 id="wpf--moderní-ui--tipy">WPF – Moderní UI &amp; Tipy</h1>
 
 <blockquote>
-<p>🚀 Praktické rady pro tvorbu desktopových aplikací ve WPF, stylování, datové vazby, validaci, animace a responzivní design.</p>
+<p>Praktické rady pro tvorbu desktopových aplikací ve WPF, stylování, datové vazby, validaci, animace a responzivní design.</p>
 </blockquote>
 <hr>
-<h2 id="-co-je-wpf">🧩 Co je WPF?</h2>
-<details>
-<summary><span style="color:#1E90FF;">🔍 Základní principy WPF</span></summary>
+<img src="/images/bce43a30-8b45-414f-b656-200d5551f88e.png" alt="" style="width: 30%; display: block; border-radius: 8px;">
+<h2 id="co-je-wpf">Co je WPF?</h2>
 <ul>
 <li>Tvorba moderních desktopových aplikací pro Windows.</li>
 <li>Oddělení logiky (<strong>C#</strong>) od vzhledu (<strong>XAML</strong>).</li>
 <li>Podpora datových vazeb, stylů, animací a vektorové grafiky.</li>
 </ul>
-<p><img src="../../images/wpf_intro.png" alt=""></p>
-</details>
 <hr>
-<h2 id="-základní-ovládací-prvky">🖱️ Základní ovládací prvky</h2>
+<h2 id="základní-ovládací-prvky">Základní ovládací prvky</h2>
 <details>
-<summary><span style="color:#1E90FF;">🔘 Button</span></summary>
+<summary>Button</summary>
 <ul>
 <li>Interaktivní tlačítko s možností stylování a událostí.</li>
 </ul>
-<pre><code class="lang-xml">&lt;Button 
+<pre><code class="lang-xml">&lt;Button
     Content=&quot;Klikni na mě&quot;
     Background=&quot;LightBlue&quot;
     Foreground=&quot;White&quot;
@@ -121,11 +118,11 @@
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">✏️ TextBox</span></summary>
+<summary>TextBox</summary>
 <ul>
 <li>Vstupní pole pro text s událostmi a stylováním.</li>
 </ul>
-<pre><code class="lang-xml">&lt;TextBox 
+<pre><code class="lang-xml">&lt;TextBox
     Text=&quot;Zadejte text&quot;
     Background=&quot;White&quot;
     Foreground=&quot;Black&quot;
@@ -140,11 +137,11 @@
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">☑️ CheckBox</span></summary>
+<summary>CheckBox</summary>
 <ul>
 <li>Zaškrtávací pole pro volby.</li>
 </ul>
-<pre><code class="lang-xml">&lt;CheckBox 
+<pre><code class="lang-xml">&lt;CheckBox
     Content=&quot;Souhlasím s podmínkami&quot;
     Background=&quot;Transparent&quot;
     Foreground=&quot;Black&quot;
@@ -157,11 +154,11 @@
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🔽 ComboBox</span></summary>
+<summary>ComboBox</summary>
 <ul>
 <li>Rozevírací seznam pro výběr jedné hodnoty.</li>
 </ul>
-<pre><code class="lang-xml">&lt;ComboBox 
+<pre><code class="lang-xml">&lt;ComboBox
     Background=&quot;White&quot;
     Foreground=&quot;Black&quot;
     BorderBrush=&quot;Gray&quot;
@@ -177,7 +174,7 @@
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🔘 RadioButton</span></summary>
+<summary>RadioButton</summary>
 <ul>
 <li>Výběr jedné možnosti ze skupiny.</li>
 </ul>
@@ -189,11 +186,11 @@
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🎚️ Slider</span></summary>
+<summary>Slider</summary>
 <ul>
 <li>Výběr hodnoty posunutím jezdce.</li>
 </ul>
-<pre><code class="lang-xml">&lt;Slider 
+<pre><code class="lang-xml">&lt;Slider
     Minimum=&quot;0&quot;
     Maximum=&quot;100&quot;
     Value=&quot;50&quot;
@@ -205,9 +202,9 @@
 </code></pre>
 </details>
 <hr>
-<h2 id="-vlastní-ovládací-prvky">🛠️ Vlastní ovládací prvky</h2>
+<h2 id="vlastní-ovládací-prvky">Vlastní ovládací prvky</h2>
 <details>
-<summary><span style="color:#1E90FF;">🧬 Jak vytvořit vlastní prvek?</span></summary>
+<summary>Jak vytvořit vlastní prvek?</summary>
 <ul>
 <li>Dědění z existujícího prvku (např. <code>Button</code>).</li>
 <li>Definice stylu a šablony v XAML.</li>
@@ -216,7 +213,7 @@
 {
     static MyCustomButton()
     {
-        DefaultStyleKeyProperty.OverrideMetadata(typeof(MyCustomButton), 
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(MyCustomButton),
             new FrameworkPropertyMetadata(typeof(MyCustomButton)));
     }
 }
@@ -236,9 +233,9 @@
 </code></pre>
 </details>
 <hr>
-<h2 id="-styly--šablony">🎨 Styly &amp; Šablony</h2>
+<h2 id="styly--šablony">Styly &amp; Šablony</h2>
 <details>
-<summary><span style="color:#1E90FF;">🖌️ Definování stylu</span></summary>
+<summary>Definování stylu</summary>
 <ul>
 <li>Styl pro více prvků najednou.</li>
 </ul>
@@ -252,13 +249,10 @@
 &lt;/Window.Resources&gt;
 </code></pre>
 </details>
-<details>
-<summary><span style="color:#1E90FF;">🧩 Použití stylu</span></summary>
 <pre><code class="lang-xml">&lt;Button Style=&quot;{StaticResource MyButtonStyle}&quot; Content=&quot;Klikni na mě&quot;/&gt;
 </code></pre>
-</details>
 <details>
-<summary><span style="color:#1E90FF;">🧬 Šablony (ControlTemplates)</span></summary>
+<summary>Šablony (ControlTemplates)</summary>
 <ul>
 <li>Úplná změna vzhledu prvku.</li>
 </ul>
@@ -271,9 +265,9 @@
 </code></pre>
 </details>
 <hr>
-<h2 id="-prefixy-v-xaml">🧭 Prefixy v XAML</h2>
+<h2 id="prefixy-v-xaml">Prefixy v XAML</h2>
 <details>
-<summary><span style="color:#1E90FF;">📚 Přehled prefixů</span></summary>
+<summary>Přehled prefixů</summary>
 <table>
 <thead>
 <tr>
@@ -319,19 +313,15 @@
 </code></pre>
 </details>
 <hr>
-<h2 id="-responzivní-design">📐 Responzivní design</h2>
-<details>
-<summary><span style="color:#1E90FF;">🧱 Layout Panely</span></summary>
+<h2 id="responzivní-design">Responzivní design</h2>
 <ul>
 <li><strong>Grid</strong>: Řádky/sloupce</li>
 <li><strong>StackPanel</strong>: Vertikální/horizontální řazení</li>
 <li><strong>WrapPanel</strong>: Zalomení prvků</li>
 <li><strong>DockPanel</strong>: Uspořádání k okrajům</li>
 </ul>
-<p><img src="../../images/wpf_layout_panels.png" alt=""></p>
-</details>
 <details>
-<summary><span style="color:#1E90FF;">🔄 Dynamické velikosti</span></summary>
+<summary>Dynamické velikosti</summary>
 <ul>
 <li>Procenta, hvězdičky (<code>*</code>), <code>Auto</code> pro flexibilní rozložení.</li>
 </ul>
@@ -344,7 +334,7 @@
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">📏 Sledování změny velikosti</span></summary>
+<summary>Sledování změny velikosti</summary>
 <ul>
 <li>Událost <code>SizeChanged</code> pro dynamické úpravy.</li>
 </ul>
@@ -355,7 +345,7 @@
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🔍 ViewBox</span></summary>
+<summary>ViewBox</summary>
 <ul>
 <li>Automatické škálování obsahu.</li>
 </ul>
@@ -367,9 +357,9 @@
 </code></pre>
 </details>
 <hr>
-<h2 id="-triggery">⚡ Triggery</h2>
+<h2 id="triggery">Triggery</h2>
 <details>
-<summary><span style="color:#1E90FF;">🎯 Dynamické změny stylu</span></summary>
+<summary>Dynamické změny stylu</summary>
 <ul>
 <li>Změna vzhledu na základě událostí.</li>
 </ul>
@@ -384,9 +374,9 @@
 </code></pre>
 </details>
 <hr>
-<h2 id="-data-binding-vazba-dat">🔗 Data Binding (Vazba dat)</h2>
+<h2 id="data-binding-vazba-dat">Data Binding (Vazba dat)</h2>
 <details>
-<summary><span style="color:#1E90FF;">🧑‍💻 ViewModel + Binding</span></summary>
+<summary>‍ ViewModel + Binding</summary>
 <ul>
 <li>Použití <code>INotifyPropertyChanged</code> pro automatickou aktualizaci UI.</li>
 </ul>
@@ -410,9 +400,9 @@
 </code></pre>
 </details>
 <hr>
-<h2 id="-validace">🛡️ Validace</h2>
+<h2 id="validace">Validace</h2>
 <details>
-<summary><span style="color:#1E90FF;">✅ IDataErrorInfo</span></summary>
+<summary>IDataErrorInfo</summary>
 <ul>
 <li>Validace vlastností s chybovou zprávou.</li>
 </ul>
@@ -425,7 +415,7 @@
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">✅ INotifyDataErrorInfo</span></summary>
+<summary>INotifyDataErrorInfo</summary>
 <ul>
 <li>Pokročilá validace s více chybami.</li>
 </ul>
@@ -438,9 +428,9 @@
 </code></pre>
 </details>
 <hr>
-<h2 id="-animace">🎬 Animace</h2>
+<h2 id="animace">Animace</h2>
 <details>
-<summary><span style="color:#1E90FF;">🌈 Příklad animace</span></summary>
+<summary>Příklad animace</summary>
 <ul>
 <li>Animace změny barvy pozadí tlačítka.</li>
 </ul>

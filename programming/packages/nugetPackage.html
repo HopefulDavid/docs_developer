@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#128230; NuGet Packages | V&#253;voj&#225;ř </title>
+      <title>NuGet Packages | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#128230; NuGet Packages | V&#253;voj&#225;ř ">
+      <meta name="title" content="NuGet Packages | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,15 +85,16 @@
         </div>
 
         <article data-uid="">
-<h1 id="-nuget-packages">📦 NuGet Packages</h1>
+<h1 id="nuget-packages">NuGet Packages</h1>
 
 <blockquote>
-<p>🛠️ Pro správu balíčků je potřeba mít nainstalovaný <strong>NuGet CLI</strong> nebo používat integrované nástroje v IDE.</p>
+<p>Pro správu balíčků je potřeba mít nainstalovaný <strong>NuGet CLI</strong> nebo používat integrované nástroje v IDE.</p>
 </blockquote>
 <hr>
-<h2 id="-správa-balíčků">🗂️ Správa balíčků</h2>
+<img src="/images/231a19b5-84c6-4961-9189-91672e9435dc.png" alt="" style="width: 40%; display: block; border-radius: 8px;">
+<h2 id="správa-balíčků">Správa balíčků</h2>
 <details>
-<summary><span style="color:#1E90FF;">🔧 Způsoby správy balíčků</span></summary>
+<summary>Způsoby správy balíčků</summary>
 <table>
 <thead>
 <tr>
@@ -104,20 +105,20 @@
 </thead>
 <tbody>
 <tr>
-<td><span style="color:#E95A84;">packages.config</span></td>
+<td>packages.config</td>
 <td>Ukládá seznam všech balíčků v projektu <strong>včetně závislostí</strong>.<br>Balíčky jsou kopírovány do složky projektu.<br>Pomalejší buildy, větší repozitář.</td>
 <td>&lt; 2017</td>
 </tr>
 <tr>
-<td><span style="color:#E95A84;">PackageReference</span></td>
+<td>PackageReference</td>
 <td>Balíčky se načítají přímo z <strong>globální složky</strong>.<br>Závislosti se spravují automaticky.<br>Rychlejší buildy, menší repozitář.</td>
 <td>2017+</td>
 </tr>
 </tbody>
 </table>
 <hr>
-<h3 id="-detaily">📜 Detaily</h3>
-<h4 id="packagesconfig"><span style="color:#E95A84;">packages.config</span></h4>
+<h3 id="detaily">Detaily</h3>
+<h4 id="packagesconfig">packages.config</h4>
 <ul>
 <li>Balíčky jsou uloženy v projektu (<code>packages</code> složka).</li>
 <li>Závislosti jsou explicitně uvedeny.</li>
@@ -125,10 +126,10 @@
 <li>Používané před rokem 2017.</li>
 </ul>
 <blockquote>
-<p>ℹ️ Každý projekt má vlastní složku s balíčky, <code>.csproj</code> obsahuje pouze cesty.</p>
+<p>Každý projekt má vlastní složku s balíčky, <code>.csproj</code> obsahuje pouze cesty.</p>
 </blockquote>
 <hr>
-<h4 id="packagereference"><span style="color:#E95A84;">PackageReference</span></h4>
+<h4 id="packagereference">PackageReference</h4>
 <ul>
 <li>Balíčky se nestahují do projektu, ale do <strong>globální složky</strong>.</li>
 <li>Závislosti se spravují automaticky.</li>
@@ -136,13 +137,13 @@
 <li>Výchozí formát od roku 2017.</li>
 </ul>
 <blockquote>
-<p>ℹ️ Balíčky jsou spravovány centrálně, projekt využívá globální umístění.</p>
+<p>Balíčky jsou spravovány centrálně, projekt využívá globální umístění.</p>
 </blockquote>
 </details>
 <hr>
-<h2 id="-globální-složka-balíčků">🌍 Globální složka balíčků</h2>
+<h2 id="globální-složka-balíčků">Globální složka balíčků</h2>
 <details>
-<summary><span style="color:#1E90FF;">📁 Umístění globální složky</span></summary>
+<summary>Umístění globální složky</summary>
 <table>
 <thead>
 <tr>
@@ -162,17 +163,17 @@
 </tbody>
 </table>
 <blockquote>
-<p>💡 Výchozí umístění lze změnit pomocí proměnné prostředí <code>NUGET_PACKAGES</code>.</p>
+<p>Výchozí umístění lze změnit pomocí proměnné prostředí <code>NUGET_PACKAGES</code>.</p>
 </blockquote>
 </details>
 <p>Doplnil jsem příklad a tabulky příkazů pro práci s NuGet balíčky v .NET. Vložte následující úsek do souboru <code>programming/packages/nugetPackage.md</code> na vhodné místo (např. pod sekci &quot;Správa balíčků&quot;).</p>
 <hr>
-<h2 id="-příklady-použití-balíčku">🧑‍💻 Příklady použití balíčku</h2>
+<h2 id="-příklady-použití-balíčku">‍ Příklady použití balíčku</h2>
 <pre><code class="lang-bash">dotnet add package SixLabors.ImageSharp.Drawing --version 2.1.7
 </code></pre>
 <hr>
-<h2 id="-přehled-základních-příkazů">📋 Přehled základních příkazů</h2>
-<h3 id="-správa-balíčků-1">🗂️ Správa balíčků</h3>
+<h2 id="přehled-základních-příkazů">Přehled základních příkazů</h2>
+<h3 id="správa-balíčků-1">Správa balíčků</h3>
 <table>
 <thead>
 <tr>
@@ -195,7 +196,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="-kontrola-a-aktualizace">🔍 Kontrola a aktualizace</h3>
+<h3 id="kontrola-a-aktualizace">Kontrola a aktualizace</h3>
 <table>
 <thead>
 <tr>
@@ -214,7 +215,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="-správa-zdrojů-a-cache">🗄️ Správa zdrojů a cache</h3>
+<h3 id="správa-zdrojů-a-cache">Správa zdrojů a cache</h3>
 <table>
 <thead>
 <tr>

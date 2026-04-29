@@ -98,6 +98,29 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "devops/opentofu.md",
+      "output": {
+        ".html": {
+          "relative_path": "devops/opentofu.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "devops/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "devops/toc.html"
+        },
+        ".json": {
+          "relative_path": "devops/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "documentation/doxygen.md",
       "output": {
         ".html": {
@@ -154,16 +177,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "ide/components.md",
-      "output": {
-        ".html": {
-          "relative_path": "ide/components.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "ide/jetBrains.md",
       "output": {
         ".html": {
@@ -201,6 +214,56 @@
       "output": {
         "resource": {
           "relative_path": "images/0qjIRo5xxb.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/10336033-b701-48a9-abdf-aa59500e77cf.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/10336033-b701-48a9-abdf-aa59500e77cf.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/1974ce4c-4914-428a-88c8-075e84a7c713.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/1974ce4c-4914-428a-88c8-075e84a7c713.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/1c750931-1fdb-47ec-882b-3781bbae6e7e.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/1c750931-1fdb-47ec-882b-3781bbae6e7e.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/231a19b5-84c6-4961-9189-91672e9435dc.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/231a19b5-84c6-4961-9189-91672e9435dc.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/2356729c-7942-4f2c-8ecc-f2b712c6e5ad.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/2356729c-7942-4f2c-8ecc-f2b712c6e5ad.png"
         }
       },
       "version": ""
@@ -327,10 +390,90 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/4381c952-e572-44c8-b4d3-c2da9964c008.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/4381c952-e572-44c8-b4d3-c2da9964c008.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/43ae90ca-b78a-405d-bf23-06f2be45eb83.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/43ae90ca-b78a-405d-bf23-06f2be45eb83.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/47b4d22e-f30e-46a1-bc78-9d1fbc371e6c.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/47b4d22e-f30e-46a1-bc78-9d1fbc371e6c.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/51fc64f1-0fc1-434d-8b9a-62915ece751a.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/51fc64f1-0fc1-434d-8b9a-62915ece751a.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/54c2ba30-4474-4c51-a6ad-2f82c28540ac.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/54c2ba30-4474-4c51-a6ad-2f82c28540ac.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/5a5f2db1-3bf6-4219-a7a1-65305baeb7ca.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/5a5f2db1-3bf6-4219-a7a1-65305baeb7ca.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/5b6c5417-6cb1-4ecf-8d08-c4d90783ae23.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/5b6c5417-6cb1-4ecf-8d08-c4d90783ae23.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/5d7ee05eacb549d5ada6e1edef7a2e59.png",
       "output": {
         "resource": {
           "relative_path": "images/5d7ee05eacb549d5ada6e1edef7a2e59.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/67df603a-1960-4ca6-8bef-241dd8688fc1.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/67df603a-1960-4ca6-8bef-241dd8688fc1.png"
         }
       },
       "version": ""
@@ -347,10 +490,70 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/6caa6198-1ee2-4529-8e40-2c62da4232c7.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/6caa6198-1ee2-4529-8e40-2c62da4232c7.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/6f0214a6-361b-4c39-a7b8-0f43a8cd8459.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/6f0214a6-361b-4c39-a7b8-0f43a8cd8459.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/7021cbf6-ee66-45b6-903c-a751e0653eec.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/7021cbf6-ee66-45b6-903c-a751e0653eec.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/7073cab7-0b16-47e4-b0c1-55129ef02687.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/7073cab7-0b16-47e4-b0c1-55129ef02687.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/7093661c-9483-46e1-87bf-72496673b81a.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/7093661c-9483-46e1-87bf-72496673b81a.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/737ee01108d04cb9b0ebcfac84835eda.png",
       "output": {
         "resource": {
           "relative_path": "images/737ee01108d04cb9b0ebcfac84835eda.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/77bb3224-887c-410f-a232-f51a105d0b01.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/77bb3224-887c-410f-a232-f51a105d0b01.png"
         }
       },
       "version": ""
@@ -381,6 +584,66 @@
       "output": {
         "resource": {
           "relative_path": "images/7NaF0iqhX4.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/87aac7e6-0da1-4ada-8c7c-1710636e867a.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/87aac7e6-0da1-4ada-8c7c-1710636e867a.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/8c61359f-a49a-4600-a86a-961c4a3dfe9d.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/8c61359f-a49a-4600-a86a-961c4a3dfe9d.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/94edf060-a2f9-476c-b93f-c4723e494cab.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/94edf060-a2f9-476c-b93f-c4723e494cab.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/9b4ddeea-a06a-4666-883e-855ceb443a3b.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/9b4ddeea-a06a-4666-883e-855ceb443a3b.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/9efd0d3e-ef5e-4e7a-8358-63fd4f8eb659.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/9efd0d3e-ef5e-4e7a-8358-63fd4f8eb659.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/9f2bcd1c-dba3-46b0-81ab-6f8ca2fec026.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/9f2bcd1c-dba3-46b0-81ab-6f8ca2fec026.png"
         }
       },
       "version": ""
@@ -557,6 +820,96 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/a188d4ef-a7b4-4028-9107-0bd99f101e30.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/a188d4ef-a7b4-4028-9107-0bd99f101e30.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/a32bfd31-f086-44eb-be6f-b8fbb993dec2.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/a32bfd31-f086-44eb-be6f-b8fbb993dec2.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/a36b0a0f-361c-4d7d-994e-eeef74bebaec.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/a36b0a0f-361c-4d7d-994e-eeef74bebaec.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/ad71ff83-1ef8-45b0-9e21-2e05c0075935.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/ad71ff83-1ef8-45b0-9e21-2e05c0075935.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/b4541721-315d-4189-b9fc-b3002d1596c8.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/b4541721-315d-4189-b9fc-b3002d1596c8.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/bce43a30-8b45-414f-b656-200d5551f88e.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/bce43a30-8b45-414f-b656-200d5551f88e.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/bcf90266-2493-4e1c-8f54-8d37b4e4e4a7.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/bcf90266-2493-4e1c-8f54-8d37b4e4e4a7.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/bfdff689-3382-451c-872a-5f566bacdca2.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/bfdff689-3382-451c-872a-5f566bacdca2.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/c5ecf7de-7ac5-488a-806b-93c271cb5998.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/c5ecf7de-7ac5-488a-806b-93c271cb5998.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/cADNNtfdn8.png",
       "output": {
         "resource": {
@@ -577,20 +930,20 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "images/changelog-config-noEmojis.js",
+      "source_relative_path": "images/cbaff73a-7ad7-489d-bb15-2fb847f6904e.png",
       "output": {
         "resource": {
-          "relative_path": "images/changelog-config-noEmojis.js"
+          "relative_path": "images/cbaff73a-7ad7-489d-bb15-2fb847f6904e.png"
         }
       },
       "version": ""
     },
     {
       "type": "Resource",
-      "source_relative_path": "images/changelog-config.js",
+      "source_relative_path": "images/d41917da-ccc6-410f-864d-53f1d5d1cdbb.png",
       "output": {
         "resource": {
-          "relative_path": "images/changelog-config.js"
+          "relative_path": "images/d41917da-ccc6-410f-864d-53f1d5d1cdbb.png"
         }
       },
       "version": ""
@@ -601,6 +954,86 @@
       "output": {
         "resource": {
           "relative_path": "images/dockerKeepDataOnLocal.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/e0f402f8-94c5-417f-b4c3-0566724c4b7a.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/e0f402f8-94c5-417f-b4c3-0566724c4b7a.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/e159d23c-f2b8-4884-bc0b-800bae9db096.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/e159d23c-f2b8-4884-bc0b-800bae9db096.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/ed2ba232-5b86-4f55-8ba5-9c3feb7e3c0b.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/ed2ba232-5b86-4f55-8ba5-9c3feb7e3c0b.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/ed2c9789-9939-4dc7-b8e1-80b50214c6eb.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/ed2c9789-9939-4dc7-b8e1-80b50214c6eb.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/ee2b5aa2-94be-4ebb-bfcd-2c526093dba1.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/ee2b5aa2-94be-4ebb-bfcd-2c526093dba1.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/efa2074c-d98f-49b1-a30e-8cabddd3a06d.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/efa2074c-d98f-49b1-a30e-8cabddd3a06d.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/f5e467cc-a417-4099-9e05-5ccbbdf763b0.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/f5e467cc-a417-4099-9e05-5ccbbdf763b0.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/fc6d2e6c-e9dc-477a-a28d-4243ee9948b8.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/fc6d2e6c-e9dc-477a-a28d-4243ee9948b8.png"
         }
       },
       "version": ""
@@ -1073,16 +1506,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "programming/eshop/bagisto_setup.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/eshop/bagisto_setup.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "programming/flutter/backupAndRestore.md",
       "output": {
         ".html": {
@@ -1187,6 +1610,16 @@
       "output": {
         ".html": {
           "relative_path": "programming/net/net_attributes.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/net/net_components.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/net/net_components.html"
         }
       },
       "version": ""
@@ -1556,6 +1989,16 @@
       "output": {
         ".html": {
           "relative_path": "vcs/git/gitFlow.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/git/gitServer.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/gitServer.html"
         }
       },
       "version": ""

@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#128640; Praktick&#233; použit&#237; gitu | V&#253;voj&#225;ř </title>
+      <title>Praktick&#233; použit&#237; Gitu | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#128640; Praktick&#233; použit&#237; gitu | V&#253;voj&#225;ř ">
+      <meta name="title" content="Praktick&#233; použit&#237; Gitu | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,23 +85,26 @@
         </div>
 
         <article data-uid="">
-<h1 id="-praktické-použití-gitu">🚀 Praktické použití gitu</h1>
+<h1 id="praktické-použití-gitu">Praktické použití Gitu</h1>
 
+<blockquote>
+<p>Reálné postupy pro bezpečné přepsání remote větve, force push a práci s historií commitů.</p>
+</blockquote>
 <hr>
-<h2 id="-proč-někdy-přepisujeme-vzdálenou-větev">🧐 Proč někdy přepisujeme vzdálenou větev?</h2>
+<h2 id="proč-někdy-přepisujeme-vzdálenou-větev">Proč někdy přepisujeme vzdálenou větev?</h2>
 <ul>
 <li>🔄 Po <code>rebase</code> nebo <code>commit --amend</code> se mění historie větve.</li>
 <li>🚫 Při push může vzniknout chyba <strong><code>non-fast-forward</code></strong> – remote větev má nové commity, které nejsou v lokální větvi.</li>
 <li>🛡️ Chceme zachovat vlastní změny, ale <strong>nechceme přijít o cizí práci</strong>.</li>
 </ul>
 <hr>
-<h2 id="-jak-git-chrání-historii">🛡️ Jak Git chrání historii?</h2>
+<h2 id="jak-git-chrání-historii">Jak Git chrání historii?</h2>
 <ul>
 <li>🚧 <strong>Non-fast-forward</strong> push je zablokován, aby se nechtěně nepřepsaly cizí commity.</li>
 <li>✅ Git vyžaduje explicitní potvrzení, že víš, co děláš.</li>
 </ul>
 <hr>
-<h2 id="-doporučený-workflow-krok-za-krokem">🏗️ Doporučený workflow krok za krokem</h2>
+<h2 id="doporučený-workflow-krok-za-krokem">Doporučený workflow krok za krokem</h2>
 <p>1️⃣ <strong>Aktualizuj si remote:</strong></p>
 <pre><code class="lang-bash">git fetch origin
 </code></pre>
@@ -112,19 +115,19 @@
 </code></pre>
 <p>🛡️ Přepíše vzdálenou větev <strong>jen pokud se nezměnila od tvého posledního fetch/pullu</strong>.</p>
 <hr>
-<h2 id="-co-dělat-při-chybě">❗ Co dělat při chybě?</h2>
+<h2 id="co-dělat-při-chybě">Co dělat při chybě?</h2>
 <ul>
 <li>❌ Push s <code>--force-with-lease</code> selže, pokud někdo mezitím pushnul nové změny.</li>
 <li>🔄 Stáhni je (<code>git fetch</code>), vyřeš konflikty a workflow opakuj.</li>
 </ul>
 <hr>
-<h2 id="-rizika--doporučení">⚠️ Rizika &amp; doporučení</h2>
+<h2 id="rizika--doporučení">Rizika &amp; doporučení</h2>
 <ul>
 <li>💣 <strong><code>git push --force</code></strong> přepíše remote bez kontroly – použij <strong>jen pokud jsi jediný na větvi</strong>!</li>
 <li>📢 Vždy informuj tým, pokud musíš přepisovat historii.</li>
 </ul>
 <hr>
-<h2 id="-slovníček-pojmů">🏷️ Slovníček pojmů</h2>
+<h2 id="slovníček-pojmů">Slovníček pojmů</h2>
 <ul>
 <li>⏩ <strong>Fast-forward</strong>: Push bez konfliktu, remote větev je přímo navazující.</li>
 <li>🚫 <strong>Non-fast-forward</strong>: Remote větev má nové commity, které nejsou v tvé větvi.</li>

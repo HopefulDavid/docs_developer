@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#129489;‍&#128187; JetBrains Rider – Tipy, propojen&#237; &amp; n&#225;stroje | V&#253;voj&#225;ř </title>
+      <title>JetBrains Rider – Tipy a n&#225;stroje | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#129489;‍&#128187; JetBrains Rider – Tipy, propojen&#237; &amp; n&#225;stroje | V&#253;voj&#225;ř ">
+      <meta name="title" content="JetBrains Rider – Tipy a n&#225;stroje | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,30 +85,23 @@
         </div>
 
         <article data-uid="">
-<h1 id="-jetbrains-rider--tipy-propojení--nástroje">🧑‍💻 JetBrains Rider – Tipy, propojení &amp; nástroje</h1>
+<h1 id="jetbrains-rider--tipy-a-nástroje">JetBrains Rider – Tipy a nástroje</h1>
 
 <blockquote>
-<p>🚀 Praktické rady pro efektivní práci v JetBrains Rider, propojení s Androidem, XML komentáře, klávesové zkratky a regulární výrazy.</p>
+<p>Propojení s Androidem, XML komentáře, klávesové zkratky a regulární výrazy v JetBrains Rider.</p>
 </blockquote>
 <hr>
-<h2 id="-propojení-s-mobilním-zařízením-android">📱 Propojení s mobilním zařízením (Android)</h2>
+<img src="/images/4381c952-e572-44c8-b4d3-c2da9964c008.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
+<h2 id="propojení-s-mobilním-zařízením-android">Propojení s mobilním zařízením (Android)</h2>
 <details>
-<summary><span style="color:#1E90FF;">🔗 Kompletní postup propojení</span></summary>
+<summary>Kompletní postup nastavení Android emulátoru</summary>
 <ol>
-<li><p><strong>Nastavení BIOSu (AMD CPU)</strong></p>
-<ul>
-<li>Otevřete <code>BIOS</code> → najděte konfiguraci CPU → nastavte <code>SVM</code> na <code>Enabled</code>.</li>
-</ul>
+<li><p><strong>Nastavení BIOSu (AMD CPU)</strong> – BIOS → CPU konfigurace → <code>SVM: Enabled</code></p>
 </li>
-<li><p><strong>Správa Android SDK v Rideru</strong></p>
-<ul>
-<li>Otevřete: <code>File</code> → <code>Project Structure</code> → <code>SDKs</code> → <code>Project</code> → nastavte Android SDK.</li>
-<li>SDK lze stáhnout v <code>Android Studio</code> → <code>More Actions</code> → <code>SDK Manager</code>.</li>
-</ul>
+<li><p><strong>Správa Android SDK v Rideru</strong> – <code>File → Project Structure → SDKs → Project</code> → nastav Android SDK.
+SDK lze stáhnout v Android Studio → <code>More Actions → SDK Manager</code>.</p>
 </li>
-<li><p><strong>Ověření základních komponent SDK</strong></p>
-<ul>
-<li>V sekci <code>SDK Tools</code> zkontrolujte:
+<li><p><strong>Ověření základních komponent SDK</strong> (sekce <code>SDK Tools</code>):</p>
 <table>
 <thead>
 <tr>
@@ -140,107 +133,79 @@
 </tbody>
 </table>
 </li>
-</ul>
+<li><p><strong>Nastavení proměnné prostředí:</strong>
+<code>C:\Users\&lt;YourUsername&gt;\AppData\Local\Android\Sdk\platform-tools</code></p>
 </li>
-<li><p><strong>Nastavení AVD (Android Virtual Device)</strong></p>
-<ul>
-<li>Přidejte do proměnné prostředí:<br>
-<code>C:\Users\&lt;YourUsername&gt;\AppData\Local\Android\Sdk\platform-tools</code></li>
-<li>ADB umožňuje komunikaci mezi PC a Androidem.</li>
-</ul>
-<details>
-<summary><span style="color:#E95A84;">📋 Zkontrolovat status emulátorů</span></summary>
-<pre><code class="lang-bash">adb devices
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#E95A84;">🔄 Restart ADB služby</span></summary>
-<pre><code class="lang-bash">adb kill-server
+<li><p><strong>Příkazy ADB:</strong></p>
+<pre><code class="lang-bash"># Stav emulátorů
+adb devices
+
+# Restart ADB služby
+adb kill-server
 adb start-server
 </code></pre>
-</details>
 </li>
-<li><p><strong>Propojení s mobilním zařízením</strong></p>
-<ul>
-<li>Otevřete <code>Android Studio</code> → <code>More Actions</code> → <code>Virtual Device Manager</code>.</li>
-<li>Vytvořte nové virtuální zařízení a spusťte jej.</li>
-<li>V Rideru vyberte zařízení a spusťte aplikaci.</li>
-</ul>
+<li><p><strong>Spuštění</strong> – Android Studio → <code>More Actions → Virtual Device Manager</code> → spusť virtuální zařízení → v Rideru vyber zařízení.</p>
 </li>
 </ol>
 </details>
 <hr>
-<h2 id="-xml-komentáře">📝 XML komentáře</h2>
-<details>
-<summary><span style="color:#1E90FF;">💬 Zalomení řádku v XML komentáři</span></summary>
-<ul>
-<li>Použijte:<br>
-<strong><code>&lt;para&gt;&amp;#160;&lt;/para&gt;</code></strong></li>
-</ul>
-<div class="WARNING">
-<h5>Warning</h5>
-<p><code>&lt;para&gt;&lt;/para&gt;</code> a <code>&lt;br/&gt;</code> nefungují pro zalomení řádku.</p>
-</div>
-<p><strong>Příklad:</strong></p>
+<h2 id="xml-komentáře">XML komentáře</h2>
+<h3 id="zalomení-řádku">Zalomení řádku</h3>
+<p>Pro zalomení řádku v XML dokumentačním komentáři použij <code>&lt;para&gt;&amp;#160;&lt;/para&gt;</code>:</p>
 <pre><code class="lang-csharp">/// &lt;summary&gt;
-///     This sentence shows up when the type is hovered
+///     Popis třídy nebo metody.
 ///     &lt;para&gt;&amp;#160;&lt;/para&gt;
 ///     &lt;para&gt;int PrimaryKey&lt;/para&gt;
 ///     &lt;para&gt;&amp;#160;&lt;/para&gt;
 ///     &lt;para&gt;virtual Relation Relation&lt;/para&gt;
 /// &lt;/summary&gt;
 </code></pre>
-<p>Více info: <a href="https://stackoverflow.com/questions/7279108/how-to-add-a-line-break-in-c-sharp-net-documentation">XML zalomení komentáře</a></p>
-</details>
+<div class="WARNING">
+<h5>Warning</h5>
+<p><code>&lt;para&gt;&lt;/para&gt;</code> ani <code>&lt;br/&gt;</code> pro zalomení řádku nefungují. Použij <code>&lt;para&gt;&amp;#160;&lt;/para&gt;</code>.</p>
+</div>
+<p><a href="https://stackoverflow.com/questions/7279108/how-to-add-a-line-break-in-c-sharp-net-documentation">Více informací (Stack Overflow)</a></p>
 <hr>
-<h2 id="-klávesové-zkratky">⌨️ Klávesové zkratky</h2>
-<details>
-<summary><span style="color:#1E90FF;">🔤 Parametry metody</span></summary>
-<ul>
-<li>Zobrazení informací o parametrech:<br>
-<code>Ctrl</code> + <code>Shift</code> + <code>Space</code></li>
-</ul>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🔄 Procházení seznamu</span></summary>
-<ul>
-<li>Vpřed:<br>
-<code>Ctrl</code> + <code>Shift</code> + <code>Space</code></li>
-<li>Zpět:<br>
-<code>Ctrl</code> + <code>Shift</code> + <code>P</code></li>
-</ul>
-</details>
+<h2 id="klávesové-zkratky">Klávesové zkratky</h2>
+<table>
+<thead>
+<tr>
+<th>Akce</th>
+<th>Zkratka</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Zobrazení informací o parametrech metody</td>
+<td><code>Ctrl</code> + <code>Shift</code> + <code>Space</code></td>
+</tr>
+<tr>
+<td>Procházení dopředu</td>
+<td><code>Ctrl</code> + <code>Shift</code> + <code>Space</code></td>
+</tr>
+<tr>
+<td>Procházení zpět</td>
+<td><code>Ctrl</code> + <code>Shift</code> + <code>P</code></td>
+</tr>
+</tbody>
+</table>
 <hr>
-<h2 id="-regulární-výrazy">🔍 Regulární výrazy</h2>
-<details>
-<summary><span style="color:#1E90FF;">💡 Použití proměnné v regexu</span></summary>
-<details>
-<summary><span style="color:#E95A84;">🔢 Číselná proměnná</span></summary>
-<ul>
-<li><p>Vyhledání proměnné v textu:</p>
-<pre><code class="lang-regex">&lt;h2&gt;(.*?)&lt;/h2&gt;
+<h2 id="regulární-výrazy">Regulární výrazy</h2>
+<h3 id="číselná-zachycená-skupina">Číselná zachycená skupina</h3>
+<pre><code class="lang-regex"># Vyhledání
+&lt;h2&gt;(.*?)&lt;/h2&gt;
+
+# Nahrazení
+&lt;h2&gt;Test $1&lt;/h2&gt;
 </code></pre>
-</li>
-<li><p>Nahrazení proměnné v textu:</p>
-<pre><code class="lang-regex">&lt;h2&gt;Test $1&lt;/h2&gt;
+<h3 id="pojmenovaná-zachycená-skupina">Pojmenovaná zachycená skupina</h3>
+<pre><code class="lang-regex"># Vyhledání
+&lt;h2&gt;(?&lt;customName&gt;.*?)&lt;/h2&gt;
+
+# Nahrazení
+&lt;h2&gt;Test ${customName}&lt;/h2&gt;
 </code></pre>
-</li>
-</ul>
-</details>
-<details>
-<summary><span style="color:#E95A84;">🏷️ Pojmenovaná proměnná</span></summary>
-<ul>
-<li><p>Vyhledání proměnné v textu:</p>
-<pre><code class="lang-regex">&lt;h2&gt;(?&lt;customName&gt;.*?)&lt;/h2&gt;
-</code></pre>
-</li>
-<li><p>Nahrazení proměnné v textu:</p>
-<pre><code class="lang-regex">&lt;h2&gt;Test ${customName}&lt;/h2&gt;
-</code></pre>
-</li>
-</ul>
-</details>
-</details>
 
 </article>
 

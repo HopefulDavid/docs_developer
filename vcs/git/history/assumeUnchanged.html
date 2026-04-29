@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#128450;️ Git – Lok&#225;ln&#237; ignorov&#225;n&#237; změn (assume-unchanged) | V&#253;voj&#225;ř </title>
+      <title>Git – Lok&#225;ln&#237; ignorov&#225;n&#237; změn (assume-unchanged) | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#128450;️ Git – Lok&#225;ln&#237; ignorov&#225;n&#237; změn (assume-unchanged) | V&#253;voj&#225;ř ">
+      <meta name="title" content="Git – Lok&#225;ln&#237; ignorov&#225;n&#237; změn (assume-unchanged) | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../../favicon.ico">
@@ -85,22 +85,28 @@
         </div>
 
         <article data-uid="">
+<h1 id="git--lokální-ignorování-změn-assume-unchanged">Git – Lokální ignorování změn (<code>assume-unchanged</code>)</h1>
 
-<p>Zde je moderní návod v 3. osobě pro soubor <code>vcs/git/history/assumeUnchanged.md</code>:</p>
-<h1 id="-git--lokální-ignorování-změn-assume-unchanged">🗂️ Git – Lokální ignorování změn (<code>assume-unchanged</code>)</h1>
 <blockquote>
-<p>🚀 Praktické rady, jak lze <strong>lokálně ignorovat změny</strong> ve složce nebo souborech, aniž by se to projevilo na vzdáleném repozitáři.</p>
+<p>Praktické rady, jak lze <strong>lokálně ignorovat změny</strong> ve složce nebo souborech, aniž by se to projevilo na vzdáleném repozitáři.</p>
 </blockquote>
 <hr>
-<h2 id="-kdy-použít">🧐 Kdy použít?</h2>
+<img src="/images/b4541721-315d-4189-b9fc-b3002d1596c8.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
+<h2 id="kdy-použít">Kdy použít?</h2>
 <ul>
 <li>Pokud je potřeba <strong>fyzicky smazat</strong> nebo upravit soubory/složku pouze lokálně, ale <strong>neovlivnit remote</strong> při push.</li>
 <li>Když má Git <strong>ignorovat změny</strong> v konkrétních souborech/složkách pouze na daném počítači.</li>
 </ul>
 <hr>
-<h2 id="-postup-krok-za-krokem">📋 Postup krok za krokem</h2>
+<h2 id="postup-krok-za-krokem">Postup krok za krokem</h2>
+<div class="NOTE">
+<h5>Note</h5>
+<p>xargs = „vezmi řádky a udělej z nich parametry“</p>
+<p>Takže například <code>git ls-files a.txt b.txt</code> vypíše <code>a.txt</code> a <code>b.txt</code>, a <code>xargs git update-index --assume-unchanged</code> spustí příkaz pro oba soubory:
+<code>git update-index --assume-unchanged a.txt b.txt</code></p>
+</div>
 <details>
-<summary><span style="color:#1E90FF;">🧹 Ignorování změn ve složce/souborech</span></summary>
+<summary>Ignorování změn ve složce/souborech</summary>
 <pre><code class="lang-bash">git ls-files cesta/xxx/Directory | xargs git update-index --assume-unchanged
 </code></pre>
 <ul>
@@ -118,7 +124,7 @@
 </details>
 <hr>
 <details>
-<summary><span style="color:#1E90FF;">🔄 Vrácení zpět (opětovné sledování změn)</span></summary>
+<summary>Vrácení zpět (opětovné sledování změn)</summary>
 <pre><code class="lang-bash">git ls-files cesta/xxx/Directory | xargs git update-index --no-assume-unchanged
 </code></pre>
 <ul>
@@ -126,20 +132,20 @@
 </ul>
 </details>
 <hr>
-<h2 id="-upozornění-na-rizika">⚠️ Upozornění na rizika</h2>
+<h2 id="upozornění-na-rizika">Upozornění na rizika</h2>
 <ul>
 <li><strong>Změny jsou pouze lokální</strong> – ostatní členové týmu je nevidí.</li>
 <li>Pokud se commitne smazání nebo úprava souborů, push už remote ovlivní.</li>
 <li>Vhodné pro dočasné úpravy, testování, nebo když je potřeba něco skrýt před Gitem.</li>
 </ul>
 <hr>
-<h2 id="-slovníček-pojmů">🏷️ Slovníček pojmů</h2>
+<h2 id="slovníček-pojmů">Slovníček pojmů</h2>
 <ul>
 <li><strong>assume-unchanged</strong>: Git ignoruje změny v souboru/složce pouze na daném počítači.</li>
 <li><strong>no-assume-unchanged</strong>: Git opět začne změny sledovat.</li>
 </ul>
 <hr>
-<h2 id="-shrnutí">💡 Shrnutí</h2>
+<h2 id="shrnutí">Shrnutí</h2>
 <ul>
 <li>Lokální ignorování změn je <strong>bezpečné</strong> pro push, dokud se necommitne smazání nebo úprava.</li>
 <li>Remote repozitář zůstane <strong>beze změny</strong>.</li>

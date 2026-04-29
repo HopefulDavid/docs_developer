@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#128444;️ Unity 2D – Tilemap, Sprity &amp; Tipy | V&#253;voj&#225;ř </title>
+      <title>Unity 2D – Tilemap, Sprity &amp; Tipy | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#128444;️ Unity 2D – Tilemap, Sprity &amp; Tipy | V&#253;voj&#225;ř ">
+      <meta name="title" content="Unity 2D – Tilemap, Sprity &amp; Tipy | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,20 +85,20 @@
         </div>
 
         <article data-uid="">
-<h1 id="-unity-2d--tilemap-sprity--tipy">🖼️ Unity 2D – Tilemap, Sprity &amp; Tipy</h1>
+<h1 id="unity-2d--tilemap-sprity--tipy">Unity 2D – Tilemap, Sprity &amp; Tipy</h1>
 
 <blockquote>
-<p>🚀 Praktické rady pro práci s 2D grafikou v Unity, nastavení Tilemap, velikosti obrázků, animace a řešení běžných problémů.</p>
+<p>Praktické rady pro práci s 2D grafikou v Unity, nastavení Tilemap, velikosti obrázků, animace a řešení běžných problémů.</p>
 </blockquote>
 <hr>
-<h2 id="-tilemap-vs-sprite-renderer">🧩 Tilemap vs Sprite Renderer</h2>
+<h2 id="tilemap-vs-sprite-renderer">Tilemap vs Sprite Renderer</h2>
 <p><img src="../../images/Vz1J4Pij2Z.png" alt=""></p>
 <hr>
-<h2 id="-tilemap">🗺️ Tilemap</h2>
+<h2 id="tilemap">Tilemap</h2>
 <details>
-<summary><span style="color:#1E90FF;">🎨 Vykreslení a nastavení barvy dlaždic</span></summary>
+<summary>Vykreslení a nastavení barvy dlaždic</summary>
 <blockquote>
-<p>⚠️ Kód funguje pouze pokud je rozdělen do dvou cyklů.</p>
+<p>Kód funguje pouze pokud je rozdělen do dvou cyklů.</p>
 </blockquote>
 <pre><code class="lang-csharp">public void GenerateTilemap(int width, int height, Color color)
 {
@@ -120,13 +120,13 @@
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">📏 Pravidla pro Tilemap</span></summary>
+<summary>Pravidla pro Tilemap</summary>
 <p><img src="../../images/TtTAcQSAM1.png" alt=""></p>
 </details>
 <hr>
-<h2 id="-velikost-obrázku">🖼️ Velikost obrázku</h2>
+<h2 id="velikost-obrázku">Velikost obrázku</h2>
 <details>
-<summary><span style="color:#1E90FF;">📐 Definice velikostí</span></summary>
+<summary>Definice velikostí</summary>
 <table>
 <thead>
 <tr>
@@ -179,14 +179,14 @@
 </tbody>
 </table>
 <blockquote>
-<p>📌 Používejte mocniny čísla 2 pro optimální výkon.</p>
+<p>Používejte mocniny čísla 2 pro optimální výkon.</p>
 </blockquote>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">⚙️ Nastavení velikosti (PPU)</span></summary>
+<summary>Nastavení velikosti (PPU)</summary>
 <p><img src="../../images/VwxJhRuC8S.png" alt=""></p>
 <blockquote>
-<p>⚠️ <strong>Pixel Per Unit (PPU)</strong> určuje, kolik pixelů tvoří jednu jednotku v Unity. Nastavte podle velikosti grafiky pro správné zobrazení.</p>
+<p><strong>Pixel Per Unit (PPU)</strong> určuje, kolik pixelů tvoří jednu jednotku v Unity. Nastavte podle velikosti grafiky pro správné zobrazení.</p>
 </blockquote>
 <table>
 <thead>
@@ -214,11 +214,11 @@
 </blockquote>
 </details>
 <hr>
-<h2 id="-animace-obrázku">🎬 Animace obrázku</h2>
+<h2 id="animace-obrázku">Animace obrázku</h2>
 <details>
-<summary><span style="color:#1E90FF;">🦴 Hloubka (Depth) u kostí</span></summary>
+<summary>Hloubka (Depth) u kostí</summary>
 <blockquote>
-<p>🗝️ Hloubka ovlivňuje pořadí vykreslení Sprite Mesh.</p>
+<p>Hloubka ovlivňuje pořadí vykreslení Sprite Mesh.</p>
 </blockquote>
 <ol>
 <li>Otevři <code>Sprite Editor</code></li>
@@ -228,7 +228,7 @@
 <img src="../../images/2D_rigging_depth.png" alt="2D_rigging_depth.png">
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🦴 Univerzální Rigging</span></summary>
+<summary>Univerzální Rigging</summary>
 <ol>
 <li>Otevři <code>Sprite Editor</code></li>
 <li>Přepni do <code>Skinning Editor</code> (aktivuj <code>Visibility</code>)</li>
@@ -236,31 +236,31 @@
 <li>Nastav Geometry a Weights</li>
 </ol>
 <blockquote>
-<p>⚠️ Pokud se část nevykresluje barevně, zkontroluj nastavení posuvníků:</p>
+<p>Pokud se část nevykresluje barevně, zkontroluj nastavení posuvníků:</p>
 </blockquote>
 <img src="../../images/2D_rigging_skinWeight.png" alt="2D_rigging_skinWeight.png">
 <ol start="4">
-<li>Zkopíruj rig<br>
+<li>Zkopíruj rig
 <img src="../../images/2D_rigging_copy.png" alt="2D_rigging_copy.png"></li>
 <li>Otevři nový sprite</li>
-<li>Vlož rig<br>
+<li>Vlož rig
 <img src="../../images/2D_rigging_paste.png" alt="2D_rigging_paste.png"></li>
 </ol>
 </details>
 <hr>
-<h2 id="-řešení-chyb-při-vykreslování-sprite">🛠️ Řešení chyb při vykreslování sprite</h2>
+<h2 id="řešení-chyb-při-vykreslování-sprite">Řešení chyb při vykreslování sprite</h2>
 <blockquote>
-<p>🟢 Na kameře musí být komponenta <code>Pixel Perfect Camera</code> pro 2D!</p>
+<p>Na kameře musí být komponenta <code>Pixel Perfect Camera</code> pro 2D!</p>
 </blockquote>
 <details>
-<summary><span style="color:#1E90FF;">🖤 Černé čáry</span></summary>
+<summary>Černé čáry</summary>
 <img src="../../images/2D_sprite_blackLines.png" alt="2D_sprite_blackLines.png">
 <p><strong>Řešení:</strong></p>
 <ul>
-<li><p>Zkontroluj umístění obrázku<br>
+<li><p>Zkontroluj umístění obrázku
 <img src="../../images/2D_sprite_blackLines_solution.png" alt="2D_sprite_blackLines_solution.png"></p>
 </li>
-<li><p>Nastav padding v <code>TexturePacker</code><br>
+<li><p>Nastav padding v <code>TexturePacker</code>
 <img src="../../images/2D_sprite_blackLines_solution2.png" alt="2D_sprite_blackLines_solution2.png"></p>
 </li>
 </ul>
@@ -283,11 +283,11 @@
 </tbody>
 </table>
 <blockquote>
-<p>📌 Zvyš padding, pokud se problém opakuje.</p>
+<p>Zvyš padding, pokud se problém opakuje.</p>
 </blockquote>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">✨ Problikávání</span></summary>
+<summary>Problikávání</summary>
 <p>Zkontroluj měřítko v herním okně, že je nastaveno na <strong>1x</strong>.</p>
 <img src="../../images/2D_sprite_blackLines_solutionCamera.png" alt="2D_sprite_blackLines_solutionCamera.png">
 </details>

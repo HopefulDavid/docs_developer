@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#129302; Ollama – Průvodce instalac&#237; &amp; spr&#225;vou | V&#253;voj&#225;ř </title>
+      <title>Ollama - Lok&#225;ln&#237; LLM (Large Language Model) pro Windows | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#129302; Ollama – Průvodce instalac&#237; &amp; spr&#225;vou | V&#253;voj&#225;ř ">
+      <meta name="title" content="Ollama - Lok&#225;ln&#237; LLM (Large Language Model) pro Windows | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,36 +85,55 @@
         </div>
 
         <article data-uid="">
-<h1 id="-ollama--průvodce-instalací--správou">🤖 Ollama – Průvodce instalací &amp; správou</h1>
+<h1 id="ollama---lokální-llm-large-language-model-pro-windows">Ollama - Lokální LLM (Large Language Model) pro Windows</h1>
 
 <blockquote>
-<p>🚀 Praktické rady pro nastavení, spuštění a správu Ollama na Windows.</p>
+<p>Průvodce nastavením, spuštěním a správou Ollama na Windows.</p>
 </blockquote>
 <hr>
-<h2 id="-základní-informace">🌐 Základní informace</h2>
+<img src="/images/cbaff73a-7ad7-489d-bb15-2fb847f6904e.png" alt="Ollama" style="width: 100%; max-width: 950px; display: block; border-radius: 8px;">
+<h2 id="základní-informace">Základní informace</h2>
 <ul>
-<li>Ollama naslouchá na adrese:<br>
-<a href="http://127.0.0.1:11434/">http://127.0.0.1:11434/</a></li>
+<li>Ollama naslouchá na adrese: <a href="http://127.0.0.1:11434/">http://127.0.0.1:11434/</a></li>
 <li>Pro spuštění je nutné spustit soubor <code>ollama app.exe</code>.</li>
 </ul>
 <hr>
-<h2 id="-změna-naslouchací-adresy">⚙️ Změna naslouchací adresy</h2>
-<details>
-<summary><span style="color:#1E90FF;">🔧 Nastavení OLLAMA_HOST</span></summary>
+<h2 id="příkazy-pro-správu-modelů">Příkazy pro správu modelů</h2>
+<table>
+<thead>
+<tr>
+<th>Příkaz</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ollama list</code></td>
+<td>Zobrazí nainstalované modely</td>
+</tr>
+<tr>
+<td><code>ollama run [model]</code></td>
+<td>Stáhne a spustí model</td>
+</tr>
+<tr>
+<td><code>ollama rm [model]</code></td>
+<td>Odstraní model</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="změna-naslouchací-adresy">Změna naslouchací adresy</h2>
 <ol>
 <li>Otevřete <strong>System variables</strong> ve Windows.</li>
-<li>Přidejte proměnnou prostředí <strong><code>OLLAMA_HOST</code></strong> s požadovanou adresou.</li>
+<li>Přidejte proměnnou prostředí <code>OLLAMA_HOST</code> s požadovanou adresou.</li>
 <li>Restartujte aplikaci <code>ollama app.exe</code>.</li>
 </ol>
 <div class="IMPORTANT">
 <h5>Important</h5>
 <p>Změna se projeví až po restartu aplikace.</p>
 </div>
-</details>
 <hr>
-<h2 id="-vypnutí-automatického-spuštění">🛑 Vypnutí automatického spuštění</h2>
-<details>
-<summary><span style="color:#1E90FF;">🛠️ Jak zakázat autostart Ollama</span></summary>
+<h2 id="vypnutí-automatického-spuštění">Vypnutí automatického spuštění</h2>
 <ol>
 <li>Stiskněte <code>Windows</code> + <code>R</code>.</li>
 <li>Zadejte <code>shell:startup</code> a potvrďte.</li>
@@ -122,26 +141,8 @@
 </ol>
 <div class="NOTE">
 <h5>Note</h5>
-<p>Ollama se ve výchozím stavu spouští při startu počítače.</p>
+<p>Ollama se ve výchozím stavu spouští automaticky při startu počítače.</p>
 </div>
-</details>
-<hr>
-<h2 id="-příkazy-pro-správu-modelů">📝 Příkazy pro správu modelů</h2>
-<details>
-<summary><span style="color:#1E90FF;">📦 Zobrazení nainstalovaných modulů</span></summary>
-<pre><code class="lang-bash">ollama list
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">⬇️ Stažení modelu</span></summary>
-<pre><code class="lang-bash">ollama run [model]
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🗑️ Odstranění modelu</span></summary>
-<pre><code class="lang-bash">ollama rm [model]
-</code></pre>
-</details>
 
 </article>
 

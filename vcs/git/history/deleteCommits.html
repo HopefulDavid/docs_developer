@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#128450;️ Git – Nahrazen&#237; vzd&#225;len&#233; větve z lok&#225;ln&#237; větve | V&#253;voj&#225;ř </title>
+      <title>Git – Nahrazen&#237; vzd&#225;len&#233; větve z lok&#225;ln&#237; větve | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#128450;️ Git – Nahrazen&#237; vzd&#225;len&#233; větve z lok&#225;ln&#237; větve | V&#253;voj&#225;ř ">
+      <meta name="title" content="Git – Nahrazen&#237; vzd&#225;len&#233; větve z lok&#225;ln&#237; větve | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../../favicon.ico">
@@ -85,22 +85,23 @@
         </div>
 
         <article data-uid="">
-<h1 id="-git--nahrazení-vzdálené-větve-z-lokální-větve">🗂️ Git – Nahrazení vzdálené větve z lokální větve</h1>
+<h1 id="git--nahrazení-vzdálené-větve-z-lokální-větve">Git – Nahrazení vzdálené větve z lokální větve</h1>
 
 <blockquote>
-<p>🚀 Praktický návod, jak kompletně nahradit historii vzdálené větve pomocí nové lokální větve.</p>
+<p>Praktický návod, jak kompletně nahradit historii vzdálené větve pomocí nové lokální větve.</p>
 </blockquote>
 <hr>
-<h2 id="-kdy-použít-tento-postup">📝 Kdy použít tento postup?</h2>
+<img src="/images/8c61359f-a49a-4600-a86a-961c4a3dfe9d.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
+<h2 id="kdy-použít-tento-postup">Kdy použít tento postup?</h2>
 <ul>
 <li>Chceš začít s čistou historií commitů (např. po refaktoringu).</li>
 <li>Potřebuješ odstranit veškerou předchozí historii z hlavní větve (<code>main</code>/<code>master</code>).</li>
 <li>Vhodné pro projekty, kde je nutné kompletní &quot;reset&quot; repozitáře.</li>
 </ul>
 <hr>
-<h2 id="-postup-krok-za-krokem">📋 Postup krok za krokem</h2>
+<h2 id="postup-krok-za-krokem">Postup krok za krokem</h2>
 <details>
-<summary><span style="color:#1E90FF;">🌱 Krok 1: Vytvoření nové větve bez historie</span></summary>
+<summary>Krok 1: Vytvoření nové větve bez historie</summary>
 <pre><code class="lang-bash">git checkout --orphan latest_branch
 </code></pre>
 <ul>
@@ -112,7 +113,7 @@
 </div>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">📥 Krok 2: Přidání všech souborů</span></summary>
+<summary>Krok 2: Přidání všech souborů</summary>
 <pre><code class="lang-bash">git add -A
 </code></pre>
 <ul>
@@ -120,7 +121,7 @@
 </ul>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">✅ Krok 3: První commit</span></summary>
+<summary>Krok 3: První commit</summary>
 <pre><code class="lang-bash">git commit -am &quot;Initialize commit&quot;
 </code></pre>
 <ul>
@@ -132,7 +133,7 @@
 </div>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🗑️ Krok 4: Smazání původní hlavní větve</span></summary>
+<summary>Krok 4: Smazání původní hlavní větve</summary>
 <pre><code class="lang-bash">git branch -D main
 </code></pre>
 <ul>
@@ -144,7 +145,7 @@
 </div>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🔄 Krok 5: Přejmenování nové větve na hlavní</span></summary>
+<summary>Krok 5: Přejmenování nové větve na hlavní</summary>
 <pre><code class="lang-bash">git branch -m main
 </code></pre>
 <ul>
@@ -156,7 +157,7 @@
 </div>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🚀 Krok 6: Force push do vzdáleného repozitáře</span></summary>
+<summary>Krok 6: Force push do vzdáleného repozitáře</summary>
 <pre><code class="lang-bash">git push -f origin main
 </code></pre>
 <ul>

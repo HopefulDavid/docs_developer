@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#128450;️ Microsoft SQL – Praktick&#233; dotazy &amp; tipy | V&#253;voj&#225;ř </title>
+      <title>Microsoft SQL – Praktick&#233; dotazy &amp; tipy | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#128450;️ Microsoft SQL – Praktick&#233; dotazy &amp; tipy | V&#253;voj&#225;ř ">
+      <meta name="title" content="Microsoft SQL – Praktick&#233; dotazy &amp; tipy | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,16 +85,17 @@
         </div>
 
         <article data-uid="">
-<h1 id="-microsoft-sql--praktické-dotazy--tipy">🗂️ Microsoft SQL – Praktické dotazy &amp; tipy</h1>
+<h1 id="microsoft-sql--praktické-dotazy--tipy">Microsoft SQL – Praktické dotazy &amp; tipy</h1>
 
 <blockquote>
-<p>🚀 Moderní přehled SQL dotazů, postupů a tipů pro práci s Microsoft SQL Serverem.</p>
+<p>Moderní přehled SQL dotazů, postupů a tipů pro práci s Microsoft SQL Serverem.</p>
 </blockquote>
 <hr>
-<h2 id="-získání-informací-o-serveru-a-databázi">🔎 Získání informací o serveru a databázi</h2>
+<img src="/images/10336033-b701-48a9-abdf-aa59500e77cf.png" alt="" style="width: 60%; display: block; border-radius: 8px;">
+<h2 id="získání-informací-o-serveru-a-databázi">Získání informací o serveru a databázi</h2>
 <details>
-<summary><span style="color:#1E90FF;">🖥️ Informace ze serveru</span></summary>
-<pre><code class="lang-sql">SELECT 
+<summary>Informace ze serveru</summary>
+<pre><code class="lang-sql">SELECT
     SERVERPROPERTY('MachineName') AS MachineName,
     SERVERPROPERTY('ServerName') AS ServerName,
     SERVERPROPERTY('InstanceName') AS InstanceName,
@@ -107,57 +108,57 @@
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">📋 Informace z tabulky</span></summary>
+<summary>Informace z tabulky</summary>
 <pre><code class="lang-sql">DECLARE @tableName NVARCHAR(128) = N'place_table_name';
 
-SELECT 
+SELECT
     C.TABLE_SCHEMA as 'Namespace',
     C.TABLE_NAME as 'Název tabulky',
-    C.COLUMN_NAME as 'Název sloupce', 
-    C.DATA_TYPE as 'Typ dat', 
-    C.IS_NULLABLE as 'Může být NULL ?', 
+    C.COLUMN_NAME as 'Název sloupce',
+    C.DATA_TYPE as 'Typ dat',
+    C.IS_NULLABLE as 'Může být NULL ?',
     T.TABLE_TYPE as 'Typ tabulky'
-FROM 
+FROM
     INFORMATION_SCHEMA.COLUMNS C
 INNER JOIN
     INFORMATION_SCHEMA.TABLES T
 ON
     C.TABLE_NAME = T.TABLE_NAME AND C.TABLE_SCHEMA = T.TABLE_SCHEMA
-WHERE 
+WHERE
     C.TABLE_NAME = @tableName
-ORDER BY 
+ORDER BY
     C.ORDINAL_POSITION;
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">📏 Velikost tabulek</span></summary>
-<pre><code class="lang-sql">SELECT 
+<summary>Velikost tabulek</summary>
+<pre><code class="lang-sql">SELECT
     t.NAME AS [Název tabulky],
     s.Name AS [Název schématu],
     p.rows AS [Počet řádků],
-    CONVERT(NVARCHAR, CAST(SUM(a.total_pages) * 8 / 1024.0 / 1024.0 AS DECIMAL(10, 2))) 
+    CONVERT(NVARCHAR, CAST(SUM(a.total_pages) * 8 / 1024.0 / 1024.0 AS DECIMAL(10, 2)))
         + ' GB (' + CONVERT(NVARCHAR, CAST((SUM(a.total_pages) * 8 / 1024.0) AS INT)) + ' MB)' AS [Celkový prostor],
-    CONVERT(NVARCHAR, CAST(SUM(a.used_pages) * 8 / 1024.0 / 1024.0 AS DECIMAL(10, 2))) 
+    CONVERT(NVARCHAR, CAST(SUM(a.used_pages) * 8 / 1024.0 / 1024.0 AS DECIMAL(10, 2)))
         + ' GB (' + CONVERT(NVARCHAR, CAST((SUM(a.used_pages) * 8 / 1024.0) AS INT)) + ' MB)' AS [Využitý prostor],
-    CONVERT(NVARCHAR, CAST((SUM(a.total_pages) - SUM(a.used_pages)) * 8 / 1024.0 / 1024.0 AS DECIMAL(10, 2))) 
+    CONVERT(NVARCHAR, CAST((SUM(a.total_pages) - SUM(a.used_pages)) * 8 / 1024.0 / 1024.0 AS DECIMAL(10, 2)))
         + ' GB (' + CONVERT(NVARCHAR, CAST(((SUM(a.total_pages) - SUM(a.used_pages)) * 8 / 1024.0) AS INT)) + ' MB)' AS [Nevyužitý prostor]
-FROM 
+FROM
     sys.tables t
-INNER JOIN      
+INNER JOIN
     sys.indexes i ON t.OBJECT_ID = i.object_id
-INNER JOIN 
+INNER JOIN
     sys.partitions p ON i.object_id = p.OBJECT_ID AND i.index_id = p.index_id
-INNER JOIN 
+INNER JOIN
     sys.allocation_units a ON p.partition_id = a.container_id
-LEFT OUTER JOIN 
+LEFT OUTER JOIN
     sys.schemas s ON t.schema_id = s.schema_id
-WHERE 
-    t.NAME NOT LIKE 'dt%' 
+WHERE
+    t.NAME NOT LIKE 'dt%'
     AND t.is_ms_shipped = 0
-    AND i.OBJECT_ID &gt; 255 
-GROUP BY 
+    AND i.OBJECT_ID &gt; 255
+GROUP BY
     t.Name, s.Name, p.Rows
-ORDER BY 
+ORDER BY
     SUM(a.total_pages) * 8 / 1024.0 / 1024.0 DESC;
 </code></pre>
 <div class="NOTE">
@@ -166,34 +167,34 @@ ORDER BY
 </div>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🗂️ Informace o indexech na sloupcích</span></summary>
+<summary>Informace o indexech na sloupcích</summary>
 <div class="TIP">
 <h5>Tip</h5>
 <p>Indexy jsou nejefektivnější, když jsou často čteny a málo aktualizovány.</p>
 </div>
-<pre><code class="lang-sql">SELECT 
+<pre><code class="lang-sql">SELECT
     OBJECT_NAME(s.object_id) AS 'Table',
     i.name AS 'Index',
     user_seeks + user_scans + user_lookups AS 'Reads',
     user_updates AS 'Updates'
-FROM 
-    sys.dm_db_index_usage_stats AS s 
-JOIN 
-    sys.indexes AS i 
-ON 
-    s.object_id = i.object_id 
-AND 
+FROM
+    sys.dm_db_index_usage_stats AS s
+JOIN
+    sys.indexes AS i
+ON
+    s.object_id = i.object_id
+AND
     i.index_id = s.index_id
-WHERE 
+WHERE
     OBJECTPROPERTY(s.object_id,'IsUserTable') = 1
-ORDER BY 
+ORDER BY
     'Reads' DESC, 'Updates' ASC
 </code></pre>
 </details>
 <hr>
-<h2 id="-hledání-v-databázi">🔍 Hledání v databázi</h2>
+<h2 id="hledání-v-databázi">Hledání v databázi</h2>
 <details>
-<summary><span style="color:#1E90FF;">🔎 Najít tabulku podle sloupce</span></summary>
+<summary>Najít tabulku podle sloupce</summary>
 <ul>
 <li><strong>Komplexní informace:</strong></li>
 </ul>
@@ -208,22 +209,22 @@ ORDER BY schema_name, table_name;
 <ul>
 <li><strong>Základní informace:</strong></li>
 </ul>
-<pre><code class="lang-sql">SELECT TABLE_NAME, COLUMN_NAME 
+<pre><code class="lang-sql">SELECT TABLE_NAME, COLUMN_NAME
 FROM INFORMATION_SCHEMA.COLUMNS
 WHERE COLUMN_NAME LIKE '%place_column_name%'
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🔢 Datový typ sloupce z tabulky</span></summary>
-<pre><code class="lang-sql">SELECT DATA_TYPE 
+<summary>Datový typ sloupce z tabulky</summary>
+<pre><code class="lang-sql">SELECT DATA_TYPE
 FROM INFORMATION_SCHEMA.COLUMNS
-WHERE 
-     TABLE_NAME = 'place_table_name' 
+WHERE
+     TABLE_NAME = 'place_table_name'
 AND  COLUMN_NAME = 'place_column_name'
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🔍 Hledat hodnotu ve všech textových a číselných sloupcích</span></summary>
+<summary>Hledat hodnotu ve všech textových a číselných sloupcích</summary>
 <blockquote>
 <p>Prohledává textové i číselné hodnoty napříč všemi tabulkami a sloupci vybrané databáze.</p>
 </blockquote>
@@ -233,27 +234,27 @@ CREATE TABLE #Results (ColumnName nvarchar(370), ColumnValue nvarchar(3630))
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">⏳ Nejnovější a nejstarší záznam</span></summary>
+<summary>Nejnovější a nejstarší záznam</summary>
 <pre><code class="lang-sql">SELECT MIN(date_column) as Oldest, MAX(date_column) as Newest FROM table_name;
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">📊 Nejčastěji se vyskytující hodnoty</span></summary>
-<pre><code class="lang-sql">SELECT place_column_name, COUNT(*) 
-FROM place_table_name 
-GROUP BY place_column_name 
+<summary>Nejčastěji se vyskytující hodnoty</summary>
+<pre><code class="lang-sql">SELECT place_column_name, COUNT(*)
+FROM place_table_name
+GROUP BY place_column_name
 ORDER BY COUNT(*) DESC;
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🔌 Port na kterém je spuštěn server</span></summary>
+<summary>Port na kterém je spuštěn server</summary>
 <pre><code class="lang-sql">EXEC xp_readerrorlog 0, 1, N'Server is listening on';
 </code></pre>
 </details>
 <hr>
-<h2 id="-výkon-a-statistiky">⚡ Výkon a statistiky</h2>
+<h2 id="výkon-a-statistiky">Výkon a statistiky</h2>
 <details>
-<summary><span style="color:#1E90FF;">📈 Efektivita dotazů</span></summary>
+<summary>Efektivita dotazů</summary>
 <ul>
 <li><p><strong>SQL Server Management Studio:</strong></p>
 <ol>
@@ -274,14 +275,14 @@ SET STATISTICS TIME OFF;
 </code></pre>
 </details>
 <hr>
-<h2 id="-konfigurace">⚙️ Konfigurace</h2>
+<h2 id="konfigurace">Konfigurace</h2>
 <details>
-<summary><span style="color:#1E90FF;">🌐 Vzdálený přístup</span></summary>
+<summary>Vzdálený přístup</summary>
 <pre><code class="lang-sql">EXEC sp_configure 'remote access';
 </code></pre>
 <div class="NOTE">
 <h5>Note</h5>
-<p><code>run_value = 1</code> znamená, že vzdálený přístup je povolen.<br>
+<p><code>run_value = 1</code> znamená, že vzdálený přístup je povolen.
 Pokud je hodnota 0, povolte vzdálený přístup příkazem:</p>
 <pre><code class="lang-sql">EXEC sp_configure 'remote access', 1;
 RECONFIGURE;
@@ -289,31 +290,41 @@ RECONFIGURE;
 </div>
 </details>
 <hr>
-<h2 id="-spojování-tabulek">🔗 Spojování tabulek</h2>
-<details>
-<summary><span style="color:#E95A84;">⬅️ LEFT JOIN</span></summary>
-Vrátí všechny řádky z první tabulky, druhá tabulka může být `NULL`.
-</details>
-<details>
-<summary><span style="color:#E95A84;">➡️ RIGHT JOIN</span></summary>
-Vrátí všechny řádky z druhé tabulky, první tabulka může být `NULL`.
-</details>
-<details>
-<summary><span style="color:#E95A84;">🔄 FULL OUTER JOIN</span></summary>
-Vrátí všechny řádky z obou tabulek, neexistující hodnoty budou `NULL`.
-</details>
-<details>
-<summary><span style="color:#E95A84;">🔗 INNER JOIN</span></summary>
-Vrátí pouze řádky, které mají odpovídající hodnoty v obou tabulkách.
-</details>
-<details>
-<summary><span style="color:#E95A84;">🔍 CROSS APPLY</span></summary>
-Umožňuje poddotaz pro každý řádek z první tabulky.
-</details>
+<h2 id="spojování-tabulek">Spojování tabulek</h2>
+<table>
+<thead>
+<tr>
+<th>Typ JOIN</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LEFT JOIN</strong></td>
+<td>Vrátí všechny řádky z první tabulky; druhá tabulka může být <code>NULL</code></td>
+</tr>
+<tr>
+<td><strong>RIGHT JOIN</strong></td>
+<td>Vrátí všechny řádky z druhé tabulky; první tabulka může být <code>NULL</code></td>
+</tr>
+<tr>
+<td><strong>FULL OUTER JOIN</strong></td>
+<td>Vrátí všechny řádky z obou tabulek; neexistující hodnoty jsou <code>NULL</code></td>
+</tr>
+<tr>
+<td><strong>INNER JOIN</strong></td>
+<td>Vrátí pouze řádky s odpovídajícími hodnotami v obou tabulkách</td>
+</tr>
+<tr>
+<td><strong>CROSS APPLY</strong></td>
+<td>Umožňuje poddotaz pro každý řádek z první tabulky</td>
+</tr>
+</tbody>
+</table>
 <hr>
-<h2 id="-spojování-hodnot-ze-sloupce-do-řetězce">🧵 Spojování hodnot ze sloupce do řetězce</h2>
+<h2 id="spojování-hodnot-ze-sloupce-do-řetězce">Spojování hodnot ze sloupce do řetězce</h2>
 <details>
-<summary><span style="color:#1E90FF;">🔗 STRING_AGG</span></summary>
+<summary>STRING_AGG</summary>
 <pre><code class="lang-sql">SELECT STRING_AGG(column_name, ';') AS concatenated_values
 FROM table_name
 GROUP BY grouping_column

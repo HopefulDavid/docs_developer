@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#129518; .NET – Metody &amp; Parametry | V&#253;voj&#225;ř </title>
+      <title>.NET – Metody a parametry | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#129518; .NET – Metody &amp; Parametry | V&#253;voj&#225;ř ">
+      <meta name="title" content=".NET – Metody a parametry | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,222 +85,205 @@
         </div>
 
         <article data-uid="">
-<h1 id="-net--metody--parametry">🧮 .NET – Metody &amp; Parametry</h1>
+<h1 id="net--metody-a-parametry">.NET – Metody a parametry</h1>
 
 <blockquote>
-<p>🚀 Praktické rady pro práci s metodami v .NET, typy parametrů, delegáty, asynchronní a paralelní zpracování.</p>
+<p>Typy parametrů, druhy metod, delegáty, asynchronní a paralelní zpracování v C#.</p>
 </blockquote>
 <hr>
-<h2 id="-základní-pojmy">🗂️ Základní pojmy</h2>
-<details>
-<summary><span style="color:#1E90FF;">🔍 Parametr vs. Argument</span></summary>
+<h2 id="základní-pojmy">Základní pojmy</h2>
 <ul>
 <li><strong>Parametr</strong> – proměnná v definici metody.</li>
 <li><strong>Argument</strong> – skutečná hodnota předaná při volání metody.</li>
 </ul>
-</details>
 <hr>
-<h2 id="-předání-hodnoty-vs-reference">🔄 Předání hodnoty vs. reference</h2>
-<details>
-<summary><span style="color:#E95A84;">📦 Hodnota</span></summary>
-<ul>
-<li>Vytvoří se kopie dat, změny v metodě neovlivní původní data.</li>
-<li>Efektivní pro malé typy (<code>int</code>, <code>float</code>, <code>bool</code>).</li>
-</ul>
-</details>
-<details>
-<summary><span style="color:#E95A84;">🔗 Reference</span></summary>
-<ul>
-<li>Předává se odkaz na původní data (<code>ref</code>, <code>out</code>, <code>in</code>).</li>
-<li>Metoda může manipulovat s původními daty (kromě <code>in</code> – pouze pro čtení).</li>
-<li>Efektivní pro velké struktury/třídy.</li>
-</ul>
-</details>
-<hr>
-<h2 id="-druhy-metod">🧑‍💻 Druhy metod</h2>
-<details>
-<summary><span style="color:#1E90FF;">📚 Přehled typů metod</span></summary>
+<h2 id="předání-hodnoty-vs-reference">Předání hodnoty vs. reference</h2>
 <table>
 <thead>
 <tr>
-<th>Typ metody</th>
+<th>Způsob</th>
+<th>Popis</th>
+<th>Kdy použít</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hodnotou</strong></td>
+<td>Vytvoří kopii dat; změny v metodě neovlivní originál</td>
+<td>Malé primitivní typy (<code>int</code>, <code>bool</code>, <code>float</code>)</td>
+</tr>
+<tr>
+<td><strong>Referencí (<code>ref</code>)</strong></td>
+<td>Předává odkaz; metoda může měnit původní data</td>
+<td>Velké struktury, sdílený stav</td>
+</tr>
+<tr>
+<td><strong>Out (<code>out</code>)</strong></td>
+<td>Metoda musí hodnotu nastavit; nemusí být inicializována</td>
+<td>Vrácení více hodnot</td>
+</tr>
+<tr>
+<td><strong>In (<code>in</code>)</strong></td>
+<td>Odkaz pouze pro čtení; metoda nemůže hodnotu měnit</td>
+<td>Velké struktury, optimalizace výkonu</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="druhy-metod">Druhy metod</h2>
+<table>
+<thead>
+<tr>
+<th>Typ</th>
 <th>Klíčové slovo</th>
 <th>Popis</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Indexátor</td>
-<td><code>this[]</code></td>
-<td>Umožňuje objektům být indexovány jako pole.</td>
-</tr>
-<tr>
 <td>Statická</td>
 <td><code>static</code></td>
-<td>Volání bez instance třídy.</td>
+<td>Volání bez instance třídy</td>
 </tr>
 <tr>
 <td>Instanční</td>
-<td>—</td>
-<td>Vyžaduje instanci třídy.</td>
+<td><em>(žádné)</em></td>
+<td>Vyžaduje instanci třídy</td>
 </tr>
 <tr>
 <td>Virtuální</td>
 <td><code>virtual</code></td>
-<td>Lze přepsat v potomcích.</td>
+<td>Lze přepsat v potomcích (<code>override</code>)</td>
 </tr>
 <tr>
 <td>Abstraktní</td>
 <td><code>abstract</code></td>
-<td>Bez implementace, nutná v potomcích.</td>
+<td>Bez implementace, musí být přepsána</td>
 </tr>
 <tr>
 <td>Přetížená</td>
-<td>—</td>
-<td>Stejný název, různé parametry.</td>
+<td><em>(žádné)</em></td>
+<td>Stejný název, různé parametry</td>
 </tr>
 <tr>
-<td>Výchozí hodnoty</td>
-<td><code>=</code></td>
-<td>Parametry s defaultní hodnotou.</td>
-</tr>
-<tr>
-<td>Params</td>
-<td><code>params</code></td>
-<td>Libovolný počet parametrů.</td>
-</tr>
-<tr>
-<td>Ref/Out/In</td>
-<td><code>ref/out/in</code></td>
-<td>Předání odkazem, různé chování.</td>
-</tr>
-<tr>
-<td>Rozšířené</td>
+<td>Rozšiřující</td>
 <td><code>this</code></td>
-<td>Přidání metod existujícím typům.</td>
+<td>Přidává metody existujícím typům</td>
 </tr>
 <tr>
 <td>Asynchronní</td>
 <td><code>async</code></td>
-<td>Asynchronní operace.</td>
+<td>Neblokující operace s <code>await</code></td>
+</tr>
+<tr>
+<td>Indexátor</td>
+<td><code>this[]</code></td>
+<td>Umožňuje indexování objektu jako pole</td>
 </tr>
 </tbody>
 </table>
-</details>
 <hr>
-<h2 id="-ukázky-deklarace-metod">🧩 Ukázky deklarace metod</h2>
-<details>
-<summary><span style="color:#E95A84;">📑 Indexátor</span></summary>
-<pre><code class="lang-csharp">public interface IOAuth2Configuration
+<h2 id="ukázky-deklarací">Ukázky deklarací</h2>
+<pre><code class="lang-csharp">// Statická metoda
+public static void MyStaticMethod() { }
+
+// Virtuální metoda
+public virtual void MyVirtualMethod() { }
+
+// Abstraktní metoda
+public abstract void MyAbstractMethod();
+
+// Přetížené metody
+public void MyMethod(int param1) { }
+public void MyMethod(int param1, int param2) { }
+
+// Výchozí hodnota parametru
+public void MyMethod(int param1, int param2 = 10) { }
+
+// Params – libovolný počet parametrů
+public void MyMethod(params int[] numbers) { }
+
+// Ref, Out, In
+public void AddTen(ref int number) { number += 10; }
+public void GetValues(out int x, out int y) { x = 5; y = 10; }
+public void PrintValue(in int number) { Console.WriteLine(number); }
+
+// Rozšiřující metoda
+public static class MyExtensions
+{
+    public static void MyExtMethod(this MyType obj) { }
+}
+
+// Asynchronní metoda
+public async Task MyAsyncMethod() { await Task.CompletedTask; }
+public async Task&lt;int&gt; MyAsyncMethodWithResult() { return await Task.FromResult(42); }
+
+// Indexátor
+public interface IOAuth2Configuration
 {
     IClientConfiguration this[string clientTypeName] { get; }
 }
 </code></pre>
-</details>
-<details>
-<summary><span style="color:#E95A84;">⚡ Statická metoda</span></summary>
-<pre><code class="lang-csharp">public static void MyStaticMethod() { /* kód */ }
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#E95A84;">🧑‍💻 Instanční metoda</span></summary>
-<pre><code class="lang-csharp">public void MyInstanceMethod() { /* kód */ }
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#E95A84;">🔄 Virtuální metoda</span></summary>
-<pre><code class="lang-csharp">public virtual void MyVirtualMethod() { /* kód */ }
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#E95A84;">🌀 Abstraktní metoda</span></summary>
-<pre><code class="lang-csharp">public abstract void MyAbstractMethod();
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#E95A84;">🔁 Přetížené metody</span></summary>
-<pre><code class="lang-csharp">public void MyMethod(int param1) { }
-public void MyMethod(int param1, int param2) { }
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#E95A84;">📝 Výchozí hodnoty parametrů</span></summary>
-<pre><code class="lang-csharp">public void MyMethod(int param1, int param2 = 10) { }
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#E95A84;">🔢 Params</span></summary>
-<pre><code class="lang-csharp">public void MyMethod(params int[] numbers) { }
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#E95A84;">🔗 Ref/Out/In parametry</span></summary>
-<pre><code class="lang-csharp">public void AddTen(ref int number) { number += 10; }
-public void GetValues(out int x, out int y) { x = 5; y = 10; }
-public void PrintValue(in int number) { Console.WriteLine(number); }
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#E95A84;">🧩 Rozšířené metody</span></summary>
-<pre><code class="lang-csharp">public static class MyExtensionMethods
-{
-    public static void MyExtensionMethod(this MyType myType) { }
-}
-</code></pre>
-</details>
-<details>
-<summary><span style="color:#E95A84;">⚡ Asynchronní metoda</span></summary>
-<pre><code class="lang-csharp">public async Task MyAsyncMethod() { await Task.CompletedTask; }
-public async Task&lt;int&gt; MyAsyncMethod() { return await Task.FromResult(42); }
-</code></pre>
-</details>
 <hr>
-<h2 id="-ukazatel-na-metody--delegáti">🧭 Ukazatel na metody &amp; Delegáti</h2>
-<details>
-<summary><span style="color:#1E90FF;">🔗 Delegáti</span></summary>
-<ul>
-<li>Typově bezpečné odkazy na metody.</li>
-<li>Užitečné pro události, LINQ, asynchronní operace.</li>
-</ul>
-<pre><code class="lang-csharp">public delegate void MyDelegate(string message);
+<h2 id="delegáti">Delegáti</h2>
+<p>Typově bezpečné reference na metody. Používají se pro události, callbacky a LINQ.</p>
+<pre><code class="lang-csharp">// Vlastní delegát
+public delegate void MyDelegate(string message);
 MyDelegate del = MyMethod;
 del(&quot;Hello, World!&quot;);
 </code></pre>
-</details>
-<details>
-<summary><span style="color:#E95A84;">⚡ Generické delegáty</span></summary>
-<ul>
-<li><strong>Func</strong> – vrací hodnotu.</li>
-<li><strong>Action</strong> – nevrací hodnotu.</li>
-<li><strong>Predicate</strong> – vrací bool.</li>
-</ul>
-<pre><code class="lang-csharp">Func&lt;int, int, int&gt; add = (x, y) =&gt; x + y;
-Action&lt;string&gt; print = msg =&gt; Console.WriteLine(msg);
-Predicate&lt;int&gt; isEven = x =&gt; x % 2 == 0;
-</code></pre>
-</details>
+<h3 id="generické-delegáty">Generické delegáty</h3>
+<table>
+<thead>
+<tr>
+<th>Typ</th>
+<th>Popis</th>
+<th>Příklad</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Func&lt;T, TResult&gt;</code></td>
+<td>Vrací hodnotu</td>
+<td><code>Func&lt;int, int, int&gt; add = (x, y) =&gt; x + y;</code></td>
+</tr>
+<tr>
+<td><code>Action&lt;T&gt;</code></td>
+<td>Nevrací hodnotu</td>
+<td><code>Action&lt;string&gt; print = msg =&gt; Console.WriteLine(msg);</code></td>
+</tr>
+<tr>
+<td><code>Predicate&lt;T&gt;</code></td>
+<td>Vrací <code>bool</code></td>
+<td><code>Predicate&lt;int&gt; isEven = x =&gt; x % 2 == 0;</code></td>
+</tr>
+</tbody>
+</table>
 <hr>
-<h2 id="-asynchronní--paralelní-metody">🚀 Asynchronní &amp; Paralelní metody</h2>
-<details>
-<summary><span style="color:#1E90FF;">⚡ Asynchronní volání</span></summary>
-<ul>
-<li>Umožňuje neblokovat hlavní vlákno.</li>
-<li>Klíčová slova <code>async</code> a <code>await</code>.</li>
-</ul>
-<pre><code class="lang-csharp">public async Task MethodA() { await MethodB(); }
-public async Task MethodB() { await Task.Delay(1000); }
+<h2 id="asynchronní-zpracování">Asynchronní zpracování</h2>
+<pre><code class="lang-csharp">// Async / await
+public async Task MethodA()
+{
+    await MethodB();
+}
+
+public async Task MethodB()
+{
+    await Task.Delay(1000);
+}
 </code></pre>
-</details>
-<details>
-<summary><span style="color:#E95A84;">🧵 Paralelní zpracování (TPL)</span></summary>
-<ul>
-<li><code>Task</code>, <code>Task&lt;T&gt;</code>, <code>Parallel.For</code>, <code>Parallel.ForEach</code>, <code>Parallel.Invoke</code>.</li>
-</ul>
-<pre><code class="lang-csharp">Parallel.For(0, 10, i =&gt; { /* kód */ });
+<hr>
+<h2 id="paralelní-zpracování-tpl">Paralelní zpracování (TPL)</h2>
+<pre><code class="lang-csharp">// Parallel.For
+Parallel.For(0, 10, i =&gt; { /* kód */ });
+
+// Task.Run
 Task&lt;int&gt; task = Task.Run(() =&gt; 42);
-int result = task.Result;
+int result = await task;
+
+// Parallel.ForEach
+Parallel.ForEach(collection, item =&gt; { /* kód */ });
 </code></pre>
-</details>
 
 </article>
 

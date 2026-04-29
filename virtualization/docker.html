@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#128450;️ Docker – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř </title>
+      <title>Docker – Průvodce a reference | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#128450;️ Docker – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř ">
+      <meta name="title" content="Docker – Průvodce a reference | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,182 +85,198 @@
         </div>
 
         <article data-uid="">
-<h1 id="-docker--praktický-průvodce--tipy">🗂️ Docker – Praktický průvodce &amp; tipy</h1>
+<h1 id="docker--průvodce-a-reference">Docker – Průvodce a reference</h1>
 
 <blockquote>
-<p>🚀 Moderní přehled základních pojmů, příkazů, konfigurace a doporučení pro práci s Dockerem na Windows.</p>
+<p>Přehled základních pojmů, příkazů, konfigurace a doporučení pro práci s Dockerem na Windows.</p>
 </blockquote>
 <hr>
-<h2 id="-co-je-docker">📖 Co je Docker?</h2>
+<img src="/images/bfdff689-3382-451c-872a-5f566bacdca2.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
+<h2 id="co-je-docker">Co je Docker?</h2>
 <ul>
-<li><strong>Platforma pro vývoj, doručování a běh aplikací pomocí kontejnerizace</strong></li>
-<li>Izoluje aplikace v kontejnerech se všemi závislostmi</li>
-<li>Kontejnery jsou rychlejší a efektivnější než klasická virtualizace</li>
+<li>Platforma pro vývoj, doručování a běh aplikací pomocí <strong>kontejnerizace</strong>.</li>
+<li>Izoluje aplikace v kontejnerech se všemi jejich závislostmi.</li>
+<li>Kontejnery jsou rychlejší a efektivnější než klasická virtualizace.</li>
 </ul>
 <div class="NOTE">
 <h5>Note</h5>
 <p>Pro instalaci Dockeru na Windows je nutné mít nainstalovaný <a href="wsl.html">WSL</a>.</p>
 </div>
 <hr>
-<h2 id="-základní-pojmy">🧩 Základní pojmy</h2>
-<details>
-<summary><span style="color:#1E90FF;">📦 Dockerfile</span></summary>
-Textový soubor s instrukcemi pro vytvoření Docker image.
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🖼️ Docker image</span></summary>
-Komprimovaná šablona aplikace, knihoven a binárek pro spuštění kontejneru.
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🚀 Docker run</span></summary>
-Příkaz pro spuštění kontejneru z image.
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🌐 Docker hub</span></summary>
-Oficiální úložiště pro sdílení Docker image.
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🛠️ Docker engine</span></summary>
-Jádro Dockeru, které spravuje kontejnery (klient-server architektura).
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🧩 Docker compose</span></summary>
-Definice a správa více kontejnerů pomocí souboru `docker-compose.yml`.
-</details>
-<hr>
-<h2 id="-soubory-dockeru">🗃️ Soubory Dockeru</h2>
-<details>
-<summary><span style="color:#E95A84;">dockerd.exe</span></summary>
-Spouští Docker Daemon, hlavní službu pro správu kontejnerů.
-</details>
-<details>
-<summary><span style="color:#E95A84;">docker.exe</span></summary>
-Klientský nástroj pro ovládání Dockeru (např. `docker run`, `docker ps`).
-</details>
-<details>
-<summary><span style="color:#E95A84;">docker-compose.exe</span></summary>
-Nástroj pro správu více kontejnerů v jedné aplikaci.
-</details>
-<details>
-<summary><span style="color:#E95A84;">docker-compose.yml</span></summary>
-Konfigurační soubor pro definici služeb, obrazů, portů a nastavení kontejnerů.
-</details>
-<hr>
-<h2 id="-základní-příkazy">🛠️ Základní příkazy</h2>
+<h2 id="klíčové-pojmy">Klíčové pojmy</h2>
 <table>
 <thead>
 <tr>
-<th>🟦 Kategorie</th>
-<th>🛠️ Příkaz</th>
-<th>📄 Popis</th>
+<th>Pojem</th>
+<th>Popis</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>🔍 Zobrazení</td>
+<td><strong>Dockerfile</strong></td>
+<td>Textový soubor s instrukcemi pro sestavení Docker image</td>
+</tr>
+<tr>
+<td><strong>Docker image</strong></td>
+<td>Komprimovaná šablona aplikace, ze které se spouští kontejner</td>
+</tr>
+<tr>
+<td><strong>Docker run</strong></td>
+<td>Příkaz pro spuštění kontejneru z image</td>
+</tr>
+<tr>
+<td><strong>Docker Hub</strong></td>
+<td>Oficiální veřejné úložiště Docker images</td>
+</tr>
+<tr>
+<td><strong>Docker Engine</strong></td>
+<td>Jádro Dockeru – klient-server architektura spravující kontejnery</td>
+</tr>
+<tr>
+<td><strong>Docker Compose</strong></td>
+<td>Definice a správa více kontejnerů přes soubor <code>docker-compose.yml</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="klíčové-soubory">Klíčové soubory</h2>
+<table>
+<thead>
+<tr>
+<th>Soubor</th>
+<th>Účel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dockerd.exe</code></td>
+<td>Spouští Docker Daemon – hlavní službu pro správu kontejnerů</td>
+</tr>
+<tr>
+<td><code>docker.exe</code></td>
+<td>Klientský nástroj pro ovládání Dockeru (<code>docker run</code>, <code>docker ps</code>)</td>
+</tr>
+<tr>
+<td><code>docker-compose.exe</code></td>
+<td>Nástroj pro správu více kontejnerů v jedné aplikaci</td>
+</tr>
+<tr>
+<td><code>docker-compose.yml</code></td>
+<td>Konfigurační soubor – služby, porty, volumes, proměnné prostředí</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="základní-příkazy">Základní příkazy</h2>
+<table>
+<thead>
+<tr>
+<th>Kategorie</th>
+<th>Příkaz</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Zobrazení</td>
 <td><code>docker ps</code></td>
 <td>Zobrazí běžící kontejnery</td>
 </tr>
 <tr>
 <td></td>
 <td><code>docker images</code></td>
-<td>Zobrazí všechny docker image</td>
+<td>Zobrazí všechny lokální images</td>
 </tr>
 <tr>
-<td>🔄 Aktualizace nastavení</td>
-<td><code>docker update --restart=yes &lt;jméno/id&gt;</code></td>
-<td>Zapne automatické spouštění kontejneru</td>
+<td>Automatické spouštění</td>
+<td><code>docker update --restart=yes &lt;id&gt;</code></td>
+<td>Zapne autostart kontejneru</td>
 </tr>
 <tr>
 <td></td>
-<td><code>docker update --restart=no &lt;jméno/id&gt;</code></td>
-<td>Vypne automatické spouštění kontejneru</td>
+<td><code>docker update --restart=no &lt;id&gt;</code></td>
+<td>Vypne autostart kontejneru</td>
 </tr>
 <tr>
-<td>⬇️ Stažení</td>
+<td>Stažení</td>
 <td><code>docker pull &lt;image&gt;</code></td>
-<td>Stáhne docker image</td>
+<td>Stáhne image z Docker Hub</td>
 </tr>
 <tr>
-<td>💾 Záloha &amp; obnova</td>
-<td><code>docker save -o &lt;cesta&gt;.tar &lt;image/id&gt;</code></td>
-<td>Zálohuje image do souboru</td>
+<td>Záloha</td>
+<td><code>docker save -o &lt;cesta&gt;.tar &lt;image&gt;</code></td>
+<td>Exportuje image do souboru</td>
 </tr>
 <tr>
 <td></td>
 <td><code>docker load -i &lt;cesta&gt;.tar</code></td>
-<td>Obnoví image ze souboru</td>
+<td>Importuje image ze souboru</td>
 </tr>
 <tr>
-<td>🛠️ Vytvoření image</td>
-<td><code>docker build -t &lt;jméno&gt; .</code></td>
+<td>Sestavení</td>
+<td><code>docker build -t &lt;název&gt; .</code></td>
 <td>Sestaví image z Dockerfile</td>
 </tr>
 <tr>
-<td>🚀 Spuštění kontejneru</td>
+<td>Spuštění</td>
 <td><code>docker run &lt;image&gt;</code></td>
-<td>Spustí kontejner z image</td>
+<td>Spustí kontejner</td>
 </tr>
 <tr>
 <td></td>
 <td><code>docker run -p 70:80 &lt;image&gt;</code></td>
-<td>Spustí kontejner na jiném portu</td>
+<td>Spustí s mapováním portu</td>
 </tr>
 <tr>
 <td></td>
 <td><code>docker run --rm &lt;image&gt;</code></td>
-<td>Spustí kontejner a smaže ho po ukončení</td>
+<td>Spustí a po ukončení automaticky smaže</td>
 </tr>
 <tr>
 <td></td>
 <td><code>docker run -it &lt;image&gt;</code></td>
-<td>Spustí kontejner v interaktivním módu</td>
+<td>Spustí v interaktivním módu</td>
 </tr>
 <tr>
-<td>🧩 Docker Compose</td>
-<td><code>docker-compose up</code></td>
-<td>Spustí služby z docker-compose (běží v terminálu)</td>
-</tr>
-<tr>
-<td></td>
+<td>Docker Compose</td>
 <td><code>docker compose up -d</code></td>
-<td>Spustí služby z docker-compose na pozadí</td>
+<td>Spustí všechny služby na pozadí</td>
 </tr>
 <tr>
 <td></td>
 <td><code>docker compose down</code></td>
-<td>Zastaví a odstraní všechny kontejnery z docker-compose</td>
+<td>Zastaví a odstraní kontejnery</td>
 </tr>
 <tr>
-<td>⏹️ Zastavení &amp; odstranění</td>
-<td><code>docker stop &lt;jméno/id&gt;</code></td>
+<td>Zastavení</td>
+<td><code>docker stop &lt;id&gt;</code></td>
 <td>Zastaví kontejner</td>
 </tr>
 <tr>
 <td></td>
-<td><code>docker rm &lt;jméno/id&gt;</code></td>
-<td>Odstraní kontejner</td>
+<td><code>docker rm &lt;id&gt;</code></td>
+<td>Odstraní zastaveý kontejner</td>
 </tr>
 <tr>
 <td></td>
-<td><code>docker rmi &lt;image/id&gt;</code></td>
+<td><code>docker rmi &lt;image&gt;</code></td>
 <td>Odstraní image</td>
 </tr>
 </tbody>
 </table>
 <hr>
-<h2 id="-dockerfile--příklady">📄 Dockerfile – Příklady</h2>
+<h2 id="dockerfile--příklady">Dockerfile – příklady</h2>
 <details>
-<summary><span style="color:#1E90FF;">.NET Core aplikace</span></summary>
-<pre><code class="lang-Docker">FROM mcr.microsoft.com/dotnet/core/runtime:3.1
+<summary>.NET Core aplikace (pouze runtime)</summary>
+<pre><code class="lang-dockerfile">FROM mcr.microsoft.com/dotnet/core/runtime:3.1
 WORKDIR /app
 COPY ./publish .
 ENTRYPOINT [&quot;dotnet&quot;, &quot;myapp.dll&quot;]
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">C# aplikace s buildem</span></summary>
-<pre><code class="lang-Docker">FROM mcr.microsoft.com/dotnet/core/sdk:3.1
+<summary>C# aplikace s buildem uvnitř kontejneru</summary>
+<pre><code class="lang-dockerfile">FROM mcr.microsoft.com/dotnet/core/sdk:3.1
 WORKDIR /app
 COPY . .
 RUN dotnet restore
@@ -269,8 +285,8 @@ ENTRYPOINT [&quot;dotnet&quot;, &quot;out/myapp.dll&quot;]
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Lokální NuGet balíčky</span></summary>
-<pre><code class="lang-Docker">FROM mcr.microsoft.com/dotnet/core/sdk:3.1
+<summary>Aplikace s lokálními NuGet balíčky</summary>
+<pre><code class="lang-dockerfile">FROM mcr.microsoft.com/dotnet/core/sdk:3.1
 WORKDIR /app
 COPY . .
 RUN dotnet restore --source ./nuget
@@ -279,65 +295,51 @@ ENTRYPOINT [&quot;dotnet&quot;, &quot;out/myapp.dll&quot;]
 </code></pre>
 </details>
 <hr>
-<h2 id="-volumes--data">📦 Volumes &amp; data</h2>
-<details>
-<summary><span style="color:#1E90FF;">Propojení složky z Windows s kontejnerem</span></summary>
+<h2 id="volumes-a-data">Volumes a data</h2>
+<h3 id="propojení-složky-z-windows-s-kontejnerem">Propojení složky z Windows s kontejnerem</h3>
 <table>
 <thead>
 <tr>
 <th>Nastavení</th>
 <th>Cesta</th>
-<th>Popis</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Host/Volume</td>
+<td>Host / Volume</td>
 <td><code>/run/desktop/mnt/host/c/Program Files/Unity/Hub/Editor/6000.0.33f1/Editor</code></td>
-<td>Cesta ke složce na hostitelském PC</td>
 </tr>
 <tr>
-<td>Path in container</td>
+<td>Cesta v kontejneru</td>
 <td><code>/app/unity</code></td>
-<td>Cesta uvnitř Docker kontejneru</td>
 </tr>
 </tbody>
 </table>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">Zachování dat z kontejneru na lokálním disku</span></summary>
-<img src="/../images/dockerKeepDataOnLocal.png" alt="dockerKeepDataOnLocal.png" width="800px">
-</details>
+<h3 id="zachování-dat-z-kontejneru-na-lokálním-disku">Zachování dat z kontejneru na lokálním disku</h3>
+<img src="/../images/dockerKeepDataOnLocal.png" alt="Docker – zachování dat lokálně" width="800px">
 <hr>
-<h2 id="-získání-dat-z-dockeru">🗂️ Získání dat z Dockeru</h2>
+<h2 id="získání-dat-z-kontejneru">Získání dat z kontejneru</h2>
 <details>
-<summary><span style="color:#1E90FF;">Export databázového schématu</span></summary>
+<summary>Export databázového schématu (PostgreSQL/Supabase)</summary>
 <pre><code class="lang-cmd">docker exec -t supabase-db pg_dump -U postgres -s postgres &gt; D:\schema.sql
 </code></pre>
-<p>Tento příkaz otevře terminál pro Docker kontejner s názvem <strong>supabase-db</strong> a vyexportuje schema databáze do souboru:</p>
-<pre><code>D:\schema.sql
-</code></pre>
+<p>Příkaz se připojí k běžícímu kontejneru <code>supabase-db</code> a exportuje schéma databáze do souboru <code>D:\schema.sql</code>.</p>
 <div class="WARNING">
 <h5>Warning</h5>
-<p>Pro <code>sqlc generate</code>, je potřeba upravit obsah (viz níže).</p>
-<p>Odstraň nebo zakomentuj řádek v souboru <code>schema.sql</code> začínající na:</p>
-<pre><code>\unrestrict
-</code></pre>
+<p>Pro <code>sqlc generate</code> je potřeba z exportovaného souboru odstranit nebo zakomentovat řádek začínající <code>\unrestrict</code>.</p>
 </div>
 </details>
 <hr>
-<h2 id="-řešení-problémů">🛡️ Řešení problémů</h2>
-<details>
-<summary><span style="color:#1E90FF;">Port není dostupný</span></summary>
+<h2 id="řešení-problémů">Řešení problémů</h2>
+<h3 id="port-není-dostupný">Port není dostupný</h3>
 <p>Restartujte službu Windows NAT:</p>
 <pre><code class="lang-cmd">net stop winnat
 net start winnat
 </code></pre>
 <div class="NOTE">
 <h5>Note</h5>
-<p>Uvolní zablokované síťové porty pro Docker kontejnery.</p>
+<p>Tento postup uvolní zablokované síťové porty pro Docker kontejnery.</p>
 </div>
-</details>
 
 </article>
 

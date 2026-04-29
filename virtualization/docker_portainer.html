@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#128450;️ Portainer – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř </title>
+      <title>Portainer – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#128450;️ Portainer – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř ">
+      <meta name="title" content="Portainer – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,13 +85,13 @@
         </div>
 
         <article data-uid="">
-<h1 id="-portainer--praktický-průvodce--tipy">🗂️ Portainer – Praktický průvodce &amp; tipy</h1>
+<h1 id="portainer--praktický-průvodce--tipy">Portainer – Praktický průvodce &amp; tipy</h1>
 
 <blockquote>
-<p>🚀 Moderní přehled spuštění, parametrů a doporučení pro práci s Portainerem v Dockeru.</p>
+<p>Moderní přehled spuštění, parametrů a doporučení pro práci s Portainerem v Dockeru.</p>
 </blockquote>
 <hr>
-<h2 id="-co-je-portainer">📖 Co je Portainer?</h2>
+<h2 id="co-je-portainer">Co je Portainer?</h2>
 <ul>
 <li><strong>Webové rozhraní pro správu Docker kontejnerů</strong></li>
 <li>Umožňuje snadnou správu, monitoring a konfiguraci kontejnerů, image, volume a sítí</li>
@@ -102,9 +102,9 @@
 <p>Portainer výrazně zjednodušuje správu Docker prostředí.</p>
 </div>
 <hr>
-<h2 id="-spuštění-portaineru">🛠️ Spuštění Portaineru</h2>
+<h2 id="spuštění-portaineru">Spuštění Portaineru</h2>
 <details>
-<summary><span style="color:#1E90FF;">🔹 Krok 1: Spuštění kontejneru</span></summary>
+<summary>Krok 1: Spuštění kontejneru</summary>
 <pre><code class="lang-cmd">docker run -d -p 9000:9000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:2.27.5
 </code></pre>
 <table>
@@ -147,20 +147,19 @@
 </table>
 </details>
 <hr>
-<h2 id="-přístup-k-portaineru">🌐 Přístup k Portaineru</h2>
+<h2 id="přístup-k-portaineru">Přístup k Portaineru</h2>
 <details>
-<summary><span style="color:#1E90FF;">🔹 Krok 2: Otevření webového rozhraní</span></summary>
+<summary>Krok 2: Otevření webového rozhraní</summary>
 <ul>
-<li>Po spuštění kontejneru otevřete prohlížeč a zadejte:<br>
+<li>Po spuštění kontejneru otevřete prohlížeč a zadejte:
 <code>http://localhost:9000</code></li>
 <li>Nastavte administrátorské heslo a připojte se k Docker endpointu.</li>
 </ul>
-<img src="../images/portainer_login.png" alt="Portainer login" width="600px">
 </details>
 <hr>
-<h2 id="-řešení-problémů">🛡️ Řešení problémů</h2>
+<h2 id="řešení-problémů">Řešení problémů</h2>
 <details>
-<summary><span style="color:#1E90FF;">Port 9000 je obsazený</span></summary>
+<summary>Port 9000 je obsazený</summary>
 <ul>
 <li>Změňte port v příkazu, např.:
 <pre><code class="lang-cmd">docker run -d -p 9100:9000 ...
@@ -173,7 +172,7 @@
 </ul>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">Chyba při připojení k Docker daemonu</span></summary>
+<summary>Chyba při připojení k Docker daemonu</summary>
 <ul>
 <li>Ověřte, že Docker běží a máte správně namapovaný <code>docker.sock</code>.</li>
 <li>Zkontrolujte oprávnění k souboru <code>/var/run/docker.sock</code>.</li>

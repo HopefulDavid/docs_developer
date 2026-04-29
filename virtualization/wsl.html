@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#128450;️ WSL (Windows Subsystem for Linux) – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř </title>
+      <title>WSL (Windows Subsystem for Linux) – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#128450;️ WSL (Windows Subsystem for Linux) – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř ">
+      <meta name="title" content="WSL (Windows Subsystem for Linux) – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,13 +85,14 @@
         </div>
 
         <article data-uid="">
-<h1 id="-wsl-windows-subsystem-for-linux--praktický-průvodce--tipy">🗂️ WSL (Windows Subsystem for Linux) – Praktický průvodce &amp; tipy</h1>
+<h1 id="wsl-windows-subsystem-for-linux--praktický-průvodce--tipy">WSL (Windows Subsystem for Linux) – Praktický průvodce &amp; tipy</h1>
 
 <blockquote>
-<p>🚀 Moderní přehled instalace, nastavení a doporučení pro práci s WSL na Windows.</p>
+<p>Moderní přehled instalace, nastavení a doporučení pro práci s WSL na Windows.</p>
 </blockquote>
 <hr>
-<h2 id="-co-je-wsl">📖 Co je WSL?</h2>
+<img src="/images/94edf060-a2f9-476c-b93f-c4723e494cab.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
+<h2 id="co-je-wsl">Co je WSL?</h2>
 <ul>
 <li><strong>WSL</strong> umožňuje instalaci a provoz linuxových distribucí přímo na Windows.</li>
 <li>Umožňuje spouštět linuxové aplikace bez potřeby virtuálního stroje.</li>
@@ -101,25 +102,19 @@
 <p>Ideální pro vývojáře, kteří potřebují Linux nástroje na Windows.</p>
 </div>
 <hr>
-<h2 id="-instalace-wsl-na-windows">🛠️ Instalace WSL na Windows</h2>
+<h2 id="instalace-wsl-na-windows">Instalace WSL na Windows</h2>
 <details>
-<summary><span style="color:#1E90FF;">🔹 Krok 1: Povolení virtualizace v BIOS/UEFI</span></summary>
+<summary>Krok 1: Povolení virtualizace v BIOS/UEFI</summary>
 <div class="IMPORTANT">
 <h5>Important</h5>
 <p>V BIOSu/UEFI povolte:</p>
 <ul>
 <li><strong>Podpora CPU virtualizace</strong>
-&gt;   - Intel: <code>Intel VT-x</code>
-<ul>
+&gt;   - Intel: <code>Intel VT-x</code></li>
 <li>AMD: <code>AMD-V</code> nebo <code>SVM</code></li>
-</ul>
-</li>
 <li><strong>Virtualizační technologie</strong>
-&gt;   - Intel: <code>VT-d</code>
-<ul>
+&gt;   - Intel: <code>VT-d</code></li>
 <li>AMD: <code>AMD-Vi</code></li>
-</ul>
-</li>
 <li><strong>Vnořená virtualizace</strong> (jen pokud potřebujete virtualizaci uvnitř WSL)</li>
 </ul>
 </div>
@@ -132,9 +127,9 @@
 <img src="../images/wv1G8UBxvy.png">
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🔹 Krok 2: Povolení WSL v systému</span></summary>
+<summary>Krok 2: Povolení WSL v systému</summary>
 <ol>
-<li><p>Spusťte <strong>PowerShell jako správce</strong><br>
+<li><p>Spusťte <strong>PowerShell jako správce</strong>
 <img src="../images/pnAzi0NFm3.png"></p>
 </li>
 <li><p>Aktivujte WSL:</p>
@@ -145,7 +140,7 @@
 </ol>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🔹 Krok 3: Povolení Virtual Machine Platform & WSL 2</span></summary>
+<summary>Krok 3: Povolení Virtual Machine Platform & WSL 2</summary>
 <p>Aktivujte platformu pro WSL 2:</p>
 <pre><code class="lang-bash">dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
 </code></pre>
@@ -156,7 +151,7 @@
 </div>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🔹 Krok 4: Stažení aktualizace Linux jádra</span></summary>
+<summary>Krok 4: Stažení aktualizace Linux jádra</summary>
 <ul>
 <li>Stáhněte a nainstalujte poslední <a href="https://github.com/Microsoft/WSL/releases">aktualizaci jádra</a>.</li>
 <li>Řeší kompatibilitu s Dockerem a dalšími nástroji.</li>
@@ -167,14 +162,14 @@
 </div>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🔹 Krok 5: Nastavení WSL 2 jako výchozí</span></summary>
+<summary>Krok 5: Nastavení WSL 2 jako výchozí</summary>
 <p>Nastavte WSL 2 jako výchozí:</p>
 <pre><code class="lang-bash">wsl --set-default-version 2
 </code></pre>
 <img src="../images/LNHIGgBhcb.png">
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🔹 Krok 6: Instalace linuxové distribuce</span></summary>
+<summary>Krok 6: Instalace linuxové distribuce</summary>
 <p>Stáhněte si RootFS (např. <a href="https://cloud-images.ubuntu.com/wsl/jammy/current/">Ubuntu</a>) a nainstalujte:</p>
 <pre><code class="lang-bash">wsl --import Ubuntu-22.04 C:\WSL\Ubuntu2204 C:\UbuntuRootFS\ubuntu-jammy-wsl-amd64-ubuntu22.04lts.rootfs.tar.gz --version 2
 </code></pre>
@@ -200,6 +195,69 @@
 </code></pre>
 <p>Např.: <code>wsl --unregister Ubuntu-22.04</code></p>
 </div>
+</details>
+---
+<h2 id="přesun-wsl-distribuce-na-jiné-místo">Přesun WSL distribuce na jiné místo</h2>
+<blockquote>
+<p>Klasická past: nelze jen přesunout soubor <code>ext4.vhdx</code> na jiné místo – musíš projít cestou <strong>export → import</strong>.</p>
+</blockquote>
+<details>
+<summary>Co vlastně chceš udělat?</summary>
+<p>Pokud chceš přesunout distribuci z:</p>
+<pre><code>D:\wsl\podman-machine-default\ext4.vhdx
+</code></pre>
+<p>na:</p>
+<pre><code>D:\wsl\ext4.vhdx
+</code></pre>
+<p>Nejde o přesun souboru – jde o <strong>přesun celé WSL distribuce</strong> na jiné umístění.</p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Ruční přesunutí <code>ext4.vhdx</code> nebo úprava registrů <strong>rozbije WSL nebo Podman</strong>. Použij výhradně postup níže.</p>
+</div>
+</details>
+<details>
+<summary>Správný postup (export → import)</summary>
+<h3 id="1-zjisti-název-distribuce">1. Zjisti název distribuce</h3>
+<pre><code class="lang-bash">wsl -l -v
+</code></pre>
+<p>Výstup zobrazí název (např. <code>podman-machine-default</code>).</p>
+<hr>
+<h3 id="2-zastav-distribuci">2. Zastav distribuci</h3>
+<pre><code class="lang-bash">wsl --shutdown
+</code></pre>
+<hr>
+<h3 id="3-exportuj-distribuci">3. Exportuj distribuci</h3>
+<pre><code class="lang-bash">wsl --export podman-machine-default D:\wsl\backup.tar
+</code></pre>
+<p>Vytvoří se záloha jako <code>.tar</code> soubor.</p>
+<hr>
+<h3 id="4-odregistruj-starou-distribuci">4. Odregistruj starou distribuci</h3>
+<pre><code class="lang-bash">wsl --unregister podman-machine-default
+</code></pre>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Tímto krokem zmizí starý <code>ext4.vhdx</code> – proto je předchozí export nezbytný.</p>
+</div>
+<hr>
+<h3 id="5-importuj-na-nové-místo">5. Importuj na nové místo</h3>
+<pre><code class="lang-bash">wsl --import podman-machine-default D:\wsl\ D:\wsl\backup.tar --version 2
+</code></pre>
+<p>Po dokončení bude distribuce umístěna v:</p>
+<pre><code>D:\wsl\ext4.vhdx
+</code></pre>
+<hr>
+<h3 id="6-ověř-výsledek">6. Ověř výsledek</h3>
+<pre><code class="lang-bash">wsl -l -v
+</code></pre>
+</details>
+<details>
+<summary>Specificky pro Podman machine</summary>
+<p>Podman machine je wrapper nad WSL. Po přesunu může být potřeba:</p>
+<pre><code class="lang-bash">podman machine start
+</code></pre>
+<p>nebo v nejhorším případě:</p>
+<pre><code class="lang-bash">podman machine init
+</code></pre>
 </details>
 
 </article>

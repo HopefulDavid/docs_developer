@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#129489;‍&#128187; .NET – Modifik&#225;tory, Runtimes &amp; PInvoke | V&#253;voj&#225;ř </title>
+      <title>.NET – Modifik&#225;tory, Runtimes &amp; PInvoke | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#129489;‍&#128187; .NET – Modifik&#225;tory, Runtimes &amp; PInvoke | V&#253;voj&#225;ř ">
+      <meta name="title" content=".NET – Modifik&#225;tory, Runtimes &amp; PInvoke | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,15 +85,16 @@
         </div>
 
         <article data-uid="">
-<h1 id="-net--modifikátory-runtimes--pinvoke">🧑‍💻 .NET – Modifikátory, Runtimes &amp; PInvoke</h1>
+<h1 id="net--modifikátory-runtimes--pinvoke">.NET – Modifikátory, Runtimes &amp; PInvoke</h1>
 
 <blockquote>
-<p>🚀 Praktické rady pro správu přístupu, multiplatformní nasazení, uvolnění zdrojů a volání nativních DLL v .NET.</p>
+<p>Praktické rady pro správu přístupu, multiplatformní nasazení, uvolnění zdrojů a volání nativních DLL v .NET.</p>
 </blockquote>
 <hr>
-<h2 id="-modifikátory-přístupu">🔐 Modifikátory přístupu</h2>
+<img src="/images/5b6c5417-6cb1-4ecf-8d08-c4d90783ae23.png" alt="" style="width: 30%; display: block; border-radius: 8px;">
+<h2 id="modifikátory-přístupu">Modifikátory přístupu</h2>
 <details>
-<summary><span style="color:#1E90FF;">🗝️ Přehled modifikátorů</span></summary>
+<summary>Přehled modifikátorů</summary>
 <p>Určuje, kdo má přístup k danému prvku.</p>
 <table>
 <thead>
@@ -174,19 +175,18 @@
 <p>📖 Více podrobností <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/access-modifiers#summary-table">zde</a>.</p>
 </details>
 <hr>
-<h2 id="-složka-runtimes--multiplatformní-nasazení">📁 Složka <code>runtimes</code> &amp; multiplatformní nasazení</h2>
+<h2 id="složka-runtimes--multiplatformní-nasazení">Složka <code>runtimes</code> &amp; multiplatformní nasazení</h2>
 <details>
-<summary><span style="color:#1E90FF;">🖥️ K čemu slouží složka `runtimes`?</span></summary>
+<summary>K čemu slouží složka `runtimes`?</summary>
 <ul>
 <li>Obsahuje <strong>platformově specifické knihovny a binární soubory</strong>.</li>
 <li>Umožňuje běh aplikace na různých OS a architekturách.</li>
 <li>V Unity obdobně slouží složka <code>Plugins</code>.</li>
 </ul>
-<p><img src="../../images/dotnet_runtimes.png" alt=""></p>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">📦 Typy nasazení</span></summary>
-<h3 id="-self-contained-deployment">🏗️ Self-contained deployment</h3>
+<summary>Typy nasazení</summary>
+<h3 id="self-contained-deployment">Self-contained deployment</h3>
 <ul>
 <li>Aplikace obsahuje <strong>vlastní .NET runtime</strong>.</li>
 <li>Běží nezávisle na systému uživatele.</li>
@@ -197,7 +197,7 @@
     &lt;RuntimeIdentifiers&gt;win-x64;linux-x64;osx-x64&lt;/RuntimeIdentifiers&gt;
 &lt;/PropertyGroup&gt;
 </code></pre>
-<h3 id="-framework-dependent-deployment">🧩 Framework-dependent deployment</h3>
+<h3 id="framework-dependent-deployment">Framework-dependent deployment</h3>
 <ul>
 <li>Aplikace <strong>vyžaduje .NET runtime</strong> na cílovém systému.</li>
 <li>Menší velikost, závislost na prostředí.</li>
@@ -212,23 +212,22 @@
 </div>
 </details>
 <hr>
-<h2 id="-uvolnění-zdrojů">🧹 Uvolnění zdrojů</h2>
+<h2 id="uvolnění-zdrojů">Uvolnění zdrojů</h2>
 <details>
-<summary><span style="color:#1E90FF;">🗑️ Řízené vs. neřízené zdroje</span></summary>
+<summary>Řízené vs. neřízené zdroje</summary>
 <ul>
 <li><strong>Řízené zdroje</strong>: spravuje garbage collector, není nutné explicitně uvolňovat.</li>
 <li><strong>Neřízené zdroje</strong>: soubory, DB, síť – nutné explicitně uvolnit.</li>
 </ul>
-<p><img src="../../images/dotnet_resources.png" alt=""></p>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🧨 Destruktor & Dispose</span></summary>
-<h3 id="-destruktor">🧨 Destruktor</h3>
+<summary>Destruktor & Dispose</summary>
+<h3 id="destruktor">Destruktor</h3>
 <ul>
 <li>Syntaxe: <code>~ClassName()</code></li>
 <li>Volán automaticky GC, není deterministický.</li>
 </ul>
-<h3 id="-dispose">🧹 Dispose</h3>
+<h3 id="dispose">Dispose</h3>
 <ul>
 <li>Implementace <code>IDisposable</code>.</li>
 <li>Volán explicitně programátorem pro okamžité uvolnění zdrojů.</li>
@@ -243,9 +242,9 @@
 </code></pre>
 </details>
 <hr>
-<h2 id="-volání-funkcí-z-externích-dll-pinvoke">🧬 Volání funkcí z externích DLL (PInvoke)</h2>
+<h2 id="volání-funkcí-z-externích-dll-pinvoke">Volání funkcí z externích DLL (PInvoke)</h2>
 <details>
-<summary><span style="color:#1E90FF;">🔗 Jak volat nativní kód?</span></summary>
+<summary>Jak volat nativní kód?</summary>
 <ul>
 <li>Použij <code>DllImport</code> z <code>System.Runtime.InteropServices</code>.</li>
 </ul>
@@ -268,7 +267,7 @@ public class MyProgram
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🧩 Speciální případ: `__Internal`</span></summary>
+<summary>Speciální případ: `__Internal`</summary>
 <ul>
 <li>Funkce se hledá přímo v hlavním spustitelném souboru.</li>
 </ul>
@@ -277,7 +276,7 @@ public static extern int MyFunction();
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🍏 PInvoke v Unity (AppleAuth příklad)</span></summary>
+<summary>PInvoke v Unity (AppleAuth příklad)</summary>
 <pre><code class="lang-csharp">private static class PInvoke
 {
 #if UNITY_IOS || UNITY_TVOS

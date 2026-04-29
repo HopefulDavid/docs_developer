@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#128218; .NET – Kolekce &amp; Datov&#233; typy | V&#253;voj&#225;ř </title>
+      <title>.NET – Kolekce &amp; Datov&#233; typy | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#128218; .NET – Kolekce &amp; Datov&#233; typy | V&#253;voj&#225;ř ">
+      <meta name="title" content=".NET – Kolekce &amp; Datov&#233; typy | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,15 +85,15 @@
         </div>
 
         <article data-uid="">
-<h1 id="-net--kolekce--datové-typy">📚 .NET – Kolekce &amp; Datové typy</h1>
+<h1 id="net--kolekce--datové-typy">.NET – Kolekce &amp; Datové typy</h1>
 
 <blockquote>
-<p>🚀 Praktické rady pro práci s kolekcemi v .NET, jejich vlastnosti, příklady použití a tipy pro efektivní správu dat.</p>
+<p>Praktické rady pro práci s kolekcemi v .NET, jejich vlastnosti, příklady použití a tipy pro efektivní správu dat.</p>
 </blockquote>
 <hr>
-<h2 id="-fifolifo-kolekce">🔄 FIFO/LIFO kolekce</h2>
+<h2 id="fifolifo-kolekce">FIFO/LIFO kolekce</h2>
 <details>
-<summary><span style="color:#1E90FF;">🚌 Queue (Fronta)</span></summary>
+<summary>Queue (Fronta)</summary>
 <ul>
 <li><strong>FIFO</strong> – První vložený prvek je první odebraný.</li>
 <li>Představ si frontu lidí na autobus.</li>
@@ -106,7 +106,7 @@ Console.WriteLine(queue.Dequeue()); // 1
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🎯 PriorityQueue</span></summary>
+<summary>PriorityQueue</summary>
 <ul>
 <li>Každý prvek má prioritu, vybírá se nejvyšší.</li>
 <li>Vhodné pro plánování úloh.</li>
@@ -119,7 +119,7 @@ Console.WriteLine(queue.Dequeue()); // 2
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🍽️ Stack (Zásobník)</span></summary>
+<summary>Stack (Zásobník)</summary>
 <ul>
 <li><strong>LIFO</strong> – Poslední vložený prvek je první odebraný.</li>
 <li>Představ si hromadu talířů.</li>
@@ -132,9 +132,9 @@ Console.WriteLine(stack.Pop()); // 3
 </code></pre>
 </details>
 <hr>
-<h2 id="-seznamy">📋 Seznamy</h2>
+<h2 id="seznamy">Seznamy</h2>
 <details>
-<summary><span style="color:#1E90FF;">📑 List</span></summary>
+<summary>List</summary>
 <ul>
 <li>Indexovatelný seznam prvků.</li>
 </ul>
@@ -148,7 +148,7 @@ Console.WriteLine(list[1]); // 3
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🔗 LinkedList</span></summary>
+<summary>LinkedList</summary>
 <ul>
 <li>Efektivní úpravy, rychlé vkládání/mazání.</li>
 </ul>
@@ -162,9 +162,9 @@ Console.WriteLine(linkedList.First.Value); // 2
 </code></pre>
 </details>
 <hr>
-<h2 id="-slovníky">🗝️ Slovníky</h2>
+<h2 id="slovníky">Slovníky</h2>
 <details>
-<summary><span style="color:#1E90FF;">📖 Dictionary</span></summary>
+<summary>Dictionary</summary>
 <ul>
 <li>Kolekce klíč-hodnota, rychlé vyhledávání.</li>
 </ul>
@@ -177,7 +177,7 @@ Console.WriteLine(dictionary.ContainsKey(&quot;key2&quot;)); // false
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🔢 SortedDictionary</span></summary>
+<summary>SortedDictionary</summary>
 <ul>
 <li>Automaticky seřazené podle klíčů.</li>
 </ul>
@@ -188,9 +188,9 @@ Console.WriteLine(sortedDictionary.First().Key); // &quot;key1&quot;
 </code></pre>
 </details>
 <hr>
-<h2 id="-kolekce-bez-duplicit">🚫 Kolekce bez duplicit</h2>
+<h2 id="kolekce-bez-duplicit">Kolekce bez duplicit</h2>
 <details>
-<summary><span style="color:#1E90FF;">🔗 HashSet</span></summary>
+<summary>HashSet</summary>
 <ul>
 <li>Množina bez duplicit, rychlé vyhledávání.</li>
 </ul>
@@ -203,7 +203,7 @@ Console.WriteLine(hashSet.Contains(2)); // false
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">📦 Hashtable</span></summary>
+<summary>Hashtable</summary>
 <ul>
 <li>Starší kolekce klíč-hodnota.</li>
 </ul>
@@ -213,9 +213,9 @@ Console.WriteLine(hashtable[&quot;key1&quot;]); // 1
 </code></pre>
 </details>
 <hr>
-<h2 id="-tuple-kolekce">🧩 Tuple kolekce</h2>
+<h2 id="tuple-kolekce">Tuple kolekce</h2>
 <details>
-<summary><span style="color:#1E90FF;">🧮 Tuple</span></summary>
+<summary>Tuple</summary>
 <ul>
 <li>Kombinace různých typů v jedné kolekci.</li>
 </ul>
@@ -225,7 +225,7 @@ Console.WriteLine(tuple.Item2); // &quot;Hello&quot;
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">⚡ ValueTuple</span></summary>
+<summary>ValueTuple</summary>
 <ul>
 <li>Rychlé vytváření, možnost pojmenování prvků.</li>
 </ul>
@@ -235,9 +235,9 @@ Console.WriteLine(Sword); // &quot;Hello&quot;
 </code></pre>
 </details>
 <hr>
-<h2 id="-pozorovatelné-kolekce">👀 Pozorovatelné kolekce</h2>
+<h2 id="pozorovatelné-kolekce">Pozorovatelné kolekce</h2>
 <details>
-<summary><span style="color:#1E90FF;">🔔 ObservableCollection</span></summary>
+<summary>ObservableCollection</summary>
 <ul>
 <li>Upozorní na změny v kolekci.</li>
 </ul>
@@ -247,9 +247,9 @@ observableCollection.Add(1);
 </code></pre>
 </details>
 <hr>
-<h2 id="-kolekce-pouze-pro-čtení">🔒 Kolekce pouze pro čtení</h2>
+<h2 id="kolekce-pouze-pro-čtení">Kolekce pouze pro čtení</h2>
 <details>
-<summary><span style="color:#1E90FF;">📚 ReadOnlyCollection</span></summary>
+<summary>ReadOnlyCollection</summary>
 <ul>
 <li>Nelze měnit po vytvoření.</li>
 </ul>
@@ -259,7 +259,7 @@ Console.WriteLine(readOnlyCollection[1]); // 2
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🗝️ ReadOnlyDictionary</span></summary>
+<summary>ReadOnlyDictionary</summary>
 <ul>
 <li>Klíč-hodnota, pouze pro čtení.</li>
 </ul>
@@ -271,9 +271,9 @@ Console.WriteLine(readOnlyDictionary[&quot;key2&quot;]); // 2
 </code></pre>
 </details>
 <hr>
-<h2 id="-neměnné-kolekce">🛡️ Neměnné kolekce</h2>
+<h2 id="neměnné-kolekce">Neměnné kolekce</h2>
 <details>
-<summary><span style="color:#1E90FF;">🧊 ImmutableArray</span></summary>
+<summary>ImmutableArray</summary>
 <ul>
 <li>Pole, které nelze měnit.</li>
 </ul>
@@ -282,7 +282,7 @@ Console.WriteLine(immutableArray[1]); // 2
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">📋 ImmutableList</span></summary>
+<summary>ImmutableList</summary>
 <ul>
 <li>Seznam, který nelze měnit.</li>
 </ul>
@@ -291,7 +291,7 @@ Console.WriteLine(immutableList[1]); // 2
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🗝️ ImmutableDictionary</span></summary>
+<summary>ImmutableDictionary</summary>
 <ul>
 <li>Klíč-hodnota, neměnný.</li>
 </ul>
@@ -301,7 +301,7 @@ Console.WriteLine(immutableDictionary[&quot;key1&quot;]); // 1
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🔗 ImmutableHashSet</span></summary>
+<summary>ImmutableHashSet</summary>
 <ul>
 <li>Množina, neměnná.</li>
 </ul>
@@ -310,7 +310,7 @@ Console.WriteLine(immutableHashSet.Contains(2)); // true
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🔢 ImmutableSortedSet</span></summary>
+<summary>ImmutableSortedSet</summary>
 <ul>
 <li>Seřazená množina, neměnná.</li>
 </ul>
@@ -319,7 +319,7 @@ Console.WriteLine(immutableSortedSet.Min); // 1
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🚌 ImmutableQueue</span></summary>
+<summary>ImmutableQueue</summary>
 <ul>
 <li>Fronta, neměnná.</li>
 </ul>
@@ -328,7 +328,7 @@ Console.WriteLine(immutableQueue.Peek()); // 1
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🍽️ ImmutableStack</span></summary>
+<summary>ImmutableStack</summary>
 <ul>
 <li>Zásobník, neměnný.</li>
 </ul>
@@ -337,9 +337,9 @@ Console.WriteLine(immutableStack.Peek()); // 3
 </code></pre>
 </details>
 <hr>
-<h2 id="-paměťové-kolekce">🧠 Paměťové kolekce</h2>
+<h2 id="paměťové-kolekce">Paměťové kolekce</h2>
 <details>
-<summary><span style="color:#1E90FF;">💾 Memory</span></summary>
+<summary>Memory</summary>
 <ul>
 <li>Bezpečný přístup k paměti.</li>
 </ul>
@@ -348,7 +348,7 @@ Console.WriteLine(memory.Span[1]); // 2
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🔍 Span</span></summary>
+<summary>Span</summary>
 <ul>
 <li>Efektivní práce s pamětí.</li>
 </ul>
@@ -357,9 +357,9 @@ Console.WriteLine(span[1]); // 2
 </code></pre>
 </details>
 <hr>
-<h2 id="-slabé-reference">🕸️ Slabé reference</h2>
+<h2 id="slabé-reference">Slabé reference</h2>
 <details>
-<summary><span style="color:#1E90FF;">🧬 WeakReference</span></summary>
+<summary>WeakReference</summary>
 <ul>
 <li>Umožňuje GC uvolnit objekt.</li>
 </ul>
@@ -368,9 +368,9 @@ Console.WriteLine(weakReference.TryGetTarget(out int value)); // true
 </code></pre>
 </details>
 <hr>
-<h2 id="-kolekce-pro-více-vláken">🧵 Kolekce pro více vláken</h2>
+<h2 id="kolekce-pro-více-vláken">Kolekce pro více vláken</h2>
 <details>
-<summary><span style="color:#1E90FF;">🚌 ConcurrentQueue</span></summary>
+<summary>ConcurrentQueue</summary>
 <ul>
 <li>Fronta bezpečná pro více vláken.</li>
 </ul>
@@ -380,7 +380,7 @@ Console.WriteLine(concurrentQueue.TryDequeue(out int value)); // true
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🍽️ ConcurrentStack</span></summary>
+<summary>ConcurrentStack</summary>
 <ul>
 <li>Zásobník bezpečný pro více vláken.</li>
 </ul>
@@ -390,7 +390,7 @@ Console.WriteLine(concurrentStack.TryPop(out int value)); // true
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🗝️ ConcurrentDictionary</span></summary>
+<summary>ConcurrentDictionary</summary>
 <ul>
 <li>Klíč-hodnota, bezpečné pro více vláken.</li>
 </ul>
@@ -400,7 +400,7 @@ Console.WriteLine(concurrentDictionary[&quot;key1&quot;]); // 1
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">👜 ConcurrentBag</span></summary>
+<summary>ConcurrentBag</summary>
 <ul>
 <li>Kolekce bezpečná pro více vláken.</li>
 </ul>
@@ -410,7 +410,7 @@ Console.WriteLine(concurrentBag.TryTake(out int value)); // true
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">⏳ BlockingCollection</span></summary>
+<summary>BlockingCollection</summary>
 <ul>
 <li>Blokuje vlákno při prázdné/plné kolekci.</li>
 </ul>

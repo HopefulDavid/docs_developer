@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#127760; .NET – Vytvořen&#237; REST API v ASP.NET Core | V&#253;voj&#225;ř </title>
+      <title>.NET – Vytvořen&#237; REST API v ASP.NET Core | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#127760; .NET – Vytvořen&#237; REST API v ASP.NET Core | V&#253;voj&#225;ř ">
+      <meta name="title" content=".NET – Vytvořen&#237; REST API v ASP.NET Core | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,15 +85,15 @@
         </div>
 
         <article data-uid="">
-<h1 id="-net--vytvoření-rest-api-v-aspnet-core">🌐 .NET – Vytvoření REST API v ASP.NET Core</h1>
+<h1 id="net--vytvoření-rest-api-v-aspnet-core">.NET – Vytvoření REST API v ASP.NET Core</h1>
 
 <blockquote>
-<p>🚀 Praktické rady pro založení, strukturu, konfiguraci a rozšíření vlastního API v C# s ASP.NET Core.</p>
+<p>Praktické rady pro založení, strukturu, konfiguraci a rozšíření vlastního API v C# s ASP.NET Core.</p>
 </blockquote>
 <hr>
-<h2 id="-vytvoření-projektu">🏗️ Vytvoření projektu</h2>
+<h2 id="vytvoření-projektu">Vytvoření projektu</h2>
 <details>
-<summary><span style="color:#1E90FF;">🛠️ Krok za krokem</span></summary>
+<summary>Krok za krokem</summary>
 <ol>
 <li>Otevři <strong>Visual Studio</strong>.</li>
 <li>Zvol <strong>Create a new project</strong>.</li>
@@ -101,12 +101,11 @@
 <li>Pojmenuj projekt a klikni na <strong>Create</strong>.</li>
 <li>Vyber <strong>.NET 6 (LTS)</strong> nebo nejnovější verzi.</li>
 </ol>
-<p><img src="../../images/net_api_create.png" alt=""></p>
 </details>
 <hr>
-<h2 id="-struktura-projektu">📁 Struktura projektu</h2>
+<h2 id="struktura-projektu">Struktura projektu</h2>
 <details>
-<summary><span style="color:#1E90FF;">🗂️ Přehled složek a souborů</span></summary>
+<summary>Přehled složek a souborů</summary>
 <table>
 <thead>
 <tr>
@@ -129,12 +128,11 @@
 </tr>
 </tbody>
 </table>
-<p><img src="../../images/net_api_structure.png" alt=""></p>
 </details>
 <hr>
-<h2 id="-přidání-kontroleru">🧑‍💻 Přidání kontroleru</h2>
+<h2 id="-přidání-kontroleru">‍ Přidání kontroleru</h2>
 <details>
-<summary><span style="color:#1E90FF;">🔌 Ukázka kontroleru</span></summary>
+<summary>Ukázka kontroleru</summary>
 <pre><code class="lang-csharp">using Microsoft.AspNetCore.Mvc;
 
 namespace MyAPI.Controllers
@@ -192,9 +190,9 @@ namespace MyAPI.Controllers
 </code></pre>
 </details>
 <hr>
-<h2 id="-konfigurace-závislostí">⚙️ Konfigurace závislostí</h2>
+<h2 id="konfigurace-závislostí">Konfigurace závislostí</h2>
 <details>
-<summary><span style="color:#1E90FF;">🔧 Nastavení v `Startup.cs`</span></summary>
+<summary>Nastavení v `Startup.cs`</summary>
 <pre><code class="lang-csharp">using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -255,9 +253,9 @@ namespace MyAPI
 </code></pre>
 </details>
 <hr>
-<h2 id="-vstupní-bod-aplikace">🚀 Vstupní bod aplikace</h2>
+<h2 id="vstupní-bod-aplikace">Vstupní bod aplikace</h2>
 <details>
-<summary><span style="color:#E95A84;">📝 `Program.cs`</span></summary>
+<summary>`Program.cs`</summary>
 <pre><code class="lang-csharp">public class Program
 {
     public static void Main(string[] args) =&gt; CreateHostBuilder(args).Build().Run();
@@ -269,9 +267,9 @@ namespace MyAPI
 </code></pre>
 </details>
 <hr>
-<h2 id="-konfigurace-v-appsettingsjson">⚙️ Konfigurace v <code>appsettings.json</code></h2>
+<h2 id="konfigurace-v-appsettingsjson">Konfigurace v <code>appsettings.json</code></h2>
 <details>
-<summary><span style="color:#E95A84;">🗂️ Ukázka konfigurace</span></summary>
+<summary>Ukázka konfigurace</summary>
 <pre><code class="lang-json">{
   &quot;Logging&quot;: {
     &quot;LogLevel&quot;: { &quot;Default&quot;: &quot;Information&quot; },
@@ -300,9 +298,9 @@ namespace MyAPI
 </code></pre>
 </details>
 <hr>
-<h2 id="-příklad-služby-s-konfigurací">🧩 Příklad služby s konfigurací</h2>
+<h2 id="příklad-služby-s-konfigurací">Příklad služby s konfigurací</h2>
 <details>
-<summary><span style="color:#1E90FF;">🔑 Třída služby</span></summary>
+<summary>Třída služby</summary>
 <pre><code class="lang-csharp">public class MyService
 {
     private readonly IConfiguration _configuration;

@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#129517; Unity – Navigačn&#237; syst&#233;m &amp; Tipy | V&#253;voj&#225;ř </title>
+      <title>Unity – Navigačn&#237; syst&#233;m (NavMesh) | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#129517; Unity – Navigačn&#237; syst&#233;m &amp; Tipy | V&#253;voj&#225;ř ">
+      <meta name="title" content="Unity – Navigačn&#237; syst&#233;m (NavMesh) | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,45 +85,28 @@
         </div>
 
         <article data-uid="">
-<h1 id="-unity--navigační-systém--tipy">🧭 Unity – Navigační systém &amp; Tipy</h1>
+<h1 id="unity--navigační-systém-navmesh">Unity – Navigační systém (NavMesh)</h1>
 
 <blockquote>
-<p>🚀 Praktické rady pro nastavení navigace, pohyb postav a využití NavMesh v Unity.</p>
+<p>Nastavení navigace, pohyb postav a využití NavMesh v Unity.</p>
 </blockquote>
 <hr>
-<h2 id="-co-je-navigační-systém">🗺️ Co je Navigační systém?</h2>
-<details>
-<summary><span style="color:#1E90FF;">🔍 Základní principy</span></summary>
-<ul>
-<li>Umožňuje postavám najít cestu v herním světě.</li>
-<li>Využívá <strong>NavMesh</strong> – speciální mapu pro navigaci.</li>
-<li>Řeší překážky, optimalizuje trasu a umožňuje dynamický pohyb.</li>
-</ul>
-<p><img src="../../images/unity_navmesh_intro.png" alt=""></p>
-</details>
+<h2 id="co-je-navmesh">Co je NavMesh?</h2>
+<p>NavMesh (Navigation Mesh) je speciální mapa herního světa, která definuje, kde se postavy mohou pohybovat. Unity ji používá pro automatické hledání cesty k cíli, obcházení překážek a optimalizaci pohybu.</p>
 <hr>
-<h2 id="-nastavení-navmesh-v-unity">🛠️ Nastavení NavMesh v Unity</h2>
-<details>
-<summary><span style="color:#1E90FF;">⚙️ Jak vytvořit NavMesh?</span></summary>
+<h2 id="nastavení-navmesh">Nastavení NavMesh</h2>
 <ol>
-<li>Označ objekty, po kterých se má chodit (<strong>Walkable</strong>).</li>
-<li>Přidej komponentu <strong>NavMesh Surface</strong>.</li>
+<li>Označ objekty, po kterých se má chodit (nastav jako <strong>Walkable</strong>).</li>
+<li>Přidej komponentu <strong>NavMesh Surface</strong> na scénu nebo herní objekt.</li>
 <li>Klikni na <strong>Bake</strong> pro vygenerování navigační mapy.</li>
 </ol>
-<p><img src="../../images/unity_navmesh_bake.png" alt=""></p>
-<blockquote>
-<p>📌 Pro dynamické prostředí použij <strong>NavMesh Obstacle</strong>.</p>
-</blockquote>
-</details>
+<div class="TIP">
+<h5>Tip</h5>
+<p>Pro dynamické překážky (pohybující se objekty) přidej komponentu <strong>NavMesh Obstacle</strong>.</p>
+</div>
 <hr>
-<h2 id="-pohyb-postavy-pomocí-navmesh-agent">🚶‍♂️ Pohyb postavy pomocí NavMesh Agent</h2>
-<details>
-<summary><span style="color:#1E90FF;">👣 Jak nastavit pohyb?</span></summary>
-<ol>
-<li>Přidej komponentu <strong>NavMesh Agent</strong> na postavu.</li>
-<li>Nastav parametry (rychlost, akcelerace, radius).</li>
-<li>Pro pohyb použij skript:</li>
-</ol>
+<h2 id="pohyb-postavy">Pohyb postavy</h2>
+<p>Přidej komponentu <strong>NavMesh Agent</strong> na postavu a nastav parametry (rychlost, akcelerace, radius). Pohyb pak zajistí jednoduchý skript:</p>
 <pre><code class="lang-csharp">using UnityEngine;
 using UnityEngine.AI;
 
@@ -143,16 +126,10 @@ public class MoveToTarget : MonoBehaviour
     }
 }
 </code></pre>
-<blockquote>
-<p>🗝️ Postava automaticky najde cestu k cíli.</p>
-</blockquote>
-</details>
+<p>Agent automaticky najde nejkratší cestu k <code>target</code> a obejde překážky.</p>
 <hr>
-<h2 id="-novinky--video">🆕 Novinky &amp; Video</h2>
-<details>
-<summary><span style="color:#1E90FF;">🎬 Co je nového v navigaci?</span></summary>
+<h2 id="video">Video</h2>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/sOIQCHNJbCs?si=Hd4186amhBQiQ_tX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-</details>
 
 </article>
 

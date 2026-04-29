@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#128450;️ Windows – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř </title>
+      <title>Windows – Průvodce a tipy | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#128450;️ Windows – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř ">
+      <meta name="title" content="Windows – Průvodce a tipy | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,88 +85,89 @@
         </div>
 
         <article data-uid="">
-<h1 id="-windows--praktický-průvodce--tipy">🗂️ Windows – Praktický průvodce &amp; tipy</h1>
+<h1 id="windows--průvodce-a-tipy">Windows – Průvodce a tipy</h1>
 
 <blockquote>
-<p>🚀 Moderní přehled instalace, nastavení, klávesových zkratek a řešení problémů ve Windows.</p>
+<p>Instalace, nastavení, klávesové zkratky a řešení problémů ve Windows.</p>
 </blockquote>
 <hr>
-<h2 id="-instalace-windows-bez-microsoft-účtu">🪟 Instalace Windows bez Microsoft účtu</h2>
-<p>Na začátku instalace při výběru jazyka stiskněte:</p>
+<h2 id="instalace-windows-bez-microsoft-účtu">Instalace Windows bez Microsoft účtu</h2>
+<p>Na začátku instalace při výběru jazyka:</p>
 <ol>
-<li><p><code>Shift</code> + <code>F10</code> pro otevření příkazového řádku.</p>
-</li>
-<li><p>Zadejte příkaz:</p>
-<p><code>start ms-cxh:localonly</code></p>
+<li>Stiskni <code>Shift</code> + <code>F10</code> pro otevření příkazového řádku.</li>
+<li>Zadej:</li>
+</ol>
+<pre><code>start ms-cxh:localonly
+</code></pre>
 <div class="TIP">
 <h5>Tip</h5>
-<p>Pokud nezafunguje, zkuste místo toho:</p>
-<p><code>OOBE\BYPASSNRO</code></p>
+<p>Pokud příkaz nezafunguje, zkus místo toho:</p>
+<pre><code>OOBE\BYPASSNRO
+</code></pre>
 </div>
-</li>
-</ol>
-<h2 id="-řešení-neviditelného-disku-při-instalaci-windows">🛠️ Řešení neviditelného disku při instalaci Windows</h2>
+<hr>
+<h2 id="řešení-neviditelného-disku-při-instalaci">Řešení neviditelného disku při instalaci</h2>
 <details>
-<summary><span style="color:#1E90FF;">💾 Řešení problému s neviditelným diskem při instalaci</span></summary>
+<summary>Postup načtení ovladače disku během instalace</summary>
 <ol>
-<li><p><strong>Stáhněte si ovladač pro diskovou jednotku</strong></p>
+<li>Otevři příkazový řádek: <code>Shift</code> + <code>F10</code></li>
+<li>Zjisti informace o discích:
+<pre><code>wmic diskdrive list brief
+</code></pre>
+</li>
+<li>Stáhni ovladač podle typu řadiče:
 <ul>
-<li>Otevřete příkazový řádek:<br>
-<code>Shift</code> + <code>F10</code></li>
-<li>Zobrazte informace o discích:<br>
-<code>wmic diskdrive list brief</code></li>
-<li>Pokud používáte <strong>Intel RST (RAID)</strong> nebo <strong>Intel Optane</strong>, stáhněte odpovídající ovladač:
-<ul>
-<li><strong>Intel RST VMD Managed Controller</strong> / <strong>Intel RST VMD Controller</strong> pro RAID/NVMe/SATA</li>
-<li><strong>Intel Optane Memory and Storage Management</strong> pro Optane</li>
+<li><strong>Intel RST VMD / Managed Controller</strong> – pro RAID/NVMe/SATA</li>
+<li><strong>Intel Optane Memory and Storage Management</strong> – pro Optane</li>
+<li>Ovladač stahuj z webu výrobce zařízení (Acer, Dell, HP…)</li>
 </ul>
 </li>
-<li>Ovladač rozbalte na <strong>USB disk</strong>.</li>
-</ul>
+<li>Rozbal ovladač na USB disk.</li>
+<li>Na obrazovce výběru disků klikni na <strong>Načíst ovladač (Load Driver)</strong>.</li>
+<li>Vlož USB a vyber soubor ovladače.</li>
+</ol>
 <div class="NOTE">
 <h5>Note</h5>
-<p>Ovladač stáhnete z oficiálních stránek u výrobce (např. acer, dell, hp, atd.)</p>
+<p>Novější verzi ovladače poznáš podle vyššího hexadecimálního čísla v názvu souboru (09AB &gt; 08AB).</p>
 </div>
-</li>
-<li><p><strong>Načtení ovladače během instalace</strong></p>
-<ul>
-<li>Spusťte instalaci Windows.</li>
-<li>Na obrazovce s výběrem disků klikněte na <strong>Načíst ovladač (Load Driver)</strong>.</li>
-<li>Vložte USB disk s ovladačem a vyberte správný soubor.</li>
-<li>Novější verzi poznáte podle vyššího hexadecimálního čísla v názvu (např. 09AB je novější než 08AB).</li>
-</ul>
 <div class="IMPORTANT">
 <h5>Important</h5>
 <p>Po načtení ovladače by měl být disk viditelný a připravený pro instalaci.</p>
 </div>
-</li>
-</ol>
 </details>
 <hr>
-<h2 id="-základní-nastavení">⚙️ Základní nastavení</h2>
-<details>
-<summary><span style="color:#1E90FF;">⏱️ Zobrazení sekund v dolním panelu</span></summary>
-<img src="../images/t9hZzZp1FO.png" alt="windows_taskbar_seconds" width="500px">
-</details>
+<h2 id="základní-nastavení">Základní nastavení</h2>
+<h3 id="zobrazení-sekund-v-dolním-panelu">Zobrazení sekund v dolním panelu</h3>
+<img src="../images/t9hZzZp1FO.png" alt="Zobrazení sekund v taskbaru" width="500px">
 <hr>
-<h2 id="-klávesnicové-zkratky">⌨️ Klávesnicové zkratky</h2>
-<details>
-<summary><span style="color:#1E90FF;">🗔 Minimalizace/Maximalizace všech oken</span></summary>
-<p><code>Win</code> + <code>D</code></p>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🔗 Skočení na adresní řádek</span></summary>
-<p><code>Alt</code> + <code>D</code></p>
-<img src="../images/windows_keyboard_explorerAddressBar.png" alt="windows_explorer_addressBar.png" width="800px">
-</details>
-<hr>
-<h2 id="-chybějící-klávesy-na-klávesnici">🖱️ Chybějící klávesy na klávesnici</h2>
-<details>
-<summary><span style="color:#1E90FF;">🗂️ Kontextová klávesa</span></summary>
-<img src="https://filestore.community.support.microsoft.com/api/images/d42eb865-8390-4aa3-af19-e7272d95121e" alt="windows_missingKeyboardContextMenu.png" width="800px">
-<p><strong>Řešení:</strong><br>
-<code>Shift</code> + <code>F10</code></p>
-</details>
+<h2 id="klávesové-zkratky">Klávesové zkratky</h2>
+<table>
+<thead>
+<tr>
+<th>Zkratka</th>
+<th>Akce</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Win</code> + <code>D</code></td>
+<td>Minimalizace / obnovení všech oken</td>
+</tr>
+<tr>
+<td><code>Alt</code> + <code>D</code></td>
+<td>Přechod na adresní řádek v Průzkumníku</td>
+</tr>
+<tr>
+<td><code>Shift</code> + <code>F10</code></td>
+<td>Náhrada chybějící kontextové klávesy</td>
+</tr>
+</tbody>
+</table>
+<h3 id="skočení-na-adresní-řádek">Skočení na adresní řádek</h3>
+<img src="../images/windows_keyboard_explorerAddressBar.png" alt="Adresní řádek ve Windows Průzkumníku" width="800px">
+<h3 id="chybějící-kontextová-klávesa">Chybějící kontextová klávesa</h3>
+<img src="https://filestore.community.support.microsoft.com/api/images/d42eb865-8390-4aa3-af19-e7272d95121e" alt="Kontextová klávesa" width="800px">
+<p>Náhrada: <code>Shift</code> + <code>F10</code></p>
 
 </article>
 

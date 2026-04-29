@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#128230; Spr&#225;va npm bal&#237;čků | V&#253;voj&#225;ř </title>
+      <title>Spr&#225;va npm bal&#237;čků | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#128230; Spr&#225;va npm bal&#237;čků | V&#253;voj&#225;ř ">
+      <meta name="title" content="Spr&#225;va npm bal&#237;čků | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,15 +85,16 @@
         </div>
 
         <article data-uid="">
-<h1 id="-správa-npm-balíčků">📦 Správa npm balíčků</h1>
+<h1 id="správa-npm-balíčků">Správa npm balíčků</h1>
 
 <blockquote>
-<p>🛠️ Pro správu balíčků je potřeba mít nainstalovaný <strong>Node.js</strong> a <strong>npm</strong>.</p>
+<p>Pro správu balíčků je potřeba mít nainstalovaný <strong>Node.js</strong> a <strong>npm</strong>.</p>
 </blockquote>
 <hr>
-<h2 id="-aktualizace-balíčků">🔄 Aktualizace balíčků</h2>
+<img src="/images/7021cbf6-ee66-45b6-903c-a751e0653eec.png" alt="" style="width: 40%; display: block; border-radius: 8px;">
+<h2 id="aktualizace-balíčků">Aktualizace balíčků</h2>
 <details>
-<summary><span style="color:#1E90FF;">🆙 Jak správně aktualizovat balíčky?</span></summary>
+<summary>Jak správně aktualizovat balíčky?</summary>
 <ol>
 <li>🚀 <strong>Aktualizace Storybook:</strong>
 <pre><code class="lang-bash">npx storybook@latest upgrade
@@ -114,13 +115,13 @@
 </li>
 </ol>
 <blockquote>
-<p>💡 <strong>Tip:</strong> Po aktualizaci spusťte projekt a ověřte funkčnost. Některé aktualizace mohou vyžadovat úpravy v konfiguraci nebo kódu.</p>
+<p><strong>Tip:</strong> Po aktualizaci spusťte projekt a ověřte funkčnost. Některé aktualizace mohou vyžadovat úpravy v konfiguraci nebo kódu.</p>
 </blockquote>
 </details>
 <hr>
-<h2 id="-globální-balíčky">🌍 Globální balíčky</h2>
+<h2 id="globální-balíčky">Globální balíčky</h2>
 <details>
-<summary><span style="color:#1E90FF;">📁 Kde najdu globální balíčky?</span></summary>
+<summary>Kde najdu globální balíčky?</summary>
 <table>
 <thead>
 <tr>
@@ -144,9 +145,9 @@
 </code></pre>
 </details>
 <hr>
-<h2 id="-záloha-globálních-balíčků">💾 Záloha globálních balíčků</h2>
+<h2 id="záloha-globálních-balíčků">Záloha globálních balíčků</h2>
 <details>
-<summary><span style="color:#1E90FF;">🗄️ Jak zálohovat globální balíčky?</span></summary>
+<summary>Jak zálohovat globální balíčky?</summary>
 <p>Tento PowerShell skript zálohuje seznam globálních balíčků a stáhne je pro offline použití.</p>
 <pre><code class="lang-powershell"># Vytvoření cesty k souboru se seznamem balíčků
 $packageListFilePath = Join-Path $PWD.Path 'npm_global_packages.txt'
@@ -177,9 +178,9 @@ foreach ($line in $content) {
 </code></pre>
 </details>
 <hr>
-<h2 id="-obnova-balíčků-z-offline-zálohy">♻️ Obnova balíčků z offline zálohy</h2>
+<h2 id="obnova-balíčků-z-offline-zálohy">Obnova balíčků z offline zálohy</h2>
 <details>
-<summary><span style="color:#1E90FF;">🔄 Jak obnovit balíčky ze zálohy?</span></summary>
+<summary>Jak obnovit balíčky ze zálohy?</summary>
 <p>Tento PowerShell skript nainstaluje všechny zálohované balíčky z offline složky.</p>
 <pre><code class="lang-powershell">$packageFolder = Join-Path $PWD.Path 'offline_packages'
 $installBaseFolder = Join-Path $PWD.Path 'Installed'
@@ -197,14 +198,14 @@ foreach ($tgzFile in $tgzFiles) {
 </code></pre>
 </details>
 <hr>
-<h2 id="-aplikační-balíčky">🧩 Aplikační balíčky</h2>
+<h2 id="aplikační-balíčky">Aplikační balíčky</h2>
 <details>
-<summary><span style="color:#1E90FF;">📜 conventional-changelog-cli</span></summary>
+<summary>conventional-changelog-cli</summary>
 <p><strong>Slouží k automatickému generování changelogu na základě commit zpráv.</strong></p>
-<h3 id="-instalace">🚀 Instalace</h3>
+<h3 id="instalace">Instalace</h3>
 <pre><code class="lang-bash">npm install -g conventional-changelog-cli
 </code></pre>
-<h3 id="-generování-changelogu">📝 Generování changelogu</h3>
+<h3 id="generování-changelogu">Generování changelogu</h3>
 <pre><code class="lang-bash">conventional-changelog -p angular -i CHANGELOG.md -o CHANGELOG.md -s
 </code></pre>
 <table>
@@ -258,12 +259,10 @@ foreach ($tgzFile in $tgzFiles) {
 </tbody>
 </table>
 <blockquote>
-<p>💡 <strong>Tip:</strong><br>
+<p><strong>Tip:</strong>
 Pro vlastní šablonu použijte:</p>
 <pre><code class="lang-bash">conventional-changelog -i index.md -s --config ./changelog-config.js
 </code></pre>
-<p><a href="../images/changelog-config.js">Příklad konfigurace s emoji</a><br>
-<a href="../images/changelog-config-noEmojis.js">Příklad konfigurace bez emoji</a></p>
 </blockquote>
 </details>
 

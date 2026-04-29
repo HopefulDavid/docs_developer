@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#127991;️ .NET – Atributy, Datov&#233; anotace &amp; FileHelpers | V&#253;voj&#225;ř </title>
+      <title>.NET – Atributy, Datov&#233; anotace &amp; FileHelpers | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#127991;️ .NET – Atributy, Datov&#233; anotace &amp; FileHelpers | V&#253;voj&#225;ř ">
+      <meta name="title" content=".NET – Atributy, Datov&#233; anotace &amp; FileHelpers | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,26 +85,25 @@
         </div>
 
         <article data-uid="">
-<h1 id="-net--atributy-datové-anotace--filehelpers">🏷️ .NET – Atributy, Datové anotace &amp; FileHelpers</h1>
+<h1 id="net--atributy-datové-anotace--filehelpers">.NET – Atributy, Datové anotace &amp; FileHelpers</h1>
 
 <blockquote>
-<p>🚀 Praktické rady pro práci s atributy v .NET, validaci dat pomocí anotací a zpracování souborů s FileHelpers.</p>
+<p>Praktické rady pro práci s atributy v .NET, validaci dat pomocí anotací a zpracování souborů s FileHelpers.</p>
 </blockquote>
 <hr>
-<h2 id="-co-jsou-atributy">🧩 Co jsou atributy?</h2>
+<h2 id="co-jsou-atributy">Co jsou atributy?</h2>
 <details>
-<summary><span style="color:#1E90FF;">🔍 Základní principy atributů</span></summary>
+<summary>Základní principy atributů</summary>
 <ul>
 <li>Atributy přidávají <strong>metadata</strong> ke třídám, metodám, vlastnostem nebo polím.</li>
 <li>Umožňují rozšířit chování kódu bez změny jeho logiky.</li>
 <li>Často se využívají pro validaci, serializaci, mapování dat apod.</li>
 </ul>
-<p><img src="../../images/net_attributes_intro.png" alt=""></p>
 </details>
 <hr>
-<h2 id="-datové-anotace">📝 Datové anotace</h2>
+<h2 id="datové-anotace">Datové anotace</h2>
 <details>
-<summary><span style="color:#1E90FF;">📚 Nejčastější datové anotace</span></summary>
+<summary>Nejčastější datové anotace</summary>
 <table>
 <thead>
 <tr>
@@ -149,7 +148,7 @@
 </table>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🧑‍💻 Příklad použití datových anotací</span></summary>
+<summary>‍ Příklad použití datových anotací</summary>
 <p><strong>Definice třídy:</strong></p>
 <pre><code class="lang-csharp">public class Author
 {
@@ -192,7 +191,7 @@ if (!valid)
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🧬 Vlastní datová anotace</span></summary>
+<summary>Vlastní datová anotace</summary>
 <ol>
 <li>Vytvoř třídu dědící z <code>ValidationAttribute</code>.</li>
 <li>Přepiš metodu <code>IsValid</code>.</li>
@@ -217,7 +216,7 @@ public string LastName { get; set; }
 </code></pre>
 </details>
 <hr>
-<h2 id="-filehelpers--zpracování-souborů">📄 FileHelpers – Zpracování souborů</h2>
+<h2 id="filehelpers--zpracování-souborů">FileHelpers – Zpracování souborů</h2>
 <div class="IMPORTANT">
 <h5>Important</h5>
 <p>Nepodporuje:</p>
@@ -227,7 +226,7 @@ public string LastName { get; set; }
 </ul>
 </div>
 <details>
-<summary><span style="color:#1E90FF;">🧩 Nejčastější atributy FileHelpers</span></summary>
+<summary>Nejčastější atributy FileHelpers</summary>
 <h3 id="třída">Třída</h3>
 <ul>
 <li><code>[DelimitedRecord]</code> – Záznamy s oddělovači</li>
@@ -244,7 +243,7 @@ public string LastName { get; set; }
 </ul>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">📝 Příklad použití FileHelpers</span></summary>
+<summary>Příklad použití FileHelpers</summary>
 <p><strong>Definice třídy:</strong></p>
 <pre><code class="lang-csharp">[DelimitedRecord(&quot;,&quot;)]
 public class Order
@@ -264,7 +263,7 @@ engine.WriteFile(&quot;Output.txt&quot;, result);
 </code></pre>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">🧬 Vlastní konvertor</span></summary>
+<summary>Vlastní konvertor</summary>
 <ol>
 <li>Vytvoř třídu dědící z <code>ConverterBase</code>.</li>
 <li>Přepiš metody <code>StringToField</code> a <code>FieldToString</code>.</li>

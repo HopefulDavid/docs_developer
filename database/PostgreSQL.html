@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#128450;️ PostgreSQL – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř </title>
+      <title>PostgreSQL – Průvodce a tipy | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#128450;️ PostgreSQL – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř ">
+      <meta name="title" content="PostgreSQL – Průvodce a tipy | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,99 +85,81 @@
         </div>
 
         <article data-uid="">
-<h1 id="-postgresql--praktický-průvodce--tipy">🗂️ PostgreSQL – Praktický průvodce &amp; tipy</h1>
+<h1 id="postgresql--průvodce-a-tipy">PostgreSQL – Průvodce a tipy</h1>
 
 <blockquote>
-<p>🚀 Moderní přehled základních pojmů, instalace, příkazů a doporučení pro práci s PostgreSQL.</p>
+<p>Přehled základních pojmů, instalace, příkazů a doporučení pro práci s PostgreSQL.</p>
 </blockquote>
 <hr>
-<h2 id="-co-je-postgresql">📖 Co je PostgreSQL?</h2>
+<img src="/images/a32bfd31-f086-44eb-be6f-b8fbb993dec2.png" alt="" style="width: 60%; display: block; border-radius: 8px;">
+<h2 id="co-je-postgresql">Co je PostgreSQL?</h2>
 <ul>
-<li><strong>Objektově-relační databázový systém</strong></li>
-<li>Podporuje širokou škálu programovacích jazyků:<br>
-<code>C</code>, <code>C++</code>, <code>Java</code>, <code>Perl</code>, <code>Python</code>, <code>Ruby</code>, <code>Tcl</code>, <code>Scheme</code>, <code>PHP</code>, <code>Swift</code>, <code>Go</code>, <code>JavaScript</code>, <code>TypeScript</code>, <code>R</code>, <code>Rust</code>, <code>Kotlin</code>, <code>Lua</code>, <code>Erlang</code>, <code>Elixir</code>, <code>Haskell</code>, <code>Scala</code>, <code>D</code>, <code>Julia</code>, <code>PL/pgSQL</code>, <code>SQL</code>, <code>PL/Python</code>, <code>PL/Perl</code>, <code>PL/Tcl</code>, <code>PL/Java</code>, <code>PL/R</code>, <code>PL/V8</code></li>
+<li><strong>Objektově-relační databázový systém</strong> s otevřeným zdrojovým kódem.</li>
+<li>Jeden z nejrobustnějších SQL systémů dostupných zdarma.</li>
+<li>Podporuje procedurální jazyky: <code>PL/pgSQL</code>, <code>PL/Python</code>, <code>PL/Perl</code>, <code>PL/Java</code> a další.</li>
 </ul>
 <div class="NOTE">
 <h5>Note</h5>
-<p><code>PL</code> znamená &quot;Procedural Language&quot; – umožňuje psaní funkcí a procedur přímo v databázi.</p>
+<p><code>PL</code> znamená „Procedural Language&quot; – umožňuje psaní funkcí a procedur přímo v databázi.</p>
 </div>
 <hr>
-<h2 id="-uživatelské-rozhraní">🖥️ Uživatelské rozhraní</h2>
-<details>
-<summary><span style="color:#1E90FF;">🖥️ Otevření aplikace</span></summary>
-<img src="../images/t0m7kk76Jm.png">
-</details>
+<h2 id="uživatelské-rozhraní">Uživatelské rozhraní</h2>
+<p>Doporučený klient je <strong>pgAdmin 4</strong> – instaluje se jako součást PostgreSQL:</p>
+<img src="../images/t0m7kk76Jm.png" alt="pgAdmin – otevření aplikace">
 <hr>
-<h2 id="-instalace-postgresql">🛠️ Instalace PostgreSQL</h2>
+<h2 id="instalace-postgresql">Instalace PostgreSQL</h2>
 <details>
-<summary><span style="color:#1E90FF;">🔢 Výběr verze produktu</span></summary>
-<a href="https://www.enterprisedb.com/downloads/postgres-postgresql-downloads"><img src="../images/postgreSQL_Install.png"></a>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">▶️ Spuštění instalace</span></summary>
-Po stažení spusťte instalační soubor:
-<img src="../images/postgreSQL_Install_2.png">
-</details>
-<details>
-<summary><span style="color:#1E90FF;">📁 Složka pro instalaci</span></summary>
-Zvolte umístění PostgreSQL (doporučeno ponechat výchozí):
-<img src="../images/postgreSQL_Install_3.png">
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🧩 Výběr komponent</span></summary>
-<img src="../images/wqiRRNNKOT.png">
-> [!NOTE]  
-> Doporučuji nainstalovat `pgAdmin 4` (grafické rozhraní) a `Command Line Tools`.
-</details>
-<details>
-<summary><span style="color:#1E90FF;">💾 Složka pro uložení dat</span></summary>
-Vyberte umístění pro data databáze (doporučeno ponechat výchozí):
-<img src="../images/postgreSQL_Install_4.png">
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🔑 Nastavení hesla</span></summary>
-Zvolte heslo pro přístup do databáze:
-<img src="../images/postgreSQL_Install_5.png">
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🔌 Port k naslouchání</span></summary>
-Nastavte port serveru (doporučeno ponechat výchozí):
-<img src="../images/postgreSQL_Install_6.png">
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🌍 Geografické umístění serveru</span></summary>
-Vyberte lokaci serveru:
-<img src="../images/postgreSQL_Install_7.png">
-</details>
-<details>
-<summary><span style="color:#1E90FF;">✅ Kontrola před instalací</span></summary>
-<img src="../images/postgreSQL_Install_8.png">
-Po kontrole dokončete instalaci.
-</details>
-<hr>
-<h2 id="-příkazový-řádek">💻 Příkazový řádek</h2>
-<details>
-<summary><span style="color:#1E90FF;">🔎 Otestovat naslouchání PostgreSQL</span></summary>
-Otevřete příkazovou konzoli:
-<img src="../images/zGRvsmYA6A.png">
-Připojení k serveru:
-<img src="../images/t0Vjh1fqzy.png">
-Výsledek připojení:
-<img src="../images/oY0QJRKkL1.png">
-<div class="WARNING">
-<h5>Warning</h5>
-<p>Pokud nevidíte konzoli v angličtině, upravte:</p>
-<ul>
-<li><code>C:\Program Files\PostgreSQL\16\data\postgresql.conf</code>
-&gt;   <img src="../images/G0Loa7KgVA.png"></li>
-<li>Proměnné prostředí
-&gt;   <img src="../images/0qjIRo5xxb.png">
-&gt; Poté restartujte konzoli.</li>
-</ul>
+<summary>Kompletní průvodce instalací krok za krokem</summary>
+<p><strong>1. Výběr verze a stažení</strong></p>
+<p>Stáhni instalátor z <a href="https://www.enterprisedb.com/downloads/postgres-postgresql-downloads">enterprisedb.com/downloads/postgres-postgresql-downloads</a>:</p>
+<img src="../images/postgreSQL_Install.png" alt="Výběr verze PostgreSQL">
+<p><strong>2. Spuštění instalace</strong></p>
+<img src="../images/postgreSQL_Install_2.png" alt="Spuštění instalace">
+<p><strong>3. Výběr složky instalace</strong> (doporučeno ponechat výchozí):</p>
+<img src="../images/postgreSQL_Install_3.png" alt="Složka pro instalaci">
+<p><strong>4. Výběr komponent</strong></p>
+<img src="../images/wqiRRNNKOT.png" alt="Výběr komponent">
+<div class="NOTE">
+<h5>Note</h5>
+<p>Doporučeno nainstalovat <code>pgAdmin 4</code> (grafické rozhraní) a <code>Command Line Tools</code>.</p>
 </div>
-<p>Pro ověření připojení spusťte:</p>
+<p><strong>5. Složka pro data</strong> (doporučeno ponechat výchozí):</p>
+<img src="../images/postgreSQL_Install_4.png" alt="Složka pro data">
+<p><strong>6. Nastavení hesla:</strong></p>
+<img src="../images/postgreSQL_Install_5.png" alt="Nastavení hesla">
+<p><strong>7. Port serveru</strong> (výchozí: <code>5432</code>):</p>
+<img src="../images/postgreSQL_Install_6.png" alt="Nastavení portu">
+<p><strong>8. Geografická lokace:</strong></p>
+<img src="../images/postgreSQL_Install_7.png" alt="Geografická lokace">
+<p><strong>9. Kontrola a dokončení:</strong></p>
+<img src="../images/postgreSQL_Install_8.png" alt="Kontrola před instalací">
+</details>
+<hr>
+<h2 id="připojení-z-příkazového-řádku">Připojení z příkazového řádku</h2>
+<details>
+<summary>Test naslouchání a ověření připojení</summary>
+<p>Otevři konzoli PostgreSQL:</p>
+<img src="../images/zGRvsmYA6A.png" alt="Otevření konzole">
+<p>P�ipojení k serveru:</p>
+<img src="../images/t0Vjh1fqzy.png" alt="Připojení k PostgreSQL">
+<p>Výsledek:</p>
+<img src="../images/oY0QJRKkL1.png" alt="Úspěšné připojení">
+<p>Ověření verze:</p>
 <pre><code class="lang-sql">SELECT version();
 </code></pre>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Pokud konzole nezobrazuje anglický text, uprav:</p>
+<ul>
+<li><p><code>C:\Program Files\PostgreSQL\16\data\postgresql.conf</code></p>
+<img src="../images/G0Loa7KgVA.png" alt="Konfigurace postgresql.conf">
+</li>
+<li><p>Systémové proměnné prostředí</p>
+<img src="../images/0qjIRo5xxb.png" alt="Proměnné prostředí">
+</li>
+</ul>
+<p>Poté restartuj konzoli.</p>
+</div>
 </details>
 
 </article>

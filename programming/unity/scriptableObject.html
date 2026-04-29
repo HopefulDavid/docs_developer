@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#128230; Unity – ScriptableObject &amp; Tipy | V&#253;voj&#225;ř </title>
+      <title>Unity – ScriptableObject &amp; Tipy | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#128230; Unity – ScriptableObject &amp; Tipy | V&#253;voj&#225;ř ">
+      <meta name="title" content="Unity – ScriptableObject &amp; Tipy | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,26 +85,25 @@
         </div>
 
         <article data-uid="">
-<h1 id="-unity--scriptableobject--tipy">📦 Unity – ScriptableObject &amp; Tipy</h1>
+<h1 id="unity--scriptableobject--tipy">Unity – ScriptableObject &amp; Tipy</h1>
 
 <blockquote>
-<p>🚀 Praktické rady pro použití ScriptableObject v Unity, jejich výhody, omezení a moderní patterny.</p>
+<p>Praktické rady pro použití ScriptableObject v Unity, jejich výhody, omezení a moderní patterny.</p>
 </blockquote>
 <hr>
-<h2 id="-co-je-scriptableobject">🧩 Co je ScriptableObject?</h2>
+<h2 id="co-je-scriptableobject">Co je ScriptableObject?</h2>
 <details>
-<summary><span style="color:#1E90FF;">🔍 Základní principy</span></summary>
+<summary>Základní principy</summary>
 <ul>
 <li><strong>ScriptableObject</strong> je speciální typ assetu v Unity.</li>
 <li>Umožňuje ukládat data mimo scénu – přímo v projektu.</li>
 <li>Vhodné pro konfigurace, globální data, nastavení, inventáře, atd.</li>
 </ul>
-<p><img src="../../images/unity_scriptableobject_intro.png" alt=""></p>
 </details>
 <hr>
-<h2 id="-vytvoření-scriptableobject">🗂️ Vytvoření ScriptableObject</h2>
+<h2 id="vytvoření-scriptableobject">Vytvoření ScriptableObject</h2>
 <details>
-<summary><span style="color:#1E90FF;">🛠️ Jak vytvořit ScriptableObject?</span></summary>
+<summary>Jak vytvořit ScriptableObject?</summary>
 <ol>
 <li>Vytvoř novou C# třídu dědící ze <code>ScriptableObject</code>.</li>
 <li>Přidej atribut <code>[CreateAssetMenu]</code> pro snadné vytvoření assetu.</li>
@@ -121,9 +120,9 @@ public class ExampleConfig : ScriptableObject
 </code></pre>
 </details>
 <hr>
-<h2 id="-ukládání--obnovení-dat">💾 Ukládání &amp; Obnovení dat</h2>
+<h2 id="ukládání--obnovení-dat">Ukládání &amp; Obnovení dat</h2>
 <details>
-<summary><span style="color:#1E90FF;">⚠️ Omezení ScriptableObject</span></summary>
+<summary>Omezení ScriptableObject</summary>
 <ul>
 <li>Data v ScriptableObject se <strong>neukládají</strong> mezi spuštěními hry.</li>
 <li>Po zavření a opětovném otevření hry se obnoví na výchozí hodnoty assetu.</li>
@@ -135,9 +134,9 @@ public class ExampleConfig : ScriptableObject
 </div>
 </details>
 <hr>
-<h2 id="-singleton-pattern-se-scriptableobject">🦄 Singleton pattern se ScriptableObject</h2>
+<h2 id="singleton-pattern-se-scriptableobject">Singleton pattern se ScriptableObject</h2>
 <details>
-<summary><span style="color:#1E90FF;">🔑 Jak na singleton ScriptableObject?</span></summary>
+<summary>Jak na singleton ScriptableObject?</summary>
 <ul>
 <li>Umožňuje globální přístup k datům bez nutnosti vytvářet instanci ve scéně.</li>
 <li>Vhodné pro nastavení, globální konfigurace, eventy.</li>

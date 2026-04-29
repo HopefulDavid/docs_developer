@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#128450;️ PowerShell – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř </title>
+      <title>PowerShell – Průvodce a reference | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#128450;️ PowerShell – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř ">
+      <meta name="title" content="PowerShell – Průvodce a reference | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,209 +85,149 @@
         </div>
 
         <article data-uid="">
-<h1 id="-powershell--praktický-průvodce--tipy">🗂️ PowerShell – Praktický průvodce &amp; tipy</h1>
+<h1 id="powershell--průvodce-a-reference">PowerShell – Průvodce a reference</h1>
 
 <blockquote>
-<p>🚀 Moderní přehled instalace, nastavení, správy balíčků, oprávnění, práce se soubory a sítě v PowerShellu.</p>
+<p>Správa balíčků, oprávnění, přizpůsobení prostředí, práce se soubory a síť v PowerShellu.</p>
 </blockquote>
 <hr>
-<h2 id="-správa-balíčků">📦 Správa balíčků</h2>
-<details>
-<summary><span style="color:#1E90FF;">📁 Umístění modulů</span></summary>
-<ul>
-<li>Windows:<br>
-<code>C:\Users\{xxx}\Documents\PowerShell\Modules</code></li>
-</ul>
-</details>
+<h2 id="správa-balíčků">Správa balíčků</h2>
+<p>Umístění modulů: <code>C:\Users\{xxx}\Documents\PowerShell\Modules</code></p>
 <hr>
-<h2 id="-změna-designu-powershellu">🎨 Změna designu PowerShellu</h2>
+<h2 id="přizpůsobení-prostředí-oh-my-posh">Přizpůsobení prostředí (Oh My Posh)</h2>
 <details>
-<summary><span style="color:#1E90FF;">🖌️ Modernizace vzhledu</span></summary>
-<ul>
-<li><p><strong>Původní vzhled:</strong><br>
-<img src="https://miro.medium.com/v2/resize:fit:4800/format:webp/1*lelcpOyX-WuXlYR5oy2g4Q.png" alt="oldPowerShell.png" width="500px"></p>
-</li>
-<li><p><strong>Nový vzhled:</strong><br>
-<img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*SI0w1Cg7iVzG6mZMtBfWqQ.png" alt="newPowerShell.png" width="500px"></p>
-</li>
-</ul>
-<details>
-<summary><span style="color:#E95A84;">🛠️ Postup modernizace</span></summary>
+<summary>Modernizace prostředí PowerShellu krok za krokem</summary>
+<p><strong>Původní vs. nový vzhled:</strong></p>
+<img src="https://miro.medium.com/v2/resize:fit:4800/format:webp/1*lelcpOyX-WuXlYR5oy2g4Q.png" alt="Původní PowerShell" width="500px">
+<img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*SI0w1Cg7iVzG6mZMtBfWqQ.png" alt="Nový PowerShell" width="500px">
+<p><strong>Postup:</strong></p>
 <ol>
-<li><p><strong>Instalace PowerShell 7+</strong></p>
-<ul>
-<li>Zjistěte verzi:
-<pre><code class="lang-bash">$PSVersionTable
+<li><p><strong>Instalace PowerShell 7+</strong> – zjisti verzi: <code>$PSVersionTable</code> → <a href="https://github.com/PowerShell/PowerShell">Stáhnout</a></p>
+</li>
+<li><p><strong>Instalace Windows Terminal</strong> → <a href="https://github.com/microsoft/terminal">Stáhnout</a></p>
+</li>
+<li><p><strong>Spusť PowerShell jako administrátor</strong></p>
+<img src="../../images/runAsAdministatorPowerShell.png" alt="Spuštění jako administrátor" width="500px">
+</li>
+<li><p><strong>Nastav oprávnění na Bypass:</strong></p>
+<pre><code class="lang-powershell">Set-ExecutionPolicy -Scope CurrentUser Bypass
 </code></pre>
 </li>
-<li><a href="https://github.com/PowerShell/PowerShell">Stáhnout PowerShell</a></li>
-</ul>
+<li><p><strong>Rozdělení okna na části</strong> – klávesová zkratka: <code>Alt</code> + <code>Left Click</code></p>
+<img src="../../images/optionsPowerShell.png" alt="Options PowerShell" width="500px">
 </li>
-<li><p><strong>Instalace Windows Terminal</strong></p>
-<ul>
-<li><a href="https://github.com/microsoft/terminal">Stáhnout Windows Terminal</a></li>
-</ul>
-</li>
-<li><p><strong>Spusťte PowerShell jako administrátor</strong><br>
-<img src="/../../images/runAsAdministatorPowerShell.png" alt="runAsAdministatorPowerShell.png" width="500px"></p>
-</li>
-<li><p><strong>Nastavte oprávnění na Bypass</strong></p>
-<pre><code class="lang-bash">Set-ExecutionPolicy -Scope CurrentUser Bypass
-</code></pre>
-</li>
-<li><p><strong>Rozdělte okno na části</strong></p>
-<ul>
-<li>Klávesová zkratka: <code>Alt</code> + <code>Left Click</code>
-<img src="/../../images/optionsPowerShell.png" alt="optionsPowerShell.png" width="500px"></li>
-</ul>
-</li>
-<li><p><strong>Instalace modulů</strong></p>
-<pre><code class="lang-bash">Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://ohmyposh.dev/install.ps1'))
+<li><p><strong>Instalace Oh My Posh a posh-git:</strong></p>
+<pre><code class="lang-powershell">Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://ohmyposh.dev/install.ps1'))
 Install-Module posh-git
 </code></pre>
 </li>
-<li><p><strong>Změna vzhledu příkazové řádky</strong></p>
-<pre><code class="lang-bash">oh-my-posh init pwsh --config 'C:\Users\{xxx}\Themes\PowerShell\aliens.omp.json' | Invoke-Expression
+<li><p><strong>Nastavení tématu:</strong></p>
+<pre><code class="lang-powershell">oh-my-posh init pwsh --config 'C:\Users\{xxx}\Themes\PowerShell\aliens.omp.json' | Invoke-Expression
+Import-Module posh-git
 </code></pre>
 </li>
-<li><p><strong>Import modulu</strong></p>
-<pre><code class="lang-bash">Import-Module posh-git
+<li><p><strong>Trvalé nastavení v profilu:</strong></p>
+<pre><code class="lang-powershell">notepad $PROFILE
 </code></pre>
-</li>
-<li><p><strong>Nastavení trvalého vzhledu</strong></p>
-<ul>
-<li>Zjistěte cestu k profilu:
-<pre><code class="lang-bash">$PROFILE
-</code></pre>
-</li>
-<li>Otevřete nebo vytvořte soubor:
-<pre><code class="lang-bash">notepad $PROFILE
-</code></pre>
-</li>
-<li>Vložte:
-<pre><code class="lang-bash">Import-Module posh-git
+<p>Vlož do souboru:</p>
+<pre><code class="lang-powershell">Import-Module posh-git
 oh-my-posh init pwsh --config 'C:\Users\{xxx}\themes\aliens.omp.json' | Invoke-Expression
 </code></pre>
 </li>
-</ul>
-</li>
-<li><p><strong>Nastavte oprávnění na RemoteSigned</strong></p>
-<pre><code class="lang-bash">Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+<li><p><strong>Vrať oprávnění na RemoteSigned:</strong></p>
+<pre><code class="lang-powershell">Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 </code></pre>
-</li>
-<li><p><strong>Vypněte administrátorský režim</strong><br>
-<img src="/../../images/runAsAdministatorPowerShell.png" alt="runAsAdministatorPowerShell.png" width="500px"></p>
 </li>
 </ol>
 </details>
-</details>
-<hr>
-<h2 id="-nastavení-vzhledů-themes">🎭 Nastavení vzhledů (themes)</h2>
-<details>
-<summary><span style="color:#E95A84;">🎨 Výběr a změna vzhledu</span></summary>
-<ul>
-<li>Navigujte do složky s tématy:<br>
-<code>C:\Users\{xxx}\themes\</code></li>
-<li>Zobrazte dostupné vzhledy:
-<pre><code class="lang-bash">Get-PoshThemes
-</code></pre>
-</li>
-<li>Změna vzhledu v profilu:
-<pre><code class="lang-bash">Import-Module posh-git
+<h3 id="výběr-a-změna-tématu">Výběr a změna tématu</h3>
+<pre><code class="lang-powershell"># Zobrazení dostupných témat
+Get-PoshThemes
+
+# Aplikace tématu v profilu
 oh-my-posh init pwsh --config 'C:\Users\{xxx}\Documents\themes\catppuccin.omp.json' | Invoke-Expression
 </code></pre>
-</li>
-<li><a href="https://github.com/JanDeDobbeleer/oh-my-posh/tree/main/themes">Šablony ke stažení</a></li>
-</ul>
-</details>
+<p><a href="https://github.com/JanDeDobbeleer/oh-my-posh/tree/main/themes">Šablony ke stažení</a></p>
 <hr>
-<h2 id="-historie-příkazů">🕑 Historie příkazů</h2>
-<details>
-<summary><span style="color:#1E90FF;">📜 Umístění historie</span></summary>
-<pre><code class="lang-bash">(Get-PSReadlineOption).HistorySavePath
+<h2 id="historie-příkazů">Historie příkazů</h2>
+<pre><code class="lang-powershell"># Umístění souboru s historií
+(Get-PSReadlineOption).HistorySavePath
 </code></pre>
-</details>
 <hr>
-<h2 id="-oprávnění">🔐 Oprávnění</h2>
-<details>
-<summary><span style="color:#1E90FF;">🔎 Zjištění oprávnění</span></summary>
-<pre><code class="lang-bash">Get-ExecutionPolicy -Scope CurrentUser
+<h2 id="oprávnění">Oprávnění</h2>
+<h3 id="zjištění-aktuálního-nastavení">Zjištění aktuálního nastavení</h3>
+<pre><code class="lang-powershell">Get-ExecutionPolicy -Scope CurrentUser
 </code></pre>
-<ul>
-<li><code>Restricted</code> – Skripty nejsou povoleny</li>
-<li><code>AllSigned</code> – Pouze podepsané skripty</li>
-<li><code>RemoteSigned</code> – Skripty z internetu musí být podepsané</li>
-<li><code>Unrestricted</code> – Všechny skripty povoleny</li>
-<li><code>Undefined</code> – Výchozí nastavení podle typu systému</li>
-</ul>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">⚙️ Nastavení oprávnění</span></summary>
-<pre><code class="lang-bash">Set-ExecutionPolicy -Scope CurrentUser Bypass
+<table>
+<thead>
+<tr>
+<th>Hodnota</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Restricted</code></td>
+<td>Skripty nejsou povoleny</td>
+</tr>
+<tr>
+<td><code>AllSigned</code></td>
+<td>Pouze digitálně podepsané skripty</td>
+</tr>
+<tr>
+<td><code>RemoteSigned</code></td>
+<td>Skripty z internetu musí být podepsané</td>
+</tr>
+<tr>
+<td><code>Unrestricted</code></td>
+<td>Všechny skripty povoleny bez omezení</td>
+</tr>
+<tr>
+<td><code>Undefined</code></td>
+<td>Výchozí systémové nastavení</td>
+</tr>
+</tbody>
+</table>
+<h3 id="změna-oprávnění">Změna oprávnění</h3>
+<pre><code class="lang-powershell">Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 </code></pre>
-<ul>
-<li><code>AllSigned</code>, <code>Bypass</code>, <code>Default</code>, <code>RemoteSigned</code>, <code>Restricted</code>, <code>Undefined</code>, <code>Unrestricted</code></li>
-</ul>
-<p><a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.4#-executionpolicy">Více info</a></p>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🚀 Spuštění skriptu bez změny oprávnění</span></summary>
-<pre><code class="lang-bash">powershell -ExecutionPolicy Bypass -File &quot;C:\{xxx}\Downloads\WSL-Offline-Install.ps1&quot;
+<p><a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.4#-executionpolicy">Dokumentace parametrů</a></p>
+<h3 id="spuštění-skriptu-bez-trvalé-změny-oprávnění">Spuštění skriptu bez trvalé změny oprávnění</h3>
+<pre><code class="lang-powershell">powershell -ExecutionPolicy Bypass -File &quot;C:\{xxx}\Downloads\skript.ps1&quot;
 </code></pre>
-</details>
 <hr>
-<h2 id="-práce-se-soubory">📁 Práce se soubory</h2>
-<details>
-<summary><span style="color:#1E90FF;">🕒 Změna metadat souboru</span></summary>
-<ul>
-<li>Změna času posledního zápisu:
-<pre><code class="lang-bash">(Get-Item &quot;C:\Users\{xxx}\FileA.docx&quot;).LastWriteTime = &quot;2024.10.10 17:00:00&quot;
+<h2 id="práce-se-soubory">Práce se soubory</h2>
+<h3 id="změna-metadat-souboru">Změna metadat souboru</h3>
+<pre><code class="lang-powershell"># Změna času posledního zápisu
+(Get-Item &quot;C:\Users\{xxx}\FileA.docx&quot;).LastWriteTime = &quot;2024.10.10 17:00:00&quot;
 </code></pre>
-</li>
-<li>Úprava celkového času v dokumentu Word:
+<p><strong>Úprava celkového času dokumentu Word:</strong></p>
 <ol>
-<li>Přejmenujte <code>.docx</code> na <code>.zip</code></li>
-<li>Rozbalte soubor</li>
-<li>V souboru <code>docProps/app.xml</code> upravte <code>&lt;TotalTime&gt;</code></li>
-<li>Zazipujte zpět a změňte příponu na <code>.docx</code></li>
+<li>Přejmenuj <code>.docx</code> na <code>.zip</code></li>
+<li>Rozbal archiv</li>
+<li>V souboru <code>docProps/app.xml</code> uprav hodnotu <code>&lt;TotalTime&gt;</code></li>
+<li>Zazipuj zpět a přejmenuj na <code>.docx</code></li>
 </ol>
-</li>
-</ul>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">📋 Kopírování souborů</span></summary>
-<ul>
-<li>Kopírování ze zdroje:
-<pre><code class="lang-bash">xcopy /y /z &quot;\\192.xxx.xx.xx\files\module.xml&quot; &quot;C:\Users\Test\Downloads\*&quot;
+<h3 id="kopírování-souborů">Kopírování souborů</h3>
+<pre><code class="lang-powershell"># Kopírování souboru ze síťového zdroje
+xcopy /y /z &quot;\\192.xxx.xx.xx\files\module.xml&quot; &quot;C:\Users\Test\Downloads\*&quot;
+
+# Kopírování do podsložek
+for /D %%G in (&quot;C:\Users\Test\Downloads\*&quot;) DO (
+  xcopy /y /z &quot;C:\Users\Test\Downloads\module.xml&quot; &quot;%%G\SubDirectory\*&quot;
+)
 </code></pre>
-</li>
-<li>Kopírování do podsložek:
-<pre><code class="lang-bash">for /D %%G in (&quot;C:\Users\Test\Downloads\*&quot;) DO (xcopy /y /z  &quot;C:\Users\Test\Downloads\module.xml&quot; &quot;%%G\SubDirectory\*&quot;)
-</code></pre>
-</li>
-<li>Přidejte <code>pause</code> pro zobrazení výsledků.</li>
-</ul>
-</details>
 <hr>
-<h2 id="-síť">🌐 Síť</h2>
-<details>
-<summary><span style="color:#1E90FF;">🔍 Získání názvu hostitele</span></summary>
-<pre><code class="lang-bash">Resolve-DnsName -Name &lt;IP adresa&gt; -Type PTR
+<h2 id="síť">Síť</h2>
+<pre><code class="lang-powershell"># Zjištění hostname podle IP adresy
+Resolve-DnsName -Name &lt;IP adresa&gt; -Type PTR
+
+# Zobrazení všech fyzických adaptérů
+Get-NetAdapter -physical
+
+# Zobrazení pouze aktivních adaptérů
+Get-NetAdapter -physical | where status -eq 'up'
 </code></pre>
-</details>
-<details>
-<summary><span style="color:#1E90FF;">🌐 Získání síťových adaptérů</span></summary>
-<ul>
-<li>Všechny:
-<pre><code class="lang-bash">Get-NetAdapter -physical
-</code></pre>
-</li>
-<li>Aktivní:
-<pre><code class="lang-bash">Get-NetAdapter -physical | where status -eq 'up'
-</code></pre>
-</li>
-</ul>
-</details>
 
 </article>
 

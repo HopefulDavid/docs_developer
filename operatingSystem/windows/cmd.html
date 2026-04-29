@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>&#128450;️ Windows CMD &amp; optimalizace – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř </title>
+      <title>Windows CMD &amp; optimalizace – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="&#128450;️ Windows CMD &amp; optimalizace – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř ">
+      <meta name="title" content="Windows CMD &amp; optimalizace – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,34 +85,35 @@
         </div>
 
         <article data-uid="">
-<h1 id="-windows-cmd--optimalizace--praktický-průvodce--tipy">🗂️ Windows CMD &amp; optimalizace – Praktický průvodce &amp; tipy</h1>
+<h1 id="windows-cmd--optimalizace--praktický-průvodce--tipy">Windows CMD &amp; optimalizace – Praktický průvodce &amp; tipy</h1>
 
 <blockquote>
-<p>🚀 Moderní přehled práce s příkazovým řádkem, dávkovými skripty a optimalizací disků ve Windows.</p>
+<p>Moderní přehled práce s příkazovým řádkem, dávkovými skripty a optimalizací disků ve Windows.</p>
 </blockquote>
 <hr>
-<h2 id="-příkazový-řádek--dávkové-skripty">📖 Příkazový řádek &amp; dávkové skripty</h2>
+<img src="/images/ad71ff83-1ef8-45b0-9e21-2e05c0075935.png" alt="" style="width: 20%; display: block; border-radius: 8px;">
+<h2 id="příkazový-řádek--dávkové-skripty">Příkazový řádek &amp; dávkové skripty</h2>
 <ul>
 <li><strong>Batch skript</strong> má příponu <code>.bat</code> nebo <code>.cmd</code>.</li>
 <li>Umožňuje automatizovat úlohy ve Windows.</li>
 </ul>
 <hr>
-<h2 id="-spouštění-sql-skriptů-ze-složky">🛠️ Spouštění SQL skriptů ze složky</h2>
+<h2 id="spouštění-sql-skriptů-ze-složky">Spouštění SQL skriptů ze složky</h2>
 <details>
-<summary><span style="color:#1E90FF;">📂 Hromadné spuštění všech SQL skriptů</span></summary>
+<summary>Hromadné spuštění všech SQL skriptů</summary>
 <pre><code class="lang-cmd">for %%G in (*.sql) do sqlcmd /S serverTest /d CT46 -U userName -P password123 -i&quot;%%G&quot;
 pause
 </code></pre>
 <div class="NOTE">
 <h5>Note</h5>
-<p>Smyčka <code>for %%G in (*.sql)</code> projde všechny <code>.sql</code> soubory v adresáři a spustí je pomocí <code>sqlcmd</code> na zadaném SQL serveru.<br>
+<p>Smyčka <code>for %%G in (*.sql)</code> projde všechny <code>.sql</code> soubory v adresáři a spustí je pomocí <code>sqlcmd</code> na zadaném SQL serveru.
 <code>pause</code> umožní zobrazit výsledek před zavřením okna.</p>
 </div>
 </details>
 <hr>
-<h2 id="-optimalizace-disků-ve-windows">🛠️ Optimalizace disků ve Windows</h2>
+<h2 id="optimalizace-disků-ve-windows">Optimalizace disků ve Windows</h2>
 <details>
-<summary><span style="color:#1E90FF;">💾 Automatická optimalizace SSD & HDD</span></summary>
+<summary>Automatická optimalizace SSD & HDD</summary>
 <div class="NOTE">
 <h5>Note</h5>
 <p>Windows 10+ automaticky spouští TRIM na SSD jednou týdně. U HDD je doporučena defragmentace jednou měsíčně.</p>
@@ -127,7 +128,7 @@ pause
 </ul>
 </details>
 <details>
-<summary><span style="color:#1E90FF;">📝 Co se stane po spuštění?</span></summary>
+<summary>Co se stane po spuštění?</summary>
 <p>1️⃣ <strong>SSD (C:)</strong></p>
 <ul>
 <li>Spustí se TRIM, který vymaže nepoužívané bloky a zlepší výkon SSD.</li>
