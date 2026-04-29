@@ -1,13 +1,3 @@
----
-title: Vývojářská dokumentace
----
-
-# Vývojářská dokumentace
-
-> Osobní interní dokumentace pokrývající nástroje, technologie a postupy využívané při vývoji.
-> 
-> Slouží jako rychlá reference namísto opakovaného hledání na internetu nebo ptaní se AI.
-
----
-
-## Changelog
+Změny
+## 2026-04-29
+  - Reset historie
