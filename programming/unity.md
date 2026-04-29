@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/d41917da-ccc6-410f-864d-53f1d5d1cdbb.png" alt="" style="width: 30%; display: block; border-radius: 8px;">
+<img src="../images/d41917da-ccc6-410f-864d-53f1d5d1cdbb.png" alt="" style="width: 30%; display: block; border-radius: 8px;">
 
 ## Rychlejší vstup do Play módu
 

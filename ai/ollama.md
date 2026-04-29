@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/cbaff73a-7ad7-489d-bb15-2fb847f6904e.png" alt="Ollama" style="width: 100%; max-width: 950px; display: block; border-radius: 8px;">
+<img src="../images/cbaff73a-7ad7-489d-bb15-2fb847f6904e.png" alt="Ollama" style="width: 100%; max-width: 950px; display: block; border-radius: 8px;">
 
 ## Základní informace
 

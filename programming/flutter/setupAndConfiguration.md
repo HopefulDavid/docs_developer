@@ -4,7 +4,7 @@ Flutter je framework pro vývoj mobilních aplikací pro **Android** a **iOS**. 
 
 ---
 
-<img src="./images/efa2074c-d98f-49b1-a30e-8cabddd3a06d.png" alt="" style="width: 30%; display: block; border-radius: 8px;">
+<img src="../../images/efa2074c-d98f-49b1-a30e-8cabddd3a06d.png" alt="" style="width: 30%; display: block; border-radius: 8px;">
 
 ## Instalace
 

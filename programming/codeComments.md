@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/ed2ba232-5b86-4f55-8ba5-9c3feb7e3c0b.png" alt="" style="width: 10%; display: block; border-radius: 8px;">
+<img src="../images/ed2ba232-5b86-4f55-8ba5-9c3feb7e3c0b.png" alt="" style="width: 10%; display: block; border-radius: 8px;">
 
 ### // TODO: Co je potřeba dodělat
 

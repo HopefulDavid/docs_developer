@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/7021cbf6-ee66-45b6-903c-a751e0653eec.png" alt="" style="width: 40%; display: block; border-radius: 8px;">
+<img src="../../images/7021cbf6-ee66-45b6-903c-a751e0653eec.png" alt="" style="width: 40%; display: block; border-radius: 8px;">
 
 ## Aktualizace balíčků
 

@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/bcf90266-2493-4e1c-8f54-8d37b4e4e4a7.png" alt="Ollama" style="width: 100%; display: block; border-radius: 8px;">
+<img src="../../images/bcf90266-2493-4e1c-8f54-8d37b4e4e4a7.png" alt="Ollama" style="width: 100%; display: block; border-radius: 8px;">
 
 ## Co jsou submoduly?
 

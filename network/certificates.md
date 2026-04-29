@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/a36b0a0f-361c-4d7d-994e-eeef74bebaec.png" alt="" style="width: 20%; display: block; border-radius: 8px;">
+<img src="../images/a36b0a0f-361c-4d7d-994e-eeef74bebaec.png" alt="" style="width: 20%; display: block; border-radius: 8px;">
 
 ## Generování klíčů
 

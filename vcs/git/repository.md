@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/87aac7e6-0da1-4ada-8c7c-1710636e867a.png" alt="Ollama" style="width: 100%; max-width: 950px; display: block; border-radius: 8px;">
+<img src="../../images/87aac7e6-0da1-4ada-8c7c-1710636e867a.png" alt="Ollama" style="width: 100%; max-width: 950px; display: block; border-radius: 8px;">
 
 ## Vytvoření úložiště
 

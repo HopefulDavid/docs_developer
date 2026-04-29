@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/a188d4ef-a7b4-4028-9107-0bd99f101e30.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
+<img src="../images/a188d4ef-a7b4-4028-9107-0bd99f101e30.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
 
 ## Co je OpenTofu?
 

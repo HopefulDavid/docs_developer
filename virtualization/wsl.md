@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/94edf060-a2f9-476c-b93f-c4723e494cab.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
+<img src="../images/94edf060-a2f9-476c-b93f-c4723e494cab.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
 
 ## Co je WSL?
 

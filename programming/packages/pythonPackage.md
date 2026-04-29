@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/6f0214a6-361b-4c39-a7b8-0f43a8cd8459.png" alt="" style="width: 40%; display: block; border-radius: 8px;">
+<img src="../../images/6f0214a6-361b-4c39-a7b8-0f43a8cd8459.png" alt="" style="width: 40%; display: block; border-radius: 8px;">
 
 ## Co jsou Python balíčky?
 

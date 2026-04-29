@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/10336033-b701-48a9-abdf-aa59500e77cf.png" alt="" style="width: 60%; display: block; border-radius: 8px;">
+<img src="../images/10336033-b701-48a9-abdf-aa59500e77cf.png" alt="" style="width: 60%; display: block; border-radius: 8px;">
 
 ## Získání informací o serveru a databázi
 

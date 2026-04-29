@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/43ae90ca-b78a-405d-bf23-06f2be45eb83.png" alt="Ollama" style="width: 100%; display: block; border-radius: 8px;">
+<img src="../../images/43ae90ca-b78a-405d-bf23-06f2be45eb83.png" alt="Ollama" style="width: 100%; display: block; border-radius: 8px;">
 
 ## Co je Git Flow?
 

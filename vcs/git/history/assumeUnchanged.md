@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/b4541721-315d-4189-b9fc-b3002d1596c8.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
+<img src="../../../images/b4541721-315d-4189-b9fc-b3002d1596c8.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
 
 ## Kdy použít?
 

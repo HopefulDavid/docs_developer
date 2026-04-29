@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/bfdff689-3382-451c-872a-5f566bacdca2.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
+<img src="../images/bfdff689-3382-451c-872a-5f566bacdca2.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
 
 ## Co je Docker?
 

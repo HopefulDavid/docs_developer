@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/6caa6198-1ee2-4529-8e40-2c62da4232c7.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
+<img src="../../../images/6caa6198-1ee2-4529-8e40-2c62da4232c7.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
 
 ## Vytvoření nové větve
 

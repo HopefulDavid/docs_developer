@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/9efd0d3e-ef5e-4e7a-8358-63fd4f8eb659.png" alt="" style="width: 60%; display: block; border-radius: 8px;">
+<img src="../images/9efd0d3e-ef5e-4e7a-8358-63fd4f8eb659.png" alt="" style="width: 60%; display: block; border-radius: 8px;">
 
 ## Entity Framework
 

@@ -1,4 +1,4 @@
-<img src="./images/fc6d2e6c-e9dc-477a-a28d-4243ee9948b8.png" alt="" style="width: 30%; display: block; border-radius: 8px;">
+<img src="../../images/fc6d2e6c-e9dc-477a-a28d-4243ee9948b8.png" alt="" style="width: 30%; display: block; border-radius: 8px;">
 
 ## Základní příkazy
 

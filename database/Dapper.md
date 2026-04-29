@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/f5e467cc-a417-4099-9e05-5ccbbdf763b0.png" alt="" style="width: 60%; display: block; border-radius: 8px;">
+<img src="../images/f5e467cc-a417-4099-9e05-5ccbbdf763b0.png" alt="" style="width: 60%; display: block; border-radius: 8px;">
 
 ## Dapper
 

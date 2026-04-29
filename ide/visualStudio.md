@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/7093661c-9483-46e1-87bf-72496673b81a.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
+<img src="../images/7093661c-9483-46e1-87bf-72496673b81a.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
 
 ## Stažení instalátoru pro offline použití
 

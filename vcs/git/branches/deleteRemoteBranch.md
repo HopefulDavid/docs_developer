@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/51fc64f1-0fc1-434d-8b9a-62915ece751a.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
+<img src="../../../images/51fc64f1-0fc1-434d-8b9a-62915ece751a.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
 
 ## Upozornění
 

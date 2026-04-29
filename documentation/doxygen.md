@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/ee2b5aa2-94be-4ebb-bfcd-2c526093dba1.png" alt="" style="width: 90%; display: block; border-radius: 8px;">
+<img src="../images/ee2b5aa2-94be-4ebb-bfcd-2c526093dba1.png" alt="" style="width: 90%; display: block; border-radius: 8px;">
 
 ## Co je Doxygen?
 

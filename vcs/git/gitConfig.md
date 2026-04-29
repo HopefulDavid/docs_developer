@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/e159d23c-f2b8-4884-bc0b-800bae9db096.png" alt="Ollama" style="width: 100%; max-width: 950px; display: block; border-radius: 8px;">
+<img src="../../images/e159d23c-f2b8-4884-bc0b-800bae9db096.png" alt="Ollama" style="width: 100%; max-width: 950px; display: block; border-radius: 8px;">
 
 ## Povolení dlouhých cest ve Windows
 

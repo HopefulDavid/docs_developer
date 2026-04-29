@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/4381c952-e572-44c8-b4d3-c2da9964c008.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
+<img src="../images/4381c952-e572-44c8-b4d3-c2da9964c008.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
 
 ## Propojení s mobilním zařízením (Android)
 

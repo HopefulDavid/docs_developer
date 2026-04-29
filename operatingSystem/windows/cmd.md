@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/ad71ff83-1ef8-45b0-9e21-2e05c0075935.png" alt="" style="width: 20%; display: block; border-radius: 8px;">
+<img src="../../images/ad71ff83-1ef8-45b0-9e21-2e05c0075935.png" alt="" style="width: 20%; display: block; border-radius: 8px;">
 
 ## Příkazový řádek & dávkové skripty
 

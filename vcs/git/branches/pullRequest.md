@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/e0f402f8-94c5-417f-b4c3-0566724c4b7a.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
+<img src="../../../images/e0f402f8-94c5-417f-b4c3-0566724c4b7a.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
 
 ## Co je Pull Request?
 

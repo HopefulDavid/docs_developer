@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/47b4d22e-f30e-46a1-bc78-9d1fbc371e6c.png" alt="" style="width: 60%; display: block; border-radius: 8px;">
+<img src="../images/47b4d22e-f30e-46a1-bc78-9d1fbc371e6c.png" alt="" style="width: 60%; display: block; border-radius: 8px;">
 
 ## Co je MongoDB?
 

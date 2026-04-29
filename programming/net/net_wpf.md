@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/bce43a30-8b45-414f-b656-200d5551f88e.png" alt="" style="width: 30%; display: block; border-radius: 8px;">
+<img src="../../images/bce43a30-8b45-414f-b656-200d5551f88e.png" alt="" style="width: 30%; display: block; border-radius: 8px;">
 
 ## Co je WPF?
 

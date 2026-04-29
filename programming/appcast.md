@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/54c2ba30-4474-4c51-a6ad-2f82c28540ac.png" alt="" style="width: 60%; display: block; border-radius: 8px;">
+<img src="../images/54c2ba30-4474-4c51-a6ad-2f82c28540ac.png" alt="" style="width: 60%; display: block; border-radius: 8px;">
 
 ## Hlavní komponenty
 

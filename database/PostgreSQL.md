@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/a32bfd31-f086-44eb-be6f-b8fbb993dec2.png" alt="" style="width: 60%; display: block; border-radius: 8px;">
+<img src="../images/a32bfd31-f086-44eb-be6f-b8fbb993dec2.png" alt="" style="width: 60%; display: block; border-radius: 8px;">
 
 ## Co je PostgreSQL?
 

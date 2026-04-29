@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/7073cab7-0b16-47e4-b0c1-55129ef02687.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
+<img src="../images/7073cab7-0b16-47e4-b0c1-55129ef02687.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
 
 ## Co je Kubernetes?
 

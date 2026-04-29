@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/1974ce4c-4914-428a-88c8-075e84a7c713.png" alt="" style="width: 40%; display: block; border-radius: 8px;">
+<img src="../../images/1974ce4c-4914-428a-88c8-075e84a7c713.png" alt="" style="width: 40%; display: block; border-radius: 8px;">
 
 ## Umístění balíčků a nástrojů
 

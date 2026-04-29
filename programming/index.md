@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/67df603a-1960-4ca6-8bef-241dd8688fc1.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
+<img src="../images/67df603a-1960-4ca6-8bef-241dd8688fc1.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
 
 ## Webové aplikace
 

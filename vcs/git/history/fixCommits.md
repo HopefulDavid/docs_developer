@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/5a5f2db1-3bf6-4219-a7a1-65305baeb7ca.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
+<img src="../../../images/5a5f2db1-3bf6-4219-a7a1-65305baeb7ca.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
 
 ## Co znamená `fixup!` a `squash!`?
 

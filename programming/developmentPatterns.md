@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/1c750931-1fdb-47ec-882b-3781bbae6e7e.png" alt="" style="width: 10%; display: block; border-radius: 8px;">
+<img src="../images/1c750931-1fdb-47ec-882b-3781bbae6e7e.png" alt="" style="width: 10%; display: block; border-radius: 8px;">
 
 ## Co jsou vývojové vzory?
 

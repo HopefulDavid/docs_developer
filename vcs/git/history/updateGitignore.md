@@ -5,7 +5,7 @@
 ---
 
 
-<img src="./images/ed2c9789-9939-4dc7-b8e1-80b50214c6eb.png" alt="Ollama" style="width: 100%; display: block; border-radius: 8px;">
+<img src="../../../images/ed2c9789-9939-4dc7-b8e1-80b50214c6eb.png" alt="Ollama" style="width: 100%; display: block; border-radius: 8px;">
 
 ## Proč aktualizovat `.gitignore`?
 

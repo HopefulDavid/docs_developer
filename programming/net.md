@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/5b6c5417-6cb1-4ecf-8d08-c4d90783ae23.png" alt="" style="width: 30%; display: block; border-radius: 8px;">
+<img src="../images/5b6c5417-6cb1-4ecf-8d08-c4d90783ae23.png" alt="" style="width: 30%; display: block; border-radius: 8px;">
 
 ## Modifikátory přístupu
 

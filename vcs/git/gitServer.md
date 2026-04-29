@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/2356729c-7942-4f2c-8ecc-f2b712c6e5ad.png" alt="Ollama" style="width: 100%; max-width: 950px; display: block; border-radius: 8px;">
+<img src="../../images/2356729c-7942-4f2c-8ecc-f2b712c6e5ad.png" alt="Ollama" style="width: 100%; max-width: 950px; display: block; border-radius: 8px;">
 
 ## Správa remote URL
 

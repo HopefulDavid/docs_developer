@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/77bb3224-887c-410f-a232-f51a105d0b01.png" alt="" style="width: 50%; display: block; border-radius: 8px;">
+<img src="../images/77bb3224-887c-410f-a232-f51a105d0b01.png" alt="" style="width: 50%; display: block; border-radius: 8px;">
 
 ## Vývojové metodiky
 

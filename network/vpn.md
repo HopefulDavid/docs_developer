@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/9b4ddeea-a06a-4666-883e-855ceb443a3b.png" alt="" style="width: 20%; display: block; border-radius: 8px;">
+<img src="../images/9b4ddeea-a06a-4666-883e-855ceb443a3b.png" alt="" style="width: 20%; display: block; border-radius: 8px;">
 
 ## Co je VPN?
 

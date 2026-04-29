@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/9f2bcd1c-dba3-46b0-81ab-6f8ca2fec026.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
+<img src="../../../images/9f2bcd1c-dba3-46b0-81ab-6f8ca2fec026.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
 
 ## Přesun commitů do **nové větve**
 

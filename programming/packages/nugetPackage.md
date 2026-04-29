@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/231a19b5-84c6-4961-9189-91672e9435dc.png" alt="" style="width: 40%; display: block; border-radius: 8px;">
+<img src="../../images/231a19b5-84c6-4961-9189-91672e9435dc.png" alt="" style="width: 40%; display: block; border-radius: 8px;">
 
 ## Správa balíčků
 

@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./images/c5ecf7de-7ac5-488a-806b-93c271cb5998.png" alt="" style="width: 80%; display: block; border-radius: 8px;">
+<img src="../images/c5ecf7de-7ac5-488a-806b-93c271cb5998.png" alt="" style="width: 80%; display: block; border-radius: 8px;">
 
 ## Co je Pandoc?
 
