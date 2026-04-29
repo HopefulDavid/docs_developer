@@ -1,0 +1,34 @@
+- name: Git
+  items:
+  - name: Konfigurace
+    href: git/gitConfig.md
+  - name: Úložiště
+    href: git/repository.md
+  - name: Git server
+    href: git/gitServer.md
+  - name: Vnořené úložiště
+    href: git/submodules.md
+  - name: Git Flow
+    href: git/gitFlow.md
+  - name: Použití v praxi
+    href: git/inPractice.md
+  - name: Větve
+    items:
+    - name: Vytvoření vzdálené větve
+      href: git/branches/createRemoteBranch.md
+    - name: Smazání vzdálené větve
+      href: git/branches/deleteRemoteBranch.md
+    - name: Pull request
+      href: git/branches/pullRequest.md
+  - name: Historie
+    items:
+      - name: .gitignore
+        href: git/history/updateGitignore.md
+      - name: Přesunutí commitů
+        href: git/history/moveCommits.md
+      - name: Oprava commitů
+        href: git/history/fixCommits.md
+      - name: Odstranění commitů
+        href: git/history/deleteCommits.md
+      - name: Lokální ignorování změn
+        href: git/history/assumeUnchanged.md

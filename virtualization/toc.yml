@@ -1,0 +1,13 @@
+- name: WSL (Windows Subsystem for Linux)
+  href: wsl.md
+- name: Docker
+  href: docker.md
+  items:
+    - name: Portainer (správa Dockeru)
+      href: docker_portainer.md
+    - name: Duplicati (zálohování)
+      href: docker_duplicati.md
+    - name: Busybox (práce s Docker volumes)
+      href: docker_busybox.md
+- name: Kubernetes
+  href: kubernetes.md

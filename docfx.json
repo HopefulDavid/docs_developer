@@ -1,0 +1,38 @@
+{
+  "build": {
+    "template": [
+      "default",
+      "modern",
+      "templates/material"
+    ],
+    "content": [
+      {
+        "files": [
+          "index.md",
+          "**/*.{md,yml}"
+        ],
+        "exclude": [
+          "_site/**"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "images/**",
+		  "pdf/**"
+        ]
+      }
+    ],
+    "output": "_site",
+    "globalMetadata": {
+      "_appName": "Dokumentace pro vývojáře",
+      "_appTitle": "Vývojář",
+      "_enableSearch": true,
+      "pdf": true
+    },
+    "markdown": {
+      "max_header_level": 7
+    }
+  }
+}

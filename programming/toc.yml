@@ -1,0 +1,130 @@
+- name: Techniky a koncepty
+  items:
+    - name: Komentáře v kódu
+      href: codeComments.md
+    - name: Vývojové vzory
+      href: developmentPatterns.md
+    - name: Techniky
+      href: techniques.md
+    - name: Výběr pro vývoj
+      href: index.md
+
+- name: Programovací jazyky
+  items:
+    - name: C#
+      href: net.md
+      items:
+        - name: Komponenty
+          href: net/net_components.md
+        - name: Základy
+          items:
+            - name: Interface
+              href: net/net_interface.md
+            - name: Datové typy
+              href: net/net_dataTypes.md
+            - name: Atributy
+              href: net/net_attributes.md
+            - name: Enum
+              href: net/net_enum.md
+            - name: Metody
+              href: net/net_methods.md
+            - name: Implicitní a Explicitní operátory
+              href: net/net_conversion.md
+        - name: API
+          items:
+            - name: Vytvoření API
+              href: net/net_createAPI.md
+        - name: Soubory
+          items:
+            - name: XML
+              href: net/net_xml.md
+        - name: Testování
+          items:
+            - name: Testy Nunit
+              href: net/net_nunit.md
+
+- name: Serverový vývoj
+  items:
+    - name: Go (Golang)
+      href: server/golang.md
+
+- name: Aplikační vývoj
+  items:
+    - name: WPF
+      href: net/net_wpf.md
+
+- name: Mobilní vývoj
+  items:
+    - name: Flutter
+      items:
+        - name: Instalace a nastavení
+          href: flutter/setupAndConfiguration.md
+        - name: Projekty
+          items:
+            - name: Vytvoření nového projektu
+              href: flutter/create_project.md
+            - name: Záloha, obnova a ukládání dat
+              href: flutter/backupAndRestore.md
+        - name: Balíčky
+          items:
+            - name: Lokalizace
+              href: flutter/localization.md
+        - name: Základní znalosti
+          href: flutter/basics.md
+        - name: Příkazy
+          href: flutter/commands.md
+        - name: Testování a pokrytí kódu
+          items:
+            - name: Pokrytí kódu
+              href: flutter/codeCoverage.md
+        - name: Řešení problémů
+          items:
+            - name: Tipy a řešení
+              href: flutter/troubleshooting.md
+
+- name: Herní vývoj
+  items:
+    - name: Unity
+      href: unity.md
+      items:
+        - name: "2D"
+          href: unity/2d.md
+        - name: Animace
+          href: unity/animation.md
+        - name: Kamera
+          href: unity/camera.md
+        - name: Navigace (Pohyb)
+          href: unity/navigation.md
+        - name: Skriptovatelné Objekty
+          href: unity/scriptableObject.md
+        - name: Uživatelské rozhraní
+          items:
+            - name: UI
+              href: unity/ui.md
+            - name: UI Toolkit
+              href: unity/uiToolkit.md
+        - name: Vykreslování
+          href: unity/renderer.md
+
+- name: Nástroje a balíčky
+  items:
+    - name: Balíčky
+      items:
+        - name: .NET CLI
+          href: packages/netCLI.md
+        - name: Nuget Package
+          href: packages/nugetPackage.md
+        - name: Node Package Manager (NPM)
+          href: packages/npm.md
+        - name: Python
+          href: packages/pythonPackage.md
+    - name: Aktualizace aplikací
+      items:
+        - name: Appcast Feed XML
+          href: appcast.md
+#    - name: Lokální vývoj (XAMPP)
+#      items:
+#        - name: Přístup k projektům přes prohlížeč
+#          href: xampp/xampp_access.md
+#        - name: Virtual Hosts
+#          href: xampp/xampp_virtualhosts.md
