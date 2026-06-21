@@ -12,6 +12,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "ai/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "ai/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "ai/ollama.md",
       "output": {
         ".html": {
@@ -35,20 +45,20 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "database/Dapper.md",
+      "source_relative_path": "changelog.md",
       "output": {
         ".html": {
-          "relative_path": "database/Dapper.html"
+          "relative_path": "changelog.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "database/EntityFramework.md",
+      "source_relative_path": "database/Dapper.md",
       "output": {
         ".html": {
-          "relative_path": "database/EntityFramework.html"
+          "relative_path": "database/Dapper.html"
         }
       },
       "version": ""
@@ -75,6 +85,26 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "database/entity-framework.md",
+      "output": {
+        ".html": {
+          "relative_path": "database/entity-framework.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "database/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "database/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "database/mongoDB.md",
       "output": {
         ".html": {
@@ -92,6 +122,16 @@
         },
         ".json": {
           "relative_path": "database/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "devops/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "devops/index.html"
         }
       },
       "version": ""
@@ -131,6 +171,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "documentation/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "documentation/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "documentation/pandoc.md",
       "output": {
         ".html": {
@@ -163,6 +213,16 @@
       "version": ""
     },
     {
+      "type": "Conceptual",
+      "source_relative_path": "graphics/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "graphics/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
       "type": "Toc",
       "source_relative_path": "graphics/toc.yml",
       "output": {
@@ -171,6 +231,16 @@
         },
         ".json": {
           "relative_path": "graphics/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "ide/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "ide/index.html"
         }
       },
       "version": ""
@@ -200,10 +270,10 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "ide/visualStudio.md",
+      "source_relative_path": "ide/visual-studio.md",
       "output": {
         ".html": {
-          "relative_path": "ide/visualStudio.html"
+          "relative_path": "ide/visual-studio.html"
         }
       },
       "version": ""
@@ -1399,6 +1469,16 @@
       "version": ""
     },
     {
+      "type": "Conceptual",
+      "source_relative_path": "network/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "network/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
       "type": "Toc",
       "source_relative_path": "network/toc.yml",
       "output": {
@@ -1422,44 +1502,54 @@
       "version": ""
     },
     {
-      "type": "Toc",
-      "source_relative_path": "operatingSystem/toc.yml",
+      "type": "Conceptual",
+      "source_relative_path": "operating-system/index.md",
       "output": {
         ".html": {
-          "relative_path": "operatingSystem/toc.html"
+          "relative_path": "operating-system/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "operating-system/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "operating-system/toc.html"
         },
         ".json": {
-          "relative_path": "operatingSystem/toc.json"
+          "relative_path": "operating-system/toc.json"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "operatingSystem/windows.md",
+      "source_relative_path": "operating-system/windows/cmd.md",
       "output": {
         ".html": {
-          "relative_path": "operatingSystem/windows.html"
+          "relative_path": "operating-system/windows/cmd.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "operatingSystem/windows/cmd.md",
+      "source_relative_path": "operating-system/windows/index.md",
       "output": {
         ".html": {
-          "relative_path": "operatingSystem/windows/cmd.html"
+          "relative_path": "operating-system/windows/index.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "operatingSystem/windows/powerShell.md",
+      "source_relative_path": "operating-system/windows/powershell.md",
       "output": {
         ".html": {
-          "relative_path": "operatingSystem/windows/powerShell.html"
+          "relative_path": "operating-system/windows/powershell.html"
         }
       },
       "version": ""
@@ -1486,30 +1576,160 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "programming/codeComments.md",
+      "source_relative_path": "programming/code-comments.md",
       "output": {
         ".html": {
-          "relative_path": "programming/codeComments.html"
+          "relative_path": "programming/code-comments.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "programming/developmentPatterns.md",
+      "source_relative_path": "programming/csharp/attributes.md",
       "output": {
         ".html": {
-          "relative_path": "programming/developmentPatterns.html"
+          "relative_path": "programming/csharp/attributes.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "programming/flutter/backupAndRestore.md",
+      "source_relative_path": "programming/csharp/components.md",
       "output": {
         ".html": {
-          "relative_path": "programming/flutter/backupAndRestore.html"
+          "relative_path": "programming/csharp/components.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/csharp/conversion.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/csharp/conversion.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/csharp/create-api.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/csharp/create-api.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/csharp/data-types.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/csharp/data-types.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/csharp/enum.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/csharp/enum.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/csharp/files.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/csharp/files.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/csharp/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/csharp/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/csharp/interface.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/csharp/interface.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/csharp/methods.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/csharp/methods.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/csharp/nunit.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/csharp/nunit.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/csharp/wpf.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/csharp/wpf.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/csharp/xml.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/csharp/xml.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/development-patterns.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/development-patterns.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/flutter/backup-and-restore.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/flutter/backup-and-restore.html"
         }
       },
       "version": ""
@@ -1526,10 +1746,10 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "programming/flutter/codeCoverage.md",
+      "source_relative_path": "programming/flutter/code-coverage.md",
       "output": {
         ".html": {
-          "relative_path": "programming/flutter/codeCoverage.html"
+          "relative_path": "programming/flutter/code-coverage.html"
         }
       },
       "version": ""
@@ -1546,10 +1766,10 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "programming/flutter/create_project.md",
+      "source_relative_path": "programming/flutter/create-project.md",
       "output": {
         ".html": {
-          "relative_path": "programming/flutter/create_project.html"
+          "relative_path": "programming/flutter/create-project.html"
         }
       },
       "version": ""
@@ -1566,10 +1786,10 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "programming/flutter/setupAndConfiguration.md",
+      "source_relative_path": "programming/flutter/setup-and-configuration.md",
       "output": {
         ".html": {
-          "relative_path": "programming/flutter/setupAndConfiguration.html"
+          "relative_path": "programming/flutter/setup-and-configuration.html"
         }
       },
       "version": ""
@@ -1596,140 +1816,10 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "programming/net.md",
+      "source_relative_path": "programming/packages/dotnet-cli.md",
       "output": {
         ".html": {
-          "relative_path": "programming/net.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "programming/net/net_attributes.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/net/net_attributes.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "programming/net/net_components.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/net/net_components.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "programming/net/net_conversion.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/net/net_conversion.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "programming/net/net_createAPI.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/net/net_createAPI.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "programming/net/net_dataTypes.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/net/net_dataTypes.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "programming/net/net_enum.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/net/net_enum.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "programming/net/net_files.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/net/net_files.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "programming/net/net_interface.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/net/net_interface.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "programming/net/net_methods.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/net/net_methods.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "programming/net/net_nunit.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/net/net_nunit.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "programming/net/net_wpf.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/net/net_wpf.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "programming/net/net_xml.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/net/net_xml.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "programming/packages/netCLI.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/packages/netCLI.html"
+          "relative_path": "programming/packages/dotnet-cli.html"
         }
       },
       "version": ""
@@ -1746,30 +1836,40 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "programming/packages/nugetPackage.md",
+      "source_relative_path": "programming/packages/nuget.md",
       "output": {
         ".html": {
-          "relative_path": "programming/packages/nugetPackage.html"
+          "relative_path": "programming/packages/nuget.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "programming/packages/pythonPackage.md",
+      "source_relative_path": "programming/packages/python.md",
       "output": {
         ".html": {
-          "relative_path": "programming/packages/pythonPackage.html"
+          "relative_path": "programming/packages/python.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "programming/server/golang.md",
+      "source_relative_path": "programming/platform-selection.md",
       "output": {
         ".html": {
-          "relative_path": "programming/server/golang.html"
+          "relative_path": "programming/platform-selection.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/server/go.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/server/go.html"
         }
       },
       "version": ""
@@ -1793,16 +1893,6 @@
         },
         ".json": {
           "relative_path": "programming/toc.json"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "programming/unity.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/unity.html"
         }
       },
       "version": ""
@@ -1839,6 +1929,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "programming/unity/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/unity/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "programming/unity/navigation.md",
       "output": {
         ".html": {
@@ -1859,10 +1959,20 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "programming/unity/scriptableObject.md",
+      "source_relative_path": "programming/unity/scriptable-object.md",
       "output": {
         ".html": {
-          "relative_path": "programming/unity/scriptableObject.html"
+          "relative_path": "programming/unity/scriptable-object.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/unity/ui-toolkit.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/unity/ui-toolkit.html"
         }
       },
       "version": ""
@@ -1879,30 +1989,30 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "programming/unity/uiToolkit.md",
+      "source_relative_path": "programming/xampp/access.md",
       "output": {
         ".html": {
-          "relative_path": "programming/unity/uiToolkit.html"
+          "relative_path": "programming/xampp/access.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "programming/xampp/xampp_access.md",
+      "source_relative_path": "programming/xampp/virtual-hosts.md",
       "output": {
         ".html": {
-          "relative_path": "programming/xampp/xampp_access.html"
+          "relative_path": "programming/xampp/virtual-hosts.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "programming/xampp/xampp_virtualhosts.md",
+      "source_relative_path": "teamwork/index.md",
       "output": {
         ".html": {
-          "relative_path": "programming/xampp/xampp_virtualhosts.html"
+          "relative_path": "teamwork/index.html"
         }
       },
       "version": ""
@@ -1945,120 +2055,110 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "vcs/git/branches/createRemoteBranch.md",
+      "source_relative_path": "vcs/git/branches/create-remote-branch.md",
       "output": {
         ".html": {
-          "relative_path": "vcs/git/branches/createRemoteBranch.html"
+          "relative_path": "vcs/git/branches/create-remote-branch.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "vcs/git/branches/deleteRemoteBranch.md",
+      "source_relative_path": "vcs/git/branches/delete-remote-branch.md",
       "output": {
         ".html": {
-          "relative_path": "vcs/git/branches/deleteRemoteBranch.html"
+          "relative_path": "vcs/git/branches/delete-remote-branch.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "vcs/git/branches/pullRequest.md",
+      "source_relative_path": "vcs/git/branches/pull-request.md",
       "output": {
         ".html": {
-          "relative_path": "vcs/git/branches/pullRequest.html"
+          "relative_path": "vcs/git/branches/pull-request.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "vcs/git/gitConfig.md",
+      "source_relative_path": "vcs/git/configuration.md",
       "output": {
         ".html": {
-          "relative_path": "vcs/git/gitConfig.html"
+          "relative_path": "vcs/git/configuration.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "vcs/git/gitFlow.md",
+      "source_relative_path": "vcs/git/git-flow.md",
       "output": {
         ".html": {
-          "relative_path": "vcs/git/gitFlow.html"
+          "relative_path": "vcs/git/git-flow.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "vcs/git/gitServer.md",
+      "source_relative_path": "vcs/git/history/assume-unchanged.md",
       "output": {
         ".html": {
-          "relative_path": "vcs/git/gitServer.html"
+          "relative_path": "vcs/git/history/assume-unchanged.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "vcs/git/history/assumeUnchanged.md",
+      "source_relative_path": "vcs/git/history/delete-commits.md",
       "output": {
         ".html": {
-          "relative_path": "vcs/git/history/assumeUnchanged.html"
+          "relative_path": "vcs/git/history/delete-commits.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "vcs/git/history/deleteCommits.md",
+      "source_relative_path": "vcs/git/history/fix-commits.md",
       "output": {
         ".html": {
-          "relative_path": "vcs/git/history/deleteCommits.html"
+          "relative_path": "vcs/git/history/fix-commits.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "vcs/git/history/fixCommits.md",
+      "source_relative_path": "vcs/git/history/move-commits.md",
       "output": {
         ".html": {
-          "relative_path": "vcs/git/history/fixCommits.html"
+          "relative_path": "vcs/git/history/move-commits.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "vcs/git/history/moveCommits.md",
+      "source_relative_path": "vcs/git/history/update-gitignore.md",
       "output": {
         ".html": {
-          "relative_path": "vcs/git/history/moveCommits.html"
+          "relative_path": "vcs/git/history/update-gitignore.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "vcs/git/history/updateGitignore.md",
+      "source_relative_path": "vcs/git/in-practice.md",
       "output": {
         ".html": {
-          "relative_path": "vcs/git/history/updateGitignore.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "vcs/git/inPractice.md",
-      "output": {
-        ".html": {
-          "relative_path": "vcs/git/inPractice.html"
+          "relative_path": "vcs/git/in-practice.html"
         }
       },
       "version": ""
@@ -2075,10 +2175,30 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "vcs/git/server.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/server.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "vcs/git/submodules.md",
       "output": {
         ".html": {
           "relative_path": "vcs/git/submodules.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/index.html"
         }
       },
       "version": ""
@@ -2092,6 +2212,16 @@
         },
         ".json": {
           "relative_path": "vcs/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "video/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "video/index.html"
         }
       },
       "version": ""
@@ -2121,40 +2251,50 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "virtualization/docker.md",
+      "source_relative_path": "virtualization/docker/busybox.md",
       "output": {
         ".html": {
-          "relative_path": "virtualization/docker.html"
+          "relative_path": "virtualization/docker/busybox.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "virtualization/docker_busybox.md",
+      "source_relative_path": "virtualization/docker/duplicati.md",
       "output": {
         ".html": {
-          "relative_path": "virtualization/docker_busybox.html"
+          "relative_path": "virtualization/docker/duplicati.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "virtualization/docker_duplicati.md",
+      "source_relative_path": "virtualization/docker/index.md",
       "output": {
         ".html": {
-          "relative_path": "virtualization/docker_duplicati.html"
+          "relative_path": "virtualization/docker/index.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "virtualization/docker_portainer.md",
+      "source_relative_path": "virtualization/docker/portainer.md",
       "output": {
         ".html": {
-          "relative_path": "virtualization/docker_portainer.html"
+          "relative_path": "virtualization/docker/portainer.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "virtualization/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "virtualization/index.html"
         }
       },
       "version": ""

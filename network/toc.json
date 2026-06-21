@@ -1,2 +1,2 @@
 
-{"items":[{"name":"Certifikáty","href":"certificates.html","topicHref":"certificates.html"},{"name":"VPN (Virtual Private Network)","href":"vpn.html","topicHref":"vpn.html"}],"pdf":true}
+{"items":[{"name":"Přehled","href":"index.html","topicHref":"index.html"},{"name":"Síťové nástroje","items":[{"name":"Certifikáty","href":"certificates.html","topicHref":"certificates.html"},{"name":"VPN","href":"vpn.html","topicHref":"vpn.html"}]}],"pdf":false}

@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Doxygen – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř </title>
+      <title>Doxygen – Praktick&#253; průvodce a tipy | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Doxygen – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř ">
+      <meta name="title" content="Doxygen – Praktick&#253; průvodce a tipy | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -44,8 +44,8 @@
       <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
         <div class="container-xxl flex-nowrap">
           <a class="navbar-brand" href="../index.html">
-            <img id="logo" class="svg" src="../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
-            Dokumentace pro v&#253;voj&#225;ře
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
           </a>
           <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
             <i class="bi bi-three-dots"></i>
@@ -85,13 +85,12 @@
         </div>
 
         <article data-uid="">
-<h1 id="doxygen--praktický-průvodce--tipy">Doxygen – Praktický průvodce &amp; tipy</h1>
+<h1 id="doxygen--praktický-průvodce-a-tipy">Doxygen – Praktický průvodce a tipy</h1>
 
 <blockquote>
 <p>Moderní přehled základních pojmů, instalace, konfigurace a doporučení pro práci s Doxygen.</p>
 </blockquote>
-<hr>
-<img src="../images/ee2b5aa2-94be-4ebb-bfcd-2c526093dba1.png" alt="" style="width: 90%; display: block; border-radius: 8px;">
+<p><img src="../images/ee2b5aa2-94be-4ebb-bfcd-2c526093dba1.png" alt="Doxygen"></p>
 <h2 id="co-je-doxygen">Co je Doxygen?</h2>
 <ul>
 <li><strong>Nástroj pro automatické generování dokumentace z komentářů v kódu</strong></li>
@@ -102,46 +101,37 @@
 <h5>Note</h5>
 <p>Doxygen je ideální pro udržení přehledné a strukturované dokumentace ke kódu.</p>
 </div>
-<hr>
 <h2 id="instalace">Instalace</h2>
 <details>
 <summary>Krok 1: Instalace potřebných nástrojů</summary>
 <ol>
-<li><p><strong>Nainstalovat Doxygen</strong></p>
+<li><strong>Nainstalovat Doxygen</strong></li>
+</ol>
 <ul>
 <li>Stáhněte z <a href="https://www.doxygen.nl/download.html">doxygen.nl/download.html</a></li>
 <li>Ověřte instalaci:
-<pre><code class="lang-sh">doxygen --version
-</code></pre>
-</li>
+<code>sh doxygen --version </code></li>
 </ul>
-</li>
-<li><p><strong>Nainstalovat Graphviz</strong> (pro diagramy)</p>
+<ol start="2">
+<li><strong>Nainstalovat Graphviz</strong> (pro diagramy)</li>
+</ol>
 <ul>
 <li>Stáhněte z <a href="https://graphviz.gitlab.io/download/">Graphviz Download</a></li>
 <li>Přidejte cestu ke složce <code>Graphviz/bin</code> do systémové <code>PATH</code></li>
 <li>Ověřte instalaci:
-<pre><code class="lang-sh">dot -version
-</code></pre>
-</li>
+<code>sh dot -version </code></li>
 </ul>
-</li>
-<li><p><strong>Nainstalovat TeX Live nebo MiKTeX</strong> (pro PDF)</p>
+<ol start="3">
+<li><strong>Nainstalovat TeX Live nebo MiKTeX</strong> (pro PDF)</li>
+</ol>
 <ul>
 <li><strong>Windows:</strong> <a href="https://miktex.org/download">miktex.org/download</a></li>
 <li><strong>Linux:</strong>
-<pre><code class="lang-sh">sudo apt install texlive-full
-</code></pre>
-</li>
+<code>sh sudo apt install texlive-full </code></li>
 <li><strong>Mac:</strong>
-<pre><code class="lang-sh">brew install mactex
-</code></pre>
-</li>
+<code>sh brew install mactex </code></li>
 </ul>
-</li>
-</ol>
 </details>
-<hr>
 <h2 id="konfigurace">Konfigurace</h2>
 <details>
 <summary>Krok 2: Vytvoření konfiguračního souboru</summary>
@@ -166,15 +156,14 @@ SHOW_USED_FILES        = NO
 SHOW_NAMESPACES        = NO
 DOT_IMAGE_FORMAT       = svg
 </code></pre>
+</li>
+</ol>
 <div class="IMPORTANT">
 <h5>Important</h5>
 <p>Tyto parametry ovlivňují generování dokumentace.
 Další nastavení lze upravit dle potřeby.</p>
 </div>
-</li>
-</ol>
 </details>
-<hr>
 <h2 id="generování-dokumentace">Generování dokumentace</h2>
 <details>
 <summary>Krok 3: Generování výstupních souborů</summary>
@@ -186,7 +175,6 @@ Další nastavení lze upravit dle potřeby.</p>
 <li>Výstupní složka bude dle <code>OUTPUT_DIRECTORY</code> (např. <code>docs</code>)</li>
 </ul>
 </details>
-<hr>
 <h2 id="vynechání-private-a-protected-členů">Vynechání private a protected členů</h2>
 <details>
 <summary>Jak vynechat private a protected z dokumentace</summary>

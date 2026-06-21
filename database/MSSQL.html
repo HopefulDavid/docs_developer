@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Microsoft SQL – Praktick&#233; dotazy &amp; tipy | V&#253;voj&#225;ř </title>
+      <title>Microsoft SQL – Praktick&#233; dotazy a tipy | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Microsoft SQL – Praktick&#233; dotazy &amp; tipy | V&#253;voj&#225;ř ">
+      <meta name="title" content="Microsoft SQL – Praktick&#233; dotazy a tipy | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -44,8 +44,8 @@
       <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
         <div class="container-xxl flex-nowrap">
           <a class="navbar-brand" href="../index.html">
-            <img id="logo" class="svg" src="../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
-            Dokumentace pro v&#253;voj&#225;ře
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
           </a>
           <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
             <i class="bi bi-three-dots"></i>
@@ -85,13 +85,12 @@
         </div>
 
         <article data-uid="">
-<h1 id="microsoft-sql--praktické-dotazy--tipy">Microsoft SQL – Praktické dotazy &amp; tipy</h1>
+<h1 id="microsoft-sql--praktické-dotazy-a-tipy">Microsoft SQL – Praktické dotazy a tipy</h1>
 
 <blockquote>
 <p>Moderní přehled SQL dotazů, postupů a tipů pro práci s Microsoft SQL Serverem.</p>
 </blockquote>
-<hr>
-<img src="../images/10336033-b701-48a9-abdf-aa59500e77cf.png" alt="" style="width: 60%; display: block; border-radius: 8px;">
+<p><img src="../images/10336033-b701-48a9-abdf-aa59500e77cf.png" alt="Microsoft SQL"></p>
 <h2 id="získání-informací-o-serveru-a-databázi">Získání informací o serveru a databázi</h2>
 <details>
 <summary>Informace ze serveru</summary>
@@ -191,7 +190,6 @@ ORDER BY
     'Reads' DESC, 'Updates' ASC
 </code></pre>
 </details>
-<hr>
 <h2 id="hledání-v-databázi">Hledání v databázi</h2>
 <details>
 <summary>Najít tabulku podle sloupce</summary>
@@ -251,30 +249,28 @@ ORDER BY COUNT(*) DESC;
 <pre><code class="lang-sql">EXEC xp_readerrorlog 0, 1, N'Server is listening on';
 </code></pre>
 </details>
-<hr>
 <h2 id="výkon-a-statistiky">Výkon a statistiky</h2>
 <details>
 <summary>Efektivita dotazů</summary>
 <ul>
-<li><p><strong>SQL Server Management Studio:</strong></p>
+<li><strong>SQL Server Management Studio:</strong></li>
+</ul>
 <ol>
 <li>Menu Query &gt; Include Client Statistics</li>
 <li>Spusťte dotaz</li>
 </ol>
-</li>
-<li><p><strong>JetBrains:</strong></p>
+<ul>
+<li><strong>JetBrains:</strong></li>
+</ul>
 <ol>
 <li>File -&gt; Settings -&gt; Database -&gt; General</li>
 <li>Zaškrtnout: Show query statistics</li>
 </ol>
-</li>
-</ul>
 <pre><code class="lang-sql">SET STATISTICS TIME ON;
 SELECT * FROM place_table -- custom code to execute
 SET STATISTICS TIME OFF;
 </code></pre>
 </details>
-<hr>
 <h2 id="konfigurace">Konfigurace</h2>
 <details>
 <summary>Vzdálený přístup</summary>
@@ -289,7 +285,6 @@ RECONFIGURE;
 </code></pre>
 </div>
 </details>
-<hr>
 <h2 id="spojování-tabulek">Spojování tabulek</h2>
 <table>
 <thead>
@@ -321,7 +316,6 @@ RECONFIGURE;
 </tr>
 </tbody>
 </table>
-<hr>
 <h2 id="spojování-hodnot-ze-sloupce-do-řetězce">Spojování hodnot ze sloupce do řetězce</h2>
 <details>
 <summary>STRING_AGG</summary>

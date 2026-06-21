@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | V&#253;voj&#225;ř </title>
+      <title>Lokalizace (intern&#237; knihovna) | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | V&#253;voj&#225;ř ">
+      <meta name="title" content="Lokalizace (intern&#237; knihovna) | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -44,8 +44,8 @@
       <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
         <div class="container-xxl flex-nowrap">
           <a class="navbar-brand" href="../../index.html">
-            <img id="logo" class="svg" src="../../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
-            Dokumentace pro v&#253;voj&#225;ře
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
           </a>
           <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
             <i class="bi bi-three-dots"></i>
@@ -85,8 +85,8 @@
         </div>
 
         <article data-uid="">
+<h1 id="lokalizace-interní-knihovna">Lokalizace (interní knihovna)</h1>
 
-<h3 id="lokalizace-interní-knihovna">Lokalizace (interní knihovna)</h3>
 <ol>
 <li><p>Přidejte do <code>pubspec.yaml</code>:</p>
 <pre><code class="lang-yaml">dependencies:
@@ -99,25 +99,15 @@
 </code></pre>
 </li>
 <li><p>Vytvořte lokalizační soubory:</p>
+</li>
+</ol>
 <ul>
 <li><code>lib/l10n/intl_en.arb</code>:
-<pre><code class="lang-json">{
-  &quot;@@locale&quot;: &quot;en&quot;,
-  &quot;hello&quot;: &quot;Hello&quot;,
-  &quot;welcome&quot;: &quot;Welcome&quot;
-}
-</code></pre>
-</li>
+<code>json { &quot;@@locale&quot;: &quot;en&quot;, &quot;hello&quot;: &quot;Hello&quot;, &quot;welcome&quot;: &quot;Welcome&quot; } </code></li>
 <li><code>lib/l10n/intl_cs.arb</code>:
-<pre><code class="lang-json">{
-  &quot;@@locale&quot;: &quot;cs&quot;,
-  &quot;hello&quot;: &quot;Ahoj&quot;,
-  &quot;welcome&quot;: &quot;Vítejte&quot;
-}
-</code></pre>
-</li>
+<code>json { &quot;@@locale&quot;: &quot;cs&quot;, &quot;hello&quot;: &quot;Ahoj&quot;, &quot;welcome&quot;: &quot;Vítejte&quot; } </code></li>
 </ul>
-</li>
+<ol start="3">
 <li><p>Přidejte <code>intl_utils</code> do <code>pubspec.yaml</code>:</p>
 <pre><code class="lang-yaml">dependencies:
   flutter:

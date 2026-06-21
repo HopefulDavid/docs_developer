@@ -44,8 +44,8 @@
       <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
         <div class="container-xxl flex-nowrap">
           <a class="navbar-brand" href="../index.html">
-            <img id="logo" class="svg" src="../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
-            Dokumentace pro v&#253;voj&#225;ře
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
           </a>
           <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
             <i class="bi bi-three-dots"></i>
@@ -90,8 +90,7 @@
 <blockquote>
 <p>Propojení s Androidem, XML komentáře, klávesové zkratky a regulární výrazy v JetBrains Rider.</p>
 </blockquote>
-<hr>
-<img src="../images/4381c952-e572-44c8-b4d3-c2da9964c008.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
+<p><img src="../images/4381c952-e572-44c8-b4d3-c2da9964c008.png" alt="JetBrains"></p>
 <h2 id="propojení-s-mobilním-zařízením-android">Propojení s mobilním zařízením (Android)</h2>
 <details>
 <summary>Kompletní postup nastavení Android emulátoru</summary>
@@ -102,6 +101,8 @@
 SDK lze stáhnout v Android Studio → <code>More Actions → SDK Manager</code>.</p>
 </li>
 <li><p><strong>Ověření základních komponent SDK</strong> (sekce <code>SDK Tools</code>):</p>
+</li>
+</ol>
 <table>
 <thead>
 <tr>
@@ -132,7 +133,7 @@ SDK lze stáhnout v Android Studio → <code>More Actions → SDK Manager</code>
 </tr>
 </tbody>
 </table>
-</li>
+<ol start="4">
 <li><p><strong>Nastavení proměnné prostředí:</strong>
 <code>C:\Users\&lt;YourUsername&gt;\AppData\Local\Android\Sdk\platform-tools</code></p>
 </li>
@@ -149,7 +150,6 @@ adb start-server
 </li>
 </ol>
 </details>
-<hr>
 <h2 id="xml-komentáře">XML komentáře</h2>
 <h3 id="zalomení-řádku">Zalomení řádku</h3>
 <p>Pro zalomení řádku v XML dokumentačním komentáři použij <code>&lt;para&gt;&amp;#160;&lt;/para&gt;</code>:</p>
@@ -166,7 +166,6 @@ adb start-server
 <p><code>&lt;para&gt;&lt;/para&gt;</code> ani <code>&lt;br/&gt;</code> pro zalomení řádku nefungují. Použij <code>&lt;para&gt;&amp;#160;&lt;/para&gt;</code>.</p>
 </div>
 <p><a href="https://stackoverflow.com/questions/7279108/how-to-add-a-line-break-in-c-sharp-net-documentation">Více informací (Stack Overflow)</a></p>
-<hr>
 <h2 id="klávesové-zkratky">Klávesové zkratky</h2>
 <table>
 <thead>
@@ -190,7 +189,6 @@ adb start-server
 </tr>
 </tbody>
 </table>
-<hr>
 <h2 id="regulární-výrazy">Regulární výrazy</h2>
 <h3 id="číselná-zachycená-skupina">Číselná zachycená skupina</h3>
 <pre><code class="lang-regex"># Vyhledání

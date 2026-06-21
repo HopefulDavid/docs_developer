@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>WSL (Windows Subsystem for Linux) – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř </title>
+      <title>WSL (Windows Subsystem for Linux) – Praktick&#253; průvodce a tipy | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="WSL (Windows Subsystem for Linux) – Praktick&#253; průvodce &amp; tipy | V&#253;voj&#225;ř ">
+      <meta name="title" content="WSL (Windows Subsystem for Linux) – Praktick&#253; průvodce a tipy | V&#253;voj&#225;ř ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -44,8 +44,8 @@
       <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
         <div class="container-xxl flex-nowrap">
           <a class="navbar-brand" href="../index.html">
-            <img id="logo" class="svg" src="../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
-            Dokumentace pro v&#253;voj&#225;ře
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
           </a>
           <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
             <i class="bi bi-three-dots"></i>
@@ -85,13 +85,12 @@
         </div>
 
         <article data-uid="">
-<h1 id="wsl-windows-subsystem-for-linux--praktický-průvodce--tipy">WSL (Windows Subsystem for Linux) – Praktický průvodce &amp; tipy</h1>
+<h1 id="wsl-windows-subsystem-for-linux--praktický-průvodce-a-tipy">WSL (Windows Subsystem for Linux) – Praktický průvodce a tipy</h1>
 
 <blockquote>
 <p>Moderní přehled instalace, nastavení a doporučení pro práci s WSL na Windows.</p>
 </blockquote>
-<hr>
-<img src="../images/94edf060-a2f9-476c-b93f-c4723e494cab.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
+<p><img src="../images/94edf060-a2f9-476c-b93f-c4723e494cab.png" alt="WSL"></p>
 <h2 id="co-je-wsl">Co je WSL?</h2>
 <ul>
 <li><strong>WSL</strong> umožňuje instalaci a provoz linuxových distribucí přímo na Windows.</li>
@@ -101,7 +100,6 @@
 <h5>Note</h5>
 <p>Ideální pro vývojáře, kteří potřebují Linux nástroje na Windows.</p>
 </div>
-<hr>
 <h2 id="instalace-wsl-na-windows">Instalace WSL na Windows</h2>
 <details>
 <summary>Krok 1: Povolení virtualizace v BIOS/UEFI</summary>
@@ -109,11 +107,11 @@
 <h5>Important</h5>
 <p>V BIOSu/UEFI povolte:</p>
 <ul>
-<li><strong>Podpora CPU virtualizace</strong>
-&gt;   - Intel: <code>Intel VT-x</code></li>
+<li><strong>Podpora CPU virtualizace</strong></li>
+<li>Intel: <code>Intel VT-x</code></li>
 <li>AMD: <code>AMD-V</code> nebo <code>SVM</code></li>
-<li><strong>Virtualizační technologie</strong>
-&gt;   - Intel: <code>VT-d</code></li>
+<li><strong>Virtualizační technologie</strong></li>
+<li>Intel: <code>VT-d</code></li>
 <li>AMD: <code>AMD-Vi</code></li>
 <li><strong>Vnořená virtualizace</strong> (jen pokud potřebujete virtualizaci uvnitř WSL)</li>
 </ul>
@@ -124,27 +122,27 @@
 <li>Přejděte na záložku <strong>Výkon (Performance)</strong></li>
 <li>Dole najdete <strong>Virtualization: Enabled</strong></li>
 </ol>
-<img src="../images/wv1G8UBxvy.png">
+<p><img src="../images/wv1G8UBxvy.png" alt="WSL"></p>
 </details>
 <details>
 <summary>Krok 2: Povolení WSL v systému</summary>
 <ol>
 <li><p>Spusťte <strong>PowerShell jako správce</strong>
-<img src="../images/pnAzi0NFm3.png"></p>
+<img src="../images/pnAzi0NFm3.png" alt="WSL"></p>
 </li>
 <li><p>Aktivujte WSL:</p>
 <pre><code class="lang-bash">dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
 </code></pre>
-<img src="../images/mei8XmPaWt.png">
 </li>
 </ol>
+<p><img src="../images/mei8XmPaWt.png" alt="WSL"></p>
 </details>
 <details>
-<summary>Krok 3: Povolení Virtual Machine Platform & WSL 2</summary>
+<summary>Krok 3: Povolení Virtual Machine Platform a WSL 2</summary>
 <p>Aktivujte platformu pro WSL 2:</p>
 <pre><code class="lang-bash">dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
 </code></pre>
-<img src="../images/cADNNtfdn8.png">
+<p><img src="../images/cADNNtfdn8.png" alt="WSL"></p>
 <div class="IMPORTANT">
 <h5>Important</h5>
 <p>Po povolení funkcí <strong>restartujte počítač</strong>.</p>
@@ -166,7 +164,7 @@
 <p>Nastavte WSL 2 jako výchozí:</p>
 <pre><code class="lang-bash">wsl --set-default-version 2
 </code></pre>
-<img src="../images/LNHIGgBhcb.png">
+<p><img src="../images/LNHIGgBhcb.png" alt="WSL"></p>
 </details>
 <details>
 <summary>Krok 6: Instalace linuxové distribuce</summary>
@@ -196,7 +194,6 @@
 <p>Např.: <code>wsl --unregister Ubuntu-22.04</code></p>
 </div>
 </details>
----
 <h2 id="přesun-wsl-distribuce-na-jiné-místo">Přesun WSL distribuce na jiné místo</h2>
 <blockquote>
 <p>Klasická past: nelze jen přesunout soubor <code>ext4.vhdx</code> na jiné místo – musíš projít cestou <strong>export → import</strong>.</p>
@@ -221,16 +218,13 @@
 <pre><code class="lang-bash">wsl -l -v
 </code></pre>
 <p>Výstup zobrazí název (např. <code>podman-machine-default</code>).</p>
-<hr>
 <h3 id="2-zastav-distribuci">2. Zastav distribuci</h3>
 <pre><code class="lang-bash">wsl --shutdown
 </code></pre>
-<hr>
 <h3 id="3-exportuj-distribuci">3. Exportuj distribuci</h3>
 <pre><code class="lang-bash">wsl --export podman-machine-default D:\wsl\backup.tar
 </code></pre>
 <p>Vytvoří se záloha jako <code>.tar</code> soubor.</p>
-<hr>
 <h3 id="4-odregistruj-starou-distribuci">4. Odregistruj starou distribuci</h3>
 <pre><code class="lang-bash">wsl --unregister podman-machine-default
 </code></pre>
@@ -238,14 +232,12 @@
 <h5>Warning</h5>
 <p>Tímto krokem zmizí starý <code>ext4.vhdx</code> – proto je předchozí export nezbytný.</p>
 </div>
-<hr>
 <h3 id="5-importuj-na-nové-místo">5. Importuj na nové místo</h3>
 <pre><code class="lang-bash">wsl --import podman-machine-default D:\wsl\ D:\wsl\backup.tar --version 2
 </code></pre>
 <p>Po dokončení bude distribuce umístěna v:</p>
 <pre><code>D:\wsl\ext4.vhdx
 </code></pre>
-<hr>
 <h3 id="6-ověř-výsledek">6. Ověř výsledek</h3>
 <pre><code class="lang-bash">wsl -l -v
 </code></pre>

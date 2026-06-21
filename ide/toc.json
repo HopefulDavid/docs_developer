@@ -1,2 +1,2 @@
 
-{"items":[{"name":"JetBrains","href":"jetBrains.html","topicHref":"jetBrains.html"},{"name":"Visual Studio","href":"visualStudio.html","topicHref":"visualStudio.html"}],"pdf":true}
+{"items":[{"name":"Přehled","href":"index.html","topicHref":"index.html"},{"name":"Vývojová prostředí","items":[{"name":"JetBrains","href":"jetbrains.md","topicHref":"jetbrains.md"},{"name":"Visual Studio","href":"visual-studio.html","topicHref":"visual-studio.html"}]}],"pdf":false}

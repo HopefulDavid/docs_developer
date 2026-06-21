@@ -1,2 +1,2 @@
 
-{"items":[{"name":"Nahrávání videa","items":[{"name":"OBS","href":"obs.html","topicHref":"obs.html"}]}],"pdf":true}
+{"items":[{"name":"Přehled","href":"index.html","topicHref":"index.html"},{"name":"Nahrávání videa","items":[{"name":"OBS","href":"obs.html","topicHref":"obs.html"}]}],"pdf":false}

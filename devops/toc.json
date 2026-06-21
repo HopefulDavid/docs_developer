@@ -1,2 +1,2 @@
 
-{"items":[{"name":"OpenTofu (Infrastructure as Code)","href":"opentofu.html","topicHref":"opentofu.html"}],"pdf":true}
+{"items":[{"name":"Přehled","href":"index.html","topicHref":"index.html"},{"name":"Infrastructure as Code","items":[{"name":"OpenTofu","href":"opentofu.html","topicHref":"opentofu.html"}]}],"pdf":false}

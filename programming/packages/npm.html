@@ -44,8 +44,8 @@
       <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
         <div class="container-xxl flex-nowrap">
           <a class="navbar-brand" href="../../index.html">
-            <img id="logo" class="svg" src="../../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
-            Dokumentace pro v&#253;voj&#225;ře
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
           </a>
           <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
             <i class="bi bi-three-dots"></i>
@@ -90,8 +90,7 @@
 <blockquote>
 <p>Pro správu balíčků je potřeba mít nainstalovaný <strong>Node.js</strong> a <strong>npm</strong>.</p>
 </blockquote>
-<hr>
-<img src="../../images/7021cbf6-ee66-45b6-903c-a751e0653eec.png" alt="" style="width: 40%; display: block; border-radius: 8px;">
+<p><img src="../../images/7021cbf6-ee66-45b6-903c-a751e0653eec.png" alt="npm"></p>
 <h2 id="aktualizace-balíčků">Aktualizace balíčků</h2>
 <details>
 <summary>Jak správně aktualizovat balíčky?</summary>
@@ -103,22 +102,23 @@
 </ol>
 <p><em>Použije nejnovější verzi Storybook a provede upgrade.</em></p>
 <ol start="2">
-<li><p>🕵️ <strong>Zjištění zastaralých balíčků:</strong></p>
+<li>🕵️ <strong>Zjištění zastaralých balíčků:</strong>
 <pre><code class="lang-bash">npm outdated
 </code></pre>
-<p><em>Vypíše seznam balíčků, které mají novější verzi.</em></p>
-</li>
-<li><p>🛠️ <strong>Aktualizace konkrétních balíčků:</strong></p>
-<pre><code class="lang-bash">npm install vite@latest @sveltejs/vite-plugin-svelte@latest
-</code></pre>
-<p><em>Nainstaluje nejnovější verze vybraných balíčků.</em></p>
 </li>
 </ol>
+<p><em>Vypíše seznam balíčků, které mají novější verzi.</em></p>
+<ol start="3">
+<li>🛠️ <strong>Aktualizace konkrétních balíčků:</strong>
+<pre><code class="lang-bash">npm install vite@latest @sveltejs/vite-plugin-svelte@latest
+</code></pre>
+</li>
+</ol>
+<p><em>Nainstaluje nejnovější verze vybraných balíčků.</em></p>
 <blockquote>
 <p><strong>Tip:</strong> Po aktualizaci spusťte projekt a ověřte funkčnost. Některé aktualizace mohou vyžadovat úpravy v konfiguraci nebo kódu.</p>
 </blockquote>
 </details>
-<hr>
 <h2 id="globální-balíčky">Globální balíčky</h2>
 <details>
 <summary>Kde najdu globální balíčky?</summary>
@@ -144,7 +144,6 @@
 <pre><code class="lang-bash">npm root -g
 </code></pre>
 </details>
-<hr>
 <h2 id="záloha-globálních-balíčků">Záloha globálních balíčků</h2>
 <details>
 <summary>Jak zálohovat globální balíčky?</summary>
@@ -177,7 +176,6 @@ foreach ($line in $content) {
 }
 </code></pre>
 </details>
-<hr>
 <h2 id="obnova-balíčků-z-offline-zálohy">Obnova balíčků z offline zálohy</h2>
 <details>
 <summary>Jak obnovit balíčky ze zálohy?</summary>
@@ -197,7 +195,6 @@ foreach ($tgzFile in $tgzFiles) {
 }
 </code></pre>
 </details>
-<hr>
 <h2 id="aplikační-balíčky">Aplikační balíčky</h2>
 <details>
 <summary>conventional-changelog-cli</summary>
@@ -261,7 +258,7 @@ foreach ($tgzFile in $tgzFiles) {
 <blockquote>
 <p><strong>Tip:</strong>
 Pro vlastní šablonu použijte:</p>
-<pre><code class="lang-bash">conventional-changelog -i index.md -s --config ./changelog-config.js
+<pre><code class="lang-bash">conventional-changelog -i index.md -s --config./changelog-config.js
 </code></pre>
 </blockquote>
 </details>

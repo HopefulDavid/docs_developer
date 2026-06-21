@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Windows CMD a optimalizace – Praktick&#253; průvodce a tipy | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Windows CMD a optimalizace – Praktick&#253; průvodce a tipy | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/operating-system/windows/cmd.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="windows-cmd-a-optimalizace--praktický-průvodce-a-tipy">Windows CMD a optimalizace – Praktický průvodce a tipy</h1>
+
+<blockquote>
+<p>Moderní přehled práce s příkazovým řádkem, dávkovými skripty a optimalizací disků ve Windows.</p>
+</blockquote>
+<p><img src="../../images/ad71ff83-1ef8-45b0-9e21-2e05c0075935.png" alt="Command Line"></p>
+<h2 id="příkazový-řádek-a-dávkové-skripty">Příkazový řádek a dávkové skripty</h2>
+<ul>
+<li><strong>Batch skript</strong> má příponu <code>.bat</code> nebo <code>.cmd</code>.</li>
+<li>Umožňuje automatizovat úlohy ve Windows.</li>
+</ul>
+<h2 id="spouštění-sql-skriptů-ze-složky">Spouštění SQL skriptů ze složky</h2>
+<details>
+<summary>Hromadné spuštění všech SQL skriptů</summary>
+<pre><code class="lang-cmd">for %%G in (*.sql) do sqlcmd /S serverTest /d CT46 -U userName -P password123 -i&quot;%%G&quot;
+pause
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Smyčka <code>for %%G in (*.sql)</code> projde všechny <code>.sql</code> soubory v adresáři a spustí je pomocí <code>sqlcmd</code> na zadaném SQL serveru.
+<code>pause</code> umožní zobrazit výsledek před zavřením okna.</p>
+</div>
+</details>
+<h2 id="optimalizace-disků-ve-windows">Optimalizace disků ve Windows</h2>
+<details>
+<summary>Automatická optimalizace SSD a HDD</summary>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Windows 10+ automaticky spouští TRIM na SSD jednou týdně. U HDD je doporučena defragmentace jednou měsíčně.</p>
+</div>
+<pre><code class="lang-cmd">defrag C: D: /O
+</code></pre>
+<p>🔍 <strong>Rozbor příkazu:</strong></p>
+<ul>
+<li><code>defrag</code> – Spustí optimalizaci disků.</li>
+<li><code>C: D:</code> – Vybere disky C: (SSD) a D: (HDD).</li>
+<li><code>/O</code> – Automaticky použije správnou metodu (TRIM pro SSD, defragmentaci pro HDD).</li>
+</ul>
+</details>
+<details>
+<summary>Co se stane po spuštění?</summary>
+<p>1️⃣ <strong>SSD (C:)</strong></p>
+<ul>
+<li>Spustí se TRIM, který vymaže nepoužívané bloky a zlepší výkon SSD.</li>
+</ul>
+<p>2️⃣ <strong>HDD (D:)</strong></p>
+<ul>
+<li>Spustí se defragmentace, která přesune roztříštěné soubory a zrychlí čtení dat.</li>
+</ul>
+</details>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/operating-system/windows/cmd.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

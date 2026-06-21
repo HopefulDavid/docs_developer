@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>.NET – Implicitn&#237; a Explicitn&#237; oper&#225;tory | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=".NET – Implicitn&#237; a Explicitn&#237; oper&#225;tory | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/csharp/conversion.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="net--implicitní-a-explicitní-operátory">.NET – Implicitní a Explicitní operátory</h1>
+
+<blockquote>
+<p>Praktické rady pro převody typů v .NET, rozdíly mezi implicitními a explicitními operátory, ukázky použití.</p>
+</blockquote>
+<h2 id="co-jsou-implicitní-a-explicitní-operátory">Co jsou implicitní a explicitní operátory?</h2>
+<details>
+<summary>Základní principy převodů</summary>
+<ul>
+<li><strong>Implicitní operátor</strong>: Automatický převod, není potřeba psát <code>cast</code>.</li>
+<li><strong>Explicitní operátor</strong>: Vyžaduje použití <code>cast</code> – převod je nutné napsat ručně.</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Implicitní je pohodlnější, ale explicitní je bezpečnější pro složité nebo nejednoznačné převody.</p>
+</div>
+</details>
+<h2 id="implicitní-operátor">Implicitní operátor</h2>
+<details>
+<summary>Automatický převod</summary>
+<ul>
+<li>Převod mezi typy probíhá automaticky, bez nutnosti psát <code>cast</code>.</li>
+</ul>
+<p><strong>Příklad:</strong></p>
+<pre><code class="lang-csharp">public struct Money
+{
+    private double _value;
+    public Money(double value) { _value = value; }
+
+    public static implicit operator double(Money money)
+    {
+        return money._value;
+    }
+}
+
+// Použití
+Money m = new Money(10.50);
+double d = m * 2;  // Automaticky převede Money na double
+</code></pre>
+</details>
+<h2 id="explicitní-operátor">Explicitní operátor</h2>
+<details>
+<summary>Převod s použitím castu</summary>
+<ul>
+<li>Převod je nutné napsat ručně pomocí <code>(typ)</code>.</li>
+</ul>
+<p><strong>Příklad:</strong></p>
+<pre><code class="lang-csharp">public struct Temperature
+{
+    private double _value;
+    public Temperature(double value) { _value = value; }
+
+    public static explicit operator double(Temperature temperature)
+    {
+        return temperature._value;
+    }
+}
+
+// Použití
+Temperature t = new Temperature(70.0);
+double d = (double)t + 32.0;  // Explicitně převedete Temperature na double
+</code></pre>
+</details>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/programming/csharp/conversion.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

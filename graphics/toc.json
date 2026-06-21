@@ -1,2 +1,2 @@
 
-{"items":[{"name":"Affinity software","href":"affinity.html","topicHref":"affinity.html"}],"pdf":true}
+{"items":[{"name":"Přehled","href":"index.html","topicHref":"index.html"},{"name":"Grafické aplikace","items":[{"name":"Affinity","href":"affinity.html","topicHref":"affinity.html"}]}],"pdf":false}

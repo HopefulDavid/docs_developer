@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Git – Přesun commitů do nov&#233; nebo existuj&#237;c&#237; větve | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git – Přesun commitů do nov&#233; nebo existuj&#237;c&#237; větve | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/history/move-commits.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git--přesun-commitů-do-nové-nebo-existující-větve">Git – Přesun commitů do nové nebo existující větve</h1>
+
+<blockquote>
+<p>Praktické rady, jak přesunout poslední commity ze jedné větve do nové nebo existující větve.</p>
+</blockquote>
+<p><img src="../../../images/9f2bcd1c-dba3-46b0-81ab-6f8ca2fec026.png" alt="Přesun commitů"></p>
+<h2 id="přesun-commitů-do-nové-větve">Přesun commitů do <strong>nové větve</strong></h2>
+<details>
+<summary>Krok 1: Vytvoření nové větve z aktuální</summary>
+<pre><code class="lang-bash">git checkout master
+git branch newbranch
+git checkout master
+</code></pre>
+<ul>
+<li>Přepne se do zdrojové větve (<code>master</code>), vytvoří novou větev (<code>newbranch</code>) se stejnou historií.</li>
+</ul>
+</details>
+<details>
+<summary>Krok 2: Odstranění commitů ze zdrojové větve</summary>
+<pre><code class="lang-bash">git reset --hard HEAD~3
+</code></pre>
+<ul>
+<li>Odstraní poslední 3 commity ze zdrojové větve (<code>master</code>).</li>
+</ul>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Tento krok je <strong>nevratný</strong> – commity budou ze zdrojové větve smazány.</p>
+</div>
+</details>
+<details>
+<summary>Krok 3: Přepnutí do nové větve</summary>
+<pre><code class="lang-bash">git checkout newbranch
+</code></pre>
+<ul>
+<li>Nová větev obsahuje původní commity, které byly odstraněny ze zdrojové větve.</li>
+</ul>
+</details>
+<h2 id="přesun-commitů-do-existující-větve">Přesun commitů do <strong>existující větve</strong></h2>
+<details>
+<summary>Krok 1: Merge commitů do cílové větve</summary>
+<pre><code class="lang-bash">git checkout existingbranch
+git merge branchToMoveCommitFrom
+</code></pre>
+<ul>
+<li>Přepne se do cílové větve (<code>existingbranch</code>) a sloučí commity ze zdrojové větve (<code>branchToMoveCommitFrom</code>).</li>
+</ul>
+</details>
+<details>
+<summary>Krok 2: Odstranění commitů ze zdrojové větve</summary>
+<pre><code class="lang-bash">git checkout branchToMoveCommitFrom
+git reset --hard HEAD~3
+</code></pre>
+<ul>
+<li>Odstraní poslední 3 commity ze zdrojové větve.</li>
+</ul>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Tento krok je <strong>nevratný</strong> – commity budou ze zdrojové větve smazány.</p>
+</div>
+</details>
+<details>
+<summary>Krok 3: Přepnutí do cílové větve</summary>
+<pre><code class="lang-bash">git checkout existingbranch
+</code></pre>
+<ul>
+<li>Pokračuj v práci na cílové větvi s přesunutými commity.</li>
+</ul>
+</details>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Více informací najdeš v <a href="https://stackoverflow.com/questions/1628563/move-the-most-recent-commits-to-a-new-branch-with-git">diskuzi na Stack Overflow</a>.</p>
+</div>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/history/move-commits.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Git – Nahrazen&#237; vzd&#225;len&#233; větve z lok&#225;ln&#237; větve | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git – Nahrazen&#237; vzd&#225;len&#233; větve z lok&#225;ln&#237; větve | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/history/delete-commits.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git--nahrazení-vzdálené-větve-z-lokální-větve">Git – Nahrazení vzdálené větve z lokální větve</h1>
+
+<blockquote>
+<p>Praktický návod, jak kompletně nahradit historii vzdálené větve pomocí nové lokální větve.</p>
+</blockquote>
+<p><img src="../../../images/8c61359f-a49a-4600-a86a-961c4a3dfe9d.png" alt="Odstranění commitů"></p>
+<h2 id="kdy-použít-tento-postup">Kdy použít tento postup?</h2>
+<ul>
+<li>Chceš začít s čistou historií commitů (např. po refaktoringu).</li>
+<li>Potřebuješ odstranit veškerou předchozí historii z hlavní větve (<code>main</code>/<code>master</code>).</li>
+<li>Vhodné pro projekty, kde je nutné kompletní &quot;reset&quot; repozitáře.</li>
+</ul>
+<h2 id="postup-krok-za-krokem">Postup krok za krokem</h2>
+<details>
+<summary>Krok 1: Vytvoření nové větve bez historie</summary>
+<pre><code class="lang-bash">git checkout --orphan latest_branch
+</code></pre>
+<ul>
+<li>Vytvoří novou větev bez historie commitů.</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p><code>--orphan</code> znamená, že větev nemá žádné předchozí commity.</p>
+</div>
+</details>
+<details>
+<summary>Krok 2: Přidání všech souborů</summary>
+<pre><code class="lang-bash">git add -A
+</code></pre>
+<ul>
+<li>Přidá všechny soubory do stage.</li>
+</ul>
+</details>
+<details>
+<summary>Krok 3: První commit</summary>
+<pre><code class="lang-bash">git commit -am &quot;Initialize commit&quot;
+</code></pre>
+<ul>
+<li>Vytvoří první commit v nové větvi.</li>
+</ul>
+<div class="TIP">
+<h5>Tip</h5>
+<p><code>-am</code> je zkrácený zápis pro <code>--all</code> a <code>--message</code>.</p>
+</div>
+</details>
+<details>
+<summary>Krok 4: Smazání původní hlavní větve</summary>
+<pre><code class="lang-bash">git branch -D main
+</code></pre>
+<ul>
+<li>Smaže hlavní větev (<code>main</code> nebo <code>master</code>).</li>
+</ul>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Ověř název hlavní větve před smazáním!</p>
+</div>
+</details>
+<details>
+<summary>Krok 5: Přejmenování nové větve na hlavní</summary>
+<pre><code class="lang-bash">git branch -m main
+</code></pre>
+<ul>
+<li>Přejmenuje aktuální větev na <code>main</code>.</li>
+</ul>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Použij správný název hlavní větve.</p>
+</div>
+</details>
+<details>
+<summary>Krok 6: Force push do vzdáleného repozitáře</summary>
+<pre><code class="lang-bash">git push -f origin main
+</code></pre>
+<ul>
+<li>Nahraje novou historii do vzdáleného repozitáře.</li>
+</ul>
+<div class="TIP">
+<h5>Tip</h5>
+<p><code>-f</code> (force) přepíše historii na serveru.</p>
+</div>
+</details>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/history/delete-commits.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

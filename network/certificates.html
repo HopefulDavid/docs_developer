@@ -44,8 +44,8 @@
       <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
         <div class="container-xxl flex-nowrap">
           <a class="navbar-brand" href="../index.html">
-            <img id="logo" class="svg" src="../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
-            Dokumentace pro v&#253;voj&#225;ře
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
           </a>
           <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
             <i class="bi bi-three-dots"></i>
@@ -90,8 +90,7 @@
 <blockquote>
 <p>Generování bezpečnostních klíčů, práce s TLS certifikáty a nastavení SSH přístupu.</p>
 </blockquote>
-<hr>
-<img src="../images/a36b0a0f-361c-4d7d-994e-eeef74bebaec.png" alt="" style="width: 20%; display: block; border-radius: 8px;">
+<p><img src="../images/a36b0a0f-361c-4d7d-994e-eeef74bebaec.png" alt="Certifikáty"></p>
 <h2 id="generování-klíčů">Generování klíčů</h2>
 <h3 id="openssl">OpenSSL</h3>
 <pre><code class="lang-bash"># Base64 secret (JWT, API keys)
@@ -100,7 +99,6 @@ openssl rand -base64 32
 # HEX secret (konfigurační klíče)
 openssl rand -hex 64
 </code></pre>
-<hr>
 <h2 id="tls-certifikáty--mkcert">TLS certifikáty – mkcert</h2>
 <p><code>mkcert</code> vytváří lokálně důvěryhodné certifikáty pro vývoj bez nutnosti akceptovat bezpečnostní varování prohlížeče.</p>
 <h3 id="instalace">Instalace</h3>
@@ -140,7 +138,6 @@ localhost-key.pem →  server.key
 <p><strong>Použití v Go:</strong></p>
 <pre><code class="lang-go">e.StartTLS(&quot;:8080&quot;, &quot;server.crt&quot;, &quot;server.key&quot;)
 </code></pre>
-<hr>
 <h2 id="ssh--nastavení-pro-github">SSH – nastavení pro GitHub</h2>
 <p>SSH využívá pár klíčů (veřejný + soukromý) místo hesla. Je bezpečnější a pohodlnější pro každodenní práci s Gitem.</p>
 <h3 id="nastavení-krok-za-krokem">Nastavení krok za krokem</h3>

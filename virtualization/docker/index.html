@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Docker – Průvodce a reference | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Docker – Průvodce a reference | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/virtualization/docker/index.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="docker--průvodce-a-reference">Docker – Průvodce a reference</h1>
+
+<blockquote>
+<p>Přehled základních pojmů, příkazů, konfigurace a doporučení pro práci s Dockerem na Windows.</p>
+</blockquote>
+<p><img src="../../images/bfdff689-3382-451c-872a-5f566bacdca2.png" alt="Docker"></p>
+<h2 id="co-je-docker">Co je Docker?</h2>
+<ul>
+<li>Platforma pro vývoj, doručování a běh aplikací pomocí <strong>kontejnerizace</strong>.</li>
+<li>Izoluje aplikace v kontejnerech se všemi jejich závislostmi.</li>
+<li>Kontejnery jsou rychlejší a efektivnější než klasická virtualizace.</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Pro instalaci Dockeru na Windows je nutné mít nainstalovaný <a href="../wsl.html">WSL</a>.</p>
+</div>
+<h2 id="klíčové-pojmy">Klíčové pojmy</h2>
+<table>
+<thead>
+<tr>
+<th>Pojem</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dockerfile</strong></td>
+<td>Textový soubor s instrukcemi pro sestavení Docker image</td>
+</tr>
+<tr>
+<td><strong>Docker image</strong></td>
+<td>Komprimovaná šablona aplikace, ze které se spouští kontejner</td>
+</tr>
+<tr>
+<td><strong>Docker run</strong></td>
+<td>Příkaz pro spuštění kontejneru z image</td>
+</tr>
+<tr>
+<td><strong>Docker Hub</strong></td>
+<td>Oficiální veřejné úložiště Docker images</td>
+</tr>
+<tr>
+<td><strong>Docker Engine</strong></td>
+<td>Jádro Dockeru – klient-server architektura spravující kontejnery</td>
+</tr>
+<tr>
+<td><strong>Docker Compose</strong></td>
+<td>Definice a správa více kontejnerů přes soubor <code>docker-compose.yml</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="klíčové-soubory">Klíčové soubory</h2>
+<table>
+<thead>
+<tr>
+<th>Soubor</th>
+<th>Účel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dockerd.exe</code></td>
+<td>Spouští Docker Daemon – hlavní službu pro správu kontejnerů</td>
+</tr>
+<tr>
+<td><code>docker.exe</code></td>
+<td>Klientský nástroj pro ovládání Dockeru (<code>docker run</code>, <code>docker ps</code>)</td>
+</tr>
+<tr>
+<td><code>docker-compose.exe</code></td>
+<td>Nástroj pro správu více kontejnerů v jedné aplikaci</td>
+</tr>
+<tr>
+<td><code>docker-compose.yml</code></td>
+<td>Konfigurační soubor – služby, porty, volumes, proměnné prostředí</td>
+</tr>
+</tbody>
+</table>
+<h2 id="základní-příkazy">Základní příkazy</h2>
+<table>
+<thead>
+<tr>
+<th>Kategorie</th>
+<th>Příkaz</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Zobrazení</td>
+<td><code>docker ps</code></td>
+<td>Zobrazí běžící kontejnery</td>
+</tr>
+<tr>
+<td></td>
+<td><code>docker images</code></td>
+<td>Zobrazí všechny lokální images</td>
+</tr>
+<tr>
+<td>Automatické spouštění</td>
+<td><code>docker update --restart=yes &lt;id&gt;</code></td>
+<td>Zapne autostart kontejneru</td>
+</tr>
+<tr>
+<td></td>
+<td><code>docker update --restart=no &lt;id&gt;</code></td>
+<td>Vypne autostart kontejneru</td>
+</tr>
+<tr>
+<td>Stažení</td>
+<td><code>docker pull &lt;image&gt;</code></td>
+<td>Stáhne image z Docker Hub</td>
+</tr>
+<tr>
+<td>Záloha</td>
+<td><code>docker save -o &lt;cesta&gt;.tar &lt;image&gt;</code></td>
+<td>Exportuje image do souboru</td>
+</tr>
+<tr>
+<td></td>
+<td><code>docker load -i &lt;cesta&gt;.tar</code></td>
+<td>Importuje image ze souboru</td>
+</tr>
+<tr>
+<td>Sestavení</td>
+<td><code>docker build -t &lt;název&gt;.</code></td>
+<td>Sestaví image z Dockerfile</td>
+</tr>
+<tr>
+<td>Spuštění</td>
+<td><code>docker run &lt;image&gt;</code></td>
+<td>Spustí kontejner</td>
+</tr>
+<tr>
+<td></td>
+<td><code>docker run -p 70:80 &lt;image&gt;</code></td>
+<td>Spustí s mapováním portu</td>
+</tr>
+<tr>
+<td></td>
+<td><code>docker run --rm &lt;image&gt;</code></td>
+<td>Spustí a po ukončení automaticky smaže</td>
+</tr>
+<tr>
+<td></td>
+<td><code>docker run -it &lt;image&gt;</code></td>
+<td>Spustí v interaktivním módu</td>
+</tr>
+<tr>
+<td>Docker Compose</td>
+<td><code>docker compose up -d</code></td>
+<td>Spustí všechny služby na pozadí</td>
+</tr>
+<tr>
+<td></td>
+<td><code>docker compose down</code></td>
+<td>Zastaví a odstraní kontejnery</td>
+</tr>
+<tr>
+<td>Zastavení</td>
+<td><code>docker stop &lt;id&gt;</code></td>
+<td>Zastaví kontejner</td>
+</tr>
+<tr>
+<td></td>
+<td><code>docker rm &lt;id&gt;</code></td>
+<td>Odstraní zastaveý kontejner</td>
+</tr>
+<tr>
+<td></td>
+<td><code>docker rmi &lt;image&gt;</code></td>
+<td>Odstraní image</td>
+</tr>
+</tbody>
+</table>
+<h2 id="dockerfile--příklady">Dockerfile – příklady</h2>
+<details>
+<summary>.NET Core aplikace (pouze runtime)</summary>
+<pre><code class="lang-dockerfile">FROM mcr.microsoft.com/dotnet/core/runtime:3.1
+WORKDIR /app
+COPY ./publish .
+ENTRYPOINT [&quot;dotnet&quot;, &quot;myapp.dll&quot;]
+</code></pre>
+</details>
+<details>
+<summary>C# aplikace s buildem uvnitř kontejneru</summary>
+<pre><code class="lang-dockerfile">FROM mcr.microsoft.com/dotnet/core/sdk:3.1
+WORKDIR /app
+COPY . .
+RUN dotnet restore
+RUN dotnet publish -c Release -o out
+ENTRYPOINT [&quot;dotnet&quot;, &quot;out/myapp.dll&quot;]
+</code></pre>
+</details>
+<details>
+<summary>Aplikace s lokálními NuGet balíčky</summary>
+<pre><code class="lang-dockerfile">FROM mcr.microsoft.com/dotnet/core/sdk:3.1
+WORKDIR /app
+COPY . .
+RUN dotnet restore --source ./nuget
+RUN dotnet publish -c Release -o out
+ENTRYPOINT [&quot;dotnet&quot;, &quot;out/myapp.dll&quot;]
+</code></pre>
+</details>
+<h2 id="volumes-a-data">Volumes a data</h2>
+<h3 id="propojení-složky-z-windows-s-kontejnerem">Propojení složky z Windows s kontejnerem</h3>
+<table>
+<thead>
+<tr>
+<th>Nastavení</th>
+<th>Cesta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Host / Volume</td>
+<td><code>/run/desktop/mnt/host/c/Program Files/Unity/Hub/Editor/6000.0.33f1/Editor</code></td>
+</tr>
+<tr>
+<td>Cesta v kontejneru</td>
+<td><code>/app/unity</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="zachování-dat-z-kontejneru-na-lokálním-disku">Zachování dat z kontejneru na lokálním disku</h3>
+<p><img src="../../images/dockerKeepDataOnLocal.png" alt="Docker – zachování dat lokálně"></p>
+<h2 id="získání-dat-z-kontejneru">Získání dat z kontejneru</h2>
+<details>
+<summary>Export databázového schématu (PostgreSQL/Supabase)</summary>
+<pre><code class="lang-cmd">docker exec -t supabase-db pg_dump -U postgres -s postgres &gt; D:\schema.sql
+</code></pre>
+<p>Příkaz se připojí k běžícímu kontejneru <code>supabase-db</code> a exportuje schéma databáze do souboru <code>D:\schema.sql</code>.</p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Pro <code>sqlc generate</code> je potřeba z exportovaného souboru odstranit nebo zakomentovat řádek začínající <code>\unrestrict</code>.</p>
+</div>
+</details>
+<h2 id="řešení-problémů">Řešení problémů</h2>
+<h3 id="port-není-dostupný">Port není dostupný</h3>
+<p>Restartujte službu Windows NAT:</p>
+<pre><code class="lang-cmd">net stop winnat
+net start winnat
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Tento postup uvolní zablokované síťové porty pro Docker kontejnery.</p>
+</div>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/virtualization/docker/index.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

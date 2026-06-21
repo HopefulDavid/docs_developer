@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Git Flow – Strategie větven&#237; a workflow | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git Flow – Strategie větven&#237; a workflow | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/git-flow.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git-flow--strategie-větvení-a-workflow">Git Flow – Strategie větvení a workflow</h1>
+
+<blockquote>
+<p>Praktické rady pro efektivní správu větví v týmu pomocí Git Flow.</p>
+</blockquote>
+<p><img src="../../images/43ae90ca-b78a-405d-bf23-06f2be45eb83.png" alt="Ollama"></p>
+<h2 id="co-je-git-flow">Co je Git Flow?</h2>
+<ul>
+<li><strong>Git Flow</strong> je osvědčená strategie pro řízení verzí a vývoj v týmech.</li>
+<li>Umožňuje jasně oddělit vývoj, přípravu vydání a opravy chyb.</li>
+</ul>
+<h2 id="hlavní-větve">Hlavní větve</h2>
+<details>
+<summary>Základní větve</summary>
+<ul>
+<li><strong><code>main</code> (nebo <code>master</code>)</strong>: Produkční verze kódu</li>
+<li><strong><code>develop</code></strong>: Připravované změny pro další vydání</li>
+</ul>
+</details>
+<details>
+<summary>Pomocné větve</summary>
+<ul>
+<li><strong><code>feature/*</code></strong>: Vývoj nových funkcí</li>
+<li><strong><code>release/*</code></strong>: Příprava vydání</li>
+<li><strong><code>hotfix/*</code></strong>: Rychlé opravy v produkci</li>
+</ul>
+</details>
+<h2 id="typické-workflow">Typické workflow</h2>
+<details>
+<summary>Vývoj nové funkce</summary>
+<pre><code class="lang-bash">git checkout develop
+git checkout -b feature/nova-funkce
+# Vývoj...
+git checkout develop
+git merge feature/nova-funkce
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Vždy vytvářejte feature větve z aktuální <code>develop</code> větve.</p>
+</div>
+</details>
+<details>
+<summary>Příprava vydání</summary>
+<pre><code class="lang-bash">git checkout develop
+git checkout -b release/1.0.0
+# Finalizace...
+git checkout main
+git merge release/1.0.0
+git checkout develop
+git merge release/1.0.0
+git tag -a v1.0.0 -m &quot;Verze 1.0.0&quot;
+</code></pre>
+<div class="TIP">
+<h5>Tip</h5>
+<p>V release větvích provádějte pouze opravy chyb, úpravy dokumentace a metadat.</p>
+</div>
+</details>
+<details>
+<summary>Oprava chyby v produkci</summary>
+<pre><code class="lang-bash">git checkout main
+git checkout -b hotfix/oprava-chyby
+# Oprava...
+git checkout main
+git merge hotfix/oprava-chyby
+git tag -a v1.0.1 -m &quot;Oprava 1.0.1&quot;
+git checkout develop
+git merge hotfix/oprava-chyby
+</code></pre>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Hotfixy vždy slučujte do <code>main</code> i <code>develop</code>!</p>
+</div>
+</details>
+<h2 id="pravidla-pro-práci-s-git-flow">Pravidla pro práci s Git Flow</h2>
+<details>
+<summary>Doporučené postupy</summary>
+<ol>
+<li>Nikdy nepracujte přímo v <code>main</code> ani <code>develop</code></li>
+<li>Každá funkce má vlastní feature větev</li>
+<li>Před sloučením proveďte code review</li>
+<li>Po sloučení release/hotfix větve označte verzi pomocí tagu</li>
+<li>Používejte smysluplné názvy větví (např. <code>feature/user-auth</code>)</li>
+<li>Udržujte commit zprávy jasné a popisné</li>
+</ol>
+</details>
+<h2 id="vizualizace-workflow">Vizualizace workflow</h2>
+<details>
+<summary>Schéma větvení</summary>
+<pre><code>main       ●────────●─────────●────────●
+            \        \         \        \
+develop     ●─────●───●─────●───●───●────●
+               \     /     /     /
+feature         ●───●     /     /
+                          /     /
+release                  ●─────●
+                              /
+hotfix                       ●
+</code></pre>
+</details>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/git-flow.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

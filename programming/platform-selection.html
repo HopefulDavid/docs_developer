@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>V&#253;běr platformy pro v&#253;voj aplikac&#237; | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="V&#253;běr platformy pro v&#253;voj aplikac&#237; | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/platform-selection.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="výběr-platformy-pro-vývoj-aplikací">Výběr platformy pro vývoj aplikací</h1>
+
+<blockquote>
+<p>Praktické rady pro výběr správné platformy a frameworku podle typu projektu.</p>
+</blockquote>
+<p><img src="../images/67df603a-1960-4ca6-8bef-241dd8688fc1.png" alt="Výběr platformy pro vývoj"></p>
+<h2 id="webové-aplikace">Webové aplikace</h2>
+<details>
+<summary>Přehled populárních frameworků</summary>
+<table>
+<thead>
+<tr>
+<th>Nástroj/Framework</th>
+<th>Platformy</th>
+<th>Výhody</th>
+<th>Nevýhody</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>React</strong></td>
+<td>Web</td>
+<td>✅ Velká komunita<br>🔄 Znovupoužitelné komponenty<br>⚡ Virtuální DOM<br>🔌 Bohatý ekosystém</td>
+<td>📈 Strmá křivka učení<br>🔤 JSX syntaxe<br>🔗 Nutnost dalších knihoven</td>
+</tr>
+<tr>
+<td><strong>Vue.js</strong></td>
+<td>Web</td>
+<td>🧩 Snadné na naučení<br>🔗 Reaktivní datové vazby<br>🛠️ Flexibilní<br>👥 Silná komunita</td>
+<td>📦 Menší ekosystém<br>📉 Omezená škálovatelnost<br>🏢 Méně vhodné pro enterprise</td>
+</tr>
+<tr>
+<td><strong>Angular</strong></td>
+<td>Web</td>
+<td>🏗️ Komplexní framework<br>🔄 Obousměrné datové vazby<br>🧩 Injekce závislostí<br>👥 Silná komunita</td>
+<td>📈 Strmá křivka učení<br>🧱 Složitost<br>⚡ Výkon u velkých aplikací</td>
+</tr>
+<tr>
+<td><strong>Svelte</strong></td>
+<td>Web</td>
+<td>🚀 Žádný virtuální DOM<br>⚡ Výkonný<br>📝 Jednoduchá syntaxe<br>🔗 Reaktivní model</td>
+<td>👥 Menší komunita<br>📦 Omezený ekosystém<br>🧪 Méně vyspělý</td>
+</tr>
+<tr>
+<td><strong>ASP.NET Core</strong></td>
+<td>Web</td>
+<td>⚡ Vysoký výkon<br>🌍 Cross-platform<br>🔒 Bezpečnost<br>🔗 Integrace s .NET</td>
+<td>📈 Strmá křivka učení<br>🧱 Složitost<br>🎨 Omezené front-end možnosti</td>
+</tr>
+<tr>
+<td><strong>Django</strong></td>
+<td>Web</td>
+<td>🏗️ Vysoce úrovňový<br>🛡️ Bezpečnost<br>🧩 Admin panel<br>📈 Škálovatelnost</td>
+<td>🧱 Monolitická struktura<br>📈 Strmá křivka učení<br>🎨 Omezené front-end možnosti</td>
+</tr>
+<tr>
+<td><strong>Laravel</strong></td>
+<td>Web</td>
+<td>✨ Elegantní syntaxe<br>🔒 Autentizace<br>👥 Komunita<br>⚡ Rychlý vývoj</td>
+<td>⚡ Výkon<br>🧱 Monolitická struktura<br>📉 Škálovatelnost</td>
+</tr>
+<tr>
+<td><strong>Spring Boot</strong></td>
+<td>Web</td>
+<td>🏗️ Komplexní<br>🔒 Bezpečnost<br>📈 Škálovatelnost<br>🔗 Integrace s Java</td>
+<td>📈 Strmá křivka učení<br>🧱 Složitost<br>⚙️ Konfigurace</td>
+</tr>
+<tr>
+<td><strong>Express.js</strong></td>
+<td>Web</td>
+<td>🧩 Minimalistický<br>⚡ Výkonný<br>🛠️ Flexibilní<br>👥 Komunita</td>
+<td>🔗 Nutnost dalších knihoven<br>📦 Omezené funkce<br>🧩 Nekonzistentní kód</td>
+</tr>
+<tr>
+<td><strong>Ruby on Rails</strong></td>
+<td>Web</td>
+<td>📝 Konvence<br>⚡ Rychlý vývoj<br>🧪 Testování<br>👥 Komunita</td>
+<td>⚡ Výkon<br>🧱 Monolitická struktura<br>📈 Strmá křivka učení</td>
+</tr>
+</tbody>
+</table>
+</details>
+<h2 id="mobilní-aplikace">Mobilní aplikace</h2>
+<details>
+<summary>Frameworky pro mobilní vývoj</summary>
+<table>
+<thead>
+<tr>
+<th>Nástroj/Framework</th>
+<th>Platformy</th>
+<th>Výhody</th>
+<th>Nevýhody</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>React Native</strong></td>
+<td>iOS, Android</td>
+<td>⚡ Rychlý vývoj<br>👥 Komunita<br>🔄 Znovupoužitelný kód<br>🔥 Hot-reload</td>
+<td>⚡ Výkon<br>📦 Velikost aplikace<br>🔗 Závislost na nativních modulech</td>
+</tr>
+<tr>
+<td><strong>Flutter</strong></td>
+<td>iOS, Android</td>
+<td>⚡ Výkon<br>🎨 Krásné UI<br>🔄 Jeden kód<br>🔥 Hot-reload</td>
+<td>📦 Velikost aplikace<br>📚 Omezené knihovny<br>📈 Křivka učení pro Dart</td>
+</tr>
+<tr>
+<td><strong>Xamarin</strong></td>
+<td>iOS, Android</td>
+<td>⚡ Nativní výkon<br>🔄 Jeden kód<br>🔗 Microsoft podpora<br>🛠️ Přístup k API</td>
+<td>📦 Velikost aplikace<br>🐢 Pomalejší vývoj<br>🔗 Závislost na Microsoft</td>
+</tr>
+<tr>
+<td><strong>Swift</strong></td>
+<td>iOS</td>
+<td>⚡ Výkon<br>🎨 Nativní vzhled<br>🍏 Apple podpora<br>🛠️ Přístup k funkcím</td>
+<td>🍏 Pouze iOS<br>📈 Křivka učení<br>👥 Menší komunita</td>
+</tr>
+<tr>
+<td><strong>Kotlin Multiplatform</strong></td>
+<td>iOS, Android</td>
+<td>🔄 Sdílení kódu<br>🔗 Kotlin podpora<br>🛠️ Postupný přechod</td>
+<td>🧪 Vývoj<br>👥 Omezená komunita<br>⚙️ Složitější nastavení</td>
+</tr>
+<tr>
+<td><strong>Ionic</strong></td>
+<td>iOS, Android</td>
+<td>🌐 Web technologie<br>⚡ Rychlý vývoj<br>👥 Komunita<br>🔌 Pluginy</td>
+<td>⚡ Výkon<br>🚫 Nevhodné pro náročné aplikace<br>🌐 Závislost na webview</td>
+</tr>
+<tr>
+<td><strong>Cordova</strong></td>
+<td>iOS, Android</td>
+<td>🌐 Web technologie<br>🔌 Pluginy<br>🛠️ Integrace s webem</td>
+<td>⚡ Výkon<br>🚫 Nevhodné pro složité aplikace<br>🌐 Závislost na webview</td>
+</tr>
+<tr>
+<td><strong>NativeScript</strong></td>
+<td>iOS, Android</td>
+<td>⚡ Nativní výkon<br>🛠️ Přístup k API<br>🔗 Podpora Angular/Vue<br>📝 TypeScript</td>
+<td>👥 Menší komunita<br>📚 Omezené knihovny<br>🐞 Složitější ladění</td>
+</tr>
+<tr>
+<td><strong>PhoneGap</strong></td>
+<td>iOS, Android</td>
+<td>🌐 Web technologie<br>🛠️ Snadné použití<br>⚡ Rychlý vývoj<br>🔗 Adobe podpora</td>
+<td>⚡ Výkon<br>🚫 Nevhodné pro složité aplikace<br>🌐 Závislost na webview</td>
+</tr>
+<tr>
+<td><strong>Sencha Touch</strong></td>
+<td>iOS, Android</td>
+<td>🎨 Bohaté UI<br>⚡ Výkon<br>🏗️ MVC architektura<br>🔗 Ext JS integrace</td>
+<td>💰 Drahé licence<br>👥 Menší komunita<br>📈 Křivka učení</td>
+</tr>
+</tbody>
+</table>
+</details>
+<h2 id="počítačové-aplikace">Počítačové aplikace</h2>
+<details>
+<summary>Frameworky pro desktop</summary>
+<table>
+<thead>
+<tr>
+<th>Nástroj/Framework</th>
+<th>Platformy</th>
+<th>Výhody</th>
+<th>Nevýhody</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Electron</strong></td>
+<td>Windows, macOS, Linux</td>
+<td>🌐 Web technologie<br>👥 Komunita<br>🔌 Pluginy<br>🛠️ Integrace s webem</td>
+<td>📦 Velikost aplikace<br>🧠 Spotřeba paměti<br>🌐 Závislost na Chromium</td>
+</tr>
+<tr>
+<td><strong>Qt</strong></td>
+<td>Windows, macOS, Linux</td>
+<td>⚡ Výkon<br>🎨 Widgety<br>🔗 Více jazyků<br>🖥️ Nativní vzhled</td>
+<td>📈 Křivka učení<br>💰 Drahé licence<br>📦 Velikost knihovny</td>
+</tr>
+<tr>
+<td><strong>WPF</strong></td>
+<td>Windows</td>
+<td>🎨 Bohaté UI<br>🔗 Microsoft podpora<br>🛠️.NET integrace<br>🏗️ MVVM</td>
+<td>🪟 Pouze Windows<br>📈 Křivka učení<br>🧠 Nároky na systém</td>
+</tr>
+<tr>
+<td><strong>JavaFX</strong></td>
+<td>Windows, macOS, Linux</td>
+<td>🔗 Více platforem<br>🛠️ Java integrace<br>🎨 Bohaté UI<br>📝 FXML</td>
+<td>📈 Křivka učení<br>👥 Menší komunita<br>🧠 Nároky na systém</td>
+</tr>
+<tr>
+<td><strong>GTK</strong></td>
+<td>Windows, macOS, Linux</td>
+<td>🖥️ Nativní vzhled<br>🔗 Více jazyků<br>👥 Komunita<br>🔓 Open source</td>
+<td>📈 Křivka učení<br>🎨 Omezené UI<br>🐞 Složitější ladění</td>
+</tr>
+<tr>
+<td><strong>WinForms</strong></td>
+<td>Windows</td>
+<td>🛠️ Snadné použití<br>⚡ Rychlý vývoj<br>🔗.NET integrace<br>👥 Komunita</td>
+<td>🪟 Pouze Windows<br>🧓 Zastaralý vzhled<br>🎨 Omezené UI</td>
+</tr>
+<tr>
+<td><strong>Swing</strong></td>
+<td>Windows, macOS, Linux</td>
+<td>🔗 Více platforem<br>🛠️ Java integrace<br>🎨 Bohaté UI<br>👥 Komunita</td>
+<td>🧓 Zastaralý vzhled<br>🧠 Nároky na systém<br>📈 Křivka učení</td>
+</tr>
+<tr>
+<td><strong>Tcl/Tk</strong></td>
+<td>Windows, macOS, Linux</td>
+<td>🛠️ Snadné použití<br>⚡ Rychlý vývoj<br>🔗 Více jazyků<br>🔓 Open source</td>
+<td>🧓 Zastaralý vzhled<br>🎨 Omezené UI<br>👥 Menší komunita</td>
+</tr>
+</tbody>
+</table>
+</details>
+<h2 id="databázový-vývoj">Databázový vývoj</h2>
+<details>
+<summary>Přehled databázových technologií</summary>
+<table>
+<thead>
+<tr>
+<th>Nástroj/Framework</th>
+<th>Platformy</th>
+<th>Výhody</th>
+<th>Nevýhody</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PostgreSQL</strong></td>
+<td>Cross-platform</td>
+<td>🔓 Open source<br>👥 Komunita<br>🧩 Pokročilé funkce<br>⚡ Výkon</td>
+<td>⚙️ Nastavení<br>🧠 Nároky na systém<br>📈 Křivka učení</td>
+</tr>
+<tr>
+<td><strong>MySQL</strong></td>
+<td>Cross-platform</td>
+<td>🔓 Open source<br>👥 Komunita<br>🛠️ Snadné použití<br>⚡ Výkon</td>
+<td>📚 Omezené funkce<br>⚡ Výkon při zatížení<br>🔗 Méně flexibilní</td>
+</tr>
+<tr>
+<td><strong>SQLite</strong></td>
+<td>Cross-platform</td>
+<td>🔓 Open source<br>🛠️ Snadné použití<br>🧠 Nízké nároky<br>🔌 Vestavěný</td>
+<td>📚 Omezené funkce<br>🚫 Nevhodné pro velké aplikace<br>👥 Omezená podpora</td>
+</tr>
+<tr>
+<td><strong>MongoDB</strong></td>
+<td>Cross-platform</td>
+<td>🔓 Open source<br>🔗 Flexibilní schéma<br>⚡ Výkon<br>👥 Komunita</td>
+<td>🧠 Nároky na systém<br>📚 Omezené transakce<br>⚠️ Konzistence dat</td>
+</tr>
+<tr>
+<td><strong>Microsoft SQL Server</strong></td>
+<td>Windows, Linux</td>
+<td>🔗 Microsoft podpora<br>🧩 Pokročilé funkce<br>⚡ Výkon<br>🛠️.NET integrace</td>
+<td>💰 Licence<br>🧠 Nároky na systém<br>🪟 Omezená podpora mimo Windows</td>
+</tr>
+<tr>
+<td><strong>Oracle Database</strong></td>
+<td>Cross-platform</td>
+<td>🧩 Pokročilé funkce<br>⚡ Výkon<br>🏢 Podpora pro enterprise<br>📈 Škálovatelnost</td>
+<td>💰 Licence<br>⚙️ Nastavení<br>🧠 Nároky na systém</td>
+</tr>
+<tr>
+<td><strong>Redis</strong></td>
+<td>Cross-platform</td>
+<td>🔓 Open source<br>⚡ Výkon<br>🔗 Datové struktury<br>🛠️ Snadné použití</td>
+<td>📚 Omezené funkce<br>🚫 Nevhodné pro trvalá data<br>🔗 Omezené dotazy</td>
+</tr>
+<tr>
+<td><strong>Cassandra</strong></td>
+<td>Cross-platform</td>
+<td>🔓 Open source<br>📈 Škálovatelnost<br>⚡ Výkon<br>👥 Komunita</td>
+<td>⚙️ Nastavení<br>🧠 Nároky na systém<br>📈 Křivka učení</td>
+</tr>
+<tr>
+<td><strong>MariaDB</strong></td>
+<td>Cross-platform</td>
+<td>🔓 Open source<br>👥 Komunita<br>🛠️ Snadné použití<br>⚡ Výkon</td>
+<td>📚 Omezené funkce<br>⚡ Výkon při zatížení<br>🔗 Méně flexibilní</td>
+</tr>
+<tr>
+<td><strong>Elasticsearch</strong></td>
+<td>Cross-platform</td>
+<td>🔓 Open source<br>⚡ Výkon<br>🔍 Full-text vyhledávání<br>📈 Škálovatelnost</td>
+<td>🧠 Nároky na systém<br>⚙️ Nastavení<br>📚 Omezené transakce</td>
+</tr>
+</tbody>
+</table>
+</details>
+<h2 id="herní-vývoj">Herní vývoj</h2>
+<details>
+<summary>Frameworky pro vývoj her</summary>
+<table>
+<thead>
+<tr>
+<th>Nástroj/Framework</th>
+<th>Platformy</th>
+<th>Výhody</th>
+<th>Nevýhody</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Unity</strong></td>
+<td>Cross-platform</td>
+<td>👥 Komunita<br>🛒 Asset store<br>🧩 C# skriptování<br>🎮 2D/3D hry</td>
+<td>📈 Křivka učení<br>⚡ Výkon u velkých projektů<br>💰 Licence</td>
+</tr>
+<tr>
+<td><strong>Unreal Engine</strong></td>
+<td>Cross-platform</td>
+<td>🎨 Grafika<br>🧩 Blueprint skriptování<br>👥 Komunita<br>🆓 Zdarma pro malé projekty</td>
+<td>📈 Křivka učení<br>🧠 Systémové požadavky<br>💰 Licence pro velké projekty</td>
+</tr>
+<tr>
+<td><strong>Godot</strong></td>
+<td>Cross-platform</td>
+<td>🔓 Open source<br>🧩 Lehký<br>📝 GDScript<br>🎮 2D/3D hry</td>
+<td>👥 Menší komunita<br>🧪 Méně vyspělý<br>🛒 Omezený asset store</td>
+</tr>
+<tr>
+<td><strong>GameMaker Studio</strong></td>
+<td>Cross-platform</td>
+<td>🧩 Snadné na naučení<br>🖱️ Drag-and-drop<br>🎮 2D hry<br>👥 Komunita</td>
+<td>📚 Omezené 3D<br>💰 Licence<br>⚡ Výkon u velkých projektů</td>
+</tr>
+<tr>
+<td><strong>CryEngine</strong></td>
+<td>Cross-platform</td>
+<td>🎨 Grafika<br>🆓 Zdarma<br>⚡ Výkon pro FPS<br>👥 Komunita</td>
+<td>📈 Křivka učení<br>🧠 Systémové požadavky<br>📚 Dokumentace</td>
+</tr>
+<tr>
+<td><strong>RPG Maker</strong></td>
+<td>Cross-platform</td>
+<td>🧩 Snadné použití<br>🎮 RPG hry<br>👥 Komunita<br>🛒 Asset store</td>
+<td>🚫 Omezeno na RPG<br>📚 Omezené možnosti<br>💰 Licence</td>
+</tr>
+<tr>
+<td><strong>Construct</strong></td>
+<td>Cross-platform</td>
+<td>🧩 Snadné na naučení<br>🖱️ Drag-and-drop<br>🎮 2D hry<br>👥 Komunita</td>
+<td>📚 Omezené 3D<br>💰 Licence<br>⚡ Výkon u velkých projektů</td>
+</tr>
+<tr>
+<td><strong>Cocos2d</strong></td>
+<td>Cross-platform</td>
+<td>🔓 Open source<br>🎮 2D hry<br>🧩 Lehký<br>👥 Komunita</td>
+<td>📚 Omezené 3D<br>📈 Křivka učení<br>🛒 Omezený asset store</td>
+</tr>
+<tr>
+<td><strong>Panda3D</strong></td>
+<td>Cross-platform</td>
+<td>🔓 Open source<br>🎮 3D hry<br>📝 Python skriptování<br>👥 Komunita</td>
+<td>📈 Křivka učení<br>🛒 Omezený asset store<br>🧪 Méně vyspělý</td>
+</tr>
+<tr>
+<td><strong>Phaser</strong></td>
+<td>Cross-platform</td>
+<td>🔓 Open source<br>🎮 2D hry<br>📝 JavaScript<br>👥 Komunita</td>
+<td>📚 Omezené 3D<br>⚡ Výkon u velkých projektů<br>🛒 Omezený asset store</td>
+</tr>
+</tbody>
+</table>
+</details>
+<h2 id="ci-a-cd">CI a CD</h2>
+<details>
+<summary>Nástroje pro automatizaci</summary>
+<table>
+<thead>
+<tr>
+<th>Nástroj/Framework</th>
+<th>Platformy</th>
+<th>Výhody</th>
+<th>Nevýhody</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Jenkins</strong></td>
+<td>Cross-platform</td>
+<td>🔓 Open source<br>👥 Komunita<br>🔌 Pluginy<br>🛠️ Flexibilní</td>
+<td>⚙️ Nastavení<br>🧠 Nároky na systém<br>📈 Křivka učení</td>
+</tr>
+<tr>
+<td><strong>GitLab CI/CD</strong></td>
+<td>Cross-platform</td>
+<td>🔗 GitLab integrace<br>🛠️ Snadné použití<br>👥 Komunita<br>🌍 Podpora platforem</td>
+<td>🚫 Omezené mimo GitLab<br>🧠 Nároky na systém<br>⚙️ Složitější konfigurace</td>
+</tr>
+<tr>
+<td><strong>CircleCI</strong></td>
+<td>Cross-platform</td>
+<td>🛠️ Snadné použití<br>⚡ Rychlé buildy<br>🔌 Docker podpora<br>🔗 Integrace s GitHub/Bitbucket</td>
+<td>🚫 Omezené pro self-hosting<br>💰 Náklady<br>🌍 Omezená podpora</td>
+</tr>
+<tr>
+<td><strong>Travis CI</strong></td>
+<td>Cross-platform</td>
+<td>🛠️ Snadné použití<br>🔗 GitHub integrace<br>🧩 Více jazyků<br>🆓 Open source</td>
+<td>🚫 Omezené pro self-hosting<br>💰 Náklady<br>🌍 Omezená podpora</td>
+</tr>
+<tr>
+<td><strong>Azure DevOps</strong></td>
+<td>Cross-platform</td>
+<td>🔗 Microsoft podpora<br>🌍 Azure integrace<br>🛠️ Podpora platforem<br>🔒 Bezpečnost</td>
+<td>⚙️ Nastavení<br>💰 Náklady<br>📈 Křivka učení</td>
+</tr>
+<tr>
+<td><strong>GitHub Actions</strong></td>
+<td>Cross-platform</td>
+<td>🔗 GitHub integrace<br>🛠️ Snadné použití<br>🌍 Podpora platforem<br>👥 Komunita</td>
+<td>🚫 Omezené mimo GitHub<br>💰 Náklady<br>⚙️ Složitější konfigurace</td>
+</tr>
+<tr>
+<td><strong>Bamboo</strong></td>
+<td>Cross-platform</td>
+<td>🔗 Atlassian podpora<br>🔗 Jira integrace<br>🌍 Podpora platforem<br>🛠️ Flexibilní</td>
+<td>💰 Náklady<br>⚙️ Nastavení<br>📈 Křivka učení</td>
+</tr>
+<tr>
+<td><strong>TeamCity</strong></td>
+<td>Cross-platform</td>
+<td>🔗 JetBrains podpora<br>🌍 Podpora platforem<br>🛠️ Flexibilní<br>🔒 Bezpečnost</td>
+<td>💰 Náklady<br>⚙️ Nastavení<br>📈 Křivka učení</td>
+</tr>
+<tr>
+<td><strong>Bitbucket Pipelines</strong></td>
+<td>Cross-platform</td>
+<td>🔗 Bitbucket integrace<br>🛠️ Snadné použití<br>🌍 Podpora platforem<br>👥 Komunita</td>
+<td>🚫 Omezené mimo Bitbucket<br>💰 Náklady<br>⚙️ Složitější konfigurace</td>
+</tr>
+<tr>
+<td><strong>Spinnaker</strong></td>
+<td>Cross-platform</td>
+<td>🌍 Multi-cloud podpora<br>🛠️ Flexibilní<br>👥 Komunita<br>🌍 Podpora platforem</td>
+<td>⚙️ Nastavení<br>🧠 Nároky na systém<br>📈 Křivka učení</td>
+</tr>
+</tbody>
+</table>
+</details>
+<h2 id="testování">Testování</h2>
+<details>
+<summary>Frameworky pro automatizované testy</summary>
+<table>
+<thead>
+<tr>
+<th>Nástroj/Framework</th>
+<th>Platformy</th>
+<th>Výhody</th>
+<th>Nevýhody</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Selenium</strong></td>
+<td>Cross-platform</td>
+<td>🔓 Open source<br>🌍 Více prohlížečů<br>👥 Komunita<br>🛠️ Flexibilní</td>
+<td>⚙️ Nastavení<br>🧠 Nároky na systém<br>📈 Křivka učení</td>
+</tr>
+<tr>
+<td><strong>JUnit</strong></td>
+<td>Cross-platform</td>
+<td>🔓 Open source<br>🔗 Java integrace<br>🛠️ Snadné použití<br>👥 Komunita</td>
+<td>🚫 Omezené pro ne-Java<br>📦 Omezené funkce<br>🔗 Nutnost dalších knihoven</td>
+</tr>
+<tr>
+<td><strong>TestNG</strong></td>
+<td>Cross-platform</td>
+<td>🔓 Open source<br>🛠️ Flexibilní<br>⚡ Paralelní testy<br>🔗 Java integrace</td>
+<td>⚙️ Nastavení<br>🧠 Nároky na systém<br>📈 Křivka učení</td>
+</tr>
+<tr>
+<td><strong>Cypress</strong></td>
+<td>Cross-platform</td>
+<td>🛠️ Snadné použití<br>⚡ Rychlé testy<br>🔗 JavaScript podpora<br>📚 Funkce</td>
+<td>🚫 Omezené pro ne-JS<br>🧠 Nároky na systém<br>🌍 Omezená podpora pro prohlížeče</td>
+</tr>
+<tr>
+<td><strong>Mocha</strong></td>
+<td>Cross-platform</td>
+<td>🛠️ Snadné použití<br>🛠️ Flexibilní<br>🔗 JavaScript podpora<br>🔗 Node.js integrace</td>
+<td>📦 Omezené funkce<br>🔗 Nutnost dalších knihoven<br>🌍 Omezená podpora pro prohlížeče</td>
+</tr>
+<tr>
+<td><strong>Jest</strong></td>
+<td>Cross-platform</td>
+<td>🛠️ Snadné použití<br>⚡ Rychlé testy<br>🔗 JavaScript podpora<br>📚 Funkce</td>
+<td>🚫 Omezené pro ne-JS<br>🧠 Nároky na systém<br>🌍 Omezená podpora pro prohlížeče</td>
+</tr>
+<tr>
+<td><strong>PyTest</strong></td>
+<td>Cross-platform</td>
+<td>🔓 Open source<br>🛠️ Snadné použití<br>🔗 Python podpora<br>🛠️ Flexibilní</td>
+<td>🚫 Omezené pro ne-Python<br>🧠 Nároky na systém<br>📈 Křivka učení</td>
+</tr>
+<tr>
+<td><strong>Robot Framework</strong></td>
+<td>Cross-platform</td>
+<td>🔓 Open source<br>🛠️ Snadné použití<br>🔗 Více jazyků<br>🛠️ Flexibilní</td>
+<td>⚙️ Nastavení<br>🧠 Nároky na systém<br>📈 Křivka učení</td>
+</tr>
+<tr>
+<td><strong>Karma</strong></td>
+<td>Cross-platform</td>
+<td>🛠️ Snadné použití<br>⚡ Rychlé testy<br>🔗 JavaScript podpora<br>🔗 Angular integrace</td>
+<td>🚫 Omezené pro ne-JS<br>🧠 Nároky na systém<br>🌍 Omezená podpora pro prohlížeče</td>
+</tr>
+<tr>
+<td><strong>NUnit</strong></td>
+<td>Cross-platform</td>
+<td>🔓 Open source<br>🔗.NET integrace<br>🛠️ Snadné použití<br>👥 Komunita</td>
+<td>🚫 Omezené pro ne-.NET<br>📦 Omezené funkce<br>🔗 Nutnost dalších knihoven</td>
+</tr>
+</tbody>
+</table>
+</details>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/programming/platform-selection.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

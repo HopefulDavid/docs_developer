@@ -44,8 +44,8 @@
       <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
         <div class="container-xxl flex-nowrap">
           <a class="navbar-brand" href="../../index.html">
-            <img id="logo" class="svg" src="../../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
-            Dokumentace pro v&#253;voj&#225;ře
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
           </a>
           <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
             <i class="bi bi-three-dots"></i>
@@ -90,10 +90,8 @@
 <blockquote>
 <p>Nastavení navigace, pohyb postav a využití NavMesh v Unity.</p>
 </blockquote>
-<hr>
 <h2 id="co-je-navmesh">Co je NavMesh?</h2>
 <p>NavMesh (Navigation Mesh) je speciální mapa herního světa, která definuje, kde se postavy mohou pohybovat. Unity ji používá pro automatické hledání cesty k cíli, obcházení překážek a optimalizaci pohybu.</p>
-<hr>
 <h2 id="nastavení-navmesh">Nastavení NavMesh</h2>
 <ol>
 <li>Označ objekty, po kterých se má chodit (nastav jako <strong>Walkable</strong>).</li>
@@ -104,7 +102,6 @@
 <h5>Tip</h5>
 <p>Pro dynamické překážky (pohybující se objekty) přidej komponentu <strong>NavMesh Obstacle</strong>.</p>
 </div>
-<hr>
 <h2 id="pohyb-postavy">Pohyb postavy</h2>
 <p>Přidej komponentu <strong>NavMesh Agent</strong> na postavu a nastav parametry (rychlost, akcelerace, radius). Pohyb pak zajistí jednoduchý skript:</p>
 <pre><code class="lang-csharp">using UnityEngine;
@@ -127,7 +124,6 @@ public class MoveToTarget : MonoBehaviour
 }
 </code></pre>
 <p>Agent automaticky najde nejkratší cestu k <code>target</code> a obejde překážky.</p>
-<hr>
 <h2 id="video">Video</h2>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/sOIQCHNJbCs?si=Hd4186amhBQiQ_tX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 

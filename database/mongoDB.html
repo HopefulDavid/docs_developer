@@ -44,8 +44,8 @@
       <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
         <div class="container-xxl flex-nowrap">
           <a class="navbar-brand" href="../index.html">
-            <img id="logo" class="svg" src="../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
-            Dokumentace pro v&#253;voj&#225;ře
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
           </a>
           <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
             <i class="bi bi-three-dots"></i>
@@ -90,8 +90,7 @@
 <blockquote>
 <p>Přehled základních pojmů, příkazů a doporučení pro práci s MongoDB.</p>
 </blockquote>
-<hr>
-<img src="../images/47b4d22e-f30e-46a1-bc78-9d1fbc371e6c.png" alt="" style="width: 60%; display: block; border-radius: 8px;">
+<p><img src="../images/47b4d22e-f30e-46a1-bc78-9d1fbc371e6c.png" alt="MongoDB"></p>
 <h2 id="co-je-mongodb">Co je MongoDB?</h2>
 <ul>
 <li><strong>Dokumentová databáze</strong> – data se ukládají jako dokumenty, ne tabulky.</li>
@@ -102,7 +101,6 @@
 <h5>Note</h5>
 <p>BSON podporuje více datových typů a je efektivnější při kódování/dekódování než JSON.</p>
 </div>
-<hr>
 <h2 id="klíčové-pojmy">Klíčové pojmy</h2>
 <table>
 <thead>
@@ -130,7 +128,6 @@
 </tr>
 </tbody>
 </table>
-<hr>
 <h2 id="vytvoření">Vytvoření</h2>
 <h3 id="databáze-a-kolekce">Databáze a kolekce</h3>
 <pre><code class="lang-javascript">// Přepnutí na databázi (vytvoří ji, pokud neexistuje)
@@ -159,7 +156,6 @@ mydb.mycollection.createIndexes([
   { key: { age: -1 } }
 ])
 </code></pre>
-<hr>
 <h2 id="čtení">Čtení</h2>
 <pre><code class="lang-javascript">// Výpis všech databází
 show dbs
@@ -179,7 +175,6 @@ mydb.mycollection.find({ name: 'test' }, { name: 1 })
 // Regulární výraz
 mydb.mycollection.find({ name: { $regex: 'te.*' } })
 </code></pre>
-<hr>
 <h2 id="počítání">Počítání</h2>
 <pre><code class="lang-javascript">// Počet všech dokumentů
 mydb.mycollection.count()
@@ -193,7 +188,6 @@ mydb.mycollection.distinct('name').length
 // Počet podle regulárního výrazu
 mydb.mycollection.count({ name: { $regex: 'te.*' } })
 </code></pre>
-<hr>
 <h2 id="aktualizace">Aktualizace</h2>
 <pre><code class="lang-javascript">// Aktualizace jednoho dokumentu
 mydb.mycollection.update(
@@ -214,7 +208,6 @@ mydb.mycollection.update(
   { upsert: true }
 )
 </code></pre>
-<hr>
 <h2 id="řazení-a-stránkování">Řazení a stránkování</h2>
 <pre><code class="lang-javascript">// Řazení vzestupně
 mydb.mycollection.find().sort({ name: 1 })
@@ -228,7 +221,6 @@ mydb.mycollection.find().sort({ name: 1 }).limit(5)
 // Přeskočení prvních N výsledků (stránkování)
 mydb.mycollection.find().sort({ name: 1 }).skip(5)
 </code></pre>
-<hr>
 <h2 id="smazání">Smazání</h2>
 <pre><code class="lang-javascript">// Smazání jednoho dokumentu
 mydb.mycollection.remove({ name: 'test' })

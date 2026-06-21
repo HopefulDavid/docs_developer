@@ -44,8 +44,8 @@
       <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
         <div class="container-xxl flex-nowrap">
           <a class="navbar-brand" href="../../index.html">
-            <img id="logo" class="svg" src="../../logo.svg" alt="Dokumentace pro v&#253;voj&#225;ře">
-            Dokumentace pro v&#253;voj&#225;ře
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
           </a>
           <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
             <i class="bi bi-three-dots"></i>
@@ -90,8 +90,7 @@
 <blockquote>
 <p>Správa externích repozitářů jako podadresářů v Git projektu.</p>
 </blockquote>
-<hr>
-<img src="../../images/bcf90266-2493-4e1c-8f54-8d37b4e4e4a7.png" alt="Ollama" style="width: 100%; display: block; border-radius: 8px;">
+<p><img src="../../images/bcf90266-2493-4e1c-8f54-8d37b4e4e4a7.png" alt="Ollama"></p>
 <h2 id="co-jsou-submoduly">Co jsou submoduly?</h2>
 <ul>
 <li>Umožňují vložit jeden Git repozitář do jiného jako podadresář.</li>
@@ -105,7 +104,6 @@
   └── Submodul/
       └── .git/
 </code></pre>
-<hr>
 <h2 id="základní-příkazy">Základní příkazy</h2>
 <h3 id="přidání-submodulu">Přidání submodulu</h3>
 <pre><code class="lang-bash">git submodule add https://github.com/uzivatel/knihovna libs/knihovna
@@ -159,7 +157,6 @@ git commit -m &quot;Odstraněn submodul&quot;
 <h3 id="kontrola-stavu">Kontrola stavu</h3>
 <pre><code class="lang-bash">git submodule status
 </code></pre>
-<hr>
 <h2 id="příklad-unity-projekt-se-submoduly">Příklad: Unity projekt se submoduly</h2>
 <pre><code>UnityProjekt/
   ├── .git/
@@ -173,7 +170,6 @@ git commit -m &quot;Odstraněn submodul&quot;
 git submodule add https://github.com/author/ui-framework Assets/Plugins/UI-Framework
 git submodule add https://github.com/author/network-lib Assets/Plugins/Network
 </code></pre>
-<hr>
 <h2 id="řešení-problémů">Řešení problémů</h2>
 <p><strong>Submodul je v &quot;detached HEAD&quot; stavu:</strong></p>
 <pre><code class="lang-bash">cd cesta/k/submodulu
@@ -182,7 +178,6 @@ git checkout main
 <p><strong>Submodul ukazuje změny i když žádné nemáš:</strong></p>
 <pre><code class="lang-bash">git submodule update
 </code></pre>
-<hr>
 <h2 id="výhody-a-nevýhody">Výhody a nevýhody</h2>
 <table>
 <thead>
