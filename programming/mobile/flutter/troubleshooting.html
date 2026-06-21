@@ -2,21 +2,21 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Z&#225;loha, obnova a ukl&#225;d&#225;n&#237; dat | V&#253;voj&#225;ř </title>
+      <title>Řešen&#237; probl&#233;mů ve Flutteru | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Z&#225;loha, obnova a ukl&#225;d&#225;n&#237; dat | V&#253;voj&#225;ř ">
+      <meta name="title" content="Řešen&#237; probl&#233;mů ve Flutteru | V&#253;voj&#225;ř ">
       
       
-      <link rel="icon" href="../../favicon.ico">
-      <link rel="stylesheet" href="../../public/docfx.min.css">
-      <link rel="stylesheet" href="../../public/main.css">
-      <meta name="docfx:navrel" content="../../toc.html">
-      <meta name="docfx:tocrel" content="../toc.html">
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
       
-      <meta name="docfx:rel" content="../../">
+      <meta name="docfx:rel" content="../../../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/flutter/backup-and-restore.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/mobile/flutter/troubleshooting.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -30,7 +30,7 @@
       <meta name="loc:copy" content="Copy">
       <meta name="loc:downloadPdf" content="Download PDF">
 
-      <script type="module" src="./../../public/docfx.min.js"></script>
+      <script type="module" src="./../../../public/docfx.min.js"></script>
 
       <script>
         const theme = localStorage.getItem('theme') || 'auto'
@@ -43,8 +43,8 @@
     <header class="bg-body border-bottom">
       <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
         <div class="container-xxl flex-nowrap">
-          <a class="navbar-brand" href="../../index.html">
-            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="V&#253;voj&#225;ř">
             V&#253;voj&#225;ř
           </a>
           <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,37 +85,44 @@
         </div>
 
         <article data-uid="">
-<h1 id="záloha-obnova-a-ukládání-dat">Záloha, obnova a ukládání dat</h1>
+<h1 id="řešení-problémů-ve-flutteru">Řešení problémů ve Flutteru</h1>
 
-<h2 id="umístění-aplikačních-dat">Umístění aplikačních dat</h2>
-<ul>
-<li><strong>shared_preferences.json</strong>: <code>%APPDATA%\com.example\xxx_app</code></li>
-<li><code>%APPDATA%</code> – uživatelská data (<code>C:\Users\&lt;uživatel&gt;\AppData\Roaming</code>)</li>
-<li><code>com.example</code> – identifikátor aplikace</li>
-<li><code>xxx_app</code> – název aplikace</li>
-<li><code>shared_preferences.json</code> – uložená data</li>
-</ul>
-<h3 id="záloha-závislostí">Záloha závislostí</h3>
-<p>Zálohujte složku <code>.pub-cache</code>:</p>
-<ul>
-<li><p><strong>Windows</strong>: <code>C:\Users\&lt;uživatelské_jméno&gt;\AppData\Local\Pub\Cache</code></p>
-</li>
-<li><p><strong>macOS/Linux</strong>: <code>/Users/&lt;uživatelské_jméno&gt;/.pub-cache</code></p>
-</li>
-<li><p><code>hosted</code> – balíčky z repozitářů (<a href="https://pub.dev/">pub.dev</a>)</p>
-</li>
-<li><p><code>hosted-hashes</code> – hash soubory pro ověření integrity</p>
-</li>
-<li><p><code>temp</code> – dočasné soubory při stahování balíčků</p>
-</li>
-</ul>
-<h3 id="obnova-závislostí">Obnova závislostí</h3>
-<p>Obnovte obsah složky <code>.pub-cache</code> do původního umístění.</p>
+<h2 id="automatické-zmenšení-textu-bez-doplňků">Automatické zmenšení textu bez doplňků</h2>
+<p>Použijte kombinaci <code>Expanded</code> a <code>FittedBox</code> pro automatické přizpůsobení velikosti textu:</p>
+<pre><code class="lang-dart">Expanded(
+  child: FittedBox(
+    fit: BoxFit.scaleDown,
+    child: Text('${widget.article.price * chosenQuantity} DH',
+      style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
+    ),
+  ),
+)
+</code></pre>
+<h3 id="vypnutí-pravidla-no_logic_in_create_state">Vypnutí pravidla <code>no_logic_in_create_state</code></h3>
+<p><strong>Jak vypnout linter pravidlo:</strong></p>
+<ol>
+<li>Otevřete soubor <code>analysis_options.yaml</code> v kořenovém adresáři projektu.</li>
+<li>Přidejte následující konfiguraci:</li>
+</ol>
+<pre><code class="lang-yaml">linter:
+  rules:
+    no_logic_in_create_state: false
+</code></pre>
+<ol start="3">
+<li>Uložte soubor a restartujte IDE.</li>
+</ol>
+<h3 id="chyba-building-with-plugins-requires-symlink-support">Chyba: Building with plugins requires symlink support</h3>
+<p>Pokud se zobrazí tato chyba na Windows, je potřeba povolit <code>Developer Mode</code>:</p>
+<ol>
+<li>Stiskněte <code>Win + R</code></li>
+<li>Zadejte <code>ms-settings:developers</code> a potvrďte</li>
+<li>Povolte <code>Developer Mode</code> (Režim pro vývojáře)</li>
+</ol>
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/programming/flutter/backup-and-restore.md/#L1" class="edit-link">Edit this page</a>
+          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/programming/mobile/flutter/troubleshooting.md/#L1" class="edit-link">Edit this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>

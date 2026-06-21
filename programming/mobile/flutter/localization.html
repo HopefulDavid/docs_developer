@@ -2,21 +2,21 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Operačn&#237; syst&#233;my | V&#253;voj&#225;ř </title>
+      <title>Lokalizace (intern&#237; knihovna) | V&#253;voj&#225;ř </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Operačn&#237; syst&#233;my | V&#253;voj&#225;ř ">
+      <meta name="title" content="Lokalizace (intern&#237; knihovna) | V&#253;voj&#225;ř ">
       
       
-      <link rel="icon" href="../favicon.ico">
-      <link rel="stylesheet" href="../public/docfx.min.css">
-      <link rel="stylesheet" href="../public/main.css">
-      <meta name="docfx:navrel" content="../toc.html">
-      <meta name="docfx:tocrel" content="toc.html">
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
       
-      <meta name="docfx:rel" content="../">
+      <meta name="docfx:rel" content="../../../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/operating-system/index.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/mobile/flutter/localization.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -30,7 +30,7 @@
       <meta name="loc:copy" content="Copy">
       <meta name="loc:downloadPdf" content="Download PDF">
 
-      <script type="module" src="./../public/docfx.min.js"></script>
+      <script type="module" src="./../../../public/docfx.min.js"></script>
 
       <script>
         const theme = localStorage.getItem('theme') || 'auto'
@@ -43,8 +43,8 @@
     <header class="bg-body border-bottom">
       <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
         <div class="container-xxl flex-nowrap">
-          <a class="navbar-brand" href="../index.html">
-            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="V&#253;voj&#225;ř">
             V&#253;voj&#225;ř
           </a>
           <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,39 +85,87 @@
         </div>
 
         <article data-uid="">
-<h1 id="operační-systémy">Operační systémy</h1>
-<!-- Tento soubor generuje npm run docs:generate. Neupravujte navigaci ani přehledy ručně. -->
+<h1 id="lokalizace-interní-knihovna">Lokalizace (interní knihovna)</h1>
 
-<p>Praktické poznámky k operačním systémům a jejich příkazovým nástrojům.</p>
-<h2 id="přehled-stránek">Přehled stránek</h2>
-<h3 id="windows">Windows</h3>
-<table>
-<thead>
-<tr>
-<th>Stránka</th>
-<th>Popis</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="windows/index.html">Windows</a></td>
-<td>Instalace, nastavení, klávesové zkratky a řešení problémů ve Windows.</td>
-</tr>
-<tr>
-<td><a href="windows/cmd.html">Command Line</a></td>
-<td>Moderní přehled práce s příkazovým řádkem, dávkovými skripty a optimalizací disků ve Windows.</td>
-</tr>
-<tr>
-<td><a href="windows/powershell.html">PowerShell</a></td>
-<td>Správa balíčků, oprávnění, přizpůsobení prostředí, práce se soubory a síť v PowerShellu.</td>
-</tr>
-</tbody>
-</table>
+<ol>
+<li><p>Přidejte do <code>pubspec.yaml</code>:</p>
+<pre><code class="lang-yaml">dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  flutter_svg: ^2.0.16
+</code></pre>
+</li>
+<li><p>Vytvořte lokalizační soubory:</p>
+</li>
+</ol>
+<ul>
+<li><code>lib/l10n/intl_en.arb</code>:
+<code>json { &quot;@@locale&quot;: &quot;en&quot;, &quot;hello&quot;: &quot;Hello&quot;, &quot;welcome&quot;: &quot;Welcome&quot; } </code></li>
+<li><code>lib/l10n/intl_cs.arb</code>:
+<code>json { &quot;@@locale&quot;: &quot;cs&quot;, &quot;hello&quot;: &quot;Ahoj&quot;, &quot;welcome&quot;: &quot;Vítejte&quot; } </code></li>
+</ul>
+<ol start="3">
+<li><p>Přidejte <code>intl_utils</code> do <code>pubspec.yaml</code>:</p>
+<pre><code class="lang-yaml">dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl_utils: ^2.5.0
+  cupertino_icons: ^1.0.8
+  flutter_svg: ^2.0.16
+</code></pre>
+</li>
+<li><p>Vygenerujte lokalizační soubory:</p>
+<pre><code class="lang-bash">dart pub get
+dart run intl_utils:generate
+</code></pre>
+</li>
+<li><p>Použití lokalizace v aplikaci:</p>
+<pre><code class="lang-dart">import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'generated/l10n.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      localizationsDelegates: [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
+      home: MainPage(),
+    );
+  }
+}
+
+class MainPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(S.of(context).hello)),
+      body: Center(child: Text(S.of(context).welcome)),
+    );
+  }
+}
+</code></pre>
+</li>
+</ol>
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/operating-system/index.md/#L1" class="edit-link">Edit this page</a>
+          <a href="https://github.com/HopefulDavid/docs_developer/blob/main/programming/mobile/flutter/localization.md/#L1" class="edit-link">Edit this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>

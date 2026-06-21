@@ -1726,90 +1726,100 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "programming/flutter/backup-and-restore.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/flutter/backup-and-restore.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "programming/flutter/basics.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/flutter/basics.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "programming/flutter/code-coverage.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/flutter/code-coverage.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "programming/flutter/commands.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/flutter/commands.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "programming/flutter/create-project.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/flutter/create-project.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "programming/flutter/localization.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/flutter/localization.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "programming/flutter/setup-and-configuration.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/flutter/setup-and-configuration.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "programming/flutter/troubleshooting.md",
-      "output": {
-        ".html": {
-          "relative_path": "programming/flutter/troubleshooting.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "programming/index.md",
       "output": {
         ".html": {
           "relative_path": "programming/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/mobile/android-studio.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/mobile/android-studio.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/mobile/flutter/backup-and-restore.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/mobile/flutter/backup-and-restore.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/mobile/flutter/basics.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/mobile/flutter/basics.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/mobile/flutter/code-coverage.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/mobile/flutter/code-coverage.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/mobile/flutter/commands.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/mobile/flutter/commands.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/mobile/flutter/create-project.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/mobile/flutter/create-project.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/mobile/flutter/localization.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/mobile/flutter/localization.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/mobile/flutter/setup-and-configuration.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/mobile/flutter/setup-and-configuration.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/mobile/flutter/troubleshooting.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/mobile/flutter/troubleshooting.html"
         }
       },
       "version": ""
