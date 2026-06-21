@@ -2,9 +2,7 @@
 
 > Přehled metodologií řízení projektů, rychlého prototypování a konvencí pojmenování v kódu.
 
----
-
-<img src="../images/77bb3224-887c-410f-a232-f51a105d0b01.png" alt="" style="width: 50%; display: block; border-radius: 8px;">
+![Techniky](../images/77bb3224-887c-410f-a232-f51a105d0b01.png)
 
 ## Vývojové metodiky
 
@@ -22,8 +20,6 @@ Zaměřuje se na spolupráci, zákaznickou spokojenost a rychlou reakci na změn
 > [!NOTE]
 > Scrum je vhodný pro projekty s proměnnými požadavky a nutností rychlé adaptace. Nevhodné pro projekty s pevným plánem a jasně definovanými výstupy.
 
----
-
 ### Vodopádová metodika
 
 Sekvenční přístup – každá fáze musí být zcela dokončena před zahájením další.
@@ -40,8 +36,6 @@ Sekvenční přístup – každá fáze musí být zcela dokončena před zaháj
 > [!NOTE]
 > Vhodné pro projekty s jasně definovanými a neměnnými požadavky.
 
----
-
 ### Kanban
 
 Vizuální řízení práce pomocí tabule a karet. Průběžná dodávka bez pevných iterací.
@@ -53,8 +47,6 @@ Vizuální řízení práce pomocí tabule a karet. Průběžná dodávka bez pe
 
 > [!NOTE]
 > Kanban je vhodný pro provozní týmy a podpůrné procesy. Nevhodné pro projekty s pevnými termíny a milníky.
-
----
 
 ## Rychlé prototypování
 
@@ -69,8 +61,6 @@ Rychlé prototypování slouží k ověření konceptu co nejdříve – cílem 
 
 > [!IMPORTANT]
 > Rychlost a zpětná vazba jsou prioritou. Neztrácejte čas perfektní grafikou nebo architekturou v rané fázi.
-
----
 
 ## BEM metodika
 
@@ -94,8 +84,6 @@ Rychlé prototypování slouží k ověření konceptu co nejdříve – cílem 
 | Block | *(žádný)* | `.menu` |
 | Element | `__` | `.menu__item` |
 | Modifier | `--` | `.menu__item--active` |
-
----
 
 ## Konvence pojmenování v kódu
 

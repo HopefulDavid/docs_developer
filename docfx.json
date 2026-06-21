@@ -26,10 +26,10 @@
     ],
     "output": "_site",
     "globalMetadata": {
-      "_appName": "Dokumentace pro vývojáře",
+      "_appName": "Vývojář",
       "_appTitle": "Vývojář",
       "_enableSearch": true,
-      "pdf": true
+      "pdf": false
     },
     "markdown": {
       "max_header_level": 7

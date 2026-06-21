@@ -2,9 +2,7 @@
 
 > Průvodce nástrojem OpenTofu pro popis a správu infrastruktury jako kódu (IaC).
 
----
-
-<img src="../images/a188d4ef-a7b4-4028-9107-0bd99f101e30.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
+![OpenTofu](../images/a188d4ef-a7b4-4028-9107-0bd99f101e30.png)
 
 ## Co je OpenTofu?
 
@@ -19,8 +17,6 @@ OpenTofu se používá na:
 > [!NOTE]
 > OpenTofu je open-source fork Terraformu. Syntaxe a příkazy jsou prakticky identické.
 
----
-
 ## Co OpenTofu není
 
 OpenTofu **nevytváří** ani **nespravuje**:
@@ -32,9 +28,7 @@ OpenTofu **nevytváří** ani **nespravuje**:
 | **OpenTofu** | Postaví infrastrukturu (servery, sítě, databáze) |
 | **Docker** | Zabalí aplikaci do kontejneru |
 | **CI/CD** | Nasadí kód do prostředí |
-| **Aplikace** | Samotný produkt (Next.js, .NET, Go…) |
-
----
+| **Aplikace** | Samotný produkt (Next.js,.NET, Go…) |
 
 ## Instalace
 
@@ -45,8 +39,6 @@ OpenTofu **nevytváří** ani **nespravuje**:
 ```bash
 tofu version
 ```
-
----
 
 ## První test – bez cloudu
 
@@ -104,8 +96,6 @@ Ve složce se vytvoří soubor `vystup.txt`.
 tofu destroy   # potvrď 'yes'
 ```
 
----
-
 ## Přehled příkazů
 
 | Příkaz | Popis |
@@ -118,8 +108,6 @@ tofu destroy   # potvrď 'yes'
 | `tofu validate` | Ověří syntaxi konfigurace |
 | `tofu output` | Zobrazí výstupní hodnoty |
 | `tofu version` | Zobrazí nainstalovanou verzi |
-
----
 
 ## Doporučená struktura projektu
 
@@ -134,8 +122,6 @@ projekt/
 
 > [!TIP]
 > Soubor `terraform.tfvars` přidej do `.gitignore`, pokud obsahuje hesla nebo tokeny.
-
----
 
 ## Základní syntaxe HCL
 
@@ -160,8 +146,6 @@ output "cesta_souboru" {
 
 > [!NOTE]
 > HCL je deklarativní jazyk – popisuješ **co** chceš mít, ne **jak** to vytvořit.
-
----
 
 ## Užitečné odkazy
 

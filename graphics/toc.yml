@@ -1,2 +1,7 @@
-- name: Affinity software
-  href: affinity.md
+# Tento soubor generuje npm run docs:generate. Neupravujte navigaci ani přehledy ručně.
+- name: "Přehled"
+  href: "index.md"
+- name: "Grafické aplikace"
+  items:
+    - name: "Affinity"
+      href: "affinity.md"

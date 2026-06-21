@@ -1,2 +1,7 @@
-- name: Outlook
-  href: outlook.md
+# Tento soubor generuje npm run docs:generate. Neupravujte navigaci ani přehledy ručně.
+- name: "Přehled"
+  href: "index.md"
+- name: "Komunikace"
+  items:
+    - name: "Outlook"
+      href: "outlook.md"

@@ -1,8 +1,6 @@
-# Unity – Kamera & Tipy
+# Unity – Kamera a Tipy
 
 > Praktické rady pro nastavení kamery v Unity, rozdíly mezi ortografickou a perspektivní kamerou, a proč používat Pixel Perfect Camera v 2D hrách.
-
----
 
 ## Pixel Perfect Camera
 
@@ -17,47 +15,41 @@
 
 </details>
 
----
-
 ## Ortografická Kamera
 
 <details>
-<summary>Vlastnosti & použití</summary>
+<summary>Vlastnosti a použití</summary>
 
-| 🏷️ Vlastnost         | 💡 Popis                                      |
+| 🏷️ Vlastnost | 💡 Popis |
 |----------------------|-----------------------------------------------|
-| Zobrazení            | Objektivní, bez perspektivního zkreslení      |
-| Velikost objektů     | Stejná bez ohledu na vzdálenost               |
-| Použití              | 2D hry, izometrie, architektura               |
-| Nastavení            | **Orthographic Size** určuje záběr            |
-| Linie                | Rovnoběžné linie zůstávají rovnoběžné         |
+| Zobrazení | Objektivní, bez perspektivního zkreslení |
+| Velikost objektů | Stejná bez ohledu na vzdálenost |
+| Použití | 2D hry, izometrie, architektura |
+| Nastavení | **Orthographic Size** určuje záběr |
+| Linie | Rovnoběžné linie zůstávají rovnoběžné |
 
 > Ideální pro 2D projekty!
 
 </details>
 
----
-
 ## Perspektivní Kamera
 
 <details>
-<summary>Vlastnosti & použití</summary>
+<summary>Vlastnosti a použití</summary>
 
-| 🏷️ Vlastnost         | 💡 Popis                                      |
+| 🏷️ Vlastnost | 💡 Popis |
 |----------------------|-----------------------------------------------|
-| Zobrazení            | Simuluje reálnou perspektivu                  |
-| Velikost objektů     | Menší s rostoucí vzdáleností                  |
-| Použití              | 3D hry, realistická hloubka                   |
-| Nastavení            | **Field of View (FOV)** určuje šířku záběru   |
-| Linie                | Rovnoběžné linie se sbíhají do jednoho bodu   |
+| Zobrazení | Simuluje reálnou perspektivu |
+| Velikost objektů | Menší s rostoucí vzdáleností |
+| Použití | 3D hry, realistická hloubka |
+| Nastavení | **Field of View (FOV)** určuje šířku záběru |
+| Linie | Rovnoběžné linie se sbíhají do jednoho bodu |
 
 > Vhodné pro 3D projekty!
 
 </details>
 
----
-
-## Novinky & Video
+## Novinky a Video
 
 <details>
 <summary>Co je nového v Unity kamerách?</summary>

@@ -1,10 +1,8 @@
-# Dapper – Průvodce & použití
+# Dapper – Průvodce a použití
 
 > Praktické rady pro práci s Dapper jako micro-ORM pro efektivní přístup k databázi v .NET.
 
----
-
-<img src="../images/f5e467cc-a417-4099-9e05-5ccbbdf763b0.png" alt="" style="width: 60%; display: block; border-radius: 8px;">
+![Dapper](../images/f5e467cc-a417-4099-9e05-5ccbbdf763b0.png)
 
 ## Dapper
 
@@ -98,11 +96,11 @@
     }
    ```
 
-   > [!NOTE]
-   > Dapper je v tomo příkladu použit v následující části kódu:
-   > ```bash
-   > using (var connection = new SqlConnection(_connectionString))
-   > {
-   >     return await connection.QueryAsync<User>(sql, new { Age = age });
-   > }
-   > ```
+> [!NOTE]
+> Dapper je v tomo příkladu použit v následující části kódu:
+> ```bash
+> using (var connection = new SqlConnection(_connectionString))
+> {
+> return await connection.QueryAsync<User>(sql, new { Age = age });
+> }
+> ```

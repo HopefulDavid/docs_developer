@@ -2,9 +2,7 @@
 
 > Správa externích repozitářů jako podadresářů v Git projektu.
 
----
-
-<img src="../../images/bcf90266-2493-4e1c-8f54-8d37b4e4e4a7.png" alt="Ollama" style="width: 100%; display: block; border-radius: 8px;">
+![Ollama](../../images/bcf90266-2493-4e1c-8f54-8d37b4e4e4a7.png)
 
 ## Co jsou submoduly?
 
@@ -20,8 +18,6 @@ HlavniProjekt/
   └── Submodul/
       └── .git/
 ```
-
----
 
 ## Základní příkazy
 
@@ -101,8 +97,6 @@ git commit -m "Odstraněn submodul"
 git submodule status
 ```
 
----
-
 ## Příklad: Unity projekt se submoduly
 
 ```
@@ -121,8 +115,6 @@ git submodule add https://github.com/author/ui-framework Assets/Plugins/UI-Frame
 git submodule add https://github.com/author/network-lib Assets/Plugins/Network
 ```
 
----
-
 ## Řešení problémů
 
 **Submodul je v "detached HEAD" stavu:**
@@ -137,8 +129,6 @@ git checkout main
 ```bash
 git submodule update
 ```
-
----
 
 ## Výhody a nevýhody
 

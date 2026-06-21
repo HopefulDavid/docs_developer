@@ -1,4 +1,9 @@
-- name: JetBrains
-  href: jetBrains.md
-- name: Visual Studio
-  href: visualStudio.md
+# Tento soubor generuje npm run docs:generate. Neupravujte navigaci ani přehledy ručně.
+- name: "Přehled"
+  href: "index.md"
+- name: "Vývojová prostředí"
+  items:
+    - name: "JetBrains"
+      href: "jetbrains.md"
+    - name: "Visual Studio"
+      href: "visual-studio.md"

@@ -2,9 +2,7 @@
 
 > Generování bezpečnostních klíčů, práce s TLS certifikáty a nastavení SSH přístupu.
 
----
-
-<img src="../images/a36b0a0f-361c-4d7d-994e-eeef74bebaec.png" alt="" style="width: 20%; display: block; border-radius: 8px;">
+![Certifikáty](../images/a36b0a0f-361c-4d7d-994e-eeef74bebaec.png)
 
 ## Generování klíčů
 
@@ -17,8 +15,6 @@ openssl rand -base64 32
 # HEX secret (konfigurační klíče)
 openssl rand -hex 64
 ```
-
----
 
 ## TLS certifikáty – mkcert
 
@@ -78,8 +74,6 @@ localhost-key.pem →  server.key
 ```go
 e.StartTLS(":8080", "server.crt", "server.key")
 ```
-
----
 
 ## SSH – nastavení pro GitHub
 

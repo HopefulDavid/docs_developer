@@ -2,13 +2,9 @@
 
 > Nastavení navigace, pohyb postav a využití NavMesh v Unity.
 
----
-
 ## Co je NavMesh?
 
 NavMesh (Navigation Mesh) je speciální mapa herního světa, která definuje, kde se postavy mohou pohybovat. Unity ji používá pro automatické hledání cesty k cíli, obcházení překážek a optimalizaci pohybu.
-
----
 
 ## Nastavení NavMesh
 
@@ -18,8 +14,6 @@ NavMesh (Navigation Mesh) je speciální mapa herního světa, která definuje, 
 
 > [!TIP]
 > Pro dynamické překážky (pohybující se objekty) přidej komponentu **NavMesh Obstacle**.
-
----
 
 ## Pohyb postavy
 
@@ -47,8 +41,6 @@ public class MoveToTarget : MonoBehaviour
 ```
 
 Agent automaticky najde nejkratší cestu k `target` a obejde překážky.
-
----
 
 ## Video
 

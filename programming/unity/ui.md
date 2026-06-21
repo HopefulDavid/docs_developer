@@ -1,8 +1,6 @@
-# Unity – UI systém & Tipy
+# Unity – UI systém a Tipy
 
 > Praktické rady pro práci s UI v Unity, včetně nastavení tlačítek, detekce kliknutí a užitečných vlastností komponent.
-
----
 
 ## Co je UI systém v Unity?
 
@@ -15,8 +13,6 @@
 
 </details>
 
----
-
 ## Tlačítko (Button)
 
 <details>
@@ -28,18 +24,16 @@
 
 </details>
 
----
-
 ## Rozsah detekce kliknutí podle průhlednosti
 
 <details>
 <summary>`alphaHitTestMinimumThreshold`</summary>
 
-| 🏷️ Vlastnost                | 💡 Popis                                                                 |
+| 🏷️ Vlastnost | 💡 Popis |
 |-----------------------------|--------------------------------------------------------------------------|
-| `alphaHitTestMinimumThreshold` | Určuje minimální alfa hodnotu pro detekci kliknutí na obrázek.           |
-| Rozsah hodnot                | 0 (klik i na průhledné části) až 1 (jen zcela neprůhledné části)         |
-| Použití                      | Ideální pro kruhová nebo nepravidelná tlačítka                           |
+| `alphaHitTestMinimumThreshold` | Určuje minimální alfa hodnotu pro detekci kliknutí na obrázek. |
+| Rozsah hodnot | 0 (klik i na průhledné části) až 1 (jen zcela neprůhledné části) |
+| Použití | Ideální pro kruhová nebo nepravidelná tlačítka |
 
 > Nastav hodnotu podle požadované citlivosti na průhlednost.
 

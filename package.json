@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "docs:generate": "node scripts/generate-docs.js",
+    "docs:check": "node scripts/generate-docs.js --check",
+    "docs:build": "docfx docfx.json",
+    "docs:serve": "docfx serve _site"
+  }
+}

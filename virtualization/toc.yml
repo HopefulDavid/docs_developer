@@ -1,13 +1,18 @@
-- name: WSL (Windows Subsystem for Linux)
-  href: wsl.md
-- name: Docker
-  href: docker.md
+# Tento soubor generuje npm run docs:generate. Neupravujte navigaci ani přehledy ručně.
+- name: "Přehled"
+  href: "index.md"
+- name: "Prostředí"
   items:
-    - name: Portainer (správa Dockeru)
-      href: docker_portainer.md
-    - name: Duplicati (zálohování)
-      href: docker_duplicati.md
-    - name: Busybox (práce s Docker volumes)
-      href: docker_busybox.md
-- name: Kubernetes
-  href: kubernetes.md
+    - name: "WSL"
+      href: "wsl.md"
+    - name: "Docker"
+      href: "docker/index.md"
+      items:
+        - name: "Portainer"
+          href: "docker/portainer.md"
+        - name: "Duplicati"
+          href: "docker/duplicati.md"
+        - name: "BusyBox"
+          href: "docker/busybox.md"
+    - name: "Kubernetes"
+      href: "kubernetes.md"

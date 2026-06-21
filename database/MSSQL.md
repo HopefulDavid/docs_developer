@@ -1,10 +1,8 @@
-# Microsoft SQL – Praktické dotazy & tipy
+# Microsoft SQL – Praktické dotazy a tipy
 
 > Moderní přehled SQL dotazů, postupů a tipů pro práci s Microsoft SQL Serverem.
 
----
-
-<img src="../images/10336033-b701-48a9-abdf-aa59500e77cf.png" alt="" style="width: 60%; display: block; border-radius: 8px;">
+![Microsoft SQL](../images/10336033-b701-48a9-abdf-aa59500e77cf.png)
 
 ## Získání informací o serveru a databázi
 
@@ -115,8 +113,6 @@ ORDER BY
 ```
 </details>
 
----
-
 ## Hledání v databázi
 
 <details>
@@ -194,20 +190,18 @@ EXEC xp_readerrorlog 0, 1, N'Server is listening on';
 ```
 </details>
 
----
-
 ## Výkon a statistiky
 
 <details>
 <summary>Efektivita dotazů</summary>
 
 - **SQL Server Management Studio:**
-  1. Menu Query > Include Client Statistics
-  2. Spusťte dotaz
+1. Menu Query > Include Client Statistics
+2. Spusťte dotaz
 
 - **JetBrains:**
-  1. File -> Settings -> Database -> General
-  2. Zaškrtnout: Show query statistics
+1. File -> Settings -> Database -> General
+2. Zaškrtnout: Show query statistics
 
 ```sql
 SET STATISTICS TIME ON;
@@ -215,8 +209,6 @@ SELECT * FROM place_table -- custom code to execute
 SET STATISTICS TIME OFF;
 ```
 </details>
-
----
 
 ## Konfigurace
 
@@ -236,8 +228,6 @@ EXEC sp_configure 'remote access';
 > ```
 </details>
 
----
-
 ## Spojování tabulek
 
 | Typ JOIN | Popis |
@@ -247,8 +237,6 @@ EXEC sp_configure 'remote access';
 | **FULL OUTER JOIN** | Vrátí všechny řádky z obou tabulek; neexistující hodnoty jsou `NULL` |
 | **INNER JOIN** | Vrátí pouze řádky s odpovídajícími hodnotami v obou tabulkách |
 | **CROSS APPLY** | Umožňuje poddotaz pro každý řádek z první tabulky |
-
----
 
 ## Spojování hodnot ze sloupce do řetězce
 

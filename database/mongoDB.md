@@ -2,9 +2,7 @@
 
 > Přehled základních pojmů, příkazů a doporučení pro práci s MongoDB.
 
----
-
-<img src="../images/47b4d22e-f30e-46a1-bc78-9d1fbc371e6c.png" alt="" style="width: 60%; display: block; border-radius: 8px;">
+![MongoDB](../images/47b4d22e-f30e-46a1-bc78-9d1fbc371e6c.png)
 
 ## Co je MongoDB?
 
@@ -15,8 +13,6 @@
 > [!NOTE]
 > BSON podporuje více datových typů a je efektivnější při kódování/dekódování než JSON.
 
----
-
 ## Klíčové pojmy
 
 | Pojem | Popis |
@@ -25,8 +21,6 @@
 | **Kolekce** | Sada dokumentů – ekvivalent tabulky v SQL. Dokumenty nemusí mít stejnou strukturu. |
 | **BSON** | Binární verze JSON – interní formát pro ukládání dat |
 | **Index** | Datová struktura pro rychlejší vyhledávání |
-
----
 
 ## Vytvoření
 
@@ -66,8 +60,6 @@ mydb.mycollection.createIndexes([
 ])
 ```
 
----
-
 ## Čtení
 
 ```javascript
@@ -90,8 +82,6 @@ mydb.mycollection.find({ name: 'test' }, { name: 1 })
 mydb.mycollection.find({ name: { $regex: 'te.*' } })
 ```
 
----
-
 ## Počítání
 
 ```javascript
@@ -107,8 +97,6 @@ mydb.mycollection.distinct('name').length
 // Počet podle regulárního výrazu
 mydb.mycollection.count({ name: { $regex: 'te.*' } })
 ```
-
----
 
 ## Aktualizace
 
@@ -133,8 +121,6 @@ mydb.mycollection.update(
 )
 ```
 
----
-
 ## Řazení a stránkování
 
 ```javascript
@@ -150,8 +136,6 @@ mydb.mycollection.find().sort({ name: 1 }).limit(5)
 // Přeskočení prvních N výsledků (stránkování)
 mydb.mycollection.find().sort({ name: 1 }).skip(5)
 ```
-
----
 
 ## Smazání
 

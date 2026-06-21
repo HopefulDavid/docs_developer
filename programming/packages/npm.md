@@ -2,9 +2,7 @@
 
 > Pro správu balíčků je potřeba mít nainstalovaný **Node.js** a **npm**.
 
----
-
-<img src="../../images/7021cbf6-ee66-45b6-903c-a751e0653eec.png" alt="" style="width: 40%; display: block; border-radius: 8px;">
+![npm](../../images/7021cbf6-ee66-45b6-903c-a751e0653eec.png)
 
 ## Aktualizace balíčků
 
@@ -21,37 +19,33 @@ _Použije nejnovější verzi Storybook a provede upgrade._
    ```bash
    npm outdated
    ```
-   _Vypíše seznam balíčků, které mají novější verzi._
+_Vypíše seznam balíčků, které mají novější verzi._
 
 3. 🛠️ **Aktualizace konkrétních balíčků:**
    ```bash
    npm install vite@latest @sveltejs/vite-plugin-svelte@latest
    ```
-   _Nainstaluje nejnovější verze vybraných balíčků._
+_Nainstaluje nejnovější verze vybraných balíčků._
 
 > **Tip:** Po aktualizaci spusťte projekt a ověřte funkčnost. Některé aktualizace mohou vyžadovat úpravy v konfiguraci nebo kódu.
 
 </details>
-
----
 
 ## Globální balíčky
 
 <details>
 <summary>Kde najdu globální balíčky?</summary>
 
-| 🖥️ Operační systém | 📂 Umístění globálních balíčků                |
+| 🖥️ Operační systém | 📂 Umístění globálních balíčků |
 |--------------------|-----------------------------------------------|
-| 🪟 Windows         | `C:\Users\<user>\AppData\Roaming\npm\node_modules` |
-| 🐧 Mac/Linux       | `~/.npm-global/lib/node_modules`              |
+| 🪟 Windows | `C:\Users\<user>\AppData\Roaming\npm\node_modules` |
+| 🐧 Mac/Linux | `~/.npm-global/lib/node_modules` |
 
 🔍 **Zjištění cesty příkazem:**
 ```bash
 npm root -g
 ```
 </details>
-
----
 
 ## Záloha globálních balíčků
 
@@ -90,8 +84,6 @@ foreach ($line in $content) {
 ```
 </details>
 
----
-
 ## Obnova balíčků z offline zálohy
 
 <details>
@@ -116,8 +108,6 @@ foreach ($tgzFile in $tgzFiles) {
 ```
 </details>
 
----
-
 ## Aplikační balíčky
 
 <details>
@@ -135,23 +125,23 @@ npm install -g conventional-changelog-cli
 conventional-changelog -p angular -i CHANGELOG.md -o CHANGELOG.md -s
 ```
 
-| ⚙️ Parametr                | 💡 Význam                                                                 |
+| ⚙️ Parametr | 💡 Význam |
 |---------------------------|--------------------------------------------------------------------------|
-| `-p` / `--preset`         | Styl changelogu (`angular`, `eslint`, `conventionalcommits`)             |
-| `-i` / `--infile`         | Vstupní soubor (např. `CHANGELOG.md`)                                    |
-| `-o` / `--outfile`        | Výstupní soubor                                                          |
-| `-r` / `--release-count`  | Počet verzí pro generování                                               |
-| `--context`               | Vlastní kontext pro šablonu changelogu                                   |
-| `--pkg`                   | Cesta k `package.json`                                                   |
-| `--append`                | Přidá změny na konec souboru                                             |
-| `--same-file`             | Přepíše stejný soubor                                                    |
-| `--tag-prefix`            | Prefix k tagům verzí                                                     |
-| `-n` / `--config`         | Vlastní konfigurační soubor                                              |
+| `-p` / `--preset` | Styl changelogu (`angular`, `eslint`, `conventionalcommits`) |
+| `-i` / `--infile` | Vstupní soubor (např. `CHANGELOG.md`) |
+| `-o` / `--outfile` | Výstupní soubor |
+| `-r` / `--release-count` | Počet verzí pro generování |
+| `--context` | Vlastní kontext pro šablonu changelogu |
+| `--pkg` | Cesta k `package.json` |
+| `--append` | Přidá změny na konec souboru |
+| `--same-file` | Přepíše stejný soubor |
+| `--tag-prefix` | Prefix k tagům verzí |
+| `-n` / `--config` | Vlastní konfigurační soubor |
 
 > **Tip:**
 > Pro vlastní šablonu použijte:
 > ```bash
-> conventional-changelog -i index.md -s --config ./changelog-config.js
+> conventional-changelog -i index.md -s --config./changelog-config.js
 > ```
 
 </details>

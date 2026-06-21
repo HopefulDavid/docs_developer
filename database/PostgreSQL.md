@@ -2,9 +2,7 @@
 
 > Přehled základních pojmů, instalace, příkazů a doporučení pro práci s PostgreSQL.
 
----
-
-<img src="../images/a32bfd31-f086-44eb-be6f-b8fbb993dec2.png" alt="" style="width: 60%; display: block; border-radius: 8px;">
+![PostgreSQL](../images/a32bfd31-f086-44eb-be6f-b8fbb993dec2.png)
 
 ## Co je PostgreSQL?
 
@@ -15,15 +13,11 @@
 > [!NOTE]
 > `PL` znamená „Procedural Language" – umožňuje psaní funkcí a procedur přímo v databázi.
 
----
-
 ## Uživatelské rozhraní
 
 Doporučený klient je **pgAdmin 4** – instaluje se jako součást PostgreSQL:
 
-<img src="../images/t0m7kk76Jm.png" alt="pgAdmin – otevření aplikace"/>
-
----
+![pgAdmin – otevření aplikace](../images/t0m7kk76Jm.png)
 
 ## Instalace PostgreSQL
 
@@ -34,46 +28,44 @@ Doporučený klient je **pgAdmin 4** – instaluje se jako součást PostgreSQL:
 
 Stáhni instalátor z [enterprisedb.com/downloads/postgres-postgresql-downloads](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads):
 
-<img src="../images/postgreSQL_Install.png" alt="Výběr verze PostgreSQL"/>
+![Výběr verze PostgreSQL](../images/postgreSQL_Install.png)
 
 **2. Spuštění instalace**
 
-<img src="../images/postgreSQL_Install_2.png" alt="Spuštění instalace"/>
+![Spuštění instalace](../images/postgreSQL_Install_2.png)
 
 **3. Výběr složky instalace** (doporučeno ponechat výchozí):
 
-<img src="../images/postgreSQL_Install_3.png" alt="Složka pro instalaci"/>
+![Složka pro instalaci](../images/postgreSQL_Install_3.png)
 
 **4. Výběr komponent**
 
-<img src="../images/wqiRRNNKOT.png" alt="Výběr komponent"/>
+![Výběr komponent](../images/wqiRRNNKOT.png)
 
 > [!NOTE]
 > Doporučeno nainstalovat `pgAdmin 4` (grafické rozhraní) a `Command Line Tools`.
 
 **5. Složka pro data** (doporučeno ponechat výchozí):
 
-<img src="../images/postgreSQL_Install_4.png" alt="Složka pro data"/>
+![Složka pro data](../images/postgreSQL_Install_4.png)
 
 **6. Nastavení hesla:**
 
-<img src="../images/postgreSQL_Install_5.png" alt="Nastavení hesla"/>
+![Nastavení hesla](../images/postgreSQL_Install_5.png)
 
 **7. Port serveru** (výchozí: `5432`):
 
-<img src="../images/postgreSQL_Install_6.png" alt="Nastavení portu"/>
+![Nastavení portu](../images/postgreSQL_Install_6.png)
 
 **8. Geografická lokace:**
 
-<img src="../images/postgreSQL_Install_7.png" alt="Geografická lokace"/>
+![Geografická lokace](../images/postgreSQL_Install_7.png)
 
 **9. Kontrola a dokončení:**
 
-<img src="../images/postgreSQL_Install_8.png" alt="Kontrola před instalací"/>
+![Kontrola před instalací](../images/postgreSQL_Install_8.png)
 
 </details>
-
----
 
 ## Připojení z příkazového řádku
 
@@ -82,15 +74,15 @@ Stáhni instalátor z [enterprisedb.com/downloads/postgres-postgresql-downloads]
 
 Otevři konzoli PostgreSQL:
 
-<img src="../images/zGRvsmYA6A.png" alt="Otevření konzole"/>
+![Otevření konzole](../images/zGRvsmYA6A.png)
 
 P�ipojení k serveru:
 
-<img src="../images/t0Vjh1fqzy.png" alt="Připojení k PostgreSQL"/>
+![Připojení k PostgreSQL](../images/t0Vjh1fqzy.png)
 
 Výsledek:
 
-<img src="../images/oY0QJRKkL1.png" alt="Úspěšné připojení"/>
+![Úspěšné připojení](../images/oY0QJRKkL1.png)
 
 Ověření verze:
 
@@ -102,11 +94,11 @@ SELECT version();
 > Pokud konzole nezobrazuje anglický text, uprav:
 > - `C:\Program Files\PostgreSQL\16\data\postgresql.conf`
 >
->   <img src="../images/G0Loa7KgVA.png" alt="Konfigurace postgresql.conf"/>
+>![Konfigurace postgresql.conf](../images/G0Loa7KgVA.png)
 >
 > - Systémové proměnné prostředí
 >
->   <img src="../images/0qjIRo5xxb.png" alt="Proměnné prostředí"/>
+>![Proměnné prostředí](../images/0qjIRo5xxb.png)
 >
 > Poté restartuj konzoli.
 

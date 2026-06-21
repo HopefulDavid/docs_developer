@@ -1,2 +1,7 @@
-- name: OpenTofu (Infrastructure as Code)
-  href: opentofu.md
+# Tento soubor generuje npm run docs:generate. Neupravujte navigaci ani přehledy ručně.
+- name: "Přehled"
+  href: "index.md"
+- name: "Infrastructure as Code"
+  items:
+    - name: "OpenTofu"
+      href: "opentofu.md"

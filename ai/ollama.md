@@ -2,16 +2,12 @@
 
 > Průvodce nastavením, spuštěním a správou Ollama na Windows.
 
----
-
-<img src="../images/cbaff73a-7ad7-489d-bb15-2fb847f6904e.png" alt="Ollama" style="width: 100%; max-width: 950px; display: block; border-radius: 8px;">
+![Ollama](../images/cbaff73a-7ad7-489d-bb15-2fb847f6904e.png)
 
 ## Základní informace
 
 - Ollama naslouchá na adrese: [http://127.0.0.1:11434/](http://127.0.0.1:11434/)
 - Pro spuštění je nutné spustit soubor `ollama app.exe`.
-
----
 
 ## Příkazy pro správu modelů
 
@@ -21,8 +17,6 @@
 | `ollama run [model]` | Stáhne a spustí model |
 | `ollama rm [model]` | Odstraní model |
 
----
-
 ## Změna naslouchací adresy
 
 1. Otevřete **System variables** ve Windows.
@@ -31,8 +25,6 @@
 
 > [!IMPORTANT]
 > Změna se projeví až po restartu aplikace.
-
----
 
 ## Vypnutí automatického spuštění
 

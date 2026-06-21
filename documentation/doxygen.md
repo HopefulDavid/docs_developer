@@ -1,10 +1,8 @@
-# Doxygen – Praktický průvodce & tipy
+# Doxygen – Praktický průvodce a tipy
 
 > Moderní přehled základních pojmů, instalace, konfigurace a doporučení pro práci s Doxygen.
 
----
-
-<img src="../images/ee2b5aa2-94be-4ebb-bfcd-2c526093dba1.png" alt="" style="width: 90%; display: block; border-radius: 8px;">
+![Doxygen](../images/ee2b5aa2-94be-4ebb-bfcd-2c526093dba1.png)
 
 ## Co je Doxygen?
 
@@ -15,41 +13,37 @@
 > [!NOTE]
 > Doxygen je ideální pro udržení přehledné a strukturované dokumentace ke kódu.
 
----
-
 ## Instalace
 
 <details>
 <summary>Krok 1: Instalace potřebných nástrojů</summary>
 
 1. **Nainstalovat Doxygen**
-    - Stáhněte z [doxygen.nl/download.html](https://www.doxygen.nl/download.html)
-    - Ověřte instalaci:
+- Stáhněte z [doxygen.nl/download.html](https://www.doxygen.nl/download.html)
+- Ověřte instalaci:
       ```sh
       doxygen --version
       ```
 
 2. **Nainstalovat Graphviz** (pro diagramy)
-    - Stáhněte z [Graphviz Download](https://graphviz.gitlab.io/download/)
-    - Přidejte cestu ke složce `Graphviz/bin` do systémové `PATH`
-    - Ověřte instalaci:
+- Stáhněte z [Graphviz Download](https://graphviz.gitlab.io/download/)
+- Přidejte cestu ke složce `Graphviz/bin` do systémové `PATH`
+- Ověřte instalaci:
       ```sh
       dot -version
       ```
 
 3. **Nainstalovat TeX Live nebo MiKTeX** (pro PDF)
-    - **Windows:** [miktex.org/download](https://miktex.org/download)
-    - **Linux:**
+- **Windows:** [miktex.org/download](https://miktex.org/download)
+- **Linux:**
       ```sh
       sudo apt install texlive-full
       ```
-    - **Mac:**
+- **Mac:**
       ```sh
       brew install mactex
       ```
 </details>
-
----
 
 ## Konfigurace
 
@@ -78,12 +72,10 @@
    SHOW_NAMESPACES        = NO
    DOT_IMAGE_FORMAT       = svg
    ```
-   > [!IMPORTANT]
-   > Tyto parametry ovlivňují generování dokumentace.
-   > Další nastavení lze upravit dle potřeby.
+> [!IMPORTANT]
+> Tyto parametry ovlivňují generování dokumentace.
+> Další nastavení lze upravit dle potřeby.
 </details>
-
----
 
 ## Generování dokumentace
 
@@ -96,8 +88,6 @@
   ```
 - Výstupní složka bude dle `OUTPUT_DIRECTORY` (např. `docs`)
 </details>
-
----
 
 ## Vynechání private a protected členů
 

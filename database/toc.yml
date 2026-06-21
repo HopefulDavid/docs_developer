@@ -1,15 +1,17 @@
-- name: Databáze
+# Tento soubor generuje npm run docs:generate. Neupravujte navigaci ani přehledy ručně.
+- name: "Přehled"
+  href: "index.md"
+- name: "Databázové systémy"
   items:
-    - name: Microsoft SQL
-      href: MSSQL.md
-    - name: MongoDB
-      href: mongoDB.md
-    - name: PostgreSQL
-      href: PostgreSQL.md
-
-- name: Nástroje pro přístup k datům
+    - name: "Microsoft SQL"
+      href: "mssql.md"
+    - name: "MongoDB"
+      href: "mongodb.md"
+    - name: "PostgreSQL"
+      href: "postgresql.md"
+- name: "Přístup k datům"
   items:
-    - name: Entity Framework
-      href: EntityFramework.md
-    - name: Dapper
-      href: Dapper.md
+    - name: "Entity Framework"
+      href: "entity-framework.md"
+    - name: "Dapper"
+      href: "dapper.md"

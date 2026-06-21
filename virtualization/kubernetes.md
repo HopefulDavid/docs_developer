@@ -2,9 +2,7 @@
 
 > Přehled základních pojmů, principů a doporučení pro práci s Kubernetes.
 
----
-
-<img src="../images/7073cab7-0b16-47e4-b0c1-55129ef02687.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
+![Kubernetes](../images/7073cab7-0b16-47e4-b0c1-55129ef02687.png)
 
 ## Co je Kubernetes?
 
@@ -19,8 +17,6 @@ Hlavní přínosy:
 > [!IMPORTANT]
 > Pro práci s Kubernetes je předpokládána znalost Dockeru.
 
----
-
 ## Základní pojmy
 
 | Pojem | Popis |
@@ -32,8 +28,6 @@ Hlavní přínosy:
 | **Cluster** | Skupina serverů (nodes), na kterých Kubernetes běží a spravuje kontejnery |
 | **Node** | Jednotlivý server v Kubernetes clusteru |
 | **Namespace** | Logická izolace zdrojů v rámci jednoho clusteru |
-
----
 
 ## Co dělá orchestrátor?
 
@@ -47,10 +41,8 @@ Orchestrátor je software, který automaticky řídí celý životní cyklus kon
 > [!NOTE]
 > Manuální správa stovek kontejnerů na více serverech je prakticky nemožná bez orchestrátoru.
 
----
-
 ## Kubernetes a microservices
 
 Kubernetes se nejčastěji používá s architekturou **microservices** – aplikace je rozdělena na nezávislé služby komunikující přes API.
 
-<img src="../images/lkjf3DXNjN.png" alt="Ukázka orchestrátoru kontejnerů"/>
+![Ukázka orchestrátoru kontejnerů](../images/lkjf3DXNjN.png)

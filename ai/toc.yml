@@ -1,2 +1,7 @@
-- name: Ollama
-  href: ollama.md
+# Tento soubor generuje npm run docs:generate. Neupravujte navigaci ani přehledy ručně.
+- name: "Přehled"
+  href: "index.md"
+- name: "Modely a nástroje"
+  items:
+    - name: "Ollama"
+      href: "ollama.md"

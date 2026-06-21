@@ -1,4 +1,9 @@
-- name: Pandoc
-  href: pandoc.md
-- name: Doxygen
-  href: doxygen.md
+# Tento soubor generuje npm run docs:generate. Neupravujte navigaci ani přehledy ručně.
+- name: "Přehled"
+  href: "index.md"
+- name: "Nástroje"
+  items:
+    - name: "Pandoc"
+      href: "pandoc.md"
+    - name: "Doxygen"
+      href: "doxygen.md"

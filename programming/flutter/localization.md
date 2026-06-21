@@ -1,4 +1,4 @@
-### Lokalizace (interní knihovna)
+# Lokalizace (interní knihovna)
 
 1. Přidejte do `pubspec.yaml`:
    ```yaml
@@ -12,7 +12,7 @@
    ```
 
 2. Vytvořte lokalizační soubory:
-    - `lib/l10n/intl_en.arb`:
+- `lib/l10n/intl_en.arb`:
       ```json
       {
         "@@locale": "en",
@@ -20,7 +20,7 @@
         "welcome": "Welcome"
       }
       ```
-    - `lib/l10n/intl_cs.arb`:
+- `lib/l10n/intl_cs.arb`:
       ```json
       {
         "@@locale": "cs",

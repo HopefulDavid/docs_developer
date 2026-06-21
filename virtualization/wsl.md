@@ -1,10 +1,8 @@
-# WSL (Windows Subsystem for Linux) – Praktický průvodce & tipy
+# WSL (Windows Subsystem for Linux) – Praktický průvodce a tipy
 
 > Moderní přehled instalace, nastavení a doporučení pro práci s WSL na Windows.
 
----
-
-<img src="../images/94edf060-a2f9-476c-b93f-c4723e494cab.png" alt="" style="width: 100%; display: block; border-radius: 8px;">
+![WSL](../images/94edf060-a2f9-476c-b93f-c4723e494cab.png)
 
 ## Co je WSL?
 
@@ -14,8 +12,6 @@
 > [!NOTE]
 > Ideální pro vývojáře, kteří potřebují Linux nástroje na Windows.
 
----
-
 ## Instalace WSL na Windows
 
 <details>
@@ -24,10 +20,10 @@
 > [!IMPORTANT]
 > V BIOSu/UEFI povolte:
 > - **Podpora CPU virtualizace**
-    >   - Intel: `Intel VT-x`
+> - Intel: `Intel VT-x`
 > - AMD: `AMD-V` nebo `SVM`
 > - **Virtualizační technologie**
-    >   - Intel: `VT-d`
+> - Intel: `VT-d`
 > - AMD: `AMD-Vi`
 > - **Vnořená virtualizace** (jen pokud potřebujete virtualizaci uvnitř WSL)
 
@@ -36,30 +32,30 @@
 2. Přejděte na záložku **Výkon (Performance)**
 3. Dole najdete **Virtualization: Enabled**
 
-<img src="../images/wv1G8UBxvy.png"/>
+![WSL](../images/wv1G8UBxvy.png)
 </details>
 
 <details>
 <summary>Krok 2: Povolení WSL v systému</summary>
 
 1. Spusťte **PowerShell jako správce**
-   <img src="../images/pnAzi0NFm3.png"/>
+![WSL](../images/pnAzi0NFm3.png)
 
 2. Aktivujte WSL:
    ```bash
    dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
    ```
-   <img src="../images/mei8XmPaWt.png"/>
+![WSL](../images/mei8XmPaWt.png)
 </details>
 
 <details>
-<summary>Krok 3: Povolení Virtual Machine Platform & WSL 2</summary>
+<summary>Krok 3: Povolení Virtual Machine Platform a WSL 2</summary>
 
 Aktivujte platformu pro WSL 2:
 ```bash
 dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
 ```
-<img src="../images/cADNNtfdn8.png"/>
+![WSL](../images/cADNNtfdn8.png)
 
 > [!IMPORTANT]
 > Po povolení funkcí **restartujte počítač**.
@@ -82,7 +78,7 @@ Nastavte WSL 2 jako výchozí:
 ```bash
 wsl --set-default-version 2
 ```
-<img src="../images/LNHIGgBhcb.png"/>
+![WSL](../images/LNHIGgBhcb.png)
 </details>
 
 <details>
@@ -117,7 +113,6 @@ wsl --shutdown
 > ```
 > Např.: `wsl --unregister Ubuntu-22.04`
 </details>
----
 
 ## Přesun WSL distribuce na jiné místo
 
@@ -156,15 +151,11 @@ wsl -l -v
 
 Výstup zobrazí název (např. `podman-machine-default`).
 
----
-
 ### 2. Zastav distribuci
 
 ```bash
 wsl --shutdown
 ```
-
----
 
 ### 3. Exportuj distribuci
 
@@ -174,8 +165,6 @@ wsl --export podman-machine-default D:\wsl\backup.tar
 
 Vytvoří se záloha jako `.tar` soubor.
 
----
-
 ### 4. Odregistruj starou distribuci
 
 ```bash
@@ -184,8 +173,6 @@ wsl --unregister podman-machine-default
 
 > [!WARNING]
 > Tímto krokem zmizí starý `ext4.vhdx` – proto je předchozí export nezbytný.
-
----
 
 ### 5. Importuj na nové místo
 
@@ -198,8 +185,6 @@ Po dokončení bude distribuce umístěna v:
 ```
 D:\wsl\ext4.vhdx
 ```
-
----
 
 ### 6. Ověř výsledek
 

@@ -1,8 +1,6 @@
-## Řešení problémů ve Flutteru
+# Řešení problémů ve Flutteru
 
----
-
-### Automatické zmenšení textu bez doplňků
+## Automatické zmenšení textu bez doplňků
 
 Použijte kombinaci `Expanded` a `FittedBox` pro automatické přizpůsobení velikosti textu:
 
@@ -16,8 +14,6 @@ Expanded(
   ),
 )
 ```
-
----
 
 ### Vypnutí pravidla `no_logic_in_create_state`
 
@@ -33,8 +29,6 @@ linter:
 ```
 
 3. Uložte soubor a restartujte IDE.
-
----
 
 ### Chyba: Building with plugins requires symlink support
 

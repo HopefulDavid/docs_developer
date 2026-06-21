@@ -1,4 +1,7 @@
-- name: Nahrávání videa
+# Tento soubor generuje npm run docs:generate. Neupravujte navigaci ani přehledy ručně.
+- name: "Přehled"
+  href: "index.md"
+- name: "Nahrávání videa"
   items:
-    - name: OBS
-      href: obs.md
+    - name: "OBS"
+      href: "obs.md"

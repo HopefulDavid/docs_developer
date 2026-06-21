@@ -2,19 +2,15 @@
 
 > Appcast je RSS feed ve formátu XML pro distribuci aktualizací aplikací pomocí technologie [Sparkle](https://sparkle-project.org/).
 
----
-
-<img src="../images/54c2ba30-4474-4c51-a6ad-2f82c28540ac.png" alt="" style="width: 60%; display: block; border-radius: 8px;">
+![Appcast feed](../images/54c2ba30-4474-4c51-a6ad-2f82c28540ac.png)
 
 ## Hlavní komponenty
 
-| 🏷️ Element     | 💡 Popis                                                         |
+| 🏷️ Element | 💡 Popis |
 |----------------|------------------------------------------------------------------|
-| `<rss>`        | Kořenový element, verze a namespace.                             |
-| `<channel>`    | Hlavní sekce feedu, metadata kanálu aktualizací.                 |
-| `<item>`       | Jednotlivý záznam pro jednu verzi aplikace.                      |
-
----
+| `<rss>` | Kořenový element, verze a namespace. |
+| `<channel>` | Hlavní sekce feedu, metadata kanálu aktualizací. |
+| `<item>` | Jednotlivý záznam pro jednu verzi aplikace. |
 
 ## Struktura feedu
 
@@ -46,17 +42,15 @@
 ```
 </details>
 
----
-
 ## `<rss>` – Kořenový element
 
 <details>
-<summary>Detaily & příklad</summary>
+<summary>Detaily a příklad</summary>
 
-| ⚙️ Atribut         | 💡 Popis                                                                 |
+| ⚙️ Atribut | 💡 Popis |
 |--------------------|--------------------------------------------------------------------------|
-| `version`          | Verze RSS specifikace, obvykle `2.0`.                                   |
-| `xmlns:sparkle`    | Namespace pro Sparkle, např. `http://www.andymatuschak.org/xml-namespaces/sparkle`. |
+| `version` | Verze RSS specifikace, obvykle `2.0`. |
+| `xmlns:sparkle` | Namespace pro Sparkle, např. `http://www.andymatuschak.org/xml-namespaces/sparkle`. |
 
 ```xml
 <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
@@ -65,60 +59,54 @@
 ```
 </details>
 
----
-
 ## `<channel>` – Metadata kanálu
 
 <details>
-<summary>Elementy & atributy</summary>
+<summary>Elementy a atributy</summary>
 
-| 🏷️ Element           | 💡 Popis                                      | ⚙️ Atributy / Vnořené elementy         |
+| 🏷️ Element | 💡 Popis | ⚙️ Atributy / Vnořené elementy |
 |----------------------|-----------------------------------------------|----------------------------------------|
-| `<title>`            | Název kanálu                                  | —                                      |
-| `<link>`             | URL adresa feedu                              | —                                      |
-| `<description>`      | Stručný popis kanálu                          | —                                      |
-| `<language>`         | Jazyk feedu                                   | —                                      |
-| `<copyright>`        | Informace o autorských právech                | —                                      |
-| `<managingEditor>`   | Email správce kanálu                          | —                                      |
-| `<webMaster>`        | Email webového správce                        | —                                      |
-| `<pubDate>`          | Datum vydání kanálu                           | —                                      |
-| `<lastBuildDate>`    | Datum poslední aktualizace                    | —                                      |
-| `<category>`         | Kategorie kanálu                              | —                                      |
-| `<generator>`        | Software použitý k vytvoření kanálu           | —                                      |
-| `<docs>`             | URL adresa specifikace RSS                    | —                                      |
-| `<cloud>`            | Specifikace pro cloudové služby               | domain, port, path, registerProcedure, protocol |
-| `<ttl>`              | Čas cache v minutách                          | —                                      |
-| `<image>`            | Logo/obrázek kanálu                           | url, title, link                       |
-| `<textInput>`        | Formulář pro zadávání textu                   | title, description, name, link          |
-| `<skipHours>`        | Hodiny bez aktualizací                        | hour                                   |
-| `<skipDays>`         | Dny bez aktualizací                           | day                                    |
+| `<title>` | Název kanálu | — |
+| `<link>` | URL adresa feedu | — |
+| `<description>` | Stručný popis kanálu | — |
+| `<language>` | Jazyk feedu | — |
+| `<copyright>` | Informace o autorských právech | — |
+| `<managingEditor>` | Email správce kanálu | — |
+| `<webMaster>` | Email webového správce | — |
+| `<pubDate>` | Datum vydání kanálu | — |
+| `<lastBuildDate>` | Datum poslední aktualizace | — |
+| `<category>` | Kategorie kanálu | — |
+| `<generator>` | Software použitý k vytvoření kanálu | — |
+| `<docs>` | URL adresa specifikace RSS | — |
+| `<cloud>` | Specifikace pro cloudové služby | domain, port, path, registerProcedure, protocol |
+| `<ttl>` | Čas cache v minutách | — |
+| `<image>` | Logo/obrázek kanálu | url, title, link |
+| `<textInput>` | Formulář pro zadávání textu | title, description, name, link |
+| `<skipHours>` | Hodiny bez aktualizací | hour |
+| `<skipDays>` | Dny bez aktualizací | day |
 
 </details>
-
----
 
 ## `<item>` – Jednotlivá aktualizace
 
 <details>
-<summary>Elementy & atributy</summary>
+<summary>Elementy a atributy</summary>
 
-| 🏷️ Element           | 💡 Popis                                      | ⚙️ Atributy / Vnořené elementy         |
+| 🏷️ Element | 💡 Popis | ⚙️ Atributy / Vnořené elementy |
 |----------------------|-----------------------------------------------|----------------------------------------|
-| `<title>`            | Název položky                                 | —                                      |
-| `<link>`             | URL adresa položky                            | —                                      |
-| `<description>`      | Stručný popis položky                         | —                                      |
-| `<author>`           | Email autora                                  | —                                      |
-| `<category>`         | Kategorie položky                             | —                                      |
-| `<comments>`         | URL komentářů                                 | —                                      |
-| `<enclosure>`        | Mediální objekt (instalační balíček)          | url, length, type, sparkle:version     |
-| `<guid>`             | Jedinečný identifikátor položky               | —                                      |
-| `<pubDate>`          | Datum publikace                               | —                                      |
-| `<source>`           | RSS kanál původu                              | —                                      |
-| `<sparkle:tags>`     | Sparkle tagy (kritická aktualizace, min/max OS, poznámky k vydání) | vnořené elementy                       |
+| `<title>` | Název položky | — |
+| `<link>` | URL adresa položky | — |
+| `<description>` | Stručný popis položky | — |
+| `<author>` | Email autora | — |
+| `<category>` | Kategorie položky | — |
+| `<comments>` | URL komentářů | — |
+| `<enclosure>` | Mediální objekt (instalační balíček) | url, length, type, sparkle:version |
+| `<guid>` | Jedinečný identifikátor položky | — |
+| `<pubDate>` | Datum publikace | — |
+| `<source>` | RSS kanál původu | — |
+| `<sparkle:tags>` | Sparkle tagy (kritická aktualizace, min/max OS, poznámky k vydání) | vnořené elementy |
 
 </details>
-
----
 
 ## Delta aktualizace
 

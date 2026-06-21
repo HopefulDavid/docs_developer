@@ -2,24 +2,20 @@
 
 > Praktické tipy pro efektivní práci s UMotion při ukládání změn animací.
 
----
-
 ## Uložení změn v UMotion
 
 <details>
 <summary>Jak klíčovat změny?</summary>
 
-| 🏷️ Způsob         | 💡 Popis                                                                 |
+| 🏷️ Způsob | 💡 Popis |
 |-------------------|--------------------------------------------------------------------------|
-| Key Selected      | Vytvoř nebo uprav klíče pro vybrané kosti/transformace.                  |
-| Auto Key          | UMotion automaticky klíčuje změny při úpravě.                            |
-| Key Dialog        | Přehledně zobrazí změny a umožní je klíčovat.                            |
+| Key Selected | Vytvoř nebo uprav klíče pro vybrané kosti/transformace. |
+| Auto Key | UMotion automaticky klíčuje změny při úpravě. |
+| Key Dialog | Přehledně zobrazí změny a umožní je klíčovat. |
 
-<img src="../../images/WHDIpG6Uzg.png" alt="UMotion Key Dialog"/>
+![UMotion Key Dialog](../../images/WHDIpG6Uzg.png)
 
 </details>
-
----
 
 ## Postup klíčování
 
