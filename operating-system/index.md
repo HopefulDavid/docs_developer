@@ -6,15 +6,10 @@ Praktické poznámky k operačním systémům a jejich příkazovým nástrojům
 
 ## Přehled stránek
 
-### Přehled
-
-| Stránka | Popis |
-| --- | --- |
-| [Windows](windows/index.md) | Instalace, nastavení, klávesové zkratky a řešení problémů ve Windows. |
-
 ### Windows
 
 | Stránka | Popis |
 | --- | --- |
+| [Windows](windows/index.md) | Instalace, nastavení, klávesové zkratky a řešení problémů ve Windows. |
 | [Command Line](windows/cmd.md) | Moderní přehled práce s příkazovým řádkem, dávkovými skripty a optimalizací disků ve Windows. |
 | [PowerShell](windows/powershell.md) | Správa balíčků, oprávnění, přizpůsobení prostředí, práce se soubory a síť v PowerShellu. |

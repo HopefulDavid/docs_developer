@@ -166,17 +166,18 @@ const navigation = {
     {
       name: 'Mobilní vývoj',
       items: [
+        { name: 'Android Studio', href: 'mobile/android-studio.md' },
         {
           name: 'Flutter',
+          href: 'mobile/flutter/setup-and-configuration.md',
           items: [
-            { name: 'Instalace a nastavení', href: 'flutter/setup-and-configuration.md' },
-            { name: 'Vytvoření projektu', href: 'flutter/create-project.md' },
-            { name: 'Záloha a obnova', href: 'flutter/backup-and-restore.md' },
-            { name: 'Lokalizace', href: 'flutter/localization.md' },
-            { name: 'Základy', href: 'flutter/basics.md' },
-            { name: 'Příkazy', href: 'flutter/commands.md' },
-            { name: 'Pokrytí kódu', href: 'flutter/code-coverage.md' },
-            { name: 'Řešení problémů', href: 'flutter/troubleshooting.md' },
+            { name: 'Vytvoření projektu', href: 'mobile/flutter/create-project.md' },
+            { name: 'Záloha a obnova', href: 'mobile/flutter/backup-and-restore.md' },
+            { name: 'Lokalizace', href: 'mobile/flutter/localization.md' },
+            { name: 'Základy', href: 'mobile/flutter/basics.md' },
+            { name: 'Příkazy', href: 'mobile/flutter/commands.md' },
+            { name: 'Pokrytí kódu', href: 'mobile/flutter/code-coverage.md' },
+            { name: 'Řešení problémů', href: 'mobile/flutter/troubleshooting.md' },
           ],
         },
       ],
@@ -317,12 +318,23 @@ const legacyRenames = new Map([
   ['programming/net/net_nunit.md', 'programming/csharp/nunit.md'],
   ['programming/net/net_wpf.md', 'programming/csharp/wpf.md'],
   ['programming/net/net_xml.md', 'programming/csharp/xml.md'],
-  ['programming/flutter/backupAndRestore.md', 'programming/flutter/backup-and-restore.md'],
-  ['programming/flutter/codeCoverage.md', 'programming/flutter/code-coverage.md'],
-  ['programming/flutter/create_project.md', 'programming/flutter/create-project.md'],
+  ['programming/flutter/backup-and-restore.md', 'programming/mobile/flutter/backup-and-restore.md'],
+  ['programming/flutter/basics.md', 'programming/mobile/flutter/basics.md'],
+  ['programming/flutter/code-coverage.md', 'programming/mobile/flutter/code-coverage.md'],
+  ['programming/flutter/commands.md', 'programming/mobile/flutter/commands.md'],
+  ['programming/flutter/create-project.md', 'programming/mobile/flutter/create-project.md'],
+  ['programming/flutter/localization.md', 'programming/mobile/flutter/localization.md'],
+  [
+    'programming/flutter/setup-and-configuration.md',
+    'programming/mobile/flutter/setup-and-configuration.md',
+  ],
+  ['programming/flutter/troubleshooting.md', 'programming/mobile/flutter/troubleshooting.md'],
+  ['programming/flutter/backupAndRestore.md', 'programming/mobile/flutter/backup-and-restore.md'],
+  ['programming/flutter/codeCoverage.md', 'programming/mobile/flutter/code-coverage.md'],
+  ['programming/flutter/create_project.md', 'programming/mobile/flutter/create-project.md'],
   [
     'programming/flutter/setupAndConfiguration.md',
-    'programming/flutter/setup-and-configuration.md',
+    'programming/mobile/flutter/setup-and-configuration.md',
   ],
   ['programming/packages/netCLI.md', 'programming/packages/dotnet-cli.md'],
   ['programming/packages/nugetPackage.md', 'programming/packages/nuget.md'],
@@ -853,7 +865,7 @@ function collectSectionRows(section, items, groupName = null) {
       const info = pageInfo(relPath);
       if (info) {
         rows.push({
-          group: groupName || 'Přehled',
+          group: groupName || item.name || 'Přehled',
           info,
         });
       }

@@ -2,7 +2,7 @@
 
 Flutter je framework pro vývoj mobilních aplikací pro **Android** a **iOS**. Používá programovací jazyk **Dart**.
 
-![Instalace a nastavení](../../images/efa2074c-d98f-49b1-a30e-8cabddd3a06d.png)
+![Instalace a nastavení](../../../images/efa2074c-d98f-49b1-a30e-8cabddd3a06d.png)
 
 ## Instalace
 
@@ -33,8 +33,8 @@ Flutter je framework pro vývoj mobilních aplikací pro **Android** a **iOS**. 
 
 1. Ujistěte se, že je nainstalován `Android Studio`.
 2. Nastavte Android toolchain podle obrázků:
--![Obrázek 1](../../images/77fb408804c94851a06078aae17e694f.png)
--![Obrázek 2](../../images/5d7ee05eacb549d5ada6e1edef7a2e59.png)
+-![Obrázek 1](../../../images/77fb408804c94851a06078aae17e694f.png)
+-![Obrázek 2](../../../images/5d7ee05eacb549d5ada6e1edef7a2e59.png)
 
 ### Vývoj webových aplikací
 

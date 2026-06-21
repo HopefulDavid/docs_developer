@@ -39,18 +39,24 @@ Vývojové platformy, jazyky, frameworky, balíčky a opakovaně použitelné po
 | [NUnit](csharp/nunit.md) | Praktické rady pro psaní unit testů v .NET pomocí NUnit, práce s více asserty a odkazy na video prezentaci. |
 | [WPF](csharp/wpf.md) | Praktické rady pro tvorbu desktopových aplikací ve WPF, stylování, datové vazby, validaci, animace a responzivní design. |
 
+### Mobilní vývoj
+
+| Stránka | Popis |
+| --- | --- |
+| [Android Studio](mobile/android-studio.md) | Android Studio je hlavní vývojové prostředí pro Android. V dokumentaci patří do obecné části mobilního vývoje, protože jeho SDK, emulátor a nástroje používají i další frameworky, například Flutter nebo React Native. |
+| [Flutter](mobile/flutter/setup-and-configuration.md) | Flutter je framework pro vývoj mobilních aplikací pro **Android** a **iOS**. Používá programovací jazyk **Dart**. |
+
 ### Flutter
 
 | Stránka | Popis |
 | --- | --- |
-| [Instalace a nastavení](flutter/setup-and-configuration.md) | Flutter je framework pro vývoj mobilních aplikací pro **Android** a **iOS**. Používá programovací jazyk **Dart**. |
-| [Vytvoření projektu](flutter/create-project.md) | 1. Vytvořte projekt: |
-| [Záloha a obnova](flutter/backup-and-restore.md) | - **shared_preferences.json**: `%APPDATA%\com.example\xxx_app` |
-| [Lokalizace](flutter/localization.md) | 1. Přidejte do `pubspec.yaml`: |
-| [Základy](flutter/basics.md) | - **Riverpod** je knihovna pro správu stavu ve Flutteru. |
-| [Příkazy](flutter/commands.md) |  |
-| [Pokrytí kódu](flutter/code-coverage.md) | 1. Nainstalujte balíček: |
-| [Řešení problémů](flutter/troubleshooting.md) | Použijte kombinaci `Expanded` a `FittedBox` pro automatické přizpůsobení velikosti textu: |
+| [Vytvoření projektu](mobile/flutter/create-project.md) | 1. Vytvořte projekt: |
+| [Záloha a obnova](mobile/flutter/backup-and-restore.md) | - **shared_preferences.json**: `%APPDATA%\com.example\xxx_app` |
+| [Lokalizace](mobile/flutter/localization.md) | 1. Přidejte do `pubspec.yaml`: |
+| [Základy](mobile/flutter/basics.md) | - **Riverpod** je knihovna pro správu stavu ve Flutteru. |
+| [Příkazy](mobile/flutter/commands.md) |  |
+| [Pokrytí kódu](mobile/flutter/code-coverage.md) | 1. Nainstalujte balíček: |
+| [Řešení problémů](mobile/flutter/troubleshooting.md) | Použijte kombinaci `Expanded` a `FittedBox` pro automatické přizpůsobení velikosti textu: |
 
 ### Herní vývoj
 
