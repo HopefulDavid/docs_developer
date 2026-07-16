@@ -2155,6 +2155,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "vcs/git/history/squash-branch-commits.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/history/squash-branch-commits.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "vcs/git/history/update-gitignore.md",
       "output": {
         ".html": {

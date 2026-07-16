@@ -97,7 +97,7 @@
   "index.html": {
     "href": "index.html",
     "title": "| Vývojář",
-    "summary": "Změny 2026-06-21 aktualizace workflow Android studio - nefunkční refaktorizace zlepšení stylu 2026-04-29 \uD83D\uDC1B Opravy chyb: opraveny cesty k obrázkům ve všech souborech Reset historie"
+    "summary": "Změny 2026-07-16 \uD83D\uDCDA Změny v dokumentaci: přidán návod na sloučení commitů uvnitř větve 2026-06-21 aktualizace workflow Android studio - nefunkční refaktorizace zlepšení stylu 2026-04-29 \uD83D\uDC1B Opravy chyb: opraveny cesty k obrázkům ve všech souborech Reset historie"
   },
   "network/certificates.html": {
     "href": "network/certificates.html",
@@ -408,6 +408,11 @@
     "href": "vcs/git/history/move-commits.html",
     "title": "Git – Přesun commitů do nové nebo existující větve | Vývojář",
     "summary": "Git – Přesun commitů do nové nebo existující větve Praktické rady, jak přesunout poslední commity ze jedné větve do nové nebo existující větve. Přesun commitů do nové větve Krok 1: Vytvoření nové větve z aktuální git checkout master git branch newbranch git checkout master Přepne se do zdrojové větve (master), vytvoří novou větev (newbranch) se stejnou historií. Krok 2: Odstranění commitů ze zdrojové větve git reset --hard HEAD~3 Odstraní poslední 3 commity ze zdrojové větve (master). Warning Tento krok je nevratný – commity budou ze zdrojové větve smazány. Krok 3: Přepnutí do nové větve git checkout newbranch Nová větev obsahuje původní commity, které byly odstraněny ze zdrojové větve. Přesun commitů do existující větve Krok 1: Merge commitů do cílové větve git checkout existingbranch git merge branchToMoveCommitFrom Přepne se do cílové větve (existingbranch) a sloučí commity ze zdrojové větve (branchToMoveCommitFrom). Krok 2: Odstranění commitů ze zdrojové větve git checkout branchToMoveCommitFrom git reset --hard HEAD~3 Odstraní poslední 3 commity ze zdrojové větve. Warning Tento krok je nevratný – commity budou ze zdrojové větve smazány. Krok 3: Přepnutí do cílové větve git checkout existingbranch Pokračuj v práci na cílové větvi s přesunutými commity. Note Více informací najdeš v diskuzi na Stack Overflow."
+  },
+  "vcs/git/history/squash-branch-commits.html": {
+    "href": "vcs/git/history/squash-branch-commits.html",
+    "title": "Git – Sloučení commitů větve do jednoho commitu | Vývojář",
+    "summary": "Git – Sloučení commitů větve do jednoho commitu Nejbezpečnější způsob, jak sloučit všechny commity, které jsou na develop navíc oproti main, do jednoho commitu. Postup krok za krokem Krok 1: Přepnutí na větev develop a vytvoření zálohy git checkout develop git branch backup/develop-before-squash Přepne se na větev develop. Vytvoří záložní větev backup/develop-before-squash pro případ, že by se něco pokazilo. Tip Zálohu větve smažeš až po ověření, že je vše v pořádku: git branch -d backup/develop-before-squash Krok 2: Stažení aktuálního stavu z remote git fetch origin Stáhne aktuální stav vzdáleného repozitáře bez automatického sloučení. Krok 3: Soft reset na společný předek s main git reset --soft $(git merge-base develop origin/main) Najde společného předka větví develop a origin/main. Soft resetem přesune HEAD na tento bod – všechny změny z commitů na develop navíc zůstanou ve stage. Note --soft zachová všechny změny ve staging area (index), takže je lze hned znovu zakomitovat. Krok 4: Vytvoření souhrnného commitu git commit -m \"Souhrnný commit pro develop\" Vytvoří jediný nový commit obsahující všechny dříve samostatné změny na větvi develop. Warning Tímto krokem přepíšeš historii větve develop. Pokud větev sdílíš s ostatními, nezapomeň je informovat a použít git push --force-with-lease origin develop."
   },
   "vcs/git/history/update-gitignore.html": {
     "href": "vcs/git/history/update-gitignore.html",
