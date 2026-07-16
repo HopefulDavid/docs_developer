@@ -35,3 +35,5 @@
           href: "git/history/delete-commits.md"
         - name: "Lokální ignorování změn"
           href: "git/history/assume-unchanged.md"
+        - name: "Sloučení commitů uvnitř větve"
+          href: "git/history/squash-branch-commits.md"
