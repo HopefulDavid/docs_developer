@@ -1,4 +1,6 @@
 Změny
+## 2026-07-16
+  - 📚 Změny v dokumentaci: přidán návod na sloučení commitů uvnitř větve
 ## 2026-06-21
   - aktualizace workflow
   - Android studio - nefunkční
