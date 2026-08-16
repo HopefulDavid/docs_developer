@@ -18,6 +18,7 @@ Kontejnery, lokální virtualizace, orchestrace a související správa prostře
 
 | Stránka | Popis |
 | --- | --- |
+| [Bezpečný upgrade stateful služby](docker/safe-stateful-upgrade.md) | Opakovatelný postup pro aktualizaci kontejnerové služby s databází a persistentními volumes tak, aby existoval ověřený bod obnovy a jasná kontrola výsledku. |
 | [Portainer](docker/portainer.md) | Moderní přehled spuštění, parametrů a doporučení pro práci s Portainerem v Dockeru. |
 | [Duplicati](docker/duplicati.md) | Moderní přehled nastavení složek, oprávnění a doporučení pro zálohování s Duplicati v Dockeru. |
 | [BusyBox](docker/busybox.md) | Moderní přehled zálohování dat z Docker volumes do lokální složky pomocí BusyBox. |

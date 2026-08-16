@@ -55,4 +55,3 @@ git commit -m "Souhrnný commit pro develop"
 > [!WARNING]
 > Tímto krokem přepíšeš historii větve `develop`. Pokud větev sdílíš s ostatními, nezapomeň je informovat a použít `git push --force-with-lease origin develop`.
 </details>
-

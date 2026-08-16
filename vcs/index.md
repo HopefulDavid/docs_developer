@@ -31,6 +31,7 @@ Praktické postupy pro Git, větve, historii a běžnou správu repozitářů.
 | --- | --- |
 | [.gitignore](git/history/update-gitignore.md) | Praktický průvodce, jak zajistit, aby Git ignoroval i soubory, které už dříve sledoval. |
 | [Přesun commitů](git/history/move-commits.md) | Praktické rady, jak přesunout poslední commity ze jedné větve do nové nebo existující větve. |
+| [Sloučení commitů](git/history/squash-branch-commits.md) | Nejbezpečnější způsob, jak sloučit všechny commity, které jsou na `develop` navíc oproti `main`, do jednoho commitu. |
 | [Oprava commitů](git/history/fix-commits.md) | Praktické rady, jak efektivně opravovat a slučovat commity pomocí `fixup!` a `squash!` v Gitu. |
 | [Odstranění commitů](git/history/delete-commits.md) | Praktický návod, jak kompletně nahradit historii vzdálené větve pomocí nové lokální větve. |
 | [Lokální ignorování změn](git/history/assume-unchanged.md) | Praktické rady, jak lze **lokálně ignorovat změny** ve složce nebo souborech, aniž by se to projevilo na vzdáleném repozitáři. |

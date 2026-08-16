@@ -112,6 +112,7 @@ const navigation = {
           items: [
             { name: '.gitignore', href: 'git/history/update-gitignore.md' },
             { name: 'Přesun commitů', href: 'git/history/move-commits.md' },
+            { name: 'Sloučení commitů', href: 'git/history/squash-branch-commits.md' },
             { name: 'Oprava commitů', href: 'git/history/fix-commits.md' },
             { name: 'Odstranění commitů', href: 'git/history/delete-commits.md' },
             { name: 'Lokální ignorování změn', href: 'git/history/assume-unchanged.md' },
@@ -257,6 +258,10 @@ const navigation = {
           name: 'Docker',
           href: 'docker/index.md',
           items: [
+            {
+              name: 'Bezpečný upgrade stateful služby',
+              href: 'docker/safe-stateful-upgrade.md',
+            },
             { name: 'Portainer', href: 'docker/portainer.md' },
             { name: 'Duplicati', href: 'docker/duplicati.md' },
             { name: 'BusyBox', href: 'docker/busybox.md' },
@@ -291,7 +296,6 @@ const navigation = {
 };
 
 const legacyRenames = new Map([
-  ['index.md', 'changelog.md'],
   ['database/Dapper.md', 'database/dapper.md'],
   ['database/EntityFramework.md', 'database/entity-framework.md'],
   ['database/MSSQL.md', 'database/mssql.md'],

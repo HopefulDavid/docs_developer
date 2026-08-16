@@ -43,19 +43,19 @@ Vývojové platformy, jazyky, frameworky, balíčky a opakovaně použitelné po
 
 | Stránka | Popis |
 | --- | --- |
-| [Android Studio](mobile/android-studio.md) | Android Studio je hlavní vývojové prostředí pro Android. V dokumentaci patří do obecné části mobilního vývoje, protože jeho SDK, emulátor a nástroje používají i další frameworky, například Flutter nebo React Native. |
+| [Android Studio](mobile/android-studio.md) | Stránka zatím nemá krátký úvod. |
 | [Flutter](mobile/flutter/setup-and-configuration.md) | Flutter je framework pro vývoj mobilních aplikací pro **Android** a **iOS**. Používá programovací jazyk **Dart**. |
 
 ### Flutter
 
 | Stránka | Popis |
 | --- | --- |
-| [Vytvoření projektu](mobile/flutter/create-project.md) | 1. Vytvořte projekt: |
-| [Záloha a obnova](mobile/flutter/backup-and-restore.md) | - **shared_preferences.json**: `%APPDATA%\com.example\xxx_app` |
+| [Vytvoření projektu](mobile/flutter/create-project.md) | Stránka zatím nemá krátký úvod. |
+| [Záloha a obnova](mobile/flutter/backup-and-restore.md) | Stránka zatím nemá krátký úvod. |
 | [Lokalizace](mobile/flutter/localization.md) | 1. Přidejte do `pubspec.yaml`: |
-| [Základy](mobile/flutter/basics.md) | - **Riverpod** je knihovna pro správu stavu ve Flutteru. |
-| [Příkazy](mobile/flutter/commands.md) |  |
-| [Pokrytí kódu](mobile/flutter/code-coverage.md) | 1. Nainstalujte balíček: |
+| [Základy](mobile/flutter/basics.md) | Stránka zatím nemá krátký úvod. |
+| [Příkazy](mobile/flutter/commands.md) | Stránka zatím nemá krátký úvod. |
+| [Pokrytí kódu](mobile/flutter/code-coverage.md) | Stránka zatím nemá krátký úvod. |
 | [Řešení problémů](mobile/flutter/troubleshooting.md) | Použijte kombinaci `Expanded` a `FittedBox` pro automatické přizpůsobení velikosti textu: |
 
 ### Herní vývoj

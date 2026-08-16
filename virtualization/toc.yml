@@ -8,6 +8,8 @@
     - name: "Docker"
       href: "docker/index.md"
       items:
+        - name: "Bezpečný upgrade stateful služby"
+          href: "docker/safe-stateful-upgrade.md"
         - name: "Portainer"
           href: "docker/portainer.md"
         - name: "Duplicati"
