@@ -1,21 +1,18 @@
-name: Publikování dokumentace
+name: Ověření dokumentace
 
 "on":
   push:
     branches:
-      - main
+      - develop
+  pull_request:
   workflow_dispatch:
 
 permissions:
-  contents: write
-
-concurrency:
-  group: github-pages
-  cancel-in-progress: false
+  contents: read
 
 jobs:
-  publish-docs:
-    name: Ověření, sestavení a publikování
+  quality:
+    name: Lokálně reprodukovatelné kontroly
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
@@ -41,9 +38,3 @@ jobs:
 
       - name: Ověření a sestavení dokumentace
         run: npm run verify
-
-      - name: Publikování sestaveného webu
-        uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4.1.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: _site

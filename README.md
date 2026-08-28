@@ -1,14 +1,12 @@
-# Název projektu
+# Dokumentace pro vývojáře
 
-> `PROJECT-INIT`: Nahraď tento blok při prvním důkladném průzkumu projektu.
-
-Jedna věta zde kanonicky vysvětluje, co projekt dělá a komu přináší hodnotu.
+Česká osobní vývojářská znalostní báze zpřístupňuje praktické technické návody a reference jako prohledávatelný statický web.
 
 ## Stav
 
-Projektová dokumentace zatím nebyla inicializována pro konkrétní projekt.
+Projekt používá oddělený veřejný obsah a interní kanonickou dokumentaci pro správu záměru, architektury a změn.
 
-Postup inicializace je v [`docs/governance/initialization.md`](docs/governance/initialization.md).
+Ověřený projektový stav je v dokumentech uvedených v [`docs/index.md`](docs/index.md).
 
 ## Rychlá orientace
 
@@ -19,8 +17,8 @@ Postup inicializace je v [`docs/governance/initialization.md`](docs/governance/i
 - Úplná mapa kanonické dokumentace je v [`docs/index.md`](docs/index.md).
 - Aktuálně rozpracovaná práce je rozpoznatelná podle souborů `docs/work/WORK-*.md`.
 
-## První spuštění
+## Lokální ověření
 
 Příkazy ani požadavky prostředí se zde neduplikují.
 
-Použij kanonický postup v [`docs/development/commands.md`](docs/development/commands.md).
+Použij přesný postup obnovení, kontroly, sestavení a spuštění v [`docs/development/commands.md`](docs/development/commands.md).

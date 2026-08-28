@@ -1,15 +1,11 @@
 ---
 canonical_for: ci-cd-and-delivery
-status: not-initialized
-last_verified: null
+status: accepted
+last_verified: 2026-08-28
 owner: delivery
 ---
 
 # CI, vydávání a nasazení
-
-> `PROJECT-INIT`: Nejprve detekuj skutečný VCS hosting, existující CI a podporované prostředí.
->
-> `PROJECT-INIT`: Nevytvářej GitHub workflow pouze proto, že jeho syntaxe je známá.
 
 Tento dokument je kanonickým popisem platformy, fází CI, vydávání a nasazení.
 
@@ -21,16 +17,17 @@ Zde se vysvětluje její účel, pořadí, prostředí, oprávnění a způsob l
 
 | Vlastnost | Ověřená hodnota | Důkaz |
 |---|---|---|
-| Hostingová platforma | `PROJECT-INIT` | Remote a projektová metadata |
-| VCS | Git nebo `PROJECT-INIT` | `PROJECT-INIT` |
-| Výchozí větev hostingu | `PROJECT-INIT` | `PROJECT-INIT` |
+| Hostingová platforma | GitHub | SSH remote `git@github.com:HopefulDavid/Docs_Developer.git`, vzdálený HEAD a `.github/workflows/` |
+| VCS | Git | `.git/`, remote a projektová historie |
+| Výchozí větev hostingu | `main` | Lokální symbolický ref `origin/HEAD -> origin/main` |
 | Vývojová větev | `develop` | [`../development/workflow.md`](../development/workflow.md) |
-| Kanonická cesta CI | `PROJECT-INIT` | Odkaz na workflow |
-| Runner nebo executor | `PROJECT-INIT` | `PROJECT-INIT` |
+| Kanonická cesta quality | [`.github/workflows/quality.yml`](../../.github/workflows/quality.yml) | Read-only workflow pro `develop`, pull request a ruční běh |
+| Kanonická cesta publikování | [`.github/workflows/main.yml`](../../.github/workflows/main.yml) | Ověření a deployment po pushi do `main` nebo ručním spuštění |
+| Runner nebo executor | GitHub-hosted `ubuntu-latest` | Obě workflow definice |
 
-Platformu určuj z více důkazů.
+Publikované články mohou popisovat Forgejo, Gitea nebo jinou platformu, ale tyto tematické stránky nejsou důkazem hostingu tohoto projektu.
 
-Forgejo, Gitea, GitHub a jiné systémy mohou používat podobnou syntaxi, ale nemusejí podporovat stejné akce, události ani bezpečnostní chování.
+Živá branch protection a Pages settings nejsou obsahem Git stromu a zůstávají k vzdálenému ověření v `ARCH-RISK-004`.
 
 ## Lokální ekvivalence
 
@@ -42,7 +39,9 @@ Workflow smí přidat platformní přípravu, cache, artifact upload a podmínky
 
 | Fáze CI | Projektový příkaz | Platformní obal | Výstupní důkaz |
 |---|---|---|---|
-| `PROJECT-INIT` | Odkaz na příkaz | `PROJECT-INIT` | `PROJECT-INIT` |
+| Obnova DocFX | `dotnet tool restore` | `setup-dotnet` podle `global.json` | Konzolový záznam o obnovené verzi |
+| Kontrola, testy a build | `npm run verify` | `setup-node` podle `package.json` | TAP výstup, DocFX log, `_site/manifest.json` a ověřený `_site/` |
+| Publikování | Lokální build kontrakt končí hotovým `_site/` | Připnutá `peaceiris/actions-gh-pages` předá obsah do `gh-pages` | Deployment commit a log GitHub Actions |
 
 ## Názvy workflow a kroků
 
@@ -95,7 +94,7 @@ Logy a artefakty nesmějí obsahovat tajemství, osobní údaje ani produkční 
 
 | Tajemství nebo identita | Účel | Dostupné fáze | Vlastník | Rotace |
 |---|---|---|---|---|
-| `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` |
+| Automatický `GITHUB_TOKEN` | Publikování ověřeného `_site/` do větve `gh-pages` | Pouze publikační workflow | GitHub a vlastník repozitáře | Krátkodobý token vydává a rotuje GitHub pro každý běh |
 
 Hodnotu tajemství nikdy nezapisuj do tohoto dokumentu.
 
@@ -119,10 +118,12 @@ Reprodukovatelnost se zvyšuje úměrně riziku a distribučnímu modelu projekt
 
 | Událost | Workflow | Povinné kontroly | Oprávnění | Poznámka |
 |---|---|---|---|---|
-| Push do `develop` | `PROJECT-INIT` | `PROJECT-INIT` | Pouze čtení nebo `PROJECT-INIT` | `PROJECT-INIT` |
-| Pull request nebo merge request | `PROJECT-INIT` | `PROJECT-INIT` | Minimální | `PROJECT-INIT` |
-| Tag nebo release | `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` |
-| Ruční nasazení | `PROJECT-INIT` | `PROJECT-INIT` | Chráněné prostředí | `PROJECT-INIT` |
+| Push do `develop` | `Ověření dokumentace` | `npm run verify` | `contents: read` | Nevytváří ani nepublikuje vzdálený artefakt |
+| Pull request | `Ověření dokumentace` | `npm run verify` | `contents: read` | Nepoužívá `pull_request_target` ani privilegované tajemství |
+| Push do `main` | `Publikování dokumentace` | `npm run verify` před deploymentem | `contents: write` | Publikuje pouze po úspěšném ověření; source checkout neuchovává credentials |
+| Tag nebo release | Žádné workflow | Žádné | Žádné | Projekt nevydává verzované binární release |
+| Ruční quality | `Ověření dokumentace` | `npm run verify` | `contents: read` | Diagnostický běh bez publikování |
+| Ruční nasazení | `Publikování dokumentace` | `npm run verify` a deployment | `contents: write` | Spouští se pouze z důvěryhodného refu vybraného vlastníkem |
 
 Nasazení do produkce vyžaduje explicitně přijatý proces projektu.
 
@@ -132,7 +133,9 @@ Automatické publikování se nezavádí jako vedlejší důsledek běžného ov
 
 | Prostředí | Účel | Zdroj artefaktu | Schválení | Ověření po nasazení | Rollback |
 |---|---|---|---|---|---|
-| `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` | Odkaz na runbook |
+| Lokální náhled | Vývoj a vizuální smoke | Lokální `_site/` | Nevyžaduje | Kroky `REQ-001` a `REQ-002` | Znovu sestavit nebo odstranit `_site/` |
+| GitHub Actions quality | Kontrola změny bez publikování | Aktuální checkout | Událost workflow | `npm run verify` | Opravit zdroj a spustit znovu |
+| GitHub Pages | Veřejný produkční statický web | `_site/` z ověřeného commitu `main` | Úspěšný publish job | HTTP a čtenářský smoke | Revertovat vadný zdrojový commit a znovu publikovat podle runbooku |
 
 Konfigurace prostředí se odděluje od zdrojového kódu způsobem přijatým projektem.
 
@@ -142,15 +145,17 @@ Datová migrace musí mít pořadí kompatibilní s aplikací a plán návratu n
 
 ## Release
 
-Popiš jediný podporovaný způsob tvorby verze, tagu, changelogu, artefaktu a publikování.
+Projekt nevytváří verzované binární release ani release tagy.
 
-Verzovací pravidlo a veřejná kompatibilita musí odpovídat produktu.
+Veřejně nasazovanou jednotkou je ověřený statický artefakt konkrétního commitu `main`.
 
-Commit zprávy jsou podle [`../development/workflow.md`](../development/workflow.md).
+Historii významných změn doplňuje verzovaný [`changelog.md`](../../changelog.md), zatímco commit zprávy dodržují [`../development/workflow.md`](../development/workflow.md).
 
 | Krok | Spouštěč | Kanonický nástroj nebo soubor | Ověření |
 |---|---|---|---|
-| `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` |
+| Aktualizace historie změn | Ve stejné zdrojové změně, pokud má změna uživatelský nebo migrační význam | [`changelog.md`](../../changelog.md) a [`changelog-config.js`](../../changelog-config.js) jako existující transformační konfigurace | Git diff a review; CI už zdrojový changelog ani homepage nemění |
+| Vytvoření artefaktu | Push do `main` nebo ruční publish | `npm run verify` a [`docfx.json`](../../docfx.json) | 0 warningů, 0 chyb a úspěšný artifact check |
+| Publikování | Úspěšný build v publikačním workflow | [`.github/workflows/main.yml`](../../.github/workflows/main.yml) | Deployment commit v `gh-pages` a dostupný web |
 
 ## Selhání a diagnostika
 

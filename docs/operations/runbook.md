@@ -1,15 +1,11 @@
 ---
 canonical_for: operations-runbook
-status: not-initialized
-last_verified: null
+status: accepted
+last_verified: 2026-08-28
 owner: operations
 ---
 
 # Provozní runbook
-
-> `PROJECT-INIT`: Vyplň pro službu, aplikaci nebo jiný projekt s provozní odpovědností.
->
-> `PROJECT-INIT`: U čisté knihovny nastav stav `not-applicable`, uveď důvod a odkaz na distribuční nebo podpůrný proces.
 
 Tento dokument je kanonickým vstupem pro bezpečný provoz, diagnostiku, obnovu a předání služby.
 
@@ -21,20 +17,20 @@ Odkazuje na ně a popisuje konkrétní provozní rozhodovací kroky.
 
 | Vlastnost | Hodnota |
 |---|---|
-| Provozní vlastník | `PROJECT-INIT` |
-| Eskalační kontakt nebo kanál | `PROJECT-INIT` |
-| Kritičnost služby | `PROJECT-INIT` |
+| Provozní vlastník | Maintainers a vlastník GitHub repozitáře |
+| Eskalační kontakt nebo kanál | Vlastník repozitáře; samostatný veřejný provozní kanál není v projektu deklarovaný |
+| Kritičnost služby | Nízká až střední; výpadek omezuje přístup ke znalostní bázi, ale neblokuje transakční ani bezpečnostní službu |
 | Podporovaná prostředí | Odkaz na [`../delivery/ci-cd.md`](../delivery/ci-cd.md) |
-| Hlavní uživatelské scénáře | Odkazy na `REQ-*` |
-| Cíle dostupnosti a obnovy | Odkazy na `QLT-*` |
+| Hlavní uživatelské scénáře | `REQ-001` a `REQ-002` v [`../product/requirements.md`](../product/requirements.md) |
+| Cíle dostupnosti a obnovy | Číselné SLO, RPO ani RTO nejsou přijaté; reprodukovatelnost a integritu chrání `QLT-002` a `QLT-003` |
 
 ## Ověření zdraví
 
-Popiš nejrychlejší bezpečné pořadí, kterým lze rozlišit zdravou službu od částečného nebo úplného selhání.
-
 | Kontrola | Jak ji provést | Zdravý výsledek | Typické selhání | Další krok |
 |---|---|---|---|---|
-| `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` |
+| Zdroj a build | V kořeni spusť `dotnet tool restore` a `npm run verify` podle dokumentu příkazů | Vše skončí kódem 0, DocFX má 0 warningů a artifact check potvrdí veřejnou hranici | Drift navigace, test, warning DocFX nebo chybějící výstup | Oprav první konkrétní chybu v konzolovém výstupu a profil zopakuj |
+| Lokální čtenářský tok | Spusť `npm run docs:serve`, otevři homepage, tematický článek a vyhledávání | Stránky se zobrazí, navigace funguje a vyhledávání vrátí očekávaný typ výsledku | Chyba šablony, stale `_site/` nebo klientský JavaScript | Znovu proveď čistý build a zkontroluj browser konzoli |
+| Produkční dostupnost | Otevři veřejnou Pages URL z nastavení repozitáře a zopakuj `REQ-001` | Poslední ověřený web odpovídá očekávanému commitu `main` | Pages nebo publish workflow je nedostupné či zastaralé | Zkontroluj poslední běh `Publikování dokumentace` a větev `gh-pages` |
 
 Health check nesmí vracet úspěch pouze proto, že proces běží, pokud hlavní schopnost není použitelná.
 
@@ -44,10 +40,10 @@ Kontrola zároveň nesmí zbytečně způsobovat drahé nebo destruktivní opera
 
 | Signál | Kanonický zdroj | Co znamená | Retence | Citlivost |
 |---|---|---|---|---|
-| Logy | `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` |
-| Metriky | `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` |
-| Trasování | `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` |
-| Audit | `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` |
+| Logy | Konzolový výstup lokálních příkazů a GitHub Actions log | Obnova nástrojů, testy, build a deployment | Podle GitHub nastavení; lokální log se standardně nearchivuje | Nesmí obsahovat hodnotu `GITHUB_TOKEN` ani soukromý obsah |
+| Metriky | Nejsou nakonfigurované | Projekt nemá přijaté provozní SLO ani vlastní runtime | Není relevantní | Znovu posoudit při přijetí dostupnostního cíle nebo analytiky |
+| Trasování | Není použitelné | Statický web nemá serverový požadavek ani distribuovanou transakci | Není relevantní | Znovu posoudit při zavedení backendu |
+| Audit | Git historie zdroje, workflow běhy a deployment historie `gh-pages` | Který commit změnil zdroj, prošel kontrolou a byl publikovaný | Git historie podle repozitáře; workflow podle GitHub nastavení | Commit metadata jsou veřejná podle viditelnosti repozitáře |
 
 Uveď stabilní identifikátory, podle kterých lze propojit požadavek, uživatele v bezpečném rozsahu, job nebo transakci.
 
@@ -61,29 +57,29 @@ Kroky mají být bezpečné, ověřitelné a seřazené od nejméně invazivníc
 
 Příkaz odkazuj na [`../development/commands.md`](../development/commands.md) nebo na řízený provozní nástroj místo kopírování jeho implementace.
 
-### Symptom: `PROJECT-INIT`
+### Symptom: Veřejný web je nedostupný nebo neodpovídá poslední změně
 
-1. `PROJECT-INIT`
-2. `PROJECT-INIT`
-3. `PROJECT-INIT`
+1. Ověř veřejnou URL a zaznamenej konkrétní HTTP nebo vizuální symptom bez změny vzdáleného stavu.
+2. Zkontroluj poslední běh workflow `Publikování dokumentace`, jeho zdrojový commit a poslední deployment commit v `gh-pages`.
+3. Na odpovídajícím zdrojovém commitu spusť `dotnet tool restore` a `npm run verify`.
+4. Pokud lokální build projde, zkontroluj stav GitHub Pages a obecný incident GitHubu; pokud selže, pokračuj od prvního lokálního důkazu.
 
-**Potvrzení příčiny:** `PROJECT-INIT`
+**Potvrzení příčiny:** příčina je potvrzená až shodou symptomu s neúspěšným krokem, rozdílným zdrojovým commitem nebo doloženým incidentem platformy.
 
-**Bezpečná náprava:** `PROJECT-INIT`
+**Bezpečná náprava:** oprav nebo revertuj vadný zdroj na standardní větvi, nech projít quality a znovu spusť podporované publikování; neupravuj sestavené HTML ručně jako nový zdroj pravdy.
 
-**Eskalace:** `PROJECT-INIT`
+**Eskalace:** vlastník repozitáře řeší oprávnění, Pages settings a ruční workflow; doložený incident platformy se eskaluje na GitHub podle jeho podpory.
 
 ## Zálohování a obnova
 
 | Datová oblast | Způsob zálohy | Frekvence | Retence | Šifrování | Poslední ověřená obnova |
 |---|---|---|---|---|---|
-| `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` |
+| Zdrojové články, konfigurace a projektová dokumentace | Distribuovaná Git historie a vzdálený GitHub repozitář | Při každém commitu a pushi | Podle Git historie projektu | Přenos přes SSH/HTTPS a ochrana GitHub účtu | 2026-08-28: lokální checkout vytvořil čistý ověřený web z deklarovaných zdrojů |
+| Publikovaný statický web | Nezálohuje se jako autoritativní data; znovu se sestavuje ze zdrojového commitu | Při každém publish běhu | Historie `gh-pages` podle publikační akce | GitHub platforma | 2026-08-28: lokální reprodukce vytvořila 99 HTML stránek bez warningu |
 
-Záloha bez ověřené obnovy není dostatečný důkaz obnovitelnosti.
+Projekt neukládá uživatelská ani serverová data, takže obnova neobsahuje databázovou konzistenci nebo datovou migraci.
 
-Obnovovací test používá bezpečné prostředí a ověřuje integritu i použitelnost dat.
-
-RPO a RTO musí odkazovat na přijatý kvalitativní požadavek.
+Pokud se přijme číselný RPO nebo RTO, musí vzniknout odpovídající `QLT-*` a tento postup se znovu ověří.
 
 ## Rollback a bezpečné pokračování
 
@@ -95,7 +91,9 @@ Zde je provozní rozhodnutí a ověření výsledku.
 
 | Situace | Preferovaná akce | Datové omezení | Ověření | Eskalace |
 |---|---|---|---|---|
-| `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` | `PROJECT-INIT` |
+| Vadný článek, navigace nebo šablona po publikování | Revertovat nebo opravit zdrojový commit a znovu publikovat | Žádné stavové datové schéma | `npm run verify` a produkční smoke `REQ-001` | Vlastník repozitáře při blokovaném merge nebo workflow |
+| Neúspěšný publish po úspěšném buildu | Zachovat poslední funkční `gh-pages`, odstranit příčinu a použít roll-forward | Nepřepisovat ručně zdrojovou větev ani token | GitHub Actions log a dostupnost předchozího webu | Vlastník GitHub Pages settings |
+| Kompromitovaný nebo podezřelý workflow běh | Zastavit další publish, zrušit běh a posoudit token i použité action SHA | Rotaci automatického tokenu řídí GitHub; zkontrolovat oprávnění repozitáře | Audit workflow, commitů a GitHub security logu | Vlastník repozitáře a GitHub podpora podle dopadu |
 
 ## Incident
 

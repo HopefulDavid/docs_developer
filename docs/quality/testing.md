@@ -15,6 +15,24 @@ Nevznikají kvůli formálnímu počtu, procentu pokrytí ani testování trivi�
 
 Testovací strategie se odvozuje z produktových scénářů, architektury, historie závad a dopadu selhání.
 
+## Projektový testovací profil
+
+Nejvyšší rizika tohoto statického webu jsou rozbitá navigace, rozdílný casing cest, nechtěné zveřejnění interních souborů, warningy DocFX a nefunkční čtenářský tok po změně šablony.
+
+| Riziko nebo požadavek | Primární důkaz | Proč tato úroveň stačí |
+|---|---|---|
+| `REQ-003`, `REQ-E001`, `QLT-001` | `npm run docs:check` | Ověřuje skutečný registr, všechny veřejné stránky, lokální odkazy a generovaný drift bez zápisu |
+| `REQ-E002`, `QLT-003`, `QLT-004` | Node testy v [`tests/`](../../tests) a artifact check | Negativní příklady chrání klasifikaci a celý sestavený výstup potvrzuje integrační hranici |
+| `REQ-E003`, `QLT-002` | `npm run docs:build` s warningy jako chybami | Testuje skutečný DocFX, šablonu, manifest a výsledné HTML místo náhrady build systému |
+| `REQ-001`, `REQ-002` | Krokovatelný lokální smoke v prohlížeči | Zobrazení, navigace, vyhledávání a volba tématu jsou pozorovatelné až v reálném browserovém výstupu |
+| Metadata a interní dokumentační odkazy | `tests/canonical-docs.test.js` | Mechanická pravidla mají rychlý deterministický důkaz bez zahrnutí interních dokumentů do veřejného buildu |
+
+Přesné příkazy, pořadí a technický smoke scénář vlastní [`../development/commands.md`](../development/commands.md).
+
+Projekt nemá schválenou pixelovou baseline ani automatizovaný end-to-end browser harness.
+
+Automatický vizuální nástroj se zavede pouze tehdy, když opakované UI regrese nebo rozsah interakce ospravedlní jeho závislosti a údržbu.
+
 ## Volba typu testu
 
 Nejprve určuj, co musí být pozorovatelné a jaké riziko test snižuje.

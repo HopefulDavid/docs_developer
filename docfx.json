@@ -12,7 +12,28 @@
           "**/*.{md,yml}"
         ],
         "exclude": [
-          "_site/**"
+          ".agents/**",
+          ".ai/**",
+          ".codex/**",
+          ".config/**",
+          ".git/**",
+          ".github/**",
+          ".idea/**",
+          "_site/**",
+          "docs/**",
+          "node_modules/**",
+          "private/**",
+          "scripts/**",
+          "templates/**",
+          "tests/**",
+          "tools/**",
+          "AGENTS.md",
+          "AGENTS.override.md",
+          "**/AGENTS.md",
+          "**/AGENTS.override.md",
+          "CLAUDE.md",
+          "GEMINI.md",
+          "README.md"
         ]
       }
     ],
@@ -20,7 +41,7 @@
       {
         "files": [
           "images/**",
-		  "pdf/**"
+          "pdf/**"
         ]
       }
     ],

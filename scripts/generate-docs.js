@@ -10,6 +10,66 @@ const generatedNotice =
 const generatedYamlNotice =
   '# Tento soubor generuje npm run docs:generate. Neupravujte navigaci ani přehledy ručně.';
 
+// Veřejný obsah má explicitní hranici; projektová metadata generátor nečte ani neupravuje.
+const ignoredRootDirectories = new Set([
+  '.agents',
+  '.ai',
+  '.codex',
+  '.config',
+  '.git',
+  '.github',
+  '.idea',
+  '_site',
+  'docs',
+  'node_modules',
+  'private',
+  'scripts',
+  'templates',
+  'tests',
+  'tools',
+]);
+const ignoredInstructionFiles = new Set(['AGENTS.md', 'AGENTS.override.md']);
+const ignoredRootFiles = new Set(['CLAUDE.md', 'GEMINI.md', 'README.md']);
+const ignoredInstructionOutputs = new Set(['AGENTS.html', 'AGENTS.override.html']);
+const ignoredRootOutputs = new Set(['CLAUDE.html', 'GEMINI.html', 'README.html']);
+
+/**
+ * Určí, zda cesta patří projektovým metadatům mimo veřejný dokumentační web.
+ *
+ * @param {string} relPath Cesta relativní ke kořeni repozitáře.
+ * @returns {boolean} `true`, pokud generátor nesmí cestu číst ani měnit.
+ */
+function isInternalPath(relPath) {
+  const normalized = toPosix(relPath).replace(/^\.\/+/, '');
+  const segments = normalized.split('/');
+  const [rootSegment] = segments;
+  const basename = segments.at(-1);
+
+  return (
+    ignoredRootDirectories.has(rootSegment) ||
+    ignoredInstructionFiles.has(basename) ||
+    ignoredRootFiles.has(normalized)
+  );
+}
+
+/**
+ * Určí, zda sestavená cesta prozrazuje interní zdroj nebo agentní instrukci.
+ *
+ * @param {string} relPath Cesta relativní ke kořeni DocFX artefaktu.
+ * @returns {boolean} `true`, pokud cesta ve veřejném artefaktu nesmí být.
+ */
+function isInternalArtifactPath(relPath) {
+  const normalized = toPosix(relPath).replace(/^\.\/+/, '');
+  const segments = normalized.split('/');
+  const basename = segments.at(-1);
+
+  return (
+    isInternalPath(normalized) ||
+    ignoredInstructionOutputs.has(basename) ||
+    (segments.length === 1 && ignoredRootOutputs.has(normalized))
+  );
+}
+
 const sectionInfo = {
   ai: {
     title: 'AI',
@@ -490,19 +550,25 @@ function moveFile(fromRel, toRel) {
 
 function walkFiles(dirRel = '.') {
   const files = [];
-  const ignored = new Set(['.agents', '.codex', '.git', '.github', '.idea', '_site', 'private']);
 
   function walk(dir) {
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
       if (entry.isDirectory()) {
-        if (!ignored.has(entry.name)) {
-          walk(path.join(dir, entry.name));
+        const fullPath = path.join(dir, entry.name);
+        const relPath = toPosix(path.relative(root, fullPath));
+
+        if (!isInternalPath(relPath)) {
+          walk(fullPath);
         }
         continue;
       }
 
       if (entry.isFile()) {
-        files.push(toPosix(path.relative(root, path.join(dir, entry.name))));
+        const relPath = toPosix(path.relative(root, path.join(dir, entry.name)));
+
+        if (!isInternalPath(relPath)) {
+          files.push(relPath);
+        }
       }
     }
   }
@@ -1031,15 +1097,21 @@ function removeEmptyDirectories() {
 
 function walkDirectories() {
   const dirs = ['.'];
-  const ignored = new Set(['.agents', '.codex', '.git', '.github', '.idea', '_site', 'private']);
 
   function walk(dir) {
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-      if (!entry.isDirectory() || ignored.has(entry.name)) {
+      if (!entry.isDirectory()) {
         continue;
       }
+
       const fullPath = path.join(dir, entry.name);
-      dirs.push(toPosix(path.relative(root, fullPath)));
+      const relPath = toPosix(path.relative(root, fullPath));
+
+      if (isInternalPath(relPath)) {
+        continue;
+      }
+
+      dirs.push(relPath);
       walk(fullPath);
     }
   }
@@ -1104,4 +1176,175 @@ function main() {
   }
 }
 
-main();
+function resolveArtifactOutput(outputArgument) {
+  const siteRoot = absolute('_site');
+  const outputRoot = path.resolve(root, outputArgument);
+  const relativeOutput = path.relative(siteRoot, outputRoot);
+
+  if (
+    relativeOutput === '..' ||
+    relativeOutput.startsWith(`..${path.sep}`) ||
+    path.isAbsolute(relativeOutput)
+  ) {
+    console.error('Kontrolovaný DocFX výstup musí ležet v adresáři _site.');
+    process.exit(2);
+  }
+
+  return outputRoot;
+}
+
+function cleanArtifact(outputArgument) {
+  const outputRoot = resolveArtifactOutput(outputArgument);
+
+  fs.rmSync(outputRoot, { recursive: true, force: true });
+  console.log(`Připraven čistý DocFX výstup: ${toPosix(path.relative(root, outputRoot))}`);
+}
+
+function verifyArtifact(outputArgument) {
+  const outputRoot = resolveArtifactOutput(outputArgument);
+
+  if (!fs.existsSync(outputRoot) || !fs.statSync(outputRoot).isDirectory()) {
+    console.error(`DocFX výstup neexistuje: ${outputRoot}`);
+    process.exit(2);
+  }
+
+  const manifestPath = path.join(outputRoot, 'manifest.json');
+  if (!fs.existsSync(manifestPath)) {
+    console.error(`DocFX výstup neobsahuje manifest.json: ${outputRoot}`);
+    process.exit(1);
+  }
+
+  let manifest;
+  try {
+    manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+  } catch (error) {
+    console.error(`DocFX manifest nelze načíst: ${error.message}`);
+    process.exit(1);
+  }
+
+  if (!Array.isArray(manifest.files)) {
+    console.error('DocFX manifest nemá očekávané pole files.');
+    process.exit(1);
+  }
+
+  const artifactErrors = [];
+  const manifestSources = new Set();
+
+  for (const file of manifest.files) {
+    if (typeof file.source_relative_path !== 'string') {
+      continue;
+    }
+
+    const source = toPosix(file.source_relative_path).replace(/^\.\/+/, '');
+    if (source === '..' || source.startsWith('../') || path.isAbsolute(file.source_relative_path)) {
+      artifactErrors.push(`manifest odkazuje mimo kořen repozitáře: ${file.source_relative_path}`);
+      continue;
+    }
+
+    manifestSources.add(source);
+    if (isInternalPath(source)) {
+      artifactErrors.push(`manifest obsahuje interní zdroj: ${source}`);
+    }
+  }
+
+  const expectedSources = new Set([
+    ...pagePaths,
+    'index.md',
+    'toc.yml',
+    ...sectionOrder.flatMap((section) => [`${section}/index.md`, `${section}/toc.yml`]),
+  ]);
+
+  for (const source of expectedSources) {
+    if (!manifestSources.has(source)) {
+      artifactErrors.push(`manifest neobsahuje veřejný zdroj: ${source}`);
+    }
+  }
+
+  const artifactFiles = [];
+
+  function walkArtifact(directory) {
+    for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+      const fullPath = path.join(directory, entry.name);
+
+      if (entry.isDirectory()) {
+        walkArtifact(fullPath);
+      } else if (entry.isFile()) {
+        artifactFiles.push(toPosix(path.relative(outputRoot, fullPath)));
+      }
+    }
+  }
+
+  walkArtifact(outputRoot);
+
+  for (const source of expectedSources) {
+    if (!source.endsWith('.md')) {
+      continue;
+    }
+
+    const expectedOutput = `${source.slice(0, -3)}.html`;
+    if (!artifactFiles.includes(expectedOutput)) {
+      artifactErrors.push(`výstup neobsahuje veřejnou stránku: ${expectedOutput}`);
+    }
+  }
+
+  const retiredCaseOnlyOutputs = [...legacyRenames]
+    .filter(([from, to]) => from !== to && from.toLocaleLowerCase() === to.toLocaleLowerCase())
+    .map(([from]) => `${from.slice(0, -3)}.html`);
+
+  for (const retiredOutput of retiredCaseOnlyOutputs) {
+    if (artifactFiles.includes(retiredOutput)) {
+      artifactErrors.push(`výstup obsahuje vysloužilou case-only stránku: ${retiredOutput}`);
+    }
+  }
+
+  for (const relPath of artifactFiles) {
+    if (isInternalArtifactPath(relPath)) {
+      artifactErrors.push(`výstup obsahuje interní soubor: ${relPath}`);
+    }
+  }
+
+  if (!artifactFiles.includes('index.html')) {
+    artifactErrors.push('výstup neobsahuje index.html');
+  }
+
+  if (artifactErrors.length) {
+    console.error('DocFX artefakt neodpovídá veřejné obsahové hranici:');
+    for (const error of artifactErrors) {
+      console.error(`- ${error}`);
+    }
+    process.exit(1);
+  }
+
+  console.log(
+    `DocFX artefakt je veřejně ohraničený (${manifestSources.size} zdrojů, ${artifactFiles.length} souborů).`,
+  );
+}
+
+function runCli(argv = process.argv) {
+  const artifactMode = argv.includes('--clean-artifact')
+    ? { flag: '--clean-artifact', run: cleanArtifact }
+    : argv.includes('--verify-artifact')
+      ? { flag: '--verify-artifact', run: verifyArtifact }
+      : null;
+
+  if (!artifactMode) {
+    main();
+    return;
+  }
+
+  const modeIndex = argv.indexOf(artifactMode.flag);
+  const outputArgument = argv[modeIndex + 1];
+
+  if (!outputArgument || outputArgument.startsWith('--')) {
+    console.error(`Použití: node scripts/generate-docs.js ${artifactMode.flag} <výstup-v-_site>`);
+    process.exit(2);
+  }
+
+  artifactMode.run(outputArgument);
+}
+
+if (require.main === module) {
+  runCli();
+}
+
+module.exports = { isInternalArtifactPath, isInternalPath };

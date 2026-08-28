@@ -2,7 +2,16 @@
   "scripts": {
     "docs:generate": "node scripts/generate-docs.js",
     "docs:check": "node scripts/generate-docs.js --check",
-    "docs:build": "docfx docfx.json",
-    "docs:serve": "docfx serve _site"
+    "docs:clean": "node scripts/generate-docs.js --clean-artifact _site",
+    "docs:compile": "dotnet tool run docfx -- docfx.json --warningsAsErrors",
+    "docs:artifact-check": "node scripts/generate-docs.js --verify-artifact _site",
+    "docs:build": "npm run docs:clean && npm run docs:compile && npm run docs:artifact-check",
+    "docs:serve": "dotnet tool run docfx -- serve _site --hostname 127.0.0.1 --port 4173",
+    "lint": "node --check scripts/generate-docs.js && node --check templates/material/public/main.js && node --check tests/canonical-docs.test.js && node --check tests/generate-docs.test.js",
+    "test": "node --test --test-isolation=none tests/canonical-docs.test.js tests/generate-docs.test.js",
+    "verify": "npm run docs:check && npm run lint && npm test && npm run docs:build"
+  },
+  "engines": {
+    "node": "24.13.0"
   }
 }
