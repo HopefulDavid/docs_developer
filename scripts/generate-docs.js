@@ -147,7 +147,6 @@ const sectionOrder = [
 
 const rootPages = [
   { name: 'Změny', href: 'changelog.md' },
-  { name: 'Historický archiv změn', href: 'changelog-archive.md' },
 ];
 
 const navigation = {

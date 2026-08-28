@@ -29,7 +29,7 @@ Odkazuje na ně a popisuje konkrétní provozní rozhodovací kroky.
 | Kontrola | Jak ji provést | Zdravý výsledek | Typické selhání | Další krok |
 |---|---|---|---|---|
 | Zdroj a build | V kořeni spusť `npm ci --ignore-scripts --no-audit --no-fund`, `dotnet tool restore` a `npm run verify` podle dokumentu příkazů | Vše skončí kódem 0, DocFX má 0 warningů a artifact check potvrdí veřejnou hranici | Drift navigace, test, warning DocFX nebo chybějící výstup | Oprav první konkrétní chybu v konzolovém výstupu a profil zopakuj |
-| Changelog | Otevři stránku `Změny` a podle potřeby spusť `npm run changelog:generate` | Zdrojový stav odpovídá `HEAD`, čtenářské kategorie mají stabilní kotvy, technické záznamy jsou sbalené a starší ruční záznamy zůstávají v archivu | Mělký checkout, zastaralý výstup, neobnovený `git-cliff` nebo chybný `cliff.toml` | Reprodukuj cílený test a generování podle diagnostického stromu |
+| Changelog | Otevři stránku `Změny` a podle potřeby spusť `npm run changelog:generate` | Zdrojový stav odpovídá `HEAD`, čtenářské kategorie mají stabilní kotvy a technické záznamy jsou sbalené | Mělký checkout, zastaralý výstup, neobnovený `git-cliff` nebo chybný `cliff.toml` | Reprodukuj cílený test a generování podle diagnostického stromu |
 | Lokální čtenářský tok | Spusť `npm run docs:serve`, otevři homepage, tematický článek a vyhledávání | Stránky se zobrazí, navigace funguje a vyhledávání vrátí očekávaný typ výsledku | Chyba šablony, stale `_site/` nebo klientský JavaScript | Znovu proveď čistý build a zkontroluj browser konzoli |
 | Produkční dostupnost | Otevři veřejnou Pages URL z nastavení repozitáře a zopakuj `REQ-001` | Poslední ověřený web odpovídá očekávanému commitu `main` | Pages nebo publish workflow je nedostupné či zastaralé | Zkontroluj poslední běh `Publikování dokumentace` a větev `gh-pages` |
 
@@ -78,7 +78,7 @@ Příkaz odkazuj na [`../development/commands.md`](../development/commands.md) n
 3. Spusť `npm run changelog:generate`, porovnej hlavičku s `git rev-parse HEAD` a konkrétní záznam s `git log` a parsery v `cliff.toml`.
 4. Spusť `npm run docs:build` a potvrď, že `_site/changelog.html` zachovává stabilní kotvy i sbalenou technickou sekci.
 
-**Potvrzení příčiny:** konkrétní commit chybí, má jinou kategorii nebo odkaz v reprodukovaném výstupu nad stejnou historií.
+**Potvrzení příčiny:** konkrétní commit chybí, má jinou kategorii nebo identifikátor v reprodukovaném výstupu nad stejnou historií.
 
 **Bezpečná náprava:** oprav zdrojovou commit zprávu pouze novým commitem nebo kompatibilně uprav `cliff.toml` a test; ignorovaný výstup ručně neupravuj.
 
@@ -89,7 +89,7 @@ Příkaz odkazuj na [`../development/commands.md`](../development/commands.md) n
 | Datová oblast | Způsob zálohy | Frekvence | Retence | Šifrování | Poslední ověřená obnova |
 |---|---|---|---|---|---|
 | Zdrojové články, konfigurace a projektová dokumentace | Distribuovaná Git historie a vzdálený GitHub repozitář | Při každém commitu a pushi | Podle Git historie projektu | Přenos přes SSH/HTTPS a ochrana GitHub účtu | 2026-08-28: lokální checkout vytvořil čistý ověřený web z deklarovaných zdrojů |
-| Publikovaný statický web | Nezálohuje se jako autoritativní data; znovu se sestavuje ze zdrojového commitu | Při každém publish běhu | Pouze poslední kořenový commit `gh-pages`; starší stav se znovu publikuje ze zdroje | GitHub platforma | 2026-08-28: lokální reprodukce vytvořila 100 HTML stránek bez warningu |
+| Publikovaný statický web | Nezálohuje se jako autoritativní data; znovu se sestavuje ze zdrojového commitu | Při každém publish běhu | Pouze poslední kořenový commit `gh-pages`; starší stav se znovu publikuje ze zdroje | GitHub platforma | 2026-08-28: lokální reprodukce vytvořila 99 HTML stránek bez warningu |
 
 Projekt neukládá uživatelská ani serverová data, takže obnova neobsahuje databázovou konzistenci nebo datovou migraci.
 
