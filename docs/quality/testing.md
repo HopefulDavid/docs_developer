@@ -24,10 +24,13 @@ Nejvyšší rizika tohoto statického webu jsou rozbitá navigace, rozdílný ca
 | `REQ-003`, `REQ-E001`, `QLT-001` | `npm run docs:check` | Ověřuje skutečný registr, všechny veřejné stránky, lokální odkazy a generovaný drift bez zápisu |
 | `REQ-E002`, `QLT-003`, `QLT-004` | Node testy v [`tests/`](../../tests) a artifact check | Negativní příklady chrání klasifikaci a celý sestavený výstup potvrzuje integrační hranici |
 | `REQ-E003`, `QLT-002` | `npm run docs:build` s warningy jako chybami | Testuje skutečný DocFX, šablonu, manifest a výsledné HTML místo náhrady build systému |
+| Neúplný, nečitelný nebo prostředím ovlivněný changelog | Skutečný `git-cliff` nad víceletou dočasnou historií s tagem, conventional, breaking i legacy commitem ve dvou časových prostředích | Chrání úplnost historie, otevřené nejnovější období, sdělení o vynechávání prázdných roků, sbalená starší období, počty a kategorie v každém roce, stabilní kotvy, technické záznamy, breaking marker a determinismus výstupu |
 | `REQ-001`, `REQ-002` | Krokovatelný lokální smoke v prohlížeči | Zobrazení, navigace, vyhledávání a volba tématu jsou pozorovatelné až v reálném browserovém výstupu |
 | Metadata a interní dokumentační odkazy | `tests/canonical-docs.test.js` | Mechanická pravidla mají rychlý deterministický důkaz bez zahrnutí interních dokumentů do veřejného buildu |
 
 Přesné příkazy, pořadí a technický smoke scénář vlastní [`../development/commands.md`](../development/commands.md).
+
+Changelogový test vytváří izolovaný víceletý Git repozitář v dočasném adresáři a spouští stejný uzamčený binární příkaz jako projektový build bez změny pracovního stromu; následně kontroluje i vazbu hlavičky na jeho skutečný `HEAD` a zařazení hraničního commitu na přelomu roku podle `Europe/Prague`.
 
 Projekt nemá schválenou pixelovou baseline ani automatizovaný end-to-end browser harness.
 

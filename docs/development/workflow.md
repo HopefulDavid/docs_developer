@@ -50,6 +50,53 @@ Nevytvářej `develop` z jiné větve pouze proto, aby práce mohla okamžitě p
 
 Existenci vzdálené větve a pravidla jejího publikování ověř podle platformy projektu.
 
+## Role větví a propagace
+
+`develop` je integrační větev a jediné místo, na kterém se běžně zpracovávají úkoly.
+
+Běžné fast-forward push aktualizace do `develop` jsou povolené, zatímco přepis historie a odstranění větve jsou zakázané vzdáleným rulesetem.
+
+Každý push do `develop` spouští vzdálené quality workflow, ale tato kontrola probíhá až po přijetí commitu, proto před pushem spusť lokální `npm run verify`.
+
+`main` je výchozí a publikační větev.
+
+Aktualizuje se pouze pull requestem z `develop`; přímý push do `main` není podporovanou součástí workflow.
+
+Pull request musí obsahovat aktuální stav `main`, projít kontrolou `Lokálně reprodukovatelné kontroly` a mít vyřešené všechny review konverzace.
+
+Sloučení používá merge commit, který je jedinou povolenou metodou rulesetu `main`.
+
+Současný model nevyžaduje schválení další osobou a počet povinných schválení je `0`.
+
+Přidání dalšího správce nebo požadavek na nezávislou kontrolu vyvolává revizi počtu schválení, rušení zastaralých schválení a pravidla pro poslední push.
+
+`gh-pages` je odvozená publikační větev a nesmí se na ní ručně zpracovávat úkoly ani opravovat sestavený obsah.
+
+Aktualizuje ji pouze publikační workflow, které ji záměrně nahrazuje jediným kořenovým deploymentovým commitem.
+
+Přesná platformní pravidla, jejich ověřený stav a zbytková rizika vlastní [`../delivery/ci-cd.md`](../delivery/ci-cd.md#vzdálené-ochrany-větví).
+
+### Publikování změny
+
+1. Dokonči logickou změnu na `develop` a spusť `npm run verify`.
+2. Pushni `develop` a ověř úspěšný běh workflow `Ověření dokumentace`.
+3. Otevři pull request z `develop` do `main`, splň všechny vzdálené podmínky a sluč jej povoleným merge commitem.
+4. Ihned po sloučení fast-forward synchronizuj dlouhodobou větev `develop` na nový merge commit z `main`.
+5. Ověř workflow `Publikování dokumentace`, deployment `gh-pages` a veřejný web podle [`../operations/runbook.md`](../operations/runbook.md).
+
+Synchronizaci proveď pouze v čistém pracovním stromu a bez přepisu historie:
+
+```bash
+git fetch origin
+git switch develop
+git merge --ff-only origin/main
+git push origin develop
+```
+
+Pokud `--ff-only` selže, nepoužívej force push.
+
+Nejdříve zjisti příčinu divergence a sjednoť větve dalším bezpečným krokem v rámci tohoto workflow.
+
 ## Pořadí změny
 
 1. Přečti aktivní pracovní záznam a kanonické dokumenty dotčených oblastí.
@@ -122,7 +169,7 @@ Nevracej ani nepřepisuj cizí commit bez výslovného důvodu a bezpečného po
 
 Nepoužívej force push jako běžný prostředek.
 
-Neprováděj merge do `main`, release ani publikování bez potvrzeného projektového workflow.
+Merge do `main` a následné publikování prováděj pouze postupem v části [Publikování změny](#publikování-změny).
 
 Git historie podporuje předání, ale nenahrazuje aktivní pracovní záznam ani kanonickou dokumentaci.
 

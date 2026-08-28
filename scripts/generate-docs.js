@@ -145,7 +145,9 @@ const sectionOrder = [
   'teamwork',
 ];
 
-const rootPages = [{ name: 'Změny', href: 'changelog.md' }];
+const rootPages = [
+  { name: 'Změny', href: 'changelog.md' },
+];
 
 const navigation = {
   ai: [{ name: 'Modely a nástroje', items: [{ name: 'Ollama', href: 'ollama.md' }] }],
@@ -1128,6 +1130,9 @@ function applyLegacyRenames() {
 
 function normalizeMarkdownFiles() {
   for (const relPath of walkMarkdown()) {
+    if (relPath === 'changelog.md') {
+      continue;
+    }
     if (relPath.endsWith('/toc.yml')) {
       continue;
     }

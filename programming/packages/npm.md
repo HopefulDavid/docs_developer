@@ -111,37 +111,44 @@ foreach ($tgzFile in $tgzFiles) {
 ## Aplikační balíčky
 
 <details>
-<summary>conventional-changelog-cli</summary>
+<summary>git-cliff</summary>
 
-**Slouží k automatickému generování changelogu na základě commit zpráv.**
+**Generuje kategorizovaný changelog z Git historie a Conventional Commits.**
 
 ### Instalace
 ```bash
-npm install -g conventional-changelog-cli
+npm install --save-dev --save-exact git-cliff
 ```
+
+Projektová instalace drží verzi v `package.json` a integritu v `package-lock.json`, takže lokální prostředí i CI používají stejný nástroj.
+
+### Vytvoření konfigurace
+```bash
+npm exec -- git-cliff --init
+```
+
+Příkaz vytvoří `cliff.toml`, ve kterém lze deklarativně nastavit skupiny commitů, šablonu, tagy, řazení a odkazy.
 
 ### Generování changelogu
 ```bash
-conventional-changelog -p angular -i CHANGELOG.md -o CHANGELOG.md -s
+npm exec -- git-cliff --config cliff.toml --output CHANGELOG.md
 ```
 
 | ⚙️ Parametr | 💡 Význam |
-|---------------------------|--------------------------------------------------------------------------|
-| `-p` / `--preset` | Styl changelogu (`angular`, `eslint`, `conventionalcommits`) |
-| `-i` / `--infile` | Vstupní soubor (např. `CHANGELOG.md`) |
-| `-o` / `--outfile` | Výstupní soubor |
-| `-r` / `--release-count` | Počet verzí pro generování |
-| `--context` | Vlastní kontext pro šablonu changelogu |
-| `--pkg` | Cesta k `package.json` |
-| `--append` | Přidá změny na konec souboru |
-| `--same-file` | Přepíše stejný soubor |
-| `--tag-prefix` | Prefix k tagům verzí |
-| `-n` / `--config` | Vlastní konfigurační soubor |
+|---|---|
+| `--config` | Cesta k verzované TOML nebo YAML konfiguraci |
+| `--output` | Výstupní Markdown soubor |
+| `--repository` | Jiný Git repozitář než aktuální pracovní adresář |
+| `--include-path` / `--exclude-path` | Omezení historie podle změněných cest |
+| `--tag-pattern` | Regulární výraz určující release tagy |
+| `--sort` | Pořadí commitů `oldest` nebo `newest` |
+| `--offline` | Zakáže vzdálená API volání i při nastaveném remote |
 
 > **Tip:**
-> Pro vlastní šablonu použijte:
+> Přidejte stabilní projektový skript a v CI používejte úplnou Git historii:
 > ```bash
-> conventional-changelog -i index.md -s --config./changelog-config.js
+> npm pkg set scripts.changelog:generate="git-cliff --config cliff.toml --output CHANGELOG.md"
+> npm run changelog:generate
 > ```
 
 </details>

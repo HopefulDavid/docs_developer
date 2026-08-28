@@ -62,7 +62,7 @@ Pracovní záznamy, testy a změny odkazují na identifikátor místo kopírová
 | `REQ-001` | Čtenář otevře kořenovou stránku bez předchozí relace | Vybere tematickou oblast a konkrétní článek | Zobrazí se přehled oblastí, navigace a obsah vybrané stránky bez přihlášení | Must | Vizuální smoke scénář nad lokálním DocFX webem |
 | `REQ-002` | Čtenář je na libovolné veřejné stránce | Zadá technický termín do vyhledávání | Web nabídne odpovídající stránky a umožní otevřít zvolený výsledek | Should | Vizuální smoke scénář nad vytvořeným vyhledávacím indexem |
 | `REQ-003` | Správce upravil zdrojový článek nebo registr navigace | Spustí podporované generování a kontrolu | Přehledy, TOC, cesty a lokální odkazy jsou deterministicky sjednocené a následná kontrola nehlásí drift | Must | `npm run docs:generate` a následné `npm run docs:check` |
-| `REQ-004` | Změna na větvi `main` splnila projektové kontroly | GitHub Actions spustí publikační workflow | Workflow sestaví jediný ověřený statický artefakt a publikuje jej bez změny zdrojové větve | Must | Konfigurace workflow a úspěšný vzdálený běh po publikování změny |
+| `REQ-004` | Změna na větvi `main` splnila projektové kontroly | GitHub Actions spustí publikační workflow | Workflow sestaví jediný ověřený statický artefakt, veřejný changelog v něm zachová úplnou historii, nejnovější rok změn nechá otevřený, roky bez změn vynechá, starší zobrazené roky sbalí a web publikuje bez změny zdrojové větve | Must | Cílený changelogový test, konfigurace workflow a úspěšný vzdálený běh po publikování změny |
 
 ## Chybové a hraniční scénáře
 
