@@ -81,7 +81,7 @@ Zde jsou pouze přesné podporované příkazy.
 | Úroveň | Přesný příkaz | Potřebné služby | Výstupní artefakty | Typická doba nebo rozsah |
 |---|---|---|---|---|
 | Cílený test veřejné hranice | `node --test --test-isolation=none tests/generate-docs.test.js` | Žádné | Konzolový TAP výstup | 4 testy; běžně pod 1 sekundu |
-| Cílený test changelogu | `node --test --test-isolation=none tests/changelog.test.mjs` | Lokální Git a obnovený `git-cliff` | Konzolový TAP výstup | Úplná fixture historie, tag, kategorie, breaking change, odkazy a dvě časová prostředí |
+| Cílený test changelogu | `node --test --test-isolation=none tests/changelog.test.mjs` | Lokální Git a obnovený `git-cliff` | Konzolový TAP výstup | Úplná fixture historie, zdrojový commit, stabilní kotvy, sbalené technické změny, breaking change, odkazy a dvě časová prostředí |
 | Automatizované testy | `npm test` | Lokální Git a obnovené npm závislosti | Konzolový TAP výstup | Všechny soubory v `tests/`; 11 scénářů |
 | Vizuální scénáře | `npm run docs:serve` a kroky níže | Předem vytvořený `_site/` a lokální prohlížeč | Vizuální pozorování, případně screenshot | Ruční smoke po rizikové změně UI, vyhledávání nebo navigace |
 | Integrační build | `npm run docs:build` | Obnovené npm závislosti a lokální DocFX | `changelog.md`, `_site/manifest.json`, HTML a konzolový souhrn | Veřejný changelog, archiv a ostatní stránky vzniknou bez warningu; běžně jednotky sekund na ověřeném stroji |
@@ -91,14 +91,16 @@ Zde jsou pouze přesné podporované příkazy.
 
 Každé sestavení odvozuje ignorovaný `changelog.md` z úplné dosažitelné Git historie pomocí přesně uzamčeného `git-cliff`.
 
-Konfigurace v [`../../cliff.toml`](../../cliff.toml) zachovává nekonvenční commity, řadí Conventional Commits do českých kategorií, zvýrazňuje breaking changes a skládá odkazy bez volání GitHub API.
+Konfigurace v [`../../cliff.toml`](../../cliff.toml) zachovává nekonvenční commity, uvádí přesný zdrojový commit a počet záznamů, řadí čtenářské Conventional Commits do českých kategorií a technické typy zachovává ve sbalené sekci.
+
+Každá kategorie má stabilní explicitní kotvu, breaking changes zůstávají zvýrazněné a odkazy na commity vznikají bez volání GitHub API.
 
 Release tagy historii nerozdělují a datum se deterministicky zobrazuje v projektovém časovém pásmu `Europe/Prague`.
 
 | Účel | Přesný příkaz | Vedlejší účinek | Očekávaný výsledek |
 |---|---|---|---|
 | Náhled bez zápisu | `npm exec -- git-cliff --config cliff.toml` | Žádný soubor se nezmění | Úplný Markdown na standardním výstupu |
-| Vytvoření vstupu pro sestavení | `npm run changelog:generate` | Přepíše pouze ignorovaný `changelog.md` | Kategorizovaný přehled aktuální historie s odkazy na commity |
+| Vytvoření vstupu pro sestavení | `npm run changelog:generate` | Přepíše pouze ignorovaný `changelog.md` | Přehled aktuální historie s identitou zdroje, stabilními kotvami a sbalenými technickými záznamy |
 
 `npm run docs:build` tento krok provádí automaticky před DocFX.
 
