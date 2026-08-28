@@ -39,8 +39,9 @@ Workflow smí přidat platformní přípravu, cache, artifact upload a podmínky
 
 | Fáze CI | Projektový příkaz | Platformní obal | Výstupní důkaz |
 |---|---|---|---|
+| Obnova changelog nástroje | `npm ci --ignore-scripts --no-audit --no-fund` | `setup-node` podle `package.json` a npm cache podle lockfilu | Přesná integrita `git-cliff` z `package-lock.json` |
 | Obnova DocFX | `dotnet tool restore` | `setup-dotnet` podle `global.json` | Konzolový záznam o obnovené verzi |
-| Kontrola, testy a build | `npm run verify` | `setup-node` podle `package.json` | TAP výstup, DocFX log, `_site/manifest.json` a ověřený `_site/` |
+| Kontrola, testy, changelog a build | `npm run verify` | Úplný checkout pomocí `fetch-depth: 0` | TAP výstup, vygenerovaný `changelog.md`, DocFX log, `_site/manifest.json` a ověřený `_site/` |
 | Publikování | Lokální build kontrakt končí hotovým `_site/` | Připnutá `peaceiris/actions-gh-pages` předá obsah do `gh-pages` s `force_orphan: true` | Jediný kořenový deployment commit a log GitHub Actions |
 
 ## Historie publikační větve
@@ -110,6 +111,8 @@ Hodnotu tajemství nikdy nezapisuj do tohoto dokumentu.
 
 CI používá stejné lockfily, verze nástrojů a podporované registry jako lokální prostředí.
 
+Oba workflow checkouty načítají úplnou Git historii, protože mělký klon nemůže vytvořit úplný changelog.
+
 Závislosti se drží v řízeném prostředí, cache nebo mirroru podle možností projektu.
 
 Cache urychluje sestavení, ale není jediným autoritativním zdrojem.
@@ -157,17 +160,19 @@ Projekt nevytváří verzované binární release ani release tagy.
 
 Veřejně nasazovanou jednotkou je ověřený statický artefakt konkrétního commitu `main`.
 
-Historii významných změn doplňuje verzovaný [`changelog.md`](../../changelog.md), zatímco commit zprávy dodržují [`../development/workflow.md`](../development/workflow.md).
+Historii změn doplňuje při každém buildu generovaný a ignorovaný `changelog.md`, zatímco commit zprávy dodržují [`../development/workflow.md`](../development/workflow.md).
 
 | Krok | Spouštěč | Kanonický nástroj nebo soubor | Ověření |
 |---|---|---|---|
-| Aktualizace historie změn | Ve stejné zdrojové změně, pokud má změna uživatelský nebo migrační význam | [`changelog.md`](../../changelog.md) a [`changelog-config.js`](../../changelog-config.js) jako existující transformační konfigurace | Git diff a review; CI už zdrojový changelog ani homepage nemění |
+| Vytvoření historie změn | Každý lokální a CI build s úplnou historií | [`cliff.toml`](../../cliff.toml), uzamčený `git-cliff` a `npm run changelog:generate` | Integrační fixture přes tag a výsledná stránka v `_site/`; zdrojová větev se nemění |
 | Vytvoření artefaktu | Push do `main` nebo ruční publish | `npm run verify` a [`docfx.json`](../../docfx.json) | 0 warningů, 0 chyb a úspěšný artifact check |
 | Publikování | Úspěšný build v publikačním workflow | [`.github/workflows/main.yml`](../../.github/workflows/main.yml) | Jediný kořenový deployment commit v `gh-pages` a dostupný web |
 
 ## Selhání a diagnostika
 
 Neúspěšný job zpřístupní dostatek logů a relevantních artefaktů pro lokální reprodukci.
+
+Selhání nebo neúplnost changelogu se reprodukuje nad úplným checkoutem příkazy z [`../development/commands.md#changelog`](../development/commands.md#changelog).
 
 Vizuální testy mají podle strategie ukládat trace, screenshot nebo video při selhání.
 

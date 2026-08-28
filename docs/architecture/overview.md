@@ -61,6 +61,7 @@ Diagram ukazuje autorství, sestavení a veřejné čtení bez serverové aplika
 | Správce obsahu | Do systému | Udržuje zdrojové články, registr navigace a projektovou konfiguraci | Git, Markdown a lokální CLI | Vlastník repozitáře | Neúspěšná kontrola změnu zastaví a uvede konkrétní důkaz |
 | GitHub | Obousměrně | Uchovává vzdálený Git a spouští workflow | Git přes SSH, GitHub Actions | GitHub a vlastník repozitáře | Lokální práce pokračuje; publikování čeká na obnovení platformy |
 | GitHub Pages | Ze systému k čtenáři | Hostuje odvozený statický web | HTTPS a větev `gh-pages` | GitHub a vlastník repozitáře | Poslední úspěšný deployment zůstává dostupný, pokud platforma zachová službu |
+| npm registry | Do sestavení | Obnovuje přesně uzamčený `git-cliff` | HTTPS balíčkový registr a npm cache | npm | Již publikovaný web zůstane dostupný; čistý build bez cache čeká na obnovu registru |
 | Prohlížeč čtenáře | Obousměrně se statickým webem | Zobrazuje stránky, vyhledává a ukládá neškodnou volbu tématu | HTTPS, HTML, CSS, JavaScript, `localStorage` | Čtenář | Nedostupné úložiště tématu se bezpečně nahradí režimem `auto` |
 
 ## 4. Strategie řešení
@@ -68,6 +69,7 @@ Diagram ukazuje autorství, sestavení a veřejné čtení bez serverové aplika
 - Veřejný obsah je explicitní allowlist tematických oblastí a zdrojových příloh, nikoli každý Markdown nalezený v repozitáři.
 - [`ADR-0002`](decisions/ADR-0002-verejny-docfx-build.md) sjednocuje veřejnou hranici, připnutý toolchain a kontrolu sestaveného artefaktu do jednoho build kontraktu.
 - [`scripts/generate-docs.js`](../../scripts/generate-docs.js) vlastní názvy, pořadí a cesty veřejné navigace; generované indexy a TOC nejsou ručně upravované zdroje pravdy.
+- [`cliff.toml`](../../cliff.toml) deklarativně převádí úplnou Git historii na ignorovaný veřejný changelog podle [`ADR-0003`](decisions/ADR-0003-generovani-changelogu-pomoci-git-cliff.md).
 - `package.json` poskytuje stejné lidské vstupní příkazy lokálnímu vývoji i GitHub Actions.
 - Interní kanonické dokumenty řídí projekt, ale nemají běhovou závislost na veřejném webu a DocFX je nesmí zpracovat.
 
@@ -77,6 +79,7 @@ Diagram ukazuje autorství, sestavení a veřejné čtení bez serverové aplika
 |---|---|---|---|---|
 | Zdrojový veřejný obsah | Tematické Markdown stránky a přílohy v `images/` a `pdf/` | Relativní veřejné cesty uvedené v registru navigace | Jiné veřejné stránky a přílohy | Správce obsahu |
 | Generátor navigace | Normalizuje veřejný Markdown, migruje legacy cesty, generuje přehledy a ověřuje navigaci i lokální odkazy | npm profily `docs:generate` a `docs:check` | Node.js standardní knihovna a zdrojový veřejný obsah | Engineering |
+| Generátor changelogu | Kategorizuje dosažitelnou Git historii, označuje breaking changes a odkazuje na přesné commity | npm profil `changelog:generate` a `cliff.toml` | Git historie a `git-cliff` uzamčený npm lockfilem; výstup je ignorovaný build vstup | Delivery |
 | Kanonická projektová dokumentace | Definuje záměr, architekturu, workflow a dlouhé úkoly | Interní odkazy z `AGENTS.md` a `docs/index.md` | Strojové konfigurace jako důkaz, nikoli veřejný obsah | Maintainers |
 | DocFX build | Převádí povolené zdroje a aktivní šablonu na statický web | npm profil `docs:build` a adresář `_site/` | Generovaný i zdrojový veřejný obsah, resources a `templates/material` | Engineering |
 | Kontrola artefaktu | Ověřuje manifest, povinné veřejné stránky a nepřítomnost interních cest | npm profil `docs:artifact-check` | Čistý DocFX výstup | Quality |
@@ -86,8 +89,10 @@ Diagram ukazuje autorství, sestavení a veřejné čtení bez serverové aplika
 flowchart LR
     S[Zdrojové články a přílohy] --> G[Generátor]
     G --> N[Generované indexy a TOC]
+    H[Git historie] --> C[git-cliff]
     S --> D[DocFX]
     N --> D
+    C --> D
     T[Material šablona] --> D
     D --> V[Kontrola artefaktu]
     V --> P[GitHub Pages]
@@ -104,7 +109,7 @@ Interní dokumentace je pouze řídicí kontext a obě zpracovatelské hranice j
 | Scénář | Navázaný požadavek | Konzistenční hranice | Selhání a zotavení |
 |---|---|---|---|
 | Aktualizace navigace | `REQ-003`, `REQ-E001` | Jedno spuštění nejdříve migruje cesty a normalizuje zdroje, poté generuje všechny přehledy a až nakonec validuje úplnost | Chyba skončí nenulovým kódem; správce opraví uvedený zdroj a spustí kontrolu znovu |
-| Ověřené lokální sestavení | `REQ-E002`, `REQ-E003`, `QLT-002`, `QLT-003` | `docs:build` odstraní pouze `_site`, provede strict DocFX build a ověří celý nový artefakt | Warning, chybějící veřejná stránka nebo interní cesta zastaví profil bez publikování |
+| Ověřené lokální sestavení | `REQ-E002`, `REQ-E003`, `QLT-002`, `QLT-003` | `docs:build` vytvoří changelog, odstraní pouze `_site`, provede strict DocFX build a ověří celý nový artefakt | Chybějící historie, warning, chybějící veřejná stránka nebo interní cesta zastaví profil bez publikování |
 | Publikování `main` | `REQ-004` | Jediný job sestaví ověřený commit a až po úspěchu předá `_site` publikační akci | Selhání zachová předchozí `gh-pages`; oprava se provede ve zdroji a workflow se zopakuje |
 
 ## 7. Data a jejich životní cyklus
@@ -114,6 +119,7 @@ Interní dokumentace je pouze řídicí kontext a obě zpracovatelské hranice j
 | Zdrojové články a veřejné přílohy | Git soubory mimo generované indexy a interní exclusions | Správce obsahu | Git historie a lokální link/navigation check | Podle historie repozitáře; odstranění je běžná verzovaná změna | Přejmenování řídí `legacyRenames` a kontrola přesného casingu |
 | Registr navigace | `sectionInfo`, `sectionOrder`, `navigation` a `rootPages` v generátoru | Engineering | Generované výstupy musí po `docs:generate` projít `docs:check` | Historii drží Git; překonaný přechod se odstraní po migraci | Generátor převádí známé legacy cesty před vytvořením výstupů |
 | Generované indexy a TOC | Výstup generátoru se zdrojovým markerem | Engineering | Nesmějí se ručně upravovat; drift je chyba | Přepisují se atomicky při generování a zůstávají verzované | Vždy se znovu odvozují z registru |
+| Changelog | Git historie a `cliff.toml` | Delivery | Regenerace při každém sestavení z úplné dosažitelné historie | Ignorovaný lokální výstup a kopie ve statickém artefaktu | Změna formátu nesmí skrýt dosažitelný commit; starší ruční záznamy chrání zmrazený archiv |
 | Statický web | Čistý build `_site/` a publikovaná větev `gh-pages` | Delivery | Artefakt check porovnává manifest a výstup s veřejnou hranicí | Lokální `_site/` je odstranitelný; `gh-pages` uchovává pouze poslední kořenový deployment commit | Neobsahuje datové migrace a lze jej znovu sestavit ze zdroje |
 | Volba tématu | `localStorage` klíč `theme` v prohlížeči | Čtenář | Hodnota se omezuje na `light`, `dark` nebo `auto` | Odstranění dat prohlížeče vrátí `auto` | Není potřeba serverová migrace |
 
@@ -121,7 +127,7 @@ Interní dokumentace je pouze řídicí kontext a obě zpracovatelské hranice j
 
 | Prostředí | Běhové jednotky | Stav | Síťová hranice | Škálování | Pozorovatelnost |
 |---|---|---|---|---|---|
-| Lokální vývoj | Node generátor, test runner, lokální DocFX tool a volitelný statický server | Git checkout a odvozený `_site/` | Síť je nutná pouze pro první restore a případné otevření externích odkazů | Není relevantní | Návratové kódy a konzolový výstup |
+| Lokální vývoj | Node generátor, `git-cliff`, test runner, lokální DocFX tool a volitelný statický server | Git checkout, ignorovaný `changelog.md` a odvozený `_site/` | Síť je nutná pouze pro první npm nebo NuGet restore a případné otevření externích odkazů | Není relevantní | Návratové kódy a konzolový výstup |
 | GitHub Actions quality | Jeden read-only job na Ubuntu | Dočasný checkout a artefakt bez publikování | GitHub runner, NuGet a action distribution | Jeden běh na událost | GitHub Actions log |
 | GitHub Actions publish | Jeden job na Ubuntu s `contents: write` | Dočasný checkout, `_site/` a jediný kořenový deployment commit | GitHub runner, NuGet a GitHub API | Concurrency skupina nepovolí souběžné publikování | GitHub Actions log a commit `gh-pages` |
 | GitHub Pages | Statické soubory z `gh-pages` | Pouze publikovaný artefakt | Veřejné HTTPS | Řídí GitHub | HTTP dostupnost a uživatelský smoke scénář |

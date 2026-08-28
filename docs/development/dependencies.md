@@ -25,18 +25,19 @@ Její zdánlivě malý počáteční rozsah nezahrnuje budoucí bezpečnost, kom
 
 Projekt nemá aplikační npm balíčky ani runtime backend závislosti.
 
-Generátor, kontrola artefaktu a testy používají pouze standardní knihovnu podporovaného Node.js.
+Vlastní generátor, kontrola artefaktu a testy používají pouze standardní knihovnu podporovaného Node.js; jediná npm devDependency poskytuje nástroj pro sestavení changelogu.
 
 | Závislost nebo vlastní prvek | Účel | Strojová autorita | Omezení a ověření |
 |---|---|---|---|
-| Node.js | Generování, kontroly a testy | [`package.json`](../../package.json) | Přesná verze se ověřuje v lokálním i CI profilu; npm lockfile není potřebný, dokud nevznikne npm balíček |
+| Node.js | Generování, kontroly a testy | [`package.json`](../../package.json) | Přesná verze se ověřuje v lokálním i CI profilu |
+| `git-cliff` | Odvození kategorizovaného veřejného changelogu z Git historie | [`package.json`](../../package.json) a [`package-lock.json`](../../package-lock.json) | Přesně uzamčená vývojová závislost; běží offline a nevstupuje do publikovaného webu jako runtime kód |
 | .NET SDK | Hostitel lokálního DocFX toolu | [`global.json`](../../global.json) | Roll-forward je vypnutý a upgrade vyžaduje celý build profil |
 | DocFX | Převod povoleného Markdown obsahu na statický web | [`.config/dotnet-tools.json`](../../.config/dotnet-tools.json) | Obnovuje se přes `dotnet tool restore` a build používá warningy jako chyby |
 | `scripts/generate-docs.js` | Projektový registr navigace, normalizace, migrace cest a kontrola artefaktu | Vlastní zdrojový soubor a [`ADR-0002`](../architecture/decisions/ADR-0002-verejny-docfx-build.md) | Vlastní implementace je krytá cílenými testy a nesmí přerůst v obecný dokumentační framework |
 | `templates/material` | Aktivní vzhled a volba tématu nad standardními DocFX šablonami | [`docfx.json`](../../docfx.json) a zdroje šablony | Browserový JavaScript nevolá externí službu a ukládá pouze volbu tématu |
 | GitHub Actions | Obnova prostředí, quality a publikování | [`.github/workflows`](../../.github/workflows) | Každá action je připnutá na full SHA; third-party publish zůstává přechodem `ARCH-RISK-002` |
 
-Přidání prvního npm balíčku musí současně zavést a commitnout lockfile a aktualizovat [`commands.md`](commands.md).
+Volbu changelog nástroje a její migrační hranice přijímá [`ADR-0003`](../architecture/decisions/ADR-0003-generovani-changelogu-pomoci-git-cliff.md).
 
 ## Hodnocení knihovny
 

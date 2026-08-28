@@ -1,4 +1,8 @@
-# Změny
+# Historický archiv změn
+
+> Tento zmrazený archiv zachovává ručně vedené záznamy z doby před obnovením současné Git historie.
+>
+> Nové změny se přidávají pouze do automaticky generované stránky [Změny](changelog.md).
 
 ## 2026-08-16
 
