@@ -1,0 +1,20 @@
+# Tento soubor generuje npm run docs:generate. Neupravujte navigaci ani přehledy ručně.
+- name: "Přehled"
+  href: "index.md"
+- name: "Prostředí"
+  items:
+    - name: "WSL"
+      href: "wsl.md"
+    - name: "Docker"
+      href: "docker/index.md"
+      items:
+        - name: "Bezpečný upgrade stateful služby"
+          href: "docker/safe-stateful-upgrade.md"
+        - name: "Portainer"
+          href: "docker/portainer.md"
+        - name: "Duplicati"
+          href: "docker/duplicati.md"
+        - name: "BusyBox"
+          href: "docker/busybox.md"
+    - name: "Kubernetes"
+      href: "kubernetes.md"

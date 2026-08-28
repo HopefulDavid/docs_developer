@@ -1,0 +1,10 @@
+# Tento soubor generuje npm run docs:generate. Neupravujte navigaci ani přehledy ručně.
+- name: "Přehled"
+  href: "index.md"
+- name: "Windows"
+  href: "windows/index.md"
+  items:
+    - name: "Command Line"
+      href: "windows/cmd.md"
+    - name: "PowerShell"
+      href: "windows/powershell.md"

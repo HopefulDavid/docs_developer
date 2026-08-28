@@ -1,0 +1,50 @@
+name: Publikování dokumentace
+
+"on":
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  publish-docs:
+    name: Ověření, sestavení a publikování
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Načtení zdrojů bez uchování zápisového tokenu
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Instalace připnutého .NET SDK
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          global-json-file: global.json
+
+      - name: Instalace připnutého Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: package.json
+          package-manager-cache: false
+
+      - name: Obnovení připnutého DocFX
+        run: dotnet tool restore
+
+      - name: Ověření a sestavení dokumentace
+        run: npm run verify
+
+      - name: Publikování sestaveného webu
+        uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4.1.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: _site
+          force_orphan: true
