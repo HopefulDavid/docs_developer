@@ -21,13 +21,17 @@ Zde se vysvětluje její účel, pořadí, prostředí, oprávnění a způsob l
 | VCS | Git | `.git/`, remote a projektová historie |
 | Výchozí větev hostingu | `main` | Lokální symbolický ref `origin/HEAD -> origin/main` |
 | Vývojová větev | `develop` | [`../development/workflow.md`](../development/workflow.md) |
+| Ochrana zdrojových větví | Aktivní GitHub rulesety pro `main` a `develop` | [Nastavení rulesetů](https://github.com/HopefulDavid/docs_developer/settings/rules), vzdáleně ověřeno 2026-08-28 |
 | Kanonická cesta quality | [`.github/workflows/quality.yml`](../../.github/workflows/quality.yml) | Read-only workflow pro `develop`, pull request a ruční běh |
 | Kanonická cesta publikování | [`.github/workflows/main.yml`](../../.github/workflows/main.yml) | Ověření a deployment po pushi do `main` nebo ručním spuštění |
+| Zdroj GitHub Pages | Kořen větve `gh-pages` | [Nastavení Pages](https://github.com/HopefulDavid/docs_developer/settings/pages), vzdáleně ověřeno 2026-08-28 |
 | Runner nebo executor | GitHub-hosted `ubuntu-latest` | Obě workflow definice |
 
 Publikované články mohou popisovat Forgejo, Gitea nebo jinou platformu, ale tyto tematické stránky nejsou důkazem hostingu tohoto projektu.
 
-Živá branch protection a Pages settings nejsou obsahem Git stromu a zůstávají k vzdálenému ověření v `ARCH-RISK-004`.
+Živá pravidla GitHubu nejsou obsahem Git stromu.
+
+Jejich poslední ověřený stav a povinné spouštěče další revize jsou uvedené v části [Vzdálené ochrany větví](#vzdálené-ochrany-větví) a zbytkové riziko driftu vlastní `ARCH-RISK-004`.
 
 ## Lokální ekvivalence
 
@@ -95,6 +99,10 @@ Workflow používá nejmenší možná oprávnění.
 
 Výchozí token nemá zapisovat, pokud job zápis nepotřebuje.
 
+Nastavení repozitáře bylo 2026-08-28 ověřeno na výchozí read-only oprávnění `GITHUB_TOKEN` a nepovoluje GitHub Actions vytvářet ani schvalovat pull requesty.
+
+Publikační workflow žádá pouze potřebné `contents: write`, zatímco quality workflow zůstává na `contents: read`.
+
 Tajemství se zpřístupňuje pouze jobu a kroku, který je skutečně používá.
 
 Kód z nedůvěryhodné větve nebo pull requestu nesmí běžet v kontextu s privilegovanými tajemstvími.
@@ -125,7 +133,7 @@ Identita artefaktu se váže na commit, verzi a relevantní provenance údaje.
 
 Reprodukovatelnost se zvyšuje úměrně riziku a distribučnímu modelu projektu.
 
-## Spouštěče a ochrany
+## Spouštěče workflow
 
 | Událost | Workflow | Povinné kontroly | Oprávnění | Poznámka |
 |---|---|---|---|---|
@@ -139,6 +147,33 @@ Reprodukovatelnost se zvyšuje úměrně riziku a distribučnímu modelu projekt
 Nasazení do produkce vyžaduje explicitně přijatý proces projektu.
 
 Automatické publikování se nezavádí jako vedlejší důsledek běžného ověřovacího workflow.
+
+## Vzdálené ochrany větví
+
+GitHub je strojovou autoritou pro živé rulesety a Pages settings.
+
+Tato část zaznamenává přijatý význam a stav vzdáleně ověřený dne 2026-08-28, aby bylo možné rozpoznat pozdější drift.
+
+Klasické branch protection rules nejsou nakonfigurované, protože zdrojové větve chrání moderní rulesety.
+
+| Cíl | Ověřený ruleset a rozsah | Vynucované vlastnosti | Vztah k workflow |
+|---|---|---|---|
+| `develop` | Aktivní `Ochrana develop`, přesný cíl `develop`, prázdný bypass list | Zákaz smazání a force push; pull request ani status check nejsou podmínkou aktualizace | Umožňuje běžné fast-forward push aktualizace a po každém pushi spouští quality workflow |
+| Výchozí větev `main` | Aktivní `Ochrana main`, cíl `Default` odpovídající `main`, prázdný bypass list | Zákaz smazání a force push, povinný pull request, aktuálnost vůči `main`, vyřešené konverzace a povinná kontrola `Lokálně reprodukovatelné kontroly` ze zdroje GitHub Actions; `0` povinných schválení a jediná povolená metoda `merge` | Vynucuje propagaci `develop` do `main` podle [`../development/workflow.md`](../development/workflow.md#publikování-změny) |
+| `gh-pages` | Bez klasické ochrany a bez rulesetu | Platforma neblokuje ruční update, smazání ani force push | Větev je obnovitelný deploymentový artefakt a publikační workflow ji musí kvůli `force_orphan: true` nahradit; ruční změny zakazuje projektový workflow, nikoli GitHub |
+
+### Důkaz vzdáleného ověření
+
+- Výchozí větev byla `main` a oba rulesety byly aktivní bez bypass aktérů.
+- [Quality běh `33182623326`](https://github.com/HopefulDavid/docs_developer/actions/runs/33182623326) úspěšně ověřil commit `ef77f7577e8cf9789949b6409712a25947e873c6` na `develop`.
+- [Publikační běh `33182623548`](https://github.com/HopefulDavid/docs_developer/actions/runs/33182623548) úspěšně sestavil a publikoval stejný zdrojový commit z `main`.
+- Pages používaly kořen větve `gh-pages`, vynucovaly HTTPS a poslední deployment dokončil navazující workflow `pages-build-deployment`.
+- Vzdálená historie `gh-pages` obsahovala jediný kořenový commit `f38e9093188f259d4134e9701108e188aeb7c10a` se zprávou odkazující na zdrojový commit.
+- [Veřejný web](https://hopefuldavid.github.io/docs_developer/) odpověděl přes HTTPS a zobrazil očekávanou homepage.
+
+Vzdálené ověření zopakuj při změně rulesetu, výchozí větve, názvu povinného jobu, workflow triggeru nebo oprávnění, Pages source a publikačního modelu.
+
+Kontrola musí potvrdit aktivní cíle a bypass listy, úspěšný quality i publish běh, jediný kořenový commit `gh-pages` a dostupný veřejný web.
 
 ## Prostředí a propagace
 
