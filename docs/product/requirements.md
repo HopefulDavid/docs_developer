@@ -1,7 +1,7 @@
 ---
 canonical_for: product-requirements
 status: accepted
-last_verified: 2026-08-28
+last_verified: 2026-08-29
 owner: product
 ---
 
@@ -47,6 +47,7 @@ Zapiš pouze omezení, která mají skutečný produktový nebo obchodní původ
 Technická omezení zaznamenej v architektonickém přehledu a zde na ně odkaž.
 
 - Veřejný obsah a rozhraní webu jsou primárně v češtině.
+- Veřejné rozhraní nenabízí odkaz pro editaci stránky ani zobrazení zdrojového souboru.
 - Web musí být použitelný jako statický artefakt bez backendu.
 - Veřejné relativní URL a jejich přesný casing jsou pozorovatelnou kompatibilitou.
 - Hosting zůstává na GitHub Pages, dokud vlastník nepřijme jiný distribuční model.

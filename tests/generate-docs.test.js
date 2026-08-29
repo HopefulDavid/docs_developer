@@ -80,6 +80,18 @@ test('DocFX explicitně vylučuje projektová metadata a instrukce', () => {
   }
 });
 
+test('DocFX používá české rozhraní bez editačních odkazů', () => {
+  const customTemplate = docfx.build.template.at(-1);
+  const tokens = JSON.parse(
+    fs.readFileSync(path.join(root, customTemplate, 'token.json'), 'utf8'),
+  );
+
+  assert.equal(docfx.build.globalMetadata._lang, 'cs');
+  assert.equal(docfx.build.globalMetadata._disableContribution, true);
+  assert.equal(tokens.inThisArticle, 'V tomto článku');
+  assert.equal(tokens.improveThisDoc, 'Upravit tuto stránku');
+});
+
 test('veřejné case-only migrace používají přesné lowercase cesty', () => {
   const canonicalPaths = [
     'database/dapper.md',

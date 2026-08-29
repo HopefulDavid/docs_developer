@@ -1,7 +1,7 @@
 ---
 canonical_for: system-architecture
 status: accepted
-last_verified: 2026-08-28
+last_verified: 2026-08-29
 owner: architecture
 ---
 
@@ -34,7 +34,7 @@ Přechodové stavy jsou soustředěné v části [Známá rizika, dluh a přecho
 | Omezení | Původ | Dopad | Stav |
 |---|---|---|---|
 | Výstup je statický web bez backendu | `REQ-001`, `REQ-002` a současný DocFX projekt | Veškerý obsah, navigace a vyhledávací index musí vzniknout při buildu | Záměr |
-| Veřejný obsah je primárně v češtině | Produktové omezení | Generátor, názvy workflow a uživatelský text používají češtinu | Záměr |
+| Veřejný obsah je primárně v češtině a neobsahuje editační odkazy | Produktové omezení | Generátor, názvy workflow, tokeny šablony, HTML jazyk a uživatelský text používají češtinu; příspěvkový blok DocFX se nevykresluje | Záměr |
 | Hosting a VCS jsou GitHub a GitHub Pages | Git remote a workflow | CI používá GitHub Actions a deployment do větve `gh-pages` | Skutečnost |
 | Projekt nemá serverovou databázi ani runtime tajemství | Inventura repozitáře a běhového výstupu | Obnova vychází z Git zdrojů a opakovatelného buildu | Skutečnost |
 | Historické veřejné URL mohou obsahovat mixed-case názvy | Lokální snapshot `origin/gh-pages` | Lowercase sjednocení může přerušit přímé historické odkazy | Skutečnost a přechod `ARCH-RISK-001` |
@@ -82,6 +82,7 @@ Diagram ukazuje autorství, sestavení a veřejné čtení bez serverové aplika
 | Generátor changelogu | Dělí dosažitelnou Git historii do ročních období, uvnitř zachovává kategorie, označuje breaking changes a uvádí krátké neklikací hashe commitů | npm profil `changelog:generate` a `cliff.toml` | Git historie a `git-cliff` uzamčený npm lockfilem; výstup je ignorovaný build vstup | Delivery |
 | Kanonická projektová dokumentace | Definuje záměr, architekturu, workflow a dlouhé úkoly | Interní odkazy z `AGENTS.md` a `docs/index.md` | Strojové konfigurace jako důkaz, nikoli veřejný obsah | Maintainers |
 | DocFX build | Převádí povolené zdroje a aktivní šablonu na statický web | npm profil `docs:build` a adresář `_site/` | Generovaný i zdrojový veřejný obsah, resources a `templates/material` | Engineering |
+| Vlastní šablona | Přizpůsobuje vzhled, české popisky a volbu tématu a ponechává příspěvkový blok DocFX vypnutý | `templates/material/` a `docfx.json` | Podporované veřejné assety, tokeny a globální metadata DocFX | Design a engineering |
 | Kontrola artefaktu | Ověřuje manifest, povinné veřejné stránky a nepřítomnost interních cest | npm profil `docs:artifact-check` | Čistý DocFX výstup | Quality |
 | GitHub workflow | Obnovuje připnuté nástroje, volá `npm run verify` a publikuje výstup | Workflow pro `develop`, pull request a `main` | GitHub Actions, build kontrakt a `GITHUB_TOKEN` pouze při publikování | Delivery |
 

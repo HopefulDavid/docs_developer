@@ -1,7 +1,7 @@
 ---
 canonical_for: operations-runbook
 status: accepted
-last_verified: 2026-08-28
+last_verified: 2026-08-29
 owner: operations
 ---
 
@@ -30,7 +30,7 @@ Odkazuje na ně a popisuje konkrétní provozní rozhodovací kroky.
 |---|---|---|---|---|
 | Zdroj a build | V kořeni spusť `npm ci --ignore-scripts --no-audit --no-fund`, `dotnet tool restore` a `npm run verify` podle dokumentu příkazů | Vše skončí kódem 0, DocFX má 0 warningů a artifact check potvrdí veřejnou hranici | Drift navigace, test, warning DocFX nebo chybějící výstup | Oprav první konkrétní chybu v konzolovém výstupu a profil zopakuj |
 | Changelog | Otevři stránku `Změny` a podle potřeby spusť `npm run changelog:generate` | Zdrojový stav odpovídá `HEAD`, nejnovější rok je otevřený, roky bez změn nejsou zobrazené a každý starší zobrazený rok je sbalený s vlastním počtem a uvnitř zůstávají kategorie i technické záznamy | Mělký checkout, zastaralý výstup, chybný roční přechod, neobnovený `git-cliff` nebo vadný `cliff.toml` | Reprodukuj cílený test a generování podle diagnostického stromu |
-| Lokální čtenářský tok | Spusť `npm run docs:serve`, otevři homepage, tematický článek a vyhledávání | Stránky se zobrazí, navigace funguje a vyhledávání vrátí očekávaný typ výsledku | Chyba šablony, stale `_site/` nebo klientský JavaScript | Znovu proveď čistý build a zkontroluj browser konzoli |
+| Lokální čtenářský tok | Spusť `npm run docs:serve`, otevři homepage, tematický článek a vyhledávání | Stránky se zobrazí, ovládací texty jsou české, editační odkaz chybí, navigace funguje a vyhledávání vrátí očekávaný typ výsledku | Anglický token, editační odkaz, chyba šablony, stale `_site/` nebo klientský JavaScript | Znovu proveď čistý build a zkontroluj browser konzoli |
 | Produkční dostupnost | Otevři veřejnou Pages URL z nastavení repozitáře a zopakuj `REQ-001` | Poslední ověřený web odpovídá očekávanému commitu `main` | Pages nebo publish workflow je nedostupné či zastaralé | Zkontroluj poslední běh `Publikování dokumentace` a větev `gh-pages` |
 
 Health check nesmí vracet úspěch pouze proto, že proces běží, pokud hlavní schopnost není použitelná.
