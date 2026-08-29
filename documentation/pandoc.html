@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Pandoc – Praktick&#253; průvodce a tipy | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Pandoc – Praktick&#253; průvodce a tipy | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/documentation/pandoc.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="pandoc--praktický-průvodce-a-tipy">Pandoc – Praktický průvodce a tipy</h1>
+
+<blockquote>
+<p>Moderní přehled základních pojmů, příkazů a doporučení pro práci s Pandoc.</p>
+</blockquote>
+<p><img src="../images/c5ecf7de-7ac5-488a-806b-93c271cb5998.png" alt="Pandoc"></p>
+<h2 id="co-je-pandoc">Co je Pandoc?</h2>
+<ul>
+<li><strong>Univerzální konvertor dokumentů</strong></li>
+<li>Podporuje širokou škálu formátů: Markdown, HTML, LaTeX, DOCX, PDF, EPUB, RTF a další</li>
+<li>Umožňuje převádět soubory mezi různými značkovacími formáty</li>
+</ul>
+<div class="NOTE">
+<h5>Pozn&#225;mka</h5>
+<p>Pandoc je ideální pro automatizaci převodů dokumentů v projektech.</p>
+</div>
+<h2 id="přehled-příkazů">Přehled příkazů</h2>
+<details>
+<summary>Tabulka převodů a možností</summary>
+<table>
+<thead>
+<tr>
+<th><strong>Vstupní Formát</strong></th>
+<th><strong>Výstupní Formát</strong></th>
+<th><strong>Příkaz</strong></th>
+<th><strong>Poznámka</strong></th>
+<th><strong>Užitečné Možnosti</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>📝 Markdown (.md)</td>
+<td>📄 DOCX (.docx)</td>
+<td><code>pandoc soubor.md -o soubor.docx</code></td>
+<td>Markdown → Word</td>
+<td><code>--standalone</code>, <code>--template=moje-sablona.tex</code>, <code>--metadata title=&quot;Název dokumentu&quot;</code></td>
+</tr>
+<tr>
+<td>📝 Markdown (.md)</td>
+<td>🌐 HTML (.html)</td>
+<td><code>pandoc soubor.md -o soubor.html</code></td>
+<td>Markdown → HTML</td>
+<td><code>--self-contained</code>, <code>--css=style.css</code>, <code>--metadata title=&quot;Titul stránky&quot;</code></td>
+</tr>
+<tr>
+<td>📝 Markdown (.md)</td>
+<td>📑 PDF (.pdf)</td>
+<td><code>pandoc soubor.md -o soubor.pdf</code></td>
+<td>Markdown → PDF (vyžaduje LaTeX)</td>
+<td><code>--pdf-engine=xelatex</code>, <code>--template=moje-sablona.tex</code>, <code>--toc</code></td>
+</tr>
+<tr>
+<td>📝 Markdown (.md)</td>
+<td>📚 EPUB (.epub)</td>
+<td><code>pandoc soubor.md -o soubor.epub</code></td>
+<td>Markdown → e-kniha</td>
+<td><code>--epub-metadata=metadata.xml</code>, <code>--css=style.css</code>, <code>--epub-cover-image=image.jpg</code></td>
+</tr>
+<tr>
+<td>📄 DOCX (.docx)</td>
+<td>📝 Markdown (.md)</td>
+<td><code>pandoc soubor.docx -o soubor.md</code></td>
+<td>Word → Markdown</td>
+<td><code>--extract-media=.</code></td>
+</tr>
+<tr>
+<td>📄 DOCX (.docx)</td>
+<td>🌐 HTML (.html)</td>
+<td><code>pandoc soubor.docx -o soubor.html</code></td>
+<td>Word → HTML</td>
+<td><code>--self-contained</code>, <code>--css=style.css</code></td>
+</tr>
+<tr>
+<td>📄 DOCX (.docx)</td>
+<td>📑 PDF (.pdf)</td>
+<td><code>pandoc soubor.docx -o soubor.pdf</code></td>
+<td>Word → PDF</td>
+<td><code>--pdf-engine=xelatex</code>, <code>--template=moje-sablona.tex</code>, <code>--toc</code></td>
+</tr>
+<tr>
+<td>📄 DOCX (.docx)</td>
+<td>📚 EPUB (.epub)</td>
+<td><code>pandoc soubor.docx -o soubor.epub</code></td>
+<td>Word → e-kniha</td>
+<td><code>--epub-metadata=metadata.xml</code>, <code>--css=style.css</code></td>
+</tr>
+<tr>
+<td>🌐 HTML (.html)</td>
+<td>📝 Markdown (.md)</td>
+<td><code>pandoc soubor.html -o soubor.md</code></td>
+<td>HTML → Markdown</td>
+<td><code>--standalone</code>, <code>--self-contained</code></td>
+</tr>
+<tr>
+<td>🌐 HTML (.html)</td>
+<td>📄 DOCX (.docx)</td>
+<td><code>pandoc soubor.html -o soubor.docx</code></td>
+<td>HTML → Word</td>
+<td><code>--self-contained</code>, <code>--extract-media=.</code></td>
+</tr>
+<tr>
+<td>🌐 HTML (.html)</td>
+<td>📑 PDF (.pdf)</td>
+<td><code>pandoc soubor.html -o soubor.pdf</code></td>
+<td>HTML → PDF</td>
+<td><code>--pdf-engine=xelatex</code>, <code>--template=moje-sablona.tex</code>, <code>--toc</code></td>
+</tr>
+<tr>
+<td>🌐 HTML (.html)</td>
+<td>📚 EPUB (.epub)</td>
+<td><code>pandoc soubor.html -o soubor.epub</code></td>
+<td>HTML → e-kniha</td>
+<td><code>--epub-metadata=metadata.xml</code>, <code>--css=style.css</code></td>
+</tr>
+<tr>
+<td>📑 LaTeX (.tex)</td>
+<td>📝 Markdown (.md)</td>
+<td><code>pandoc soubor.tex -o soubor.md</code></td>
+<td>LaTeX → Markdown</td>
+<td><code>--standalone</code>, <code>--self-contained</code></td>
+</tr>
+<tr>
+<td>📑 LaTeX (.tex)</td>
+<td>📄 DOCX (.docx)</td>
+<td><code>pandoc soubor.tex -o soubor.docx</code></td>
+<td>LaTeX → Word</td>
+<td><code>--pdf-engine=xelatex</code>, <code>--extract-media=.</code></td>
+</tr>
+<tr>
+<td>📑 LaTeX (.tex)</td>
+<td>🌐 HTML (.html)</td>
+<td><code>pandoc soubor.tex -o soubor.html</code></td>
+<td>LaTeX → HTML</td>
+<td><code>--self-contained</code>, <code>--standalone</code></td>
+</tr>
+<tr>
+<td>📑 LaTeX (.tex)</td>
+<td>📑 PDF (.pdf)</td>
+<td><code>pandoc soubor.tex -o soubor.pdf</code></td>
+<td>LaTeX → PDF</td>
+<td><code>--pdf-engine=xelatex</code>, <code>--template=moje-sablona.tex</code>, <code>--toc</code></td>
+</tr>
+<tr>
+<td>📑 LaTeX (.tex)</td>
+<td>📚 EPUB (.epub)</td>
+<td><code>pandoc soubor.tex -o soubor.epub</code></td>
+<td>LaTeX → e-kniha</td>
+<td><code>--epub-metadata=metadata.xml</code>, <code>--css=style.css</code></td>
+</tr>
+<tr>
+<td>📚 EPUB (.epub)</td>
+<td>📝 Markdown (.md)</td>
+<td><code>pandoc soubor.epub -o soubor.md</code></td>
+<td>EPUB → Markdown</td>
+<td><code>--standalone</code>, <code>--self-contained</code></td>
+</tr>
+<tr>
+<td>📚 EPUB (.epub)</td>
+<td>📄 DOCX (.docx)</td>
+<td><code>pandoc soubor.epub -o soubor.docx</code></td>
+<td>EPUB → Word</td>
+<td><code>--extract-media=.</code></td>
+</tr>
+<tr>
+<td>📚 EPUB (.epub)</td>
+<td>🌐 HTML (.html)</td>
+<td><code>pandoc soubor.epub -o soubor.html</code></td>
+<td>EPUB → HTML</td>
+<td><code>--self-contained</code>, <code>--standalone</code></td>
+</tr>
+<tr>
+<td>📚 EPUB (.epub)</td>
+<td>📑 PDF (.pdf)</td>
+<td><code>pandoc soubor.epub -o soubor.pdf</code></td>
+<td>EPUB → PDF</td>
+<td><code>--pdf-engine=xelatex</code>, <code>--template=moje-sablona.tex</code>, <code>--toc</code></td>
+</tr>
+<tr>
+<td>📄 RTF (.rtf)</td>
+<td>📝 Markdown (.md)</td>
+<td><code>pandoc soubor.rtf -o soubor.md</code></td>
+<td>RTF → Markdown</td>
+<td><code>--standalone</code>, <code>--self-contained</code></td>
+</tr>
+<tr>
+<td>📄 RTF (.rtf)</td>
+<td>📄 DOCX (.docx)</td>
+<td><code>pandoc soubor.rtf -o soubor.docx</code></td>
+<td>RTF → Word</td>
+<td><code>--extract-media=.</code></td>
+</tr>
+<tr>
+<td>📄 RTF (.rtf)</td>
+<td>🌐 HTML (.html)</td>
+<td><code>pandoc soubor.rtf -o soubor.html</code></td>
+<td>RTF → HTML</td>
+<td><code>--self-contained</code>, <code>--standalone</code></td>
+</tr>
+<tr>
+<td>📄 RTF (.rtf)</td>
+<td>📑 PDF (.pdf)</td>
+<td><code>pandoc soubor.rtf -o soubor.pdf</code></td>
+<td>RTF → PDF</td>
+<td><code>--pdf-engine=xelatex</code>, <code>--template=moje-sablona.tex</code>, <code>--toc</code></td>
+</tr>
+</tbody>
+</table>
+</details>
+<h2 id="užitečné-možnosti-pro-konfiguraci-výstupů">Užitečné možnosti pro konfiguraci výstupů</h2>
+<details>
+<summary>Nastavení metadat, šablon a výstupů</summary>
+<ul>
+<li><p><strong>Nastavení metadat (title, author, date):</strong></p>
+<pre><code class="lang-sh">pandoc soubor.md -o soubor.pdf --metadata title=&quot;Titul dokumentu&quot; --metadata author=&quot;Autor&quot;
+</code></pre>
+</li>
+<li><p><strong>Použití vlastní šablony pro PDF/HTML:</strong></p>
+<pre><code class="lang-sh">pandoc soubor.md -o soubor.pdf --template=moje-sablona.tex
+</code></pre>
+</li>
+<li><p><strong>Generování samostatného souboru pro HTML/PDF (včetně obrázků):</strong></p>
+<pre><code class="lang-sh">pandoc soubor.md -o soubor.html --standalone
+</code></pre>
+</li>
+<li><p><strong>Přidání obrázků přímo do HTML (base64):</strong></p>
+<pre><code class="lang-sh">pandoc soubor.md -o soubor.html --self-contained
+</code></pre>
+</li>
+<li><p><strong>Vložení obrázků (s externími cestami):</strong></p>
+<pre><code class="lang-sh">pandoc soubor.md -o soubor.html --extract-media=./media
+</code></pre>
+</li>
+<li><p><strong>Zobrazení obsahu (TOC):</strong></p>
+<pre><code class="lang-sh">pandoc soubor.md -o soubor.pdf --toc
+</code></pre>
+</li>
+<li><p><strong>Výběr formátu pro PDF engine (xelatex, pdflatex, etc.):</strong></p>
+<pre><code class="lang-sh">pandoc soubor.md -o soubor.pdf --pdf-engine=xelatex
+</code></pre>
+</li>
+</ul>
+</details>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

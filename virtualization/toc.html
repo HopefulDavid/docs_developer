@@ -1,0 +1,54 @@
+
+<div id="sidetoggle">
+  <div>
+    <div class="sidefilter">
+      <form class="toc-filter">
+        <span class="glyphicon glyphicon-filter filter-icon"></span>
+        <span class="glyphicon glyphicon-remove clear-icon" id="toc_filter_clear"></span>
+        <input type="text" id="toc_filter_input" placeholder="Filtrovat podle n&#225;zvu" onkeypress="if(event.keyCode==13) {return false;}">
+      </form>
+    </div>
+    <div class="sidetoc">
+      <div class="toc" id="toc">
+
+          <ul class="nav level1">
+                <li>
+                    <a href="index.html" name="" title="Přehled">Přehled</a>
+                </li>
+                <li>
+                    <span class="expand-stub"></span>
+                    <a>Prostředí</a>
+
+                    <ul class="nav level2">
+                          <li>
+                              <a href="wsl.html" name="" title="WSL">WSL</a>
+                          </li>
+                          <li>
+                              <span class="expand-stub"></span>
+                              <a href="docker/index.html" name="" title="Docker">Docker</a>
+
+                              <ul class="nav level3">
+                                    <li>
+                                        <a href="docker/safe-stateful-upgrade.html" name="" title="Bezpečn&#253; upgrade stateful služby">Bezpečn&#253; upgrade stateful služby</a>
+                                    </li>
+                                    <li>
+                                        <a href="docker/portainer.html" name="" title="Portainer">Portainer</a>
+                                    </li>
+                                    <li>
+                                        <a href="docker/duplicati.html" name="" title="Duplicati">Duplicati</a>
+                                    </li>
+                                    <li>
+                                        <a href="docker/busybox.html" name="" title="BusyBox">BusyBox</a>
+                                    </li>
+                              </ul>
+                          </li>
+                          <li>
+                              <a href="kubernetes.html" name="" title="Kubernetes">Kubernetes</a>
+                          </li>
+                    </ul>
+                </li>
+          </ul>
+      </div>
+    </div>
+  </div>
+</div>

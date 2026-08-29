@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Unity 2D – Tilemap, Sprity a Tipy | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Unity 2D – Tilemap, Sprity a Tipy | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/unity/2d.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="unity-2d--tilemap-sprity-a-tipy">Unity 2D – Tilemap, Sprity a Tipy</h1>
+
+<blockquote>
+<p>Praktické rady pro práci s 2D grafikou v Unity, nastavení Tilemap, velikosti obrázků, animace a řešení běžných problémů.</p>
+</blockquote>
+<h2 id="tilemap-vs-sprite-renderer">Tilemap vs Sprite Renderer</h2>
+<p><img src="../../images/Vz1J4Pij2Z.png" alt=""></p>
+<h2 id="tilemap">Tilemap</h2>
+<details>
+<summary>Vykreslení a nastavení barvy dlaždic</summary>
+<blockquote>
+<p>Kód funguje pouze pokud je rozdělen do dvou cyklů.</p>
+</blockquote>
+<pre><code class="lang-csharp">public void GenerateTilemap(int width, int height, Color color)
+{
+    // Smazání všech dlaždic
+    this.ClearTiles();
+
+    for (int x = 0; x &lt; width; x++)
+    for (int y = 0; y &lt; height; y++)
+    {
+        this.Tilemap.SetTile(new(x, y, 0), this.TileBase);
+    }
+
+    for (int x = 0; x &lt; width; x++)
+    for (int y = 0; y &lt; height; y++)
+    {
+        this.Tilemap.SetColor(new(x, y, 0), color);
+    }
+}
+</code></pre>
+</details>
+<details>
+<summary>Pravidla pro Tilemap</summary>
+<p><img src="../../images/TtTAcQSAM1.png" alt=""></p>
+</details>
+<h2 id="velikost-obrázku">Velikost obrázku</h2>
+<details>
+<summary>Definice velikostí</summary>
+<table>
+<thead>
+<tr>
+<th>📏 Rozměr</th>
+<th>💡 Použití</th>
+<th>👁️ Vzdálenost od kamery</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>16x16 px</td>
+<td>Ikony, jednoduché UI</td>
+<td>Velmi daleko, detail není důležitý</td>
+</tr>
+<tr>
+<td>32x32 px</td>
+<td>Malé UI prvky, ikony</td>
+<td>Velmi daleko</td>
+</tr>
+<tr>
+<td>64x64 px</td>
+<td>Menší objekty</td>
+<td>Střední vzdálenost</td>
+</tr>
+<tr>
+<td>128x128 px</td>
+<td>Střední objekty</td>
+<td>Blízká vzdálenost</td>
+</tr>
+<tr>
+<td>256x256 px</td>
+<td>Větší objekty, detailní textury</td>
+<td>Střední až blízká vzdálenost</td>
+</tr>
+<tr>
+<td>512x512 px</td>
+<td>Velmi detailní objekty</td>
+<td>Blízká vzdálenost</td>
+</tr>
+<tr>
+<td>1024x1024 px</td>
+<td>Velké objekty, textury</td>
+<td>Velmi blízká vzdálenost</td>
+</tr>
+<tr>
+<td>2048x2048+ px</td>
+<td>Maximální detail</td>
+<td>Extrémně blízká vzdálenost</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Používejte mocniny čísla 2 pro optimální výkon.</p>
+</blockquote>
+</details>
+<details>
+<summary>Nastavení velikosti (PPU)</summary>
+<p><img src="../../images/VwxJhRuC8S.png" alt=""></p>
+<blockquote>
+<p><strong>Pixel Per Unit (PPU)</strong> určuje, kolik pixelů tvoří jednu jednotku v Unity. Nastavte podle velikosti grafiky pro správné zobrazení.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>🖼️ Rozměr spritu</th>
+<th>⚙️ PPU</th>
+<th>📏 Výsledek na scéně</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>32x32 px</td>
+<td>32</td>
+<td>1x1 jednotka</td>
+</tr>
+<tr>
+<td>256x256 px</td>
+<td>256</td>
+<td>1x1 jednotka</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Pro více informací <a href="https://www.reddit.com/r/aseprite/comments/vq2mq9/what_size_should_sprites_be_for_a_2d_game/">reddit: Jakou velikost spritů použít?</a></p>
+</blockquote>
+</details>
+<h2 id="animace-obrázku">Animace obrázku</h2>
+<details>
+<summary>Hloubka (Depth) u kostí</summary>
+<blockquote>
+<p>Hloubka ovlivňuje pořadí vykreslení Sprite Mesh.</p>
+</blockquote>
+<ol>
+<li>Otevři <code>Sprite Editor</code></li>
+<li>Přepni do <code>Skinning Editor</code></li>
+<li>Nastav hloubku u kostí</li>
+</ol>
+<p><img src="../../images/2D_rigging_depth.png" alt="2D_rigging_depth.png"></p>
+</details>
+<details>
+<summary>Univerzální Rigging</summary>
+<ol>
+<li>Otevři <code>Sprite Editor</code></li>
+<li>Přepni do <code>Skinning Editor</code> (aktivuj <code>Visibility</code>)</li>
+<li>Vytvoř kosti (bones)</li>
+<li>Nastav Geometry a Weights</li>
+</ol>
+<blockquote>
+<p>Pokud se část nevykresluje barevně, zkontroluj nastavení posuvníků:</p>
+</blockquote>
+<p><img src="../../images/2D_rigging_skinWeight.png" alt="2D_rigging_skinWeight.png"></p>
+<ol start="4">
+<li>Zkopíruj rig
+<img src="../../images/2D_rigging_copy.png" alt="2D_rigging_copy.png"></li>
+<li>Otevři nový sprite</li>
+<li>Vlož rig
+<img src="../../images/2D_rigging_paste.png" alt="2D_rigging_paste.png"></li>
+</ol>
+</details>
+<h2 id="řešení-chyb-při-vykreslování-sprite">Řešení chyb při vykreslování sprite</h2>
+<blockquote>
+<p>Na kameře musí být komponenta <code>Pixel Perfect Camera</code> pro 2D!</p>
+</blockquote>
+<details>
+<summary>Černé čáry</summary>
+<p><img src="../../images/2D_sprite_blackLines.png" alt="2D_sprite_blackLines.png"></p>
+<p><strong>Řešení:</strong></p>
+<ul>
+<li><p>Zkontroluj umístění obrázku
+<img src="../../images/2D_sprite_blackLines_solution.png" alt="2D_sprite_blackLines_solution.png"></p>
+</li>
+<li><p>Nastav padding v <code>TexturePacker</code>
+<img src="../../images/2D_sprite_blackLines_solution2.png" alt="2D_sprite_blackLines_solution2.png"></p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>🏷️ Typ paddingu</th>
+<th>💡 Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Border padding</td>
+<td>Mezera kolem okrajů celého sheetu</td>
+</tr>
+<tr>
+<td>Shape padding</td>
+<td>Mezera mezi jednotlivými sprites na sheetu</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Zvyš padding, pokud se problém opakuje.</p>
+</blockquote>
+</details>
+<details>
+<summary>Problikávání</summary>
+<p>Zkontroluj měřítko v herním okně, že je nastaveno na <strong>1x</strong>.</p>
+<p><img src="../../images/2D_sprite_blackLines_solutionCamera.png" alt="2D_sprite_blackLines_solutionCamera.png"></p>
+</details>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

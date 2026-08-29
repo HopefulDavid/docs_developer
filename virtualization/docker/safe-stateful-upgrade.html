@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Bezpečn&#253; upgrade stateful služby v Docker Compose | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Bezpečn&#253; upgrade stateful služby v Docker Compose | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/virtualization/docker/safe-stateful-upgrade.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="bezpečný-upgrade-stateful-služby-v-docker-compose">Bezpečný upgrade stateful služby v Docker Compose</h1>
+
+<blockquote>
+<p>Opakovatelný postup pro aktualizaci kontejnerové služby s databází a persistentními volumes tak, aby existoval ověřený bod obnovy a jasná kontrola výsledku.</p>
+</blockquote>
+<h2 id="cíl-postupu">Cíl postupu</h2>
+<p>Stateful služba neukládá důležitá data do kontejneru, ale do databáze, pojmenovaných Docker volumes nebo bind mountů. Samotné znovuvytvoření kontejneru je proto běžné; riziková je změna datového formátu nebo databázového schématu při startu nové verze.</p>
+<div class="WARNING">
+<h5>Varov&#225;n&#237;</h5>
+<p>Úspěšný <code>docker compose up -d</code> nepotvrzuje, že aplikace zachovala data, dokončila migrace a fungují její pomocné služby. Upgrade je hotový až po kontrole dat, health stavu a logů.</p>
+</div>
+<h2 id="základní-pravidla">Základní pravidla</h2>
+<ul>
+<li>Používej konkrétní verzi image, například <code>16.0.2-rootless</code>, nikoli <code>latest</code> ani pouze hlavní verzi.</li>
+<li>Předem přečti release notes, breaking changes a podporovanou cestu upgradu.</li>
+<li>Záloha musí být mimo produkční volume a musí projít kontrolou čitelnosti.</li>
+<li>Před zálohou zastav všechny služby, které zapisují do aplikačních dat. Databázi lze při logickém dumpu ponechat běžet.</li>
+<li>Nekopíruj živý datový adresář PostgreSQL jako běžné soubory. Použij <code>pg_dump</code>, databázový snapshot nebo databázi korektně zastav.</li>
+<li>Nepoužívej <code>docker compose down -v</code>, <code>docker volume rm</code> ani jiné příkazy odstraňující volumes.</li>
+<li>Po databázové migraci nespouštěj starou aplikaci proti nové databázi. Rollback obvykle vyžaduje obnovu aplikace i databáze ze stejného bodu.</li>
+</ul>
+<h2 id="1-připrav-změnu-bez-zásahu-do-runtime">1. Připrav změnu bez zásahu do runtime</h2>
+<p>V Compose souboru nejprve připni cílové image na konkrétní verze:</p>
+<pre><code class="lang-yaml">services:
+  app:
+    image: registry.example/app:2.4.1
+  runner:
+    image: registry.example/runner:5.2.0
+</code></pre>
+<p>Ověř existenci tagu v registru a výslednou Compose konfiguraci:</p>
+<pre><code class="lang-powershell">docker manifest inspect registry.example/app:2.4.1
+docker compose -f docker-compose.yaml config --quiet
+</code></pre>
+<p>Pokud stack používá environment-specific overrides, validuj každou variantu:</p>
+<pre><code class="lang-powershell">docker compose -f docker-compose.yaml -f docker-compose.dev.yaml config --quiet
+docker compose -f docker-compose.yaml -f docker-compose.prod.yaml config --quiet
+</code></pre>
+<h2 id="2-zaznamenej-výchozí-stav">2. Zaznamenej výchozí stav</h2>
+<p>Před odstávkou ulož nebo alespoň zkontroluj:</p>
+<pre><code class="lang-powershell">docker compose -f docker-compose.yaml ps -a
+docker inspect app --format 'image={{.Config.Image}} status={{.State.Status}} health={{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}}'
+docker inspect db --format 'image={{.Config.Image}} status={{.State.Status}} health={{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}}'
+docker volume inspect app_data app_db_data --format '{{.Name}} created={{.CreatedAt}} mount={{.Mountpoint}}'
+docker system df
+</code></pre>
+<p>Zjisti také:</p>
+<ul>
+<li>které kontejnery mohou zapisovat do dat;</li>
+<li>které volumes obsahují nenahraditelná data a které jsou pouze cache;</li>
+<li>kolik je uživatelů, repozitářů nebo jiných hlavních objektů;</li>
+<li>zda je na zálohovacím disku dostatek volného místa;</li>
+<li>zda právě neběží background job, import nebo CI workflow.</li>
+</ul>
+<h2 id="3-vytvoř-konzistentní-a-ověřenou-zálohu">3. Vytvoř konzistentní a ověřenou zálohu</h2>
+<h3 id="připrav-samostatný-adresář">Připrav samostatný adresář</h3>
+<pre><code class="lang-powershell">$backupStamp = Get-Date -Format 'yyyyMMdd-HHmmss'
+$backupPath = &quot;D:\Záloha\docker\manual\app\pre-2.4.1-$backupStamp&quot;
+New-Item -ItemType Directory -Path $backupPath -Force
+</code></pre>
+<p>Adresář nesmí ležet uvnitř produkčního volume. Časové razítko brání nechtěnému přepsání předchozí zálohy.</p>
+<h3 id="zastav-zapisující-služby">Zastav zapisující služby</h3>
+<p>Nejprve zastav runner, worker a aplikaci. PostgreSQL ponech běžet a zdravý, aby mohl vytvořit konzistentní logický dump:</p>
+<pre><code class="lang-powershell">docker compose -f docker-compose.yaml stop runner worker app
+docker inspect db --format 'status={{.State.Status}} health={{.State.Health.Status}}'
+</code></pre>
+<p>Pokud záloha před nasazením selže, spusť původní již existující kontejnery příkazem <code>docker start</code>. Nepoužívej automaticky <code>docker compose up</code>, pokud Compose soubor už ukazuje na novou verzi.</p>
+<h3 id="zálohuj-postgresql">Zálohuj PostgreSQL</h3>
+<p>Následující příklad využívá proměnné uložené uvnitř databázového kontejneru a nevypisuje heslo:</p>
+<pre><code class="lang-powershell">docker exec db sh -ec 'pg_dump -U &quot;$POSTGRES_USER&quot; -d &quot;$POSTGRES_DB&quot; -Fc -f /tmp/pre-upgrade.dump; pg_restore -l /tmp/pre-upgrade.dump &gt;/dev/null'
+docker cp db:/tmp/pre-upgrade.dump &quot;$backupPath\database.dump&quot;
+docker exec db rm -f /tmp/pre-upgrade.dump
+</code></pre>
+<p>Formát <code>-Fc</code> lze kontrolovat i obnovovat pomocí <code>pg_restore</code>. Úspěšný <code>pg_restore -l</code> potvrzuje, že dump má čitelný katalog.</p>
+<h3 id="zálohuj-aplikační-volumes">Zálohuj aplikační volumes</h3>
+<p>Zdrojový volume připoj pouze pro čtení a pomocný image také připni na konkrétní verzi:</p>
+<pre><code class="lang-powershell">docker run --rm --entrypoint sh `
+  -v app_data:/source:ro `
+  -v &quot;${backupPath}:/backup&quot; `
+  busybox:1.37.0-glibc `
+  -ec 'tar -czf /backup/app_data.tar.gz -C /source .'
+</code></pre>
+<p>Stejným způsobem zálohuj další nenahraditelné volumes, například identitu runneru. Image cache, build cache a Actions cache obvykle není nutné zálohovat.</p>
+<h3 id="ověř-soubory-a-jejich-kontrolní-součty">Ověř soubory a jejich kontrolní součty</h3>
+<pre><code class="lang-powershell">$hashes = Get-ChildItem -LiteralPath $backupPath -File | Get-FileHash -Algorithm SHA256
+$hashes | Format-Table Path, Hash
+$hashes |
+  ForEach-Object { &quot;$($_.Hash) *$([IO.Path]::GetFileName($_.Path))&quot; } |
+  Set-Content -LiteralPath (Join-Path $backupPath 'SHA256SUMS')
+</code></pre>
+<p>Úplná kontrola čitelnosti archivu:</p>
+<pre><code class="lang-powershell">docker run --rm --entrypoint sh `
+  -v &quot;${backupPath}:/backup:ro&quot; `
+  busybox:1.37.0-glibc `
+  -ec 'tar -tzf /backup/app_data.tar.gz &gt;/dev/null; echo ARCHIVE_OK'
+</code></pre>
+<div class="IMPORTANT">
+<h5>Důležit&#233;</h5>
+<p>Existence souboru nebo nenulová velikost sama o sobě nestačí. Před upgradem musí skončit úspěšně databázová i archivní kontrola.</p>
+</div>
+<h2 id="4-stáhni-image-a-proveď-řízené-nasazení">4. Stáhni image a proveď řízené nasazení</h2>
+<p>Stahuj jen image, kterých se upgrade týká:</p>
+<pre><code class="lang-powershell">docker compose -f docker-compose.yaml pull app runner
+</code></pre>
+<p>Potom nech Compose znovu vytvořit změněné kontejnery nad existujícími pojmenovanými volumes:</p>
+<pre><code class="lang-powershell">docker compose -f docker-compose.yaml up -d
+</code></pre>
+<p><code>up -d</code> zachová pojmenované volumes. Přesto zkontroluj výstup: vytvoření nového cache volume je očekávané, vytvoření nového produkčního datového volume obvykle signalizuje chybný název nebo změnu Compose projektu.</p>
+<h2 id="5-ověř-migrace-data-a-pomocné-služby">5. Ověř migrace, data a pomocné služby</h2>
+<h3 id="verze-a-health-stav">Verze a health stav</h3>
+<pre><code class="lang-powershell">docker compose -f docker-compose.yaml ps -a
+docker exec app app-binary --version
+docker inspect app db --format '{{.Name}} status={{.State.Status}} health={{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}} restarts={{.RestartCount}}'
+</code></pre>
+<p>Pokud aplikace poskytuje health a version endpointy, ověř je nezávisle z hostitele:</p>
+<pre><code class="lang-powershell">Invoke-RestMethod 'http://127.0.0.1:3000/api/healthz'
+Invoke-RestMethod 'http://127.0.0.1:3000/api/v1/version'
+</code></pre>
+<h3 id="migrační-a-chybové-logy">Migrační a chybové logy</h3>
+<pre><code class="lang-powershell">docker logs --since 10m --tail 300 app
+docker logs --since 10m --tail 200 runner
+</code></pre>
+<p>V logu hledej:</p>
+<ul>
+<li>úspěšné dokončení všech databázových migrací;</li>
+<li>spuštění HTTP a případně SSH serveru;</li>
+<li>úspěšné přihlášení runneru;</li>
+<li><code>error</code>, <code>fatal</code>, <code>panic</code>, <code>permission denied</code> a opakované restarty.</li>
+</ul>
+<h3 id="zachování-dat">Zachování dat</h3>
+<p>Porovnej původní a nový počet hlavních objektů. U Git služby lze například porovnat počet záznamů v databázi s počtem adresářů repozitářů na volume. Zkontroluj také, že produkční volumes mají stejné datum vytvoření a mountpoint jako před upgradem.</p>
+<h2 id="oprávnění-nového-volume-pro-neprivilegovaný-kontejner">Oprávnění nového volume pro neprivilegovaný kontejner</h2>
+<p>Nový pojmenovaný volume bývá vlastněný uživatelem <code>root</code>. Aplikace běžící například jako <code>1000:1000</code> proto může skončit na <code>permission denied</code>. Nesnižuj bezpečnost celé služby spuštěním jako root; použij idempotentní jednorázový init kontejner:</p>
+<pre><code class="lang-yaml">services:
+  cache-init:
+    image: busybox:1.37.0-glibc
+    restart: &quot;no&quot;
+    user: &quot;0:0&quot;
+    read_only: true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - FOWNER
+    security_opt:
+      - no-new-privileges:true
+    network_mode: none
+    volumes:
+      - runner_cache:/cache
+    entrypoint: [&quot;sh&quot;, &quot;-ec&quot;]
+    command: [&quot;chown 1000:1000 /cache &amp;&amp; chmod 0700 /cache&quot;]
+
+  runner:
+    user: &quot;1000:1000&quot;
+    depends_on:
+      cache-init:
+        condition: service_completed_successfully
+    volumes:
+      - runner_cache:/cache
+
+volumes:
+  runner_cache:
+</code></pre>
+<p><code>CHOWN</code> dovolí změnit vlastníka a <code>FOWNER</code> zachová idempotenci <code>chmod</code> i při dalších spuštěních, kdy volume už vlastní UID <code>1000</code>. Init nemá síť, kořenový filesystem je read-only a zvýšená oprávnění platí jen po dobu jednorázové úpravy mountu.</p>
+<h2 id="příklad-forgejo-15--16-a-actions-cache">Příklad: Forgejo 15 → 16 a Actions cache</h2>
+<p>Při ověřeném upgradu byly použity konkrétní image:</p>
+<pre><code class="lang-yaml">services:
+  forgejo:
+    image: codeberg.org/forgejo/forgejo:16.0.2-rootless
+  forgejo-runner:
+    image: data.forgejo.org/forgejo/runner:13.0.0
+</code></pre>
+<p>Runnerová Actions cache vyžadovala nejen <code>enabled: true</code>, ale také persistentní adresář a adresu dosažitelnou z job kontejnerů:</p>
+<pre><code class="lang-yaml">cache:
+  enabled: true
+  dir: /cache
+  port: 0
+  proxy_port: 8088
+  actions_cache_url_override: http://127.0.0.1:8088
+</code></pre>
+<p>Protože joby běžely přes samostatný Docker-in-Docker daemon v režimu <code>network: host</code>, loopback adresa uvnitř jobu patřila DinD kontejneru. Samostatný <code>socat</code> proxy proto sdílel jeho síťový prostor a předával port runneru:</p>
+<pre><code class="lang-yaml">services:
+  forgejo-runner-cache-proxy:
+    image: alpine/socat:1.8.1.3@sha256:3ed1cd38741bd445ebffa3aecb9d80c46a83db45f5b5ef03332976c7ca9814af
+    restart: unless-stopped
+    init: true
+    user: &quot;65534:65534&quot;
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 64
+    mem_limit: 32m
+    network_mode: &quot;service:forgejo-runner-docker&quot;
+    command:
+      - TCP4-LISTEN:8088,fork,reuseaddr
+      - TCP4:forgejo-runner:8088
+</code></pre>
+<p>Transportní kontrola z jobové sítě:</p>
+<pre><code class="lang-powershell">docker exec forgejo-runner-docker sh -c 'wget -S -O /dev/null http://127.0.0.1:8088/ 2&gt;&amp;1 || true'
+</code></pre>
+<p>Očekávaná odpověď na kořenové cestě je HTTP <code>404 Not Found</code>: potvrzuje, že spojení prošlo přes DinD proxy až do HTTP serveru cache runneru. <code>Connection refused</code> nebo <code>error getting response</code> znamená, že cache server nebo forward nefunguje. Funkční workflow s <code>actions/cache</code> následně ověří autorizovanou cache cestu konkrétního jobu.</p>
+<h2 id="rollback">Rollback</h2>
+<p>Rollback zahaj, pokud migrace skončí chybou, health stav se neustálí, data nesouhlasí nebo pomocná služba potřebná pro provoz nefunguje.</p>
+<ol>
+<li>Zastav novou aplikaci, runner a všechny další zapisující služby.</li>
+<li>Zachovej chybový stav pro diagnostiku; nemaž okamžitě nové kontejnery ani volumes.</li>
+<li>Obnov databázi i aplikační data ze stejného předmigračního bodu.</li>
+<li>Vrať Compose na původní konkrétní verze image.</li>
+<li>Spusť starou verzi až nad obnovenou databází a daty.</li>
+<li>Zopakuj health, log a datové kontroly.</li>
+</ol>
+<div class="CAUTION">
+<h5>Upozorněn&#237;</h5>
+<p>Obnova přepisuje stav a musí mít vlastní, předem nacvičený runbook. První test obnovy prováděj do nových volumes nebo izolovaného Compose projektu, ne přímo nad jedinou kopií produkčních dat.</p>
+</div>
+<h2 id="kontrolní-seznam">Kontrolní seznam</h2>
+<ul>
+<li>[ ] Cílové image používají konkrétní verze a v registru existují.</li>
+<li>[ ] Compose konfigurace všech prostředí je validní.</li>
+<li>[ ] Je zaznamenán původní health stav, verze, volumes a počty dat.</li>
+<li>[ ] Všechny zapisující služby jsou před zálohou zastavené.</li>
+<li>[ ] Databázový dump prošel kontrolou.</li>
+<li>[ ] Archivy volumes prošly úplným testem čitelnosti.</li>
+<li>[ ] Záložní soubory mají uložené SHA-256.</li>
+<li>[ ] Produkční volumes nebyly odstraněny ani nově vytvořeny pod jiným názvem.</li>
+<li>[ ] Databázové migrace skončily úspěšně.</li>
+<li>[ ] Aplikace, databáze, runner a proxy jsou zdravé a bez nových chyb.</li>
+<li>[ ] Počty a dostupnost hlavních dat odpovídají stavu před upgradem.</li>
+<li>[ ] Je známá přesná cesta k záloze a postup rollbacku.</li>
+</ul>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

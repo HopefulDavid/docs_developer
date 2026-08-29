@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>V&#253;vojov&#233; metodiky a konvence | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="V&#253;vojov&#233; metodiky a konvence | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/techniques.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="vývojové-metodiky-a-konvence">Vývojové metodiky a konvence</h1>
+
+<blockquote>
+<p>Přehled metodologií řízení projektů, rychlého prototypování a konvencí pojmenování v kódu.</p>
+</blockquote>
+<p><img src="../images/77bb3224-887c-410f-a232-f51a105d0b01.png" alt="Techniky"></p>
+<h2 id="vývojové-metodiky">Vývojové metodiky</h2>
+<h3 id="agilní-metodika-scrum">Agilní metodika (Scrum)</h3>
+<p>Zaměřuje se na spolupráci, zákaznickou spokojenost a rychlou reakci na změny. Práce probíhá v krátkých iteracích nazývaných <strong>sprinty</strong> (2–4 týdny).</p>
+<table>
+<thead>
+<tr>
+<th>Fáze</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Plánování sprintu</strong></td>
+<td>Tým vybírá úkoly z backlogu a plánuje jejich provedení</td>
+</tr>
+<tr>
+<td><strong>Vývoj a Daily Scrum</strong></td>
+<td>Denní schůzky, průběžné testování, řešení překážek</td>
+</tr>
+<tr>
+<td><strong>Revize sprintu</strong></td>
+<td>Prezentace výsledků zákazníkovi, získání zpětné vazby</td>
+</tr>
+<tr>
+<td><strong>Retrospektiva</strong></td>
+<td>Zhodnocení procesu, návrhy na zlepšení</td>
+</tr>
+</tbody>
+</table>
+<div class="NOTE">
+<h5>Pozn&#225;mka</h5>
+<p>Scrum je vhodný pro projekty s proměnnými požadavky a nutností rychlé adaptace. Nevhodné pro projekty s pevným plánem a jasně definovanými výstupy.</p>
+</div>
+<h3 id="vodopádová-metodika">Vodopádová metodika</h3>
+<p>Sekvenční přístup – každá fáze musí být zcela dokončena před zahájením další.</p>
+<table>
+<thead>
+<tr>
+<th>Fáze</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Analýza požadavků</strong></td>
+<td>Shromažďování a analýza potřeb zákazníka</td>
+</tr>
+<tr>
+<td><strong>Návrh</strong></td>
+<td>Plánování struktury a funkcí systému</td>
+</tr>
+<tr>
+<td><strong>Implementace</strong></td>
+<td>Převod návrhu do zdrojového kódu</td>
+</tr>
+<tr>
+<td><strong>Testování</strong></td>
+<td>Ověření funkčnosti a hledání chyb</td>
+</tr>
+<tr>
+<td><strong>Nasazení</strong></td>
+<td>Přechod do produkčního prostředí</td>
+</tr>
+<tr>
+<td><strong>Údržba</strong></td>
+<td>Opravy, vylepšení, sledování výkonu</td>
+</tr>
+</tbody>
+</table>
+<div class="NOTE">
+<h5>Pozn&#225;mka</h5>
+<p>Vhodné pro projekty s jasně definovanými a neměnnými požadavky.</p>
+</div>
+<h3 id="kanban">Kanban</h3>
+<p>Vizuální řízení práce pomocí tabule a karet. Průběžná dodávka bez pevných iterací.</p>
+<ul>
+<li>Tabule je rozdělena na sloupce (např. Backlog → In Progress → Done).</li>
+<li>Karty reprezentují jednotlivé úkoly.</li>
+<li>Klíčový princip: omezení počtu rozpracovaných úkolů (<strong>WIP limit</strong>).</li>
+<li>Průběžné hodnocení procesu a optimalizace.</li>
+</ul>
+<div class="NOTE">
+<h5>Pozn&#225;mka</h5>
+<p>Kanban je vhodný pro provozní týmy a podpůrné procesy. Nevhodné pro projekty s pevnými termíny a milníky.</p>
+</div>
+<h2 id="rychlé-prototypování">Rychlé prototypování</h2>
+<p>Rychlé prototypování slouží k ověření konceptu co nejdříve – cílem je funkční model, ne dokonalý produkt.</p>
+<ol>
+<li><strong>Definice konceptu</strong> – jasná představa, klíčové mechaniky a cíle.</li>
+<li><strong>Vytvoření základní scény</strong> – např. v Unity nebo jiném nástroji.</li>
+<li><strong>Přidání objektů</strong> – jednoduché tvary reprezentující prvky (krychle, koule).</li>
+<li><strong>Implementace mechanik</strong> – skriptování, základní funkce.</li>
+<li><strong>Testování a iterace</strong> – získání zpětné vazby, úpravy.</li>
+<li><strong>Opakování cyklu</strong> – iterativní vylepšování.</li>
+</ol>
+<div class="IMPORTANT">
+<h5>Důležit&#233;</h5>
+<p>Rychlost a zpětná vazba jsou prioritou. Neztrácejte čas perfektní grafikou nebo architekturou v rané fázi.</p>
+</div>
+<h2 id="bem-metodika">BEM metodika</h2>
+<p><strong>BEM = Block Element Modifier</strong> – strukturované pojmenování tříd v HTML/CSS.</p>
+<pre><code class="lang-html">&lt;div class=&quot;block&quot;&gt;
+  &lt;div class=&quot;block__element&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;block__element--modifier&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="lang-css">.block { ... }
+.block__element { ... }
+.block__element--modifier { ... }
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Typ</th>
+<th>Oddělovač</th>
+<th>Příklad</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Block</td>
+<td><em>(žádný)</em></td>
+<td><code>.menu</code></td>
+</tr>
+<tr>
+<td>Element</td>
+<td><code>__</code></td>
+<td><code>.menu__item</code></td>
+</tr>
+<tr>
+<td>Modifier</td>
+<td><code>--</code></td>
+<td><code>.menu__item--active</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="konvence-pojmenování-v-kódu">Konvence pojmenování v kódu</h2>
+<table>
+<thead>
+<tr>
+<th>Pravidlo</th>
+<th>Příklad</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Popisné názvy, bez zkratek</td>
+<td><code>userRepository</code> místo <code>ur</code></td>
+</tr>
+<tr>
+<td>Boolovské proměnné s předponou <code>is</code>, <code>has</code>, <code>can</code></td>
+<td><code>isAvailable</code>, <code>hasAccess</code></td>
+</tr>
+<tr>
+<td>Název funkce začíná slovesem</td>
+<td><code>getUserName()</code>, <code>calculateTotalPrice()</code></td>
+</tr>
+<tr>
+<td>Konzistentní styl napříč projektem</td>
+<td><code>camelCase</code> nebo <code>snake_case</code></td>
+</tr>
+<tr>
+<td>Pole v množném čísle</td>
+<td><code>users</code>, <code>products</code>, <code>orders</code></td>
+</tr>
+<tr>
+<td>Magické hodnoty jako pojmenované konstanty</td>
+<td><code>MAX_RETRIES = 3</code> místo <code>3</code></td>
+</tr>
+</tbody>
+</table>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>PostgreSQL – Průvodce a tipy | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="PostgreSQL – Průvodce a tipy | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/database/postgresql.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="postgresql--průvodce-a-tipy">PostgreSQL – Průvodce a tipy</h1>
+
+<blockquote>
+<p>Přehled základních pojmů, instalace, příkazů a doporučení pro práci s PostgreSQL.</p>
+</blockquote>
+<p><img src="../images/a32bfd31-f086-44eb-be6f-b8fbb993dec2.png" alt="PostgreSQL"></p>
+<h2 id="co-je-postgresql">Co je PostgreSQL?</h2>
+<ul>
+<li><strong>Objektově-relační databázový systém</strong> s otevřeným zdrojovým kódem.</li>
+<li>Jeden z nejrobustnějších SQL systémů dostupných zdarma.</li>
+<li>Podporuje procedurální jazyky: <code>PL/pgSQL</code>, <code>PL/Python</code>, <code>PL/Perl</code>, <code>PL/Java</code> a další.</li>
+</ul>
+<div class="NOTE">
+<h5>Pozn&#225;mka</h5>
+<p><code>PL</code> znamená „Procedural Language&quot; – umožňuje psaní funkcí a procedur přímo v databázi.</p>
+</div>
+<h2 id="uživatelské-rozhraní">Uživatelské rozhraní</h2>
+<p>Doporučený klient je <strong>pgAdmin 4</strong> – instaluje se jako součást PostgreSQL:</p>
+<p><img src="../images/t0m7kk76Jm.png" alt="pgAdmin – otevření aplikace"></p>
+<h2 id="instalace-postgresql">Instalace PostgreSQL</h2>
+<details>
+<summary>Kompletní průvodce instalací krok za krokem</summary>
+<p><strong>1. Výběr verze a stažení</strong></p>
+<p>Stáhni instalátor z <a href="https://www.enterprisedb.com/downloads/postgres-postgresql-downloads">enterprisedb.com/downloads/postgres-postgresql-downloads</a>:</p>
+<p><img src="../images/postgreSQL_Install.png" alt="Výběr verze PostgreSQL"></p>
+<p><strong>2. Spuštění instalace</strong></p>
+<p><img src="../images/postgreSQL_Install_2.png" alt="Spuštění instalace"></p>
+<p><strong>3. Výběr složky instalace</strong> (doporučeno ponechat výchozí):</p>
+<p><img src="../images/postgreSQL_Install_3.png" alt="Složka pro instalaci"></p>
+<p><strong>4. Výběr komponent</strong></p>
+<p><img src="../images/wqiRRNNKOT.png" alt="Výběr komponent"></p>
+<div class="NOTE">
+<h5>Pozn&#225;mka</h5>
+<p>Doporučeno nainstalovat <code>pgAdmin 4</code> (grafické rozhraní) a <code>Command Line Tools</code>.</p>
+</div>
+<p><strong>5. Složka pro data</strong> (doporučeno ponechat výchozí):</p>
+<p><img src="../images/postgreSQL_Install_4.png" alt="Složka pro data"></p>
+<p><strong>6. Nastavení hesla:</strong></p>
+<p><img src="../images/postgreSQL_Install_5.png" alt="Nastavení hesla"></p>
+<p><strong>7. Port serveru</strong> (výchozí: <code>5432</code>):</p>
+<p><img src="../images/postgreSQL_Install_6.png" alt="Nastavení portu"></p>
+<p><strong>8. Geografická lokace:</strong></p>
+<p><img src="../images/postgreSQL_Install_7.png" alt="Geografická lokace"></p>
+<p><strong>9. Kontrola a dokončení:</strong></p>
+<p><img src="../images/postgreSQL_Install_8.png" alt="Kontrola před instalací"></p>
+</details>
+<h2 id="připojení-z-příkazového-řádku">Připojení z příkazového řádku</h2>
+<details>
+<summary>Test naslouchání a ověření připojení</summary>
+<p>Otevři konzoli PostgreSQL:</p>
+<p><img src="../images/zGRvsmYA6A.png" alt="Otevření konzole"></p>
+<p>P�ipojení k serveru:</p>
+<p><img src="../images/t0Vjh1fqzy.png" alt="Připojení k PostgreSQL"></p>
+<p>Výsledek:</p>
+<p><img src="../images/oY0QJRKkL1.png" alt="Úspěšné připojení"></p>
+<p>Ověření verze:</p>
+<pre><code class="lang-sql">SELECT version();
+</code></pre>
+<div class="WARNING">
+<h5>Varov&#225;n&#237;</h5>
+<p>Pokud konzole nezobrazuje anglický text, uprav:</p>
+<ul>
+<li><code>C:\Program Files\PostgreSQL\16\data\postgresql.conf</code></li>
+</ul>
+<p><img src="../images/G0Loa7KgVA.png" alt="Konfigurace postgresql.conf"></p>
+<ul>
+<li>Systémové proměnné prostředí</li>
+</ul>
+<p><img src="../images/0qjIRo5xxb.png" alt="Proměnné prostředí"></p>
+<p>Poté restartuj konzoli.</p>
+</div>
+</details>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

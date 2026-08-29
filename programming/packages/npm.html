@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Spr&#225;va npm bal&#237;čků | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Spr&#225;va npm bal&#237;čků | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/packages/npm.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="správa-npm-balíčků">Správa npm balíčků</h1>
+
+<blockquote>
+<p>Pro správu balíčků je potřeba mít nainstalovaný <strong>Node.js</strong> a <strong>npm</strong>.</p>
+</blockquote>
+<p><img src="../../images/7021cbf6-ee66-45b6-903c-a751e0653eec.png" alt="npm"></p>
+<h2 id="aktualizace-balíčků">Aktualizace balíčků</h2>
+<details>
+<summary>Jak správně aktualizovat balíčky?</summary>
+<ol>
+<li>🚀 <strong>Aktualizace Storybook:</strong>
+<pre><code class="lang-bash">npx storybook@latest upgrade
+</code></pre>
+</li>
+</ol>
+<p><em>Použije nejnovější verzi Storybook a provede upgrade.</em></p>
+<ol start="2">
+<li>🕵️ <strong>Zjištění zastaralých balíčků:</strong>
+<pre><code class="lang-bash">npm outdated
+</code></pre>
+</li>
+</ol>
+<p><em>Vypíše seznam balíčků, které mají novější verzi.</em></p>
+<ol start="3">
+<li>🛠️ <strong>Aktualizace konkrétních balíčků:</strong>
+<pre><code class="lang-bash">npm install vite@latest @sveltejs/vite-plugin-svelte@latest
+</code></pre>
+</li>
+</ol>
+<p><em>Nainstaluje nejnovější verze vybraných balíčků.</em></p>
+<blockquote>
+<p><strong>Tip:</strong> Po aktualizaci spusťte projekt a ověřte funkčnost. Některé aktualizace mohou vyžadovat úpravy v konfiguraci nebo kódu.</p>
+</blockquote>
+</details>
+<h2 id="globální-balíčky">Globální balíčky</h2>
+<details>
+<summary>Kde najdu globální balíčky?</summary>
+<table>
+<thead>
+<tr>
+<th>🖥️ Operační systém</th>
+<th>📂 Umístění globálních balíčků</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🪟 Windows</td>
+<td><code>C:\Users\&lt;user&gt;\AppData\Roaming\npm\node_modules</code></td>
+</tr>
+<tr>
+<td>🐧 Mac/Linux</td>
+<td><code>~/.npm-global/lib/node_modules</code></td>
+</tr>
+</tbody>
+</table>
+<p>🔍 <strong>Zjištění cesty příkazem:</strong></p>
+<pre><code class="lang-bash">npm root -g
+</code></pre>
+</details>
+<h2 id="záloha-globálních-balíčků">Záloha globálních balíčků</h2>
+<details>
+<summary>Jak zálohovat globální balíčky?</summary>
+<p>Tento PowerShell skript zálohuje seznam globálních balíčků a stáhne je pro offline použití.</p>
+<pre><code class="lang-powershell"># Vytvoření cesty k souboru se seznamem balíčků
+$packageListFilePath = Join-Path $PWD.Path 'npm_global_packages.txt'
+$outputFolder = Join-Path $PWD.Path 'offline_packages'
+
+# Uložení seznamu balíčků
+npm list -g --depth=0 | Out-File $packageListFilePath -Encoding utf8
+
+# Vytvoření složky pro balíčky
+if (!(Test-Path $outputFolder)) { New-Item -ItemType Directory -Path $outputFolder | Out-Null }
+
+# Načtení balíčků a stažení .tgz souborů
+$content = Get-Content $packageListFilePath | Select-Object -Skip 1
+foreach ($line in $content) {
+    $line = $line.Trim() -replace '^[+`-]+\s*', ''
+    if ([string]::IsNullOrWhiteSpace($line)) { continue }
+    $parts = $line -split '@'
+    $packageName = $parts[0].Trim()
+    $version = if ($parts.Length -gt 1) { $parts[1].Trim() } else { '' }
+    $packageDir = Join-Path $outputFolder $packageName
+    if (!(Test-Path $packageDir)) { New-Item -ItemType Directory -Path $packageDir | Out-Null }
+    if ($version) {
+        npm pack &quot;$packageName@$version&quot; --pack-destination $packageDir
+    } else {
+        npm pack $packageName --pack-destination $packageDir
+    }
+}
+</code></pre>
+</details>
+<h2 id="obnova-balíčků-z-offline-zálohy">Obnova balíčků z offline zálohy</h2>
+<details>
+<summary>Jak obnovit balíčky ze zálohy?</summary>
+<p>Tento PowerShell skript nainstaluje všechny zálohované balíčky z offline složky.</p>
+<pre><code class="lang-powershell">$packageFolder = Join-Path $PWD.Path 'offline_packages'
+$installBaseFolder = Join-Path $PWD.Path 'Installed'
+
+if (!(Test-Path $packageFolder)) { Write-Host &quot;Složka s offline balíčky nebyla nalezena.&quot; -ForegroundColor Red; exit }
+if (!(Test-Path $installBaseFolder)) { New-Item -ItemType Directory -Path $installBaseFolder }
+
+$tgzFiles = Get-ChildItem $packageFolder -Filter *.tgz -Recurse
+foreach ($tgzFile in $tgzFiles) {
+    $packageName = [System.IO.Path]::GetFileNameWithoutExtension($tgzFile.Name)
+    $installDir = Join-Path $installBaseFolder $packageName
+    if (!(Test-Path $installDir)) { New-Item -ItemType Directory -Path $installDir }
+    npm install --prefix $installDir $tgzFile.FullName
+}
+</code></pre>
+</details>
+<h2 id="aplikační-balíčky">Aplikační balíčky</h2>
+<details>
+<summary>git-cliff</summary>
+<p><strong>Generuje kategorizovaný changelog z Git historie a Conventional Commits.</strong></p>
+<h3 id="instalace">Instalace</h3>
+<pre><code class="lang-bash">npm install --save-dev --save-exact git-cliff
+</code></pre>
+<p>Projektová instalace drží verzi v <code>package.json</code> a integritu v <code>package-lock.json</code>, takže lokální prostředí i CI používají stejný nástroj.</p>
+<h3 id="vytvoření-konfigurace">Vytvoření konfigurace</h3>
+<pre><code class="lang-bash">npm exec -- git-cliff --init
+</code></pre>
+<p>Příkaz vytvoří <code>cliff.toml</code>, ve kterém lze deklarativně nastavit skupiny commitů, šablonu, tagy, řazení a odkazy.</p>
+<h3 id="generování-changelogu">Generování changelogu</h3>
+<pre><code class="lang-bash">npm exec -- git-cliff --config cliff.toml --output CHANGELOG.md
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>⚙️ Parametr</th>
+<th>💡 Význam</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--config</code></td>
+<td>Cesta k verzované TOML nebo YAML konfiguraci</td>
+</tr>
+<tr>
+<td><code>--output</code></td>
+<td>Výstupní Markdown soubor</td>
+</tr>
+<tr>
+<td><code>--repository</code></td>
+<td>Jiný Git repozitář než aktuální pracovní adresář</td>
+</tr>
+<tr>
+<td><code>--include-path</code> / <code>--exclude-path</code></td>
+<td>Omezení historie podle změněných cest</td>
+</tr>
+<tr>
+<td><code>--tag-pattern</code></td>
+<td>Regulární výraz určující release tagy</td>
+</tr>
+<tr>
+<td><code>--sort</code></td>
+<td>Pořadí commitů <code>oldest</code> nebo <code>newest</code></td>
+</tr>
+<tr>
+<td><code>--offline</code></td>
+<td>Zakáže vzdálená API volání i při nastaveném remote</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Tip:</strong>
+Přidejte stabilní projektový skript a v CI používejte úplnou Git historii:</p>
+<pre><code class="lang-bash">npm pkg set scripts.changelog:generate=&quot;git-cliff --config cliff.toml --output CHANGELOG.md&quot;
+npm run changelog:generate
+</code></pre>
+</blockquote>
+</details>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

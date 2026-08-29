@@ -1,0 +1,2 @@
+
+{"items":[{"name":"Přehled","href":"index.html","topicHref":"index.html"},{"name":"Databázové systémy","items":[{"name":"Microsoft SQL","href":"mssql.html","topicHref":"mssql.html"},{"name":"MongoDB","href":"mongodb.html","topicHref":"mongodb.html"},{"name":"PostgreSQL","href":"postgresql.html","topicHref":"postgresql.html"}]},{"name":"Přístup k datům","items":[{"name":"Entity Framework","href":"entity-framework.html","topicHref":"entity-framework.html"},{"name":"Dapper","href":"dapper.html","topicHref":"dapper.html"}]}],"pdf":false}

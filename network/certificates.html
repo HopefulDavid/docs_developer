@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Kl&#237;če a certifik&#225;ty | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Kl&#237;če a certifik&#225;ty | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/network/certificates.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="klíče-a-certifikáty">Klíče a certifikáty</h1>
+
+<blockquote>
+<p>Generování bezpečnostních klíčů, práce s TLS certifikáty a nastavení SSH přístupu.</p>
+</blockquote>
+<p><img src="../images/a36b0a0f-361c-4d7d-994e-eeef74bebaec.png" alt="Certifikáty"></p>
+<h2 id="generování-klíčů">Generování klíčů</h2>
+<h3 id="openssl">OpenSSL</h3>
+<pre><code class="lang-bash"># Base64 secret (JWT, API keys)
+openssl rand -base64 32
+
+# HEX secret (konfigurační klíče)
+openssl rand -hex 64
+</code></pre>
+<h2 id="tls-certifikáty--mkcert">TLS certifikáty – mkcert</h2>
+<p><code>mkcert</code> vytváří lokálně důvěryhodné certifikáty pro vývoj bez nutnosti akceptovat bezpečnostní varování prohlížeče.</p>
+<h3 id="instalace">Instalace</h3>
+<ol>
+<li>Stáhni <code>mkcert.exe</code> z <a href="https://github.com/FiloSottile/mkcert/releases">github.com/FiloSottile/mkcert/releases</a>.</li>
+<li>Ulož například do <code>C:\mkcert</code>.</li>
+<li>Volitelně přidej složku do systémové proměnné <code>PATH</code>.</li>
+</ol>
+<h3 id="instalace-lokální-ca">Instalace lokální CA</h3>
+<pre><code class="lang-bash">mkcert -install
+</code></pre>
+<p>CA se nainstaluje do Windows a do Chrome/Edge. Firefox vyžaduje ruční přidání:</p>
+<ol>
+<li>Otevři <code>about:preferences#privacy</code></li>
+<li><strong>Certificates → View Certificates → Authorities → Import</strong></li>
+<li>Importuj soubor: <code>C:\Users\&lt;User&gt;\AppData\Local\mkcert\rootCA.pem</code></li>
+<li>Zaškrtni <em>Trust this CA to identify websites</em></li>
+</ol>
+<h3 id="vytvoření-certifikátu">Vytvoření certifikátu</h3>
+<pre><code class="lang-bash"># Jeden host
+mkcert localhost
+
+# Více hostů
+mkcert localhost 127.0.0.1 myapp.local
+</code></pre>
+<p>Výstup: <code>localhost.pem</code> a <code>localhost-key.pem</code></p>
+<h3 id="použití-certifikátů">Použití certifikátů</h3>
+<p>Soubory <code>.pem</code> lze použít přímo v:
+Go, Node.js, Nginx, Caddy, Docker kontejnerech.</p>
+<p><strong>Převod na PFX (.NET / Windows):</strong></p>
+<pre><code class="lang-bash">openssl pkcs12 -export -out server.pfx -inkey localhost-key.pem -in localhost.pem
+</code></pre>
+<p><strong>Převod na CRT/KEY (Apache, Nginx):</strong></p>
+<pre><code>localhost.pem     →  server.crt
+localhost-key.pem →  server.key
+</code></pre>
+<p><strong>Použití v Go:</strong></p>
+<pre><code class="lang-go">e.StartTLS(&quot;:8080&quot;, &quot;server.crt&quot;, &quot;server.key&quot;)
+</code></pre>
+<h2 id="ssh--nastavení-pro-github">SSH – nastavení pro GitHub</h2>
+<p>SSH využívá pár klíčů (veřejný + soukromý) místo hesla. Je bezpečnější a pohodlnější pro každodenní práci s Gitem.</p>
+<h3 id="nastavení-krok-za-krokem">Nastavení krok za krokem</h3>
+<p><strong>1. Generování SSH klíče</strong></p>
+<pre><code class="lang-bash">ssh-keygen -t rsa -b 4096 -C &quot;tvuj@email.com&quot;
+</code></pre>
+<p><strong>2. Zobrazení veřejného klíče</strong></p>
+<pre><code class="lang-bash"># Windows
+type %userprofile%\.ssh\id_rsa.pub
+
+# Linux / macOS
+cat ~/.ssh/id_rsa.pub
+</code></pre>
+<p><strong>3. Přidání klíče na GitHub</strong></p>
+<p>GitHub → <strong>Settings → SSH and GPG keys → New SSH key</strong></p>
+<p><strong>4. Test připojení</strong></p>
+<pre><code class="lang-bash">ssh -T git@github.com
+</code></pre>
+<p><strong>5. Klonování přes SSH</strong></p>
+<pre><code class="lang-bash">git clone git@github.com:username/repository.git
+</code></pre>
+<p><strong>6. Změna remote URL na SSH</strong></p>
+<pre><code class="lang-bash">git remote set-url origin git@github.com:username/repository.git
+</code></pre>
+<p><strong>7. Zobrazení remote URL</strong></p>
+<pre><code class="lang-bash">git remote -v
+</code></pre>
+<p><strong>8. Oddělené URL pro fetch a push</strong></p>
+<pre><code class="lang-bash">git remote set-url origin &lt;fetch-url&gt;
+git remote set-url --push origin &lt;push-url&gt;
+git remote -v
+</code></pre>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>JetBrains Rider – Tipy a n&#225;stroje | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="JetBrains Rider – Tipy a n&#225;stroje | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/ide/jetbrains.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="jetbrains-rider--tipy-a-nástroje">JetBrains Rider – Tipy a nástroje</h1>
+
+<blockquote>
+<p>Propojení s Androidem, XML komentáře, klávesové zkratky a regulární výrazy v JetBrains Rider.</p>
+</blockquote>
+<p><img src="../images/4381c952-e572-44c8-b4d3-c2da9964c008.png" alt="JetBrains"></p>
+<h2 id="propojení-s-mobilním-zařízením-android">Propojení s mobilním zařízením (Android)</h2>
+<details>
+<summary>Kompletní postup nastavení Android emulátoru</summary>
+<ol>
+<li><p><strong>Nastavení BIOSu (AMD CPU)</strong> – BIOS → CPU konfigurace → <code>SVM: Enabled</code></p>
+</li>
+<li><p><strong>Správa Android SDK v Rideru</strong> – <code>File → Project Structure → SDKs → Project</code> → nastav Android SDK.
+SDK lze stáhnout v Android Studio → <code>More Actions → SDK Manager</code>.</p>
+</li>
+<li><p><strong>Ověření základních komponent SDK</strong> (sekce <code>SDK Tools</code>):</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Komponenta</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Android SDK Built-Tools</code></td>
+<td>Sestavení aplikací</td>
+</tr>
+<tr>
+<td><code>Android SDK Command-Line Tools</code></td>
+<td>Správa SDK</td>
+</tr>
+<tr>
+<td><code>Android Emulator</code></td>
+<td>Testování aplikací</td>
+</tr>
+<tr>
+<td><code>Android Emulator hypervisor driver</code></td>
+<td>Výkon emulátoru (Intel/AMD)</td>
+</tr>
+<tr>
+<td><code>Android SDK Platform-Tools</code></td>
+<td>Komunikace s zařízeními (<code>adb</code>)</td>
+</tr>
+</tbody>
+</table>
+<ol start="4">
+<li><p><strong>Nastavení proměnné prostředí:</strong>
+<code>C:\Users\&lt;YourUsername&gt;\AppData\Local\Android\Sdk\platform-tools</code></p>
+</li>
+<li><p><strong>Příkazy ADB:</strong></p>
+<pre><code class="lang-bash"># Stav emulátorů
+adb devices
+
+# Restart ADB služby
+adb kill-server
+adb start-server
+</code></pre>
+</li>
+<li><p><strong>Spuštění</strong> – Android Studio → <code>More Actions → Virtual Device Manager</code> → spusť virtuální zařízení → v Rideru vyber zařízení.</p>
+</li>
+</ol>
+</details>
+<h2 id="xml-komentáře">XML komentáře</h2>
+<h3 id="zalomení-řádku">Zalomení řádku</h3>
+<p>Pro zalomení řádku v XML dokumentačním komentáři použij <code>&lt;para&gt;&amp;#160;&lt;/para&gt;</code>:</p>
+<pre><code class="lang-csharp">/// &lt;summary&gt;
+///     Popis třídy nebo metody.
+///     &lt;para&gt;&amp;#160;&lt;/para&gt;
+///     &lt;para&gt;int PrimaryKey&lt;/para&gt;
+///     &lt;para&gt;&amp;#160;&lt;/para&gt;
+///     &lt;para&gt;virtual Relation Relation&lt;/para&gt;
+/// &lt;/summary&gt;
+</code></pre>
+<div class="WARNING">
+<h5>Varov&#225;n&#237;</h5>
+<p><code>&lt;para&gt;&lt;/para&gt;</code> ani <code>&lt;br/&gt;</code> pro zalomení řádku nefungují. Použij <code>&lt;para&gt;&amp;#160;&lt;/para&gt;</code>.</p>
+</div>
+<p><a href="https://stackoverflow.com/questions/7279108/how-to-add-a-line-break-in-c-sharp-net-documentation">Více informací (Stack Overflow)</a></p>
+<h2 id="klávesové-zkratky">Klávesové zkratky</h2>
+<table>
+<thead>
+<tr>
+<th>Akce</th>
+<th>Zkratka</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Zobrazení informací o parametrech metody</td>
+<td><code>Ctrl</code> + <code>Shift</code> + <code>Space</code></td>
+</tr>
+<tr>
+<td>Procházení dopředu</td>
+<td><code>Ctrl</code> + <code>Shift</code> + <code>Space</code></td>
+</tr>
+<tr>
+<td>Procházení zpět</td>
+<td><code>Ctrl</code> + <code>Shift</code> + <code>P</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="regulární-výrazy">Regulární výrazy</h2>
+<h3 id="číselná-zachycená-skupina">Číselná zachycená skupina</h3>
+<pre><code class="lang-regex"># Vyhledání
+&lt;h2&gt;(.*?)&lt;/h2&gt;
+
+# Nahrazení
+&lt;h2&gt;Test $1&lt;/h2&gt;
+</code></pre>
+<h3 id="pojmenovaná-zachycená-skupina">Pojmenovaná zachycená skupina</h3>
+<pre><code class="lang-regex"># Vyhledání
+&lt;h2&gt;(?&lt;customName&gt;.*?)&lt;/h2&gt;
+
+# Nahrazení
+&lt;h2&gt;Test ${customName}&lt;/h2&gt;
+</code></pre>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

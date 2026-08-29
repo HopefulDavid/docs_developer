@@ -1,0 +1,2371 @@
+{
+  "source_base_path": "/home/runner/work/docs_developer/docs_developer",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      }
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "ai/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "ai/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "ai/ollama.md",
+      "output": {
+        ".html": {
+          "relative_path": "ai/ollama.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "ai/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "ai/toc.json"
+        },
+        ".html": {
+          "relative_path": "ai/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "changelog.md",
+      "output": {
+        ".html": {
+          "relative_path": "changelog.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "database/dapper.md",
+      "output": {
+        ".html": {
+          "relative_path": "database/dapper.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "database/entity-framework.md",
+      "output": {
+        ".html": {
+          "relative_path": "database/entity-framework.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "database/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "database/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "database/mongodb.md",
+      "output": {
+        ".html": {
+          "relative_path": "database/mongodb.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "database/mssql.md",
+      "output": {
+        ".html": {
+          "relative_path": "database/mssql.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "database/postgresql.md",
+      "output": {
+        ".html": {
+          "relative_path": "database/postgresql.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "database/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "database/toc.json"
+        },
+        ".html": {
+          "relative_path": "database/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "devops/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "devops/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "devops/opentofu.md",
+      "output": {
+        ".html": {
+          "relative_path": "devops/opentofu.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "devops/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "devops/toc.json"
+        },
+        ".html": {
+          "relative_path": "devops/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "documentation/doxygen.md",
+      "output": {
+        ".html": {
+          "relative_path": "documentation/doxygen.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "documentation/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "documentation/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "documentation/pandoc.md",
+      "output": {
+        ".html": {
+          "relative_path": "documentation/pandoc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "documentation/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "documentation/toc.json"
+        },
+        ".html": {
+          "relative_path": "documentation/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "graphics/affinity.md",
+      "output": {
+        ".html": {
+          "relative_path": "graphics/affinity.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "graphics/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "graphics/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "graphics/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "graphics/toc.json"
+        },
+        ".html": {
+          "relative_path": "graphics/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "ide/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "ide/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "ide/jetbrains.md",
+      "output": {
+        ".html": {
+          "relative_path": "ide/jetbrains.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "ide/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "ide/toc.json"
+        },
+        ".html": {
+          "relative_path": "ide/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "ide/visual-studio.md",
+      "output": {
+        ".html": {
+          "relative_path": "ide/visual-studio.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/0qjIRo5xxb.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/0qjIRo5xxb.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/10336033-b701-48a9-abdf-aa59500e77cf.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/10336033-b701-48a9-abdf-aa59500e77cf.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/1974ce4c-4914-428a-88c8-075e84a7c713.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/1974ce4c-4914-428a-88c8-075e84a7c713.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/1c750931-1fdb-47ec-882b-3781bbae6e7e.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/1c750931-1fdb-47ec-882b-3781bbae6e7e.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/231a19b5-84c6-4961-9189-91672e9435dc.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/231a19b5-84c6-4961-9189-91672e9435dc.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/2356729c-7942-4f2c-8ecc-f2b712c6e5ad.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/2356729c-7942-4f2c-8ecc-f2b712c6e5ad.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/2D_grid_calculation.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/2D_grid_calculation.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/2D_rigging_copy.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/2D_rigging_copy.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/2D_rigging_depth.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/2D_rigging_depth.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/2D_rigging_paste.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/2D_rigging_paste.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/2D_rigging_skinWeight.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/2D_rigging_skinWeight.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/2D_sprite_blackLines.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/2D_sprite_blackLines.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/2D_sprite_blackLines_solution.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/2D_sprite_blackLines_solution.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/2D_sprite_blackLines_solution2.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/2D_sprite_blackLines_solution2.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/2D_sprite_blackLines_solutionCamera.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/2D_sprite_blackLines_solutionCamera.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/2D_sprite_blackLines_solution_failed.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/2D_sprite_blackLines_solution_failed.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/2gaLgutVIR.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/2gaLgutVIR.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/32ntGCZMUJ.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/32ntGCZMUJ.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/4381c952-e572-44c8-b4d3-c2da9964c008.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/4381c952-e572-44c8-b4d3-c2da9964c008.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/43ae90ca-b78a-405d-bf23-06f2be45eb83.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/43ae90ca-b78a-405d-bf23-06f2be45eb83.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/47b4d22e-f30e-46a1-bc78-9d1fbc371e6c.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/47b4d22e-f30e-46a1-bc78-9d1fbc371e6c.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/51fc64f1-0fc1-434d-8b9a-62915ece751a.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/51fc64f1-0fc1-434d-8b9a-62915ece751a.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/54c2ba30-4474-4c51-a6ad-2f82c28540ac.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/54c2ba30-4474-4c51-a6ad-2f82c28540ac.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/5a5f2db1-3bf6-4219-a7a1-65305baeb7ca.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/5a5f2db1-3bf6-4219-a7a1-65305baeb7ca.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/5b6c5417-6cb1-4ecf-8d08-c4d90783ae23.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/5b6c5417-6cb1-4ecf-8d08-c4d90783ae23.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/5d7ee05eacb549d5ada6e1edef7a2e59.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/5d7ee05eacb549d5ada6e1edef7a2e59.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/67df603a-1960-4ca6-8bef-241dd8688fc1.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/67df603a-1960-4ca6-8bef-241dd8688fc1.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/6Ry3w30HPF.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/6Ry3w30HPF.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/6caa6198-1ee2-4529-8e40-2c62da4232c7.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/6caa6198-1ee2-4529-8e40-2c62da4232c7.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/6f0214a6-361b-4c39-a7b8-0f43a8cd8459.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/6f0214a6-361b-4c39-a7b8-0f43a8cd8459.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/7021cbf6-ee66-45b6-903c-a751e0653eec.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/7021cbf6-ee66-45b6-903c-a751e0653eec.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/7073cab7-0b16-47e4-b0c1-55129ef02687.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/7073cab7-0b16-47e4-b0c1-55129ef02687.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/7093661c-9483-46e1-87bf-72496673b81a.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/7093661c-9483-46e1-87bf-72496673b81a.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/737ee01108d04cb9b0ebcfac84835eda.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/737ee01108d04cb9b0ebcfac84835eda.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/77bb3224-887c-410f-a232-f51a105d0b01.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/77bb3224-887c-410f-a232-f51a105d0b01.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/77fb408804c94851a06078aae17e694f.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/77fb408804c94851a06078aae17e694f.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/7Biis7dol1.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/7Biis7dol1.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/7NaF0iqhX4.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/7NaF0iqhX4.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/87aac7e6-0da1-4ada-8c7c-1710636e867a.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/87aac7e6-0da1-4ada-8c7c-1710636e867a.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/8c61359f-a49a-4600-a86a-961c4a3dfe9d.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/8c61359f-a49a-4600-a86a-961c4a3dfe9d.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/94edf060-a2f9-476c-b93f-c4723e494cab.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/94edf060-a2f9-476c-b93f-c4723e494cab.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/9b4ddeea-a06a-4666-883e-855ceb443a3b.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/9b4ddeea-a06a-4666-883e-855ceb443a3b.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/9efd0d3e-ef5e-4e7a-8358-63fd4f8eb659.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/9efd0d3e-ef5e-4e7a-8358-63fd4f8eb659.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/9f2bcd1c-dba3-46b0-81ab-6f8ca2fec026.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/9f2bcd1c-dba3-46b0-81ab-6f8ca2fec026.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/A2q5GRgncw.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/A2q5GRgncw.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/A6QaLVyhyO.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/A6QaLVyhyO.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/DI1aOl6eDo.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/DI1aOl6eDo.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/FGHnDA1tNp.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/FGHnDA1tNp.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/G0Loa7KgVA.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/G0Loa7KgVA.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/GhlBCozwaQ.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/GhlBCozwaQ.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/HV5zUWuMiu.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/HV5zUWuMiu.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/IN3lzoSUMT.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/IN3lzoSUMT.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/LNHIGgBhcb.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/LNHIGgBhcb.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/NqjNbekRF2.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/NqjNbekRF2.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/SK8PEQ57KG.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/SK8PEQ57KG.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/TtTAcQSAM1.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/TtTAcQSAM1.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/VwxJhRuC8S.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/VwxJhRuC8S.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/Vz1J4Pij2Z.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/Vz1J4Pij2Z.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/WHDIpG6Uzg.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/WHDIpG6Uzg.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/XKFGaxW3GC.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/XKFGaxW3GC.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/Z4EPv2avqi.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/Z4EPv2avqi.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/a188d4ef-a7b4-4028-9107-0bd99f101e30.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/a188d4ef-a7b4-4028-9107-0bd99f101e30.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/a32bfd31-f086-44eb-be6f-b8fbb993dec2.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/a32bfd31-f086-44eb-be6f-b8fbb993dec2.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/a36b0a0f-361c-4d7d-994e-eeef74bebaec.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/a36b0a0f-361c-4d7d-994e-eeef74bebaec.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/ad71ff83-1ef8-45b0-9e21-2e05c0075935.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/ad71ff83-1ef8-45b0-9e21-2e05c0075935.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/b4541721-315d-4189-b9fc-b3002d1596c8.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/b4541721-315d-4189-b9fc-b3002d1596c8.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/bce43a30-8b45-414f-b656-200d5551f88e.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/bce43a30-8b45-414f-b656-200d5551f88e.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/bcf90266-2493-4e1c-8f54-8d37b4e4e4a7.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/bcf90266-2493-4e1c-8f54-8d37b4e4e4a7.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/bfdff689-3382-451c-872a-5f566bacdca2.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/bfdff689-3382-451c-872a-5f566bacdca2.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/c5ecf7de-7ac5-488a-806b-93c271cb5998.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/c5ecf7de-7ac5-488a-806b-93c271cb5998.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/cADNNtfdn8.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/cADNNtfdn8.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/cFT7edPhap.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/cFT7edPhap.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/cbaff73a-7ad7-489d-bb15-2fb847f6904e.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/cbaff73a-7ad7-489d-bb15-2fb847f6904e.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/d41917da-ccc6-410f-864d-53f1d5d1cdbb.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/d41917da-ccc6-410f-864d-53f1d5d1cdbb.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/dockerKeepDataOnLocal.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/dockerKeepDataOnLocal.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/e0f402f8-94c5-417f-b4c3-0566724c4b7a.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/e0f402f8-94c5-417f-b4c3-0566724c4b7a.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/e159d23c-f2b8-4884-bc0b-800bae9db096.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/e159d23c-f2b8-4884-bc0b-800bae9db096.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/ed2ba232-5b86-4f55-8ba5-9c3feb7e3c0b.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/ed2ba232-5b86-4f55-8ba5-9c3feb7e3c0b.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/ed2c9789-9939-4dc7-b8e1-80b50214c6eb.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/ed2c9789-9939-4dc7-b8e1-80b50214c6eb.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/ee2b5aa2-94be-4ebb-bfcd-2c526093dba1.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/ee2b5aa2-94be-4ebb-bfcd-2c526093dba1.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/efa2074c-d98f-49b1-a30e-8cabddd3a06d.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/efa2074c-d98f-49b1-a30e-8cabddd3a06d.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/f5e467cc-a417-4099-9e05-5ccbbdf763b0.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/f5e467cc-a417-4099-9e05-5ccbbdf763b0.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/fc6d2e6c-e9dc-477a-a28d-4243ee9948b8.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/fc6d2e6c-e9dc-477a-a28d-4243ee9948b8.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/gddGxGy2O7.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/gddGxGy2O7.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/gwMfzQMOvC.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/gwMfzQMOvC.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/hJGmbHsLeI.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/hJGmbHsLeI.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/ierpy4lHJC.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/ierpy4lHJC.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/lRCeGcyyCN.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/lRCeGcyyCN.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/lhkGBjJ7SB.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/lhkGBjJ7SB.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/lkjf3DXNjN.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/lkjf3DXNjN.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/mei8XmPaWt.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/mei8XmPaWt.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/o5mZ6uXeRR.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/o5mZ6uXeRR.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/oXiTjeGZYK.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/oXiTjeGZYK.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/oY0QJRKkL1.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/oY0QJRKkL1.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/optionsPowerShell.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/optionsPowerShell.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/outlook_calendarAfterOverlay.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/outlook_calendarAfterOverlay.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/outlook_calendarBeforeOverlay.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/outlook_calendarBeforeOverlay.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/pnAzi0NFm3.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/pnAzi0NFm3.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/postgreSQL_Install.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/postgreSQL_Install.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/postgreSQL_Install_2.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/postgreSQL_Install_2.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/postgreSQL_Install_3.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/postgreSQL_Install_3.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/postgreSQL_Install_4.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/postgreSQL_Install_4.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/postgreSQL_Install_5.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/postgreSQL_Install_5.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/postgreSQL_Install_6.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/postgreSQL_Install_6.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/postgreSQL_Install_7.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/postgreSQL_Install_7.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/postgreSQL_Install_8.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/postgreSQL_Install_8.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/runAsAdministatorPowerShell.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/runAsAdministatorPowerShell.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/sOYccHNNHx.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/sOYccHNNHx.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/t0Vjh1fqzy.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/t0Vjh1fqzy.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/t0m7kk76Jm.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/t0m7kk76Jm.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/t9hZzZp1FO.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/t9hZzZp1FO.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/wNNBV4Lsm4.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/wNNBV4Lsm4.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/wVLtmuFEWr.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/wVLtmuFEWr.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/windows_keyboard_explorerAddressBar.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/windows_keyboard_explorerAddressBar.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/wqiRRNNKOT.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/wqiRRNNKOT.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/wv1G8UBxvy.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/wv1G8UBxvy.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/zGRvsmYA6A.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/zGRvsmYA6A.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "network/certificates.md",
+      "output": {
+        ".html": {
+          "relative_path": "network/certificates.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "network/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "network/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "network/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "network/toc.json"
+        },
+        ".html": {
+          "relative_path": "network/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "network/vpn.md",
+      "output": {
+        ".html": {
+          "relative_path": "network/vpn.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "operating-system/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "operating-system/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "operating-system/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "operating-system/toc.json"
+        },
+        ".html": {
+          "relative_path": "operating-system/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "operating-system/windows/cmd.md",
+      "output": {
+        ".html": {
+          "relative_path": "operating-system/windows/cmd.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "operating-system/windows/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "operating-system/windows/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "operating-system/windows/powershell.md",
+      "output": {
+        ".html": {
+          "relative_path": "operating-system/windows/powershell.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "pdf/dev_design_patterns.pdf",
+      "output": {
+        "resource": {
+          "relative_path": "pdf/dev_design_patterns.pdf"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/appcast.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/appcast.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/code-comments.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/code-comments.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/csharp/attributes.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/csharp/attributes.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/csharp/components.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/csharp/components.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/csharp/conversion.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/csharp/conversion.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/csharp/create-api.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/csharp/create-api.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/csharp/data-types.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/csharp/data-types.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/csharp/enum.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/csharp/enum.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/csharp/files.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/csharp/files.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/csharp/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/csharp/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/csharp/interface.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/csharp/interface.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/csharp/methods.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/csharp/methods.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/csharp/nunit.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/csharp/nunit.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/csharp/wpf.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/csharp/wpf.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/csharp/xml.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/csharp/xml.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/development-patterns.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/development-patterns.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/mobile/android-studio.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/mobile/android-studio.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/mobile/flutter/backup-and-restore.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/mobile/flutter/backup-and-restore.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/mobile/flutter/basics.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/mobile/flutter/basics.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/mobile/flutter/code-coverage.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/mobile/flutter/code-coverage.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/mobile/flutter/commands.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/mobile/flutter/commands.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/mobile/flutter/create-project.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/mobile/flutter/create-project.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/mobile/flutter/localization.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/mobile/flutter/localization.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/mobile/flutter/setup-and-configuration.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/mobile/flutter/setup-and-configuration.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/mobile/flutter/troubleshooting.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/mobile/flutter/troubleshooting.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/packages/dotnet-cli.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/packages/dotnet-cli.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/packages/npm.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/packages/npm.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/packages/nuget.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/packages/nuget.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/packages/python.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/packages/python.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/platform-selection.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/platform-selection.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/server/go.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/server/go.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/techniques.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/techniques.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "programming/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "programming/toc.json"
+        },
+        ".html": {
+          "relative_path": "programming/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/unity/2d.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/unity/2d.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/unity/animation.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/unity/animation.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/unity/camera.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/unity/camera.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/unity/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/unity/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/unity/navigation.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/unity/navigation.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/unity/renderer.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/unity/renderer.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/unity/scriptable-object.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/unity/scriptable-object.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/unity/ui-toolkit.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/unity/ui-toolkit.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/unity/ui.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/unity/ui.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/xampp/access.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/xampp/access.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "programming/xampp/virtual-hosts.md",
+      "output": {
+        ".html": {
+          "relative_path": "programming/xampp/virtual-hosts.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "teamwork/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "teamwork/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "teamwork/outlook.md",
+      "output": {
+        ".html": {
+          "relative_path": "teamwork/outlook.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "teamwork/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "teamwork/toc.json"
+        },
+        ".html": {
+          "relative_path": "teamwork/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "toc.json"
+        },
+        ".html": {
+          "relative_path": "toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/git/branches/create-remote-branch.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/branches/create-remote-branch.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/git/branches/delete-remote-branch.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/branches/delete-remote-branch.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/git/branches/pull-request.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/branches/pull-request.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/git/configuration.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/configuration.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/git/git-flow.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/git-flow.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/git/history/assume-unchanged.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/history/assume-unchanged.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/git/history/delete-commits.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/history/delete-commits.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/git/history/fix-commits.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/history/fix-commits.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/git/history/move-commits.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/history/move-commits.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/git/history/squash-branch-commits.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/history/squash-branch-commits.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/git/history/update-gitignore.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/history/update-gitignore.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/git/in-practice.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/in-practice.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/git/repository.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/repository.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/git/server.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/server.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/git/submodules.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/git/submodules.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "vcs/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "vcs/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "vcs/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "vcs/toc.json"
+        },
+        ".html": {
+          "relative_path": "vcs/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "video/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "video/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "video/obs.md",
+      "output": {
+        ".html": {
+          "relative_path": "video/obs.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "video/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "video/toc.json"
+        },
+        ".html": {
+          "relative_path": "video/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "virtualization/docker/busybox.md",
+      "output": {
+        ".html": {
+          "relative_path": "virtualization/docker/busybox.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "virtualization/docker/duplicati.md",
+      "output": {
+        ".html": {
+          "relative_path": "virtualization/docker/duplicati.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "virtualization/docker/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "virtualization/docker/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "virtualization/docker/portainer.md",
+      "output": {
+        ".html": {
+          "relative_path": "virtualization/docker/portainer.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "virtualization/docker/safe-stateful-upgrade.md",
+      "output": {
+        ".html": {
+          "relative_path": "virtualization/docker/safe-stateful-upgrade.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "virtualization/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "virtualization/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "virtualization/kubernetes.md",
+      "output": {
+        ".html": {
+          "relative_path": "virtualization/kubernetes.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "virtualization/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "virtualization/toc.json"
+        },
+        ".html": {
+          "relative_path": "virtualization/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "virtualization/wsl.md",
+      "output": {
+        ".html": {
+          "relative_path": "virtualization/wsl.html"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}
