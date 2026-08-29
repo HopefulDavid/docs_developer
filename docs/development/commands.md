@@ -1,7 +1,7 @@
 ---
 canonical_for: project-commands
 status: accepted
-last_verified: 2026-08-28
+last_verified: 2026-08-29
 owner: engineering
 ---
 
@@ -80,9 +80,9 @@ Zde jsou pouze přesné podporované příkazy.
 
 | Úroveň | Přesný příkaz | Potřebné služby | Výstupní artefakty | Typická doba nebo rozsah |
 |---|---|---|---|---|
-| Cílený test veřejné hranice | `node --test --test-isolation=none tests/generate-docs.test.js` | Žádné | Konzolový TAP výstup | 4 testy; běžně pod 1 sekundu |
+| Cílený test veřejné hranice | `node --test --test-isolation=none tests/generate-docs.test.js` | Žádné | Konzolový TAP výstup | 5 testů včetně českých tokenů a vypnutého příspěvkového bloku; běžně pod 1 sekundu |
 | Cílený test changelogu | `node --test --test-isolation=none tests/changelog.test.mjs` | Lokální Git a obnovený `git-cliff` | Konzolový TAP výstup | Víceletá úplná fixture historie, otevřené nejnovější období, sdělení o vynechávání prázdných roků, sbalená starší období, jejich počty a kategorie, stabilní kotvy, breaking change, neklikací hashe a dvě časová prostředí |
-| Automatizované testy | `npm test` | Lokální Git a obnovené npm závislosti | Konzolový TAP výstup | Všechny soubory v `tests/`; 11 scénářů |
+| Automatizované testy | `npm test` | Lokální Git a obnovené npm závislosti | Konzolový TAP výstup | Všechny soubory v `tests/`; 12 scénářů |
 | Vizuální scénáře | `npm run docs:serve` a kroky níže | Předem vytvořený `_site/` a lokální prohlížeč | Vizuální pozorování, případně screenshot | Ruční smoke po rizikové změně UI, vyhledávání nebo navigace |
 | Integrační build | `npm run docs:build` | Obnovené npm závislosti a lokální DocFX | `changelog.md`, `_site/manifest.json`, HTML a konzolový souhrn | Veřejný changelog a ostatní stránky vzniknou bez warningu; běžně jednotky sekund na ověřeném stroji |
 | Úplná lokální kontrola | `npm run verify` | Obnovené npm závislosti a lokální DocFX | TAP, DocFX log, `changelog.md`, manifest a `_site/` | Kontrola driftu, syntax, testy, generování changelogu, strict build a artifact check |

@@ -50,6 +50,8 @@
       "_appName": "Vývojář",
       "_appTitle": "Vývojář",
       "_enableSearch": true,
+      "_lang": "cs",
+      "_disableContribution": true,
       "pdf": false
     },
     "markdown": {
