@@ -114,9 +114,170 @@ Ubuntu má vlastní souborový systém a vlastní virtuální disk, takže zálo
 
 Soubory připojené do kontejnerů pomocí bind mountů zůstávají ve zdrojových složkách Windows nebo Ubuntu a vyžadují vlastní zálohu. [Ukládání pomocí bind mountů](https://docs.docker.com/engine/storage/bind-mounts/)
 
-Před obnovou Docker disku úplně ukonči Docker Desktop, ověř skutečné umístění jeho datového disku a uchovej zálohu současných dat; vlastní postup popisuje [oficiální návod k obnově Docker Desktopu](https://docs.docker.com/desktop/settings-and-maintenance/backup-and-restore/#if-docker-desktop-fails-to-start-or-you-want-to-back-up-the-whole-docker-desktop-vm).
+Vlastní Ubuntu přenes pomocí [exportu a importu distribuce WSL](../wsl.md#přesun-wsl-distribuce-na-jiné-místo); pro datový disk Dockeru použij následující postup.
 
 Úspěšné `hello-world` potvrzuje spuštění kontejneru, nikoli obnovu původních images, kontejnerů nebo dat aplikací.
+
+### Přenos dat Docker Desktopu na jiný počítač
+
+Tento postup je určený pro **Docker Desktop s backendem WSL 2 ve Windows, který ukládá data do souboru `docker_data.vhdx`**.
+
+Záloha vzniká zkopírováním vypnutého datového disku a obnova jeho vložením do datového umístění cílové instalace podle [oficiálního postupu Dockeru](https://docs.docker.com/desktop/settings-and-maintenance/backup-and-restore/#if-docker-desktop-fails-to-start-or-you-want-to-back-up-the-whole-docker-desktop-vm).
+
+Počítá se se stejnou architekturou obou počítačů, například x64; pro první obnovení doporučuji stejnou verzi Docker Desktopu jako na zdroji, aby se přenos nespojoval také s upgradem.
+
+Obnova **nahradí současná Docker data na cíli**; nesloučí dvě existující prostředí.
+
+Příkazy pro práci s datovým diskem zadávej ve **Windows PowerShellu** pod účtem, který Docker Desktop používá; uvedené cesty jsou příklady, které nahraď podle svých disků a složek.
+
+<details>
+<summary>Zdrojový počítač: záloha Docker dat</summary>
+
+#### 1. Poznamenej si stav a skutečné umístění disku
+
+V **About Docker Desktop** si poznamenej verzi aplikace a při spuštěném enginu zaznamenej, co chceš po obnově najít:
+
+```text
+docker context ls
+docker image ls
+docker container ls --all
+docker volume ls
+```
+
+Ověř, že klient používá místní Linux engine Docker Desktopu, protože výpis vzdáleného enginu by nepopisoval zálohovaný disk.
+
+Datový soubor v běžném kořenovém adresáři Dockeru vyhledáš takto:
+
+```text
+Get-ChildItem -LiteralPath "$env:LOCALAPPDATA\Docker\wsl" -Filter 'docker_data.vhdx' -File -Recurse |
+    Select-Object FullName, Length
+```
+
+Pokud jsi datové umístění změnil, hledej v nastavené složce; jestli tvoje verze zobrazuje **Settings → Resources → Advanced → Disk image location**, ověř cestu také tam. [Umístění dat backendu WSL](https://docs.docker.com/desktop/features/wsl/)
+
+Pokud soubor nenajdeš nebo nevíš, která nalezená kopie je aktivní, nejprve ověř datové umístění své instalace; nezaměňuj jej za disk Ubuntu ani za jiný soubor `ext4.vhdx`.
+
+#### 2. Připrav soubory mimo datový disk a ukonči Docker
+
+Samostatně uchovej Compose soubory, potřebné `.env` a konfigurace i zdrojové složky bind mountů; soubory uložené uvnitř vlastní distribuce Ubuntu přenese její export.
+
+Řádně zastav své aplikace a databáze, aby dokončily zápis; u projektu spravovaného přes Compose lze v jeho složce použít:
+
+```text
+docker compose stop
+```
+
+Potom z nabídky ikony Dockeru u hodin zvol **Quit Docker Desktop** a počkej na úplné ukončení aplikace.
+
+Ulož také práci ve všech distribucích WSL a zavři jejich terminály, protože následující příkaz zastaví všechny distribuce i virtuální stroj WSL 2:
+
+```text
+wsl --shutdown
+```
+
+Do dokončení kopírování a kontroly znovu nespouštěj Docker Desktop.
+
+#### 3. Zkopíruj disk a ověř zálohu
+
+V proměnné `$dockerDisk` nahraď ukázkovou cestu skutečnou cestou z prvního kroku a pro zálohu zvol novou složku na disku s dostatkem místa.
+
+Přenosový disk musí podporovat velikost souboru; FAT32 neumožňuje soubor větší než 4 GB.
+
+```text
+$dockerDisk = 'D:\DockerData\docker_data.vhdx'
+New-Item -ItemType Directory -Path 'E:\Prenos\Docker' -ErrorAction Stop
+Copy-Item -LiteralPath $dockerDisk -Destination 'E:\Prenos\Docker\docker_data.vhdx' -ErrorAction Stop
+Get-FileHash -LiteralPath $dockerDisk -Algorithm SHA256
+Get-FileHash -LiteralPath 'E:\Prenos\Docker\docker_data.vhdx' -Algorithm SHA256
+```
+
+Obě hodnoty `Hash` musí být shodné; zaznamenej si je pro kontrolu po přenosu a při neshodě zálohu nepoužívej.
+
+Po úspěšném dokončení můžeš zdrojový Docker Desktop znovu spustit, ale pozdější změny už v této záloze nebudou.
+
+Disk může obsahovat databáze a přístupové údaje aplikací, proto zálohu chraň stejně jako původní data.
+
+</details>
+
+<details>
+<summary>Cílový počítač: obnova a ověření Docker dat</summary>
+
+#### 1. Připrav cílovou instalaci a ověř přenos
+
+Připoj přenosový disk se zálohou nebo zkopíruj záložní soubor na cílový počítač a podle jeho umístění uprav cestu v příkazech.
+
+Připrav WSL 2 a nainstaluj Docker Desktop pro linuxové kontejnery; prvním spuštěním nech vytvořit jeho datové umístění.
+
+Zjisti skutečnou cestu cílového `docker_data.vhdx` stejným způsobem jako na zdroji.
+
+Pokud na cíli už máš vlastní prostředí, řádně zastav jeho aplikace a databáze; potom Docker Desktop úplně ukonči přes **Quit Docker Desktop**.
+
+Po uložení práce ve všech distribucích WSL spusť:
+
+```text
+wsl --shutdown
+Get-FileHash -LiteralPath 'E:\Prenos\Docker\docker_data.vhdx' -Algorithm SHA256
+```
+
+Hodnota `Hash` přenesené zálohy musí odpovídat hodnotě zaznamenané na zdroji; při neshodě nepokračuj.
+
+#### 2. Uchovej cílový disk a nahraď ho zálohou
+
+V proměnné `$cilovyDisk` nastav skutečnou cestu cílové instalace a pro původní cílová data zvol novou záložní složku.
+
+Po celou dobu kopírování a kontroly musí Docker Desktop zůstat ukončený; na disku musí být místo i pro zálohu dosavadních cílových dat.
+
+Nejprve zazálohuj současný cílový disk:
+
+```text
+$cilovyDisk = 'D:\DockerData\docker_data.vhdx'
+New-Item -ItemType Directory -Path 'D:\Zalohy\Docker-pred-obnovou' -ErrorAction Stop
+Copy-Item -LiteralPath $cilovyDisk -Destination 'D:\Zalohy\Docker-pred-obnovou\docker_data.vhdx' -ErrorAction Stop
+Get-FileHash -LiteralPath $cilovyDisk -Algorithm SHA256
+Get-FileHash -LiteralPath 'D:\Zalohy\Docker-pred-obnovou\docker_data.vhdx' -Algorithm SHA256
+```
+
+Teprve když oba kontrolní součty souhlasí, přepiš cílový datový soubor přenesenou zálohou:
+
+```text
+Copy-Item -LiteralPath 'E:\Prenos\Docker\docker_data.vhdx' -Destination $cilovyDisk -ErrorAction Stop
+Get-FileHash -LiteralPath $cilovyDisk -Algorithm SHA256
+```
+
+Výsledný `Hash` musí souhlasit se zálohou ze zdrojového počítače; tuto kontrolu proveď ještě před spuštěním Docker Desktopu, který začne disk měnit.
+
+#### 3. Obnov okolní soubory a zkontroluj data aplikací
+
+Před spuštěním enginu obnov také Compose soubory, konfigurace a zdrojové složky bind mountů do očekávaných cest, protože některé kontejnery se mohou automaticky spustit.
+
+Pokud bind mounty používaly soubory z Ubuntu, nejprve dokonči jeho import a ověř, že cesty odpovídají obnovenému prostředí.
+
+Spusť Docker Desktop a pro přístup z obnoveného Ubuntu zapni jeho [WSL Integration](#2-zapni-integraci-pro-ubuntu).
+
+Nastavení aplikace Docker Desktop a zapnutí integrace ověř samostatně; kopie datového disku není zálohou nastavení Windows.
+
+```text
+docker version
+docker image ls
+docker container ls --all
+docker volume ls
+```
+
+Ověř části **Client** a **Server**, porovnej seznamy se zdrojem a spusť své aplikace s obnovenou konfigurací.
+
+Pokud se změnily cesty bind mountů nebo název distribuce Ubuntu, oprav konfiguraci a znovu vytvoř dotčené kontejnery; u Compose spusť ze správné distribuce a složky projektu:
+
+```text
+docker compose up --detach --force-recreate
+```
+
+Zachovej původní název projektu Compose a názvy volumes, aby aplikace použily obnovená data. [Opětovné vytvoření kontejnerů pomocí Compose](https://docs.docker.com/reference/cli/docker/compose/up/)
+
+Zkontroluj konkrétní uložená data, například záznamy v databázi nebo nahrané soubory; samotná přítomnost volume ani úspěšné `hello-world` tuto kontrolu nenahrazují.
+
+Původní zálohy ponech do dokončení kontroly; při návratu k předchozímu cílovému stavu Docker Desktop opět úplně ukonči a stejným postupem vrať jeho disk ze složky `Docker-pred-obnovou`.
+
+</details>
 
 ## Klíčové pojmy
 
