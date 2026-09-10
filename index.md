@@ -17,7 +17,7 @@ Osobní vývojářská dokumentace sjednocená podle tematických oblastí. Pře
 | [Dokumentace](documentation/index.md) | 2 | Nástroje a postupy pro tvorbu, převod a údržbu technické dokumentace. |
 | [Virtualizace](virtualization/index.md) | 7 | Kontejnery, lokální virtualizace, orchestrace a související správa prostředí. |
 | [Síť](network/index.md) | 2 | Síťové technologie, přístupy, certifikáty a bezpečné propojení prostředí. |
-| [Operační systémy](operating-system/index.md) | 3 | Praktické poznámky k operačním systémům a jejich příkazovým nástrojům. |
+| [Operační systémy](operating-system/index.md) | 4 | Praktické poznámky k operačním systémům a jejich příkazovým nástrojům. |
 | [Grafika](graphics/index.md) | 1 | Grafické nástroje, pracovní postupy a praktické tipy pro vizuální tvorbu. |
 | [Video](video/index.md) | 1 | Nástroje a postupy pro nahrávání, střih nebo zpracování videa. |
 | [Komunikace](teamwork/index.md) | 1 | Nástroje a postupy pro týmovou komunikaci a organizaci práce. |

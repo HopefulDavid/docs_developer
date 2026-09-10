@@ -11,5 +11,6 @@ Praktické poznámky k operačním systémům a jejich příkazovým nástrojům
 | Stránka | Popis |
 | --- | --- |
 | [Windows](windows/index.md) | Instalace, nastavení, klávesové zkratky a řešení problémů ve Windows. |
+| [Instalátor nevidí SSD](windows/installation-missing-ssd.md) | Jak zpřístupnit interní SSD při instalaci Windows, vybrat kompatibilní ovladač a bezpečně odlišit cílový disk od instalačního USB. |
 | [Command Line](windows/cmd.md) | Moderní přehled práce s příkazovým řádkem, dávkovými skripty a optimalizací disků ve Windows. |
 | [PowerShell](windows/powershell.md) | Správa balíčků, oprávnění, přizpůsobení prostředí, práce se soubory a síť v PowerShellu. |
