@@ -210,3 +210,7 @@ podman machine init
 ```
 
 </details>
+
+## Docker Desktop a vlastní Ubuntu
+
+Rozdíl mezi distribucemi `Ubuntu-22.04` a `docker-desktop`, zapnutí integrace, ověření Dockeru z Ubuntu i význam disku `docker_data.vhdx` vysvětluje [Docker Desktop a WSL 2 ve Windows](docker/index.md#docker-desktop-a-wsl-2-ve-windows).

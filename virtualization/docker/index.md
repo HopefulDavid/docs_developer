@@ -11,7 +11,112 @@
 - Kontejnery jsou rychlejší a efektivnější než klasická virtualizace.
 
 > [!NOTE]
-> Pro instalaci Dockeru na Windows je nutné mít nainstalovaný [WSL](../wsl.md).
+> Pro použití Docker Desktopu s backendem WSL 2 ve Windows nejprve připrav [WSL](../wsl.md).
+
+## Docker Desktop a WSL 2 ve Windows
+
+Tento postup ověřuje používání linuxových kontejnerů Docker Desktopu z vlastní distribuce WSL, například Ubuntu.
+
+### Proč jsou v Průzkumníku Ubuntu i docker-desktop
+
+V části **Linux** v Průzkumníku Windows mohou být obě distribuce současně:
+
+| Distribuce | Účel |
+|---|---|
+| `Ubuntu-22.04` | Tvoje vlastní Linux prostředí pro projekty, Bash, Git a správu balíčků; může být nainstalované běžně nebo importované z RootFS. |
+| `docker-desktop` | Interní distribuce vytvořená a spravovaná Docker Desktopem, ve které běží Docker Engine. |
+
+Zapnutá **WSL Integration** umožní zadávat příkazy `docker` z Ubuntu a používat engine spravovaný Docker Desktopem.
+
+Ubuntu přitom není pro samotný běh Docker Desktopu povinné; Docker lze používat také přímo z terminálu Windows.
+
+Přítomnost obou distribucí není chyba ani důvod jednu smazat; do `docker-desktop` běžně ručně nezasahuj. [Jak funguje integrace WSL](https://docs.docker.com/desktop/features/wsl/)
+
+### 1. Zkontroluj distribuce a verzi WSL
+
+Ve **Windows PowerShellu nebo CMD** spusť:
+
+```text
+wsl --list --verbose
+```
+
+Příklad výstupu při spuštěném Docker Desktopu:
+
+```text
+  NAME              STATE           VERSION
+* Ubuntu-22.04      Stopped         2
+  docker-desktop    Running         2
+```
+
+Pro tento postup musí používané distribuce běžet ve WSL 2, tedy mít ve sloupci `VERSION` hodnotu `2`.
+
+`Stopped` znamená zastavenou distribuci, kterou můžeš spustit; hvězdička označuje výchozí distribuci. [Výpis distribucí WSL](https://learn.microsoft.com/en-us/windows/wsl/basic-commands#list-installed-linux-distributions)
+
+Název `Ubuntu-22.04` je příklad z tohoto prostředí, proto jej v dalších příkazech nahraď přesným názvem ze svého výpisu.
+
+### 2. Zapni integraci pro Ubuntu
+
+1. Spusť Docker Desktop a počkej na spuštění enginu.
+2. V **Settings → General** zapni **Use WSL 2 based engine**, pokud se tato volba zobrazuje.
+3. V **Settings → Resources → WSL Integration** zapni svou distribuci Ubuntu a potvrď **Apply**.
+
+Pokud nabídka WSL Integration chybí, ověř režim kontejnerů a případně v nabídce Docker Desktopu zvol **Switch to Linux containers**.
+
+Pro tuto variantu neinstaluj do Ubuntu další samostatný Docker Engine nebo Docker CLI, protože může s integrací Docker Desktopu kolidovat. [Nastavení integrace](https://docs.docker.com/desktop/features/wsl/#enable-docker-in-a-wsl-2-distribution)
+
+### 3. Ověř spojení s enginem a spuštění kontejneru
+
+Ve **Windows PowerShellu nebo CMD** otevři Ubuntu:
+
+```text
+wsl --distribution Ubuntu-22.04
+```
+
+Následující příkaz už spusť **uvnitř Ubuntu**:
+
+```text
+docker version
+```
+
+Výpis má obsahovat části **Client** i **Server** bez chyby připojení; samotné `docker --version` ukazuje pouze verzi klienta. [Význam výstupu docker version](https://docs.docker.com/reference/cli/docker/version/)
+
+Pak ve stejném terminálu Ubuntu spusť testovací kontejner:
+
+```text
+docker run --rm hello-world
+```
+
+Očekávaná zpráva je:
+
+```text
+Hello from Docker!
+```
+
+Pokud image ještě není uložená lokálně, Docker ji stáhne z Docker Hubu a potřebuje připojení k internetu.
+
+Volba `--rm` po dokončení odstraní testovací kontejner, stažená image zůstane. [Spuštění a odstranění kontejneru](https://docs.docker.com/reference/cli/docker/container/run/#clean-up---rm)
+
+| Výsledek | Co ověřit |
+|---|---|
+| `docker: command not found` | Zapnutí integrace pro správnou distribuci a nové otevření terminálu Ubuntu. |
+| Chyba připojení v části `Server` | Běh Docker Desktopu a zvolené připojení klienta. |
+| Chyba při stahování image | Přístup k Docker Hubu, proxy nebo limit stahování. |
+
+Pokud používáš i vzdálený Docker, ověř připojení přes `docker context ls` a případné proměnné `DOCKER_HOST` nebo `DOCKER_CONTEXT`; úspěšný test se vztahuje k připojenému enginu. [Docker kontexty](https://docs.docker.com/engine/manage-resources/contexts/)
+
+Z Ubuntu se do terminálu Windows vrátíš příkazem `exit`.
+
+### Kam patří docker_data.vhdx
+
+`docker_data.vhdx` je samostatný datový disk Docker Desktopu; obsahuje Docker images, kontejnery, pojmenované volumes a build cache.
+
+Ubuntu má vlastní souborový systém a vlastní virtuální disk, takže záloha `docker_data.vhdx` nepatří do Ubuntu a nenahrazuje její disk.
+
+Soubory připojené do kontejnerů pomocí bind mountů zůstávají ve zdrojových složkách Windows nebo Ubuntu a vyžadují vlastní zálohu. [Ukládání pomocí bind mountů](https://docs.docker.com/engine/storage/bind-mounts/)
+
+Před obnovou Docker disku úplně ukonči Docker Desktop, ověř skutečné umístění jeho datového disku a uchovej zálohu současných dat; vlastní postup popisuje [oficiální návod k obnově Docker Desktopu](https://docs.docker.com/desktop/settings-and-maintenance/backup-and-restore/#if-docker-desktop-fails-to-start-or-you-want-to-back-up-the-whole-docker-desktop-vm).
+
+Úspěšné `hello-world` potvrzuje spuštění kontejneru, nikoli obnovu původních images, kontejnerů nebo dat aplikací.
 
 ## Klíčové pojmy
 
