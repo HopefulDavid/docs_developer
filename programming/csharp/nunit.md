@@ -1,61 +1,54 @@
-# .NET – NUnit (Testovací framework)
+# .NET – NUnit
 
-> Praktické rady pro psaní unit testů v .NET pomocí NUnit, práce s více asserty a odkazy na video prezentaci.
+NUnit umožňuje spouštět automatizované testy a zapisovat očekávání pomocí `Assert.That`.
 
-## Co je NUnit?
+## Založení a spuštění testů
 
-<details>
-<summary>Základní principy NUnit</summary>
+Se SDK .NET 10 vytvořte projekt a spusťte jeho testy:
 
-- **NUnit** je populární open-source framework pro unit testování v .NET.
-- Umožňuje psát automatizované testy, ověřovat chování kódu a zvyšovat jeho kvalitu.
-- Podporuje různé typy asertů, parametrizované testy, setup/teardown metody a další.
+```powershell
+dotnet new nunit -n NUnitDemo -f net10.0
+cd NUnitDemo
+dotnet test
+```
 
-</details>
+Šablona přidá NUnit, testovací adaptér a SDK potřebné pro objevování a spouštění testů. [Microsoft: testování s NUnit a dotnet test](https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-csharp-with-nunit).
 
 ## Multiple Asserts
 
-<details>
-<summary>Jak fungují Multiple Asserts?</summary>
+Více souvisejících ověření jednoho výsledku seskupte do `Assert.Multiple`.
 
-- Ve standardním případě, pokud první `assert` selže, následující testy v metodě už nejsou spuštěny.
-- Pomocí `Assert.Multiple` lze provést více ověření najednou a zobrazit všechny chyby najednou.
-- Vhodné pro komplexní ověřování výsledků.
+Soubor `UnitTest1.cs` nahraďte úplnou ukázkou:
 
-**Ukázka použití:**
 ```csharp
-[Test]
-public void MultipleAssertsDemo()
+using System.Numerics;
+using NUnit.Framework;
+
+/// <summary>Ukázka ověření více složek jednoho výsledku.</summary>
+public sealed class ComplexTests
 {
-    var situationUnderTest = new SomeCalculator();
-    var result = situationUnderTest.DoCalculation();
-
-    Assert.Multiple(() =>
+    /// <summary>Součet komplexních čísel zachová obě složky.</summary>
+    [Test]
+    public void AdditionAddsBothComponents()
     {
-        Assert.That(result.RealPart, Is.EqualTo(5.2));
-        Assert.That(result.ImaginaryPart, Is.EqualTo(3.9));
-    });
-
-    // Lze použít i klasickou syntaxi
-    Assert.Multiple(() =>
-    {
-        ClassicAssert.AreEqual(5.2, result.RealPart, "Real Part");
-        ClassicAssert.AreEqual(3.9, result.ImaginaryPart, "Imaginary Part");
-    });
+        var result = new Complex(2, 1) + new Complex(3, 3);
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.Real, Is.EqualTo(5));
+            Assert.That(result.Imaginary, Is.EqualTo(4));
+        });
+    }
 }
 ```
 
-> [!NOTE]
-> Multiple asserts využij, pokud chceš v jednom testu ověřit více vlastností najednou.
+Znovu spusťte `dotnet test`; očekáván je jeden úspěšný test.
 
-</details>
+Ukázka demonstruje syntaxi na standardním typu; v aplikaci tímto způsobem ověřujte výsledky vlastního kódu.
+
+NUnit shromáždí selhání asertů v bloku, ale neošetřená výjimka může zbývající vykonávání ukončit.
+
+Od NUnit 4.2 existuje také `using (Assert.EnterMultipleScope())`; `Assert.Multiple` je použitelné i pro starší verze. [NUnit: Multiple Asserts](https://docs.nunit.org/articles/nunit/writing-tests/assertions/multiple-asserts.html).
 
 ## Video prezentace
 
-<details>
-<summary>Trendy v unit testování a mockování</summary>
-
-- Doporučené video:
-[Trendy v unit testování a mockování (WUG Days 2018)](https://download.wug.cz/videos/wug/WUGBrno_WUG-Days-2018_Trendy-v-unit-testovani-a-mockovani/WUGBrno_WUG-Days-2018_Trendy-v-unit-testovani-a-mockovani_1080p.mp4)
-
-</details>
+[Trendy v unit testování a mockování, WUG Days 2018](https://download.wug.cz/videos/wug/WUGBrno_WUG-Days-2018_Trendy-v-unit-testovani-a-mockovani/WUGBrno_WUG-Days-2018_Trendy-v-unit-testovani-a-mockovani_1080p.mp4) nabízí historický kontext; podobu současného API ověřujte v dokumentaci NUnit.

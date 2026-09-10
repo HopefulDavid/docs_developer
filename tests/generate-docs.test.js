@@ -6,11 +6,21 @@ const test = require('node:test');
 const docfx = require('../docfx.json');
 const {
   cleanInline,
+  descriptionFromMarkdown,
   isInternalArtifactPath,
   isInternalPath,
 } = require('../scripts/generate-docs.js');
 
 const root = path.resolve(__dirname, '..');
+
+test('přehled nepřenáší relativní odkazy z úvodu do jiné složky', () => {
+  const intro = '# Projekt\n\nNejprve ověř [instalaci SDK](setup-and-configuration.md).\n';
+  assert.equal(descriptionFromMarkdown(intro), 'Nejprve ověř instalaci SDK.');
+  assert.equal(
+    descriptionFromMarkdown('# API\n\nPoužij `dotnet` a [referenci](https://example.com/api).'),
+    'Použij `dotnet` a referenci.',
+  );
+});
 
 test('normalizace zachovává čitelný název .NET v nadpisu i textu', () => {
   for (const text of [

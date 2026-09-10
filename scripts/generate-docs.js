@@ -209,9 +209,9 @@ const navigation = {
           name: 'C# a .NET',
           href: 'csharp/index.md',
           items: [
-            { name: 'Komponenty', href: 'csharp/components.md' },
-            { name: 'Interface', href: 'csharp/interface.md' },
-            { name: 'Datové typy', href: 'csharp/data-types.md' },
+            { name: 'Windows Workflow (WF)', href: 'csharp/components.md' },
+            { name: 'Rozhraní a kopírování', href: 'csharp/interface.md' },
+            { name: 'Kolekce a datové typy', href: 'csharp/data-types.md' },
             { name: 'Atributy', href: 'csharp/attributes.md' },
             { name: 'Enum', href: 'csharp/enum.md' },
             { name: 'Metody', href: 'csharp/methods.md' },
@@ -875,6 +875,7 @@ function firstHeading(content) {
   return match ? cleanInline(match[1]) : '';
 }
 
+/** Vrací stručný úvod bez odkazů, jejichž relativní cesty neplatí v přehledu sekce. */
 function descriptionFromMarkdown(content) {
   const lines = content.split('\n');
   const headingIndex = lines.findIndex((line) => /^#\s+/.test(line));
@@ -891,7 +892,8 @@ function descriptionFromMarkdown(content) {
       continue;
     }
 
-    return cleanInline(line.replace(/^>\s*/, '').replace(/^\*\*.+?:\*\*\s*/, ''));
+    return cleanInline(line.replace(/^>\s*/, '').replace(/^\*\*.+?:\*\*\s*/, ''))
+      .replace(/(?<!!)\[([^\]\n]+)\]\([^)\n]+\)/g, '$1');
   }
 
   return 'Stránka zatím nemá krátký úvod.';
@@ -938,10 +940,10 @@ function renderRootIndex() {
     ];
   });
 
-  const body = `Osobní vývojářská dokumentace sjednocená podle tematických oblastí. Přehledy a navigace se skládají automaticky ze zdrojových souborů, aby zůstaly konzistentní i při dalším rozšiřování.\n\n## Oblasti\n\n${table(
+  const body = `Praktické návody, příkazy a vysvětlení pro každodenní vývoj.\n\nVyber oblast nebo vyhledej konkrétní nástroj v horní liště.\n\n## Oblasti\n\n${table(
     ['Oblast', 'Stránek', 'Záměr'],
     sectionRows
-  )}\n## Údržba\n\n- Aktualizace přehledů a navigace: \`npm run docs:generate\`.\n- Kontrola bez zápisu: \`npm run docs:check\`.\n- Build DocFX výstupu: \`npm run docs:build\`.\n- Historie změn: ${link(file, 'Změny', 'changelog.md')}.`;
+  )}\nHistorii úprav najdeš na stránce ${link(file, 'Změny', 'changelog.md')}.`;
 
   generatedPage(file, 'Dokumentace pro vývojáře', body);
 }
@@ -1372,4 +1374,4 @@ if (require.main === module) {
   runCli();
 }
 
-module.exports = { cleanInline, isInternalArtifactPath, isInternalPath };
+module.exports = { cleanInline, descriptionFromMarkdown, isInternalArtifactPath, isInternalPath };

@@ -1,105 +1,63 @@
-# PostgreSQL – Průvodce a tipy
+# PostgreSQL – instalace a připojení
 
-> Přehled základních pojmů, instalace, příkazů a doporučení pro práci s PostgreSQL.
+PostgreSQL je relační databázový systém; pro práci lze použít konzoli psql nebo grafický klient pgAdmin.
 
-![PostgreSQL](../images/a32bfd31-f086-44eb-be6f-b8fbb993dec2.png)
+## Instalace PostgreSQL ve Windows
 
-## Co je PostgreSQL?
+1. Vyber podporovanou verzi a instalátor z [oficiálního rozcestníku](https://www.postgresql.org/download/windows/).
+2. V instalátoru EDB zvol server a **Command Line Tools**, případně také **pgAdmin 4**.
+3. Vyber datový adresář, nastav heslo databázového správce a poznamenej si port; běžný výchozí port je `5432`.
+4. Dokonči instalaci a ověř běh databázové služby.
 
-- **Objektově-relační databázový systém** s otevřeným zdrojovým kódem.
-- Jeden z nejrobustnějších SQL systémů dostupných zdarma.
-- Podporuje procedurální jazyky: `PL/pgSQL`, `PL/Python`, `PL/Perl`, `PL/Java` a další.
+pgAdmin je samostatný klient; jeho přítomnost závisí na distribuci a volbě komponent.
 
-> [!NOTE]
-> `PL` znamená „Procedural Language" – umožňuje psaní funkcí a procedur přímo v databázi.
+### Výběr komponent
 
-## Uživatelské rozhraní
-
-Doporučený klient je **pgAdmin 4** – instaluje se jako součást PostgreSQL:
-
-![pgAdmin – otevření aplikace](../images/t0m7kk76Jm.png)
-
-## Instalace PostgreSQL
-
-<details>
-<summary>Kompletní průvodce instalací krok za krokem</summary>
-
-**1. Výběr verze a stažení**
-
-Stáhni instalátor z [enterprisedb.com/downloads/postgres-postgresql-downloads](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads):
-
-![Výběr verze PostgreSQL](../images/postgreSQL_Install.png)
-
-**2. Spuštění instalace**
-
-![Spuštění instalace](../images/postgreSQL_Install_2.png)
-
-**3. Výběr složky instalace** (doporučeno ponechat výchozí):
-
-![Složka pro instalaci](../images/postgreSQL_Install_3.png)
-
-**4. Výběr komponent**
-
-![Výběr komponent](../images/wqiRRNNKOT.png)
-
-> [!NOTE]
-> Doporučeno nainstalovat `pgAdmin 4` (grafické rozhraní) a `Command Line Tools`.
-
-**5. Složka pro data** (doporučeno ponechat výchozí):
-
-![Složka pro data](../images/postgreSQL_Install_4.png)
-
-**6. Nastavení hesla:**
-
-![Nastavení hesla](../images/postgreSQL_Install_5.png)
-
-**7. Port serveru** (výchozí: `5432`):
-
-![Nastavení portu](../images/postgreSQL_Install_6.png)
-
-**8. Geografická lokace:**
-
-![Geografická lokace](../images/postgreSQL_Install_7.png)
-
-**9. Kontrola a dokončení:**
-
-![Kontrola před instalací](../images/postgreSQL_Install_8.png)
-
-</details>
+![Komponenty instalátoru PostgreSQL pro Windows](../images/wqiRRNNKOT.png)
 
 ## Připojení z příkazového řádku
 
-<details>
-<summary>Test naslouchání a ověření připojení</summary>
+Otevři **SQL Shell (psql)**, nebo v terminálu s dostupným `psql` spusť:
 
-Otevři konzoli PostgreSQL:
+```text
+psql -h localhost -p 5432 -U postgres -d postgres
+```
 
-![Otevření konzole](../images/zGRvsmYA6A.png)
+Heslo zadej do výzvy, nikoli jako součást příkazu.
 
-P�ipojení k serveru:
-
-![Připojení k PostgreSQL](../images/t0Vjh1fqzy.png)
-
-Výsledek:
-
-![Úspěšné připojení](../images/oY0QJRKkL1.png)
-
-Ověření verze:
+Po přihlášení ověř:
 
 ```sql
 SELECT version();
+SELECT current_database(), current_user;
 ```
 
-> [!WARNING]
-> Pokud konzole nezobrazuje anglický text, uprav:
-> - `C:\Program Files\PostgreSQL\16\data\postgresql.conf`
->
->![Konfigurace postgresql.conf](../images/G0Loa7KgVA.png)
->
-> - Systémové proměnné prostředí
->
->![Proměnné prostředí](../images/0qjIRo5xxb.png)
->
-> Poté restartuj konzoli.
+V konzoli lze použít také:
 
-</details>
+| Příkaz psql | Význam |
+|---|---|
+| `\l` | Seznam databází |
+| `\dt` | Tabulky v aktuálním vyhledávacím schématu |
+| `\d schema.tabulka` | Struktura konkrétní tabulky |
+| `\q` | Ukončení konzole |
+
+[Reference psql](https://www.postgresql.org/docs/current/app-psql.html)
+
+## Připojení v pgAdminu
+
+Zaregistruj server a vyplň hostitele, port, databázi pro první připojení, uživatele a heslo odpovídající instalaci.
+
+V **Query Tool** spusť stejný ověřovací dotaz jako v psql. [Dialog serveru](https://www.pgadmin.org/docs/pgadmin4/latest/server_dialog.html)
+
+Pro aplikace vytvoř samostatný účet s potřebnými oprávněními; správce `postgres` v tomto návodu slouží k ověření nové lokální instalace.
+
+## Když se připojení nedaří
+
+| Chyba | Co ověřit |
+|---|---|
+| `psql` nenalezen | Instalaci Command Line Tools a cestu k adresáři `bin` |
+| Connection refused | Běh serveru, hostitele a port |
+| Password authentication failed | Jméno databázového uživatele a jeho heslo |
+| No pg_hba.conf entry | Pravidla přístupu pro konkrétního klienta a databázi |
+
+Jazyk konzole není důvod měnit konfiguraci serveru; řeš konkrétní chybu připojení. [Konfigurace přístupu](https://www.postgresql.org/docs/current/auth-pg-hba-conf.html)

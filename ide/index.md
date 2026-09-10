@@ -10,5 +10,5 @@ Nastavení a používání vývojových prostředí pro každodenní práci.
 
 | Stránka | Popis |
 | --- | --- |
-| [JetBrains](jetbrains.md) | Propojení s Androidem, XML komentáře, klávesové zkratky a regulární výrazy v JetBrains Rider. |
-| [Visual Studio](visual-studio.md) | Praktické rady pro stažení a instalaci Visual Studio Community offline. |
+| [JetBrains](jetbrains.md) | Rider propojuje editor .NET s nástroji pro sestavení, ladění a práci se zdrojovým kódem. |
+| [Visual Studio](visual-studio.md) | Offline instalace používá předem stažený layout obsahující instalátor a vybrané komponenty. |

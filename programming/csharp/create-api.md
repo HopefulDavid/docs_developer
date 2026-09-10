@@ -1,285 +1,151 @@
 # .NET – Vytvoření REST API v ASP.NET Core
 
-> Praktické rady pro založení, strukturu, konfiguraci a rozšíření vlastního API v C# s ASP.NET Core.
+Tento postup pro SDK .NET 10 vytvoří lokální API poznámek s funkčním přidáním, čtením, úpravou a mazáním.
+
+Data zůstávají pouze v paměti jednoho procesu a po restartu zmizí.
 
 ## Vytvoření projektu
 
-<details>
-<summary>Krok za krokem</summary>
+V nové pracovní složce spusťte:
 
-1. Otevři **Visual Studio**.
-2. Zvol **Create a new project**.
-3. Vyber šablonu **ASP.NET Core Web API**.
-4. Pojmenuj projekt a klikni na **Create**.
-5. Vyber **.NET 6 (LTS)** nebo nejnovější verzi.
-
-</details>
-
-## Struktura projektu
-
-<details>
-<summary>Přehled složek a souborů</summary>
-
-| Složka/Soubor | Popis |
-|------------------|------------------------------|
-| Controllers | Obsahuje kontrolery API. |
-| Program.cs | Hlavní vstupní bod aplikace. |
-| appsettings.json | Konfigurační soubor. |
-
-</details>
-
-## Přidání kontroleru
-
-<details>
-<summary>Ukázka kontroleru</summary>
-
-```csharp
-using Microsoft.AspNetCore.Mvc;
-
-namespace MyAPI.Controllers
-{
-    [ApiController]
-    [Route("api/[controller]")]
-    public class MyController : ControllerBase
-    {
-        [HttpGet]
-        public IActionResult Get() => Ok(new { message = "Vítejte v mém API!" });
-
-        [HttpPost]
-        public IActionResult Post([FromBody] MyModel model)
-        {
-            if (model == null) return BadRequest("Model je null");
-            return CreatedAtAction(nameof(Get), new { id = model.Id }, model);
-        }
-
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] MyModel model)
-        {
-            if (id != model.Id) return BadRequest("ID neodpovídá");
-            return Ok(model);
-        }
-
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            // Smazání logiky zde
-            return NoContent();
-        }
-
-        [HttpGet("search")]
-        public IActionResult Search([FromQuery] string query)
-        {
-            // Vyhledávací logika zde
-            return Ok(new { query });
-        }
-
-        [HttpGet("{id}")]
-        public IActionResult GetById([FromRoute] int id)
-        {
-            var model = new MyModel { Id = id, Name = "Example" };
-            if (model == null) return NotFound();
-            return Ok(model);
-        }
-    }
-
-    public class MyModel
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-    }
-}
+```powershell
+dotnet new web -n NotesApi -f net10.0
+cd NotesApi
 ```
-</details>
 
-## Konfigurace závislostí
-
-<details>
-<summary>Nastavení v `Startup.cs`</summary>
-
-```csharp
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-
-namespace MyAPI
-{
-    public class Startup
-    {
-        private readonly IConfiguration _configuration;
-        public Startup(IConfiguration configuration) => _configuration = configuration;
-
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddControllers();
-            services.AddCors();
-            services.AddAuthentication();
-            services.AddAuthorization();
-            services.AddSwaggerGen();
-            services.AddSingleton<MyService>();
-        }
-
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger, MyService myService)
-        {
-            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
-            }
-
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-            app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.RoutePrefix = string.Empty;
-                c.SwaggerEndpoint("v1/swagger.json", "My API V1");
-            });
-
-            app.Use(async (context, next) =>
-            {
-                myService.LogInformation();
-                myService.UseApiKeys();
-                logger.LogInformation("Handling request: " + context.Request.Path);
-                await next.Invoke();
-                logger.LogInformation("Finished handling request.");
-            });
-
-            app.UseEndpoints(endpoints => endpoints.MapControllers());
-        }
-    }
-}
-```
-</details>
+Prázdná webová šablona umožní přidat jen služby potřebné pro tento příklad. [Microsoft: šablony dotnet new](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-new-sdk-templates).
 
 ## Vstupní bod aplikace
 
-<details>
-<summary>`Program.cs`</summary>
+Nahraďte celý `Program.cs`:
 
 ```csharp
-public class Program
-{
-    public static void Main(string[] args) => CreateHostBuilder(args).Build().Run();
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddControllers();
 
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
-}
+var app = builder.Build();
+app.MapControllers();
+app.Run();
 ```
-</details>
 
-## Konfigurace v `appsettings.json`
+`AddControllers` registruje MVC služby a `MapControllers` zpřístupní trasy označené atributy. [Microsoft: API s kontrolery](https://learn.microsoft.com/en-us/aspnet/core/web-api/?view=aspnetcore-10.0).
 
-<details>
-<summary>Ukázka konfigurace</summary>
+## Přidání kontroleru
 
-```json
-{
-  "Logging": {
-    "LogLevel": { "Default": "Information" },
-    "Console": { "IncludeScopes": true }
-  },
-  "AllowedHosts": "*",
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;",
-    "AnotherConnection": "Server=anotherServerAddress;Database=anotherDataBase;User Id=anotherUsername;Password=anotherPassword;"
-  },
-  "CustomSettings": {
-    "EmailSettings": {
-      "SmtpServer": "smtp.example.com",
-      "SmtpPort": 587,
-      "SenderName": "Example App",
-      "SenderEmail": "noreply@example.com",
-      "Username": "smtpUser",
-      "Password": "smtpPassword"
-    },
-    "ThirdPartyApiKeys": {
-      "GoogleMaps": "your-google-maps-api-key",
-      "SendGrid": "your-sendgrid-api-key"
-    }
-  }
-}
-```
-</details>
-
-## Příklad služby s konfigurací
-
-<details>
-<summary>Třída služby</summary>
+Vytvořte složku `Controllers` a soubor `Controllers/NotesController.cs`:
 
 ```csharp
-public class MyService
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
+
+namespace NotesApi.Controllers;
+
+/// <summary>Lokální ukázkové API poznámek uchovávaných v paměti.</summary>
+[ApiController]
+[Route("api/notes")]
+public sealed class NotesController : ControllerBase
 {
-    private readonly IConfiguration _configuration;
-    private readonly ILogger<MyService> _logger;
-    private readonly string _defaultConnectionString;
-    private readonly string _anotherConnectionString;
-    private readonly EmailSettings _emailSettings;
-    private readonly ThirdPartyApiKeys _apiKeys;
+    private static readonly object Gate = new();
+    private static readonly Dictionary<Guid, Note> Notes = new();
 
-    public MyService(IConfiguration configuration, ILogger<MyService> logger)
+    /// <summary>Vrátí aktuální seznam poznámek.</summary>
+    [HttpGet]
+    public ActionResult<Note[]> GetAll()
     {
-        _configuration = configuration;
-        _logger = logger;
-        _defaultConnectionString = _configuration.GetConnectionString("DefaultConnection");
-        _anotherConnectionString = _configuration.GetConnectionString("AnotherConnection");
-        _emailSettings = _configuration.GetSection("CustomSettings:EmailSettings").Get<EmailSettings>();
-        _apiKeys = _configuration.GetSection("CustomSettings:ThirdPartyApiKeys").Get<ThirdPartyApiKeys>();
+        lock (Gate)
+            return Notes.Values.OrderBy(note => note.Id).ToArray();
     }
 
-    public void LogInformation()
+    /// <summary>Vyhledá poznámku podle identifikátoru.</summary>
+    [HttpGet("{id:guid}")]
+    public ActionResult<Note> GetById(Guid id)
     {
-        _logger.LogInformation("Default connection string: {ConnectionString}", _defaultConnectionString);
-        _logger.LogInformation("Another connection string: {ConnectionString}", _anotherConnectionString);
+        lock (Gate)
+            return Notes.TryGetValue(id, out var note) ? Ok(note) : NotFound();
     }
 
-    public void SendEmail()
+    /// <summary>Vytvoří poznámku a vrátí její adresu v Location.</summary>
+    [HttpPost]
+    public ActionResult<Note> Create(NoteInput input)
     {
-        var smtpClient = new SmtpClient(_emailSettings.SmtpServer, _emailSettings.SmtpPort)
+        var note = new Note(Guid.NewGuid(), input.Text);
+        lock (Gate)
+            Notes.Add(note.Id, note);
+        return CreatedAtAction(nameof(GetById), new { id = note.Id }, note);
+    }
+
+    /// <summary>Nahradí text existující poznámky.</summary>
+    [HttpPut("{id:guid}")]
+    public IActionResult Update(Guid id, NoteInput input)
+    {
+        lock (Gate)
         {
-            Credentials = new NetworkCredential(_emailSettings.Username, _emailSettings.Password),
-            EnableSsl = true
-        };
-        var mailMessage = new MailMessage
-        {
-            From = new MailAddress(_emailSettings.SenderEmail, _emailSettings.SenderName),
-            Subject = "Test Email",
-            Body = "This is a test email.",
-            IsBodyHtml = true,
-        };
-        mailMessage.To.Add("recipient@example.com");
-        smtpClient.Send(mailMessage);
+            if (!Notes.ContainsKey(id))
+                return NotFound();
+            Notes[id] = new Note(id, input.Text);
+            return NoContent();
+        }
     }
 
-    public void UseApiKeys()
+    /// <summary>Odstraní existující poznámku.</summary>
+    [HttpDelete("{id:guid}")]
+    public IActionResult Delete(Guid id)
     {
-        var googleMapsApiKey = _apiKeys.GoogleMaps;
-        var sendGridApiKey = _apiKeys.SendGrid;
-        _logger.LogInformation("Google Maps API Key: {ApiKey}", googleMapsApiKey);
-        _logger.LogInformation("SendGrid API Key: {ApiKey}", sendGridApiKey);
+        lock (Gate)
+            return Notes.Remove(id) ? NoContent() : NotFound();
     }
 }
 
-public class EmailSettings
+/// <summary>Data přijatá při vytvoření nebo změně poznámky.</summary>
+public sealed class NoteInput
 {
-    public string SmtpServer { get; set; }
-    public int SmtpPort { get; set; }
-    public string SenderName { get; set; }
-    public string SenderEmail { get; set; }
-    public string Username { get; set; }
-    public string Password { get; set; }
+    /// <summary>Povinný text o nejvýše 200 znacích.</summary>
+    [Required, StringLength(200)]
+    public string Text { get; init; } = "";
 }
 
-public class ThirdPartyApiKeys
-{
-    public string GoogleMaps { get; set; }
-    public string SendGrid { get; set; }
-}
+/// <summary>Uložená neměnná hodnota poznámky.</summary>
+/// <param name="Id">Identifikátor přidělený serverem.</param>
+/// <param name="Text">Obsah poznámky.</param>
+public sealed record Note(Guid Id, string Text);
 ```
-</details>
+
+Atribut `ApiController` vrátí pro neplatný model automaticky HTTP 400.
+
+`CreatedAtAction` vrací HTTP 201 s odkazem na existující akci pro čtení právě vytvořené položky. [Microsoft: chování ApiController](https://learn.microsoft.com/en-us/aspnet/core/web-api/?view=aspnetcore-10.0#automatic-http-400-responses), [návratové typy akcí](https://learn.microsoft.com/en-us/aspnet/core/web-api/action-return-types?view=aspnetcore-10.0).
+
+## Spuštění a ověření
+
+Spusťte server s explicitním lokálním portem:
+
+```powershell
+dotnet run --no-launch-profile --urls http://127.0.0.1:5057
+```
+
+V druhém PowerShellu proveďte celý cyklus:
+
+```powershell
+$api = 'http://127.0.0.1:5057/api/notes'
+$note = Invoke-RestMethod -Method Post -Uri $api -ContentType 'application/json' -Body '{"text":"Prvni poznamka"}'
+Invoke-RestMethod -Uri "$api/$($note.id)"
+Invoke-RestMethod -Method Put -Uri "$api/$($note.id)" -ContentType 'application/json' -Body '{"text":"Upraveno"}'
+Invoke-RestMethod -Uri "$api/$($note.id)"
+Invoke-RestMethod -Method Delete -Uri "$api/$($note.id)"
+Invoke-RestMethod -Uri $api
+```
+
+Druhé čtení vrátí text `Upraveno` a závěrečný seznam je prázdný.
+
+Opakované čtení smazaného ID vrací HTTP 404; POST s `{"text":""}` vrací HTTP 400.
+
+Server ukončíte pomocí `Ctrl+C`.
+
+## Další rozšíření
+
+Pro trvalé ukládání navazujte na [EF Core](../../database/entity-framework.md).
+
+Před nasazením doplňte autentizaci a oprávnění podle účelu API, HTTPS, práci s chybami a odpovídající úložiště; lokální zámek nesdílí data mezi více procesy.
+
+Tajné hodnoty neukládejte do veřejného `appsettings.json` ani nevypisujte do logů. [Správa tajných údajů](../../network/secrets.md).
+
+Tato ukázka nepřidává OpenAPI ani Swagger UI; jejich konfiguraci řeší [oficiální dokumentace ASP.NET Core OpenAPI](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/openapi/overview?view=aspnetcore-10.0).

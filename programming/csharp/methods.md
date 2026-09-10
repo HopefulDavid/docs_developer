@@ -1,122 +1,66 @@
-# .NET – Metody a parametry
+# C# – parametry, metody a asynchronní práce
 
-> Typy parametrů, druhy metod, delegáty, asynchronní a paralelní zpracování v C#.
+Podpis metody určuje předávané hodnoty a výsledek; způsob předání je důležitý zejména u měnitelných objektů.
 
-## Základní pojmy
+## Parametry
 
-- **Parametr** – proměnná v definici metody.
-- **Argument** – skutečná hodnota předaná při volání metody.
+| Zápis | Význam |
+|---|---|
+| Bez modifikátoru | Předání hodnotou; u třídy se kopíruje reference, nikoli objekt |
+| `ref` | Metoda může číst i měnit proměnnou volajícího |
+| `out` | Metoda musí při běžném návratu přiřadit výstup |
+| `in` | Reference pro čtení; neznamená hlubokou neměnnost odkazovaného objektu |
+| `params` | Proměnný počet argumentů, například `params int[] values` |
+| Volitelný parametr | Použije výchozí hodnotu, pokud argument chybí |
 
-## Předání hodnoty vs. reference
+[Pravidla parametrů](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters)
 
-| Způsob | Popis | Kdy použít |
-|--------|-------|------------|
-| **Hodnotou** | Vytvoří kopii dat; změny v metodě neovlivní originál | Malé primitivní typy (`int`, `bool`, `float`) |
-| **Referencí (`ref`)** | Předává odkaz; metoda může měnit původní data | Velké struktury, sdílený stav |
-| **Out (`out`)** | Metoda musí hodnotu nastavit; nemusí být inicializována | Vrácení více hodnot |
-| **In (`in`)** | Odkaz pouze pro čtení; metoda nemůže hodnotu měnit | Velké struktury, optimalizace výkonu |
+Příklad s lokálními funkcemi v konzolovém `Program.cs`:
+
+```csharp
+var number = 1;
+var values = new List<int> { 1 };
+
+ChangeValue(number);
+Console.WriteLine(number); // 1
+
+ChangeReference(ref number);
+Console.WriteLine(number); // 2
+
+Append(values);
+Console.WriteLine(values.Count); // 2
+
+static void ChangeValue(int value) => value = 2;
+static void ChangeReference(ref int value) => value = 2;
+static void Append(List<int> items) => items.Add(2);
+```
+
+Metoda `Append` dostává kopii reference, ale mění společný objekt seznamu.
 
 ## Druhy metod
 
-| Typ | Klíčové slovo | Popis |
-|-----|---------------|-------|
-| Statická | `static` | Volání bez instance třídy |
-| Instanční | *(žádné)* | Vyžaduje instanci třídy |
-| Virtuální | `virtual` | Lze přepsat v potomcích (`override`) |
-| Abstraktní | `abstract` | Bez implementace, musí být přepsána |
-| Přetížená | *(žádné)* | Stejný název, různé parametry |
-| Rozšiřující | `this` | Přidává metody existujícím typům |
-| Asynchronní | `async` | Neblokující operace s `await` |
-| Indexátor | `this[]` | Umožňuje indexování objektu jako pole |
+- Instanční metoda pracuje s konkrétním objektem; `static` metoda instanci nepotřebuje.
+- Přetížení má stejné jméno a jiný podpis parametrů; samotný návratový typ nestačí.
+- `virtual` umožňuje přepsání v potomkovi přes `override`.
+- Rozšiřující metoda poskytuje syntaxi volání nad existujícím typem.
+- Delegát představuje typované volání metody; například `Func<int, int>` přijme a vrátí číslo.
 
-## Ukázky deklarací
-
-```csharp
-// Statická metoda
-public static void MyStaticMethod() { }
-
-// Virtuální metoda
-public virtual void MyVirtualMethod() { }
-
-// Abstraktní metoda
-public abstract void MyAbstractMethod();
-
-// Přetížené metody
-public void MyMethod(int param1) { }
-public void MyMethod(int param1, int param2) { }
-
-// Výchozí hodnota parametru
-public void MyMethod(int param1, int param2 = 10) { }
-
-// Params – libovolný počet parametrů
-public void MyMethod(params int[] numbers) { }
-
-// Ref, Out, In
-public void AddTen(ref int number) { number += 10; }
-public void GetValues(out int x, out int y) { x = 5; y = 10; }
-public void PrintValue(in int number) { Console.WriteLine(number); }
-
-// Rozšiřující metoda
-public static class MyExtensions
-{
-    public static void MyExtMethod(this MyType obj) { }
-}
-
-// Asynchronní metoda
-public async Task MyAsyncMethod() { await Task.CompletedTask; }
-public async Task<int> MyAsyncMethodWithResult() { return await Task.FromResult(42); }
-
-// Indexátor
-public interface IOAuth2Configuration
-{
-    IClientConfiguration this[string clientTypeName] { get; }
-}
-```
-
-## Delegáti
-
-Typově bezpečné reference na metody. Používají se pro události, callbacky a LINQ.
-
-```csharp
-// Vlastní delegát
-public delegate void MyDelegate(string message);
-MyDelegate del = MyMethod;
-del("Hello, World!");
-```
-
-### Generické delegáty
-
-| Typ | Popis | Příklad |
-|-----|-------|---------|
-| `Func<T, TResult>` | Vrací hodnotu | `Func<int, int, int> add = (x, y) => x + y;` |
-| `Action<T>` | Nevrací hodnotu | `Action<string> print = msg => Console.WriteLine(msg);` |
-| `Predicate<T>` | Vrací `bool` | `Predicate<int> isEven = x => x % 2 == 0;` |
+[Metody v C#](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/methods)
 
 ## Asynchronní zpracování
 
-```csharp
-// Async / await
-public async Task MethodA()
-{
-    await MethodB();
-}
+`async` samo nezakládá nové vlákno.
 
-public async Task MethodB()
-{
-    await Task.Delay(1000);
-}
-```
+Pro I/O používej asynchronní API a `await`; pro výpočetně náročnou práci lze podle prostředí použít `Task.Run`. [Asynchronní scénáře](https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/async-scenarios)
 
-## Paralelní zpracování (TPL)
+Příklad vyžaduje existující soubor `vstup.txt` v pracovní složce:
 
 ```csharp
-// Parallel.For
-Parallel.For(0, 10, i => { /* kód */ });
-
-// Task.Run
-Task<int> task = Task.Run(() => 42);
-int result = await task;
-
-// Parallel.ForEach
-Parallel.ForEach(collection, item => { /* kód */ });
+using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+string text = await File.ReadAllTextAsync("vstup.txt", cancellation.Token);
+Console.WriteLine(text.Length);
 ```
+
+Operace může skončit chybou souboru nebo zrušením; rozhodni, kde je aplikace zachytí a oznámí.
+
+Vyhýbej se `async void` kromě obsluhy událostí; vrácený `Task` dovoluje čekat na dokončení a pozorovat výjimku. [Návratové typy async](https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/async-return-types)

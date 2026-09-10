@@ -1,35 +1,33 @@
-# Visual Studio – Offline instalace a tipy
+# Visual Studio – offline instalace
 
-> Praktické rady pro stažení a instalaci Visual Studio Community offline.
+Offline instalace používá předem stažený layout obsahující instalátor a vybrané komponenty.
 
-![Visual Studio](../images/7093661c-9483-46e1-87bf-72496673b81a.png)
+## Stažení na počítači s internetem
 
-## Stažení instalátoru pro offline použití
+1. Stáhni bootstrapper požadované edice a verze z [Visual Studio Downloads](https://visualstudio.microsoft.com/downloads/).
+2. Otevři **CMD jako správce** ve složce se staženým `vs_community.exe`.
+3. Stáhni kompletní layout pro češtinu a angličtinu:
 
-<details>
-<summary>Kompletní postup stažení</summary>
+```cmd
+vs_community.exe --layout C:\visualstudio_offline --lang cs-CZ en-US
+```
 
-1. **Stáhněte instalátor**
-Získejte `vs_community.exe` z [oficiálních stránek Visual Studio](https://visualstudio.microsoft.com/cs/downloads/).
+Bez omezení `--add` se stahují všechny workloady a komponenty; úplný layout vyžaduje desítky GB a může trvat dlouho.
 
-2. **Přesuňte se do složky s instalátorem**
-Například:
-`C:\Users\<VašeJméno>\Stažené\`
+Pro menší layout vyber jen potřebné workloady podle [oficiálního postupu](https://learn.microsoft.com/en-us/visualstudio/install/create-an-offline-installation-of-visual-studio).
 
-3. **Otevřete příkazový řádek**
-Spusťte `cmd` jako správce.
+## Instalace bez internetu
 
-4. **Spusťte příkaz pro offline stažení:**
+Zkopíruj celou dokončenou složku layoutu na cílový počítač.
 
-   ```bash
-   vs_community.exe --layout C:\visualstudio_offline --lang cs-CZ en-US --all
-   ```
+V CMD spusť instalátor přímo z této kopie:
 
-- `--layout` určuje cílovou složku pro instalační soubory.
-- `--lang` nastavuje jazyky (čeština, angličtina).
-- `--all` stáhne všechny dostupné komponenty včetně volitelných modulů.
+```cmd
+C:\visualstudio_offline\vs_community.exe --noWeb
+```
 
-> [!NOTE]
-> Po dokončení se vytvoří složka `visualstudio_offline` s kompletními instalačními soubory.
+Vyber pouze komponenty obsažené v layoutu.
 
-</details>
+Pokud instalátor hlásí chybějící certifikáty nebo balíčky, vyřeš příčinu podle jeho hlášení a instalační dokumentace; `--noWeb` chybějící soubory nedoplní. [Offline instalace a certifikáty](https://learn.microsoft.com/en-us/visualstudio/install/create-an-offline-installation-of-visual-studio)
+
+Po dokončení spusť Visual Studio a sestav projekt vyžadující zvolený workload.

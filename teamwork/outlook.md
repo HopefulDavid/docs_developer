@@ -1,17 +1,25 @@
-# Outlook – Kalendář
+# Outlook – zobrazení více kalendářů
 
-> Přehled funkcí zobrazení a správy kalendáře v Outlooku.
+Kalendáře lze zobrazit vedle sebe nebo překrýt pro snadnější porovnání termínů.
 
-## Zobrazení kalendáře
+## Klasický Outlook pro Windows
 
-### Sloučené a oddělené zobrazení
+1. V kalendáři zaškrtni další kalendář v levém panelu.
+2. Na jeho záložce vyber šipku **View in Overlay Mode**.
+3. Pro návrat vedle sebe použij **View in Side-by-Side Mode**.
 
-Pomocí **View → Overlay** lze přepínat mezi oddělením a sloučením více kalendářů do jednoho okna.
+Jde o změnu zobrazení, nikoli sloučení událostí do jednoho kalendáře. [Porovnání kalendářů](https://support.microsoft.com/en-US/Outlook/calendar/view-multiple-calendars-at-the-same-time-in-outlook)
 
-**Oddělené zobrazení** – každý kalendář je zobrazen samostatně:
+### Oddělené zobrazení
 
-![Oddělené zobrazení kalendářů](../images/outlook_calendarBeforeOverlay.png)
+![Kalendáře vedle sebe v klasickém Outlooku](../images/outlook_calendarBeforeOverlay.png)
 
-**Sloučené zobrazení** – všechny kalendáře jsou zobrazeny v jednom okně:
+### Překryté zobrazení
 
-![Sloučené zobrazení kalendářů](../images/outlook_calendarAfterOverlay.png)
+![Překryté kalendáře v klasickém Outlooku](../images/outlook_calendarAfterOverlay.png)
+
+## Nový Outlook a web
+
+Vyber požadované kalendáře a v nabídce uspořádání zapni **Split view** pro zobrazení vedle sebe.
+
+Vypnutím této volby je překryješ. [Postup pro nový Outlook a web](https://support.microsoft.com/en-US/Outlook/calendar/view-multiple-calendars-at-the-same-time-in-outlook)

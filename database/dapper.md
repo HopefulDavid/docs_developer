@@ -1,106 +1,74 @@
-# Dapper – Průvodce a použití
+# Dapper – parametrizované SQL v .NET
 
-> Praktické rady pro práci s Dapper jako micro-ORM pro efektivní přístup k databázi v .NET.
+Dapper mapuje výsledky SQL na objekty .NET; dotazy i databázové schéma spravuje aplikace.
 
-![Dapper](../images/f5e467cc-a417-4099-9e05-5ccbbdf763b0.png)
+## Instalace
 
-## Dapper
+V existujícím konzolovém projektu .NET přidej Dapper a provider pro SQL Server:
 
-### Kdy použít
+```powershell
+dotnet add package Dapper
+dotnet add package Microsoft.Data.SqlClient
+```
 
-> [!NOTE]
-> Pro projekty, kde je klíčový výkon nebo kontrola nad databází.
+Pro jinou databázi zvol její ADO.NET provider. [Dapper](https://github.com/DapperLib/Dapper)
 
-- Výkon: Maximální výkon, nízká režie
-- Snadnost vývoje: Ruční psaní SQL, více práce
-- Komplexní modely: Ruční správa modelů
-- Flexibilita dotazů: Vysoká – plná kontrola nad SQL
+## Připojení a dotaz
 
-### Použití
+Příklad předpokládá dostupný SQL Server, oprávnění ke čtení a tabulku `dbo.Users` se sloupci `Id int`, `Name nvarchar(100)` a `Age int`.
 
-1. Instalace NuGet balíčku:
+Do proměnné prostředí `APP_DB_CONNECTION` nastav připojovací řetězec svého vývojového prostředí.
 
-    ```bash
-    dotnet add package Dapper
-    ```
+V `Program.cs` použij:
 
-2. Konfigurace a použití:
+```csharp
+using Dapper;
+using Microsoft.Data.SqlClient;
 
-   ```bash
-    using System;
-    using System.Data.SqlClient;
-    using System.Threading.Tasks;
-    using Dapper;
+var connectionString = Environment.GetEnvironmentVariable("APP_DB_CONNECTION")
+    ?? throw new InvalidOperationException("Chybí APP_DB_CONNECTION.");
 
-    // Příklad implementace v aplikační vrstvě
-    public class UserRepository
-    {
-        private readonly string _connectionString;
+await using var connection = new SqlConnection(connectionString);
+await connection.OpenAsync();
 
-        public UserRepository(string connectionString)
-        {
-            _connectionString = connectionString;
-        }
+var users = await connection.QueryAsync<User>(
+    "SELECT Id, Name, Age FROM dbo.Users WHERE Age >= @MinAge ORDER BY Id;",
+    new { MinAge = 18 });
 
-        // Metoda na získání uživatelů starších než zadaný věk
-        public async Task<IEnumerable<User>> GetUsersOlderThanAsync(int age)
-        {
-            const string sql = "SELECT Id, Name, Age FROM Users WHERE Age > @Age";
+foreach (var user in users)
+{
+    Console.WriteLine($"{user.Id}: {user.Name} ({user.Age})");
+}
 
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                return await connection.QueryAsync<User>(sql, new { Age = age });
-            }
-        }
-    }
+/// <summary>Výsledek dotazu na uživatele.</summary>
+public sealed class User
+{
+    /// <summary>Identifikátor uživatele.</summary>
+    public int Id { get; set; }
 
-    // Model entity
-    public class User
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int Age { get; set; }
-    }
+    /// <summary>Zobrazované jméno.</summary>
+    public string Name { get; set; } = "";
 
-    // Použití repository ve službě
-    public class UserService
-    {
-        private readonly UserRepository _repository;
+    /// <summary>Věk v letech.</summary>
+    public int Age { get; set; }
+}
+```
 
-        public UserService(UserRepository repository)
-        {
-            _repository = repository;
-        }
+Hodnotu `MinAge` předává objekt parametrů; nevkládej uživatelské hodnoty do SQL interpolací řetězce. [Parametry v Dapperu](https://github.com/DapperLib/Dapper)
 
-        public async Task ShowUsersAsync()
-        {
-            var users = await _repository.GetUsersOlderThanAsync(18);
-            foreach (var user in users)
-            {
-                Console.WriteLine($"ID: {user.Id}, Name: {user.Name}, Age: {user.Age}");
-            }
-        }
-    }
+## Zápis dat
 
-    // Hlavní program
-    class Program
-    {
-        static async Task Main()
-        {
-            var connectionString = "Server=myServer;Database=myDatabase;User Id=myUser;Password=myPassword;";
-            var userRepository = new UserRepository(connectionString);
-            var userService = new UserService(userRepository);
+Ve stejném otevřeném připojení lze místo dotazu provést:
 
-            await userService.ShowUsersAsync();
-        }
-    }
-   ```
+```csharp
+var changed = await connection.ExecuteAsync(
+    "UPDATE dbo.Users SET Name = @Name WHERE Id = @Id;",
+    new { Id = 1, Name = "Jana" });
+Console.WriteLine($"Změněné řádky: {changed}");
+```
 
-> [!NOTE]
-> Dapper je v tomo příkladu použit v následující části kódu:
-> ```bash
-> using (var connection = new SqlConnection(_connectionString))
-> {
-> return await connection.QueryAsync<User>(sql, new { Age = age });
-> }
-> ```
+Tento příkaz mění data; předpokládá oprávnění k zápisu a správný identifikátor.
+
+Pro více souvisejících změn použij transakci a předej ji každému příkazu.
+
+Dapper nevybírej pouze podle obecného příslibu výkonu; rozhodují konkrétní dotazy, indexy, přenos dat a naměřený výsledek.

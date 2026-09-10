@@ -1,154 +1,102 @@
-# .NET – XML: Serializace, CDATA, Namespace a Konvence
+# .NET – XML a serializace
 
-> Praktické rady pro práci s XML v .NET, náhradu znaků, CDATA, serializaci/deserializaci objektů, namespace a konvence.
+XML ukládá strukturovaná data do elementů a atributů; `XmlSerializer` mapuje tuto strukturu na veřejné členy objektů.
 
 ## Náhrada znaků v XML
 
-<details>
-<summary>Základní a speciální znaky</summary>
+XML předdefinuje pouze následujících pět pojmenovaných entit:
 
-| Znak | Náhrada | Popis |
-|-----------|--------------|----------------------|
-| `<` | `&lt;` | Levá ostrá závorka |
-| `>` | `&gt;` | Pravá ostrá závorka |
-| `&` | `&amp;` | Ampersand |
-| `'` | `&apos;` | Apostrof |
-| `"` | `&quot;` | Uvozovky |
-| Á | `&Aacute;` | Á s čárkou |
-| á | `&aacute;` | á s čárkou |
-| Č | `&Ccaron;` | Č s háčkem |
-| č | `&ccaron;` | č s háčkem |
+| Znak | Zápis |
+|---|---|
+| `<` | `&lt;` |
+| `>` | `&gt;` |
+| `&` | `&amp;` |
+| `'` | `&apos;` |
+| `"` | `&quot;` |
 
-> [!NOTE]
-> Stejným způsobem lze nahradit i další znaky s diakritikou pomocí prefixů `acute` (čárka) nebo `caron` (háček).
+Diakritiku zapisujte přímo v deklarovaném kódování, například UTF-8, nebo číselnou referencí jako `&#x10D;` pro `č`.
 
-</details>
+HTML entity jako `&ccaron;` nejsou v běžném XML bez vlastní deklarace platné. [W3C: entity XML](https://www.w3.org/TR/xml/#sec-predefined-ent).
 
 ## CDATA sekce
 
-<details>
-<summary>Co je CDATA?</summary>
+CDATA umožňuje zapsat text obsahující například `<` a `&` bez escapování:
 
-- Umožňuje vložit do XML libovolný text, včetně speciálních znaků.
-- Vše uvnitř CDATA není interpretováno jako XML.
-
-**Ukázka:**
 ```xml
-<exampleOfACDATA>
-  <![CDATA[
-    Můžete použít > < „ & nebo vkládat elementy <foo></bar>
-    bez narušení formátu XML.
-  ]]>
-</exampleOfACDATA>
+<example><![CDATA[Podmínka: a < b && b > 0]]></example>
 ```
-</details>
 
-## Serializace a Deserializace objektů
+Uvnitř jedné CDATA sekce nesmí být ukončovací posloupnost `]]>` a stále platí omezení na povolené znaky XML. [W3C: CDATA](https://www.w3.org/TR/xml/#sec-cdata-sect).
 
-<details>
-<summary>Jak převést objekt na XML a zpět?</summary>
+## Serializace a deserializace objektů
 
-### Serializace objektu do XML
+Úplný `Program.cs` pro konzolový projekt .NET 10 provede převod na XML a zpět:
+
 ```csharp
-public string SerializeObject(MyObject myObject)
+using System.Xml;
+using System.Xml.Serialization;
+
+var serializer = new XmlSerializer(typeof(Person));
+using var output = new StringWriter();
+serializer.Serialize(output, new Person { Name = "Eva & Adam" });
+Console.WriteLine(output.ToString());
+
+using var input = new StringReader(output.ToString());
+using var reader = XmlReader.Create(input, new XmlReaderSettings
 {
-    var serializer = new XmlSerializer(typeof(MyObject));
-    using (var stringWriter = new StringWriter())
-    {
-        serializer.Serialize(stringWriter, myObject);
-        return stringWriter.ToString();
-    }
+    DtdProcessing = DtdProcessing.Prohibit,
+    XmlResolver = null
+});
+var restored = (Person?)serializer.Deserialize(reader)
+    ?? throw new InvalidDataException("Dokument neobsahuje osobu.");
+Console.WriteLine(restored.Name);
+
+/// <summary>Osoba ukládaná do XML dokumentu.</summary>
+[XmlRoot("person", Namespace = "urn:example:people")]
+public class Person
+{
+    /// <summary>Zobrazované jméno osoby.</summary>
+    [XmlElement("name")]
+    public string Name { get; set; } = "";
 }
 ```
 
-### Deserializace XML na objekt
-```csharp
-public MyObject DeserializeObject(string xml)
-{
-    var serializer = new XmlSerializer(typeof(MyObject));
-    using (var stringReader = new StringReader(xml))
-    {
-        return (MyObject)serializer.Deserialize(stringReader);
-    }
-}
-```
-</details>
+Serializátor sám escapuje ampersand a deserializovaný výstup je opět `Eva & Adam`.
+
+`StringWriter` vytváří text s deklarací UTF-16; pro zápis přímo do UTF-8 souboru použijte `XmlWriter` nad souborem s odpovídajícím nastavením kódování. [Microsoft: příklady serializace XML](https://learn.microsoft.com/en-us/dotnet/standard/serialization/examples-of-xml-serialization).
+
+Čtečka explicitně odmítá DTD a nenačítá externí zdroje. [DtdProcessing](https://learn.microsoft.com/en-us/dotnet/api/system.xml.xmlreadersettings.dtdprocessing), [XmlResolver](https://learn.microsoft.com/en-us/dotnet/api/system.xml.xmlreadersettings.xmlresolver).
 
 ## Namespace v XML
 
-<details>
-<summary>Jak fungují jmenné prostory?</summary>
+Identitu elementu určuje jeho lokální název a URI jmenného prostoru; prefix je jen zkratka.
 
-- Zabraňují konfliktu názvů v XML.
-- Poznáte podle atributu `xmlns`.
+URI nemusí být dostupná webová stránka.
 
-> [!NOTE]
-> URL namespace nemusí být skutečná adresa, slouží jen jako identifikátor.
+Následující dva elementy tedy označují stejné jméno:
 
-**Příklad s prefixem:**
 ```xml
-<p:Person xmlns:p="test">
-    <p:FirstName>John</p:FirstName>
-</p:Person>
-```
-**Serializace s namespace:**
-```csharp
-XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-ns.Add("p", "test");
-s.Serialize(writer, person, ns);
+<p:person xmlns:p="urn:example:people" />
+<person xmlns="urn:example:people" />
 ```
 
-**Bez namespace:**
-```xml
-<person>
-    <name>John Doe</name>
-</person>
-```
-```csharp
-ns.Add("", "");
-s.Serialize(writer, person, ns);
-```
+Pouhé odstranění prefixů a namespace může sloučit původně rozdílné názvy a změnit význam dat.
 
-> [!WARNING]
-> Vlastnosti nesmí mít atribut `XmlElement` s namespace, pokud serializujete bez namespace.
-
-**Odebrání namespace z XML:**
-```csharp
-XDocument document = XDocument.Parse(dataOutput);
-foreach (var element in document.Root.DescendantsAndSelf())
-{
-    element.Name = element.Name.LocalName;
-    element.ReplaceAttributes(element.Attributes()
-        .Where(x => !x.IsNamespaceDeclaration)
-        .Select(x => new XAttribute(x.Name.LocalName, x.Value)));
-}
-dataOutput = document.ToString();
-```
-</details>
+Namespace v atributech modelu musí odpovídat vstupnímu dokumentu. [W3C: Namespaces in XML](https://www.w3.org/TR/xml-names/).
 
 ## Konvence serializace XML
 
-<details>
-<summary>Přizpůsobení serializace tříd a vlastností</summary>
+| Atribut | Účel |
+|---|---|
+| `XmlRoot` | Název a namespace kořenového elementu |
+| `XmlElement` | Mapování člena na element |
+| `XmlAttribute` | Mapování člena na atribut |
+| `XmlText` | Textový obsah elementu |
+| `XmlIgnore` | Vynechání člena |
+| `XmlArray`, `XmlArrayItem` | Obal kolekce a položky |
+| `XmlEnum` | Textová reprezentace hodnoty enumu |
+| `XmlType` | Název a namespace XML typu |
+| `XmlInclude` | Zahrnutí známého odvozeného typu |
+| `XmlAnyElement`, `XmlAnyAttribute` | Zachycení dalších elementů nebo atributů |
 
-| Attribut/Metoda | Použití |
-|--------------------------------|------------------------------------------------------------------------|
-| `[XmlRoot("MyClass")]` | Pojmenuje kořenový element |
-| `[XmlIgnore]` | Ignoruje vlastnost při serializaci |
-| `[XmlNamespaceDeclarations]` | Povolit jmenné prostory jako atributy |
-| `ShouldSerialize{Property}` | Metoda rozhodující o serializaci vlastnosti |
-| `{Property}Specified` | Bool vlastnost určující serializaci |
-| `[XmlArray("MyCollection")]` | Pojmenuje kolekci |
-| `[XmlArrayItem("Item")]` | Pojmenuje položky v kolekci |
-| `[XmlAttribute]` | Serializuje vlastnost jako XML atribut |
-| `[XmlText]` | Serializuje vlastnost jako textový obsah elementu |
-| `[XmlEnum("Value1")]` | Pojmenuje hodnotu enumu v XML |
-| `[XmlType("MyClass")]` | Pojmenuje třídu jako XML element |
-| `[XmlInclude(typeof(...))]` | Umožní serializaci děděných tříd |
-| `[XmlAnyElement]` | Libovolný XML element (typ XmlElement[]) |
-| `[XmlAnyAttribute]` | Libovolný XML atribut (typ XmlAttribute[]) |
-
-> [!NOTE]
-> Pro detailní nastavení serializace využijte kombinaci atributů a metod.
-
-</details>
+Přesné mapování a omezení typů shrnuje [Microsoft: atributy pro XML serializaci](https://learn.microsoft.com/en-us/dotnet/standard/serialization/attributes-that-control-xml-serialization).

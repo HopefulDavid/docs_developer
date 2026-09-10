@@ -10,4 +10,4 @@ Nástroje a postupy pro práci s lokálními i vývojářskými modely umělé i
 
 | Stránka | Popis |
 | --- | --- |
-| [Ollama](ollama.md) | Průvodce nastavením, spuštěním a správou Ollama na Windows. |
+| [Ollama](ollama.md) | Ollama spouští jazykové modely a poskytuje lokální API pro další aplikace. |

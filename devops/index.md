@@ -10,4 +10,4 @@ Infrastruktura, automatizace a provozní postupy pro vývojářské prostředí.
 
 | Stránka | Popis |
 | --- | --- |
-| [OpenTofu](opentofu.md) | Průvodce nástrojem OpenTofu pro popis a správu infrastruktury jako kódu (IaC). |
+| [OpenTofu](opentofu.md) | OpenTofu spravuje požadovaný stav zdrojů popsaný v konfiguračních souborech HCL. |

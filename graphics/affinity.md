@@ -1,6 +1,6 @@
-# Affinity – Mřížka a tipy
+# Affinity Designer 2 – mřížka a okraje
 
-> Použití mřížky, výpočty zarovnání a řešení častých problémů v Affinity.
+Mřížka a okraje jsou pomocné čáry pro rozvržení dokumentu v Affinity Designeru 2 pro desktop.
 
 ## Mřížka (Grid)
 
@@ -8,6 +8,8 @@
 
 1. **View → Show Grid** – zobrazí mřížku
 2. **View → Grid and Axis…** – nastavení parametrů mřížky
+
+V režimu **Basic** nastav **Spacing** a **Divisions** podle požadovaného rozestupu a dělení. [Nastavení mřížky](https://affinity.help/designer2/en-US.lproj/pages/DesignAids/grids.html)
 
 ## Výpočet zarovnání na střed
 
@@ -19,7 +21,9 @@ Příklad s hodnotami `gridWidth = 256 px`, `gridHeight = 256 px`, `offsetX = 25
 
 ### Modrý čtverec uvnitř stránky
 
-Modrý čtverec je způsoben aktivním odsazením (**Include margins**).
+Modrá obrysová čára může označovat okraje dokumentu; přepnutím **View → Show Margins** ověř, zda jde právě o tuto pomůcku.
+
+Velikost okrajů upravíš v nastavení dokumentu; nejde o skutečný grafický objekt. [Okraje dokumentu](https://affinity.help/designer2/en-US.lproj/pages/DesignAids/margins.html)
 
 **Při vytváření nového dokumentu:**
 

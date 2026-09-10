@@ -1,382 +1,187 @@
-# WPF – Moderní UI a Tipy
+# WPF – Rozložení, datové vazby a styly
 
-> Praktické rady pro tvorbu desktopových aplikací ve WPF, stylování, datové vazby, validaci, animace a responzivní design.
+WPF je UI framework pro desktopové aplikace Windows; vzhled popisuje XAML a chování obvykle C#.
 
-![WPF](../../images/bce43a30-8b45-414f-b656-200d5551f88e.png)
+## Založení projektu
 
-## Co je WPF?
+Na Windows se SDK .NET 10:
 
-- Tvorba moderních desktopových aplikací pro Windows.
-- Oddělení logiky (**C#**) od vzhledu (**XAML**).
-- Podpora datových vazeb, stylů, animací a vektorové grafiky.
-
-## Základní ovládací prvky
-
-<details>
-<summary>Button</summary>
-
-- Interaktivní tlačítko s možností stylování a událostí.
-
-```xml
-<Button
-    Content="Klikni na mě"
-    Background="LightBlue"
-    Foreground="White"
-    BorderBrush="Blue"
-    BorderThickness="2"
-    FontSize="16"
-    Padding="10"
-    Margin="10"
-    CornerRadius="5"/>
-```
-</details>
-
-<details>
-<summary>TextBox</summary>
-
-- Vstupní pole pro text s událostmi a stylováním.
-
-```xml
-<TextBox
-    Text="Zadejte text"
-    Background="White"
-    Foreground="Black"
-    BorderBrush="Gray"
-    BorderThickness="1"
-    FontSize="14"
-    Padding="5"
-    Margin="10"
-    Width="200"
-    Height="30"
-    TextChanged="TextBox_TextChanged"/>
-```
-</details>
-
-<details>
-<summary>CheckBox</summary>
-
-- Zaškrtávací pole pro volby.
-
-```xml
-<CheckBox
-    Content="Souhlasím s podmínkami"
-    Background="Transparent"
-    Foreground="Black"
-    BorderBrush="Gray"
-    BorderThickness="1"
-    FontSize="14"
-    Padding="5"
-    Margin="10"
-    Checked="CheckBox_Checked"/>
-```
-</details>
-
-<details>
-<summary>ComboBox</summary>
-
-- Rozevírací seznam pro výběr jedné hodnoty.
-
-```xml
-<ComboBox
-    Background="White"
-    Foreground="Black"
-    BorderBrush="Gray"
-    BorderThickness="1"
-    FontSize="14"
-    Padding="5"
-    Margin="10"
-    Width="150"
-    Height="30">
-    <ComboBoxItem Content="Možnost 1"/>
-    <ComboBoxItem Content="Možnost 2"/>
-</ComboBox>
-```
-</details>
-
-<details>
-<summary>RadioButton</summary>
-
-- Výběr jedné možnosti ze skupiny.
-
-```xml
-<StackPanel Margin="10">
-    <TextBlock Text="Vyberte si jednu z možností:" FontSize="16" Margin="0,0,0,10"/>
-    <RadioButton Content="Možnost A" GroupName="OptionsGroup"/>
-    <RadioButton Content="Možnost B" GroupName="OptionsGroup"/>
-</StackPanel>
-```
-</details>
-
-<details>
-<summary>Slider</summary>
-
-- Výběr hodnoty posunutím jezdce.
-
-```xml
-<Slider
-    Minimum="0"
-    Maximum="100"
-    Value="50"
-    Background="LightGray"
-    Foreground="Blue"
-    Width="200"
-    Height="30"
-    Margin="10"/>
-```
-</details>
-
-## Vlastní ovládací prvky
-
-<details>
-<summary>Jak vytvořit vlastní prvek?</summary>
-
-- Dědění z existujícího prvku (např. `Button`).
-- Definice stylu a šablony v XAML.
-
-```csharp
-public class MyCustomButton : Button
-{
-    static MyCustomButton()
-    {
-        DefaultStyleKeyProperty.OverrideMetadata(typeof(MyCustomButton),
-            new FrameworkPropertyMetadata(typeof(MyCustomButton)));
-    }
-}
+```powershell
+dotnet new wpf -n WpfDemo -f net10.0
+cd WpfDemo
 ```
 
-```xml
-<Style TargetType="{x:Type local:MyCustomButton}">
-    <Setter Property="Background" Value="LightGray"/>
-    <Setter Property="Template">
-        <Setter.Value>
-            <ControlTemplate TargetType="{x:Type local:MyCustomButton}">
-                <Border Background="{TemplateBinding Background}" CornerRadius="10">
-                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Border>
-            </ControlTemplate>
-        </Setter.Value>
-    </Setter>
-</Style>
-```
-</details>
-
-## Styly a Šablony
-
-<details>
-<summary>Definování stylu</summary>
-
-- Styl pro více prvků najednou.
-
-```xml
-<Window.Resources>
-    <Style x:Key="MyButtonStyle" TargetType="Button">
-        <Setter Property="Background" Value="Blue"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="Padding" Value="10"/>
-    </Style>
-</Window.Resources>
-```
-</details>
-
-```xml
-<Button Style="{StaticResource MyButtonStyle}" Content="Klikni na mě"/>
-```
-
-<details>
-<summary>Šablony (ControlTemplates)</summary>
-
-- Úplná změna vzhledu prvku.
-
-```xml
-<ControlTemplate x:Key="MyButtonTemplate" TargetType="Button">
-    <Border Background="{TemplateBinding Background}" CornerRadius="5">
-        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-    </Border>
-</ControlTemplate>
-<Button Template="{StaticResource MyButtonTemplate}" Content="Stylizované tlačítko"/>
-```
-</details>
-
-## Prefixy v XAML
-
-<details>
-<summary>Přehled prefixů</summary>
-
-| Prefix | Použití |
-|-------------|----------------------------------------------|
-| `x` | Standardní XAML funkce (`x:Class`, `x:Name`) |
-| `local` | Vlastní namespace aplikace |
-| `sys` | Základní typy.NET |
-| `controls` | Externí knihovny |
-| `mc` | Kompatibilita markupů |
-| `d` | Návrhové funkce |
-
-```xml
-<Window x:Class="MyNamespace.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:MyNamespace"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        mc:Ignorable="d">
-```
-</details>
-
-## Responzivní design
-
-- **Grid**: Řádky/sloupce
-- **StackPanel**: Vertikální/horizontální řazení
-- **WrapPanel**: Zalomení prvků
-- **DockPanel**: Uspořádání k okrajům
-
-<details>
-<summary>Dynamické velikosti</summary>
-
-- Procenta, hvězdičky (`*`), `Auto` pro flexibilní rozložení.
-
-```xml
-<Grid>
-    <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="2*"/>
-        <ColumnDefinition Width="1*"/>
-    </Grid.ColumnDefinitions>
-</Grid>
-```
-</details>
-
-<details>
-<summary>Sledování změny velikosti</summary>
-
-- Událost `SizeChanged` pro dynamické úpravy.
-
-```csharp
-private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
-{
-    // Úprava velikosti prvků podle okna
-}
-```
-</details>
-
-<details>
-<summary>ViewBox</summary>
-
-- Automatické škálování obsahu.
-
-```xml
-<ViewBox>
-    <Grid>
-        <TextBlock Text="Responzivní text!" FontSize="20"/>
-    </Grid>
-</ViewBox>
-```
-</details>
-
-## Triggery
-
-<details>
-<summary>Dynamické změny stylu</summary>
-
-- Změna vzhledu na základě událostí.
-
-```xml
-<Style TargetType="Button">
-    <Setter Property="Background" Value="Gray"/>
-    <Style.Triggers>
-        <Trigger Property="IsMouseOver" Value="True">
-            <Setter Property="Background" Value="Green"/>
-        </Trigger>
-    </Style.Triggers>
-</Style>
-```
-</details>
+WPF zůstává technologií pro Windows i v moderním .NET. [Microsoft: WPF](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/overview/).
 
 ## Data Binding (Vazba dat)
 
-<details>
-<summary>‍ ViewModel + Binding</summary>
+Nahraďte `MainWindow.xaml` následujícím obsahem:
 
-- Použití `INotifyPropertyChanged` pro automatickou aktualizaci UI.
+```xml
+<Window x:Class="WpfDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Vazba dat" Width="480" Height="260"
+        MinWidth="320" MinHeight="220">
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Label Content="_Jméno:" Target="{Binding ElementName=NameInput}"/>
+        <TextBox x:Name="NameInput" Grid.Row="1" Margin="0,8"
+                 Text="{Binding Name, UpdateSourceTrigger=PropertyChanged,
+                                ValidatesOnDataErrors=True}"/>
+        <TextBlock Grid.Row="2" Text="{Binding Name}" TextWrapping="Wrap"/>
+    </Grid>
+</Window>
+```
+
+Nahraďte `MainWindow.xaml.cs`:
 
 ```csharp
-public class MyViewModel : INotifyPropertyChanged
+using System.ComponentModel;
+using System.Windows;
+
+namespace WpfDemo;
+
+/// <summary>Okno demonstrující vazbu na model.</summary>
+public partial class MainWindow : Window
 {
-    private string _name;
+    /// <summary>Vytvoří ovládací prvky a jejich zdroj dat.</summary>
+    public MainWindow()
+    {
+        InitializeComponent();
+        DataContext = new PersonViewModel();
+    }
+}
+
+/// <summary>Upravované jméno s oznámením změn a validací.</summary>
+public sealed class PersonViewModel : INotifyPropertyChanged, IDataErrorInfo
+{
+    private string name = "Eva";
+
+    /// <summary>Jméno zobrazené v obou ovládacích prvcích.</summary>
     public string Name
     {
-        get => _name;
-        set { _name = value; OnPropertyChanged(nameof(Name)); }
+        get => name;
+        set
+        {
+            if (name == value)
+                return;
+            name = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
+        }
     }
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected void OnPropertyChanged(string propertyName)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
+
+    /// <summary>Oznámí změnu vlastnosti datové vazbě.</summary>
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    /// <summary>Ukázka nepoužívá chybu celého objektu.</summary>
+    public string Error => "";
+
+    /// <summary>Vrátí chybu pro ověřovanou vlastnost.</summary>
+    public string this[string columnName] =>
+        columnName == nameof(Name) && string.IsNullOrWhiteSpace(Name)
+            ? "Jméno je povinné."
+            : "";
 }
 ```
 
-```xml
-<TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
-<TextBlock Text="{Binding Name}" Margin="10,50,10,10"/>
-```
-</details>
+Po `dotnet run` změna textu ihned mění náhled pod vstupem.
 
-## Validace
+Vymazání jména aktivuje výchozí chybový rámeček WPF.
 
-<details>
-<summary>IDataErrorInfo</summary>
+`DataContext` určuje zdroj vazby, `INotifyPropertyChanged` hlásí jeho změny a `UpdateSourceTrigger=PropertyChanged` přenáší úpravy při psaní. [Microsoft: datové vazby a validace](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/data/).
 
-- Validace vlastností s chybovou zprávou.
+## Základní ovládací prvky a rozložení
 
-```csharp
-public class MyViewModel : INotifyPropertyChanged, IDataErrorInfo
-{
-    // ... implementace validace ...
-}
-```
+| Prvek | Účel |
+|---|---|
+| `Button` | Spuštění akce nebo příkazu |
+| `TextBox`, `TextBlock` | Editovatelný a zobrazovaný text |
+| `CheckBox` | Nezávislá volba |
+| `RadioButton` | Výběr ve skupině |
+| `ComboBox` | Výběr ze seznamu |
+| `Slider` | Číselná hodnota v intervalu |
+| `Grid` | Řádky a sloupce |
+| `StackPanel`, `WrapPanel` | Řazení bez zalamování nebo se zalamováním |
+| `DockPanel` | Umístění k okrajům |
+| `Viewbox` | Škálování obsahu |
 
-```xml
-<TextBox Text="{Binding Name, ValidatesOnDataErrors=True}" />
-```
-</details>
+U `Grid` znamená `Auto` velikost podle obsahu a `*` podíl zbývajícího prostoru.
 
-<details>
-<summary>INotifyDataErrorInfo</summary>
+Například sloupce `2*` a `*` si dostupný prostor rozdělí v poměru 2: 1; zápis procent není podporovaný.
 
-- Pokročilá validace s více chybami.
+`Viewbox` škáluje celý obsah a nenahrazuje přeskupení formuláře při zúžení okna. [Microsoft: panely](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/panels-overview), [Viewbox](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/viewbox).
 
-```csharp
-public class MyViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
-{
-    // ... implementace validace ...
-}
-```
+## Styly a šablony
+
+`Style` sdílí hodnoty vlastností a `ControlTemplate` definuje vizuální strom prvku.
+
+`Button` nemá vlastnost `CornerRadius`; zaoblení patří například prvku `Border` uvnitř jeho šablony. [Microsoft: styly a šablony](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/styles-templates-overview).
+
+Následující samostatný fragment patří do `Window.Resources` před hlavní `Grid`:
 
 ```xml
-<TextBox Text="{Binding Name, ValidatesOnNotifyDataErrors=True}" />
+<Window.Resources>
+    <Style x:Key="RoundedButton" TargetType="Button">
+        <Setter Property="Background" Value="#174B75"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Padding" Value="12,8"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Surface" CornerRadius="6"
+                            Padding="{TemplateBinding Padding}"
+                            Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          RecognizesAccessKey="True"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Surface" Property="Background" Value="#24679D"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Surface" Property="Background" Value="#103550"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="Surface" Property="BorderBrush" Value="#F0B400"/>
+                            <Setter TargetName="Surface" Property="BorderThickness" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Surface" Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</Window.Resources>
 ```
-</details>
+
+Styl použijte například na tlačítku v jiném řádku formuláře:
+
+```xml
+<Button Style="{StaticResource RoundedButton}" Content="_Uložit"/>
+```
+
+Akci připojte přes `Command` nebo obsluhu `Click`; samotný styl data neukládá.
+
+Při vlastní šabloně ověřte stavy myši, stisku, klávesnicového fokusu a zakázání.
+
+## Prefixy v XAML
+
+Prefix platí až po deklaraci příslušného `xmlns`.
+
+`x` obvykle označuje jazykové prvky jako `x:Class`; `local` je běžně volené jméno pro vlastní CLR namespace, nikoli automaticky dostupné klíčové slovo. [Microsoft: jmenné prostory XAML](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/advanced/xaml-namespaces-and-namespace-mapping-for-wpf-xaml).
 
 ## Animace
 
-<details>
-<summary>Příklad animace</summary>
+Pro změny v čase použijte `Storyboard` a animaci vhodnou pro daný typ vlastnosti.
 
-- Animace změny barvy pozadí tlačítka.
+Například `ColorAnimation` na `(Background).(SolidColorBrush.Color)` vyžaduje pozadí typu `SolidColorBrush`.
 
-```xml
-<Button Content="Klikni na mě">
-    <Button.Triggers>
-        <EventTrigger RoutedEvent="Button.MouseEnter">
-            <BeginStoryboard>
-                <Storyboard>
-                    <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
-                                    To="Red" Duration="0:0:1"/>
-                </Storyboard>
-            </BeginStoryboard>
-        </EventTrigger>
-    </Button.Triggers>
-</Button>
-```
-</details>
+U vlastní šablony animujte skutečně zobrazovaný prvek; výchozí šablona může barvu tlačítka řídit svými stavy. [Microsoft: přehled animací](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/animation-overview).

@@ -39,17 +39,15 @@ function setTheme(theme, persist = true) {
 }
 
 function itemTheme(item) {
-  const text = item.textContent.trim().toLowerCase();
-
-  if (text.includes("light")) {
+  if (item.querySelector(".bi-sun")) {
     return "light";
   }
 
-  if (text.includes("dark")) {
+  if (item.querySelector(".bi-moon")) {
     return "dark";
   }
 
-  if (text.includes("auto")) {
+  if (item.querySelector(".bi-circle-half")) {
     return "auto";
   }
 
@@ -57,7 +55,7 @@ function itemTheme(item) {
 }
 
 function syncThemeControl(theme = readStoredTheme()) {
-  const toggle = document.querySelector('a[title="Change theme"], button[title="Change theme"]');
+  const toggle = document.querySelector('[title="Změnit motiv"], [title="Change theme"]');
   const icon = toggle?.querySelector("i");
 
   if (icon) {
@@ -74,7 +72,11 @@ function syncThemeControl(theme = readStoredTheme()) {
     const active = value === theme;
     item.dataset.docsThemeValue = value;
     item.classList.toggle("active", active);
-    item.toggleAttribute("aria-current", active);
+    if (active) {
+      item.setAttribute("aria-current", "true");
+    } else {
+      item.removeAttribute("aria-current");
+    }
   });
 }
 

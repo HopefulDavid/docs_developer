@@ -1,68 +1,42 @@
-# .NET – Implicitní a Explicitní operátory
+# C# – implicitní a explicitní převody
 
-> Praktické rady pro převody typů v .NET, rozdíly mezi implicitními a explicitními operátory, ukázky použití.
+Vlastní konverzní operátor určuje, jak se hodnota uživatelského typu převádí na jiný typ.
 
-## Co jsou implicitní a explicitní operátory?
+## Rozdíl v použití
 
-<details>
-<summary>Základní principy převodů</summary>
+| Operátor | Volání | Vhodný význam |
+|---|---|---|
+| `implicit` | Bez přetypování | Převod bez očekávané ztráty informace nebo výjimky |
+| `explicit` | S přetypováním `(Typ)hodnota` | Převod, jehož provedení má být v kódu výslovné |
 
-- **Implicitní operátor**: Automatický převod, není potřeba psát `cast`.
-- **Explicitní operátor**: Vyžaduje použití `cast` – převod je nutné napsat ručně.
+Samotné slovo `explicit` nezaručuje bezpečnost převodu; chování určuje implementace. [Konverzní operátory](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/user-defined-conversion-operators)
 
-> [!NOTE]
-> Implicitní je pohodlnější, ale explicitní je bezpečnější pro složité nebo nejednoznačné převody.
+## Příklad: hodnota s jednotkou
 
-</details>
+Ukázka pro konzolový projekt .NET převádí počet metrů na číselnou hodnotu a výslovně zpět:
 
-## Implicitní operátor
-
-<details>
-<summary>Automatický převod</summary>
-
-- Převod mezi typy probíhá automaticky, bez nutnosti psát `cast`.
-
-**Příklad:**
 ```csharp
-public struct Money
+var distance = (Meters)12.5m;
+decimal value = distance;
+Console.WriteLine(value);
+
+/// <summary>Vzdálenost vyjádřená v metrech.</summary>
+public readonly struct Meters
 {
-    private double _value;
-    public Money(double value) { _value = value; }
+    /// <summary>Vytvoří vzdálenost z počtu metrů.</summary>
+    public Meters(decimal value) => Value = value;
 
-    public static implicit operator double(Money money)
-    {
-        return money._value;
-    }
+    /// <summary>Počet metrů.</summary>
+    public decimal Value { get; }
+
+    /// <summary>Vrátí číselnou hodnotu ve stejné jednotce.</summary>
+    public static implicit operator decimal(Meters distance) => distance.Value;
+
+    /// <summary>Výslovně přiřadí číselné hodnotě jednotku metr.</summary>
+    public static explicit operator Meters(decimal value) => new(value);
 }
-
-// Použití
-Money m = new Money(10.50);
-double d = m * 2;  // Automaticky převede Money na double
 ```
-</details>
 
-## Explicitní operátor
+Převod hodnoty na číslo není převodem jednotek.
 
-<details>
-<summary>Převod s použitím castu</summary>
-
-- Převod je nutné napsat ručně pomocí `(typ)`.
-
-**Příklad:**
-```csharp
-public struct Temperature
-{
-    private double _value;
-    public Temperature(double value) { _value = value; }
-
-    public static explicit operator double(Temperature temperature)
-    {
-        return temperature._value;
-    }
-}
-
-// Použití
-Temperature t = new Temperature(70.0);
-double d = (double)t + 32.0;  // Explicitně převedete Temperature na double
-```
-</details>
+Pro změnu jednotky, například Celsius → Fahrenheit, je často čitelnější pojmenovaná metoda, která jasně vyjadřuje výpočet.

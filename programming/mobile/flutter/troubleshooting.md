@@ -1,39 +1,45 @@
 # Řešení problémů ve Flutteru
 
+Nejprve rozliš problém prostředí, rozložení a statické analýzy; každá oblast má jiné ověření.
+
 ## Automatické zmenšení textu bez doplňků
 
-Použijte kombinaci `Expanded` a `FittedBox` pro automatické přizpůsobení velikosti textu:
+Tento fragment patří do rozhraní s omezenou šířkou, například do těla `Scaffold`:
 
 ```dart
-Expanded(
-  child: FittedBox(
-    fit: BoxFit.scaleDown,
-    child: Text('${widget.article.price * chosenQuantity} DH',
-      style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
+const Row(
+  children: [
+    Expanded(
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        alignment: Alignment.centerLeft,
+        child: Text('Celková cena objednávky: 1 250 Kč'),
+      ),
     ),
-  ),
+  ],
 )
 ```
 
-### Vypnutí pravidla `no_logic_in_create_state`
+`Expanded` zde patří přímo do `Row`; mimo `Row`, `Column` nebo `Flex` jej nelze libovolně vložit. [Expanded](https://api.flutter.dev/flutter/widgets/Expanded-class.html)
 
-**Jak vypnout linter pravidlo:**
+Pro běžný delší text zvaž zalamování místo zmenšování, aby zůstal čitelný i při zvětšeném systémovém písmu.
 
-1. Otevřete soubor `analysis_options.yaml` v kořenovém adresáři projektu.
-2. Přidejte následující konfiguraci:
+## Pravidlo no_logic_in_create_state
 
-```yaml
-linter:
-  rules:
-    no_logic_in_create_state: false
-```
+`createState` má vrátit novou instanci stavu bez další logiky.
 
-3. Uložte soubor a restartujte IDE.
+Hodnoty widgetu čti ve stavu přes `widget`; jednorázovou inicializaci umísti podle její závislosti do příslušné metody životního cyklu, například `initState`.
 
-### Chyba: Building with plugins requires symlink support
+Pravidlo proto neřeš plošným vypnutím linteru. [Význam pravidla](https://dart.dev/tools/linter-rules/no_logic_in_create_state)
 
-Pokud se zobrazí tato chyba na Windows, je potřeba povolit `Developer Mode`:
+## Building with plugins requires symlink support
 
-1. Stiskněte `Win + R`
-2. Zadejte `ms-settings:developers` a potvrďte
-3. Povolte `Developer Mode` (Režim pro vývojáře)
+Ve Windows otevři nastavení vývojářů přes `Win+R` → `ms-settings:developers` a povol **Developer Mode**, pokud to dovolují zásady počítače.
+
+Potom opakuj sestavení. [Režim pro vývojáře ve Windows](https://learn.microsoft.com/en-us/windows/apps/get-started/enable-your-device-for-development)
+
+## Závislosti nebo zařízení nejsou dostupné
+
+Spusť `flutter doctor -v`, `flutter devices` a podle konkrétní chyby oprav [instalaci](setup-and-configuration.md).
+
+Při chybě obnovy balíčků zkontroluj výstup `flutter pub get`; mazání celého projektu není diagnostický krok.

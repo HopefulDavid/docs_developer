@@ -1,154 +1,76 @@
-# MongoDB – Průvodce a reference
+# MongoDB – příkazy v mongosh
 
-> Přehled základních pojmů, příkazů a doporučení pro práci s MongoDB.
+MongoDB ukládá dokumenty BSON do kolekcí; následující příklady jsou pro interaktivní shell `mongosh`.
 
-![MongoDB](../images/47b4d22e-f30e-46a1-bc78-9d1fbc371e6c.png)
+## Databáze a kolekce
 
-## Co je MongoDB?
-
-- **Dokumentová databáze** – data se ukládají jako dokumenty, ne tabulky.
-- **NoSQL** – nevyužívá relační model jako SQL databáze.
-- Data jsou uložena ve formátu **BSON** (binární JSON).
-
-> [!NOTE]
-> BSON podporuje více datových typů a je efektivnější při kódování/dekódování než JSON.
-
-## Klíčové pojmy
-
-| Pojem | Popis |
-|-------|-------|
-| **Dokument** | Základní datová jednotka, struktura podobná JSON |
-| **Kolekce** | Sada dokumentů – ekvivalent tabulky v SQL. Dokumenty nemusí mít stejnou strukturu. |
-| **BSON** | Binární verze JSON – interní formát pro ukládání dat |
-| **Index** | Datová struktura pro rychlejší vyhledávání |
-
-## Vytvoření
-
-### Databáze a kolekce
+Připoj se ke své vývojové instanci a vyber databázi:
 
 ```javascript
-// Přepnutí na databázi (vytvoří ji, pokud neexistuje)
-use mydb
-
-// Vytvoření kolekce
-mydb.createCollection('mycollection')
-```
-
-### Vložení dokumentů
-
-```javascript
-// Jeden dokument
-mydb.mycollection.insert({ name: 'test' })
-
-// Více dokumentů najednou
-mydb.mycollection.insertMany([
-  { name: 'test1' },
-  { name: 'test2' }
-])
-```
-
-### Indexy
-
-```javascript
-// Jeden index (1 = vzestupně, -1 = sestupně)
-mydb.mycollection.createIndex({ name: 1 })
-
-// Více indexů najednou
-mydb.mycollection.createIndexes([
-  { key: { name: 1 } },
-  { key: { age: -1 } }
-])
-```
-
-## Čtení
-
-```javascript
-// Výpis všech databází
 show dbs
-
-// Výpis kolekcí v aktuální databázi
+use docs_demo
+db
 show collections
-
-// Všechny dokumenty v kolekci
-mydb.mycollection.find()
-
-// Filtrování podle hodnoty
-mydb.mycollection.find({ name: 'test' })
-
-// Projekce – vrátí jen vybraná pole
-mydb.mycollection.find({ name: 'test' }, { name: 1 })
-
-// Regulární výraz
-mydb.mycollection.find({ name: { $regex: 'te.*' } })
 ```
 
-## Počítání
+`use` změní aktuální databázi reprezentovanou proměnnou `db`; databáze vznikne až při prvním zápisu, pokud dosud neexistuje. [Příkazy mongosh](https://www.mongodb.com/docs/mongodb-shell/run-commands/)
+
+## Vložení a čtení
 
 ```javascript
-// Počet všech dokumentů
-mydb.mycollection.count()
-
-// Počet podle filtru
-mydb.mycollection.count({ name: 'test' })
-
-// Počet unikátních hodnot
-mydb.mycollection.distinct('name').length
-
-// Počet podle regulárního výrazu
-mydb.mycollection.count({ name: { $regex: 'te.*' } })
+db.users.insertOne({ name: "Jana", age: 28 })
+db.users.insertMany([
+  { name: "Petr", age: 17 },
+  { name: "Eva", age: 35 }
+])
+db.users.find({ age: { $gte: 18 } })
+db.users.findOne({ name: "Jana" })
+db.users.countDocuments({ age: { $gte: 18 } })
 ```
 
-## Aktualizace
+Opakované vložení vytvoří další dokumenty; jméno není automaticky unikátní. [CRUD operace](https://www.mongodb.com/docs/manual/crud/)
+
+Pro výběr sloupců, řazení a omezení výsledků:
 
 ```javascript
-// Aktualizace jednoho dokumentu
-mydb.mycollection.update(
-  { name: 'test' },
-  { $set: { name: 'newTest' } }
-)
-
-// Aktualizace více dokumentů
-mydb.mycollection.updateMany(
-  {},
-  { $set: { name: 'newTest' } }
-)
-
-// Upsert – aktualizace nebo vložení, pokud dokument neexistuje
-mydb.mycollection.update(
-  { name: 'test' },
-  { $set: { name: 'newTest' } },
-  { upsert: true }
-)
+db.users.find({}, { _id: 0, name: 1, age: 1 })
+db.users.find().sort({ age: -1, _id: 1 }).limit(10)
+db.users.find().sort({ age: -1, _id: 1 }).skip(10).limit(10)
 ```
 
-## Řazení a stránkování
+`_id` se standardně vrací i při projekci vybraných polí, pokud jej výslovně nevypneš.
+
+Jedinečné `_id` doplňuje jednoznačné pořadí při shodném věku; změny dat mezi dotazy přesto mohou posunout stránkování. [Find a projekce](https://www.mongodb.com/docs/manual/reference/method/db.collection.find/)
+
+## Změny a odstranění
+
+Před zápisem si stejným filtrem `find` prohlédni cílové dokumenty.
 
 ```javascript
-// Řazení vzestupně
-mydb.mycollection.find().sort({ name: 1 })
-
-// Řazení podle více polí
-mydb.mycollection.find().sort({ name: 1, age: -1 })
-
-// Limit počtu výsledků
-mydb.mycollection.find().sort({ name: 1 }).limit(5)
-
-// Přeskočení prvních N výsledků (stránkování)
-mydb.mycollection.find().sort({ name: 1 }).skip(5)
+db.users.updateOne({ name: "Jana" }, { $set: { age: 29 } })
+db.users.updateMany({ age: { $lt: 18 } }, { $set: { minor: true } })
+db.users.deleteOne({ name: "Petr" })
+db.users.deleteMany({ minor: true })
 ```
 
-## Smazání
+Metody s `One` mění nejvýše jeden odpovídající dokument, `Many` všechny odpovídající dokumenty.
+
+Prázdný filtr u `deleteMany({})` odstraní celý obsah kolekce. [CRUD operace](https://www.mongodb.com/docs/manual/crud/)
+
+## Indexy
 
 ```javascript
-// Smazání jednoho dokumentu
-mydb.mycollection.remove({ name: 'test' })
-
-// Smazání všech dokumentů v kolekci
-mydb.mycollection.remove({})
-
-// Smazání celé kolekce
-mydb.mycollection.drop()
-
-// Smazání celé databáze
-db.dropDatabase()
+db.users.createIndex({ name: 1 })
+db.users.createIndexes([{ age: -1 }, { name: 1, age: 1 }])
+db.users.getIndexes()
 ```
+
+Každá položka pole v `createIndexes` je přímo specifikace klíčů jednoho indexu.
+
+Složený index `{name: 1, age: 1}` není totéž co dva samostatné indexy. [CreateIndexes](https://www.mongodb.com/docs/manual/reference/method/db.collection.createIndexes/)
+
+## Odstranění kolekce nebo databáze
+
+Až po ověření `db.getName()` a uchování potřebných dat lze použít `db.users.drop()` pro kolekci nebo `db.dropDatabase()` pro aktuální databázi.
+
+Tyto operace nejsou běžným ukončením práce. [Drop database](https://www.mongodb.com/docs/manual/reference/method/db.dropDatabase/)

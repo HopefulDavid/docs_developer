@@ -10,4 +10,4 @@ Nástroje a postupy pro nahrávání, střih nebo zpracování videa.
 
 | Stránka | Popis |
 | --- | --- |
-| [OBS](obs.md) | Moderní přehled argumentů, příkladů spuštění a doporučení pro práci s OBS Studio. |
+| [OBS](obs.md) | Parametry OBS umožňují vybrat profil, scénu a případně automaticky zahájit nahrávání nebo streamování. |

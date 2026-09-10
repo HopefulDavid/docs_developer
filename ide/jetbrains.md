@@ -1,94 +1,54 @@
-# JetBrains Rider – Tipy a nástroje
+# JetBrains Rider – Android, komentáře a zkratky
 
-> Propojení s Androidem, XML komentáře, klávesové zkratky a regulární výrazy v JetBrains Rider.
-
-![JetBrains](../images/4381c952-e572-44c8-b4d3-c2da9964c008.png)
+Rider propojuje editor .NET s nástroji pro sestavení, ladění a práci se zdrojovým kódem.
 
 ## Propojení s mobilním zařízením (Android)
 
-<details>
-<summary>Kompletní postup nastavení Android emulátoru</summary>
+Nejprve připrav [Android SDK a zařízení](../programming/mobile/android-studio.md).
 
-1. **Nastavení BIOSu (AMD CPU)** – BIOS → CPU konfigurace → `SVM: Enabled`
+Pro projekt .NET MAUI musí instalace .NET obsahovat odpovídající workload a Rider musí rozpoznat SDK; dostupné cíle se řídí operačním systémem a projektem. [MAUI v Rideru](https://www.jetbrains.com/help/rider/MAUI.html)
 
-2. **Správa Android SDK v Rideru** – `File → Project Structure → SDKs → Project` → nastav Android SDK.
-SDK lze stáhnout v Android Studio → `More Actions → SDK Manager`.
+V **File → Settings** vyhledej nastavení Android SDK a zkontroluj skutečné umístění SDK.
 
-3. **Ověření základních komponent SDK** (sekce `SDK Tools`):
+Potom vyber Android konfiguraci a zařízení v panelu spuštění.
 
-| Komponenta | Popis |
-|------------|-------|
-| `Android SDK Built-Tools` | Sestavení aplikací |
-| `Android SDK Command-Line Tools` | Správa SDK |
-| `Android Emulator` | Testování aplikací |
-| `Android Emulator hypervisor driver` | Výkon emulátoru (Intel/AMD) |
-| `Android SDK Platform-Tools` | Komunikace s zařízeními (`adb`) |
-
-4. **Nastavení proměnné prostředí:**
-`C:\Users\<YourUsername>\AppData\Local\Android\Sdk\platform-tools`
-
-5. **Příkazy ADB:**
-
-   ```bash
-   # Stav emulátorů
-   adb devices
-
-   # Restart ADB služby
-   adb kill-server
-   adb start-server
-   ```
-
-6. **Spuštění** – Android Studio → `More Actions → Virtual Device Manager` → spusť virtuální zařízení → v Rideru vyber zařízení.
-
-</details>
+Pokud zařízení chybí, ověř jej přes `adb devices`; nástroj je součástí adresáře `platform-tools` v Android SDK. [Android Debug Bridge](https://developer.android.com/tools/adb)
 
 ## XML komentáře
 
-### Zalomení řádku
-
-Pro zalomení řádku v XML dokumentačním komentáři použij `<para>&#160;</para>`:
+Odstavce v dokumentačním komentáři odděluj značkami `<para>`:
 
 ```csharp
 /// <summary>
-///     Popis třídy nebo metody.
-///     <para>&#160;</para>
-///     <para>int PrimaryKey</para>
-///     <para>&#160;</para>
-///     <para>virtual Relation Relation</para>
+/// <para>Načte konfiguraci aplikace ze souboru.</para>
+/// <para>Chybějící soubor oznámí výjimkou.</para>
 /// </summary>
 ```
 
-> [!WARNING]
-> `<para></para>` ani `<br/>` pro zalomení řádku nefungují. Použij `<para>&#160;</para>`.
-
-[Více informací (Stack Overflow)](https://stackoverflow.com/questions/7279108/how-to-add-a-line-break-in-c-sharp-net-documentation)
+Vkládání prázdného odstavce s nezlomitelnou mezerou není potřeba; vzhled dokumentace závisí na rendereru. [Doporučené XML značky C#](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/recommended-tags)
 
 ## Klávesové zkratky
 
+Tabulka platí pro **IntelliJ keymap ve Windows**; vlastní mapování ověř v **Settings → Keymap**.
+
 | Akce | Zkratka |
-|------|---------|
-| Zobrazení informací o parametrech metody | `Ctrl` + `Shift` + `Space` |
-| Procházení dopředu | `Ctrl` + `Shift` + `Space` |
-| Procházení zpět | `Ctrl` + `Shift` + `P` |
+|---|---|
+| Informace o parametrech | `Ctrl+P` |
+| Navigace zpět | `Ctrl+Alt+Left` |
+| Navigace dopředu | `Ctrl+Alt+Right` |
+| Doplnění podle očekávaného typu | `Ctrl+Shift+Space` |
+
+[Oficiální přehled zkratek](https://resources.jetbrains.com/storage/products/rider/docs/Rider_default_win_shortcuts.pdf)
 
 ## Regulární výrazy
 
-### Číselná zachycená skupina
+V panelu nahrazování zapni režim **Regex** a před hromadnou změnou zkontroluj náhled.
 
-```regex
-# Vyhledání
-<h2>(.*?)</h2>
+| Zachycení | Hledat | Nahradit |
+|---|---|---|
+| Číselná skupina | `<h2>(.*?)</h2>` | `<h2>Test $1</h2>` |
+| Pojmenovaná skupina | `<h2>(?<customName>.*?)</h2>` | `<h2>Test ${customName}</h2>` |
 
-# Nahrazení
-<h2>Test $1</h2>
-```
+Příklad předpokládá jednoduchý nadpis na jednom řádku; nejde o obecný parser HTML.
 
-### Pojmenovaná zachycená skupina
-
-```regex
-# Vyhledání
-<h2>(?<customName>.*?)</h2>
-
-# Nahrazení
-<h2>Test ${customName}</h2>
-```
+Vyhledávání v IDE používá Java regex, jehož syntaxe se může lišit od regexu v aplikaci .NET. [Nahrazování pomocí regexu](https://www.jetbrains.com/help/rider/Tutorial_Finding_and_Replacing_Text_Using_Regular_Expressions.html)

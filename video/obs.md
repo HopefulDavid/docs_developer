@@ -1,54 +1,38 @@
-# OBS Studio – Praktický průvodce a tipy
+# OBS Studio – parametry spuštění
 
-> Moderní přehled argumentů, příkladů spuštění a doporučení pro práci s OBS Studio.
-
-## Co je OBS Studio?
-
-- **Open-source software pro nahrávání a streamování videa**
-- Umožňuje pokročilou správu scén, zdrojů, zvuku a výstupů
-- Podporuje Windows, macOS, Linux
-
-> [!NOTE]
-> OBS je ideální pro tvorbu streamů, záznamů a virtuálních kamer.
+Parametry OBS umožňují vybrat profil, scénu a případně automaticky zahájit nahrávání nebo streamování.
 
 ## Argumenty příkazové řádky
 
-<details>
-<summary>Přehled argumentů</summary>
+| Argument | Význam |
+|---|---|
+| `--help` | Nápověda parametrů |
+| `--startrecording` | Zahájení nahrávání |
+| `--startstreaming` | Zahájení vysílání |
+| `--startvirtualcam` | Spuštění virtuální kamery |
+| `--startreplaybuffer` | Spuštění předem nastaveného replay bufferu |
+| `--collection "name"` | Výběr existující kolekce scén |
+| `--profile "name"` | Výběr existujícího profilu |
+| `--scene "name"` | Výběr scény |
+| `--studio-mode` | Režim Studio |
+| `--minimize-to-tray` | Minimalizace do oznamovací oblasti |
+| `--portable` | Přenosný režim |
+| `--multi` | Povolení více instancí bez varování |
+| `--verbose` | Podrobnější log |
+| `--safe-mode` | Diagnostický běh bez pluginů třetích stran, skriptů a websocketů |
 
-| **Argument** | **Popis** |
-|---------------------------------|--------------------------------------------------------------------------------------------------|
-| `--help`, `-h` | Získat seznam dostupných parametrů. |
-| `--version`, `-v` | Získat verzi OBS. |
-| `--startstreaming` | Automaticky spustí streamování. |
-| `--startrecording` | Automaticky spustí nahrávání. |
-| `--startvirtualcam` | Automaticky spustí virtuální kameru. |
-| `--startreplaybuffer` | Automaticky spustí Replay Buffer. |
-| `--collection "name"` | Spustí s danou sbírkou scén. |
-| `--profile "name"` | Spustí s daným profilem. |
-| `--scene "name"` | Spustí s danou scénou. |
-| `--studio-mode` | Spustí s aktivním režimem Studio. |
-| `--minimize-to-tray` | Spustí minimalizováno do systémové lišty. |
-| `--portable`, `-p` | Použijte přenosný režim. |
-| `--multi`, `-m` | Nebude varovat při spuštění více instancí. |
-| `--always-on-top` | Spustí v režimu "vždy nahoře". |
-| `--verbose` | Učiní protokol podrobnějším. |
-| `--unfiltered_log` | Zakáže filtr logu (nepotlačuje opakující se řádky). |
-| `--disable-updater` | Zakáže vestavěný updater (pouze Windows/macOS). |
-| `--allow-opengl` | Povolit OpenGL renderer na Windows. |
-| `--only-bundled-plugins` | Spustí pouze s vestavěnými moduly. |
-| `--safe-mode` | Spustí v nouzovém režimu, zakáže všechny třetí strany pluginy, skripty a websockety. |
-| `--disable-shutdown-check` | Zakáže detekci neuklizeného vypnutí, které by vyvolalo spuštění v nouzovém režimu. |
-| `--disable-missing-files-check` | Zakáže dialog o chybějících souborech při spuštění. |
-
-</details>
+Parametr `--version` není dostupný ve Windows. [Oficiální parametry OBS](https://obsproject.com/kb/launch-parameters)
 
 ## Příklad automatického spuštění nahrávání
 
-<details>
-<summary>Spuštění OBS s nahráváním (Windows)</summary>
+Nejprve v OBS nastav zdroje, zvuk a cestu pro záznam a krátký záznam ručně vyzkoušej.
 
-```bash
-start /d "C:\Program Files\obs-studio\bin\64bit" obs64.exe --startrecording
+Následující příkaz pro **CMD ve Windows** ihned zahájí nahrávání:
+
+```cmd
+start "" /d "C:\Program Files\obs-studio\bin\64bit" obs64.exe --startrecording
 ```
-</details>
+
+Prázdný první argument je název okna pro příkaz `start`; `/d` nastavuje pracovní složku OBS.
+
+Cestu uprav podle instalace a po spuštění ověř indikátor záznamu i výsledný soubor. [Spuštění OBS](https://obsproject.com/kb/launch-parameters), [Příkaz start](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/start)

@@ -10,5 +10,5 @@ Nástroje a postupy pro tvorbu, převod a údržbu technické dokumentace.
 
 | Stránka | Popis |
 | --- | --- |
-| [Pandoc](pandoc.md) | Moderní přehled základních pojmů, příkazů a doporučení pro práci s Pandoc. |
-| [Doxygen](doxygen.md) | Moderní přehled základních pojmů, instalace, konfigurace a doporučení pro práci s Doxygen. |
+| [Pandoc](pandoc.md) | Pandoc převádí strukturu dokumentu mezi formáty; po převodu ověř také tabulky, obrázky a stránkování. |
+| [Doxygen](doxygen.md) | Doxygen vytváří referenční dokumentaci z deklarací a dokumentačních komentářů ve zdrojových souborech. |

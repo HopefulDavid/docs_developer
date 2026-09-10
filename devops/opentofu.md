@@ -1,8 +1,6 @@
 # OpenTofu – Infrastructure as Code
 
-> Průvodce nástrojem OpenTofu pro popis a správu infrastruktury jako kódu (IaC).
-
-![OpenTofu](../images/a188d4ef-a7b4-4028-9107-0bd99f101e30.png)
+OpenTofu spravuje požadovaný stav zdrojů popsaný v konfiguračních souborech HCL.
 
 ## Co je OpenTofu?
 
@@ -14,14 +12,13 @@ OpenTofu se používá na:
 - správu cloudové infrastruktury,
 - opakovatelné a předvídatelné nasazování.
 
-> [!NOTE]
-> OpenTofu je open-source fork Terraformu. Syntaxe a příkazy jsou prakticky identické.
+OpenTofu vzniklo jako fork Terraformu; kompatibilitu konkrétní konfigurace a providerů ověř před migrací podle používaných verzí.
 
 ## Co OpenTofu není
 
-OpenTofu **nevytváří** ani **nespravuje**:
-- samotnou aplikaci (to řeší Docker, CI/CD),
-- prostředí pro běh kódu – jen infrastrukturu pro něj.
+OpenTofu komunikuje s cílovými systémy prostřednictvím providerů, takže může spravovat i aplikační prostředky nebo služby.
+
+Samo nenahrazuje překladač, testy ani řízení celého release procesu. [Úloha providerů](https://opentofu.org/docs/language/providers/)
 
 | Nástroj | Role |
 |---------|------|
@@ -42,7 +39,7 @@ tofu version
 
 ## První test – bez cloudu
 
-Nejjednodušší ověření funkčnosti bez cloudového účtu.
+Příklad nevyžaduje cloudový účet, ale první `tofu init` potřebuje stáhnout provider ze sítě, pokud není dostupný místně. [Inicializace](https://opentofu.org/docs/cli/commands/init/)
 
 **1. Vytvoř složku projektu:**
 
@@ -105,7 +102,7 @@ tofu destroy   # potvrď 'yes'
 | `tofu apply` | Provede změny v infrastruktuře |
 | `tofu destroy` | Smaže vytvořené zdroje |
 | `tofu fmt` | Naformátuje `.tf` soubory |
-| `tofu validate` | Ověří syntaxi konfigurace |
+| `tofu validate` | Ověří syntaxi a vnitřní konzistenci inicializované konfigurace; nekontroluje dostupnost vzdálených služeb |
 | `tofu output` | Zobrazí výstupní hodnoty |
 | `tofu version` | Zobrazí nainstalovanou verzi |
 
@@ -120,8 +117,13 @@ projekt/
 └── README.md        # Popis projektu
 ```
 
-> [!TIP]
-> Soubor `terraform.tfvars` přidej do `.gitignore`, pokud obsahuje hesla nebo tokeny.
+Soubor `.terraform.lock.hcl` verzuj, aby změny vybraných providerů byly dohledatelné. [Dependency lock](https://opentofu.org/docs/language/files/dependency-lock/)
+
+Adresář `.terraform/`, místní stav `terraform.tfstate*`, uložené plány a soubory s tajemstvími nevkládej do veřejného repozitáře.
+
+Stav může obsahovat citlivé hodnoty i tehdy, když je výstup označený jako `sensitive`; uchovávej jej v chráněném a zálohovaném úložišti. [Citlivá data ve stavu](https://opentofu.org/docs/language/state/sensitive-data/)
+
+`tofu validate` nenahrazuje kontrolu konkrétního plánu před `apply`. [Rozsah validace](https://opentofu.org/docs/cli/commands/validate/)
 
 ## Základní syntaxe HCL
 

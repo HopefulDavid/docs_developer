@@ -1,108 +1,51 @@
-# Doxygen – Praktický průvodce a tipy
+# Doxygen – dokumentace zdrojového kódu
 
-> Moderní přehled základních pojmů, instalace, konfigurace a doporučení pro práci s Doxygen.
+Doxygen vytváří referenční dokumentaci z deklarací a dokumentačních komentářů ve zdrojových souborech.
 
-![Doxygen](../images/ee2b5aa2-94be-4ebb-bfcd-2c526093dba1.png)
+## Instalace a první sestavení
 
-## Co je Doxygen?
+Nainstaluj Doxygen pro svůj systém a ověř `doxygen --version`. [Instalace](https://www.doxygen.nl/manual/install.html)
 
-- **Nástroj pro automatické generování dokumentace z komentářů v kódu**
-- Podporuje různé jazyky (C, C++, C#, Java, Python, atd.)
-- Umožňuje generovat dokumentaci ve formátech HTML, LaTeX (PDF), RTF, XML
+V kořeni projektu vytvoř konfigurační soubor:
 
-> [!NOTE]
-> Doxygen je ideální pro udržení přehledné a strukturované dokumentace ke kódu.
-
-## Instalace
-
-<details>
-<summary>Krok 1: Instalace potřebných nástrojů</summary>
-
-1. **Nainstalovat Doxygen**
-- Stáhněte z [doxygen.nl/download.html](https://www.doxygen.nl/download.html)
-- Ověřte instalaci:
-      ```sh
-      doxygen --version
-      ```
-
-2. **Nainstalovat Graphviz** (pro diagramy)
-- Stáhněte z [Graphviz Download](https://graphviz.gitlab.io/download/)
-- Přidejte cestu ke složce `Graphviz/bin` do systémové `PATH`
-- Ověřte instalaci:
-      ```sh
-      dot -version
-      ```
-
-3. **Nainstalovat TeX Live nebo MiKTeX** (pro PDF)
-- **Windows:** [miktex.org/download](https://miktex.org/download)
-- **Linux:**
-      ```sh
-      sudo apt install texlive-full
-      ```
-- **Mac:**
-      ```sh
-      brew install mactex
-      ```
-</details>
-
-## Konfigurace
-
-<details>
-<summary>Krok 2: Vytvoření konfiguračního souboru</summary>
-
-1. **Vytvořte `Doxyfile` v adresáři projektu:**
-   ```sh
-   doxygen -g Doxyfile
-   ```
-
-2. **Upravte klíčové parametry v `Doxyfile`:**
-   ```
-   INPUT                  = ../../
-   PROJECT_NAME           = "Moje C# dokumentace"
-   OUTPUT_DIRECTORY       = "docs"
-   RECURSIVE              = YES
-   EXTRACT_ALL            = YES
-   GENERATE_LATEX         = YES
-   GENERATE_HTML          = NO
-   GENERATE_XML           = NO
-   HAVE_DOT               = YES
-   UML_LOOK               = YES
-   DOT_PATH               = "C:/Program Files/Graphviz/bin"
-   SHOW_USED_FILES        = NO
-   SHOW_NAMESPACES        = NO
-   DOT_IMAGE_FORMAT       = svg
-   ```
-> [!IMPORTANT]
-> Tyto parametry ovlivňují generování dokumentace.
-> Další nastavení lze upravit dle potřeby.
-</details>
-
-## Generování dokumentace
-
-<details>
-<summary>Krok 3: Generování výstupních souborů</summary>
-
-- Spusťte Doxygen:
-  ```sh
-  doxygen Doxyfile
-  ```
-- Výstupní složka bude dle `OUTPUT_DIRECTORY` (např. `docs`)
-</details>
-
-## Vynechání private a protected členů
-
-<details>
-<summary>Jak vynechat private a protected z dokumentace</summary>
-
-V souboru `Doxyfile` nastavte:
-
-```
-EXTRACT_PRIVATE      = NO
-ENABLE_PREPROCESSING = YES
-MACRO_EXPANSION      = YES
-EXPAND_ONLY_PREDEF   = YES
-PREDEFINED           = protected=private
+```text
+doxygen -g Doxyfile
 ```
 
-Tímto způsobem Doxygen vynechá private a protected členy z dokumentace.
-</details>
+V něm uprav existující hodnoty například takto; `src` musí odpovídat skutečnému adresáři zdrojů:
+
+```ini
+PROJECT_NAME = "Moje aplikace"
+OUTPUT_DIRECTORY = docs-api
+INPUT = src
+RECURSIVE = YES
+EXTRACT_ALL = NO
+EXTRACT_PRIVATE = NO
+GENERATE_HTML = YES
+GENERATE_LATEX = NO
+HAVE_DOT = NO
+```
+
+Sestav dokumentaci:
+
+```text
+doxygen Doxyfile
+```
+
+Otevři `docs-api/html/index.html`, zkontroluj očekávané typy a oprav varování v terminálu.
+
+## Rozsah dokumentace
+
+`EXTRACT_ALL = YES` zahrne i nedokumentované entity, ale soukromé členy mají samostatné nastavení `EXTRACT_PRIVATE`.
+
+Pro běžné API komentáře ponech `EXTRACT_ALL = NO`, aby ses mohl řídit varováními o nedokumentovaných členech.
+
+Případné výjimky vybírej přes `EXCLUDE`, `EXCLUDE_PATTERNS` nebo `EXCLUDE_SYMBOLS`; nepřepisuj význam klíčových slov jazyka makrem. [Konfigurace](https://www.doxygen.nl/manual/config.html)
+
+## Grafy a PDF
+
+Pro grafy nainstaluj Graphviz a nastav `HAVE_DOT = YES`.
+
+Pro PDF nastav `GENERATE_LATEX = YES` a připrav LaTeX distribuci.
+
+Doxygen nejprve vytvoří LaTeX zdroje; výsledné PDF vznikne až jejich překladem, například `make` v adresáři `docs-api/latex` v prostředí s dostupným Make a LaTeXem. [Výstupy Doxygenu](https://www.doxygen.nl/manual/output.html)
