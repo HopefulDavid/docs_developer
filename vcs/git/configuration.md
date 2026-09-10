@@ -6,9 +6,8 @@
 
 ## Výběr SSH klienta
 
-Diagnostiku používaného klienta, prioritu `core.sshCommand` a proměnných prostředí i volbu pro jeden repozitář nebo celý uživatelský účet popisuje návod [SSH – Windows, Git a volba klienta](../../network/ssh.md#které-ssh-používá-git).
-
-Pro společného klienta a agenta pokračuj částí [Sjednocení na Windows OpenSSH](../../network/ssh.md#sjednocení-na-windows-openssh).
+- [Zjistit klienta používaného Gitem](../../network/ssh/git.md#které-ssh-používá-git).
+- [Nastavit společného klienta pro Windows a Git](../../network/ssh/windows.md#jeden-klient-pro-windows-a-git).
 
 ## Povolení dlouhých cest ve Windows
 

@@ -10,6 +10,15 @@ Síťové technologie, přístupy, certifikáty a bezpečné propojení prostře
 
 | Stránka | Popis |
 | --- | --- |
-| [SSH](ssh.md) | Zjištění používaného SSH, instalace Windows OpenSSH, základní příkazy a sjednocení klienta i agenta pro Git. |
-| [Certifikáty](certificates.md) | Generování bezpečnostních klíčů, práce s TLS certifikáty a nastavení SSH přístupu. |
+| [SSH – příkazy a připojení](ssh.md) | Přihlášení na server, kopírování souborů a nastavení připojení. |
+| [TLS certifikáty](certificates.md) | Důvěryhodný certifikát pro lokální vývoj pomocí mkcert. |
+| [Náhodná tajemství](secrets.md) | Generování náhodných hodnot pro aplikační tajemství pomocí OpenSSL. |
 | [VPN](vpn.md) | Přehled fungování VPN, výhod, příkladů použití a bezpečnostních doporučení. |
+
+### SSH – příkazy a připojení
+
+| Stránka | Popis |
+| --- | --- |
+| [Windows a volba klienta](ssh/windows.md) | Zjištění implementace, instalace a nastavení společného klienta pro terminál i Git. |
+| [SSH klíče](ssh/keys.md) | Vytvoření klíče, heslová fráze a odemykání pomocí agenta. |
+| [Git přes SSH](ssh/git.md) | Připojení ke GitHubu, SSH adresy repozitářů a diagnostika klienta používaného Gitem. |

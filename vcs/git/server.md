@@ -113,7 +113,7 @@ Výstup zobrazí aktuální LFS endpoint a stav konfigurace.
 <details>
 <summary>Nastavení SSH klíče pro Gitea</summary>
 
-1. Podle společného [návodu k vytvoření SSH klíče s heslovou frází](../../network/certificates.md#ssh-klíč-s-heslovou-frází) připrav klíč, případně nastav popisek a zkopíruj veřejný klíč.
+1. [Vytvoř SSH klíč a zkopíruj jeho veřejnou část](../../network/ssh/keys.md#vytvoření-klíče).
 2. Otevři Gitea → **Settings → SSH / GPG Keys → Add Key**, vyplň název a vlož zkopírovaný veřejný klíč.
 3. Otestuj připojení příkazem níže; adresu a port nahraď hodnotami svého serveru.
 

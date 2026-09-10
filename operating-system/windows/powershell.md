@@ -4,7 +4,7 @@
 
 ## SSH ve Windows
 
-Instalaci klienta, zjištění skutečně spouštěného programu, nastavení primárního SSH a propojení s Gitem popisuje návod [SSH – Windows, Git a volba klienta](../../network/ssh.md).
+Instalace a nastavení: [SSH ve Windows](../../network/ssh/windows.md).
 
 ## Správa balíčků
 

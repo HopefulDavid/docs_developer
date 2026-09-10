@@ -337,8 +337,17 @@ const navigation = {
     {
       name: 'Síťové nástroje',
       items: [
-        { name: 'SSH', href: 'ssh.md' },
-        { name: 'Certifikáty', href: 'certificates.md' },
+        {
+          name: 'SSH – příkazy a připojení',
+          href: 'ssh.md',
+          items: [
+            { name: 'Windows a volba klienta', href: 'ssh/windows.md' },
+            { name: 'SSH klíče', href: 'ssh/keys.md' },
+            { name: 'Git přes SSH', href: 'ssh/git.md' },
+          ],
+        },
+        { name: 'TLS certifikáty', href: 'certificates.md' },
+        { name: 'Náhodná tajemství', href: 'secrets.md' },
         { name: 'VPN', href: 'vpn.md' },
       ],
     },

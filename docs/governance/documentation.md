@@ -138,6 +138,18 @@ Odkazuj pokud možno na stabilní nadpis nebo identifikátor.
 
 Neopisuj cílovou pasáž pouze pro pohodlí čtenáře.
 
+## Čitelnost veřejných návodů
+
+Veřejný návod začíná nejkratším použitelným postupem a pouze nezbytnými předpoklady.
+
+Vysvětlení principů, alternativy a podrobnou diagnostiku umísti za hlavní postup nebo do pojmenovaných rozbalovacích bloků.
+
+Podmínky, oprávnění a upozornění nutná pro správné provedení ponech přímo u příslušného kroku.
+
+Každá stránka řeší jasný praktický cíl; související návody seskup v navigaci a odkazuj přímo na potřebný postup.
+
+Úvody, obrázky a opakované rozcestníky nesmějí zbytečně oddalovat první užitečný krok.
+
 ## Mermaid diagramy
 
 Mermaid použij tam, kde zkrátí čas potřebný k pochopení vztahů, pořadí, stavů, toku dat nebo nasazení.
