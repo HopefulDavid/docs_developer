@@ -2,6 +2,10 @@
 
 > Správa balíčků, oprávnění, přizpůsobení prostředí, práce se soubory a síť v PowerShellu.
 
+## SSH ve Windows
+
+Instalaci klienta, zjištění skutečně spouštěného programu, nastavení primárního SSH a propojení s Gitem popisuje návod [SSH – Windows, Git a volba klienta](../../network/ssh.md).
+
 ## Správa balíčků
 
 Umístění modulů: `C:\Users\{xxx}\Documents\PowerShell\Modules`

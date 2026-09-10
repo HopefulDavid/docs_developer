@@ -26,6 +26,22 @@ test('normalizace zachovává čitelný název .NET v nadpisu i textu', () => {
     'SDK .NET: nastavení, ověření.');
 });
 
+test('normalizace zachovává příkazy v Markdown kódu uvnitř tabulek a textu', () => {
+  for (const text of [
+    '| Nahrání | `scp ./soubor.txt uzivatel@server.example.com:/home/uzivatel/` |',
+    '| Stažení | `scp uzivatel@server.example.com:/home/uzivatel/soubor.txt ./` |',
+    '| Adresář | `scp -P 2222 -r ./slozka uzivatel@server.example.com:/home/uzivatel/` |',
+    'Příkaz `ssh server "echo A & echo B"` zachová argumenty.',
+    'PowerShell: ``Write-Output `"A  &  B`"``.',
+    'Vnořený oddělovač: ```text `` a ` .```.',
+  ]) {
+    assert.equal(cleanInline(text), text);
+  }
+
+  assert.equal(cleanInline('  Spusť  `ssh server "echo A & echo B"` , poté  `scp ./a ./b` .  '),
+    'Spusť `ssh server "echo A & echo B"`, poté `scp ./a ./b`.');
+});
+
 function hasExactPath(relPath) {
   let current = root;
 

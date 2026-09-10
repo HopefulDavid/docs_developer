@@ -4,6 +4,12 @@
 
 ![Ollama](../../images/e159d23c-f2b8-4884-bc0b-800bae9db096.png)
 
+## Výběr SSH klienta
+
+Diagnostiku používaného klienta, prioritu `core.sshCommand` a proměnných prostředí i volbu pro jeden repozitář nebo celý uživatelský účet popisuje návod [SSH – Windows, Git a volba klienta](../../network/ssh.md#které-ssh-používá-git).
+
+Pro společného klienta a agenta pokračuj částí [Sjednocení na Windows OpenSSH](../../network/ssh.md#sjednocení-na-windows-openssh).
+
 ## Povolení dlouhých cest ve Windows
 
 ```bash

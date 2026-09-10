@@ -22,6 +22,7 @@ Nejvyšší rizika tohoto statického webu jsou rozbitá navigace, rozdílný ca
 | Riziko nebo požadavek | Primární důkaz | Proč tato úroveň stačí |
 |---|---|---|
 | `REQ-003`, `REQ-E001`, `QLT-001` | `npm run docs:check` | Ověřuje skutečný registr, všechny veřejné stránky, lokální odkazy a generovaný drift bez zápisu |
+| Poškození příkazů při normalizaci Markdownu | Cílený Node test normalizace a kontrola sestaveného článku | Chrání mezery, interpunkci a znaky shellu uvnitř vloženého kódu v textu i tabulkách včetně různě dlouhých oddělovačů |
 | `REQ-E002`, `QLT-003`, `QLT-004` | Node testy v [`tests/`](../../tests) a artifact check | Negativní příklady chrání klasifikaci a celý sestavený výstup potvrzuje integrační hranici |
 | `REQ-E003`, `QLT-002` | `npm run docs:build` s warningy jako chybami | Testuje skutečný DocFX, šablonu, manifest a výsledné HTML místo náhrady build systému |
 | České rozhraní bez editačních odkazů | Node test globálních metadat a tokenů, poté skutečný DocFX build | Chrání `_lang`, `_disableContribution` a české popisky a potvrzuje jejich výsledné HTML |

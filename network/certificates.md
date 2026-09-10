@@ -85,7 +85,7 @@ SSH přihlášení pomocí klíče používá veřejný klíč uložený na serv
 
 ### Vytvoření klíče
 
-Potřebuješ klienta OpenSSH s příkazy `ssh` a `ssh-keygen`; dostupnost klienta ověříš příkazem `ssh -V`.
+Nejprve ověř [dostupnost a výběr klienta OpenSSH](ssh.md#které-ssh-se-skutečně-spouští), případně dokonči [instalaci ve Windows](ssh.md#instalace-windows-openssh).
 
 Následující příkaz je stejný ve Windows (PowerShell nebo CMD), Linuxu i macOS (Bash nebo Zsh):
 
@@ -183,35 +183,9 @@ Význam přepínačů a chování komentáře popisuje [manuál OpenSSH pro ssh-
 
 ### Volitelné odemykání přes ssh-agent
 
-`ssh-agent` umožňuje používat odemčený klíč bez opakovaného zadávání fráze a ponechává soukromý soubor zašifrovaný.
+Spuštění agenta a přidání klíče popisuje společný návod pro [Windows OpenSSH](ssh.md#4-načti-klíč-do-windows-agenta) a pro [Git Bash, Linux a macOS](ssh.md#agent-v-git-bash-linuxu-a-macos).
 
-V **PowerShellu spuštěném jako správce** nejprve povol a spusť službu Windows OpenSSH:
-
-```text
-Set-Service -Name ssh-agent -StartupType Manual
-Start-Service ssh-agent
-```
-
-Při nastavení `Manual` může být po restartu Windows nutné službu znovu spustit příkazem `Start-Service ssh-agent` v PowerShellu správce.
-
-Poté v **běžném PowerShellu pod svým účtem** přidej soukromý klíč a zadej jeho frázi:
-
-```text
-ssh-add "$env:USERPROFILE\.ssh\id_ed25519"
-```
-
-Pro **Bash nebo Zsh na Linuxu a macOS, případně Git Bash** použij v aktuálním terminálu:
-
-```text
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_ed25519
-```
-
-Agentovi předej i klíč uložený pod vlastním názvem, aby jej SSH mohlo nabídnout serveru.
-
-Pokud Git ve Windows frázi stále vyžaduje, ověř, zda používá stejného klienta OpenSSH jako agent, podle [návodu pro souběh Windows OpenSSH a Git for Windows](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#adding-your-ssh-key-to-the-ssh-agent).
-
-Správu soukromých klíčů a agenta ve Windows vysvětluje také [dokumentace Microsoftu](https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_keymanagement).
+Při souběhu více klientů použij [sjednocení Windows OpenSSH a Gitu](ssh.md#sjednocení-na-windows-openssh).
 
 ## SSH – nastavení pro GitHub
 

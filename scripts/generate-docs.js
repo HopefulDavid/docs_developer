@@ -337,6 +337,7 @@ const navigation = {
     {
       name: 'Síťové nástroje',
       items: [
+        { name: 'SSH', href: 'ssh.md' },
         { name: 'Certifikáty', href: 'certificates.md' },
         { name: 'VPN', href: 'vpn.md' },
       ],
@@ -697,9 +698,15 @@ function htmlImageToMarkdown(line, relPath, pageTitle) {
   return `${prefix}![${alt}](${normalizedSrc})`;
 }
 
-/** Normalizuje mezery a interpunkci textu při zachování názvu .NET. */
+/** Normalizuje mezery a interpunkci textu při zachování názvu .NET a Markdown kódu. */
 function cleanInline(value) {
-  return value
+  const codeSpans = [];
+  const prose = value.replace(/(?<!`)(`+)(?!`)[\s\S]*?(?<!`)\1(?!`)/g, (code) => {
+    codeSpans.push(code);
+    return `\u0000${codeSpans.length - 1}\u0000`;
+  });
+
+  return prose
     .replace(/\s&\s/g, ' a ')
     .replace(/[\u00A0\u202F]/g, ' ')
     .replace(/[ \t]{2,}/g, ' ')
@@ -707,7 +714,8 @@ function cleanInline(value) {
     .replace(/\b(v|ve|s|se|pro|pomocí)\.NET/g, '$1 .NET')
     .replace(/\(\s+/g, '(')
     .replace(/\s+\)/g, ')')
-    .trim();
+    .trim()
+    .replace(/\u0000(\d+)\u0000/g, (_, index) => codeSpans[Number(index)]);
 }
 
 function normalizeHeadingTitle(title) {

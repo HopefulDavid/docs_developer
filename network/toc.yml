@@ -3,6 +3,8 @@
   href: "index.md"
 - name: "Síťové nástroje"
   items:
+    - name: "SSH"
+      href: "ssh.md"
     - name: "Certifikáty"
       href: "certificates.md"
     - name: "VPN"

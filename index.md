@@ -16,7 +16,7 @@ Osobní vývojářská dokumentace sjednocená podle tematických oblastí. Pře
 | [DevOps](devops/index.md) | 1 | Infrastruktura, automatizace a provozní postupy pro vývojářské prostředí. |
 | [Dokumentace](documentation/index.md) | 2 | Nástroje a postupy pro tvorbu, převod a údržbu technické dokumentace. |
 | [Virtualizace](virtualization/index.md) | 7 | Kontejnery, lokální virtualizace, orchestrace a související správa prostředí. |
-| [Síť](network/index.md) | 2 | Síťové technologie, přístupy, certifikáty a bezpečné propojení prostředí. |
+| [Síť](network/index.md) | 3 | Síťové technologie, přístupy, certifikáty a bezpečné propojení prostředí. |
 | [Operační systémy](operating-system/index.md) | 5 | Praktické poznámky k operačním systémům a jejich příkazovým nástrojům. |
 | [Grafika](graphics/index.md) | 1 | Grafické nástroje, pracovní postupy a praktické tipy pro vizuální tvorbu. |
 | [Video](video/index.md) | 1 | Nástroje a postupy pro nahrávání, střih nebo zpracování videa. |
