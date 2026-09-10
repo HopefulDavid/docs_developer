@@ -81,7 +81,7 @@ Vývojové platformy, jazyky, frameworky, balíčky a opakovaně použitelné po
 
 | Stránka | Popis |
 | --- | --- |
-| [.NET CLI](packages/dotnet-cli.md) | Pro práci je nutné mít nainstalovaný **.NET SDK** a **.NET Runtime** |
+| [.NET CLI](packages/dotnet-cli.md) | Správa nástrojů .NET CLI a vypnutí i ověření telemetrie .NET SDK. |
 | [NuGet](packages/nuget.md) | Pro správu balíčků je potřeba mít nainstalovaný **NuGet CLI** nebo používat integrované nástroje v IDE. |
 | [npm](packages/npm.md) | Pro správu balíčků je potřeba mít nainstalovaný **Node.js** a **npm**. |
 | [Python](packages/python.md) | Praktické rady pro správu Python balíčků, zálohování, offline instalaci a užitečné příkazy. |

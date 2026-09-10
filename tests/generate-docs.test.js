@@ -5,11 +5,26 @@ const test = require('node:test');
 
 const docfx = require('../docfx.json');
 const {
+  cleanInline,
   isInternalArtifactPath,
   isInternalPath,
 } = require('../scripts/generate-docs.js');
 
 const root = path.resolve(__dirname, '..');
+
+test('normalizace zachovává čitelný název .NET v nadpisu i textu', () => {
+  for (const text of [
+    'Vypnutí telemetrie .NET SDK',
+    'Správa nástrojů .NET CLI a vypnutí telemetrie .NET SDK.',
+    'Telemetrii .NET SDK vypneš proměnnou prostředí.',
+    'Příkazy .NET CLI spouštěj v .NET SDK.',
+  ]) {
+    assert.equal(cleanInline(text), text);
+  }
+
+  assert.equal(cleanInline('  SDK  .NET : nastavení , ověření .  '),
+    'SDK .NET: nastavení, ověření.');
+});
 
 function hasExactPath(relPath) {
   let current = root;

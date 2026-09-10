@@ -6,6 +6,10 @@
 
 Umístění modulů: `C:\Users\{xxx}\Documents\PowerShell\Modules`
 
+## Vypnutí telemetrie .NET SDK
+
+Trvalé nastavení pro uživatele nebo celý počítač a kontrolu uložené i aktuální hodnoty popisuje návod [.NET CLI – vypnutí telemetrie SDK](../../programming/packages/dotnet-cli.md#vypnutí-telemetrie-net-sdk).
+
 ## Přizpůsobení prostředí (Oh My Posh)
 
 <details>

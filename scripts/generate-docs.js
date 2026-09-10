@@ -697,12 +697,13 @@ function htmlImageToMarkdown(line, relPath, pageTitle) {
   return `${prefix}![${alt}](${normalizedSrc})`;
 }
 
+/** Normalizuje mezery a interpunkci textu při zachování názvu .NET. */
 function cleanInline(value) {
   return value
     .replace(/\s&\s/g, ' a ')
     .replace(/[\u00A0\u202F]/g, ' ')
     .replace(/[ \t]{2,}/g, ' ')
-    .replace(/\s+([,.;:!?])/g, '$1')
+    .replace(/\s+([,;:!?]|\.(?!NET\b))/g, '$1')
     .replace(/\b(v|ve|s|se|pro|pomocí)\.NET/g, '$1 .NET')
     .replace(/\(\s+/g, '(')
     .replace(/\s+\)/g, ')')
@@ -1354,4 +1355,4 @@ if (require.main === module) {
   runCli();
 }
 
-module.exports = { isInternalArtifactPath, isInternalPath };
+module.exports = { cleanInline, isInternalArtifactPath, isInternalPath };
