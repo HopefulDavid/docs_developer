@@ -113,31 +113,16 @@ Výstup zobrazí aktuální LFS endpoint a stav konfigurace.
 <details>
 <summary>Nastavení SSH klíče pro Gitea</summary>
 
-1. **Vygeneruj SSH klíč** (pokud ještě nemáš):
+1. Podle společného [návodu k vytvoření SSH klíče s heslovou frází](../../network/certificates.md#ssh-klíč-s-heslovou-frází) připrav klíč, případně nastav popisek a zkopíruj veřejný klíč.
+2. Otevři Gitea → **Settings → SSH / GPG Keys → Add Key**, vyplň název a vlož zkopírovaný veřejný klíč.
+3. Otestuj připojení příkazem níže; adresu a port nahraď hodnotami svého serveru.
 
-   ```bash
-   ssh-keygen -t rsa -b 4096 -C "tvuj@email.com"
-   ```
+```text
+ssh -T git@127.0.0.1 -p 2222
+```
 
-2. **Zobraz veřejný klíč:**
+Při prvním připojení ověř otisk serveru u jeho správce a potvrď jej pouze při shodě.
 
-**Windows:**
-   ```bash
-   type %userprofile%\.ssh\id_rsa.pub
-   ```
-
-**Linux/macOS:**
-   ```bash
-   cat ~/.ssh/id_rsa.pub
-   ```
-
-3. **Přidej klíč do Gitea:**
-- Otevři Gitea → **Settings → SSH / GPG Keys → Add Key**
-
-4. **Otestuj připojení:**
-
-   ```bash
-   ssh -T git@127.0.0.1 -p 2222
-   ```
+Případná výzva k zadání passphrase požaduje heslovou frázi tvého soukromého klíče.
 
 </details>
