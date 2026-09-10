@@ -17,7 +17,7 @@ Zde se vysvětluje její účel, pořadí, prostředí, oprávnění a způsob l
 
 | Vlastnost | Ověřená hodnota | Důkaz |
 |---|---|---|
-| Hostingová platforma | GitHub | SSH remote `git@github.com:HopefulDavid/docs_developer.git`, vzdálený HEAD a `.github/workflows/` |
+| Hostingová platforma | GitHub | Remote `https://github.com/HopefulDavid/docs_developer.git` a shoda místního obsahu s `origin/develop` ověřené 2026-09-10; `.github/workflows/` |
 | VCS | Git | `.git/`, remote a projektová historie |
 | Výchozí větev hostingu | `main` | Lokální symbolický ref `origin/HEAD -> origin/main` |
 | Vývojová větev | `develop` | [`../development/workflow.md`](../development/workflow.md) |
