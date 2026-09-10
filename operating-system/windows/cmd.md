@@ -9,6 +9,10 @@
 - **Batch skript** má příponu `.bat` nebo `.cmd`.
 - Umožňuje automatizovat úlohy ve Windows.
 
+## Odstranění souborů a složek
+
+Rozlišení `del` a `rd`, krátké názvy a rozšířené cesty najdeš v návodu [Windows – nelze odstranit soubor nebo složku](cannot-delete-item.md#cmd-rozlišení-souboru-a-složky).
+
 ## Spouštění SQL skriptů ze složky
 
 <details>

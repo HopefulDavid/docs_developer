@@ -116,6 +116,10 @@ powershell -ExecutionPolicy Bypass -File "C:\{xxx}\Downloads\skript.ps1"
 
 ## Práce se soubory
 
+### Když soubor nebo složka nejde odstranit
+
+Kontrolu cílové cesty, náhled pomocí `-WhatIf` a odstranění přes `-LiteralPath` popisuje návod [Windows – nelze odstranit soubor nebo složku](cannot-delete-item.md#powershell-kontrola-a-odstranění).
+
 ### Změna metadat souboru
 
 ```powershell

@@ -348,6 +348,7 @@ const navigation = {
       href: 'windows/index.md',
       items: [
         { name: 'Instalátor nevidí SSD', href: 'windows/installation-missing-ssd.md' },
+        { name: 'Nelze odstranit položku', href: 'windows/cannot-delete-item.md' },
         { name: 'Command Line', href: 'windows/cmd.md' },
         { name: 'PowerShell', href: 'windows/powershell.md' },
       ],

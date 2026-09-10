@@ -23,6 +23,10 @@ start ms-cxh:localonly
 
 Diagnostiku, výběr ovladače a bezpečné rozlišení interního SSD od instalačního USB najdeš v návodu [Instalátor Windows nevidí SSD – Intel RST a VMD](installation-missing-ssd.md).
 
+## Soubor nebo složka nejde odstranit
+
+Chybu „Položka nebyla nalezena“, rozlišení CMD a PowerShellu a problematické názvy řeší návod [Windows – nelze odstranit soubor nebo složku](cannot-delete-item.md).
+
 ## Základní nastavení
 
 ### Zobrazení sekund v dolním panelu
