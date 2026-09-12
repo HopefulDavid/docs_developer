@@ -16,17 +16,19 @@ V původním fungujícím projektu spusť:
 
 ```powershell
 ./.venv/Scripts/python.exe -m pip freeze | Set-Content -Encoding utf8 requirements-backup.txt
-./.venv/Scripts/python.exe -m pip download --only-binary=:all: --dest ../zaloha-python/wheelhouse -r requirements-backup.txt
+./.venv/Scripts/python.exe -m pip download --only-binary=:all: `
+  --dest ../zaloha-python/wheelhouse -r requirements-backup.txt
 ```
 
-První řádek uloží nainstalované verze včetně nepřímých závislostí; druhý k nim stáhne instalační soubory. [Pip freeze](https://pip.pypa.io/en/stable/cli/pip_freeze/), [pip download](https://pip.pypa.io/en/stable/cli/pip_download/)
+První příkaz uloží nainstalované verze včetně nepřímých závislostí; druhý k nim stáhne instalační soubory. [Pip freeze](https://pip.pypa.io/en/stable/cli/pip_freeze/), [pip download](https://pip.pypa.io/en/stable/cli/pip_download/)
 
 `--only-binary=:all:` vyžaduje hotové wheely, aby se na offline počítači nemusela připravovat jejich sestavovací prostředí.
 
 Pokud některý balíček hotový wheel nemá, vytvoř jej online na kompatibilním počítači s potřebnými build nástroji:
 
 ```powershell
-./.venv/Scripts/python.exe -m pip wheel --wheel-dir ../zaloha-python/wheelhouse -r requirements-backup.txt
+./.venv/Scripts/python.exe -m pip wheel `
+  --wheel-dir ../zaloha-python/wheelhouse -r requirements-backup.txt
 ```
 
 Obsahuje-li seznam `-e`, URL nebo místní cestu, použij níže variantu pro vlastní balíčky.
@@ -53,7 +55,9 @@ Na cíli rozbal pracovní kopii zálohy a v jejím `projekt`, kde ještě není 
 
 ```powershell
 python -m venv .venv
-./.venv/Scripts/python.exe -m pip install --no-index --find-links=../wheelhouse --only-binary=:all: --no-cache-dir -r requirements-backup.txt
+./.venv/Scripts/python.exe -m pip install --no-index `
+  --find-links=../wheelhouse --only-binary=:all: --no-cache-dir `
+  -r requirements-backup.txt
 ./.venv/Scripts/python.exe -m pip check
 ```
 
@@ -78,9 +82,13 @@ S internetem stačí v novém prostředí `./.venv/Scripts/python.exe -m pip ins
 Ve fungujícím prostředí sestav každý vlastní balíček a potom ulož přenositelný seznam; příklad pro sousední `moje-knihovna`:
 
 ```powershell
-./.venv/Scripts/python.exe -m pip wheel --no-deps --wheel-dir ../zaloha-python/wheelhouse ../moje-knihovna
-./.venv/Scripts/python.exe -m pip list --format=freeze --exclude pip | Set-Content -Encoding utf8 requirements-offline.txt
-./.venv/Scripts/python.exe -m pip download --only-binary=:all: --find-links=../zaloha-python/wheelhouse --dest ../zaloha-python/wheelhouse -r requirements-offline.txt
+./.venv/Scripts/python.exe -m pip wheel --no-deps `
+  --wheel-dir ../zaloha-python/wheelhouse ../moje-knihovna
+./.venv/Scripts/python.exe -m pip list --format=freeze --exclude pip |
+  Set-Content -Encoding utf8 requirements-offline.txt
+./.venv/Scripts/python.exe -m pip download --only-binary=:all: `
+  --find-links=../zaloha-python/wheelhouse `
+  --dest ../zaloha-python/wheelhouse -r requirements-offline.txt
 ```
 
 První příkaz zopakuj pro všechny vlastní balíčky; jejich verze musí odpovídat tomu, co máš nainstalované. [Pip wheel](https://pip.pypa.io/en/stable/cli/pip_wheel/), [pip list](https://pip.pypa.io/en/stable/cli/pip_list/)

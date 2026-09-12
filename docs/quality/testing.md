@@ -332,3 +332,23 @@ Přenesený globální DocFX navíc skutečně sestavil malou dokumentaci s 0 ch
 Parser PowerShellu přijal všech 11 aktuálních bloků balíčků bez syntaktické chyby.
 
 Projektové `npm run verify` prošlo 20 testy a strict buildem s 0 chybami a 0 varováními; kontrola artefaktu ověřila 253 zdrojů a 494 výstupních souborů.
+
+Při následné vizuální kontrole byly dlouhé příkazy Pythonu rozděleny do více řádků; přesný blok obnovy převzatý z Markdownu úspěšně vytvořil nové venv, obnovil balíčky a prošel `pip check` i importem requests.
+
+Přímá zkouška PowerShellu odhalila, že `[IO.Path]::GetFullPath` s relativní cestou vychází z pracovního adresáře procesu, který se může lišit od aktuální složky PowerShellu.
+
+Návod Dartu proto používá `Join-Path $PWD "../pub-cache"`; po `Push-Location` do testovacího projektu byla ověřena správná cesta, offline obnova s lockfilem i spuštění aplikace.
+
+V prohlížeči prošlo 18 stránek při 320, 390, 768 a 1440 px ve světlém i tmavém motivu, celkem 144 kombinací bez vodorovného přetékání celé stránky, rozbitých obrázků nebo posuvného bloku nepřístupného klávesnicí.
+
+Rozsah zahrnoval všech sedm článků balíčků, .NET CLI, Programování, homepage, Verzování, Docker, Unity 2D, Affinity, OpenTofu a tři návody úprav historie Gitu.
+
+Po posledních úpravách Pythonu a Dartu znovu prošlo všech 16 jejich kombinací rozměru a motivu; zkontrolovány byly také snímky celých článků a mobilní zobrazení.
+
+Ověřeny byly nové popisy a krátký název .NET tools v rozcestníku i navigaci, odkaz z .NET CLI, přechod mezi balíčky v mobilní navigaci, vyhledání Dockeru a prázdný výsledek pro neexistující výraz.
+
+Kopírování .NET restore i víceřádkového Python bloku přesně zachovalo text; klávesnice přesunula fokus na obsah a rozbalila obrázkový postup Unity, tmavý motiv zůstal po reloadu a prohlížeč nezaznamenal JavaScript chybu.
+
+Affinity nadále používá snímky šířky 760 a 482 px se shodným pravidlem centrování, takže odlišné odsazení odpovídá pouze jejich šířce.
+
+Úklid VCS přesunul vnořené testovací repozitáře i staré instalační experimenty mimo checkout; závěrečná kontrola našla jen skutečnou projektovou `.git`, jeden worktree a místní `main` a `develop`, se zachovanou vzdálenou `gh-pages`.

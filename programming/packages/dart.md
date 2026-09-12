@@ -19,7 +19,7 @@ Zachovej `pubspec.yaml`, `pubspec.lock`, celý workspace, případné overrides 
 V této kopii projektu spusť:
 
 ```powershell
-$env:PUB_CACHE = [IO.Path]::GetFullPath("../pub-cache")
+$env:PUB_CACHE = Join-Path $PWD "../pub-cache"
 dart pub get --enforce-lockfile
 ```
 
@@ -46,7 +46,7 @@ Přilož výstup `dart --version` nebo `flutter --version` a archiv odpovídají
 Na cíli rozbal pracovní kopii zálohy a v jejím `projekt` spusť:
 
 ```powershell
-$env:PUB_CACHE = [IO.Path]::GetFullPath("../pub-cache")
+$env:PUB_CACHE = Join-Path $PWD "../pub-cache"
 dart pub get --offline --enforce-lockfile
 dart pub deps
 ```
