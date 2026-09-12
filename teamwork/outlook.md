@@ -1,3 +1,7 @@
+---
+description: "Zobrazení a překrytí více kalendářů."
+---
+
 # Outlook – zobrazení více kalendářů
 
 Kalendáře lze zobrazit vedle sebe nebo překrýt pro snadnější porovnání termínů.
@@ -12,11 +16,15 @@ Jde o změnu zobrazení, nikoli sloučení událostí do jednoho kalendáře. [P
 
 ### Oddělené zobrazení
 
-![Kalendáře vedle sebe v klasickém Outlooku](../images/outlook_calendarBeforeOverlay.png)
+<img src="../images/outlook_calendarBeforeOverlay.png" alt="Kalendáře vedle sebe v klasickém Outlooku" width="760">
+
+[Zobrazit obrázek v původní velikosti](../images/outlook_calendarBeforeOverlay.png)
 
 ### Překryté zobrazení
 
-![Překryté kalendáře v klasickém Outlooku](../images/outlook_calendarAfterOverlay.png)
+<img src="../images/outlook_calendarAfterOverlay.png" alt="Překryté kalendáře v klasickém Outlooku" width="760">
+
+[Zobrazit obrázek v původní velikosti](../images/outlook_calendarAfterOverlay.png)
 
 ## Nový Outlook a web
 

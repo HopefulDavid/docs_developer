@@ -1,3 +1,7 @@
+---
+description: "Instalace, připojení přes psql a orientace v databázových objektech."
+---
+
 # PostgreSQL – instalace a připojení
 
 PostgreSQL je relační databázový systém; pro práci lze použít konzoli psql nebo grafický klient pgAdmin.
@@ -13,7 +17,9 @@ pgAdmin je samostatný klient; jeho přítomnost závisí na distribuci a volbě
 
 ### Výběr komponent
 
-![Komponenty instalátoru PostgreSQL pro Windows](../images/wqiRRNNKOT.png)
+<img src="../images/wqiRRNNKOT.png" alt="Komponenty instalátoru PostgreSQL pro Windows" width="545">
+
+[Zobrazit obrázek v původní velikosti](../images/wqiRRNNKOT.png)
 
 ## Připojení z příkazového řádku
 
@@ -34,12 +40,14 @@ SELECT current_database(), current_user;
 
 V konzoli lze použít také:
 
-| Příkaz psql | Význam |
+| Syntaxe v konzoli psql | Význam |
 |---|---|
 | `\l` | Seznam databází |
 | `\dt` | Tabulky v aktuálním vyhledávacím schématu |
-| `\d schema.tabulka` | Struktura konkrétní tabulky |
+| `\d <schéma>.<tabulka>` | Struktura vybrané tabulky; doplň její schéma a název |
 | `\q` | Ukončení konzole |
+
+Například `\d public.notes` zobrazí strukturu existující tabulky `notes` ve schématu `public`; zadává se do konzole psql, nikoli přímo do PowerShellu.
 
 [Reference psql](https://www.postgresql.org/docs/current/app-psql.html)
 

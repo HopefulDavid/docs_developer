@@ -93,11 +93,18 @@ Zde jsou pouze přesné podporované příkazy.
 
 1. Vyber existující tematickou složku a zkontroluj, zda postup už nevlastní jiný článek.
 2. Uprav jeho Markdown, nebo přidej nový soubor s malými písmeny a pomlčkami v názvu.
+   Každý navigovaný článek potřebuje metadata `description: "Stručný přímý popis obsahu."` před prvním nadpisem v YAML front matter.
 3. U nového článku přidej položku `name` a relativní `href` do odpovídající skupiny `navigation` v [`scripts/generate-docs.js`](../../scripts/generate-docs.js).
 4. Spusť `npm run docs:generate`, zkontroluj Git diff a následně `npm run verify`.
 5. Otevři sestavenou stránku a ověř navigaci, příklad i zobrazení podle smoke scénáře níže.
 
 `sectionInfo` vlastní názvy a úvody hlavních oblastí, `sectionOrder` jejich pořadí a `navigation` podskupiny i články.
+
+Stručné popisy řádků rozcestníku vlastní `description` cílového článku, nikoli jeho první odstavec nebo kopie v navigačním registru.
+
+Pro rozměr snímku použij například `<img src="../images/dialog.png" alt="Nastavení dialogu" width="420">` se skutečnou cestou, popisem a posouzenou šířkou.
+
+HTML obrázek s kladným width zůstává při normalizaci zachovaný; širší obsah se na mobilu zmenší podle CSS.
 
 `docs:generate` přepíše odvozené indexy a TOC a normalizuje veřejné zdroje, proto před spuštěním zkontroluj pracovní strom.
 

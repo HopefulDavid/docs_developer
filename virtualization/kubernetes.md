@@ -1,49 +1,79 @@
-# Kubernetes: první Deployment a Service
+---
+description: "První lokální cluster, vztah Deployment–Pod–Service a diagnostika nasazení."
+---
 
-Kubernetes řídí kontejnery podle požadovaného stavu, například „udržuj dvě instance této aplikace“.
+# Kubernetes – první aplikace krok za krokem
 
-Je užitečný pro provoz více aplikací a serverů, ale pro jednoduchou lokální sestavu může stačit [Docker Compose](docker/index.md).
+Kubernetes udržuje kontejnery podle požadovaného stavu, například „spouštěj dvě připravené instance tohoto webu“.
 
-## Jak funguje
+Když instance zanikne, řídicí mechanismus se pokusí vytvořit náhradu, takže aplikaci neřídíš jen jednorázovým spuštěním procesu.
 
-| Pojem | Úloha |
+## Kdy ho použít
+
+Hodí se pro více služeb, řízené aktualizace a provoz přes více uzlů.
+
+Pro jednoduchou místní sestavu může stačit Docker Compose; nejprve porozuměj [image, kontejneru a portům](docker/index.md).
+
+## Jak součásti spolupracují
+
+```text
+kubectl → API clusteru → Deployment → ReplicaSet → Pody → kontejnery
+                                                    ↑
+                              Service vybírá Pody podle labelů
+```
+
+| Pojem | Praktický význam |
 |---|---|
-| Cluster | Řídicí vrstva a pracovní uzly se společným API |
-| Node | Stroj, na kterém běží pracovní zátěž |
-| Pod | Nejmenší plánovaná jednotka s jedním nebo více kontejnery |
-| Deployment | Udržuje požadovaný počet Podů a řídí aktualizace |
-| Service | Poskytuje stabilní adresu pro vybranou skupinu Podů |
-| Namespace | Odděluje názvy prostředků a umožňuje uplatnit pravidla správy |
+| Cluster | Celek s řídicí vrstvou a pracovními uzly |
+| Node / uzel | Stroj nebo virtuální prostředí pro běh Podů |
+| Pod | Nejmenší plánovaná jednotka, obvykle s hlavním kontejnerem aplikace |
+| Deployment | Předpis počtu instancí a aktualizace bezstavové aplikace |
+| ReplicaSet | Hlídá počet Podů, u Deploymentu jej spravuje Kubernetes |
+| Service | Stabilní síťový vstup pro vybranou skupinu Podů |
+| Namespace | Prostor názvů a správy uvnitř clusteru |
+| Manifest | YAML soubor požadovaných prostředků |
+| Context | Volba clusteru, účtu a případného výchozího namespace pro kubectl |
 
-Namespace sám nezaručuje síťovou ani bezpečnostní izolaci.
+Pod může být nahrazen jiným jménem a IP, proto aplikaci obvykle zpřístupníš přes Service.
 
-Automatické škálování podle zátěže vyžaduje další konfiguraci a metriky; dvě repliky ani rolling update samy nezaručují nulový výpadek.
+Namespace sám není úplná síťová ani bezpečnostní izolace.
 
-## Před použitím
+## 1. Připrav výukový cluster
 
-Potřebuješ `kubectl`, běžící výukový cluster a oprávnění vytvářet namespace, Deployment a Service.
+| Možnost | Kdy ji zvolit |
+|---|---|
+| Minikube | Pojmenovaný lokální cluster s jednoduchým start/stop |
+| Kubernetes v Docker Desktopu | Využití podporované integrace své instalace |
+| kind | Krátkodobé testovací clustery jako kontejnery |
 
-Návod předpokládá linuxové uzly a znalost obrazu, portu a kontejneru.
+Příklad používá Minikube s Docker driverem, běžící linuxový engine Dockeru a instalované [minikube](https://minikube.sigs.k8s.io/docs/start/) a [kubectl](https://kubernetes.io/docs/tasks/tools/).
+
+První start potřebuje internet a volné prostředky podle požadavků Minikube.
 
 ```bash
-# Ověř, kam se kubectl připojuje; další kroky mění právě tento cluster.
+docker version
+minikube start --driver=docker --profile docs-demo
 kubectl config current-context
-kubectl cluster-info
 kubectl get nodes
 ```
 
-Pokračuj pouze v zamýšleném výukovém clusteru, kde není namespace `docs-demo` používaný někým jiným.
+`docs-demo` je vlastní profil clusteru; očekávej jeho context a uzel ve stavu `Ready`.
 
-## Praktické použití
+Existující lokální cluster lze použít místo Minikube, ale vždy ověř context, aby příkazy nezasáhly jiné prostředí.
 
-Nejprve vytvoř vlastní namespace, aby v něm server mohl ověřit následující prostředky.
+## 2. Vytvoř prostor pro ukázku
 
 ```bash
-# Nový prostor pouze pro tuto ukázku; AlreadyExists znamená, že je název obsazený.
 kubectl create namespace docs-demo
 ```
 
-Ulož následující soubor jako `web.yaml`.
+Jde o namespace uvnitř clusteru, který má zde stejné jméno jako profil Minikube, ale je jiným objektem.
+
+Pokud již existuje, ověř jeho obsah a vlastníka, než budeš pokračovat.
+
+## 3. Popiš web a přístup k němu
+
+Do nové složky ulož `web.yaml`:
 
 ```yaml
 apiVersion: apps/v1
@@ -52,14 +82,14 @@ metadata:
   name: web
   namespace: docs-demo
 spec:
-  replicas: 2 # Dvě požadované instance, nikoli automatické škálování.
+  replicas: 2 # Dvě instance, nikoli automatické škálování.
   selector:
     matchLabels:
       app: docs-web
   template:
     metadata:
       labels:
-        app: docs-web # Musí odpovídat selectoru Deploymentu i Service.
+        app: docs-web # Stejnou značku vybírá Service.
     spec:
       containers:
         - name: nginx
@@ -68,15 +98,14 @@ spec:
             - containerPort: 80
           resources:
             requests:
-              cpu: 100m # Desetina CPU pro plánování kapacity.
+              cpu: 100m
               memory: 32Mi
             limits:
-              memory: 128Mi # Překročení může způsobit ukončení kontejneru.
+              memory: 128Mi
           readinessProbe:
             httpGet:
               path: /
               port: 80
-            initialDelaySeconds: 2
             periodSeconds: 5
 ---
 apiVersion: v1
@@ -85,61 +114,117 @@ metadata:
   name: web
   namespace: docs-demo
 spec:
+  type: ClusterIP
   selector:
     app: docs-web
   ports:
     - port: 80
       targetPort: 80
-  type: ClusterIP # Služba je dostupná uvnitř clusteru.
 ```
 
-`---` odděluje dva prostředky; popisky propojují Service s Pody a readiness kontrola rozhoduje, zda je Pod připraven přijímat provoz.
+`---` odděluje dva YAML dokumenty; Deployment vytvoří Pody a Service je vybere podle stejné značky `app: docs-web`.
 
-Tag `stable-alpine` je pohyblivý; pro reprodukovatelné nasazení použij ověřený digest konkrétního obrazu.
+| Hodnota | Úloha |
+|---|---|
+| `replicas: 2` | Dvě instance stejného webu |
+| `containerPort: 80` | Popis portu nginxu, sám naslouchání nespouští |
+| `requests.cpu: 100m` | Pro plánování žádá desetinu CPU na kontejner |
+| `requests.memory: 32Mi` | Malá výchozí paměťová žádost pro ukázku |
+| `limits.memory: 128Mi` | Limit, jehož překročení může ukončit kontejner |
+| `readinessProbe` | Kontrola připravenosti přijímat provoz |
+| `ClusterIP` | Dostupnost Service uvnitř clusteru |
+| `port / targetPort` | Port Service a skutečný port aplikace |
+
+Zdroje jsou výukové nastavení nginxu, nikoli univerzální hodnoty pro jinou aplikaci.
+
+Tag `stable-alpine` je pohyblivý; pro reprodukovatelné nasazení použij ověřený digest image.
+
+## 4. Ověř a aplikuj
+
+V PowerShellu nebo Bashi ve složce manifestu:
 
 ```bash
-# Server nejprve ověří manifest bez uložení změn.
 kubectl apply --dry-run=server -f web.yaml
-```
-
-Po úspěšném ověření nasaď prostředky a zkontroluj skutečný stav.
-
-```bash
 kubectl apply -f web.yaml
 kubectl rollout status deployment/web -n docs-demo --timeout=120s
 kubectl get pods,services -n docs-demo
-# Lokální tunel na Service; terminál musí zůstat spuštěný.
+```
+
+První příkaz provede serverovou kontrolu bez uložení, druhý prostředky skutečně vytvoří nebo aktualizuje.
+
+Kontrola rollout počká nejvýše 120 sekund; při timeoutu pokračuj diagnostikou, ne automatickým smazáním clusteru.
+
+Očekávej dva Pody `Running` s `READY 1/1` a Service `web`.
+
+## 5. Otevři web
+
+```bash
 kubectl port-forward -n docs-demo service/web 8080:80
 ```
 
-Otevři `http://localhost:8080`; očekávaným výsledkem je uvítací stránka nginx a dvě připravené instance v předchozím výpisu.
+Dočasný tunel propojí místní port `8080` s portem `80` služby; otevři `http://localhost:8080` a očekávej stránku nginx.
 
-`Ctrl+C` ukončí tunel, nikoli Deployment.
+`Ctrl+C` ukončí pouze tunel, nikoli aplikaci.
 
-## Co lze upravit
+Port-forward je místní zkouška, není trvalé veřejné publikování a při zániku vybraného Podu se může ukončit.
 
-Změň `replicas`, obraz a měřené nároky aplikace podle potřeby, ale label a oba selectory musí zůstat ve shodě.
+## 6. Změň požadovaný stav
 
-Port aplikace musí odpovídat `targetPort` a readiness kontrole; `containerPort` sám proces na portu nespustí.
+Změň v YAML `replicas` ze `2` na `3` a znovu spusť `kubectl apply -f web.yaml`.
 
-Ukázka nemá persistentní data, autentizaci, TLS ani pravidla pro veřejný provoz.
+`kubectl get pods -n docs-demo` má po chvíli ukázat tři připravené Pody.
 
-## Časté problémy a úklid
+Při změně image vzniká nová revize a Deployment postupně nahrazuje Pody podle strategie.
 
-```bash
-# Události vysvětlí Pending, chybu stažení obrazu nebo neúspěšnou sondu.
-kubectl get events -n docs-demo --sort-by=.metadata.creationTimestamp
-kubectl describe deployment web -n docs-demo
-kubectl logs -n docs-demo deployment/web
+`kubectl rollout history deployment/web -n docs-demo` vypíše dostupné revize a `kubectl rollout undo deployment/web -n docs-demo` může vrátit předchozí šablonu Podů.
+
+Undo nevrací databázové změny, externí data ani všechnu konfiguraci; po návratu oprav také zdrojový manifest, jinak další apply znovu požádá o vadný stav.
+
+## Když aplikace neběží
+
+Najdi konkrétní Pod ve výpisu a použij:
+
+```text
+kubectl describe pod <pod> -n <namespace>
+kubectl logs <pod> -n <namespace> [--previous]
+kubectl get events -n <namespace> --sort-by=.metadata.creationTimestamp
 ```
 
-`Pending` často znamená nedostupné prostředky, `ImagePullBackOff` problém s obrazem nebo přístupem a `CrashLoopBackOff` opakované ukončování procesu.
+`describe` ukáže plánování a události, `logs` výstup aplikace a `--previous` log předchozí ukončené instance.
 
-Po dokončení smaž výhradně vlastní výukové prostředky.
+| Stav | Co ověřit |
+|---|---|
+| `Pending` | Kapacitu uzlů, plánovací podmínky a volume |
+| `ImagePullBackOff` | Image, jeho verzi a přístup k registru |
+| `CrashLoopBackOff` | Log aplikace, spuštění, konfiguraci a paměť |
+| `Running`, ale `READY 0/1` | Port a výsledek readiness kontroly |
+| Nefunkční Service | Shodu labelů, selectoru a `targetPort` |
+
+## Konfigurace, data a veřejný provoz
+
+| Potřeba | Navazující prostředek |
+|---|---|
+| Běžné nastavení | ConfigMap |
+| Přístupové údaje | Secret a odpovídající správa přístupu a šifrování |
+| Trvalá data | PersistentVolumeClaim a úložiště clusteru |
+| Stabilní identita stavové aplikace | Podle návrhu StatefulSet |
+| Jednorázová nebo pravidelná úloha | Job nebo CronJob |
+| Veřejný HTTP vstup | Gateway API nebo Ingress s příslušnou implementací řadiče |
+
+Base64 v Secretu není šifrování.
+
+Dvě repliky na jednom místním uzlu nechrání před jeho výpadkem a Deployment nenahrazuje zálohu dat.
+
+## Úklid
+
+Pro odstranění jen prostředků tohoto souboru:
 
 ```bash
-# Odstraní celý docs-demo včetně prostředků, které do něj byly dodatečně přidány.
-kubectl delete namespace docs-demo
+kubectl delete -f web.yaml
 ```
 
-Chování Deploymentu popisuje [oficiální návod Kubernetes](https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/).
+`kubectl delete namespace docs-demo` odstraní celý výukový prostor včetně dalších prostředků, které v něm mezitím vznikly.
+
+`minikube stop --profile docs-demo` cluster zastaví a `minikube delete --profile docs-demo` ho včetně dat odstraní.
+
+Zdroje: [Minikube](https://minikube.sigs.k8s.io/docs/start/), [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/), [Service](https://kubernetes.io/docs/concepts/services-networking/service/), [port-forward](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/), [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/).

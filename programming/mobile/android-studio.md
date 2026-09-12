@@ -1,3 +1,7 @@
+---
+description: "Instalace SDK, příprava emulátoru a připojení fyzického zařízení."
+---
+
 # Android Studio
 
 Android Studio poskytuje Android SDK, správu emulátorů a nástroje pro ladění aplikací na telefonu.

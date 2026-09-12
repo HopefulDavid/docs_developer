@@ -3,6 +3,8 @@
   href: "index.md"
 - name: "Síťové nástroje"
   items:
+    - name: "Základy a diagnostika sítě"
+      href: "basics.md"
     - name: "SSH – příkazy a připojení"
       href: "ssh.md"
       items:

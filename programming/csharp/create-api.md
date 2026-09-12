@@ -1,3 +1,7 @@
+---
+description: "Vytvoření HTTP API, validace vstupů a ověření požadavků."
+---
+
 # .NET – Vytvoření REST API v ASP.NET Core
 
 Tento postup pro SDK .NET 10 vytvoří lokální API poznámek s funkčním přidáním, čtením, úpravou a mazáním.

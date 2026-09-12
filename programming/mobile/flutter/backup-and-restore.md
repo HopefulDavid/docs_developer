@@ -1,3 +1,7 @@
+---
+description: "Přenos projektu, SDK a navazujících závislostí na další počítač."
+---
+
 # Flutter – záloha a obnova
 
 Obnovitelný projekt potřebuje zdrojové soubory, konfiguraci, prostředky a záznam použité verze SDK.
@@ -15,6 +19,8 @@ Složky `build/` a `.dart_tool/` lze znovu vytvořit; nejsou náhradou zdrojů. 
 Git uchovává pouze přidané a commitnuté soubory, proto samostatně zkontroluj necommitnuté a ignorované soubory.
 
 ## Obnova na novém počítači
+
+Pro cílový počítač bez internetu nejprve připrav [offline zálohu pub cache](../../packages/dart.md) a platformní nástroje; následující základní varianta předpokládá dostupný zdroj chybějících závislostí.
 
 1. Obnov zdroje z repozitáře nebo zálohy do nové složky.
 2. Nainstaluj odpovídající Flutter SDK a [nástroje cílové platformy](setup-and-configuration.md).

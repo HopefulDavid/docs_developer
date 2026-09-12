@@ -1,3 +1,7 @@
+---
+description: "Zpřístupnění místní aplikace a kontrola portů Apache."
+---
+
 # XAMPP: spuštění lokálního PHP projektu
 
 XAMPP spojuje Apache, PHP a další nástroje pro místní vývoj.

@@ -1,3 +1,7 @@
+---
+description: "Převody Markdownu, HTML, Wordu a PDF s volbou šablony."
+---
+
 # Pandoc – převody dokumentů
 
 Pandoc převádí strukturu dokumentu mezi formáty; po převodu ověř také tabulky, obrázky a stránkování.
@@ -8,13 +12,17 @@ Nainstaluj Pandoc podle [oficiálního postupu](https://pandoc.org/installing.ht
 
 Příkazy spouštěj ve složce vstupního souboru:
 
-| Převod | Příkaz |
+`<vstup>` a `<výstup>` nahraď cestami k souborům v uvedených formátech; příponu výstupu Pandoc používá při výběru formátu.
+
+| Převod | Syntaxe |
 |---|---|
-| Markdown → DOCX | `pandoc dokument.md -o dokument.docx` |
-| DOCX → Markdown a obrázky | `pandoc dokument.docx -t gfm --extract-media=media -o dokument.md` |
-| Markdown → HTML | `pandoc dokument.md --standalone -o dokument.html` |
-| HTML → Markdown | `pandoc dokument.html -t gfm -o dokument.md` |
-| Markdown → EPUB | `pandoc dokument.md -o dokument.epub` |
+| Markdown → DOCX | `pandoc <vstup.md> -o <výstup.docx>` |
+| DOCX → Markdown a obrázky | `pandoc <vstup.docx> -t gfm --extract-media=<složka-obrázků> -o <výstup.md>` |
+| Markdown → HTML | `pandoc <vstup.md> --standalone -o <výstup.html>` |
+| HTML → Markdown | `pandoc <vstup.html> -t gfm -o <výstup.md>` |
+| Markdown → EPUB | `pandoc <vstup.md> -o <výstup.epub>` |
+
+Například `pandoc navod.md -o navod.docx` převede existující Markdown ve tvé pracovní složce do dokumentu Word; jména souborů změň podle potřeby a zvol výstup, který můžeš vytvořit nebo přepsat.
 
 `-o` určuje výstupní soubor, `-t gfm` zvolí GitHub Flavored Markdown a `--extract-media=media` uloží obrázky do složky `media`.
 

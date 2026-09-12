@@ -1,3 +1,7 @@
+---
+description: "Diagnostika chyb SDK, balíčků, zařízení a sestavení."
+---
+
 # Řešení problémů ve Flutteru
 
 Nejprve rozliš problém prostředí, rozložení a statické analýzy; každá oblast má jiné ověření.

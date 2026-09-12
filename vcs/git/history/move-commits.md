@@ -1,47 +1,74 @@
-# Git – přesun commitů do jiné větve
+---
+description: "Přesun práce na novou větev a přenos vybraných commitů pomocí cherry-pick."
+---
 
-Větev je ukazatel na commit; vytvořením nové větve lze hotovou práci zachovat a původní ukazatel přesunout zpět.
+# Git – práce na nesprávné větvi
 
-## Před použitím
+Změnu můžeš uchovat na nové větvi nebo zkopírovat jednotlivé commity do existující větve.
 
-Následující postup mění pouze **místní, dosud nepublikovanou** historii.
+Nejdříve rozliš, zda máš jen necommitované soubory, místní commity, nebo už sdílenou historii.
 
-Ověř `git status --short` a pokračuj s čistým pracovním stromem; počet `3` je příklad tří posledních lineárních commitů.
+## Zatím jen rozpracované soubory
 
-## Přesun do nové větve
+Pokud aktuální commit představuje správný základ nové práce:
 
-Z aktuální chybně použité větve spusť:
+```bash
+git switch -c feature/presunuta-prace
+git status
+```
+
+Nová větev vznikne z aktuálního HEAD a necommitované úpravy zůstanou v pracovním stromu.
+
+Pokud potřebuješ jiný základ, nejprve použij [stash nebo worktree](../stash-worktree.md).
+
+## Místní commity patří na novou větev
+
+Příklad pro PowerShell i Bash předpokládá čistý strom a **jeden poslední neodeslaný commit** na špatné větvi.
 
 ```bash
 git log --oneline -5
 git branch feature/presunuta-prace
-git reset --keep HEAD~3
+git reset --keep HEAD~1
 git switch feature/presunuta-prace
+git log --graph --oneline --all -8
 ```
 
-Nová větev nejprve uchová všechny commity; reset posune původní větev a `--keep` odmítne změny, které by přepsaly dotčené místní úpravy. [Reference git reset](https://git-scm.com/docs/git-reset)
+Nejprve vytvoříš ukazatel na hotovou práci, teprve pak původní větev vrátíš k rodiči a přepneš na uchovanou práci.
 
-Přes `git log --oneline --all --graph -10` ověř, že práce zůstala v nové větvi.
+Pro více commitů použij skutečný ověřený výchozí commit místo `HEAD~1`; nepočítej naslepo řádky logu obsahující merge.
 
-## Přenos do existující větve
+Původní větev se vrací, ale nová větev stále obsahuje všechny přesunuté změny.
 
-Pro jednotlivý commit použij `cherry-pick`, aby se nepřenesla celá zdrojová větev:
+## Jeden commit patří do existující větve
+
+Obecný postup:
+
+```text
+git switch <cílová-větev>
+git cherry-pick <commit>
+```
+
+`cherry-pick` zkopíruje změnu zvoleného commitu na aktuální větev jako nový commit; ze zdrojové větve ji neodstraní.
+
+Konkrétní příklad pro poslední commit zdrojové větve:
 
 ```bash
-# Ve zdrojové větvi uchovej poslední commit pojmenovaným ukazatelem.
 git branch backup/zdroj
-git switch cilova-vetev
+git switch main
 git cherry-pick backup/zdroj
+git show --stat HEAD
 ```
 
-`cilova-vetev` nahraď existující cílovou větví; ukázka kopíruje pouze poslední commit, ne všechny commity ze zálohy.
+`backup/zdroj` musíš vytvořit ještě ve zdrojové větvi; příklad přenese právě její poslední commit.
 
-Při více commitech vybírej jejich skutečná ID od nejstaršího; merge commity vyžadují samostatné posouzení. [Reference cherry-pick](https://git-scm.com/docs/git-cherry-pick)
+Při více změnách vybírej ID v pořadí od nejstaršího, aby byly zachované závislosti.
 
-Při konfliktu oprav soubory, připrav je pomocí `git add` a pokračuj přes `git cherry-pick --continue`; zrušení provede `git cherry-pick --abort`.
+## Konflikt a kontrola
 
-## Ověření a úklid
+Při konfliktu oprav soubory, připrav je přes `git add` a použij `git cherry-pick --continue`; návrat zajistí `git cherry-pick --abort`.
 
-Spusť testy cílové větve a prohlédni rozdíl, než odstraníš commit ze zdrojové větve.
+Otestuj cílovou větev, než cokoli odstraníš ze zdroje.
 
-U již publikované práce preferuj [revert](delete-commits.md); reset sdílené větve by změnil historii ostatním.
+U již publikované chybně umístěné práce použij ve zdroji [revert](delete-commits.md), pokud tam změna opravdu nemá zůstat; přenos a odstranění jsou dvě samostatná rozhodnutí.
+
+Zdroje: [git cherry-pick](https://git-scm.com/docs/git-cherry-pick), [git reset](https://git-scm.com/docs/git-reset).

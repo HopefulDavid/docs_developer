@@ -1,30 +1,67 @@
-# Git – smazání vzdálené větve
+---
+description: "Úklid dokončené místní i vzdálené větve a možnost obnovení."
+---
 
-Smazáním větve odstraníš její pojmenovaný ukazatel na serveru; místní kopie a jiné větve tím nezmizí.
+# Git – odstranění dokončené větve
 
-## Před použitím
+Odstraněním větve zrušíš její jméno; místní a vzdálená větev jsou samostatné reference.
 
-Ověř dokončené review, začlenění práce a přesný název cíle; příklad maže krátkodobou větev `feature/hotovo`.
+Nejdříve ověř, že její práce je začleněná nebo ji už nepotřebuješ.
 
-Pokud si potřebuješ uchovat její aktuální commit, po `git fetch origin` vytvoř zálohu `git branch backup/hotovo origin/feature/hotovo`.
+## Zkontroluj výsledek
 
-## Praktický postup
+Příklad používá dokončenou `feature/hledani` a cílovou `main`; před přepnutím musí být pracovní strom čistý.
 
 ```bash
+git switch main
 git fetch origin
-git log --oneline origin/main..origin/feature/hotovo
-git push origin --delete feature/hotovo
-git fetch origin --prune
+git log --oneline main..feature/hledani
 ```
 
-Výpis před smazáním ukazuje commity nedosažitelné z `origin/main`; při squash merge může obsahovat položky i po začlenění výsledného kódu, proto ověř také PR a změny.
+Výpis ukazuje commity pracovní větve, které nejsou dosažitelné z místní `main`; po serverovém PR nejprve [aktualizuj main](../synchronization.md).
 
-`--delete` odstraní vzdálenou větev a `--prune` uklidí místní odkazy na již neexistující vzdálené větve. [Git push](https://git-scm.com/docs/git-push), [git fetch](https://git-scm.com/docs/git-fetch)
+Při squash nebo rebase merge mohou mít začleněné změny jiná ID, proto navíc ověř skutečný obsah a stav PR.
 
-## Ověření a obnova
+## Místní větev
 
-`git ls-remote --heads origin feature/hotovo` už nemá vrátit tuto větev.
+```bash
+git branch -d feature/hledani
+```
 
-Existující zálohu lze znovu publikovat pomocí `git push origin backup/hotovo:refs/heads/feature/hotovo`, pokud jméno zůstalo volné a máš oprávnění.
+`-d` používá kontrolu začlenění do upstreamu, případně do HEAD, pokud upstream není nastavený; není náhradou vlastní kontroly zamýšlené cílové větve.
 
-Obnova není zaručena bez dostupného commitu; ochrana serveru může smazání i opětovné vytvoření odmítnout.
+Když kontrola selže po ověřeném squash, můžeš si nejprve ponechat záložní jméno a vědomě odstranit původní:
+
+```bash
+git branch backup/hledani feature/hledani
+git branch -D feature/hledani
+```
+
+`-D` kontrolu sloučení obchází, proto ho nepoužívej jen kvůli odstranění chybového hlášení.
+
+## Vzdálená větev
+
+```bash
+git push origin --delete feature/hledani
+git fetch origin --prune
+git ls-remote --heads origin feature/hledani
+```
+
+První příkaz odstraní jméno na serveru a druhý uklidí místní odkazy na zaniklé vzdálené větve.
+
+Poslední příkaz už nemá vypsat odstraněnou větev; místní `backup/hledani` zůstane zachovaná.
+
+## Obnova
+
+Pokud máš záložní větev a název je volný:
+
+```bash
+git branch feature/hledani backup/hledani
+git push -u origin feature/hledani
+```
+
+Obnovíš místní i vzdálené pojmenování původního commitu.
+
+Bez zálohy může pomoci místní [reflog](../recovery.md), jeho dostupnost ale není trvalá.
+
+Zdroje: [git branch](https://git-scm.com/docs/git-branch), [git push](https://git-scm.com/docs/git-push).

@@ -1,3 +1,7 @@
+---
+description: "Rozložení oken, datové vazby, styly a opakované použití vzhledu."
+---
+
 # WPF – Rozložení, datové vazby a styly
 
 WPF je UI framework pro desktopové aplikace Windows; vzhled popisuje XAML a chování obvykle C#.

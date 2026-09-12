@@ -1,10 +1,16 @@
-# SSH ve Windows
+---
+description: "Instalace klienta, volba Windows OpenSSH nebo Git SSH a společný agent."
+---
 
-> Zjištění implementace, instalace a nastavení společného klienta pro terminál i Git.
+# SSH ve Windows – klient a agent
+
+Windows OpenSSH, Git for Windows a WSL mohou mít každý svůj SSH program i vlastní prostředí.
+
+Pro bezproblémové používání zvol klienta vědomě a načítej klíče do agenta, se kterým tento klient skutečně komunikuje.
 
 ## Které SSH se spouští
 
-V **PowerShellu** spusť:
+V běžném PowerShellu:
 
 ```powershell
 Get-Command ssh -All | Select-Object CommandType, Name, Source, Definition
@@ -12,178 +18,116 @@ where.exe ssh
 ssh -V
 ```
 
-První výsledek `Get-Command` určuje volbu PowerShellu; cesta odliší instalace, verze potvrdí spuštěný program.
+`Get-Command` ukáže i případný alias nebo funkci, `where.exe` cesty nalezených programů a `-V` verzi skutečně spuštěného klienta.
 
-| Typická cesta | Implementace |
-| --- | --- |
+| Typická cesta | Prostředí |
+|---|---|
 | `C:\Windows\System32\OpenSSH\ssh.exe` | Windows OpenSSH |
-| `C:\Program Files\Git\usr\bin\ssh.exe` | OpenSSH přibalené ke Git for Windows |
-| `/usr/bin/ssh` ve WSL | Samostatná linuxová instalace |
-| `plink.exe` | Klient PuTTY / Plink |
+| `C:\Program Files\Git\usr\bin\ssh.exe` | OpenSSH dodané s Git for Windows |
+| `/usr/bin/ssh` ve WSL | Linuxová instalace ve zvolené distribuci |
 
-Windows i Git dodávají OpenSSH, ale každý má vlastní programy a aktualizace; samotné číslo verze proto nestačí.
+Stejná cesta `/usr/bin/ssh` v Git Bash označuje jeho vlastní prostředí, nikoli automaticky WSL.
 
-<details>
-<summary>CMD, Git Bash a podrobnosti vyhledávání</summary>
-
-V **CMD** použij `where.exe ssh` a `ssh -V`.
-
-V **Git Bash, Bashi na Linuxu nebo macOS**:
-
-```bash
-type -a ssh
-command -v ssh
-ssh -V
-```
-
-V Git Bash odpovídá `/usr/bin/ssh` instalaci Gitu; Windows cestu zobrazí `cygpath -w /usr/bin/ssh.exe`.
-
-`where.exe` hledá i v aktuálním adresáři, zatímco PowerShell odtud program bez `./` nespouští, pokud adresář není v `PATH`.
-
-Alias nebo funkce může překrýt program i po změně `PATH`; původ ukáže `Get-Command` podle [pravidel PowerShellu](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_command_precedence).
-
-</details>
+V Bashi pomůže `type -a ssh` a `command -v ssh`; v CMD použij `where.exe ssh`.
 
 ## Instalace Windows OpenSSH
 
-Otevři **64bitový Windows PowerShell jako správce** a zjisti stav klienta:
+Pro odchozí přihlášení nebo Git potřebuješ **Client**, nikoli službu SSH Server.
+
+Pokud klient chybí, otevři 64bitový Windows PowerShell jako správce:
 
 ```powershell
 Get-WindowsCapability -Online -Name 'OpenSSH.Client*'
-```
-
-Pokud je stav `NotPresent`, nainstaluj jej:
-
-```powershell
 Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
 ```
 
-Znovu ověř stav `Installed`, při `RestartNeeded: True` restartuj počítač a v novém běžném PowerShellu ověř verzi:
+Instalační příkaz použij jen při stavu `NotPresent`; vyžaduje dostupný zdroj funkcí Windows.
+
+Při požadovaném restartu restartuj počítač a v novém běžném terminálu ověř:
 
 ```powershell
 & "$env:WINDIR\System32\OpenSSH\ssh.exe" -V
 ```
 
-Pro připojování a Git stačí **OpenSSH Client**; server `sshd` potřebuješ pouze pro příchozí přihlášení na tento počítač.
-
-<details>
-<summary>Instalace přes Nastavení nebo řešení chyby instalace</summary>
-
-Ve Startu vyhledej **Volitelné funkce → Přidat / Zobrazit funkce → OpenSSH Client** a dokonči instalaci.
-
-Postup pro vestavěnou součást Windows 11, Windows 10 od sestavení 1809 a Windows Server od verze 2019 popisuje [Microsoft](https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse), včetně samostatné instalace serveru.
-
-Při problému se zdrojem balíčků nebo firemními zásadami použij [diagnostiku instalace](https://learn.microsoft.com/en-us/troubleshoot/windows-server/system-management-components/cant-install-openssh-features).
-
-</details>
+Alternativně vyhledej ve Windows **Volitelné funkce → OpenSSH Client**.
 
 ## Jeden klient pro Windows a Git
 
-Následující postup volí **Windows OpenSSH**; terminál vybírá program přes `PATH`, Git může mít vlastní nastavení.
+### Varianta A: Windows OpenSSH
 
-### 1. Nastav primární klient v terminálu
-
-Pro aktuální **PowerShell**:
-
-```powershell
-$env:Path = "$env:WINDIR\System32\OpenSSH;$env:Path"
-Get-Command ssh, ssh-add, ssh-keygen | Select-Object Name, Source
-```
-
-Pro trvalou volbu otevři **Proměnné prostředí → Path**, poznamenej si původní pořadí a umísti `%WINDIR%\System32\OpenSSH` před adresáře s jiným SSH.
-
-Rozhoduje výsledné pořadí systémového a uživatelského `Path`; úprava systémové části vyžaduje správce a samotné přesunutí uživatelské položky nemusí stačit.
-
-Ostatní položky zachovej, úplně restartuj Windows Terminal i IDE a zopakuj kontrolu z úvodu.
-
-<details>
-<summary>Stejný primární klient také v Git Bash</summary>
-
-```bash
-export PATH="/c/Windows/System32/OpenSSH:$PATH"
-hash -r
-type -a ssh
-```
-
-Pro trvalé nastavení přidej řádek `export` do `~/.bashrc` a ověř, že jej přihlašovací profil `~/.bash_profile` načítá.
-
-Cestu uprav, pokud jsou Windows nainstalované jinde.
-
-</details>
-
-### 2. Nastav klienta pro Git
-
-V repozitáři nejprve zobraz původní nastavení a případná přepsání:
+Nejprve si poznamenej současné nastavení:
 
 ```powershell
 git config --show-origin --show-scope --get-all core.sshCommand
 Get-ChildItem Env:GIT_SSH*
 ```
 
-Poznamenej si původní hodnoty a nastav klienta pro svůj účet; cestu případně uprav podle instalace:
+Pro aktuální terminál můžeš Windows klienta upřednostnit:
 
 ```powershell
+$env:Path = "$env:WINDIR\System32\OpenSSH;$env:Path"
 git config --global core.sshCommand C:/Windows/System32/OpenSSH/ssh.exe
 ```
 
-Pokud už existuje `GIT_SSH_COMMAND` nebo lokální `core.sshCommand`, mají před globální volbou přednost; uprav je podle [diagnostiky Gitu](git.md#které-ssh-používá-git).
+První změna platí pouze pro toto okno, druhá nastaví klienta Gitu pro uživatelský účet; cestu uprav, pokud jsou Windows jinde.
 
-Pro výjimku v jediném repozitáři použij `--local` místo `--global`.
+Pro trvalou volbu terminálu uprav pořadí položek Path v nastavení prostředí a zachovej ostatní adresáře.
 
-### 3. Zapni společného agenta, pokud jej chceš používat
+Potom úplně restartuj terminál i IDE; prioritu místních výjimek a proměnných vysvětluje [Git přes SSH](git.md#které-ssh-používá-git).
 
-Agent zpřístupní [SSH klíč](keys.md#vytvoření-klíče) bez opakovaného zadávání heslové fráze.
+### Varianta B: OpenSSH z Git for Windows
 
-V **PowerShellu jako správce** si poznamenej původní stav služby a zapni ji:
+Pokud používáš převážně Git Bash, lze ponechat klienta této instalace a načítat klíče do jeho agenta.
+
+Následující příkaz je kvůli vnořeným uvozovkám určený pro **Git Bash**:
+
+```bash
+git config --global core.sshCommand '"C:/Program Files/Git/usr/bin/ssh.exe"'
+```
+
+Cestu ověř podle své instalace a postup pro agenta vyber v [SSH klíčích](keys.md#agent-v-git-bash-linuxu-a-macos).
+
+Obě varianty jsou alternativy; není potřeba je střídavě nastavovat.
+
+## Agent Windows OpenSSH
+
+Agent zpřístupní odemčený klíč klientovi bez opakovaného zadávání heslové fráze.
+
+V PowerShellu **jako správce**:
 
 ```powershell
 Get-Service ssh-agent | Select-Object Name, Status, StartType
-Set-Service -Name ssh-agent -StartupType Automatic
+Set-Service ssh-agent -StartupType Automatic
 Start-Service ssh-agent
 ```
 
-V **běžném PowerShellu pod svým účtem** načti soukromý klíč a ověř jeho otisk:
+První příkaz zachytí původní stav, další zapnou automatické spouštění a současný běh služby.
+
+V běžném PowerShellu **pod vlastním účtem** načti svůj existující klíč:
 
 ```powershell
 & "$env:WINDIR\System32\OpenSSH\ssh-add.exe" "$env:USERPROFILE\.ssh\id_ed25519"
 & "$env:WINDIR\System32\OpenSSH\ssh-add.exe" -l
 ```
 
-Windows agent a agent Git Bash standardně nesdílejí načtené klíče, proto používej klienta i `ssh-add` ze stejné instalace podle [GitHub Docs](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent?platform=windows#adding-your-ssh-key-to-the-ssh-agent).
+Poslední příkaz musí vypsat jeho otisk; heslovou frázi zadáváš jen při odemčení.
 
-### 4. Ověř skutečné připojení
+Název souboru přizpůsob svému klíči a Windows službu nezaměňuj s agentem spuštěným uvnitř Git Bash nebo WSL.
 
-Pro GitHub dokonči [registraci klíče a test spojení](git.md#připojení-ke-githubu), potom v repozitáři s SSH adresou spusť:
+## Ověření a návrat
 
-```powershell
-git ls-remote origin HEAD
-```
+Ověř běžné `ssh <alias>` a u Git projektu s SSH adresou `git ls-remote origin HEAD`.
 
-Úspěch vrátí kód `0` v `$LASTEXITCODE`; prázdný repozitář nemusí vypsat žádný řádek.
+Pokud terminál funguje a Git nikoli, zjisti [skutečně spuštěný klient](git.md#ověření-spuštěného-příkazu).
 
-Pokud Git používá jiný klient nebo spojení selže pouze v IDE, pokračuj [trasováním příkazu](git.md#ověření-spuštěného-příkazu).
+Pro návrat obnov původní konfigurační hodnoty, Path a případně původní režim služby; pouze pokud předtím globální volba neexistovala, odstraň ji přes `git config --global --unset-all core.sshCommand`.
 
-## Alternativa: primární OpenSSH z Git for Windows
+## Kdy potřebuješ SSH Server
 
-Pokud pracuješ převážně v Git Bash, můžeš zvolit jeho klienta; tento příkaz se kvůli uvozovkám spouští v **Git Bash**:
+Server instaluj jen tehdy, pokud se chceš vzdáleně přihlašovat **na tento počítač**.
 
-```bash
-git config --global core.sshCommand '"C:/Program Files/Git/usr/bin/ssh.exe"'
-```
+Vyžaduje samostatné nastavení služby `sshd`, firewallu a uživatelského přístupu; u administrátorských účtů Windows má soubor veřejných klíčů odlišné výchozí umístění i požadavky na oprávnění.
 
-Uprav cestu podle instalace, v `PATH` terminálu upřednostni odpovídající adresář a pro klíče použij [agenta Git Bash](keys.md#agent-v-git-bash-linuxu-a-macos).
+Postup správy serveru vlastní [Microsoft OpenSSH](https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse); [správa klíčů](https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_keymanagement) popisuje také `administrators_authorized_keys`.
 
-<details>
-<summary>Návrat k původní volbě</summary>
-
-Obnov původní hodnotu `core.sshCommand`; pokud před změnou žádná nebyla, odstraň přidanou globální volbu:
-
-```text
-git config --global --unset-all core.sshCommand
-```
-
-Lokální změnu vrať pomocí `--local` a obnov také původní `Path`, případný profil Git Bash a režim služby `ssh-agent`.
-
-Po restartu terminálu znovu ověř volbu klienta; odstranění jedné hodnoty pouze uvolní místo dalšímu nastavení podle [priority Gitu](git.md#které-ssh-používá-git).
-
-</details>
+Zdroje: [instalace OpenSSH](https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse), [Windows SSH agent pro Git](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent?platform=windows#adding-your-ssh-key-to-the-ssh-agent).

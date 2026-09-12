@@ -1,69 +1,108 @@
-# npm – instalace, aktualizace a obnova balíčků
+---
+description: "Správa závislostí Node.js a přenos ověřené cache pro npm ci bez registru."
+---
 
-npm spravuje JavaScriptové balíčky a projektové příkazy; `package.json` popisuje požadavky a `package-lock.json` zaznamenává konkrétní vyřešené závislosti.
+# npm – balíčky a offline obnova
 
-## Před použitím
+npm spravuje závislosti Node.js a spouští skripty projektu z `package.json`.
 
-Nainstaluj Node.js ve verzi požadované projektem a ověř `node --version` i `npm --version`.
+`package-lock.json` zaznamenává konkrétní vyřešené verze, které má `npm ci` znovu nainstalovat.
 
-Projektové příkazy spouštěj ve složce s `package.json`.
+## Běžné příkazy
 
-## Běžná práce
+Spouštěj je v kořeni projektu se správnou verzí Node.js a npm.
 
-| Úkol | Příkaz | Co změní |
-|---|---|---|
-| Obnova z existujícího lockfilu | `npm ci` | Znovu vytvoří `node_modules`, při nesouladu manifestu a lockfilu selže |
-| Přidání knihovny | `npm install knihovna` | Zapíše závislost a aktualizuje lockfile |
-| Přidání vývojového nástroje | `npm install --save-dev nastroj` | Zapíše nástroj mezi `devDependencies` |
-| Dostupné aktualizace | `npm outdated` | Vypíše stav bez instalace |
-| Aktualizace v povolených rozsazích | `npm update` | Obnoví verze podle rozsahů manifestu |
-| Odebrání | `npm uninstall knihovna` | Odebere deklaraci a upraví lockfile |
-| Dostupné projektové příkazy | `npm run` | Vypíše sekci `scripts` |
+| Syntaxe | Účinek |
+|---|---|
+| `npm ci` | Odstraní stávající `node_modules` a obnoví přesný lockfile |
+| `npm install <balíček>[@<verze>]` | Přidá knihovnu a aktualizuje manifest i lockfile |
+| `npm install --save-dev <balíček>[@<verze>]` | Přidá vývojovou závislost |
+| `npm uninstall <balíček>` | Odebere deklaraci i odpovídající instalaci |
+| `npm outdated` | Ukáže dostupné novější verze |
+| `npm update` | Aktualizuje závislosti v povolených rozsazích manifestu |
+| `npm run [<skript>]` | Vypíše skripty nebo spustí zvolený projektový příkaz |
 
-`knihovna` a `nastroj` jsou místa pro skutečné názvy z registru; do terminálu je nekopíruj bez nahrazení.
+Například `npm install --save-dev --save-exact typescript` uloží aktuálně zvolenou konkrétní verzi překladače TypeScript bez rozsahového prefixu.
 
-`npm ci` nemění lockfile, ale může spouštět instalační skripty závislostí; `--ignore-scripts` použij jen tehdy, pokud projekt bez nich funguje. [Npm ci](https://docs.npmjs.com/cli/v11/commands/npm-ci/), [npm update](https://docs.npmjs.com/cli/v11/commands/npm-update/)
+Před přijetím aktualizace prohlédni oba změněné soubory a spusť testy; `@latest` neznamená automaticky kompatibilní verzi.
 
-## Praktický příklad: changelog pomocí git-cliff
+## Offline záloha a obnova
 
-V samostatném Git projektu s `package.json` spusť:
+Cache npm je pracovní mezipaměť, nikoli garantovaný trvalý archiv; pro konkrétní zálohu ji proto naplň a **ověř obnovou do čistého projektu**.
+
+Příklady fungují v PowerShellu i Bashi a používají npm 11; verzi správce zachovej i na cíli.
+
+### 1. Připrav obsah s internetem
+
+V čisté kopii projektu s platným lockfile:
 
 ```bash
-npm install --save-dev --save-exact git-cliff
-npm exec -- git-cliff --init
-npm exec -- git-cliff --config cliff.toml --output CHANGELOG.md
+node --version
+npm --version
+npm ci --cache ../zaloha-npm/npm-cache --no-audit --no-fund
+npm cache verify --cache ../zaloha-npm/npm-cache
 ```
 
-První příkaz uloží přesnou aktuálně vybranou verzi, druhý vytvoří konfiguraci a třetí zpracuje dostupnou Git historii do Markdownu.
+`ci` nově nainstaluje celý projekt a pro stahování používá samostatnou cache v sousední složce zálohy.
 
-Ve stávajícím projektu s `cliff.toml` inicializaci neopakuj; místo toho uprav jeho skupiny, šablonu a filtrování.
+`--no-audit` a `--no-fund` vynechají doprovodný audit a výpis financování; bezpečnostní audit závislostí udělej online zvlášť.
 
-Možnosti popisuje [Git-cliff: použití](https://git-cliff.org/docs/category/usage/).
+Pokud projekt pro vytvoření lockfilu vyžadoval například `legacy-peer-deps` nebo jiné instalační nastavení, uchovej stejné projektové `.npmrc` bez tokenů.
 
-Verzuj manifest, lockfile a konfiguraci společně; při generování úplné historie potřebuješ úplný klon.
+### 2. Přenes celou složku
 
-## Globální nástroje a jejich obnova
+Zálohu sestav takto:
 
-```powershell
-npm list -g --depth=0 --json | Set-Content -Encoding utf8 npm-global.json
-npm root -g
-npm config get prefix
+```text
+zaloha-npm/
+  projekt/          zdroje, package.json, package-lock.json, .npmrc, workspaces
+  npm-cache/        celá naplněná cache
+  verze.txt         Node.js, npm, OS a architektura
 ```
 
-JSON uchovává strukturované názvy i verze, včetně názvů se scope jako `@scope/balicek`; druhé dva příkazy ukazují skutečné instalační cesty.
+`projekt` je kopie skutečných zdrojů bez `node_modules`; přidej i používané lokální `file:` závislosti a všechny workspaces v odpovídajících relativních cestách.
 
-Na novém počítači vyber z inventáře potřebné nástroje a nainstaluj je pomocí `npm install -g NAZEV@VERZE`, kde obě hodnoty nahradíš záznamem.
+Před kopírováním cache ukonči instalace a nic v ní ručně nevybírej ani nečisti.
 
-## Offline instalace a omezení
+Pokud chceš zálohovat již používanou globální cache, její cestu ukáže `npm config get cache`; lze přenést celý tento adresář, ale úplnost pro projekt musíš prokázat stejnou offline zkouškou.
 
-Samotný `npm pack` nevytváří úplnou offline zálohu všech tranzitivních závislostí.
+### 3. Obnov na cílovém počítači
 
-Pro opakovatelnou obnovu uchovej projekt a lockfile; v řízeném prostředí připrav registry mirror nebo naplněnou cache a vyzkoušej `npm ci --offline` bez sítě na stejné platformě.
+Nainstaluj stejnou verzi Node.js a npm, otevři terminál v `zaloha-npm/projekt` a spusť:
 
-Chybějící položka cache tento příkaz zastaví; nativní balíčky a instalační skripty mohou potřebovat další platformní prostředky. [Npm cache](https://docs.npmjs.com/cli/v11/commands/npm-cache/), [npm pack](https://docs.npmjs.com/cli/v11/commands/npm-pack/)
+```bash
+npm ci --offline --cache ../npm-cache --no-audit --no-fund
+npm ls --all
+```
 
-## Ověření aktualizace
+`--offline` zabrání npm stahovat chybějící obsah z registru; chybějící položka způsobí chybu místo tichého doplnění ze sítě.
 
-Před přechodem na hlavní verzi prostuduj migrační pokyny nástroje; `@latest` není záruka kompatibility s ostatními balíčky.
+`npm ls` zkontroluje strom závislostí; poté spusť skutečný build, testy a aplikaci podle jejích skriptů.
 
-Zkontroluj diff obou manifestů a spusť build i testy definované projektem.
+## Co může potřebovat samostatnou zálohu
+
+- Nativní moduly a volitelné balíčky závisejí na OS, CPU a verzi Node.js.
+- Instalační skripty mohou stahovat prohlížeče, binární nástroje nebo jiná data mimo cache npm.
+- Git závislosti a lokální soubory vyžadují i dostupný zdroj, který lockfile označuje.
+- `npm pack` vytvoří archiv zvoleného balíčku, ale automaticky nearchivuje celý strom jeho závislostí.
+
+`--ignore-scripts` může být užitečné pro kontrolovaný test instalace, ale není plnohodnotnou obnovou, pokud aplikace výstup těchto skriptů potřebuje.
+
+## Globální nástroje
+
+Inventář zjistíš příkazem `npm list -g --depth=0` a umístění přes `npm root -g` a `npm config get prefix`.
+
+Globální složka a spouštěče nejsou obecně přenosná instalace; pro důležitý nástroj preferuj projektovou závislost s lockfile a výše ověřenou cache.
+
+Globální opětovná instalace má syntaxi `npm install -g <balíček>@<verze> --offline --cache <zálohovaná-cache>` a musíš ji samostatně vyzkoušet s úplnou cache tohoto nástroje.
+
+## Časté problémy
+
+| Chyba | Náprava při přípravě zálohy |
+|---|---|
+| `ENOTCACHED` | Naplň cache znovu online pro přesný projekt, platformu a lockfile |
+| Manifest a lockfile nesouhlasí | Vědomě sjednoť přes `npm install`, zkontroluj diff a vytvoř novou zálohu |
+| Instalační skript chce internet | Uchovej jeho externí data nebo použij dokumentované offline nastavení daného balíčku |
+| Jiná platforma | Připrav a otestuj samostatnou zálohu pro tuto kombinaci OS, CPU a Node.js |
+
+Zdroje: [npm ci](https://docs.npmjs.com/cli/v11/commands/npm-ci/), [npm cache](https://docs.npmjs.com/cli/v11/commands/npm-cache/), [konfigurace offline](https://docs.npmjs.com/cli/v11/using-npm/config/#offline).

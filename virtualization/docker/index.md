@@ -1,3 +1,7 @@
+---
+description: "Spouštění kontejnerů, Compose a zálohování obrazů i aplikačních dat."
+---
+
 # Docker – kontejnery, příkazy a data
 
 Docker spouští aplikace v izolovaných kontejnerech vytvořených z image; kontejner sdílí jádro hostitelského systému, zatímco jeho soubory a procesy mají vlastní prostředí.
@@ -61,19 +65,19 @@ Tag `stable-alpine` je pohyblivý; pro reprodukovatelné nasazení zvol ověřen
 
 ## Příkazy a restartování
 
-| Úkol | Příkaz | Význam |
+| Úkol | Syntaxe | Význam |
 |---|---|---|
 | Všechny kontejnery | `docker container ls --all` | Zahrne i zastavené |
 | Místní image | `docker image ls` | Šablony dostupné na enginu |
-| Restartovací pravidlo | `docker update --restart=unless-stopped docs-web` | Obnovuje běh s výjimkou ručně zastaveného kontejneru |
-| Vypnutí restartování | `docker update --restart=no docs-web` | Vyžaduje ruční spuštění |
-| Export image | `docker save --output web-image.tar nginx:stable-alpine` | Uchová image, nikoli data volumes |
-| Import image | `docker load --input web-image.tar` | Načte uloženou image |
+| Restartovací pravidlo | `docker update --restart=unless-stopped <kontejner>` | Obnovuje běh s výjimkou ručně zastaveného kontejneru |
+| Vypnutí restartování | `docker update --restart=no <kontejner>` | Vyžaduje ruční spuštění |
+| Export image | `docker image save --output <archiv.tar> <image>...` | Uchová image, nikoli data volumes |
+| Import image | `docker image load --input <archiv.tar>` | Načte uloženou image |
 | Compose konfigurace | `docker compose config --quiet` | Ověří a sloučí konfigurační vstupy |
 | Spuštění služeb | `docker compose up --detach` | Vytvoří nebo aktualizuje služby definované Compose |
 | Ukončení projektu | `docker compose down` | Odstraní jeho kontejnery a běžné projektové sítě |
 
-Příkazy pro `docs-web` vyžadují existující kontejner z příkladu; restartovací politika `yes` neexistuje. [Restartovací pravidla](https://docs.docker.com/engine/containers/start-containers-automatically/)
+Hodnotu `<kontejner>` nahraď názvem z výpisu všech kontejnerů; restartovací politika `yes` neexistuje. [Restartovací pravidla](https://docs.docker.com/engine/containers/start-containers-automatically/)
 
 ## Dockerfile pro konzolovou aplikaci .NET 10
 
@@ -117,13 +121,83 @@ Pokud už máš publikovaný výstup, stačí runtime fáze s `COPY ./publish .`
 
 ## Volumes a zálohy
 
-Změny ve zapisovatelné vrstvě kontejneru zmizí při jeho odstranění; data potřebná mezi vytvořeními ukládej do volume nebo bind mountu.
+Záloha Dockeru zůstává v této oblasti, protože chrání image a provozní data aplikací; [záloha balíčků](../../programming/packages/offline.md) slouží k obnovení vývojových závislostí.
 
-Pojmenované volumes běžné `docker compose down` zachová; přidáním `--volumes` bys je odstranil.
+| Co chceš obnovit | Co zálohovat |
+|---|---|
+| Image pro spuštění bez registru | Archiv přes `docker image save` |
+| Data aplikace v pojmenovaném volume | Konzistentní obsah volume nebo aplikační export |
+| Data v bind mountu | Skutečnou zdrojovou složku hostitele |
+| Sestavu služeb | Compose soubory, konfiguraci, potřebná tajemství a data |
+| Celé místní prostředí Docker Desktop WSL 2 | Vypnutý datový disk podle [postupu níže](#přenos-dat-docker-desktopu-na-jiný-počítač) |
 
-[Záloha a zkušební obnova volume](busybox.md) vysvětluje rozdíl mezi archivem, kontrolou přenosu a skutečnou obnovou.
+Image neobsahuje obsah připojených volumes a `docker export` není náhradou zálohy image s jeho historií a konfigurací.
 
-Pro aktualizace databázových služeb pokračuj [bezpečným upgradem](safe-stateful-upgrade.md).
+Pojmenované volumes běžné `docker compose down` zachová; `--volumes` je naopak odstraní.
+
+### Záloha a načtení image
+
+Příklad pro existující image na aktuálním enginu:
+
+```bash
+docker image inspect nginx:stable-alpine
+docker image save --output nginx-image.tar nginx:stable-alpine
+```
+
+První příkaz ověří přesný obraz a druhý uloží jeho místní podobu do nového archivu.
+
+Přenes archiv a na kompatibilním cílovém enginu:
+
+```bash
+docker image load --input nginx-image.tar
+docker image inspect nginx:stable-alpine
+```
+
+Porovnej ID obrazu a skutečně ho spusť; manifest pro jinou architekturu není automaticky součástí každé lokální image.
+
+### Záloha a obnova volume
+
+Příklad je pro **PowerShell, místní linuxový engine** a existující vlastní volume `moje-data`.
+
+Nejdříve zastav všechny zapisující aplikace; u databáze preferuj její dokumentovaný konzistentní export, protože kopie živých souborů může být neobnovitelná.
+
+```powershell
+docker volume inspect moje-data
+New-Item -ItemType Directory -Path ./docker-zaloha -ErrorAction Stop
+$backupDirectory = (Resolve-Path ./docker-zaloha).Path
+docker run --rm --mount source=moje-data,target=/data,readonly --mount "type=bind,source=$backupDirectory,target=/backup" alpine:3.22 tar -czf /backup/data.tgz -C /data .
+```
+
+`moje-data` nahraď ověřeným názvem svého volume a použij novou složku pro zálohu.
+
+Pomocný kontejner čte zdroj pouze pro čtení a zapisuje gzip archiv do hostitelské složky; `-C /data .` zahrne i skryté položky.
+
+První použití potřebuje dostupnou pomocnou image, kterou můžeš pro offline obnovu rovněž uložit přes `docker image save`.
+
+Po úspěšném návratovém kódu ověř obsah archivu:
+
+```powershell
+docker run --rm --mount "type=bind,source=$backupDirectory,target=/backup,readonly" alpine:3.22 tar -tzf /backup/data.tgz
+Get-FileHash -LiteralPath ./docker-zaloha/data.tgz -Algorithm SHA256
+```
+
+Hash uchovej pro kontrolu přenosu; výpis ani shodný hash nenahrazují zkušební obnovu aplikace.
+
+Na cíli nejprve vypiš `docker volume ls` a zvol **nové dosud nepoužité** jméno `obnovena-data`:
+
+```powershell
+docker volume create obnovena-data
+$backupDirectory = (Resolve-Path ./docker-zaloha).Path
+docker run --rm --mount source=obnovena-data,target=/data --mount "type=bind,source=$backupDirectory,target=/backup,readonly" alpine:3.22 tar -xzf /backup/data.tgz -C /data
+```
+
+`volume create` by při již existujícím názvu pouze vrátil staré volume, proto jeho nepoužitost ověř předem.
+
+Připoj obnovené volume do oddělené testovací instance se stejnou verzí aplikace a ověř konkrétní data i oprávnění souborů.
+
+Pro první obnovu nespouštěj současně upgrade aplikace; původní data ponech do ověření.
+
+Zdroje: [Docker volumes a záloha](https://docs.docker.com/engine/storage/volumes/#back-up-restore-or-migrate-data-volumes), [image save](https://docs.docker.com/reference/cli/docker/image/save/), [image load](https://docs.docker.com/reference/cli/docker/image/load/).
 
 ### Export schématu PostgreSQL z kontejneru
 

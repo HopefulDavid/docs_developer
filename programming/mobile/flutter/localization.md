@@ -1,3 +1,7 @@
+---
+description: "Překlady pomocí ARB souborů a generování lokalizačních tříd."
+---
+
 # Flutter – lokalizace
 
 Vestavěný generátor `gen-l10n` vytváří typované překlady ze souborů ARB; tento postup nepotřebuje balíček `intl_utils`.

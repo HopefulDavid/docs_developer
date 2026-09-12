@@ -1,3 +1,7 @@
+---
+description: "První program, moduly, spuštění, testy a sestavení aplikace."
+---
+
 # Go – první program a příkazy
 
 Go překládá zdrojové soubory do programu; modul v `go.mod` určuje jeho identitu a závislosti.
@@ -42,7 +46,7 @@ První příkaz program **přeloží a spustí**, druhý uloží binární výst
 
 ## Přehled příkazů
 
-| Příkaz | Význam |
+| Syntaxe | Význam |
 |---|---|
 | `go fmt ./...` | Naformátuje balíčky v aktuálním modulu |
 | `go test ./...` | Spustí jejich testy |
@@ -50,8 +54,12 @@ První příkaz program **přeloží a spustí**, druhý uloží binární výst
 | `go mod tidy` | Sjednotí závislosti s použitými importy; může změnit `go.mod` a `go.sum` |
 | `go mod vendor` | Připraví kopie závislostí ve složce `vendor` |
 | `go env GOBIN GOPATH` | Ukáže cesty používané pro instalované nástroje |
-| `go doc fmt.Println` | Zobrazí dokumentaci funkce |
-| `go help build` | Zobrazí nápovědu sestavení |
+| `go doc <balíček>.<symbol>` | Zobrazí dokumentaci vybraného symbolu |
+| `go help <příkaz>` | Zobrazí nápovědu konkrétního příkazu |
+
+Například `go doc fmt.Println` vysvětlí funkci `Println` z balíčku `fmt` a `go help build` volby sestavení.
+
+`./...` v příkazech výše je skutečný vzor Go pro aktuální adresář a jeho podadresáře, ne zástupná výpustka z dokumentační syntaxe.
 
 Tečka znamená aktuální balíček, `./...` zahrne i podbalíčky. [Reference příkazu go](https://pkg.go.dev/cmd/go)
 

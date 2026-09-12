@@ -6,8 +6,8 @@ Infrastruktura, automatizace a provozní postupy pro vývojářské prostředí.
 
 ## Přehled stránek
 
-### Infrastructure as Code
+### Infrastruktura jako kód
 
 | Stránka | Popis |
 | --- | --- |
-| [OpenTofu](opentofu.md) | OpenTofu spravuje požadovaný stav zdrojů popsaný v konfiguračních souborech HCL. |
+| [OpenTofu](opentofu.md) | Popis infrastruktury v souborech, kontrola změn a ochrana stavového souboru. |

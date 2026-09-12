@@ -1,3 +1,7 @@
+---
+description: "Čtení a zápis textu, CSV a volba správného kódování."
+---
+
 # .NET – Textové soubory, CSV a kódování
 
 Při čtení dat určete kódování, oddělovač a očekávané sloupce podle smluveného formátu souboru.

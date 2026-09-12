@@ -1,3 +1,7 @@
+---
+description: "Smlouvy rozhraní a rozdíl mezi mělkou a hlubokou kopií objektu."
+---
+
 # C# – rozhraní a kopírování objektů
 
 Rozhraní popisuje kontrakt implementace; význam jednotlivých metod musí být jednoznačný pro volajícího.

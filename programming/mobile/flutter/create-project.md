@@ -1,3 +1,7 @@
+---
+description: "Založení aplikace, spuštění na zařízení a vytvoření sestavení."
+---
+
 # Flutter – vytvoření projektu
 
 Nový projekt vytvoř ve složce pro své zdrojové kódy; předem ověř [instalaci SDK](setup-and-configuration.md).

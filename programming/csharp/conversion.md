@@ -1,3 +1,7 @@
+---
+description: "Vlastní převody mezi typy a volba implicitního či explicitního operátoru."
+---
+
 # C# – implicitní a explicitní převody
 
 Vlastní konverzní operátor určuje, jak se hodnota uživatelského typu převádí na jiný typ.

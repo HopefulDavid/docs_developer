@@ -1,3 +1,7 @@
+---
+description: "Předávání parametrů, návratové hodnoty a asynchronní volání."
+---
+
 # C# – parametry, metody a asynchronní práce
 
 Podpis metody určuje předávané hodnoty a výsledek; způsob předání je důležitý zejména u měnitelných objektů.

@@ -1,3 +1,7 @@
+---
+description: "Vysvětlení záměru kódu a tvorba užitečných dokumentačních komentářů."
+---
+
 # Komentáře v kódu
 
 Komentář vysvětluje záměr, omezení nebo důvod rozhodnutí, který není z kódu zřejmý.

@@ -1,3 +1,7 @@
+---
+description: "Výběr platformy podle zařízení, distribuce, výkonu a zkušeností."
+---
+
 # Výběr platformy podle požadavků projektu
 
 Platformu vybírej podle toho, kde má aplikace fungovat, jaká zařízení potřebuje ovládat a kdo ji bude dlouhodobě udržovat.

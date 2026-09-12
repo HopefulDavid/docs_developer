@@ -1,3 +1,7 @@
+---
+description: "Čtení XML a převod mezi dokumentem a objekty aplikace."
+---
+
 # .NET – XML a serializace
 
 XML ukládá strukturovaná data do elementů a atributů; `XmlSerializer` mapuje tuto strukturu na veřejné členy objektů.

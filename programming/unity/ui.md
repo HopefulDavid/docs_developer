@@ -1,3 +1,7 @@
+---
+description: "Nastavení Canvasu a omezení klikání podle průhlednosti tlačítka."
+---
+
 # Unity UI: Canvas a tvar klikacího tlačítka
 
 Unity UI neboli uGUI používá GameObjecty s komponentami, například Canvas, Image a Button.

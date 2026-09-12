@@ -1,3 +1,7 @@
+---
+description: "Vytvoření a podepisování aktualizačního feedu aplikace pro Sparkle."
+---
+
 # Appcast: bezpečné vydání aktualizace přes Sparkle
 
 Appcast je RSS feed s rozšířeními, podle kterého updater Sparkle pro macOS vyhledá vhodnou aktualizaci a její archiv.

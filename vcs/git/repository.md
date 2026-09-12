@@ -1,67 +1,94 @@
-# Git – vytvoření a klonování úložiště
+---
+description: "Založení projektu, klonování existující historie a první ověřený commit."
+---
 
-Git ukládá historii projektu do commitů; pracovní kopie navíc obsahuje soubory, které upravuješ v editoru.
+# Git – založení a klonování repozitáře
 
-## Jak úložiště funguje
+Nový repozitář vytvoříš pomocí `init`; existující projekt s historií získáš přes `clone`.
 
-Pracovní strom obsahuje rozpracované soubory, index připravuje obsah dalšího commitu a adresář `.git` uchovává historii a konfiguraci.
-
-Serverové **bare úložiště** nemá pracovní strom a slouží například jako cíl pro push.
-
-Přípona `.git` u názvu serverové složky je konvence, nikoli podmínka funkčnosti. [Reference git init](https://git-scm.com/docs/git-init)
+Tyto možnosti jsou alternativy: do naklonovaného projektu už znovu `init` nepotřebuješ.
 
 ## Před použitím
 
-Nainstaluj Git a ověř `git --version`; před prvním commitem nastav [jméno a e-mail](configuration.md).
+Nainstaluj [Git](https://git-scm.com/downloads), ověř `git --version` a nastav [jméno a e-mail autora](configuration.md).
 
-Následující příkazy fungují v PowerShellu i Bashi a používají nové složky, jejichž názvy můžeš změnit.
+Příklady fungují v PowerShellu i Bashi a používají nové složky; do cizího existujícího repozitáře nevkládej další vnořený `.git`.
 
-## Praktické použití
+## Nový projekt
 
-### Nový projekt
+V rodičovské složce projektů spusť:
 
 ```bash
-# Vytvoří pracovní kopii s počáteční větví main.
 git init -b main moje-aplikace
 cd moje-aplikace
 git status
 ```
 
-V editoru vytvoř `README.md` s popisem projektu, potom ulož právě tento soubor do historie:
+`init` založí složku `moje-aplikace` a historii uvnitř `.git`; `-b main` zvolí název počáteční větve.
+
+V editoru vytvoř `README.md` s názvem a účelem projektu a přidej vhodný [`.gitignore`](history/update-gitignore.md) ještě před prvním hromadným přidáváním souborů.
 
 ```bash
-git add README.md
+git add -- README.md .gitignore
 git diff --cached
-git commit -m "docs: přidává popis projektu"
+git commit -m "docs: zakládá projekt"
+git log --oneline -1
 ```
 
-`add` připraví obsah, `diff --cached` umožní jeho kontrolu a `commit` vytvoří místní záznam; na server se zatím nic neposílá.
+První příkaz předpokládá oba vytvořené soubory; pokud `.gitignore` nepotřebuješ a nevytvořil jsi ho, vynech jeho název.
 
-### Existující projekt
+Zkontrolovaný obsah indexu se uloží jako první místní commit a poslední příkaz zobrazí jeho ID.
 
-Zkopíruj klonovací adresu ze svého hostingu a nahraď jí ukázkovou URL:
+### Už mám soubory bez Gitu
+
+V kořeni této složky použij `git init -b main` bez názvu dalšího adresáře.
+
+Pak nejprve projdi `git status --short` a přidávej jen požadované soubory; konfigurace s hesly, velké exporty a výstup buildů obvykle do historie nepatří.
+
+## Existující projekt na serveru
+
+Obecná syntaxe:
+
+```text
+git clone <URL-nebo-místní-cesta> [<cílová-složka>]
+```
+
+Adresu zkopíruj z tlačítka Clone nebo Code na svém hostingu; vyber HTTPS nebo SSH podle [způsobu přihlášení](server.md).
+
+Tento veřejný příklad lze vyzkoušet bez účtu:
 
 ```bash
-git clone https://git.example.com/tym/aplikace.git moje-kopie
-cd moje-kopie
+git clone https://github.com/octocat/Hello-World.git git-ukazka
+cd git-ukazka
+git status
 git remote -v
 ```
 
-`clone` stáhne historii a vytvoří pracovní kopii; vzdálený zdroj standardně pojmenuje `origin`. [Reference git clone](https://git-scm.com/docs/git-clone)
+`git-ukazka` je volitelný místní název složky; `clone` stáhne historii a vytvoří remote `origin` podle zdrojové adresy.
 
-### Lokální serverové úložiště
+Výchozí větev přebírá ze serveru, proto nepředpokládej automaticky `main`; tento ukázkový repozitář používá `master`.
+
+Stažený ZIP obsahuje soubory, ale nezachovává repozitářovou historii jako `clone`.
+
+## Ověření a další krok
 
 ```bash
-# Spusť ve složce pro testovací repozitáře, mimo předchozí projekt.
-git init --bare centralni.git
-git clone centralni.git pracovni-kopie
+git rev-parse --show-toplevel
+git branch --show-current
+git status --short --branch
 ```
 
-Varování o prázdném úložišti je v tomto případě očekávané.
+Uvidíš kořen správného projektu, aktuální větev a stav změn.
 
-Do `centralni.git` nevkládej zdrojové soubory ručně; pracuj v `pracovni-kopie` a změny přenášej přes Git.
+Nový lokální projekt připoj k [serveru](server.md); naklonovaný projekt je připravený pro [každodenní práci](in-practice.md).
 
-## Související témata
+### Časté problémy
 
-- [Připojení Git serveru](server.md).
-- [Vytvoření vzdálené větve](branches/create-remote-branch.md).
+| Hlášení | Co ověřit |
+|---|---|
+| `not a git repository` | Terminál není uvnitř pracovní kopie; přejdi do její složky |
+| Cílová složka není prázdná | Pro clone zvol novou složku a existující obsah nejprve prohlédni |
+| `Author identity unknown` | Nastav identitu před commitem |
+| `repository not found` | Zkontroluj přesnou URL a přístup svého účtu k privátnímu projektu |
+
+Podrobnosti: [git init](https://git-scm.com/docs/git-init), [git clone](https://git-scm.com/docs/git-clone).

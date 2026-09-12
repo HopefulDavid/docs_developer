@@ -10,15 +10,16 @@ Síťové technologie, přístupy, certifikáty a bezpečné propojení prostře
 
 | Stránka | Popis |
 | --- | --- |
-| [SSH – příkazy a připojení](ssh.md) | Přihlášení na server, kopírování souborů a nastavení připojení. |
-| [TLS certifikáty](certificates.md) | Důvěryhodný certifikát pro lokální vývoj pomocí mkcert. |
-| [Náhodná tajemství](secrets.md) | Generování náhodných hodnot pro aplikační tajemství pomocí OpenSSL. |
-| [VPN](vpn.md) | VPN vytváří spojení mezi zařízením a vzdálenou sítí nebo bránou; běžné VPN protokoly tento tunel šifrují. |
+| [Základy a diagnostika sítě](basics.md) | IP adresa, DNS, port, localhost a postupné ověření nedostupné služby. |
+| [SSH – příkazy a připojení](ssh.md) | Přihlášení na server, přenos souborů, konfigurace spojení a lokální tunel. |
+| [TLS certifikáty](certificates.md) | Důvěryhodné místní HTTPS, výběr certifikátu a zapojení do vývojového serveru. |
+| [Náhodná tajemství](secrets.md) | Vytvoření náhodného aplikačního tajemství, délka, kódování a bezpečné uložení. |
+| [VPN](vpn.md) | Připojení do soukromé sítě, rozdělení provozu a diagnostika DNS, tras a portů. |
 
 ### SSH – příkazy a připojení
 
 | Stránka | Popis |
 | --- | --- |
-| [Windows a volba klienta](ssh/windows.md) | Zjištění implementace, instalace a nastavení společného klienta pro terminál i Git. |
-| [SSH klíče](ssh/keys.md) | Vytvoření klíče, heslová fráze a odemykání pomocí agenta. |
-| [Git přes SSH](ssh/git.md) | Připojení ke GitHubu, SSH adresy repozitářů a diagnostika klienta používaného Gitem. |
+| [Windows a volba klienta](ssh/windows.md) | Instalace klienta, volba Windows OpenSSH nebo Git SSH a společný agent. |
+| [SSH klíče](ssh/keys.md) | Vytvoření a ochrana SSH klíče, registrace veřejné části a používání agenta. |
+| [Git přes SSH](ssh/git.md) | Přihlášení GitHub klíčem, dva účty na jednom počítači a diagnostika klienta. |

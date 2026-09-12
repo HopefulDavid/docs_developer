@@ -10,13 +10,14 @@ Databázové systémy, dotazy a nástroje pro přístup k datům.
 
 | Stránka | Popis |
 | --- | --- |
-| [Microsoft SQL](mssql.md) | Dotazy spouštěj v kontextu zamýšlené databáze; přístup k metadatům a diagnostickým pohledům závisí na oprávnění účtu. |
-| [MongoDB](mongodb.md) | MongoDB ukládá dokumenty BSON do kolekcí; následující příklady jsou pro interaktivní shell `mongosh`. |
-| [PostgreSQL](postgresql.md) | PostgreSQL je relační databázový systém; pro práci lze použít konzoli psql nebo grafický klient pgAdmin. |
+| [Microsoft SQL](mssql.md) | SQL dotazy, vazby tabulek a diagnostika databáze. |
+| [MongoDB](mongodb.md) | Výběr databáze a čtení či změny dokumentů v mongosh. |
+| [PostgreSQL](postgresql.md) | Instalace, připojení přes psql a orientace v databázových objektech. |
 
 ### Přístup k datům
 
 | Stránka | Popis |
 | --- | --- |
-| [Entity Framework](entity-framework.md) | EF Core mapuje model .NET na databázi, překládá podporované LINQ dotazy a sleduje změny entit. |
-| [Dapper](dapper.md) | Dapper mapuje výsledky SQL na objekty .NET; dotazy i databázové schéma spravuje aplikace. |
+| [SQL skripty přes sqlcmd](sqlcmd.md) | Spuštění seřazených SQL skriptů dávkou, zastavení při chybě a kontrola výsledku. |
+| [Entity Framework](entity-framework.md) | Mapování .NET objektů na databázi a řízení změn pomocí migrací. |
+| [Dapper](dapper.md) | Parametrizované SQL a mapování výsledků na .NET objekty. |

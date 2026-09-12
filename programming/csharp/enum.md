@@ -1,3 +1,7 @@
+---
+description: "Pojmenované hodnoty, číselná reprezentace a kombinace příznaků."
+---
+
 # C# – výčtové typy enum
 
 Výčtový typ dává číselným hodnotám jména; sám neomezuje vstup pouze na pojmenované členy.

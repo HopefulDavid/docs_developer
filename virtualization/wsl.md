@@ -1,3 +1,7 @@
+---
+description: "Instalace Linuxu ve Windows, správa distribucí a jejich přenos."
+---
+
 # WSL – Linux ve Windows
 
 WSL umožňuje používat linuxové nástroje z Windows; WSL 2 spouští skutečné linuxové jádro v řízeném lehkém virtuálním stroji.
@@ -46,15 +50,19 @@ Příkazy vypíšou uživatele, pracovní adresář a jádro; `exit` se vrátí 
 
 ## Co lze upravit
 
-| Příkaz ve Windows | Význam |
+| Syntaxe ve Windows | Význam |
 |---|---|
 | `wsl --list --online` | Dostupné distribuce pro instalaci |
-| `wsl --install -d Debian` | Instalace jiné distribuce; název vyber z výpisu |
-| `wsl --set-default Ubuntu` | Zvolí výchozí existující distribuci |
-| `wsl --set-default-version 2` | Nastaví verzi pro další instalace, nemigruje existující distribuce |
+| `wsl --install -d <distribuce>` | Instaluje distribuci; název vyber z online výpisu |
+| `wsl --set-default <distribuce>` | Zvolí výchozí již nainstalovanou distribuci |
+| `wsl --set-default-version {1\|2}` | Nastaví verzi pro další instalace, nemigruje existující distribuce |
 | `wsl --update` | Aktualizuje WSL |
-| `wsl --terminate Ubuntu` | Zastaví jednu pojmenovanou distribuci |
+| `wsl --terminate <distribuce>` | Zastaví jednu již nainstalovanou distribuci |
 | `wsl --shutdown` | Zastaví všechny distribuce i virtuální stroj WSL 2 |
+
+`<distribuce>` nahraď přesným názvem a u volby `{1|2}` zadej jedno číslo bez závorek, například `wsl --set-default-version 2`.
+
+Například `wsl --install -d Debian` instaluje Debian, zatímco `wsl --terminate Debian` tuto existující distribuci zastaví.
 
 Před zastavením ulož práci; názvy `Ubuntu` a `Debian` nahraď skutečným názvem své distribuce. [Reference WSL](https://learn.microsoft.com/en-us/windows/wsl/basic-commands)
 

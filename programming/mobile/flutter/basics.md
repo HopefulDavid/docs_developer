@@ -1,3 +1,7 @@
+---
+description: "Widgety, rozložení a základní práce se stavem aplikace."
+---
+
 # Flutter – základy
 
 Rozhraní Flutteru tvoří strom widgetů; každý widget popisuje část vzhledu nebo chování aplikace.

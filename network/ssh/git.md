@@ -1,60 +1,86 @@
+---
+description: "Přihlášení GitHub klíčem, dva účty na jednom počítači a diagnostika klienta."
+---
+
 # Git přes SSH
 
-> Připojení ke GitHubu, SSH adresy repozitářů a diagnostika klienta používaného Gitem.
+Git používá SSH jako přenos a ověření přístupu ke vzdálenému repozitáři.
+
+Klíč rozhoduje o účtu na serveru, zatímco `git config user.name` a `user.email` pouze určují autora commitů.
 
 ## Připojení ke GitHubu
 
-1. [Vytvoř SSH klíč a zkopíruj jeho veřejnou část](keys.md#vytvoření-klíče), pokud jej ještě nemáš.
+1. [Vytvoř klíč](keys.md#vytvoření-klíče) nebo vyber svůj existující.
 2. V GitHubu otevři **Settings → SSH and GPG keys → New SSH key**.
-3. Vyplň název zařízení do **Title**, zvol **Authentication Key**, vlož veřejný klíč a ulož jej.
-4. Otestuj připojení:
+3. Zvol **Authentication Key**, pojmenuj zařízení a vlož celý obsah veřejného `.pub` souboru.
+4. Ulož a otestuj spojení:
 
-```text
+```bash
 ssh -T git@github.com
 ```
 
-Při prvním spojení porovnej zobrazený otisk s [otisky SSH serverů GitHubu](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints), teprve potom potvrď důvěru.
+Při prvním připojení porovnej otisk s [oficiálními otisky GitHubu](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints).
 
-Zpráva `Hi USERNAME! You've successfully authenticated, but GitHub does not provide shell access.` znamená úspěch; tento test přesto vrací kód `1`, protože GitHub neposkytuje shell podle [oficiálního návodu](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection).
+Úspěšná odpověď obsahuje tvůj účet a informaci, že ověření prošlo, ale GitHub neposkytuje shell; tento test vrací kód `1` i při úspěšném přihlášení.
 
-Vždy se připojuj jako `git`; konkrétní GitHub účet určuje přijatý klíč.
+Připojovací účet je `git` a konkrétní GitHub identitu určí přijatý klíč.
 
-## SSH adresa repozitáře
+## Připoj konkrétní repozitář
 
-Nový repozitář naklonuj pomocí SSH adresy z tlačítka **Code → SSH**:
+Zkopíruj SSH adresu z **Code → SSH**:
 
 ```text
-git clone git@github.com:uzivatel/repozitar.git
+git clone <SSH-URL> [<cílová-složka>]
 ```
 
-U existujícího repozitáře nejprve zkontroluj adresy a potom uprav zamýšlený remote:
+Pro existující místní projekt místo klonování:
 
 ```text
 git remote -v
-git remote set-url origin git@github.com:uzivatel/repozitar.git
-git remote -v
+git remote set-url origin <SSH-URL>
+git ls-remote origin HEAD
 ```
 
-Adresa `https://` používá HTTPS, takže ji výběr SSH klienta neovlivní.
+Nahraď `<SSH-URL>` skutečnou adresou; například tvar `git@github.com:<vlastník>/<repozitář>.git` obsahuje dvě hodnoty z tvého projektu.
 
-<details>
-<summary>Jiný server nebo oddělené adresy pro fetch a push</summary>
+Příkaz `ls-remote` ověřuje čtení daného repozitáře, zatímco samotný `ssh -T` prokazuje pouze přihlášení k účtu.
 
-Pro jiný server převezmi SSH adresu od jeho správce, například `ssh://git@server.example.com:2222/tym/repozitar.git`.
+Adresa začínající `https://` nepoužívá SSH; pokud má remote samostatnou push URL, zkontroluj také `git remote get-url --push --all origin` a podle záměru ji změň pomocí `git remote set-url --push origin <SSH-URL>`.
 
-Pokud `git remote -v` ukazuje samostatnou adresu pro push, uprav i ji, pokud ji chceš převést na SSH:
+## Dva účty na jednom počítači
 
-```text
-git remote set-url --push origin git@github.com:uzivatel/repozitar.git
+Vytvoř samostatný klíč pro každou identitu a registruj veřejné části do příslušných účtů.
+
+V `~/.ssh/config`, ve Windows zpravidla `%USERPROFILE%\.ssh\config`:
+
+```sshconfig
+Host github-osobni
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_osobni
+    IdentitiesOnly yes
+
+Host github-prace
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_prace
+    IdentitiesOnly yes
 ```
 
-Při více adresách zkontroluj `git remote get-url --all origin` a `git remote get-url --push --all origin` a měň každou zamýšlenou adresu jednotlivě podle [git remote](https://git-scm.com/docs/git-remote).
+`Host` vytváří dvě místní zkratky stejného serveru, které se liší vybraným soukromým klíčem.
 
-</details>
+```bash
+ssh -T github-osobni
+ssh -T github-prace
+```
+
+Odpovědi mají identifikovat příslušné dva účty.
+
+V remote URL pak použij alias, například syntaxi `git@github-prace:<organizace>/<repozitář>.git`, a projektovou identitu autora nastav samostatně přes `git config --local user.email "<pracovní-e-mail>"`.
 
 ## Které SSH používá Git
 
-Spusť **uvnitř repozitáře v PowerShellu**, případně v terminálu IDE, kde problém nastává:
+V PowerShellu uvnitř problémového repozitáře:
 
 ```powershell
 git config --show-origin --show-scope --get-all core.sshCommand
@@ -62,83 +88,47 @@ git config --show-origin --show-scope --get-all ssh.variant
 Get-ChildItem Env:GIT_SSH*
 ```
 
-Prázdný výpis konfigurace s kódem `1` znamená nenastavenou položku; v Git Bash zobrazíš proměnné pomocí `env | grep '^GIT_SSH'`.
+Prázdná konfigurace s návratovým kódem `1` může jen znamenat, že klíč není nastavený.
 
-Git vybírá klienta v tomto pořadí:
+| Pořadí | Zdroj volby klienta |
+|---|---|
+| 1 | Proměnná `GIT_SSH_COMMAND` |
+| 2 | Účinné `core.sshCommand` |
+| 3 | Proměnná `GIT_SSH` |
+| 4 | Příkaz `ssh` nalezený v prostředí procesu Gitu |
 
-| Priorita | Zdroj |
-| --- | --- |
-| 1 | `GIT_SSH_COMMAND` – příkaz v prostředí procesu |
-| 2 | `core.sshCommand` – účinná konfigurace Gitu |
-| 3 | `GIT_SSH` – cesta k programu bez dalších argumentů |
-| 4 | `ssh` nalezené v prostředí procesu Gitu |
+Místní konfigurace může přebít globální a dočasné `git -c` může přebít obě; `ssh.variant` a `GIT_SSH_VARIANT` určují podobu argumentů klienta, nikoli jeho cestu.
 
-U `core.sshCommand` má přednost `git -c` před worktree, lokální, globální a systémovou konfigurací.
-
-`ssh.variant` a `GIT_SSH_VARIANT` určují podobu argumentů pro OpenSSH či Plink, nikoli cestu ke klientovi.
-
-**Změnu preference** pro terminál i Git proveď podle [nastavení Windows OpenSSH nebo klienta z Git for Windows](windows.md#jeden-klient-pro-windows-a-git).
-
-<details>
-<summary>Odstranění nechtěného přepsání</summary>
-
-Pokud lokální hodnota pouze přebíjí požadovanou globální volbu, poznamenej si ji a odstraň ji v daném repozitáři:
-
-```text
-git config --local --unset-all core.sshCommand
-```
-
-Původ proměnných zkontroluj v PowerShellu:
-
-```powershell
-foreach ($name in 'GIT_SSH_COMMAND', 'GIT_SSH', 'GIT_SSH_VARIANT') {
-    [pscustomobject]@{
-        Name = $name
-        Process = [Environment]::GetEnvironmentVariable($name, 'Process')
-        User = [Environment]::GetEnvironmentVariable($name, 'User')
-        Machine = [Environment]::GetEnvironmentVariable($name, 'Machine')
-    }
-}
-```
-
-Nepotřebné `GIT_SSH_COMMAND` z aktuálního procesu a uživatelského prostředí odstraníš takto:
-
-```powershell
-Remove-Item Env:GIT_SSH_COMMAND -ErrorAction SilentlyContinue
-[Environment]::SetEnvironmentVariable('GIT_SSH_COMMAND', $null, 'User')
-```
-
-Uprav jen nalezené přepsání; může jej znovu nastavovat profil shellu nebo IDE, systémové proměnné vyžadují správce.
-
-Při přechodu z Plinku odstraň také jeho nepotřebné `ssh.variant` v nalezeném rozsahu a `GIT_SSH_VARIANT`; standardní `ssh.exe` Git rozpozná automaticky.
-
-</details>
+Společný Windows nebo Git klient nastav podle [návodu pro Windows](windows.md#jeden-klient-pro-windows-a-git).
 
 ### Ověření spuštěného příkazu
 
-Pro repozitář s SSH remote spusť čtecí test v **PowerShellu**:
+Čtecí test pro SSH remote v PowerShellu:
 
 ```powershell
 $previousGitTrace = $env:GIT_TRACE
 try {
-    $env:GIT_TRACE = '1'
+    $env:GIT_TRACE = "1"
     git ls-remote origin HEAD
 } finally {
     $env:GIT_TRACE = $previousGitTrace
 }
 ```
 
-Ve výpisu `run_command` hledej SSH příkaz; pokud je uvedené jen `ssh`, dohledání cesty stále závisí na prostředí Gitu a jednoznačnou volbu zajistí úplná cesta v `core.sshCommand`.
+Výpis ukáže spouštěný příkaz a `finally` obnoví původní nastavení trasování.
 
-Po změně prostředí úplně restartuj IDE, které může používat jiný Git nebo vlastní SSH klient.
+Pokud výpis obsahuje pouze `ssh` bez celé cesty, její dohledání stále závisí na prostředí Gitu.
 
-## Když připojení nefunguje
+Nechtěné přepsání oprav pouze v nalezeném rozsahu; například `git config --local --unset-all core.sshCommand` odstraní místní volbu a nechá se uplatnit nižší nastavení.
+
+## Diagnostika
 
 | Projev | Co zkontrolovat |
-| --- | --- |
-| Git chce přihlášení k HTTPS | SSH adresu v `git remote -v`. |
-| `ssh -T` funguje, ale Git selhává | [Skutečně spuštěný příkaz](#ověření-spuštěného-příkazu) a přístup účtu ke konkrétnímu repozitáři. |
-| `Permission denied (publickey)` | Nabízený klíč pomocí `ssh -vvv -T git@github.com` a veřejný klíč v účtu. |
-| Heslová fráze se zadává opakovaně | [Agenta odpovídajícího klientovi](keys.md#odemykání-přes-agenta). |
+|---|---|
+| Přihlášení funguje, repozitář ne | Oprávnění daného účtu, přesnou URL, případně organizací vyžadované SSO |
+| Nabízí se jiný účet | Alias v URL, `IdentityFile` a `IdentitiesOnly` |
+| `Permission denied (publickey)` | Výpis `ssh -vvv -T <alias>`, registrovaný veřejný klíč a agenta |
+| Terminál funguje, IDE ne | Git a SSH cestu IDE, zděděné prostředí a restart po změně konfigurace |
+| Opakované zadávání fráze | Správného [agenta](keys.md#odemykání-přes-agenta) |
 
-Výběr klienta dokládají [proměnné Gitu](https://git-scm.com/docs/git#Documentation/git.txt-GITSSH), [core.sshCommand](https://git-scm.com/docs/git-config#Documentation/git-config.txt-coresshCommand) a [implementace Gitu](https://github.com/git/git/blob/v2.55.0/connect.c).
+Zdroje: [test GitHub SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection), [proměnné Gitu](https://git-scm.com/docs/git#Documentation/git.txt-GITSSH), [core.sshCommand](https://git-scm.com/docs/git-config#Documentation/git-config.txt-coresshCommand).

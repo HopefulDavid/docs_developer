@@ -1,3 +1,7 @@
+---
+description: "Řešení opakovaných návrhových problémů na malých příkladech."
+---
+
 # Návrhové vzory
 
 Návrhový vzor je pojmenované řešení opakujícího se problému se vztahy mezi objekty nebo částmi programu.

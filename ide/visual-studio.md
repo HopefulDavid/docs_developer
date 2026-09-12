@@ -1,3 +1,7 @@
+---
+description: "Příprava instalačního archivu a instalace IDE bez internetu."
+---
+
 # Visual Studio – offline instalace
 
 Offline instalace používá předem stažený layout obsahující instalátor a vybrané komponenty.

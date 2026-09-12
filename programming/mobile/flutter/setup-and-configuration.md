@@ -1,3 +1,7 @@
+---
+description: "Příprava SDK a ověření nástrojů pro cílové platformy."
+---
+
 # Flutter – instalace a nastavení
 
 Flutter používá Dart pro vývoj aplikací pro mobilní zařízení, web a desktop; potřebné nástroje se liší podle cílové platformy.

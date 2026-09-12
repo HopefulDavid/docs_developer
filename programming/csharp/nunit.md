@@ -1,3 +1,7 @@
+---
+description: "Příprava testovacího projektu, testovací případy a spuštění testů."
+---
+
 # .NET – NUnit
 
 NUnit umožňuje spouštět automatizované testy a zapisovat očekávání pomocí `Assert.That`.

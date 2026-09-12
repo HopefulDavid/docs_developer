@@ -1,3 +1,7 @@
+---
+description: "Organizace vývoje, pojmenování a rozhodování o struktuře kódu."
+---
+
 # Vývojové metodiky a konvence
 
 Metodika pomáhá týmu organizovat práci; konvence sjednocuje podobu kódu a prototyp ověřuje nápad před větší investicí.

@@ -1,3 +1,7 @@
+---
+description: "Spuštění testů s pokrytím a čtení výsledného reportu."
+---
+
 # Flutter – pokrytí kódu testy
 
 Pokrytí ukazuje, které části kódu se při testech vykonaly; vysoké procento samo neprokazuje správná očekávání testů.

@@ -1,91 +1,94 @@
-# Windows CMD: dávkové skripty a správa disků
+---
+description: "Základní orientace v CMD, soubory, proměnné a dávkové skripty."
+---
 
-CMD je příkazový interpret Windows, ve kterém příkazy pracují převážně s textem a návratovými kódy.
+# CMD – příkazový řádek Windows
 
-Soubor `.cmd` nebo `.bat` umožňuje opakovat stejnou posloupnost; jeho syntaxe se liší od [PowerShellu](powershell.md).
+CMD spouští příkazy Windows a dávkové soubory `.cmd` nebo `.bat`.
 
-## Před použitím
+Jeho syntaxe používá například `%PROMENNA%` a není zaměnitelná s PowerShellem ani Bashem.
 
-Otevři **Příkazový řádek** nebo profil CMD ve Windows Terminalu a ověř aktuální složku.
+## Začni ve správné složce
+
+Otevři profil **Příkazový řádek** ve Windows Terminalu nebo spusť `cmd.exe`.
 
 ```cmd
-rem cd bez parametru vypise aktualni slozku; dir zobrazi jeji obsah.
+rem Vypise aktualni slozku a jeji obsah.
 cd
 dir
-rem /d zmeni soucasne slozku i jednotku; cestu nahrad svym projektem.
+rem /d prejde i na jinou jednotku; cestu nahrad vlastnim projektem.
 cd /d "C:\projekty\moje-aplikace"
 ```
 
-Cesty s mezerami piš do uvozovek a oprávnění správce používej jen pro operace, které je vyžadují.
+Při neexistující cestě oprav název; další příkazy jinak zůstanou v předchozí složce.
 
-## Spouštění SQL skriptů ze složky
+## Nejčastější operace
 
-Následující dávka je pro ručně zkontrolované skripty v testovací databázi a nainstalovaný `sqlcmd` s přihlášením Windows.
+| Syntaxe CMD | Účinek |
+|---|---|
+| `dir [<cesta>]` | Vypíše obsah složky |
+| `dir /a /x [<cesta>]` | Zahrne skryté položky a existující krátké názvy |
+| `cd /d "<cesta>"` | Změní složku i jednotku |
+| `mkdir "<složka>"` | Vytvoří složku |
+| `copy "<zdroj>" "<cíl>"` | Zkopíruje soubor; zkontroluj případné přepsání cíle |
+| `type "<soubor>"` | Vypíše textový obsah |
+| `where.exe <program>` | Vyhledá program v cestách |
+| `<příkaz> /?` | U většiny vestavěných příkazů zobrazí nápovědu |
 
-Soubory pojmenuj například `001-schema.sql` a `002-data.sql`, aby řazení podle názvu odpovídalo požadovanému pořadí.
+Mazání souboru a celé složky se liší; použij [cílený postup](cannot-delete-item.md#cmd-rozlišení-souboru-a-složky).
 
-Ulož `run-sql.cmd` vedle nich a uprav dvě konfigurační hodnoty.
+## Proměnné a přesměrování
+
+```cmd
+set "PROJECT_NAME=moje-aplikace"
+echo %PROJECT_NAME%
+dir /b > soubory.txt
+```
+
+`set` nastaví proměnnou pro aktuální proces, `echo` ji vypíše a `>` přepíše výstupní soubor seznamem názvů.
+
+`>>` by připojovalo na konec a `|` předává textový výstup dalšímu příkazu.
+
+Použij nový výstupní soubor, protože přesměrování může bez dalšího dotazu nahradit jeho obsah.
+
+## Malý opakovatelný skript
+
+Do nové složky ulož `seznam.cmd`:
 
 ```cmd
 @echo off
 setlocal
-rem Zmen pouze na server a testovaci databazi, ktere chces upravit.
-set "SQL_SERVER=localhost"
-set "SQL_DATABASE=MojeTestovaciDatabaze"
-rem Prepnuti do slozky skriptu zabrani pouziti souboru z jineho adresare.
+rem Zacni ve slozce tohoto skriptu; pri neuspechu okamzite skonci.
 pushd "%~dp0" || exit /b 1
-if not exist "*.sql" (
-  echo Ve slozce nejsou SQL skripty.
-  popd
-  exit /b 1
-)
-for /f "delims=" %%G in ('dir /b /a-d /on *.sql') do (
-  echo Spoustim %%G
-  sqlcmd -S "%SQL_SERVER%" -d "%SQL_DATABASE%" -E -b -i "%%G"
-  if errorlevel 1 (
-    echo Chyba: dalsi skripty se nespusti.
-    popd
-    exit /b 1
-  )
-)
+dir /b
 popd
 exit /b 0
 ```
 
-`-S` určuje server, `-d` databázi, `-E` použije identitu Windows, `-i` načte soubor a `-b` způsobí chybový návratový kód při odpovídající SQL chybě.
+Spusť `seznam.cmd` v CMD; skript vypíše obsah své složky, vrátí původní pracovní adresář a oznámí úspěch kódem `0`.
 
-`%%G` patří do dávkového souboru; při ručním zápisu smyčky přímo do CMD se používá `%G`.
+`@echo off` skryje vypisování samotných příkazů, `setlocal` omezí změny prostředí a `%~dp0` označuje disk a cestu dávky.
 
-Chyba zastaví další skripty, ale nevrátí dříve potvrzené změny; transakce a opakovatelnost musí řešit samotné SQL nebo migrační nástroj.
+Nenulový návrat signalizuje chybu podle použitého programu; v dávce `if errorlevel 1` kontroluje hodnotu alespoň jedna.
 
-Po spuštění ověř očekávané tabulky a data, ne pouze návratový kód.
+Ve smyčce dávkového souboru se používá například `%%G`, zatímco stejná ručně zadaná smyčka v CMD používá `%G`.
 
-Při SQL autentizaci neukládej heslo do dávky ani nepoužívej `-P` s heslem v historii; způsob přihlášení a TLS nastav podle [dokumentace své varianty sqlcmd](https://learn.microsoft.com/en-us/sql/tools/sqlcmd/sqlcmd-utility).
+Pro konkrétní databázový postup pokračuj na [spouštění SQL souborů přes sqlcmd](../../database/sqlcmd.md).
 
-## Optimalizace disků ve Windows
+## Kontrola a optimalizace disku
 
-Windows má plánovanou údržbu v aplikaci **Defragmentovat a optimalizovat jednotky**.
+Windows běžně zajišťuje plánovanou údržbu přes **Defragmentovat a optimalizovat jednotky**.
 
-Písmeno jednotky neurčuje, zda jde o SSD nebo HDD, a TRIM není bezpečné vymazání dat.
-
-Pro ruční diagnostiku spusť CMD jako správce.
+Pokud potřebuješ ruční analýzu, v CMD jako správce:
 
 ```cmd
-rem /A pouze analyzuje vybranou jednotku, /V vypise podrobnosti.
 defrag C: /A /V
 ```
 
-Pokud je ruční optimalizace potřebná, nech Windows zvolit postup podle typu média.
+`/A` jen analyzuje a `/V` vypíše podrobnosti; `C:` nahraď skutečně kontrolovanou jednotkou.
 
-```cmd
-rem /O zvoli vhodnou optimalizaci, /U ukazuje prubeh.
-defrag C: /O /U
-```
+Pro vědomě požadovanou optimalizaci `defrag C: /O /U` nechá Windows zvolit postup podle typu média a zobrazí průběh.
 
-`C:` nahraď konkrétní zamýšlenou jednotkou a zachovej běžnou plánovanou údržbu, pokud nemáš důvod ji měnit.
+Písmeno jednotky neurčuje SSD/HDD a TRIM nepředstavuje bezpečné vymazání dat.
 
-Podporované volby a pravidla údržby SSD popisuje [Microsoft: defrag](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/defrag).
-
-## Odstranění souborů a složek
-
-Rozlišení `del` a `rd`, rozšířené cesty a kontrolu cíle vlastní návod [nelze odstranit soubor nebo složku](cannot-delete-item.md#cmd-rozlišení-souboru-a-složky).
+Zdroje: [CMD](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd), [set](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/set_1), [defrag](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/defrag).

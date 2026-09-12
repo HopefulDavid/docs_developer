@@ -8,11 +8,21 @@ const {
   cleanInline,
   collectHtmlLinkErrors,
   descriptionFromMarkdown,
+  htmlImageToMarkdown,
   isInternalArtifactPath,
   isInternalPath,
 } = require('../scripts/generate-docs.js');
 
 const root = path.resolve(__dirname, '..');
+
+test('normalizace nezahodí autorem určenou šířku obrázku', () => {
+  const sized = '<img src="../images/dialog.png" alt="Nastavení dialogu" width="420">';
+  assert.equal(htmlImageToMarkdown(sized, 'ide/example.md', 'IDE'), sized);
+  assert.equal(
+    htmlImageToMarkdown('<img src="../images/dialog.png" alt="Dialog">', 'ide/example.md', 'IDE'),
+    '![Dialog](../images/dialog.png)',
+  );
+});
 
 test('HTML odkazy rozlišují kotvy, URL kódování, query a relativní cestu', () => {
   const pages = new Map([
@@ -49,13 +59,20 @@ test('HTML kontrola vysvětlí neplatné procentové kódování místo pádu', 
   assert.match(collectHtmlLinkErrors(pages, new Set(pages.keys()))[0], /neplatné kódování URL/);
 });
 
-test('přehled nepřenáší relativní odkazy z úvodu do jiné složky', () => {
-  const intro = '# Projekt\n\nNejprve ověř [instalaci SDK](setup-and-configuration.md).\n';
-  assert.equal(descriptionFromMarkdown(intro), 'Nejprve ověř instalaci SDK.');
+test('přehled používá vlastní popis a odmítá chybějící nebo nebezpečný obsah tabulky', () => {
   assert.equal(
-    descriptionFromMarkdown('# API\n\nPoužij `dotnet` a [referenci](https://example.com/api).'),
-    'Použij `dotnet` a referenci.',
+    descriptionFromMarkdown('---\ndescription: "Založení a obnova projektu."\n---\n\n# Git\n\nJiný úvod.'),
+    'Založení a obnova projektu.',
   );
+  for (const content of [
+    '# Projekt\n\nÚvod se nesmí automaticky stát popisem.',
+    '---\ndescription: ""\n---\n',
+    '---\ndescription: "A | B"\n---\n',
+    '---\ndescription: "[Odkaz](../wrong.md)"\n---\n',
+    '---\ndescription: "Neplatné \\q"\n---\n',
+  ]) {
+    assert.equal(descriptionFromMarkdown(content), '');
+  }
 });
 
 test('normalizace zachovává čitelný název .NET v nadpisu i textu', () => {

@@ -1,49 +1,56 @@
-# Git – sloučení commitů do jednoho
+---
+description: "Spojení vlastních pracovních commitů nebo squash až při sloučení do cíle."
+---
 
-Squash spojí práci z několika commitů do jednoho záznamu; hodí se k úpravě vlastní pracovní větve před review.
+# Git – spojení commitů do jednoho
 
-## Před použitím
+Squash se hodí, když několik pracovních commitů představuje jednu ucelenou změnu.
 
-Příklad je pro **Bash nebo Git Bash**, vlastní větev `feature/nova-funkce` a cílovou `origin/main`.
+Nejdříve zvol, zda chceš přepsat vlastní pracovní větev, nebo vytvořit souhrnný commit až při začlenění do cíle.
 
-Pracovní strom i index musí být čisté; názvy větví uprav podle projektu a nepoužívej postup automaticky na dlouhodobé sdílené větve.
+## Nejmenší zásah: squash při sloučení
 
-## Praktický postup
+Použij [`git merge --squash`](../merging.md#squash-jedna-ucelená-změna-v-cíli) nebo možnost **Squash and merge** na hostingu.
+
+Zdrojová větev si ponechá původní commity a cílová dostane jeden souhrnný; není potřeba přepisovat vzdálenou pracovní větev.
+
+## Úprava vlastních posledních commitů
+
+Příklad je pro PowerShell i Bash, čistý strom a **tři poslední vlastní lineární commity**, které ještě nesdílíš.
 
 ```bash
-git switch feature/nova-funkce
-git status --short
-git fetch origin
+git log --oneline -5
 git branch backup/pred-squash
-base=$(git merge-base HEAD origin/main)
-git log --oneline "$base"..HEAD
+git rebase -i HEAD~3
 ```
 
-`base` je společný předek; výpis ukáže commity, které přepis zahrne.
+`HEAD~3` označuje rodiče nejstaršího z těchto tří commitů; ověř počet a rozsah předem.
 
-Pokračuj jen tehdy, když je to zamýšlený rozsah:
+V otevřeném seznamu ponech první řádek jako `pick` a další dva změň na `squash`:
 
-```bash
-git reset --soft "$base"
-git diff --cached --stat
-git commit -m "feat: přidává novou funkci"
+```text
+pick   <id-první-změny> Přidání základu hledání
+squash <id-druhé-změny> Doplnění filtrování
+squash <id-třetí-změny> Testy hledání
 ```
 
-`--soft` přesune větev, ale zachová index i pracovní soubory; nový commit proto obsahuje jejich souhrnný stav. [Reference git reset](https://git-scm.com/docs/git-reset)
+Zástupná ID nekopíruj: editor už obsahuje skutečné commity a měníš jen slovo na začátku řádku.
 
-## Ověření výsledku
+Po uložení zadej jednu výslednou zprávu; `fixup` místo `squash` by zahodil zprávu připojovaného commitu.
+
+Pro rozsah zahrnující úplně první commit repozitáře se používá `git rebase -i --root`.
+
+## Ověření a návrat
 
 ```bash
 git diff backup/pred-squash HEAD
-git log --oneline "$base"..HEAD
+git log --oneline -5
 ```
 
-První výpis má být prázdný a druhý obsahovat jediný nový commit; následně spusť testy projektu.
+Rozdíl konečného obsahu má být prázdný a log má ukazovat zamýšlený počet nových commitů.
 
-Zveřejněnou vlastní větev aktualizuj podle [postupu pro přepis s lease](../in-practice.md), jehož očekávaný vzdálený commit je nutné zaznamenat před přepisem.
+Pokud rebase teprve probíhá, `git rebase --abort` jej zruší; po dokončení uchovává původní historii záložní větev.
 
-## Alternativa bez přepisu zdrojové větve
+Konflikt řeš podle [návodu pro rebase](../merging.md), výsledek otestuj a případnou již zveřejněnou vlastní větev aktualizuj jen podle [postupu s lease](fix-commits.md#publikování-přepsané-vlastní-větve).
 
-Pokud hosting nabízí **Squash and merge**, lze vytvořit jeden commit až při sloučení PR; možnost musí povolovat pravidla projektu.
-
-Zálohu ponech do ověření výsledku a publikování.
+Zdroje: [interaktivní rebase](https://git-scm.com/docs/git-rebase#_interactive_mode), [git merge](https://git-scm.com/docs/git-merge).

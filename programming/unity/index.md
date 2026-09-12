@@ -1,3 +1,7 @@
+---
+description: "Orientace ve scénách, komponentách a assetech a nastavení Play Mode."
+---
+
 # Unity: orientace v projektu a Play Mode
 
 Unity spojuje editor scén, assety a C# komponenty do aplikace, kterou sestavíš pro cílovou platformu.

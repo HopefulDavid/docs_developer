@@ -1,3 +1,7 @@
+---
+description: "Nastavení mřížky a přesné rozměry či okraje grafiky."
+---
+
 # Affinity Designer 2 – mřížka a okraje
 
 Mřížka a okraje jsou pomocné čáry pro rozvržení dokumentu v Affinity Designeru 2 pro desktop.
@@ -26,8 +30,6 @@ Při oblasti `256 × 256 px`, obrázku `146,2 × 244,6 px` a posunu `256 px` vyc
 
 V panelu Transform zvol referenční bod vlevo nahoře a stejnou souřadnicovou soustavu; při jiném bodu ukotvení mají X a Y jiný význam.
 
-![Výpočet zarovnání na střed gridu](../images/2D_grid_calculation.png)
-
 ## Řešení problémů
 
 ### Modrý čtverec uvnitř stránky
@@ -38,8 +40,12 @@ Velikost okrajů upravíš v nastavení dokumentu; nejde o skutečný grafický 
 
 **Při vytváření nového dokumentu:**
 
-![Nastavení margins při vytváření dokumentu](../images/wNNBV4Lsm4.png)
+<img src="../images/wNNBV4Lsm4.png" alt="Nastavení margins při vytváření dokumentu" width="760">
+
+[Zobrazit obrázek v původní velikosti](../images/wNNBV4Lsm4.png)
 
 **Pro již otevřený dokument:**
 
-![Nastavení margins pro otevřený dokument](../images/sOYccHNNHx.png)
+<img src="../images/sOYccHNNHx.png" alt="Nastavení margins pro otevřený dokument" width="482">
+
+[Zobrazit obrázek v původní velikosti](../images/sOYccHNNHx.png)

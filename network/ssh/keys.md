@@ -1,108 +1,120 @@
-# SSH klíče
+---
+description: "Vytvoření a ochrana SSH klíče, registrace veřejné části a používání agenta."
+---
 
-> Vytvoření klíče, heslová fráze a odemykání pomocí agenta.
+# SSH klíče – vytvoření a používání
+
+SSH pár tvoří soukromý klíč u tebe a veřejný klíč uložený u cílového účtu.
+
+Server ověří, že ovládáš odpovídající soukromou část, aniž bys mu ji posílal.
+
+## Rozliš dvě ověření
+
+| Ověření | Co prokazuje |
+|---|---|
+| Hostitelský klíč serveru | Že ses připojil ke známému správnému serveru |
+| Tvůj uživatelský klíč | Že smíš vystupovat jako daný účet |
+
+Heslová fráze chrání soukromý klíč na disku; není to heslo vzdáleného účtu.
 
 ## Vytvoření klíče
 
-V PowerShellu, Git Bash, Linuxu nebo macOS s dostupným `ssh-keygen` spusť:
+S dostupným OpenSSH v PowerShellu nebo Bashi:
 
-```text
+```bash
 ssh-keygen -t ed25519 -C "Osobni notebook"
 ```
 
-1. Potvrď nabídnuté umístění klíče ve složce `.ssh`, nebo zadej vlastní název.
-2. Pokud program nabízí přepsání existujícího klíče, odpověz `n` a zvol jiný název.
-3. Zadej heslovou frázi a potvrď ji; při psaní se znaky nezobrazují.
+`-t` volí algoritmus a `-C` čitelný popisek zařízení.
 
-Frázi ulož do správce hesel, protože ji ze soukromého klíče nelze obnovit.
+1. Zvol nabízenou cestu nebo vlastní jméno v `.ssh`.
+2. Při nabídce přepsání existujícího klíče zvol `n` a nový název, pokud nechceš původní identitu ztratit.
+3. Zadej silnou heslovou frázi a uchovej ji ve správci hesel.
 
-| Výchozí soubor | K čemu slouží |
-| --- | --- |
-| `id_ed25519` | Soukromý klíč; ponech jej u sebe a nikdy jej nevkládej do účtu ani repozitáře. |
-| `id_ed25519.pub` | Veřejný klíč; přidává se na server nebo do účtu GitHub/Gitea. |
+| Výchozí soubor | Zacházení |
+|---|---|
+| `id_ed25519` | Soukromý klíč, nepatří do hostingu, chatu ani repozitáře |
+| `id_ed25519.pub` | Veřejná část, kterou můžeš registrovat u serveru |
 
-Hodnota za `-C` je pouze popisek klíče, nikoli heslo nebo přihlašovací jméno.
+Pro starší systém, který Ed25519 nepodporuje, lze po ověření jeho požadavků použít `ssh-keygen -t rsa -b 4096 -C "Osobni notebook"`; počet `4096` určuje velikost RSA klíče, nikoli délku hesla.
 
-## Zkopírování veřejného klíče
+## Registrace veřejného klíče
 
-V **PowerShellu** zobraz obsah; při jiném názvu uprav cestu:
+V PowerShellu:
 
 ```powershell
-Get-Content -Encoding utf8 "$env:USERPROFILE\.ssh\id_ed25519.pub"
+Get-Content "$env:USERPROFILE\.ssh\id_ed25519.pub"
 ```
 
-Zkopíruj celý jediný řádek od `ssh-ed25519` včetně popisku a pokračuj [přidáním do GitHubu](git.md#připojení-ke-githubu) nebo [Gitea](../../vcs/git/server.md#ssh-přístup).
+V Bashi použij `cat ~/.ssh/id_ed25519.pub` a zkopíruj celý řádek začínající `ssh-ed25519`.
 
-<details>
-<summary>Výpis v Git Bash, Linuxu, macOS nebo CMD</summary>
+- U Git hostingu vlož řádek do nastavení SSH klíčů svého účtu; [GitHub postup](git.md#připojení-ke-githubu) popisuje konkrétní obrazovku.
+- U linuxového serveru patří veřejný řádek do `~/.ssh/authorized_keys` cílového účtu.
+- U Windows serveru závisí umístění i oprávnění na typu účtu; použij [postup Microsoftu](https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_keymanagement).
 
-V **Bashi**:
+Na Linuxu s existujícím heslovým přístupem a nástrojem `ssh-copy-id` má automatické přidání syntaxi `ssh-copy-id -i <veřejný-klíč.pub> <uživatel>@<server>`.
 
-```bash
-cat ~/.ssh/id_ed25519.pub
-```
+Při ručním nastavení na Linuxu bývá potřeba `chmod 700 ~/.ssh` a `chmod 600 ~/.ssh/authorized_keys` provedené na serveru pod správným účtem; vlastník souboru musí odpovídat tomuto účtu.
 
-V **CMD**:
-
-```bat
-chcp 65001 >nul
-type "%USERPROFILE%\.ssh\id_ed25519.pub"
-```
-
-</details>
-
-## Změna heslové fráze nebo popisku
+## Ověření konkrétní identity
 
 ```text
-ssh-keygen -p
+ssh -i <soukromý-klíč> -o IdentitiesOnly=yes <uživatel>@<server>
+ssh-keygen -lf <veřejný-klíč.pub>
 ```
 
-Zadej cestu k **soukromému** klíči, dosavadní frázi a novou frázi; veřejný klíč zůstává stejný a není třeba jej znovu registrovat.
+První příkaz nabídne vybranou identitu a druhý ukáže její otisk pro porovnání s registrovaným klíčem.
 
-Pro změnu popisku použij `ssh-keygen -c` a postupuj podle výzev.
+Pokud přístup funguje, můžeš cestu trvale uvést v [SSH config](../ssh.md#ulož-připojení-pod-názvem).
 
 ## Odemykání přes agenta
 
-Pro Windows OpenSSH použij [nastavení služby a načtení klíče ve Windows](windows.md#3-zapni-společného-agenta-pokud-jej-chceš-používat).
+Pro Windows OpenSSH použij [službu ssh-agent](windows.md#agent-windows-openssh).
 
 ### Agent v Git Bash, Linuxu a macOS
 
-Nejprve zjisti, zda má aktuální terminál dostupného agenta:
+Nejprve:
 
 ```bash
 ssh-add -l
 ```
 
-Pokud hlásí, že se k agentovi nelze připojit, spusť jej v tomto terminálu:
+Výpis identit znamená dostupného agenta; hlášení `The agent has no identities` znamená běžícího agenta bez načteného klíče.
+
+Pouze pokud se k agentovi nelze připojit, spusť pro tuto relaci:
 
 ```bash
 eval "$(ssh-agent -s)"
 ```
 
-Při hlášení `The agent has no identities` již agent běží; stačí přidat klíč:
+Příkaz načte proměnné nově spuštěného agenta do aktuálního shellu.
+
+Potom přidej klíč:
 
 ```bash
 ssh-add ~/.ssh/id_ed25519
 ssh-add -l
 ```
 
-Tento agent je dostupný procesům, které zdědí jeho `SSH_AUTH_SOCK`; IDE spuštěné jinak jej nemusí vidět.
+Procesy musí zdědit odpovídající `SSH_AUTH_SOCK`; samostatně spuštěné IDE nemusí vidět stejného agenta.
 
-<details>
-<summary>Další příkazy agenta a starší servery</summary>
+| Syntaxe | Účinek |
+|---|---|
+| `ssh-add <soukromý-klíč>` | Odemkne a načte identitu |
+| `ssh-add -l` | Vypíše otisky načtených klíčů |
+| `ssh-add -d <veřejný-klíč.pub>` | Odebere jednu identitu z agenta |
+| `ssh-add -D` | Odebere všechny identity z tohoto agenta |
 
-Příkazy spouštěj pomocí `ssh-add` odpovídajícího zvolenému agentovi.
+Odebrání identity nemaže soubor klíče, jen jeho dostupnost pro další přihlášení přes agenta.
 
-| Úloha | Příkaz |
-| --- | --- |
-| Vypsat veřejné klíče | `ssh-add -L` |
-| Odebrat jednu identitu z agenta | `ssh-add -d ~/.ssh/id_ed25519.pub` |
-| Odebrat všechny identity z agenta | `ssh-add -D` |
+## Změna fráze, záloha a ztráta
 
-Odebrání identity z agenta nemaže soubor klíče, ale ovlivní další spojení používající tohoto agenta.
+`ssh-keygen -p -f <soukromý-klíč>` změní ochrannou frázi po zadání původní; veřejná identita zůstane stejná.
 
-Pokud starší server nepodporuje Ed25519, vytvoř místo něj RSA klíč příkazem `ssh-keygen -t rsa -b 4096 -C "Osobni notebook"`.
+Pro zálohu použij chráněné šifrované úložiště a uchovej frázi odděleně od nechráněné kopie souboru.
 
-</details>
+Při podezření na únik soukromého klíče odeber jeho veřejnou část ze všech účtů, vytvoř nový pár a nahraď registrace; pouhá změna fráze neodvolá již zkopírovanou identitu.
 
-Podrobnosti: [ssh-keygen](https://man.openbsd.org/ssh-keygen), [ssh-agent](https://man.openbsd.org/ssh-agent), [ssh-add](https://man.openbsd.org/ssh-add) a [správa klíčů ve Windows](https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_keymanagement).
+Agent forwarding `ssh -A` nezapínej plošně: vzdálený systém může po dobu spojení využívat dostupného agenta.
+
+Zdroje: [ssh-keygen](https://man.openbsd.org/ssh-keygen), [ssh-add](https://man.openbsd.org/ssh-add), [ssh-agent](https://man.openbsd.org/ssh-agent).

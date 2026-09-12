@@ -10,4 +10,4 @@ Nástroje a postupy pro týmovou komunikaci a organizaci práce.
 
 | Stránka | Popis |
 | --- | --- |
-| [Outlook](outlook.md) | Kalendáře lze zobrazit vedle sebe nebo překrýt pro snadnější porovnání termínů. |
+| [Outlook](outlook.md) | Zobrazení a překrytí více kalendářů. |

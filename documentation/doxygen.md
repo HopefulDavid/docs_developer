@@ -1,3 +1,7 @@
+---
+description: "Generování dokumentace z komentářů a konfigurace výstupu."
+---
+
 # Doxygen – dokumentace zdrojového kódu
 
 Doxygen vytváří referenční dokumentaci z deklarací a dokumentačních komentářů ve zdrojových souborech.

@@ -1,3 +1,7 @@
+---
+description: "Výběr kolekcí podle způsobu přístupu, vyhledávání a změn dat."
+---
+
 # .NET – kolekce a související typy
 
 Kolekci vybírej podle přístupu k prvkům, pořadí, jedinečnosti a požadavků na souběh.

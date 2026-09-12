@@ -1,3 +1,7 @@
+---
+description: "Klíčování pohybu a nastavení automatického záznamu animace."
+---
+
 # UMotion – Klíčování animací v Unity
 
 > Praktické tipy pro efektivní práci s UMotion při ukládání změn animací.
@@ -14,7 +18,9 @@ Změna pózy sama není uložený animační klíč ani exportovaný AnimationCl
 | Auto Key | UMotion automaticky klíčuje změny při úpravě. |
 | Key Dialog | Přehledně zobrazí změny a umožní je klíčovat. |
 
-![UMotion Key Dialog](../../images/WHDIpG6Uzg.png)
+<img src="../../images/WHDIpG6Uzg.png" alt="UMotion Key Dialog" width="360">
+
+[Zobrazit obrázek v původní velikosti](../../images/WHDIpG6Uzg.png)
 
 ## Postup klíčování
 

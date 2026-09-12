@@ -152,42 +152,46 @@ const rootPages = [
 const navigation = {
   ai: [{ name: 'Modely a nástroje', items: [{ name: 'Ollama', href: 'ollama.md' }] }],
   vcs: [
-    {
-      name: 'Git',
-      items: [
-        { name: 'Konfigurace', href: 'git/configuration.md' },
-        { name: 'Repozitář', href: 'git/repository.md' },
-        { name: 'Git server', href: 'git/server.md' },
-        { name: 'Submoduly', href: 'git/submodules.md' },
-        { name: 'Git Flow', href: 'git/git-flow.md' },
-        { name: 'Použití v praxi', href: 'git/in-practice.md' },
-        {
-          name: 'Větve',
-          items: [
-            { name: 'Vytvoření vzdálené větve', href: 'git/branches/create-remote-branch.md' },
-            { name: 'Smazání vzdálené větve', href: 'git/branches/delete-remote-branch.md' },
-            { name: 'Pull request', href: 'git/branches/pull-request.md' },
-          ],
-        },
-        {
-          name: 'Historie',
-          items: [
-            { name: '.gitignore', href: 'git/history/update-gitignore.md' },
-            { name: 'Přesun commitů', href: 'git/history/move-commits.md' },
-            { name: 'Sloučení commitů', href: 'git/history/squash-branch-commits.md' },
-            { name: 'Oprava commitů', href: 'git/history/fix-commits.md' },
-            { name: 'Odstranění commitů', href: 'git/history/delete-commits.md' },
-            { name: 'assume-unchanged a lokální konfigurace', href: 'git/history/assume-unchanged.md' },
-          ],
-        },
-      ],
-    },
+    { name: 'Začínáme s Gitem', items: [
+      { name: 'Principy a orientace', href: 'git/basics.md' },
+      { name: 'Výběr způsobu práce', href: 'git/workflows.md' },
+      { name: 'Nastavení', href: 'git/configuration.md' },
+      { name: 'Založení a klonování', href: 'git/repository.md' },
+      { name: 'Připojení serveru', href: 'git/server.md' },
+    ] },
+    { name: 'Každodenní práce', items: [
+      { name: 'Běžný pracovní den', href: 'git/in-practice.md' },
+      { name: 'Vytvoření a výběr větve', href: 'git/branches/create-remote-branch.md' },
+      { name: 'Synchronizace a push', href: 'git/synchronization.md' },
+      { name: 'Slučování a konflikty', href: 'git/merging.md' },
+      { name: 'Pull request', href: 'git/branches/pull-request.md' },
+      { name: 'Stash a worktree', href: 'git/stash-worktree.md' },
+      { name: 'Odstranění větve', href: 'git/branches/delete-remote-branch.md' },
+      { name: '.gitignore', href: 'git/history/update-gitignore.md' },
+    ] },
+    { name: 'Historie a řešení problémů', items: [
+      { name: 'Obnova při chybě', href: 'git/recovery.md' },
+      { name: 'Čtení historie a bisect', href: 'git/history/reading.md' },
+      { name: 'Oprava commitů', href: 'git/history/fix-commits.md' },
+      { name: 'Vrácení změny', href: 'git/history/delete-commits.md' },
+      { name: 'Přesun a cherry-pick', href: 'git/history/move-commits.md' },
+      { name: 'Spojení commitů', href: 'git/history/squash-branch-commits.md' },
+      { name: 'Lokální konfigurace', href: 'git/history/assume-unchanged.md' },
+    ] },
+    { name: 'Vydávání a správa projektu', items: [
+      { name: 'Tagy a vydání', href: 'git/releases.md' },
+      { name: 'Záloha a migrace', href: 'git/backups.md' },
+      { name: 'Submoduly', href: 'git/submodules.md' },
+      { name: 'Git Flow', href: 'git/git-flow.md' },
+    ] },
   ],
   ide: [
     {
       name: 'Vývojová prostředí',
       items: [
-        { name: 'JetBrains', href: 'jetbrains.md' },
+        { name: 'JetBrains', href: 'jetbrains.md', items: [
+          { name: 'Regulární výrazy', href: 'jetbrains/regular-expressions.md' },
+        ] },
         { name: 'Visual Studio', href: 'visual-studio.md' },
       ],
     },
@@ -265,12 +269,21 @@ const navigation = {
       ],
     },
     {
-      name: 'Nástroje a balíčky',
+      name: 'Balíčky',
+      items: [
+        { name: 'Záloha a offline obnova', href: 'packages/offline.md' },
+        { name: 'NuGet', href: 'packages/nuget.md' },
+        { name: '.NET tools – offline obnova', href: 'packages/dotnet-tools.md' },
+        { name: 'npm', href: 'packages/npm.md' },
+        { name: 'pnpm', href: 'packages/pnpm.md' },
+        { name: 'Python', href: 'packages/python.md' },
+        { name: 'Dart a Flutter pub', href: 'packages/dart.md' },
+      ],
+    },
+    {
+      name: 'Vývojové nástroje',
       items: [
         { name: '.NET CLI', href: 'packages/dotnet-cli.md' },
-        { name: 'NuGet', href: 'packages/nuget.md' },
-        { name: 'npm', href: 'packages/npm.md' },
-        { name: 'Python', href: 'packages/python.md' },
         { name: 'Appcast feed', href: 'appcast.md' },
       ],
     },
@@ -294,13 +307,14 @@ const navigation = {
     {
       name: 'Přístup k datům',
       items: [
+        { name: 'SQL skripty přes sqlcmd', href: 'sqlcmd.md' },
         { name: 'Entity Framework', href: 'entity-framework.md' },
         { name: 'Dapper', href: 'dapper.md' },
       ],
     },
   ],
   devops: [
-    { name: 'Infrastructure as Code', items: [{ name: 'OpenTofu', href: 'opentofu.md' }] },
+    { name: 'Infrastruktura jako kód', items: [{ name: 'OpenTofu', href: 'opentofu.md' }] },
   ],
   documentation: [
     {
@@ -316,19 +330,7 @@ const navigation = {
       name: 'Prostředí',
       items: [
         { name: 'WSL', href: 'wsl.md' },
-        {
-          name: 'Docker',
-          href: 'docker/index.md',
-          items: [
-            {
-              name: 'Bezpečný upgrade stateful služby',
-              href: 'docker/safe-stateful-upgrade.md',
-            },
-            { name: 'Portainer', href: 'docker/portainer.md' },
-            { name: 'Duplicati', href: 'docker/duplicati.md' },
-            { name: 'BusyBox', href: 'docker/busybox.md' },
-          ],
-        },
+        { name: 'Docker', href: 'docker/index.md' },
         { name: 'Kubernetes', href: 'kubernetes.md' },
       ],
     },
@@ -337,6 +339,7 @@ const navigation = {
     {
       name: 'Síťové nástroje',
       items: [
+        { name: 'Základy a diagnostika sítě', href: 'basics.md' },
         {
           name: 'SSH – příkazy a připojení',
           href: 'ssh.md',
@@ -353,6 +356,9 @@ const navigation = {
     },
   ],
   'operating-system': [
+    { name: 'Příkazová řádka', items: [
+      { name: 'Jak číst zápis příkazů', href: 'command-line-syntax.md' },
+    ] },
     {
       name: 'Windows',
       href: 'windows/index.md',
@@ -361,6 +367,7 @@ const navigation = {
         { name: 'Nelze odstranit položku', href: 'windows/cannot-delete-item.md' },
         { name: 'Příkazový řádek (CMD)', href: 'windows/cmd.md' },
         { name: 'PowerShell', href: 'windows/powershell.md' },
+        { name: 'Prostředí PowerShellu', href: 'windows/terminal.md' },
       ],
     },
   ],
@@ -436,9 +443,6 @@ const legacyRenames = new Map([
   ['vcs/git/history/moveCommits.md', 'vcs/git/history/move-commits.md'],
   ['vcs/git/history/updateGitignore.md', 'vcs/git/history/update-gitignore.md'],
   ['virtualization/docker.md', 'virtualization/docker/index.md'],
-  ['virtualization/docker_busybox.md', 'virtualization/docker/busybox.md'],
-  ['virtualization/docker_duplicati.md', 'virtualization/docker/duplicati.md'],
-  ['virtualization/docker_portainer.md', 'virtualization/docker/portainer.md'],
 ]);
 
 const reverseRenames = new Map([...legacyRenames].map(([from, to]) => [to, from]));
@@ -697,6 +701,10 @@ function htmlImageToMarkdown(line, relPath, pageTitle) {
 
   const prefix = match[1];
   const attrs = match[2];
+  // Rozměr ručně posouzeného snímku je součástí článku, převod na Markdown by ho zahodil.
+  if (/\bwidth=["'][1-9]\d*["']/i.test(attrs)) {
+    return line;
+  }
   const src = attrs.match(/\bsrc=["']([^"']+)["']/i)?.[1];
   if (!src) {
     return line;
@@ -875,28 +883,22 @@ function firstHeading(content) {
   return match ? cleanInline(match[1]) : '';
 }
 
-/** Vrací stručný úvod bez odkazů, jejichž relativní cesty neplatí v přehledu sekce. */
+/** Čte samostatný popis rozcestníku; neplatná nebo chybějící metadata vrací jako prázdný text. */
 function descriptionFromMarkdown(content) {
-  const lines = content.split('\n');
-  const headingIndex = lines.findIndex((line) => /^#\s+/.test(line));
-
-  for (let index = Math.max(0, headingIndex + 1); index < lines.length; index += 1) {
-    const line = lines[index].trim();
-    if (!line || line.startsWith('<!--')) {
-      continue;
+  // Jednořádkový JSON řetězec je současně platný YAML a nepřenáší odkazy z těla.
+  const { frontMatter } = splitFrontMatter(content);
+  const metadata = frontMatter.match(/^description:\s*("(?:[^"\\]|\\.)*")\s*$/m);
+  if (metadata) {
+    try {
+      const description = JSON.parse(metadata[1]).trim();
+      if (description && !/[\r\n|]|\[[^\]]*\]\(/.test(description)) {
+        return description;
+      }
+    } catch {
+      return '';
     }
-    if (line.startsWith('#') || line.startsWith('![') || line.startsWith('|')) {
-      continue;
-    }
-    if (line.startsWith('> [!')) {
-      continue;
-    }
-
-    return cleanInline(line.replace(/^>\s*/, '').replace(/^\*\*.+?:\*\*\s*/, ''))
-      .replace(/(?<!!)\[([^\]\n]+)\]\([^)\n]+\)/g, '$1');
   }
-
-  return 'Stránka zatím nemá krátký úvod.';
+  return '';
 }
 
 function pageInfo(relPath) {
@@ -906,11 +908,15 @@ function pageInfo(relPath) {
   }
 
   const content = readFile(relPath);
+  const description = descriptionFromMarkdown(content);
+  if (!description) {
+    errors.push(`${relPath}: doplň neprázdný jednořádkový description v dvojitých uvozovkách, bez odkazů a znaku |`);
+  }
   return {
     relPath,
     title: firstHeading(content) || inferredTitle(relPath),
     navTitle: titleByPath.get(relPath) || firstHeading(content) || inferredTitle(relPath),
-    description: descriptionFromMarkdown(content),
+    description,
   };
 }
 
@@ -1455,4 +1461,4 @@ if (require.main === module) {
   runCli();
 }
 
-module.exports = { cleanInline, collectHtmlLinkErrors, descriptionFromMarkdown, isInternalArtifactPath, isInternalPath };
+module.exports = { cleanInline, collectHtmlLinkErrors, descriptionFromMarkdown, htmlImageToMarkdown, isInternalArtifactPath, isInternalPath };

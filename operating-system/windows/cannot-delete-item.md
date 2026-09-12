@@ -1,167 +1,101 @@
-# Windows – nelze odstranit soubor nebo složku
+---
+description: "Rozlišení zamčeného souboru, oprávnění a chybné cesty před přesným odstraněním."
+---
 
-> Postup při chybě „Položka nebyla nalezena“, rozlišení příkazů CMD a PowerShellu a odstranění položek s problematickým názvem.
+# Windows – soubor nebo složka nejde odstranit
 
-Pokud Průzkumník hlásí, že položka už není v daném umístění, samotná zpráva ještě neurčuje příčinu.
+Chybové hlášení nejprve použij k určení příčiny; větší síla mazacího příkazu neřeší všechny případy.
 
-Může jít o neobnovený seznam, nesprávnou cestu nebo název, se kterým běžné rozhraní Windows neumí pracovat.
+## Rozhodni podle projevu
 
-## Nejdříve ověř položku a prostředí
+| Projev | První krok |
+|---|---|
+| „Položka nebyla nalezena“ | Obnov Průzkumník přes F5 a ověř skutečný název i nadřazenou cestu |
+| Soubor používá jiný proces | Zavři danou aplikaci a terminály v mazané složce |
+| Přístup odepřen | Ověř vlastníka a oprávnění k přesné položce |
+| Položka se vrací | Zjisti, která aplikace nebo synchronizace ji vytváří |
+| Chyba disku | Nejprve chraň data a řeš úložiště |
 
-1. Zavři chybové okno a obnov složku klávesou **F5**; pokud položka zmizí, další mazání není potřeba.
-2. Pokud zůstane, ověř v adresním řádku její nadřazenou složku a zjisti, zda jde o soubor, nebo adresář.
-3. Zavři aplikaci, která položku může používat, a vyber postup pro svůj příkazový interpret níže.
+Následující příkazy mažou přímo, bez přesunu do Koše.
 
-Windows Terminal může obsahovat PowerShell i CMD, takže samotný vzhled okna nerozhoduje.
-
-| Prostředí | Jak ho otevřít | Příkazy v tomto návodu |
-|---|---|---|
-| PowerShell | Vyber profil Windows PowerShell nebo PowerShell v terminálu | `Get-ChildItem`, `Get-Item`, `Remove-Item` |
-| CMD | V adresním řádku Průzkumníku napiš `cmd` a stiskni Enter | `dir`, `del`, `rd` |
-
-V PowerShellu jsou `del` a `rd` aliasy pro `Remove-Item`, proto do něj nekopíruj přepínače CMD jako `/f`, `/s` nebo `/q`.
-
-> [!WARNING]
-> Následující příkazy mažou přímo a nepřesouvají položky do Koše.
->
-> Cesty `C:\Data\Ukazka`, názvy souborů a složek jsou pouze příklady: před mazáním je nahraď a ověř, že označují přesně zamýšlený cíl.
->
-> Rekurzivní odstranění smaže celou zvolenou složku včetně obsahu; kvůli jedinému chybnému souboru tak nemaž jeho nadřazenou složku, pokud chceš ostatní data zachovat.
+Celou složku maž pouze tehdy, když je jejím zamýšleným odstraněním i veškerý obsah.
 
 ## PowerShell: kontrola a odstranění
 
-Nejprve vypiš nadřazenou složku včetně skrytých položek a zkontroluj úplnou cestu cíle:
+Nahraď cestu skutečnou položkou a nejprve ji pouze prohlédni:
 
-```text
-Get-ChildItem -LiteralPath 'C:\Data\Ukazka' -Force
-Get-Item -LiteralPath 'C:\Data\Ukazka\ProblemovaSlozka' -Force |
+```powershell
+$itemPath = 'C:\Data\Ukazka\ProblemovaSlozka'
+Get-Item -LiteralPath $itemPath -Force |
     Select-Object FullName, PSIsContainer, Attributes
 ```
 
-Hodnota `PSIsContainer` je u adresáře `True` a u souboru `False`.
+`PSIsContainer: True` označuje adresář; při chybě výpisu nepokračuj s odhadnutým názvem.
 
-Pokud ověření cesty skončí chybou, nepokračuj mazáním odhadnutého názvu a přejdi k [diagnostice v CMD](#cmd-rozlišení-souboru-a-složky).
+Pro adresář ověř také obsah a náhled:
 
-Pro **složku**, jejíž celý obsah chceš odstranit, nejprve zobraz obsah a náhled operace:
-
-```text
-Get-ChildItem -LiteralPath 'C:\Data\Ukazka\ProblemovaSlozka' -Force
-Remove-Item -LiteralPath 'C:\Data\Ukazka\ProblemovaSlozka' -Recurse -Force -WhatIf
+```powershell
+Get-ChildItem -LiteralPath $itemPath -Force
+Remove-Item -LiteralPath $itemPath -Recurse -WhatIf
 ```
 
-`-WhatIf` nic nemaže, ale není zárukou, že skutečné odstranění později proběhne bez chyby.
+`-WhatIf` nic neodstraní a `-LiteralPath` chápe název doslova včetně hranatých závorek.
 
-Po kontrole cíle spusť odstranění s potvrzením:
+Po potvrzení správné úplné cesty použij:
 
-```text
-Remove-Item -LiteralPath 'C:\Data\Ukazka\ProblemovaSlozka' -Recurse -Force -Confirm
+```powershell
+Remove-Item -LiteralPath $itemPath -Recurse -Confirm
 ```
 
-Pro **jednotlivý soubor** použij jeho přesnou cestu a vynech `-Recurse`:
-
-```text
-Remove-Item -LiteralPath 'C:\Data\Ukazka\problem.txt' -Force -Confirm
-```
-
-`-LiteralPath` zachází s cestou doslovně, takže například hranaté závorky v názvu nejsou zástupným vzorem.
-
-`-Force` umožňuje odstranit také skryté položky nebo soubory jen pro čtení, ale neobchází přístupová oprávnění. ([Microsoft: Remove-Item](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/remove-item))
+Pro jediný soubor nastav jeho přesnou cestu a vynech `-Recurse`; při potřebě odstranit skrytou položku nebo soubor jen pro čtení lze přidat `-Force`, který však neobchází ACL oprávnění.
 
 ## CMD: rozlišení souboru a složky
 
-Následující příkazy zadávej v samostatném **CMD**, nikoli do PowerShellu.
+Tuto alternativu spouštěj v **CMD**, protože `del` a `rd` jsou v PowerShellu aliasy jiného příkazu.
 
-Přejdi do nadřazené složky a ověř výpis:
-
-```text
+```cmd
 cd /d "C:\Data\Ukazka"
 dir /a /x
 ```
 
-`cd /d` změní složku i jednotku; při mazání adresáře nesmíš mít tento adresář ani jeho podsložku jako aktuální pracovní složku.
+`/a` zahrne skryté položky a `/x` ukáže existující krátké názvy 8.3; `<DIR>` ve výpisu znamená adresář.
 
-Přepínač `/a` zahrne skryté a systémové položky a `/x` zobrazí také existující krátké názvy 8.3. ([Microsoft: dir](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/dir))
+| Syntaxe CMD | Účinek |
+|---|---|
+| `del /p "<soubor>"` | Odstraní přesný soubor s potvrzením |
+| `del /f /p "<soubor>"` | Zahrne i soubor jen pro čtení |
+| `rd "<prázdná-složka>"` | Odstraní prázdnou složku |
+| `rd /s "<složka>"` | Po potvrzení odstraní celou složku i obsah |
 
-U běžné složky výpis uvádí `<DIR>`, zatímco u souboru zobrazuje velikost.
+Před `rd /s` prohlédni obsah přes `dir /a "<složka>"` a přejdi v terminálu mimo odstraňovanou složku.
 
-Pro **soubor** použij jeho přesný název a potvrď jeho odstranění:
-
-```text
-del /f /p "problem.txt"
-```
-
-`/f` umožní smazat soubor jen pro čtení a `/p` vyžádá potvrzení.
-
-Pro **celou složku včetně obsahu** nejprve zkontroluj obsah a potom použij `rd`:
-
-```text
-dir /a "ProblemovaSlozka"
-rd /s "ProblemovaSlozka"
-```
-
-Přepínač `/s` zahrnuje všechny podsložky a soubory; `/q` by potlačil potvrzení, proto jej tento ruční postup nepoužívá. ([Microsoft: rd](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/rd))
-
-Příkaz `del` neodstraní samotný adresář: pokud mu předáš cestu ke složce, může smazat soubory uvnitř, proto jej nepoužívej jako náhradu za `rd`. ([Microsoft: del](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/del))
-
-### Použití krátkého názvu
-
-Pokud `dir /a /x` u problematické položky ukáže krátký název, například `PROBLE~1.TXT`, můžeš jej v odpovídajícím příkazu výše použít místo dlouhého názvu.
-
-Převezmi přesně název z výpisu včetně případné přípony a ověř, ke které položce patří; nevymýšlej jej podle příkladu a nepoužívej zástupné znaky `*` nebo `?`.
-
-Krátký název nemusí existovat, protože jeho vytváření může být vypnuté. ([Microsoft: krátké a dlouhé názvy](https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file#short-vs-long-names))
+Nepřebírej název typu `PROBLE~1` z ukázky; použij pouze skutečný krátký název z výpisu, pokud vůbec existuje.
 
 ## CMD: problematický název nebo dlouhá cesta
 
-Pokud běžná cesta selže, může pomoci úplná cesta s předponou `\\?\`, zejména u dlouhé cesty nebo názvu končícího tečkou či mezerou.
+Úplná cesta s předponou `\\?\` může pomoci u nástrojem podporované rozšířené cesty, například názvu končícího tečkou.
 
-Předpona mění zpracování cesty v podporujících Windows API; neposkytuje vyšší oprávnění a není univerzálním řešením každé chyby při mazání. ([Microsoft: názvy a jmenné prostory cest](https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file#win32-file-namespaces))
-
-V CMD nejprve ověř nadřazenou složku a obsah přesné cílové složky:
-
-```text
-dir /a /x "\\?\C:\Data\Ukazka"
-dir /a "\\?\C:\Data\Ukazka\ProblemovaSlozka"
+```cmd
+dir /a "\\?\C:\Data\Ukazka"
+dir /a "\\?\C:\Data\Ukazka\ProblemovaSlozka."
 ```
 
-Teprve pokud výpis odpovídá složce, kterou chceš odstranit **celou**, spusť:
+Příklad končí tečkou, která je součástí skutečného názvu; ověř přesný výpis, nic automaticky neopravuj ani nezkracuj.
 
-```text
-rd /s "\\?\C:\Data\Ukazka\ProblemovaSlozka"
+Jen pro takto ověřenou celou složku:
+
+```cmd
+rd /s "\\?\C:\Data\Ukazka\ProblemovaSlozka."
 ```
 
-Pro samostatný soubor použij `del /f /p` s jeho úplnou cestou obsahující stejnou předponu.
+Předpona nezvyšuje oprávnění a vyžaduje úplnou cestu bez relativních `.` a `..`.
 
-Cesta za `\\?\` musí být úplná a přesná včetně případné koncové tečky nebo mezery; nepřepisuj ji na relativní cestu s `.` či `..`.
+Pro samostatný soubor použij `del /p` s jeho přesnou rozšířenou cestou.
 
-Podpora rozšířených cest se mezi nástroji liší, proto tyto příklady nepřenášej automaticky do jiné aplikace.
+## Ověření výsledku
 
-## Ověření výsledku a další chyby
+Znovu vypiš nadřazenou složku stejným nástrojem a obnov Průzkumník přes F5.
 
-Po odstranění znovu vypiš nadřazenou složku a v Průzkumníku stiskni **F5**.
+Úspěch znamená, že cílová položka zmizela a ostatní data zůstala; při další chybě postupuj podle jejího přesného znění.
 
-**PowerShell:**
-
-```text
-Get-ChildItem -LiteralPath 'C:\Data\Ukazka' -Force
-```
-
-**CMD:**
-
-```text
-dir /a "C:\Data\Ukazka"
-```
-
-U problematických názvů zopakuj také výpis s předponou `\\?\` z předchozího kroku.
-
-Úspěch znamená, že cílová položka ve výpisu chybí a ostatní zamýšlená data zůstala na místě.
-
-Pokud se objeví další chyba, zapiš její přesné znění a nepokračuj plošným mazáním nadřazených složek.
-
-| Chyba nebo stav | Další krok |
-|---|---|
-| Parametr `/f`, `/s` nebo `/q` není rozpoznán | Ověř, zda jsi nezadal příkaz CMD do PowerShellu |
-| Přístup byl odepřen | Ověř oprávnění k přesné položce; `-Force` ani `\\?\` je neobcházejí |
-| Soubor používá jiný proces | Zavři příslušnou aplikaci a ověř, že cílovou složku nepoužívá některý terminál |
-| Položka se po odstranění znovu objeví | Zjisti, zda ji znovu nevytváří běžící aplikace nebo synchronizační služba |
-| Přesný výpis stále selhává nebo se objeví chyba disku | Nejprve chraň zbývající data a pokračuj diagnostikou podle konkrétní chyby |
+Zdroje: [Remove-Item](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/remove-item), [rd](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/rd), [Windows cesty](https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file).

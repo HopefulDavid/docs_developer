@@ -1,3 +1,7 @@
+---
+description: "Spouštění místních modelů, jejich stahování, odstranění a nastavení serveru."
+---
+
 # Ollama – lokální modely ve Windows
 
 Ollama spouští jazykové modely a poskytuje lokální API pro další aplikace.
@@ -20,16 +24,27 @@ První spuštění stáhne chybějící model; počítej s připojením k intern
 
 ## Příkazy pro správu modelů
 
-| Příkaz | Význam |
+`<model>` je název modelu, který doplníš bez závorek; značení vysvětluje [syntaxe příkazů](../operating-system/command-line-syntax.md).
+
+| Syntaxe | Co příkaz provede |
 |---|---|
 | `ollama list` | Modely uložené na disku |
 | `ollama ps` | Modely právě načtené v paměti |
-| `ollama pull llama3.2` | Stažení nebo aktualizace modelu |
-| `ollama run llama3.2` | Interaktivní spuštění modelu |
-| `ollama stop llama3.2` | Uvolnění modelu z paměti |
-| `ollama rm llama3.2` | Odstranění místní kopie modelu |
+| `ollama pull <model>` | Stáhne nebo aktualizuje soubory zvoleného modelu |
+| `ollama run <model> [<zadání>]` | Spustí model, případně mu rovnou předá zadání |
+| `ollama stop <model>` | Uvolní model z paměti, ale ponechá jej na disku |
+| `ollama rm <model>` | Smaže místní model z disku |
 
-Název `llama3.2` je příklad; nahraď jej modelem odpovídajícím paměti a účelu počítače. [Reference CLI](https://docs.ollama.com/cli)
+### Příklad: stažení jednoho modelu
+
+```powershell
+ollama pull llama3.2
+ollama list
+```
+
+`llama3.2` je konkrétní název, který můžeš změnit podle dostupné paměti a účelu; druhý příkaz ověří, že je model uložený.
+
+Jméno může obsahovat také tag, například `llama3.2:1b`; pokud jej použiješ při stahování, používej stejný název i při spuštění nebo odstranění. [Reference CLI](https://docs.ollama.com/cli)
 
 ## Změna naslouchací adresy
 

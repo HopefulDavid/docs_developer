@@ -1,3 +1,7 @@
+---
+description: "Sdílená konfigurační data oddělená od běhového stavu objektů."
+---
+
 # Unity: sdílená konfigurace se ScriptableObject
 
 ScriptableObject je Unity objekt, který může existovat jako asset nezávislý na konkrétní scéně.

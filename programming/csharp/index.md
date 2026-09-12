@@ -1,3 +1,7 @@
+---
+description: "Přístupnost členů, cílové platformy a použití nativních knihoven."
+---
+
 # .NET – Přístup, nasazení a nativní knihovny
 
 Přístupnost členů, cílová platforma a životnost prostředků určují, jak lze knihovnu bezpečně použít v aplikaci.

@@ -1,3 +1,7 @@
+---
+description: "Parametrizované SQL a mapování výsledků na .NET objekty."
+---
+
 # Dapper – parametrizované SQL v .NET
 
 Dapper mapuje výsledky SQL na objekty .NET; dotazy i databázové schéma spravuje aplikace.

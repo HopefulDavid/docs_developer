@@ -1,3 +1,7 @@
+---
+description: "Vlastní lokální domény a směrování na jednotlivé projekty."
+---
+
 # XAMPP: vlastní lokální doména projektu
 
 Virtual Host vybírá web podle názvu v HTTP požadavku a přiřadí mu vlastní `DocumentRoot`.

@@ -1,58 +1,109 @@
-# Git – bezpečný push a přepis vlastní větve
+---
+description: "Kontrola změn, příprava části souboru, commit a dokončení běžného pracovního dne."
+---
 
-Push přenáší místní commity do vzdáleného repozitáře; běžně smí vzdálenou větev pouze posunout dopředu.
+# Git – běžný pracovní den
 
-## Jak funguje ochrana historie
+Jedna logická změna má projít kontrolou, testem a commitem, aby ses později dokázal vrátit k jejímu smyslu i obsahu.
 
-**Fast-forward** znamená, že dosavadní vzdálený commit je předkem nového.
+Následující postup funguje v PowerShellu i Bashi; předpokládá existující repozitář a [zvolený způsob práce](workflows.md).
 
-Odmítnutí **non-fast-forward** může způsobit nová cizí práce i tvůj rebase nebo amend, který vytvořil jiné commity.
-
-## Před použitím
-
-Příklady jsou pro **Git Bash nebo Bash** a vlastní krátkodobou větev `feature/nova-funkce`.
-
-Přepis historie použij jen tam, kde jej dovolují pravidla repozitáře a domluva s ostatními; ochranu sdílené větve neobcházej.
-
-## Běžný push
+## 1. Zjisti, kde začínáš
 
 ```bash
 git status --short --branch
-git fetch origin
-git log --oneline --graph --all -15
-git push origin feature/nova-funkce
+git branch --show-current
 ```
 
-První tři příkazy umožní zkontrolovat místní práci a vztah větví; poslední publikuje konkrétní větev.
+Pokud už máš rozpracované soubory, nejdříve je dokonči nebo [odlož](stash-worktree.md); nesynchronizuj a nepřepínej bez pochopení jejich stavu.
 
-Při odmítnutí nejprve prohlédni rozdíly a začleň vzdálené změny podle týmového workflow.
+Používáš-li server, aktualizuj výchozí větev podle [synchronizace](synchronization.md).
 
-## Přepis po rebase nebo amend
-
-Ještě **před úpravou historie** zaznamenej přesný vzdálený commit:
+Pro samostatnou funkci vytvoř větev z právě zkontrolovaného základu:
 
 ```bash
-git fetch origin
-expected=$(git rev-parse refs/remotes/origin/feature/nova-funkce)
-git branch backup/pred-upravou
+git switch -c feature/hledani
 ```
 
-Proměnná `expected` je očekávaný stav serveru a záložní větev zachová původní místní historii.
+`feature/hledani` je volitelný název tvého úkolu; při práci na jediné větvi tento krok vynech.
 
-Po [ověřené úpravě commitů](history/fix-commits.md) porovnej výsledek a publikuj:
+## 2. Uprav soubory a zkontroluj rozdíl
+
+Po úpravách v editoru spusť:
 
 ```bash
-git log --oneline --graph -15
-git diff backup/pred-upravou HEAD
-git push --force-with-lease=refs/heads/feature/nova-funkce:"$expected" origin HEAD:refs/heads/feature/nova-funkce
+git status --short
+git diff
 ```
 
-Explicitní lease dovolí přepis pouze tehdy, pokud server stále ukazuje na zaznamenaný commit; automatický fetch v IDE tuto uloženou hodnotu neposune. [Reference git push](https://git-scm.com/docs/git-push)
+`status` ukáže i nové soubory, které `diff` zatím nezobrazuje; jejich obsah prohlédni v editoru.
 
-## Když push selže
+Výpis `diff` může otevřít prohlížeč textu, ze kterého se běžně vrací klávesou `q`.
 
-Znovu načti a prohlédni vzdálenou historii, zachovej cizí změny a dohodni další postup.
+## 3. Vyber obsah jednoho commitu
 
-Nepřepisuj jen hodnotu `expected` a neopakuj příkaz bez kontroly: tím bys mohl sám odsouhlasit odstranění nových commitů.
+Zvol jednu možnost podle toho, co patří k dokončované změně:
 
-Záložní větev chrání commity, nikoli necommitované soubory.
+| Syntaxe | Co připraví do indexu |
+|---|---|
+| `git add -- <soubor>...` | Právě vyjmenované soubory včetně jejich úprav nebo odstranění |
+| `git add -p [-- <soubor>]` | Interaktivně vybrané části změn sledovaných souborů |
+| `git add -A` | Všechny změny v repozitáři včetně nových souborů a odstranění |
+| `git restore --staged -- <soubor>` | Vyřadí soubor z indexu, úpravy ponechá v pracovní složce |
+
+`--` odděluje volby od cest, aby například pomlčka v názvu souboru nebyla vyhodnocena jako přepínač.
+
+Pro změnu samotného `README.md`:
+
+```bash
+git add -- README.md
+git diff --cached
+```
+
+Do commitu půjde přesně zobrazený rozdíl; pokud po `add` soubor ještě upravíš, spusť `add` znovu jen tehdy, chceš-li zahrnout i novou úpravu.
+
+Při `add -p` volba `y` přijme kus změny, `n` jej přeskočí, `s` jej podle možností rozdělí a `?` zobrazí nápovědu.
+
+## 4. Otestuj a ulož
+
+Spusť build nebo testy, které projekt skutečně používá; univerzální příkaz pro všechny projekty neexistuje.
+
+Pokud testuješ s dalšími nepřipravenými změnami, mysli na to, že testuješ pracovní strom, zatímco commit bude obsahovat jen index.
+
+```bash
+git diff --cached --check
+git commit -m "docs: upřesňuje spuštění aplikace"
+git show --stat --oneline HEAD
+git status
+```
+
+`--check` upozorní například na některé chyby v bílých znacích, commit uloží připravený stav a `show` zobrazí právě uloženou změnu.
+
+Zpráva má říct účel změny; prefix `docs:` je konvence pro dokumentaci, kterou můžeš přizpůsobit pravidlům projektu.
+
+Hlášení `nothing to commit` znamená, že index neobsahuje rozdíl oproti poslednímu commitu.
+
+## 5. Dokonči větev a vzdálenou kopii
+
+- Na jediné větvi pokračuj [odesláním commitů](synchronization.md).
+- Na pracovní větvi nejprve zkontroluj [sloučení](merging.md) nebo vytvoř [pull request](branches/pull-request.md).
+- Rozdělanou práci, kterou zatím nechceš slučovat, můžeš commitnout a odeslat na vlastní větev.
+
+Samotný push pracovní větve ještě nezmění `main`.
+
+## Přejmenování a odstranění souboru
+
+Git rozpoznává přejmenování podle podobnosti obsahu, proto funguje i změna v editoru následovaná přidáním obou cest.
+
+Tyto příkazy zároveň upraví pracovní složku a připraví změnu do indexu:
+
+```text
+git mv <stará-cesta> <nová-cesta>
+git rm -- <soubor>
+```
+
+Po nich opět použij `git diff --cached`; `git rm` fyzicky odstraní soubor, zatímco varianta `git rm --cached` pouze ukončí sledování.
+
+Pokud se něco nepovedlo, vyber odpovídající postup v [obnově](recovery.md).
+
+Zdroje: [git add](https://git-scm.com/docs/git-add), [git commit](https://git-scm.com/docs/git-commit), [git status](https://git-scm.com/docs/git-status).

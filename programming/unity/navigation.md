@@ -1,3 +1,7 @@
+---
+description: "Příprava NavMesh a pohyb postavy k cíli."
+---
+
 # Unity: navigace pomocí NavMesh
 
 NavMesh popisuje schůdné plochy a propojení mezi nimi; NavMeshAgent podle něj plánuje a provádí pohyb.

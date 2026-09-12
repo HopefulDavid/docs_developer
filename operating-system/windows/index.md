@@ -1,60 +1,58 @@
-# Windows – Průvodce a tipy
+---
+description: "Místní účet, nastavení hodin a rychlé vstupy k běžným problémům Windows."
+---
 
-> Instalace, nastavení, klávesové zkratky a řešení problémů ve Windows.
+# Windows – nastavení a řešení problémů
 
-## Instalace Windows bez Microsoft účtu
+Vyber konkrétní úlohu; pro práci v terminálu vždy rozliš CMD a PowerShell.
 
-Dostupné volby úvodního nastavení OOBE závisí na edici, sestavení a způsobu správy počítače.
+## Kam pokračovat
 
-Staré příkazy `ms-cxh:localonly` a `OOBE\BYPASSNRO` nejsou stabilní podporované rozhraní, proto na nich nestav opakovatelný instalační postup.
+| Potřebuji | Postup |
+|---|---|
+| Pochopit závorky a hodnoty v příkazu | [Klíč syntaxe](../command-line-syntax.md) |
+| Pracovat se soubory a skripty | [PowerShell](powershell.md) nebo [CMD](cmd.md) |
+| Nastavit profil a prompt | [Prostředí PowerShellu](terminal.md) |
+| Odstranit problematickou položku | [Diagnostika souboru a cesty](cannot-delete-item.md) |
+| Zpřístupnit SSD instalátoru | [Ovladač řadiče a výběr disku](installation-missing-ssd.md) |
 
-Microsoft výslovně oznámil odstraňování těchto mechanismů v [Insider sestaveních](https://blogs.windows.com/windows-insider/2025/10/06/announcing-windows-11-insider-preview-build-26120-6772-beta-channel/); oznámení o konkrétní testovací verzi samo neurčuje chování všech vydaných instalátorů.
+## Místní účet místo Microsoft účtu
 
-Pokud instalátor lokální účet přímo nabízí, použij jeho standardní volbu; u spravovaného zařízení dodrž postup organizace.
+Ve funkčních osobních Windows:
 
-### Přechod na místní účet po instalaci
-
-Pokud máš funkční osobní Windows přihlášené Microsoft účtem, podporovanou možností je přepnutí stávajícího profilu na místní přihlášení.
-
-1. Ulož rozpracované soubory a otevři **Nastavení → Účty → Vaše informace**.
+1. Otevři **Nastavení → Účty → Vaše informace**.
 2. Zvol **Přihlásit se místo toho místním účtem**.
-3. Dokonči ověření, nastav jméno a heslo a zvol odhlášení a dokončení.
-4. Přihlas se místním účtem a ověř dostupnost svých souborů i aplikací.
+3. Dokonči ověření a nastav místní jméno a heslo.
+4. Odhlas se, přihlas místním účtem a ověř své soubory i aplikace.
 
-Lokální heslo spravuješ pro tento počítač; přihlášení do OneDrive nebo jiných aplikací může zůstat samostatné.
+Přepnutí mění způsob přihlášení ke stávajícímu profilu; OneDrive a další aplikace mohou mít samostatné účty.
 
-Postup a možnosti návratu popisuje [Microsoft: změna typu účtu](https://support.microsoft.com/en-us/accounts-billing/manage/change-from-a-local-account-to-a-microsoft-account-in-windows).
+Volby během první instalace závisejí na edici, sestavení a správě zařízení, proto používej přímo nabízenou podporovanou možnost a nestav postup na neudržovaných obchvatech OOBE.
 
-## Řešení neviditelného disku při instalaci
+Oficiální kroky a návrat popisuje [Microsoft: změna typu účtu](https://support.microsoft.com/en-us/accounts-billing/manage/change-from-a-local-account-to-a-microsoft-account-in-windows).
 
-Diagnostiku, výběr ovladače a bezpečné rozlišení interního SSD od instalačního USB najdeš v návodu [Instalátor Windows nevidí SSD – Intel RST a VMD](installation-missing-ssd.md).
+## Sekundy v hodinách Windows 11
 
-## Soubor nebo složka nejde odstranit
+V nastavení **Datum a čas** vyhledej zobrazení času v oznamovací oblasti a zapni **Zobrazovat sekundy**.
 
-Chybu „Položka nebyla nalezena“, rozlišení CMD a PowerShellu a problematické názvy řeší návod [Windows – nelze odstranit soubor nebo složku](cannot-delete-item.md).
+Ve starších sestaveních může být volba v **Přizpůsobení → Hlavní panel → Chování hlavního panelu**; následující snímek ukazuje nastavení v části Datum a čas.
 
-## Základní nastavení
+<img src="../../images/t9hZzZp1FO.png" alt="Volba sekund v nastavení data a času" width="720">
 
-### Zobrazení sekund v dolním panelu
+[Zobrazit obrázek v původní velikosti](../../images/t9hZzZp1FO.png)
 
-V aktuálních Windows 11 otevři pravým tlačítkem hodiny → **Upravit datum a čas** a u zobrazení času v oznamovací oblasti zapni **Zobrazovat sekundy**.
+Zobrazení sekund může mírně zvýšit spotřebu; umístění volby popisuje [Microsoft: hlavní panel](https://support.microsoft.com/en-US/Windows/Experience/Personalization/customize-the-taskbar-in-windows).
 
-Ve starších sestaveních může být volba v chování hlavního panelu; její umístění a vyšší spotřebu popisuje [nastavení panelu Microsoftu](https://support.microsoft.com/en-US/Windows/Experience/Personalization/customize-the-taskbar-in-windows).
+## Užitečné zkratky Průzkumníku
 
-![Zobrazení sekund v taskbaru](../../images/t9hZzZp1FO.png)
+| Zkratka | Výsledek |
+|---|---|
+| `Alt+D` | Vybere adresní řádek pro zadání nebo kopírování cesty |
+| `Shift+F10` | Otevře kontextovou nabídku vybrané položky |
+| `Win+D` | Zobrazí plochu nebo vrátí okna |
 
-## Klávesové zkratky
+<img src="../../images/windows_keyboard_explorerAddressBar.png" alt="Adresní řádek Průzkumníku vybraný pro zadání cesty" width="640">
 
-| Zkratka | Akce |
-|---------|------|
-| `Win` + `D` | Minimalizace / obnovení všech oken |
-| `Alt` + `D` | Přechod na adresní řádek v Průzkumníku |
-| `Shift` + `F10` | Náhrada chybějící kontextové klávesy |
+[Zobrazit obrázek v původní velikosti](../../images/windows_keyboard_explorerAddressBar.png)
 
-### Skočení na adresní řádek
-
-![Adresní řádek ve Windows Průzkumníku](../../images/windows_keyboard_explorerAddressBar.png)
-
-### Chybějící kontextová klávesa
-
-Náhrada: `Shift` + `F10`
+Do vybraného řádku lze napsat `cmd` a otevřít CMD v této složce; neznamená to spuštění jako správce.

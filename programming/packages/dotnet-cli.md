@@ -1,10 +1,12 @@
+---
+description: "Práce se SDK, lokálními a globálními nástroji a telemetrií."
+---
+
 # .NET CLI (Command Line Interface)
 
 > Správa nástrojů .NET CLI a vypnutí i ověření telemetrie .NET SDK.
 
 Pro práci s příkazy .NET CLI nainstaluj **.NET SDK**.
-
-![.NET CLI](../../images/1974ce4c-4914-428a-88c8-075e84a7c713.png)
 
 ## Vypnutí telemetrie .NET SDK
 
@@ -187,14 +189,14 @@ Po klonování stejného projektu použij `dotnet tool restore`, který obnoví 
 
 ### Příkazy a jejich rozsah
 
-| Účel | Globálně pro účet | Lokálně pro projekt |
+| Účel | Globální syntaxe | Lokální syntaxe |
 |---|---|---|
 | Seznam | `dotnet tool list -g` | `dotnet tool list` |
-| Instalace | `dotnet tool install -g docfx` | `dotnet tool install docfx` |
-| Aktualizace | `dotnet tool update -g docfx` | `dotnet tool update docfx` |
-| Odinstalace | `dotnet tool uninstall -g docfx` | `dotnet tool uninstall docfx` |
+| Instalace | `dotnet tool install -g <balíček> [--version <verze>]` | `dotnet tool install <balíček> [--version <verze>]` |
+| Aktualizace | `dotnet tool update -g <balíček> [--version <verze>]` | `dotnet tool update <balíček> [--version <verze>]` |
+| Odinstalace | `dotnet tool uninstall -g <balíček>` | `dotnet tool uninstall <balíček>` |
 
-`docfx` nahraď skutečným balíčkem nástroje; pro reprodukovatelnost při instalaci a aktualizaci přidej `--version` s vybraným číslem.
+`<balíček>` je identifikátor nástroje na NuGet, například `docfx`; `<verze>` je přesná požadovaná verze a její uvedení umožní opakovat stejnou instalaci.
 
 `dotnet tool list` nemá přepínač `--outdated`; seznam zastaralých **knihoven** je jiný příkaz. [Reference tool list](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-list)
 
@@ -205,3 +207,5 @@ Výchozí spouštěče globálních nástrojů jsou v `%USERPROFILE%\.dotnet\too
 V PowerShellu zjistíš hostitele přes `Get-Command dotnet`, v CMD přes `where.exe dotnet` a v Bashi přes `command -v dotnet`.
 
 Globální nástroje obnov z inventáře `dotnet tool list -g` opětovnou instalací stejných verzí; pouhá kopie složky není spolehlivá obnova pro jiný systém nebo runtime. [Správa .NET tools](https://learn.microsoft.com/en-us/dotnet/core/tools/global-tools)
+
+Konkrétní přenos manifestu, balíčkových archivů a opětovnou instalaci bez registru popisuje [offline obnova .NET tools](dotnet-tools.md).

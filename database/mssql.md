@@ -1,3 +1,7 @@
+---
+description: "SQL dotazy, vazby tabulek a diagnostika databáze."
+---
+
 # SQL Server – dotazy a diagnostika
 
 Dotazy spouštěj v kontextu zamýšlené databáze; přístup k metadatům a diagnostickým pohledům závisí na oprávnění účtu.

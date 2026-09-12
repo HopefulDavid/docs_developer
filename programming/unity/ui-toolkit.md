@@ -1,3 +1,7 @@
+---
+description: "Propojení UXML, stylů USS a reakcí na události v C#."
+---
+
 # Unity: UI Toolkit od UXML ke kliknutí
 
 UI Toolkit vytváří rozhraní jako strom prvků, který popisuje UXML, styluje USS a ovládá C#.

@@ -1,3 +1,7 @@
+---
+description: "Připojení cizího repozitáře na konkrétní commit a jeho aktualizace."
+---
+
 # Git – submoduly
 
 Submodul připojuje samostatný repozitář do podadresáře projektu a hlavní repozitář zaznamenává jeho konkrétní commit.
@@ -23,7 +27,7 @@ git add .gitmodules libs/knihovna
 git commit -m "build: přidává submodul knihovny"
 ```
 
-Pro nový klon hlavního projektu použij `git clone --recurse-submodules URL`, kde `URL` nahradíš jeho adresou.
+Pro nový klon hlavního projektu použij `git clone --recurse-submodules <URL> [<cílová-složka>]`, kde `<URL>` nahradíš adresou hlavního projektu.
 
 V již naklonovaném projektu obnov přesně zapsané verze:
 
@@ -58,8 +62,16 @@ Stav **detached HEAD** je při obnově připnuté verze očekávaný; sám o sob
 
 ## Změna adresy nebo odstranění
 
-`git submodule set-url libs/knihovna NOVA_URL` změní adresu a synchronizuje místní konfiguraci; nahraď `NOVA_URL` a commituj `.gitmodules`.
+`git submodule set-url <cesta-submodulu> <nová-URL>` změní adresu a synchronizuje místní konfiguraci; obě hodnoty nahraď podle své knihovny a commituj `.gitmodules`.
 
 Po uchování vlastní práce lze submodul odstranit přes `git rm libs/knihovna`, zkontrolovat `git diff --cached` a vytvořit commit.
 
 Neodstraňuj ručně `.git/modules` jako běžný úklid; může obsahovat jediné kopie místních commitů. [Odstranění a obnova submodulů](https://git-scm.com/docs/gitsubmodules)
+
+## Když je složka prázdná nebo ukazuje jinou verzi
+
+Po běžném pull hlavního projektu spusť `git submodule update --init --recursive`; tím obnovíš verze zapsané hlavním projektem, aniž bys vybíral nejnovější vzdálenou větev.
+
+Znak `+` před ID ve výpisu `git submodule status` znamená jiný vybraný commit než ten zapsaný v hlavním indexu, `-` neinicializovaný submodul a `U` konflikt.
+
+Před aktualizací prohlédni vlastní změny přes `git -C libs/knihovna status` a zachovej je, pokud nejsou hotové.

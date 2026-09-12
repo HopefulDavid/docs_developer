@@ -1,63 +1,87 @@
-# VPN: tunel, směrování a ověření přístupu
+---
+description: "Připojení do soukromé sítě, rozdělení provozu a diagnostika DNS, tras a portů."
+---
 
-VPN vytváří spojení mezi zařízením a vzdálenou sítí nebo bránou; běžné VPN protokoly tento tunel šifrují.
+# VPN – přístup do vzdálené sítě
 
-Vývojář ji používá například pro přístup k internímu Git serveru, databázi nebo testovacímu prostředí.
+VPN vytvoří tunel mezi tvým zařízením a vzdálenou bránou nebo dalším zařízením.
 
-## Jak VPN funguje
+Vývojář přes něj může dosáhnout na interní Git, databázi či server, které nejsou přímo dostupné z internetu.
 
-Klient ověří server, vytvoří tunel a podle směrovací tabulky do něj posílá vybraný provoz.
+## Jak spojení funguje
 
-Za VPN bránou už ochrana samotného tunelu končí, proto mají aplikace dál používat HTTPS, SSH nebo jiné koncové šifrování.
-
-| Režim | Co prochází tunelem | Praktický důsledek |
-|---|---|---|
-| Split tunnel | Jen vybrané sítě nebo adresy | Interní server může být dostupný, zatímco běžný web dál používá domácí připojení |
-| Full / force tunnel | Výchozí směrování vede přes VPN, podle konfigurace mohou existovat výjimky | Internetový provoz může vystupovat přes VPN bránu a závisí na její kapacitě |
-
-Přesné chování určuje konfigurace IPv4, IPv6, DNS a výjimek, nikoli pouze zelená ikona klienta.
-
-Princip rozdělení provozu popisuje [Microsoft: směrování VPN](https://learn.microsoft.com/en-us/windows/security/operating-system-security/network-security/vpn/vpn-routing).
-
-## Co je potřeba vědět před použitím
-
-Získej od správce schváleného klienta, adresu serveru, způsob přihlášení a název služby, ke které máš mít přístup.
-
-Soubor konfigurace může obsahovat soukromý klíč, proto jej nesdílej jako běžnou ukázku.
-
-VPN neuděluje automaticky oprávnění k databázi a nenahrazuje aktualizace systému, vícefaktorové přihlášení ani kontrolu certifikátu.
-
-## Praktické použití a kontrola
-
-1. Připoj se schváleným klientem a dokonči požadované ověření identity.
-2. Otevři konkrétní interní službu, kterou máš oprávnění používat.
-3. Pokud nefunguje, rozliš překlad názvu, dosažitelnost portu a přihlášení do aplikace.
-
-Ve Windows lze v PowerShellu ověřit interní web následujícím způsobem; ukázkový název nahraď názvem od správce.
-
-```powershell
-# DNS musí vrátit adresu očekávaného interního serveru.
-Resolve-DnsName -Name 'git.firma.example'
-# Kontrola TCP spojení na HTTPS; neověřuje přihlášení ani platnost certifikátu.
-Test-NetConnection -ComputerName 'git.firma.example' -Port 443
+```text
+tvůj počítač → VPN tunel → vzdálená brána → interní služba
 ```
 
-`TcpTestSucceeded: True` znamená dostupné TCP spojení, nikoli zaručeně funkční web.
+Směrování určuje, který provoz se do tunelu pošle, a DNS může pro interní jména potřebovat jiný resolver než běžný internet.
 
-## Časté problémy
+VPN přístup do sítě sám neuděluje účet ani databázové oprávnění.
 
-| Projev | Co prověřit |
+## Vyber podle skutečné infrastruktury
+
+| Situace | Co použít |
 |---|---|
-| Název neexistuje | Přidělené DNS servery a správnost názvu |
-| DNS funguje, port ne | Směrování, firewall a oprávnění dané VPN skupiny |
-| Přihlášení je odmítnuto | Účet aplikace a jeho oprávnění |
-| Nefunguje jen část sítí | Split tunnel, IPv6 nebo překryv domácí a firemní podsítě |
-| Certifikát neodpovídá serveru | Správnou adresu a certifikát se správcem; chybu neobcházej |
+| Firemní síť | Klienta a profil určený správcem |
+| Vlastní WireGuard server | WireGuard klienta a konfiguraci konkrétního peeru |
+| Server poskytuje OpenVPN | Odpovídající klient a profil serveru |
+| Brána poskytuje protokol podporovaný Windows | Vestavěné VPN připojení se správným typem ověření |
+| Jen jedna neveřejná TCP služba za SSH | Může stačit [SSH tunel](ssh.md#lokální-tunel-k-neveřejné-službě) |
 
-## Důležité poznámky
+Nainstalování libovolného VPN klienta nevytvoří kompatibilní server; profil musí odpovídat protokolu a nastavení protistrany.
 
-HTTPS chrání obsah webové komunikace i bez VPN, pokud používáš důvěryhodný server a platný certifikát.
+## Split tunnel a celý provoz
 
-VPN přesouvá část důvěry k provozovateli brány; sama nezaručuje anonymitu, protože web tě může poznat podle účtu nebo cookies.
+| Režim | Chování | Jak ho poznat při použití |
+|---|---|---|
+| Split tunnel | Tunelem jdou jen vybrané sítě | Interní server je dostupný, veřejný internet může dál používat místní bránu |
+| Full / force tunnel | Výchozí trasa vede přes VPN, mohou existovat výjimky | Běžný internetový provoz zpravidla vystupuje u VPN brány |
 
-Změněná veřejná IP adresa není důkazem, že všechny aplikace a DNS dotazy používají tunel.
+IPv4, IPv6 a DNS se mohou směrovat samostatně, takže změna veřejné IP sama neprokazuje úplný průchod všech aplikací tunelem.
+
+U WireGuardu `AllowedIPs` ovlivňuje výběr provozu pro peer a povolené zdrojové adresy; nejde o seznam uživatelů a nemá se bez důvodu změnit na všechny sítě.
+
+## Praktické připojení
+
+1. Získej správný profil, přihlašovací údaje a přesný název či IP interní služby.
+2. Importuj profil do odpovídajícího klienta a zkontroluj, pro jakou síť je určený.
+3. Připoj se a dokonči požadované vícefaktorové ověření.
+4. Otevři konkrétní interní službu a přihlas se i do ní.
+5. Po práci se odpoj, pokud VPN nepotřebuješ trvale.
+
+Ve Windows se vestavěné připojení spravuje v **Nastavení → Síť a internet → VPN**; WireGuard nebo OpenVPN obvykle používají vlastní klientské rozhraní.
+
+Profil může obsahovat soukromý klíč, a proto jej uchovávej jako přístupový údaj.
+
+## Diagnostika ve Windows
+
+Příkazy v PowerShellu nic nepřesměrovávají; ukázkový název nahraď interní službou od správce.
+
+```powershell
+Resolve-DnsName -Name "git.firma.example"
+Test-NetConnection -ComputerName "git.firma.example" -Port 443
+Get-NetIPConfiguration
+```
+
+První příkaz ověří DNS, druhý TCP port a třetí zobrazí síťová rozhraní včetně relevantní konfigurace.
+
+| Projev | Co ověřit |
+|---|---|
+| VPN se nepřipojí | Adresu brány, přihlášení, čas zařízení a log klienta |
+| VPN je připojená, interní jméno neexistuje | DNS přidělené VPN a správný název |
+| DNS funguje, TCP ne | Trasu, pravidla firewallu, běh služby a oprávnění VPN skupiny |
+| TCP funguje, aplikace odmítá přihlášení | Samostatný účet a práva aplikace |
+| Nefunguje jen určitá síť | Překryv domácí a vzdálené podsítě nebo split tunnel |
+| Po připojení přestane fungovat internet | Výchozí trasu, DNS, kapacitu brány a požadovanou politiku přístupu |
+
+Při překryvu například dvou sítí `192.168.1.0/24` může počítač hledat vzdálený server v domácí síti; neopravuj to náhodným mazáním tras a nejprve vyřeš adresní plán se správcem.
+
+## Co VPN nezajišťuje sama
+
+Tunel končí na vzdálené straně, proto služby dál používej přes HTTPS nebo SSH.
+
+VPN nezaručuje anonymitu a web tě může poznat podle přihlášení či cookies.
+
+Další rozlišení chyb je v [síťové diagnostice](basics.md).
+
+Zdroje: [Microsoft: VPN routing](https://learn.microsoft.com/en-us/windows/security/operating-system-security/network-security/vpn/vpn-routing), [WireGuard: principy](https://www.wireguard.com/#cryptokey-routing), [OpenVPN dokumentace](https://openvpn.net/community-docs/).

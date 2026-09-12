@@ -1,19 +1,25 @@
+---
+description: "Automatické zahájení nahrávání a výběr profilu při spuštění."
+---
+
 # OBS Studio – parametry spuštění
 
 Parametry OBS umožňují vybrat profil, scénu a případně automaticky zahájit nahrávání nebo streamování.
 
 ## Argumenty příkazové řádky
 
-| Argument | Význam |
+`<název>` nahraď přesným existujícím názvem v OBS; uvozovky umožňují mezery.
+
+| Syntaxe argumentu | Význam |
 |---|---|
 | `--help` | Nápověda parametrů |
 | `--startrecording` | Zahájení nahrávání |
 | `--startstreaming` | Zahájení vysílání |
 | `--startvirtualcam` | Spuštění virtuální kamery |
 | `--startreplaybuffer` | Spuštění předem nastaveného replay bufferu |
-| `--collection "name"` | Výběr existující kolekce scén |
-| `--profile "name"` | Výběr existujícího profilu |
-| `--scene "name"` | Výběr scény |
+| `--collection "<název>"` | Výběr existující kolekce scén |
+| `--profile "<název>"` | Výběr existujícího profilu |
+| `--scene "<název>"` | Výběr scény |
 | `--studio-mode` | Režim Studio |
 | `--minimize-to-tray` | Minimalizace do oznamovací oblasti |
 | `--portable` | Přenosný režim |

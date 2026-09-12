@@ -1,82 +1,144 @@
-<a id="ssh--windows-git-a-volba-klienta"></a>
+---
+description: "Přihlášení na server, přenos souborů, konfigurace spojení a lokální tunel."
+---
 
-# SSH – příkazy a připojení
+# SSH – připojení k jinému počítači
 
-> Přihlášení na server, kopírování souborů a nastavení připojení.
+SSH je šifrované spojení, přes které se přihlásíš na vzdálený počítač, spustíš příkaz nebo přeneseš soubor.
+
+Na tvém počítači běží **klient** a na cíli musí běžet dostupný **SSH server**; instalace klienta sama nepovolí příchozí přístup k tvému zařízení.
+
+## Co potřebuješ před připojením
+
+| Údaj | Příklad | Kdo ho určuje |
+|---|---|---|
+| Adresa | `server.example.com` nebo IP | Správce cílového počítače |
+| Uživatelský účet | `jana` | Účet existující na cíli |
+| Port | `22`, případně jiný | Konfigurace SSH serveru a firewallu |
+| Přihlášení | Heslo nebo [SSH klíč](ssh/keys.md) | Povolený způsob na serveru |
+| Otisk serveru | SHA256 otisk hostitelského klíče | Správce nebo oficiální dokumentace služby |
+
+Adresa `server.example.com` je ukázková a musíš ji nahradit svým skutečným serverem.
+
+Ve Windows nejprve ověř [instalaci a výběr klienta](ssh/windows.md).
+
+## První přihlášení
+
+Obecná syntaxe:
 
 ```text
-ssh uzivatel@server.example.com
+ssh [-p <port>] [-i <soukromý-klíč>] <uživatel>@<server>
 ```
 
-Nahraď účet a adresu vlastními údaji; při prvním připojení ověř otisk serveru u jeho správce před potvrzením důvěry.
+Příklad pro účet `jana` na serveru s výchozím portem:
 
-**Nastavení:** [Windows a volba klienta](ssh/windows.md) · [SSH klíče](ssh/keys.md) · [Git a GitHub](ssh/git.md)
+```bash
+ssh jana@server.example.com
+```
 
-## Základní SSH příkazy
+Při prvním připojení porovnej zobrazený otisk s nezávisle získaným otiskem serveru a až při shodě potvrď důvěru.
 
-Příklady platí pro OpenSSH v PowerShellu i Bashi; vzdálené cesty a příkaz `uname` předpokládají linuxový server.
+Otisk se uloží do `known_hosts`, aby klient při příštím spojení poznal stejný server.
 
-| Úloha | Příkaz |
-| --- | --- |
-| Verze klienta | `ssh -V` |
-| Připojení na jiný port | `ssh -p 2222 uzivatel@server.example.com` |
-| Použití konkrétního klíče | `ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes uzivatel@server.example.com` |
-| Jeden vzdálený příkaz | `ssh uzivatel@server.example.com "uname -a"` |
-| Nahrání souboru | `scp ./soubor.txt uzivatel@server.example.com:/tmp/` |
-| Stažení souboru | `scp uzivatel@server.example.com:/tmp/soubor.txt ./` |
-| Nahrání adresáře | `scp -r ./data uzivatel@server.example.com:/tmp/` |
-| Kopírování přes jiný port | `scp -P 2222 ./soubor.txt uzivatel@server.example.com:/tmp/` |
-| Interaktivní přenos souborů | `sftp -P 2222 uzivatel@server.example.com` |
-| Podrobná diagnostika | `ssh -vvv uzivatel@server.example.com` |
-| Ukončení vzdáleného shellu | `exit` |
+Po přihlášení příkazy spouštíš **na cílovém počítači** a používáš jeho shell; příkaz `exit` vzdálené přihlášení ukončí.
 
-SSH používá pro port malé `-p`, zatímco SCP a SFTP velké `-P`.
+Heslo účtu nebo fráze klíče se při zadávání běžně nezobrazuje.
 
-## Konfigurace jednotlivých serverů
+## Ulož připojení pod názvem
 
-Ulož zkratku připojení do `%USERPROFILE%\.ssh\config` pro Windows OpenSSH nebo `~/.ssh/config` pro Bash, Linux a macOS; soubor nemá příponu `.txt`.
+Do `%USERPROFILE%\.ssh\config` ve Windows nebo `~/.ssh/config` v Linuxu a macOS ulož:
 
 ```sshconfig
-Host pracovni-server
+Host vyvoj
     HostName server.example.com
-    User uzivatel
+    User jana
     Port 2222
     IdentityFile ~/.ssh/id_ed25519
     IdentitiesOnly yes
 ```
 
-Pak stačí `ssh pracovni-server`; účinné nastavení bez připojení vypíše `ssh -G pracovni-server`.
+Soubor nemá příponu `.txt` a uvedené údaje musí odpovídat tvému serveru.
 
-Konkrétní bloky `Host` dávej před obecný `Host *`, protože OpenSSH obvykle použije první získanou hodnotu.
+| Nastavení | Co můžeš změnit |
+|---|---|
+| `Host` | Vlastní krátký název spojení |
+| `HostName` | Skutečnou adresu serveru |
+| `User` | Cílový účet |
+| `Port` | Skutečný naslouchající port; `2222` je pouze příklad |
+| `IdentityFile` | Cestu k vlastnímu soukromému klíči |
+| `IdentitiesOnly yes` | Omezí nabídku na nakonfigurované identity místo libovolných dalších klíčů agenta |
 
-<details>
-<summary>Lokální tunel přes SSH</summary>
-
-```text
-ssh -N -L 127.0.0.1:8080:127.0.0.1:80 uzivatel@server.example.com
+```bash
+ssh -G vyvoj
+ssh vyvoj
 ```
 
-Po dobu běhu příkazu zpřístupní `http://127.0.0.1:8080` na tvém počítači port 80 z pohledu SSH serveru; tunel ukončíš `Ctrl+C`.
+`-G` vypíše účinnou konfiguraci bez přihlášení a druhý příkaz použije zkratku.
 
-</details>
+Konkrétní bloky dávej před obecný `Host *`, protože pro běžné jednotlivé volby se použije první získaná hodnota.
 
-## Řešení problémů
+## Přenos souborů
 
-| Projev | Další krok |
-| --- | --- |
-| Příkaz `ssh` neexistuje | [Zkontroluj instalaci a cestu](ssh/windows.md#které-ssh-se-spouští). |
-| `Permission denied (publickey)` | Pomocí `ssh -vvv` porovnej nabízený klíč a účet s veřejným klíčem uloženým na serveru. |
-| `Connection refused` | Ověř adresu, port a běh SSH serveru. |
-| `Connection timed out` | Ověř dostupnost sítě, VPN a pravidla firewallu. |
-| Změnil se otisk serveru | Nejdříve ověř nový otisk u správce, teprve potom uprav záznam v `known_hosts`. |
-| Terminál funguje, Git selhává | [Zjisti klienta, kterého spouští Git](ssh/git.md#které-ssh-používá-git). |
+Příklady předpokládají nastavený alias `vyvoj` a linuxový cílový server, na kterém máš právo zapisovat do domovské složky.
 
-Před sdílením diagnostického výpisu odstraň soukromé názvy serverů, účtů a lokální cesty.
+```bash
+scp ./poznamky.txt vyvoj:./poznamky.txt
+scp vyvoj:./poznamky.txt ./stazene-poznamky.txt
+```
 
-## Nastavení SSH
+První příkaz nahraje existující místní soubor do domovské složky cílového účtu a druhý jej stáhne pod jiným místním názvem.
 
-<!-- Stabilní kotvy zachovávají staré záložky a vedou k příslušnému návodu níže. -->
+Před kopírováním ověř cílový název, protože existující soubor lze přepsat.
 
+| Syntaxe | Účel |
+|---|---|
+| `scp [-P <port>] <místní-soubor> <uživatel>@<server>:<cílová-cesta>` | Nahrání souboru |
+| `scp [-P <port>] <uživatel>@<server>:<soubor> <místní-cesta>` | Stažení souboru |
+| `scp -r <místní-adresář> <alias>:<cílová-cesta>` | Rekurzivní kopie adresáře |
+| `sftp [-P <port>] <uživatel>@<server>` | Interaktivní přenos s příkazy `ls`, `get`, `put` a `exit` |
+
+SSH používá pro port `-p`, ale SCP a SFTP `-P`; při použití aliasu si port převezmou z jeho konfigurace.
+
+Novější OpenSSH používá pro SCP standardně protokol SFTP; kompatibilitu se starým serverem ověř, než budeš měnit transport.
+
+## Lokální tunel k neveřejné službě
+
+Představ si web na portu `80`, který je dostupný pouze ze SSH serveru.
+
+```bash
+ssh -N -L 127.0.0.1:8080:127.0.0.1:80 vyvoj
+```
+
+| Část | Význam |
+|---|---|
+| `-N` | Neotevře vzdálený shell, pouze tunel |
+| První `127.0.0.1:8080` | Naslouchání jen na tvém počítači na portu 8080 |
+| Druhé `127.0.0.1:80` | Cíl z pohledu SSH serveru, tedy jeho vlastní port 80 |
+| `vyvoj` | Server, který vytvoří vzdálenou část spojení |
+
+Po dobu běhu otevři `http://127.0.0.1:8080`; `Ctrl+C` tunel ukončí.
+
+Místní port můžeš změnit na volný, ale cílovou adresu a port musíš znát a server musí tunelování povolovat.
+
+`-L` zpřístupňuje cíl lokálně, `-R` vytváří naslouchání na vzdálené straně a `-D` místní SOCKS proxy; vzdálené či veřejné naslouchání nastavuj jen pro konkrétní zamýšlený přístup.
+
+## Diagnostika podle chyby
+
+| Projev | Co znamená a co ověřit |
+|---|---|
+| `Could not resolve hostname` | Chybný název nebo DNS; zkontroluj také potřebnou VPN |
+| `Connection timed out` | Cesta k serveru, firewall, VPN nebo nesprávná adresa |
+| `Connection refused` | Cíl spojení odmítl; ověř běžící server a správný port |
+| `Permission denied` | Spojení došlo k ověření identity; kontroluj účet a nabízený klíč |
+| Změna hostitelského klíče | Může jít o reinstalaci i cizí server; ověř nový otisk jiným kanálem |
+
+`ssh -vvv <alias>` vypíše podrobnosti přihlášení; před sdílením logu odstraň soukromá jména, adresy a místní cesty.
+
+Po nezávislém ověření legitimní změny můžeš odstranit starý záznam pomocí `ssh-keygen -R <server>`, u jiného portu `ssh-keygen -R "[<server>]:<port>"`, a při dalším spojení ověřit nový otisk.
+
+Zdroje: [ssh](https://man.openbsd.org/ssh), [ssh_config](https://man.openbsd.org/ssh_config), [scp](https://man.openbsd.org/scp), [sftp](https://man.openbsd.org/sftp).
+
+<a id="ssh--windows-git-a-volba-klienta"></a>
 <a id="kde-začít"></a>
 <a id="klient-server-a-agent"></a>
 <a id="které-ssh-se-skutečně-spouští"></a>
@@ -94,17 +156,7 @@ Před sdílením diagnostického výpisu odstraň soukromé názvy serverů, ú�
 <a id="5-ověř-výsledek"></a>
 <a id="alternativa-openssh-z-git-for-windows"></a>
 <a id="návrat-k-původní-volbě"></a>
-
-- [SSH ve Windows](ssh/windows.md) – zjištění implementace, instalace, primární klient a sjednocení s Gitem.
-
 <a id="agent-v-git-bash-linuxu-a-macos"></a>
 <a id="rychlá-správa-agenta"></a>
-
-- [SSH klíče](ssh/keys.md) – vytvoření, heslová fráze a správa agenta.
-
 <a id="které-ssh-používá-git"></a>
 <a id="ověření-skutečně-spuštěného-příkazu"></a>
-
-- [Git přes SSH](ssh/git.md) – GitHub, adresy repozitářů a diagnostika výběru klienta.
-
-Podrobné přepínače: [ssh](https://man.openbsd.org/ssh), [scp](https://man.openbsd.org/scp), [sftp](https://man.openbsd.org/sftp) a [ssh_config](https://man.openbsd.org/ssh_config).

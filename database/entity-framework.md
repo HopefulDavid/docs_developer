@@ -1,3 +1,7 @@
+---
+description: "Mapování .NET objektů na databázi a řízení změn pomocí migrací."
+---
+
 # Entity Framework Core – první databáze a migrace
 
 EF Core mapuje model .NET na databázi, překládá podporované LINQ dotazy a sleduje změny entit.
@@ -70,13 +74,19 @@ Před aplikací migrace přečti její operace `Up` a `Down`, zvlášť pokud m�
 
 ## Běžná správa
 
-| Záměr | Příkaz / postup |
+`<migrace>` je název nové migrace, nebo existující migrace z výpisu podle konkrétního řádku.
+
+| Záměr | Syntaxe |
 |---|---|
 | Seznam migrací | `dotnet ef migrations list` |
-| Nová změna modelu | `dotnet ef migrations add PopisZmeny` |
+| Nová změna modelu | `dotnet ef migrations add <migrace>` |
 | Zrušení poslední dosud neaplikované migrace | `dotnet ef migrations remove` |
-| Nastavení databáze na konkrétní migraci | `dotnet ef database update NazevMigrace` |
+| Nastavení databáze na konkrétní migraci | `dotnet ef database update <migrace>` |
 | Obnova lokálního nástroje z manifestu | `dotnet tool restore` |
+
+Například `dotnet ef migrations add AddNotes` připraví migraci pojmenovanou `AddNotes`; teprve `dotnet ef database update AddNotes` ji aplikuje na nakonfigurovanou databázi.
+
+Před aktualizací ověř connection string a vytvoř zálohu dat; výběr starší migrace může provést její kroky Down a odstranit data.
 
 Cílová migrace může znamenat i návrat zpět a ztrátu dat; aplikovanou sdílenou migraci neopravuj smazáním její historie. [CLI EF Core](https://learn.microsoft.com/en-us/ef/core/cli/dotnet)
 

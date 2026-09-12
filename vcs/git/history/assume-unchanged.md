@@ -1,8 +1,12 @@
+---
+description: "Oddělení lokální konfigurace a limity příznaků sledovaných souborů."
+---
+
 # Git – lokální konfigurace a assume-unchanged
 
 Příznak `assume-unchanged` je optimalizace kontroly sledovaného souboru; není spolehlivý způsob ukládání vlastní konfigurace mimo historii.
 
-## K čemu slouží
+## Proč tím neskrývat vlastní úpravy
 
 Gitu slibuješ, že soubor neměníš, takže může vynechat některé kontroly pracovního stromu.
 
@@ -42,7 +46,7 @@ git diff -- config.json
 
 Malé počáteční písmeno ve výpisu `ls-files -v` označuje `assume-unchanged`; poslední příkaz ukáže místní změny. [Reference git ls-files](https://git-scm.com/docs/git-ls-files)
 
-Samotné nastavení by mělo podobu `git update-index --assume-unchanged -- config.json`, ale pro lokální úpravy použij oddělenou konfiguraci výše.
+Samotné nastavení by mělo podobu `git update-index --assume-unchanged -- <sledovaný-soubor>`, ale pro lokální úpravy použij oddělenou konfiguraci výše.
 
 ## Důležité poznámky
 

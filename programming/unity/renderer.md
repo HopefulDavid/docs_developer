@@ -1,3 +1,7 @@
+---
+description: "Příprava URP, materiály a rozdíl mezi světly a postprocessingem."
+---
+
 # Unity: Universal Render Pipeline
 
 Universal Render Pipeline neboli URP určuje, jak Unity připraví a vykreslí snímek.

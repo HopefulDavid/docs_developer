@@ -164,6 +164,12 @@ Komentář nebo bezprostřední vysvětlení objasní účel příkazu, význam 
 
 Ukázkové názvy a cesty jsou konkrétní a výslovně vysvětlené, nikoli nevysvětlené zástupné značky.
 
+Referenční tabulky používají obecnou syntaxi: pevné části se píší doslova, `<hodnota>` označuje nahrazovaný argument, `[volba]` nepovinnou část, `{a|b}` povinnou alternativu a `...` opakování.
+
+Konkrétní spustitelný příklad je označený jako příklad a bezprostředně vysvětluje vybrané názvy a hodnoty; tabulka rozebírající právě tento příklad smí jeho hodnoty opakovat.
+
+Výukový význam značek vlastní veřejný [klíč syntaxe příkazů](../../operating-system/command-line-syntax.md); skutečné operátory shellu a syntaxe programovacího jazyka se nezaměňují s touto dokumentační notací.
+
 Příkaz měnící data má před sebou podmínky použití a kontrolu cíle; jeho návratový kód nenahrazuje ověření skutečného výsledku nebo obnovy.
 
 Významnou technickou změnu dolož relevantní primární dokumentací a dostupným spustitelným ověřením, přičemž rozlišuj ověření zdroje, syntaxe a skutečného běhu služby.
@@ -178,11 +184,21 @@ Tabulka porovnává souběžné možnosti, seznam zachycuje kroky nebo stručný
 
 Snímek obrazovky ani video nesmějí být jediným nositelem zásadního postupu; obrázek má popisný alternativní text a video smysluplný titulek.
 
+U posouzeného snímku použij HTML `img` s kladnou šířkou `width` v pixelech; normalizátor ji zachová a CSS omezí šířku dostupným místem při zachování poměru stran.
+
+Malé dialogy nezvětšuj nad potřebnou čitelnost; u rozsáhlých snímků ponech odkaz na původní rozlišení a informaci popiš také textem.
+
 Dekorativní úvodní obrázky, emoji v každé buňce a nepodložená označení jako „kompletní“ nebo „nejlepší“ nepřidávají orientační hodnotu.
 
 Související postup vlastní jedna stránka a ostatní na ni odkazují.
 
 Při přidání tématu uprav registr v generátoru podle [projektových příkazů](../development/commands.md#úprava-nebo-přidání-článku), nikoli generované rozcestníky a TOC.
+
+Každý navigovaný obsahový článek vlastní jednořádkové YAML metadata `description` v dvojitých uvozovkách s platným JSON escapováním.
+
+Popis stručně a přímo říká, co čtenář u cíle najde, bez opisování definice z úvodu, formulace „tato stránka“, odkazů nebo znaku svislé čáry.
+
+Generátor popis neodvozuje z prvního odstavce a chybějící či neplatná metadata odmítá, takže úvod a rozcestník lze udržovat podle jejich odlišného účelu.
 
 Změna nadpisu musí zahrnout kontrolu příchozích odkazů na kotvu; veřejné cesty a jejich casing zachovávej.
 

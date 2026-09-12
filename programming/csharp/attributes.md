@@ -1,3 +1,7 @@
+---
+description: "Metadata typů a členů a jejich čtení pomocí reflexe."
+---
+
 # .NET – Atributy, validace a FileHelpers
 
 Atributy připojují metadata k typům a členům; jejich účinek závisí na kompilátoru, runtime nebo knihovně, která je zpracovává.

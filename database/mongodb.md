@@ -1,3 +1,7 @@
+---
+description: "Výběr databáze a čtení či změny dokumentů v mongosh."
+---
+
 # MongoDB – příkazy v mongosh
 
 MongoDB ukládá dokumenty BSON do kolekcí; následující příklady jsou pro interaktivní shell `mongosh`.

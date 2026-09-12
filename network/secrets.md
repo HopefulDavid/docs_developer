@@ -1,21 +1,71 @@
-# Náhodná tajemství
+---
+description: "Vytvoření náhodného aplikačního tajemství, délka, kódování a bezpečné uložení."
+---
 
-> Generování náhodných hodnot pro aplikační tajemství pomocí OpenSSL.
+# Náhodná tajemství pro aplikace
 
-S nainstalovaným OpenSSL vygeneruj požadovaný počet náhodných bajtů:
+Aplikační tajemství je neveřejná hodnota, například podpisový klíč relace nebo token pro přístup ke službě.
 
-```text
+Generuj ho kryptografickým generátorem a podle požadavků aplikace, ne skládáním předvídatelného názvu a data.
+
+## Nejdříve zjisti požadovaný formát
+
+| Požadavek aplikace | Co potřebuješ vytvořit |
+|---|---|
+| Náhodný symetrický klíč | Přesný počet náhodných bajtů, případně zakódovaný jako Base64 či hex |
+| Token služby | Hodnotu vydanou touto službou, vlastní náhodný text ji nenahradí |
+| SSH identita | [Pár klíčů pomocí ssh-keygen](ssh/keys.md) |
+| HTTPS server | [Certifikát a soukromý klíč](certificates.md) |
+
+Kódování není šifrování: Base64 i hex lze převést zpět na původní bajty bez hesla.
+
+## Generování pomocí OpenSSL
+
+S nainstalovaným OpenSSL v PowerShellu nebo Bashi:
+
+```bash
 openssl rand -base64 32
-openssl rand -hex 64
 ```
 
-| Příkaz | Výstup |
-| --- | --- |
-| `-base64 32` | 32 náhodných bajtů zakódovaných jako Base64 |
-| `-hex 64` | 64 náhodných bajtů zapsaných jako 128 hexadecimálních znaků |
+Vznikne 32 náhodných bajtů, tedy 256 bitů, zakódovaných do 44 znaků Base64 včetně výplně `=`.
 
-Jde o samostatné tajné hodnoty pro aplikace; [SSH pár klíčů](ssh/keys.md) vytvářej pomocí `ssh-keygen`.
+Číslo je délka vstupních bajtů, nikoli počet znaků výstupu.
 
-Výsledek ulož do správce tajemství nebo lokální konfigurace vyloučené z Gitu a nesdílej jej ve výpisech či dokumentaci.
+Alternativa pro aplikaci vyžadující hex:
 
-Parametry a generátor popisuje [OpenSSL rand](https://docs.openssl.org/master/man1/openssl-rand/).
+```bash
+openssl rand -hex 32
+```
+
+Opět jde o 32 náhodných bajtů, tentokrát zapsaných jako 64 hexadecimálních znaků; každý příkaz vytváří jinou novou hodnotu.
+
+| Syntaxe | Význam |
+|---|---|
+| `openssl rand -base64 <počet-bajtů>` | Base64 reprezentace požadované náhodnosti |
+| `openssl rand -hex <počet-bajtů>` | Hex reprezentace, dva znaky na bajt |
+
+Standardní Base64 může obsahovat `+`, `/` a `=`; pokud aplikace požaduje Base64url, použij její dokumentovaný postup místo ručního odstraňování znaků.
+
+## Alternativa bez OpenSSL v PowerShellu 7
+
+```powershell
+$secretBytes = [byte[]]::new(32)
+[System.Security.Cryptography.RandomNumberGenerator]::Fill($secretBytes)
+[Convert]::ToBase64String($secretBytes)
+```
+
+Pole obsahuje 32 bajtů, systémový generátor ho naplní a poslední řádek vypíše Base64.
+
+Obyčejný `Get-Random` pro tento účel nenahrazuje požadavek na kryptograficky bezpečný generátor.
+
+## Uložení a změna klíče
+
+Výstup ulož do správce tajemství nebo chráněné místní konfigurace, kterou aplikace umí načíst.
+
+Zabráníš-li commitu souboru přes `.gitignore`, chráníš tím budoucí Git změny, nikoli už uložené verze nebo zálohy.
+
+Před výměnou zjisti dopad: změna podpisového klíče může zneplatnit relace a ztráta šifrovacího klíče může znemožnit čtení dat.
+
+U více instancí aplikace musí být klíče sdílené nebo verzované podle jejího návrhu, nikoli vygenerované jinak při každém startu.
+
+Zdroje: [OpenSSL rand](https://docs.openssl.org/master/man1/openssl-rand/), [RandomNumberGenerator](https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.randomnumbergenerator).

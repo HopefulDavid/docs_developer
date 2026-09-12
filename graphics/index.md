@@ -10,4 +10,4 @@ Grafické nástroje, pracovní postupy a praktické tipy pro vizuální tvorbu.
 
 | Stránka | Popis |
 | --- | --- |
-| [Affinity](affinity.md) | Mřížka a okraje jsou pomocné čáry pro rozvržení dokumentu v Affinity Designeru 2 pro desktop. |
+| [Affinity](affinity.md) | Nastavení mřížky a přesné rozměry či okraje grafiky. |

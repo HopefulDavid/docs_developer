@@ -1,4 +1,8 @@
-# JetBrains Rider – Android, komentáře a zkratky
+---
+description: "Připojení Android zařízení a hledání i nahrazování textu pomocí regexu."
+---
+
+# JetBrains Rider – nastavení
 
 Rider propojuje editor .NET s nástroji pro sestavení, ladění a práci se zdrojovým kódem.
 
@@ -27,28 +31,8 @@ Odstavce v dokumentačním komentáři odděluj značkami `<para>`:
 
 Vkládání prázdného odstavce s nezlomitelnou mezerou není potřeba; vzhled dokumentace závisí na rendereru. [Doporučené XML značky C#](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/recommended-tags)
 
-## Klávesové zkratky
-
-Tabulka platí pro **IntelliJ keymap ve Windows**; vlastní mapování ověř v **Settings → Keymap**.
-
-| Akce | Zkratka |
-|---|---|
-| Informace o parametrech | `Ctrl+P` |
-| Navigace zpět | `Ctrl+Alt+Left` |
-| Navigace dopředu | `Ctrl+Alt+Right` |
-| Doplnění podle očekávaného typu | `Ctrl+Shift+Space` |
-
-[Oficiální přehled zkratek](https://resources.jetbrains.com/storage/products/rider/docs/Rider_default_win_shortcuts.pdf)
-
 ## Regulární výrazy
 
-V panelu nahrazování zapni režim **Regex** a před hromadnou změnou zkontroluj náhled.
+Pro hledání opakujících se tvarů textu a jejich nahrazování pokračuj samostatným [návodem k regulárním výrazům](jetbrains/regular-expressions.md).
 
-| Zachycení | Hledat | Nahradit |
-|---|---|---|
-| Číselná skupina | `<h2>(.*?)</h2>` | `<h2>Test $1</h2>` |
-| Pojmenovaná skupina | `<h2>(?<customName>.*?)</h2>` | `<h2>Test ${customName}</h2>` |
-
-Příklad předpokládá jednoduchý nadpis na jednom řádku; nejde o obecný parser HTML.
-
-Vyhledávání v IDE používá Java regex, jehož syntaxe se může lišit od regexu v aplikaci .NET. [Nahrazování pomocí regexu](https://www.jetbrains.com/help/rider/Tutorial_Finding_and_Replacing_Text_Using_Regular_Expressions.html)
+Najdeš v něm nastavení rozsahu, vysvětlené vzory, vstup i výsledek náhrady a přehled pokročilých možností.

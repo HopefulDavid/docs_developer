@@ -1,3 +1,7 @@
+---
+description: "Komponenty a běh pracovních postupů Windows Workflow."
+---
+
 # Windows Workflow Foundation (WF)
 
 Windows Workflow Foundation je technologie .NET Framework pro modelování a spouštění pracovních postupů z aktivit.

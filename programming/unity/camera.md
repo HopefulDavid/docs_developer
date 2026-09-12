@@ -1,3 +1,7 @@
+---
+description: "Výpočet velikosti záběru a přizpůsobení kamery poměru stran."
+---
+
 # Unity: kamera a velikost záběru
 
 Kamera převádí scénu na obraz; projekce, rozlišení a vrstvy určují, co hráč skutečně uvidí.

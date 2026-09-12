@@ -452,6 +452,11 @@ article table tr:nth-child(even) td {
   background-color: color-mix(in srgb, var(--docs-surface-soft) 58%, transparent);
 }
 
+/* Bootstrap kreslí i rámečky řádků; jejich barva musí odpovídat motivu buněk. */
+article table > :not(caption) > tr {
+  border-color: var(--docs-border);
+}
+
 code {
   margin: 0 0.08rem;
   padding: 0.08rem 0.28rem;
@@ -558,7 +563,6 @@ pre:hover .code-action, pre:focus-within .code-action { opacity: 1; pointer-even
 
 article img {
   display: block;
-  width: auto;
   max-width: min(100%, 760px);
   max-height: none;
   height: auto;
@@ -570,6 +574,13 @@ article img {
   border-radius: var(--docs-radius);
   box-shadow: var(--docs-shadow);
   box-sizing: border-box;
+}
+
+/* Originál snímku zůstává dostupný i při menším zobrazení v textu. */
+article p:has(> a[href$=".png"]:only-child) {
+  margin-top: -0.5rem;
+  text-align: center;
+  font-size: 0.85rem;
 }
 
 article p:has(> img:only-child) {

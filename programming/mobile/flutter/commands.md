@@ -1,8 +1,12 @@
+---
+description: "Syntaxe příkazů pro spuštění, testování a sestavení aplikace."
+---
+
 # Flutter – příkazy
 
 Projektové příkazy spouštěj ve složce s `pubspec.yaml`.
 
-| Účel | Příkaz |
+| Účel | Syntaxe |
 |---|---|
 | Verze SDK | `flutter --version` |
 | Diagnostika prostředí | `flutter doctor -v` |
@@ -11,11 +15,15 @@ Projektové příkazy spouštěj ve složce s `pubspec.yaml`.
 | Přehled aktualizací balíčků | `flutter pub outdated` |
 | Statická analýza | `flutter analyze` |
 | Testy | `flutter test` |
-| Spuštění | `flutter run` |
+| Spuštění | `flutter run [-d <id-zařízení>]` |
 | Sestavení Android APK | `flutter build apk` |
 | Sestavení webu | `flutter build web` |
 | Generování překladů | `flutter gen-l10n` |
-| Nápověda konkrétního příkazu | `flutter help build` |
+| Nápověda konkrétního příkazu | `flutter help <příkaz>` |
+
+`<id-zařízení>` vezmi z výpisu `flutter devices`; například `flutter run -d chrome` spustí webovou aplikaci v prohlížeči, pokud je cíl Chrome dostupný.
+
+`flutter help build` je příklad nápovědy pro sestavení; volitelný zápis v hranatých závorkách se při zadávání příkazu neopisuje.
 
 Sestavení vyžaduje nástroje cílové platformy. [Reference CLI](https://docs.flutter.dev/reference/flutter-cli)
 
