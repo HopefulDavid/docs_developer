@@ -259,3 +259,46 @@ Jednorázové testy a jejich výstupy vznikly v ignorované `private/docs-review
 Dart/Flutter, Docker, skutečný cluster Kubernetes a OpenTofu nebyly v této revizi místně provozované; jejich změněné postupy byly ověřeny podle odkazovaných primárních zdrojů.
 
 Úspěšný statický build se nevydává za provozní zkoušku těchto prostředí ani za ověření každého externího odkazu.
+
+## Ověření obnovených postupů Gitu a balíčků 2026-09-12
+
+Navazující revize obnovila záměr historického `c3474271` a ověřila nové příkazy skutečnými nástroji v oddělených pracovních složkách.
+
+Závěrečné `npm run verify` prošlo 20 projektovými testy, sestavilo DocFX bez chyby či varování a zkontrolovalo 253 zdrojů a 494 výstupních souborů včetně místních odkazů, kotev a casingu.
+
+Celkem prošlo 46 obsahových kontrol:
+
+| Oblast | Kontrol | Provedený důkaz |
+|---|---|---|
+| Git | 22 | Přesun právě tří commitů do nové i existující větve, původní varianta merge, zachování práce cíle, konflikt a abort, odmítnutí kolidujícího resetu, reverty publikovaných commitů, soft squash, jediný kořenový commit se stejným stromem, dry-run, skutečný přepis místního bare serveru, odmítnutí zastaralého lease a obnova bundlem i novým klonem |
+| NuGet a .NET tools | 7 | Příprava projektových archivů, obnova přímo z nezměněné kopie hierarchické složky, build s lockfilem, izolace evidence CLI, spuštění obnoveného DocFX a přenos celé tool-path složky včetně `.store` s nedostupnou původní instalací |
+| npm | 4 | Přesunutá cache obnoví produkční i vývojové nepřímé závislosti při `NODE_ENV=production`, lockfile zůstane stejný, prázdná cache selže a přesná verze globálního nástroje se obnoví do nové izolované prefix složky |
+| pnpm | 5 | Příprava store i metadat přes skutečný `pnpm-workspace.yaml`, přesunutá záloha obnoví produkční i vývojové nepřímé závislosti, zachová lockfile a odmítne chybějící archiv i metadata |
+| Python | 4 | Kopie wheelhouse obnoví nové venv bez indexu a pip cache, projde kontrola závislostí a vlastní editovatelný balíček se obnoví z wheelu podle normalizovaného seznamu verzí |
+| Dart | 4 | Přesunutá úplná pub cache obnoví striktní lockfile, znovu vytvoří mapování cest a spustí aplikaci, prázdná cache selže a projekt CLI nástroje funguje i při nedostupné původní cache |
+
+Prostředí bylo Windows, Node.js 24.13.0, npm 11.6.2, pnpm 12.4.0, .NET SDK 10.0.301, DocFX 2.78.5, Python 3.12.14 a Dart 3.12.2.
+
+Postupy obnovy používaly nové pracovní instalace a explicitní offline režim nebo místní zdroj; síťové chování vlastních build skriptů není těmito přepínači obecně řízené.
+
+Zkouška pnpm bez metadat skutečně skončila `ERR_PNPM_NO_OFFLINE_META`; návod proto zálohuje `cacheDir` i `storeDir` a používá ověřené nastavení YAML.
+
+První kopírování npm fixture přes Python `shutil` selhalo na délce cesty ve Windows; úspěšné opakování použilo kratší pracovní kořen a návod tuto praktickou hranici uvádí.
+
+Logy a výsledky jednorázových experimentů zůstávají v ignorovaných `private/docs-review/followup/*-revision-20260912`, `private/docs-review/revision-20260912/*-proof` a `private/npm-r12`; nepřidávají projektu závislost ani nový podporovaný build příkaz.
+
+Parser PowerShellu přijal všech 27 bloků ve složkách balíčků a historie Gitu bez syntaktické chyby.
+
+V prohlížeči prošlo 17 stránek při 320, 390, 768 a 1440 px v obou motivech, celkem 136 kombinací, bez vodorovného přetékání, chyb obrázků nebo posuvné ukázky nepřístupné klávesnicí.
+
+Výběr zahrnoval homepage, Programování, Verzování, Docker, Unity 2D, Affinity, OpenTofu, tři změněné návody historie a všech sedm článků skupiny Balíčky.
+
+Mobilní navigace otevřela přesun commitů, hledání `historie` našlo nový článek, hledání `Docker` otevřelo výsledek ve stejné kartě a neexistující výraz zobrazil prázdný výsledek.
+
+Ověřeno bylo také přesné kopírování prvního PowerShell bloku nového návodu, přeskočení navigace klávesnicí, rozbalení obrázkového postupu Unity, zachování tmavého motivu po reloadu a volba automatického motivu.
+
+Víceslovný dotaz `nahrazení celé historie` výsledek nevrátil, ačkoli jednoslovné `historie` článek našlo; omezení vyhledávání eviduje `ARCH-RISK-005` v [architektuře](../architecture/overview.md#11-známá-rizika-dluh-a-přechodové-stavy).
+
+Affinity má v desktopovém článku šířky 760 a 482 px a shodné automatické levé i pravé okraje; rozdílné odsazení odpovídá pouze různé šířce snímků a bylo podle zadání zachováno.
+
+Git testy neměnily skutečný hosting; plný platformní build Flutteru a legacy `packages.config` nebyly součástí provedených integračních zkoušek.

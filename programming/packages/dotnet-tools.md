@@ -1,130 +1,137 @@
 ---
-description: "Záloha manifestu a NuGet archivů pro obnovu nástrojů .NET bez serveru."
+description: "Záloha lokálních i globálních nástrojů .NET a jejich opětovná instalace z místních balíčků."
 ---
 
-# .NET tools – offline záloha nástrojů
+# .NET tools – záloha a obnova nástrojů
 
-.NET tool je spustitelný nástroj distribuovaný jako NuGet balíček, například generátor dokumentace DocFX.
+.NET tool je spustitelný nástroj distribuovaný jako NuGet balíček, například DocFX.
 
-Lokální nástroje vybírá projektový manifest `.config/dotnet-tools.json`, globální instalace patří uživatelskému účtu.
+Projektové nástroje obnovuje manifest `.config/dotnet-tools.json`; globálně instalované nástroje obnovíš podle uložených názvů a verzí.
 
-## Co zálohovat
+## Vyber podle instalace
 
-| Část | Úloha |
-|---|---|
-| Manifest nástrojů | Názvy balíčků, přesné verze a dostupné příkazy |
-| Místní zdroj `.nupkg` | Skutečné archivy nástrojů a potřebných závislostí |
-| .NET SDK a runtime | Prostředí potřebné pro instalaci a spuštění daných verzí |
-| Projektová konfigurace | Vstupy, které nástroj používá, například `docfx.json` |
+| Co používáš | Záznam verzí | Obnova s internetem |
+|---|---|---|
+| Lokální nástroje projektu | `.config/dotnet-tools.json` | `dotnet tool restore` |
+| Globální nástroje účtu | Výpis `dotnet tool list --global` | `dotnet tool install --global <balíček> --version <verze>` |
+| Nástroje ve vlastní složce | `dotnet tool list --tool-path <složka>` | Instalace se stejnou verzí a `--tool-path <složka>` |
 
-Kopie samotných spouštěčů z `%USERPROFILE%\.dotnet\tools` nepředstavuje přenositelnou instalaci na jiný počítač.
+Zálohuj také konfiguraci nástroje a odpovídající .NET SDK či runtime; samotný manifest balíčky neobsahuje.
 
-## 1. Připrav manifest s internetem
+Příklady níže jsou pro **PowerShell a .NET SDK 10**; DocFX `2.78.5` je konkrétní ukázka, nikoli požadavek aktualizovat tvé nástroje.
 
-Pokud projekt již manifest má, zachovej ho a přeskoč jeho vytváření.
+## 1. Připrav manifest pro offline zálohu
 
-V nové zkušební složce bez manifestu s .NET SDK 10 například:
+Pokud už projekt manifest má, použij jeho kopii v pracovní složce.
+
+Pro nástroje instalované globálně si nejprve ulož `dotnet tool list --global` a v **nové prázdné složce** vytvoř zálohovací manifest:
 
 ```powershell
 dotnet new tool-manifest
-dotnet tool install docfx --version 2.78.5
+dotnet tool install --local docfx --version 2.78.5
 dotnet tool list
 ```
 
-Příklad připíná konkrétní ověřenou verzi DocFX, nikoli doporučení automaticky měnit verzi v jiném projektu.
+Instalaci zopakuj pro každý požadovaný balíček s přesnou verzí z inventáře; místní instalace nezmění jeho globální instalaci. [Lokální nástroje](https://learn.microsoft.com/en-us/dotnet/core/tools/local-tools-how-to-use)
 
-Pro jiný nástroj má instalační syntaxe podobu `dotnet tool install <balíček> --version <verze>`.
+## 2. Stáhni všechny potřebné archivy
 
-### Naplň samostatnou složku balíčků
-
-Ve stejném projektu v PowerShellu:
+Ve složce s manifestem a s internetem, v novém PowerShellu:
 
 ```powershell
-$env:NUGET_PACKAGES = [IO.Path]::GetFullPath("../zaloha-tools/packages")
-$env:DOTNET_CLI_HOME = [IO.Path]::GetFullPath("../zaloha-tools/cli-home")
-dotnet tool restore --disable-parallel
+$env:NUGET_PACKAGES = [IO.Path]::GetFullPath("../zaloha-tools/balicky")
+$env:DOTNET_CLI_HOME = [IO.Path]::GetFullPath("../zaloha-tools/priprava-cli")
+dotnet tool restore --tool-manifest .config/dotnet-tools.json
 dotnet tool run docfx -- --version
+Get-ChildItem -LiteralPath $env:NUGET_PACKAGES -Recurse -Filter *.nupkg -File
 ```
 
-`NUGET_PACKAGES` určí složku archivů a `DOTNET_CLI_HOME` samostatná pracovní data CLI včetně evidence obnovených nástrojů.
+Obě cílové složky musí být při první přípravě nové.
 
-Při první přípravě zvol nové prázdné umístění `cli-home`: samotná změna `NUGET_PACKAGES` nestačí, protože restore může úspěšně použít nástroj evidovaný ve staré složce a novou zálohu vůbec nenaplnit.
+`NUGET_PACKAGES` určuje stažené balíčky a `DOTNET_CLI_HOME` oddělí také evidenci obnovených nástrojů; samotná změna první proměnné může nechat restore použít starou instalaci. [Umístění nástrojů](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-install#installation-locations), [prostředí CLI](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-environment-variables#dotnet_cli_home)
 
-`--disable-parallel` obnovuje nástroje postupně, což zde usnadní dohledání případné chyby.
+Poslední příkaz musí vypsat skutečné archivy; úspěšná hláška restore s prázdnou zálohou nestačí.
 
-Obě proměnné platí pro aktuální okno a jeho potomky; nové okno terminálu se vrátí k původnímu nastavení.
+U jiného nástroje nahraď `docfx -- --version` jeho vlastním příkazem a ověř také běžnou operaci.
 
-Spusť i běžnou operaci nástroje s internetem, pokud může při prvním použití doplňovat vlastní data.
+## 3. Přenes zálohu
 
-## 2. Vytvoř přenositelný feed
+Po dokončení instalací přenes:
 
-Po úspěšném restore:
-
-```powershell
-$toolFeed = [IO.Path]::GetFullPath("../zaloha-tools/feed")
-New-Item -ItemType Directory -Path $toolFeed -Force | Out-Null
-Get-ChildItem -LiteralPath $env:NUGET_PACKAGES -Recurse -Filter *.nupkg -File |
-    Copy-Item -Destination $toolFeed
-Get-ChildItem -LiteralPath $toolFeed -Filter *.nupkg -File
+```text
+zaloha-tools/
+  projekt/       .config/dotnet-tools.json a vstupy nástrojů
+  balicky/       celá stažená složka včetně .nupkg a metadat
+  verze.txt      dotnet --info a inventář globálních nástrojů
 ```
 
-Skript zkopíruje balíčkové archivy do jednoho adresáře a vypíše výsledek; prázdný feed není hotová záloha.
+Složku `priprava-cli` nepřenášej: obsahuje pracovní evidenci původního počítače.
 
-Nestačí zálohovat pouze rozbalené DLL nebo globální spouštěč a `cli-home` na cílový počítač nepřenášej, protože eviduje cesty zdrojového počítače.
+`balicky` můžeš použít přímo jako hierarchický místní zdroj; převod archivů do další složky není nutný. [Lokální feed NuGet](https://learn.microsoft.com/en-us/nuget/hosting-packages/local-feeds)
 
-K feedu přenes projekt včetně `.config/dotnet-tools.json` a záznam verze `dotnet --info`.
+## 4. Obnov lokální nástroje bez internetu
 
-Použij strukturu `zaloha-tools/projekt` vedle `zaloha-tools/feed`.
-
-## 3. Obnov na cílovém počítači
-
-Nainstaluj odpovídající SDK a runtime a v obnoveném projektu vytvoř `NuGet.Offline.Config`:
+Do obnoveného `projekt/NuGet.Offline.Config` ulož:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
   <packageSources>
     <clear />
-    <!-- Cesta je relativní k tomuto konfiguračnímu souboru. -->
-    <add key="offline-tools" value="../feed" />
+    <add key="offline-tools" value="../balicky" />
   </packageSources>
 </configuration>
 ```
 
-V kořeni projektu:
+V tomto projektu spusť:
 
 ```powershell
-dotnet tool restore --configfile NuGet.Offline.Config
+$env:NUGET_PACKAGES = [IO.Path]::GetFullPath("../obnovene-balicky")
+$env:DOTNET_CLI_HOME = [IO.Path]::GetFullPath("../obnova-cli")
+dotnet tool restore --tool-manifest .config/dotnet-tools.json --configfile NuGet.Offline.Config --no-cache
 dotnet tool list
 dotnet tool run docfx -- --version
 ```
 
-Konfigurace obsahuje pouze místní zdroj, takže chybějící balíček nemá odkud stáhnout.
+Nové prázdné pracovní složky prokážou, že obnova opravdu používá zálohu; pro následné používání lokálních nástrojů zachovej tyto cesty a nastavení.
 
-Při zkoušce obnovy na původním počítači nastav `NUGET_PACKAGES` i `DOTNET_CLI_HOME` do dalších nových složek; jinak již nainstalovaný nástroj může zamaskovat neúplný feed.
+Pokud chceš nástroje obnovit do běžného profilu nového počítače, první dva řádky vynech a použij jeho výchozí umístění.
 
-## Globální nástroj nebo vlastní složka
+`--configfile` použije jen uvedenou konfiguraci; `--add-source` by pouze přidal zdroj k ostatním a offline režim by nezajistil. [Dotnet tool restore](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-restore)
 
-Seznam globálně používaných balíčků a verzí vypíše `dotnet tool list --global`.
+## Obnova globálně nebo do vlastní složky
 
-Pro obnovu stejného nástroje z již připraveného feedu lze místo manifestu použít:
+Ze stejné zálohy a s předchozím `NuGet.Offline.Config` zvol jednu alternativu:
 
-```text
-dotnet tool install --global <balíček> --version <verze> --configfile NuGet.Offline.Config
-dotnet tool install <balíček> --version <verze> --tool-path <cílová-složka> --configfile NuGet.Offline.Config
+```powershell
+dotnet tool install --global docfx --version 2.78.5 --configfile NuGet.Offline.Config
 ```
 
-Jde o dvě alternativy: první instaluje pro účet a druhá do zvolené nové složky, ze které nástroj spouštíš vlastní cestou.
+Nebo do nové vlastní složky:
 
-Přesná verze a platforma musí mít odpovídající balíčky ve feedu; odlišná architektura může potřebovat jiný platformní balíček téhož nástroje.
+```powershell
+dotnet tool install docfx --version 2.78.5 --tool-path ../moje-tools --configfile NuGet.Offline.Config
+../moje-tools/docfx.exe --version
+```
 
-## Ověření a problémy
+Globální variantu spouštěj v běžném novém terminálu bez dočasného `DOTNET_CLI_HOME`; názvy a verze nahraď uloženým inventářem.
 
-| Výsledek | Co ověřit |
-|---|---|
-| Balíček není nalezen | Feed, přesnou verzi a všechny stažené archivy |
-| Instalace projde, spuštění vyžaduje runtime | `dotnet --list-runtimes` a požadavky nástroje |
-| Příkaz není nalezen | Lokální `dotnet tool run <příkaz>`, případně cestu globálního spouštěče |
-| Nástroj sám chce internet | Jeho konfiguraci, rozšíření, šablony a další data mimo NuGet |
+`--tool-path` vytvoří spouštěč i potřebnou `.store` a nevyžaduje globální instalaci. [Dotnet tool install](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-install)
 
-Zdroje: [dotnet tool restore](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-restore), [tool install](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-install), [lokální nástroje](https://learn.microsoft.com/en-us/dotnet/core/tools/local-tools-how-to-use).
+## Kopie již hotové složky
+
+Pro obnovu stejného prostředí lze zálohovat celou složku globálních nástrojů nebo vlastní `--tool-path`, **včetně skryté `.store`**.
+
+Výchozí globální složka je ve Windows `%USERPROFILE%/.dotnet/tools`, na Linuxu a macOS `$HOME/.dotnet/tools`; vlastní `DOTNET_CLI_HOME` může toto umístění změnit. [Umístění instalace](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-install#installation-locations)
+
+Samotné soubory `.exe` nebo shellové spouštěče nestačí.
+
+Přenos celé složky ověř na stejném OS, architektuře a kompatibilním runtime; nástroj může mít vlastní data mimo tuto složku.
+
+Pro obnovu na jiném počítači je opětovná instalace z připravených balíčků výše lépe kontrolovatelná.
+
+## Ověření výsledku
+
+Porovnej `dotnet tool list` nebo `dotnet tool list --global` s původním inventářem a spusť každý důležitý nástroj.
+
+Při chybě runtime zkontroluj `dotnet --list-runtimes`; pokud nástroj po instalaci stahuje šablony, pluginy či další data, připrav je samostatně a vyzkoušej jeho běžnou práci bez sítě.

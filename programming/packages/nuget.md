@@ -1,139 +1,146 @@
 ---
-description: "Správa knihoven .NET a obnova z globální složky nebo místního NuGet zdroje."
+description: "Záloha knihoven .NET do složky a obnova projektu z místního zdroje nebo původní cache."
 ---
 
-# NuGet – knihovny .NET a offline obnova
+# NuGet – záloha a obnova knihoven .NET
 
-NuGet vyhledá knihovny deklarované projektem, vyřeší jejich odvozené závislosti a připraví je pro sestavení.
+NuGet obnovuje knihovny uvedené v projektu včetně jejich nepřímých závislostí.
 
-U moderního `PackageReference` jsou deklarace v `.csproj`, případně společné verze v `Directory.Packages.props`, zatímco stažený obsah žije v globální složce balíčků.
+Pro běžnou obnovu s internetem uchovej zdroje a uzamčené verze; pro offline obnovu přidej složku se skutečnými balíčky.
 
-## Běžná správa
+## Před použitím
 
-Příkazy spouštěj ve složce s jedním projektem a s jeho požadovaným .NET SDK.
+Návod je pro **PowerShell a projekty s PackageReference**, například běžnou aplikaci v .NET 8 nebo 10.
 
-| Syntaxe | Co provede |
-|---|---|
-| `dotnet add package <balíček> [--version <verze>]` | Přidá nebo změní přímou závislost a provede restore |
-| `dotnet remove package <balíček>` | Odebere přímý odkaz; používající kód musíš opravit |
-| `dotnet restore [<projekt-nebo-řešení>]` | Obnoví deklarované balíčky |
-| `dotnet list package --include-transitive` | Vypíše i odvozené závislosti |
-| `dotnet list package --outdated` | Porovná verze s dostupným zdrojem |
-| `dotnet list package --vulnerable --include-transitive` | Zkontroluje známé zranitelnosti podle dostupných metadat |
+Pracuj v kořeni řešení s odpovídajícím SDK a na stejné cílové platformě; pokud je ve složce více řešení, uváděj za `restore` konkrétní soubor.
 
-V .NET 10 lze použít i pořadí `dotnet package add` nebo `dotnet package list`; zde uvedený zápis funguje také ve starších podporovaných SDK.
+Balíčky neobsahují samotné SDK, workloady ani všechny nástroje potřebné pro build.
 
-Například `dotnet add package Dapper` připojí knihovnu pro provádění vlastních SQL dotazů; před přijetím změny zkontroluj verzi v projektu a spusť testy.
+## Obnova s internetem
 
-## Připrav uzamčený stav
+Zálohuj celý zdrojový projekt včetně `.csproj`, `global.json`, `NuGet.Config`, používaných `Directory.*.props/targets` a `packages.lock.json`.
 
-U aplikace s `PackageReference` vytvoř a verzuj lockfile:
+Pokud lockfile dosud nemáš, vytvoř jej jednou přes `dotnet restore --use-lock-file`, prohlédni vybrané verze a uchovej jej s projektem.
+
+Na cíli se stejným SDK:
 
 ```powershell
-dotnet restore --use-lock-file
 dotnet restore --locked-mode
-dotnet --info
-dotnet nuget locals global-packages --list
+dotnet build --no-restore
 ```
 
-První příkaz zapíše vyřešené verze do `packages.lock.json` a druhý odmítne změnu vyžadující jeho přepočítání.
-
-Uchovej projekty, lockfile, `global.json` a soubory `Directory.*.props/targets`, které projekt používá; samotný lockfile neobsahuje knihovny.
-
-Restore připrav pro stejné cílové frameworky a runtime identifikátory, které budeš používat na cíli; například self-contained publikování může potřebovat další runtime balíčky.
+`--locked-mode` odmítne obnovu, která by potřebovala změnit lockfile. [Uzamčení závislostí](https://learn.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files#locking-dependencies)
 
 ## Záloha složky balíčků
 
-Skutečné umístění určuje poslední příkaz výše, nikoli odhad podle uživatelského jména.
+### 1. Připrav balíčky konkrétního projektu
 
-| Výchozí systém | Globální složka |
-|---|---|
-| Windows | `%USERPROFILE%\.nuget\packages` |
-| Linux a macOS | `~/.nuget/packages` |
-
-Umístění může změnit `NUGET_PACKAGES` nebo konfigurace projektu.
-
-Po úspěšném restore zastav další instalace a zkopíruj **celou složku** včetně skrytých souborů, `.nupkg`, hashů a `.nupkg.metadata`.
-
-Na kompatibilním cíli ji můžeš obnovit do jeho zjištěného globálního umístění; stejné absolutní uživatelské jméno není podmínkou.
-
-Při přenosu do vlastní složky, například `D:\offline\nuget-global`, v PowerShellu nastav:
+V pracovní kopii projektu s internetem a hotovým lockfile:
 
 ```powershell
-$env:NUGET_PACKAGES = "D:\offline\nuget-global"
-dotnet nuget locals global-packages --list
+dotnet --info
+dotnet restore --locked-mode --packages ../zaloha-nuget/balicky
+dotnet build --no-restore
 ```
 
-Proměnná platí pro toto okno a jeho potomky; druhý příkaz ověří, že restore bude používat skutečně obnovený adresář.
+`--packages` uloží balíčky do samostatné složky vedle projektu; její obsah bude odpovídat tomuto restore. [Dotnet restore](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-restore)
 
-### Obnova bez online zdrojů
+Pro více řešení zopakuj restore každého z nich se stejnou cílovou složkou.
 
-V kořeni projektu vytvoř samostatný `NuGet.Offline.Config`:
+Pokud používáš různé frameworky, konfigurace nebo runtime identifikátory, připrav všechny potřebné varianty; pro publikování `win-x64` například také restore s `-r win-x64`.
+
+### 2. Přenes zdroje a celou složku
+
+Po dokončení všech instalací vytvoř tuto zálohu:
+
+```text
+zaloha-nuget/
+  projekt/       zdrojový projekt, konfigurace a lockfily
+  balicky/       celý adresář z --packages
+  verze.txt      výstup dotnet --info a ověřený příkaz sestavení
+```
+
+`balicky` obsahují adresáře podle názvu a verze, původní archivy `.nupkg`, rozbalené soubory a metadata; nic z nich nevybírej ručně.
+
+Takový adresář lze použít přímo jako hierarchický **místní zdroj NuGet**, pokud obsahuje původní `.nupkg`; není potřeba všechny archivy kopírovat do další ploché složky. [Místní zdroje NuGet](https://learn.microsoft.com/en-us/nuget/hosting-packages/local-feeds)
+
+### 3. Obnov bez registru
+
+Na cíli rozbal zálohu do pracovní složky a do `projekt/NuGet.Offline.Config` ulož:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
   <packageSources>
-    <!-- Použij pouze úplně obnovenou globální složku, žádný server. -->
     <clear />
+    <add key="offline" value="../balicky" />
   </packageSources>
 </configuration>
 ```
 
-Potom:
+Cesta `../balicky` se počítá od konfiguračního souboru; `<clear />` ponechá jako zdroj jen tuto zálohu. [Konfigurace NuGet](https://learn.microsoft.com/en-us/nuget/reference/nuget-config-file#packagesources)
+
+V kořeni obnoveného projektu:
 
 ```powershell
-dotnet restore --locked-mode --configfile NuGet.Offline.Config -p:NuGetAudit=false
+dotnet restore --locked-mode --configfile NuGet.Offline.Config --packages ../obnovene-balicky --no-http-cache -p:NuGetAudit=false
 dotnet build --no-restore
 ```
 
-`--configfile` vybere tuto konkrétní konfiguraci a `NuGetAudit=false` při offline obnově vypne dotazy na auditní metadata; online audit proveď před archivací a zopakuj při návratu k síti.
+Pro první zkoušku musí být `obnovene-balicky` nová prázdná složka, aby obnovu nezachránila stará instalace.
 
-Pokud balíček v globální složce chybí, obnova musí selhat; `--ignore-failed-sources` není důkaz úplnosti zálohy.
+Vstupní `balicky` zůstávají zdrojem archivů; NuGet rozbalí pracovní instalaci do `obnovene-balicky`.
 
-## Přenositelný místní zdroj z balíčků.nupkg
+Auditní metadata se při této offline operaci nestahují; kontrolu zranitelností proveď při přípravě online.
 
-Tato varianta obnoví projekt i do prázdné globální složky a umožní uchovávat archiv nezávisle na její vnitřní struktuře.
+Pokud projekt používá vlastní source mapping nebo pravidla podpisů, přenes tato pravidla do offline konfigurace a přizpůsob mapování místnímu zdroji.
 
-V PowerShellu s hotovou zálohou globální složky:
+## Záloha všech již stažených balíčků
 
-```powershell
-$packageBackup = "D:\offline\nuget-global"
-$localFeed = "D:\offline\nuget-feed"
-New-Item -ItemType Directory -Path $localFeed -Force | Out-Null
-Get-ChildItem -LiteralPath $packageBackup -Recurse -Filter *.nupkg -File |
-    Copy-Item -Destination $localFeed
-```
-
-Nahraď obě cesty; skript zkopíruje původní balíčkové archivy do jednoho adresáře a globální zálohu nemění.
-
-Do `packageSources` za `<clear />` přidej:
-
-```xml
-<add key="offline" value="D:\offline\nuget-feed" />
-```
-
-Jde o jeden řádek dovnitř předchozí konfigurace, nikoli druhý samostatný XML dokument.
-
-Pro ověření nového prázdného cílového adresáře:
+Pro zálohu více projektů můžeš místo přípravy samostatné složky převzít již naplněnou globální složku:
 
 ```powershell
-dotnet restore --locked-mode --configfile NuGet.Offline.Config --packages .offline-test-packages -p:NuGetAudit=false
+dotnet nuget locals global-packages --list
+```
+
+Zkopíruj celý vypsaný adresář jako `zaloha-nuget/balicky` a obnovuj stejným postupem výše.
+
+Výchozí cesta ve Windows je `%USERPROFILE%\.nuget\packages`, ale může ji změnit `NUGET_PACKAGES` nebo konfigurace projektu. [Složky NuGet](https://learn.microsoft.com/en-us/nuget/consume-packages/managing-the-global-packages-and-cache-folders)
+
+Před kopírováním dokonči restore všech projektů, které chceš obnovovat; globální cache obsahuje pouze balíčky, které do ní byly skutečně stažené.
+
+### Použití kopie přímo jako globální složky
+
+Pokud chceš šetřit místem a nepotřebuješ druhou pracovní kopii, nastav v novém PowerShellu:
+
+```powershell
+$env:NUGET_PACKAGES = [IO.Path]::GetFullPath("../balicky")
+dotnet restore --locked-mode --configfile NuGet.Offline.Config --no-http-cache -p:NuGetAudit=false
 dotnet build --no-restore
 ```
 
-`.offline-test-packages` musí být před první zkouškou nová složka a nepatří do Git historie.
+Tato varianta používá `balicky` současně jako pracovní instalaci, proto pracuj s kopií zálohy a zachovej i skryté soubory včetně `.nupkg.metadata`.
 
-## Omezení a řešení problémů
+Proměnná platí pro toto okno a jeho potomky; jeho zavřením se vrátíš k původnímu nastavení.
 
-| Problém | Co doplnit nebo ověřit |
+## Ověření a běžná správa
+
+Po obnově spusť také projektové testy a cílový build bez sítě; vlastní build target může stahovat data mimo NuGet.
+
+| Příkaz | Účel |
 |---|---|
-| Balíček nebyl nalezen | Správná verze a všechny odvozené balíčky v záloze |
-| SDK nebo targeting pack chybí | Nainstalovaný odpovídající .NET SDK, případně workload; NuGet cache SDK nenahrazuje |
-| Restore funguje, build chce síť | Build targety, generátory a vlastní stahovací skripty projektu |
-| Projekt používá `packages.config` | Starší restore model typicky přes NuGet CLI či MSBuild a projektovou složku `packages` |
-| Po přenosu je položka neúplná | Zálohuj až po dokončeném restore a nekopíruj jen rozbalené DLL |
+| `dotnet add package Dapper` | Příklad přidání knihovny a aktualizace projektu |
+| `dotnet remove package Dapper` | Odebrání přímého odkazu |
+| `dotnet list package --include-transitive` | Výpis přímých i nepřímých závislostí |
+| `dotnet list package --outdated` | Online porovnání verzí |
+| `dotnet list package --vulnerable --include-transitive` | Online kontrola známých zranitelností |
 
-Pro `packages.config` použij odpovídající nástroj projektu, například syntaxi `nuget restore <řešení.sln> -Source <místní-feed> -PackagesDirectory <složka-balíčků>`; nástroj `nuget.exe` a potřebný MSBuild uchovej také.
+V .NET 10 existuje také pořadí `dotnet package add` nebo `dotnet package list`; zachovej syntaxi podporovanou SDK projektu.
 
-Zdroje: [NuGet cache](https://learn.microsoft.com/en-us/nuget/consume-packages/managing-the-global-packages-and-cache-folders), [lockfile](https://learn.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files#locking-dependencies), [dotnet restore](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-restore), [NuGet restore](https://learn.microsoft.com/en-us/nuget/reference/cli-reference/cli-ref-restore).
+Při chybě chybějícího balíčku doplň jeho přesnou verzi do zálohy a zkoušku opakuj s prázdnou pracovní složkou.
+
+`--ignore-failed-sources` nenahrazuje offline konfiguraci ani důkaz úplné zálohy.
+
+Starší `packages.config` používá jiný restore model, například `nuget restore <řešení.sln> -Source <místní-složka> -PackagesDirectory <výstup>`; uchovej i potřebný `nuget.exe` a MSBuild. [NuGet restore](https://learn.microsoft.com/en-us/nuget/reference/cli-reference/cli-ref-restore)
+
+Spustitelné nástroje jako DocFX mají samostatný postup [.NET tools](dotnet-tools.md).

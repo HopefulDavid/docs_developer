@@ -8,6 +8,8 @@ Squash se hodí, když několik pracovních commitů představuje jednu ucelenou
 
 Nejdříve zvol, zda chceš přepsat vlastní pracovní větev, nebo vytvořit souhrnný commit až při začlenění do cíle.
 
+Pokud má celá vzdálená větev začít jediným kořenovým commitem bez původních předků, použij [nahrazení celé historie](replace-history.md).
+
 ## Nejmenší zásah: squash při sloučení
 
 Použij [`git merge --squash`](../merging.md#squash-jedna-ucelená-změna-v-cíli) nebo možnost **Squash and merge** na hostingu.
@@ -40,7 +42,33 @@ Po uložení zadej jednu výslednou zprávu; `fixup` místo `squash` by zahodil 
 
 Pro rozsah zahrnující úplně první commit repozitáře se používá `git rebase -i --root`.
 
-## Ověření a návrat
+## Celá vlastní větev od společného předka
+
+Pokud chceš spojit všechny vlastní změny větve do jednoho commitu bez ručního počítání, lze použít původní postup se soft resetem.
+
+Příklad je pro PowerShell, čistou vlastní větev `feature/hledani` a jediný společný základ s `origin/main`; nemá sloužit k neřízenému přepisování sdílené integrační větve.
+
+```powershell
+git switch feature/hledani
+git fetch origin
+git branch --no-track backup/pred-soft-squash
+$base = git merge-base HEAD origin/main
+git log --oneline "$base..HEAD"
+git reset --soft $base
+git diff --cached --stat
+git commit -m "feat: přidává hledání"
+git diff backup/pred-soft-squash HEAD
+```
+
+Nejdříve prohlédni vypsaný rozsah; soft reset ponechá aktuální index a soubory, takže nový commit zachytí jejich výsledný rozdíl proti společnému předku.
+
+Poslední diff má být prázdný; operace nepřebírá nové změny z `origin/main`, které vznikly po rozvětvení.
+
+Pokud větev obsahuje složité merge nebo má více společných základů, použij raději squash při začlenění do cíle.
+
+Již publikovaná vlastní větev vyžaduje zachytit vzdálený stav **před resetem** a následně použít [publikování s lease](fix-commits.md#publikování-přepsané-vlastní-větve).
+
+## Ověření a návrat po interaktivním rebase
 
 ```bash
 git diff backup/pred-squash HEAD
@@ -53,4 +81,4 @@ Pokud rebase teprve probíhá, `git rebase --abort` jej zruší; po dokončení 
 
 Konflikt řeš podle [návodu pro rebase](../merging.md), výsledek otestuj a případnou již zveřejněnou vlastní větev aktualizuj jen podle [postupu s lease](fix-commits.md#publikování-přepsané-vlastní-větve).
 
-Zdroje: [interaktivní rebase](https://git-scm.com/docs/git-rebase#_interactive_mode), [git merge](https://git-scm.com/docs/git-merge).
+Zdroje: [interaktivní rebase](https://git-scm.com/docs/git-rebase#_interactive_mode), [git merge](https://git-scm.com/docs/git-merge), [git reset](https://git-scm.com/docs/git-reset), [git merge-base](https://git-scm.com/docs/git-merge-base).

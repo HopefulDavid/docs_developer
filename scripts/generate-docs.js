@@ -174,8 +174,9 @@ const navigation = {
       { name: 'Čtení historie a bisect', href: 'git/history/reading.md' },
       { name: 'Oprava commitů', href: 'git/history/fix-commits.md' },
       { name: 'Vrácení změny', href: 'git/history/delete-commits.md' },
-      { name: 'Přesun a cherry-pick', href: 'git/history/move-commits.md' },
+      { name: 'Přesun commitů', href: 'git/history/move-commits.md' },
       { name: 'Spojení commitů', href: 'git/history/squash-branch-commits.md' },
+      { name: 'Nahrazení celé historie', href: 'git/history/replace-history.md' },
       { name: 'Lokální konfigurace', href: 'git/history/assume-unchanged.md' },
     ] },
     { name: 'Vydávání a správa projektu', items: [

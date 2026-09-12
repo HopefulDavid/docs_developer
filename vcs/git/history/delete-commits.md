@@ -8,6 +8,8 @@ Revert vytvoří nový commit s opačnou změnou; reset přesune ukazatel aktuá
 
 Pro běžnou opravu zveřejněné historie použij revert, aby navazující práce zůstala dohledatelná.
 
+Pro nový začátek s jediným commitem použij samostatný postup [nahrazení celé vzdálené historie](replace-history.md).
+
 ## Revert zveřejněné změny
 
 Příklad funguje v PowerShellu i Bashi a předpokládá čistý strom a poslední commit, který není merge:

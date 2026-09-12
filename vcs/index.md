@@ -37,8 +37,9 @@ Praktické postupy pro Git, větve, historii a běžnou správu repozitářů.
 | [Čtení historie a bisect](git/history/reading.md) | Porovnání verzí, historie souboru a nalezení commitu, který zavedl chybu. |
 | [Oprava commitů](git/history/fix-commits.md) | Oprava posledního i staršího commitu a pravidla publikování přepsané vlastní větve. |
 | [Vrácení změny](git/history/delete-commits.md) | Vrácení zveřejněné chyby revertem a návrat místní větve pomocí resetu. |
-| [Přesun a cherry-pick](git/history/move-commits.md) | Přesun práce na novou větev a přenos vybraných commitů pomocí cherry-pick. |
+| [Přesun commitů](git/history/move-commits.md) | Přesun posledních commitů do nové i existující větve včetně úklidu zdroje, merge a cherry-pick. |
 | [Spojení commitů](git/history/squash-branch-commits.md) | Spojení vlastních pracovních commitů nebo squash až při sloučení do cíle. |
+| [Nahrazení celé historie](git/history/replace-history.md) | Nahrazení historie vzdálené větve jediným kořenovým commitem z aktuálního místního obsahu. |
 | [Lokální konfigurace](git/history/assume-unchanged.md) | Oddělení lokální konfigurace a limity příznaků sledovaných souborů. |
 
 ### Vydávání a správa projektu

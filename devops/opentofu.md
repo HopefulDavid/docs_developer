@@ -142,14 +142,4 @@ Pro dlouhodobou infrastrukturu vyber backend s odpovídajícím přístupem, zá
 
 Označení `sensitive` skrývá některé výpisy, ale samo neodstraňuje citlivé hodnoty ze stavu.
 
-## Časté problémy
-
-| Projev | Další krok |
-|---|---|
-| Provider se nestáhne | Zdroj, síť a verze; lockfile nemaž bez důvodu |
-| Validace projde, plan selže | Přístup a aktuální stav cílové služby |
-| Nečekané smazání v plánu | Prostředí, backend, vstupy a změna konfigurace |
-| Objekt už existuje mimo state | Dokumentovaný import konkrétního prostředku |
-| Chybí state | Obnova zálohy; prázdný state neznamená prázdnou infrastrukturu |
-
 Zdroje: [workflow](https://opentofu.org/docs/intro/core-workflow/), [providers](https://opentofu.org/docs/language/providers/), [plan](https://opentofu.org/docs/cli/commands/plan/), [citlivý stav](https://opentofu.org/docs/language/state/sensitive-data/).

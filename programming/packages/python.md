@@ -1,101 +1,121 @@
 ---
-description: "Izolované prostředí a instalace Python balíčků ze zálohy wheelů."
+description: "Záloha Python prostředí jako seznam verzí a složka wheelů, včetně vlastních balíčků."
 ---
 
-# Python – balíčky a offline instalace
+# Python – záloha a obnova balíčků
 
-Balíčky doplňují Python o knihovny; `pip` je instaluje do prostředí konkrétního interpretu.
+Pro obnovu Python projektu uchovej jeho zdroje a přesné verze závislostí.
+
+Pokud se chceš obejít bez internetu, přidej **wheelhouse**: obyčejnou složku s instalačními balíčky `.whl`. [Opakovatelné instalace pip](https://pip.pypa.io/en/stable/topics/repeatable-installs/)
 
 ## Před použitím
 
-Příklad používá Python 3 a PowerShell ve Windows; ověř `python --version` a `python -m pip --version`.
+Příklady jsou pro **Python 3 a PowerShell ve Windows** a předpokládají fungující projektové prostředí `.venv`.
 
-Pro projekt vytvoř samostatné virtuální prostředí, aby instalace neměnila jiné aplikace:
+Na Linuxu nebo macOS nahraď `.venv/Scripts/python.exe` cestou `.venv/bin/python` a při vytvoření prostředí případně použij `python3`.
+
+Použití úplné cesty k interpretu zajistí, že pip pracuje právě s tímto prostředím; aktivace není nutná.
+
+Zálohu připrav pro stejnou verzi a implementaci Pythonu, OS a architekturu jako na cíli.
+
+## 1. Zaznamenej fungující prostředí
+
+V kořeni projektu:
+
+```powershell
+./.venv/Scripts/python.exe --version
+./.venv/Scripts/python.exe -m pip --version
+./.venv/Scripts/python.exe -m pip check
+./.venv/Scripts/python.exe -m pip freeze | Set-Content -Encoding utf8 requirements-backup.txt
+```
+
+`freeze` zachytí aktuálně instalované verze včetně nepřímých závislostí; jde o snímek prostředí, nikoli univerzální lockfile pro všechny platformy. [Pip freeze](https://pip.pypa.io/en/stable/cli/pip_freeze/)
+
+Původní `requirements.txt`, `pyproject.toml` a další projektové vstupy zachovej.
+
+Pokud projekt ještě vlastní prostředí nemá, vytvoř je přes `python -m venv .venv` a nainstaluj do něj jeho skutečné závislosti, například přes `./.venv/Scripts/python.exe -m pip install -r requirements.txt`.
+
+## 2. Připrav balíčky pro obnovu bez internetu
+
+S internetem, ve stejném projektu:
+
+```powershell
+./.venv/Scripts/python.exe -m pip download --only-binary=:all: --dest ../zaloha-python/wheelhouse -r requirements-backup.txt
+```
+
+`--only-binary=:all:` vyžaduje hotové wheely, takže na cíli nebude potřeba dodatečně stahovat build závislosti pro zdrojové archivy. [Pip download](https://pip.pypa.io/en/stable/cli/pip_download/)
+
+Pokud pro některou knihovnu wheel neexistuje, připrav jej online na kompatibilním počítači s potřebným překladačem:
+
+```powershell
+./.venv/Scripts/python.exe -m pip wheel --wheel-dir ../zaloha-python/wheelhouse -r requirements-backup.txt
+```
+
+Tato alternativa vytvoří wheely balíčků i jejich závislostí; build může při přípravě potřebovat další nástroje a internet. [Pip wheel](https://pip.pypa.io/en/stable/cli/pip_wheel/)
+
+Pro jiný OS či Python připrav samostatný wheelhouse; nejjednodušší je provést přípravu přímo v kompatibilním prostředí.
+
+## 3. Přenes zálohu
+
+```text
+zaloha-python/
+  projekt/       zdroje, projektové vstupy a requirements-backup.txt
+  wheelhouse/    všechny připravené .whl
+  verze.txt      Python, pip, OS a architektura
+```
+
+Přidej instalátor či archiv Pythonu a případné externí knihovny, které aplikace potřebuje.
+
+`.venv` na cíli vytvoř znovu: spouštěče mohou obsahovat absolutní cesty k původnímu interpretu. [Přenositelnost venv](https://docs.python.org/3/library/venv.html#how-venvs-work)
+
+## 4. Obnov v novém prostředí
+
+V obnoveném `zaloha-python/projekt`, kde ještě není `.venv`:
 
 ```powershell
 python -m venv .venv
-.\.venv\Scripts\python.exe -m pip --version
+./.venv/Scripts/python.exe -m pip install --no-index --find-links=../wheelhouse --only-binary=:all: --no-cache-dir -r requirements-backup.txt
+./.venv/Scripts/python.exe -m pip check
 ```
 
-Na Linuxu a macOS použij při vytvoření `python3` a potom `.venv/bin/python`; aktivace prostředí není při plné cestě nutná. [Virtuální prostředí](https://docs.python.org/3/library/venv.html)
+`--no-index` vypne indexy balíčků, `--find-links` použije wheelhouse a `--no-cache-dir` zabrání využití staré pip cache během zkoušky. [Pip install](https://pip.pypa.io/en/stable/cli/pip_install/)
 
-## Instalace a záznam verzí
+Potom spusť testy a běžnou operaci aplikace.
+
+Například u projektu s `requests` ověř import přes `./.venv/Scripts/python.exe -c "import requests; print(requests.__version__)"`.
+
+Pokud máš internet a nepotřebuješ wheelhouse, ve stejném novém prostředí stačí `./.venv/Scripts/python.exe -m pip install -r requirements-backup.txt`.
+
+## Vlastní, Git a editovatelné balíčky
+
+Pokud snímek obsahuje `-e`, URL nebo přímou cestu, není sám o sobě přenositelný: `--no-index` nezakazuje stažení z URL přímo uvedené v požadavcích.
+
+Takový balíček nejdříve sestav ze svého ověřeného zdroje do wheelhouse; příklad pro sousední `moje-knihovna`:
 
 ```powershell
-.\.venv\Scripts\python.exe -m pip install requests
-.\.venv\Scripts\python.exe -m pip freeze | Set-Content -Encoding utf8 requirements.txt
-.\.venv\Scripts\python.exe -m pip check
+./.venv/Scripts/python.exe -m pip wheel --no-deps --wheel-dir ../zaloha-python/wheelhouse ../moje-knihovna
+./.venv/Scripts/python.exe -m pip list --format=freeze --exclude pip | Set-Content -Encoding utf8 requirements-offline.txt
+./.venv/Scripts/python.exe -m pip download --only-binary=:all: --find-links=../zaloha-python/wheelhouse --dest ../zaloha-python/wheelhouse -r requirements-offline.txt
 ```
 
-`requests` je ukázková HTTP knihovna; první příkaz stáhne balíček, druhý zaznamená instalované verze a třetí zkontroluje deklarované závislosti.
+První krok zopakuj pro každý vlastní balíček; jeho deklarovaná verze musí odpovídat nainstalované verzi.
 
-`freeze` není univerzální lockfile pro všechny platformy; uchovej také verzi Pythonu a způsob sestavení prostředí.
+`pip list --format=freeze` zapíše názvy a verze bez editovatelných cest, takže tento zvláštní snímek lze obnovit z připravených wheelů. [Pip list](https://pip.pypa.io/en/stable/cli/pip_list/)
 
-## Příprava offline instalace
+Pro cílovou instalaci pak použij `requirements-offline.txt` místo `requirements-backup.txt`.
 
-Na počítači s internetem a **stejným OS, architekturou a verzí Pythonu** připrav balíčky podle záznamu:
+Zdrojové repozitáře uchovej zvlášť, protože wheel neobnoví editovatelnou vývojovou vazbu ani celou historii zdroje.
 
-```powershell
-.\.venv\Scripts\python.exe -m pip download --only-binary=:all: --dest wheelhouse -r requirements.txt
-```
+## Co upravit podle potřeby
 
-`--only-binary=:all:` vyžaduje hotové wheel balíčky; pokud některý chybí, příkaz selže místo přípravy zdrojů vyžadujících další překladač a závislosti.
-
-Na cílový počítač přenes `requirements.txt` a celý `wheelhouse`, vytvoř nové `.venv` a spusť:
-
-```powershell
-.\.venv\Scripts\python.exe -m pip install --no-index --find-links=wheelhouse -r requirements.txt
-.\.venv\Scripts\python.exe -m pip check
-```
-
-`--no-index` vypne registry, `--find-links` určí složku balíčků a `-r` dodá seznam toho, co se má instalovat. [Pip: místní instalace](https://pip.pypa.io/en/stable/user_guide/#installing-from-local-packages)
-
-## Ověření a úpravy
-
-Pro tento příklad ověř import pomocí `.\.venv\Scripts\python.exe -c "import requests; print(requests.__version__)"` a potom spusť testy aplikace.
-
-Názvy prostředí a složky můžeš změnit, ale stejné cesty použij ve všech příkazech.
-
-Složku `.venv` nekopíruj jako přenosnou zálohu; rekonstruuj ji z uložených vstupů.
-
-## Když hotový wheel neexistuje
-
-Na kompatibilním počítači s internetem a potřebným překladačem lze balíček nejprve sestavit:
-
-```powershell
-.\.venv\Scripts\python.exe -m pip wheel --wheel-dir wheelhouse -r requirements.txt
-```
-
-`pip wheel` vytvoří instalační wheely včetně požadovaných závislostí; během sestavení může doplnit další build nástroje ze sítě.
-
-Výslednou složku přenes celou a instaluj stejným postupem `--no-index --find-links` do nového prostředí.
-
-Pokud požadavky obsahují Git URL, místní adresáře nebo editovatelné instalace, nahraď je pro cílovou obnovu odpovídajícími sestavenými balíčky s verzí a uchovej jejich zdroje zvlášť.
-
-`pip freeze` popisuje aktuálně instalované prostředí, ale nezaručuje přenosnost těchto přímých cest ani řešení pro jiný systém.
-
-## Lze zkopírovat cache pipu?
-
-`python -m pip cache dir` ukáže skutečnou mezipaměť a `python -m pip cache info` její obsah a velikost.
-
-Její struktura a uložené položky nejsou stabilní distribuční formát pro celou aplikaci; jako složkovou zálohu pro obnovu používej výše uvedený `wheelhouse`.
-
-Virtuální prostředí může obsahovat absolutní cesty a skripty svázané s původním interpretem, proto na cíli vždy vytvoř nové.
-
-## Referenční příkazy
-
-V tabulce představuje `python` interpret zvoleného prostředí; ve Windows ho nahraď například `.\.venv\Scripts\python.exe`.
-
-| Syntaxe | Co provede |
+| Potřeba | Postup |
 |---|---|
-| `python -m pip install <balíček>[==<verze>]` | Nainstaluje balíček, případně přesně zvolenou verzi |
-| `python -m pip uninstall <balíček>` | Odebere balíček z tohoto prostředí |
-| `python -m pip list --outdated` | Online porovná nainstalované verze |
-| `python -m pip check` | Ověří deklarované závislosti, nikoli funkčnost aplikace |
-| `python -m pip download --only-binary=:all: --dest <složka> -r <požadavky>` | Připraví hotové balíčky do zálohy |
+| Záloha jen jednoho projektu | Snímek z jeho vlastního prostředí |
+| Balíčky z více projektů | Samostatný seznam verzí pro každý projekt; kompatibilní wheely mohou sdílet složku |
+| Jiná platforma | Samostatná příprava nebo přesné cílové volby `pip download`, potom zkouška na cíli |
+| Kontrola integrity archivů | Požadavky s hashi a `--require-hashes` podle pravidel projektu |
+| Pouze kopie pip cache | Použij raději wheelhouse; interní cache není stabilní instalační archiv |
 
-Pro jiný cílový interpret podporuje download volby `--platform`, `--python-version`, `--implementation` a `--abi`; všechny musí odpovídat cíli a výsledek stejně ověř instalací na této platformě.
+Když instalace hlásí, že neexistuje odpovídající distribuce, zkontroluj název, verzi a kompatibilitu wheelu s cílovým Pythonem.
 
-Pro běžnou vlastní zálohu je snazší příprava na kompatibilním systému než odhadování správné kombinace těchto hodnot.
-
-Zdroje: [pip download](https://pip.pypa.io/en/stable/cli/pip_download/), [pip wheel](https://pip.pypa.io/en/stable/cli/pip_wheel/), [nepřenositelnost venv](https://docs.python.org/3/library/venv.html#how-venvs-work).
+`pip check` ověřuje deklarované závislosti, ale samotnou funkčnost aplikace potvrdí až její testy.

@@ -71,7 +71,11 @@ Pracovní záznamy, testy a změny odkazují na identifikátor místo kopírová
 
 Verzování rozlišuje začátky, každodenní práci, historii s řešením problémů a vydávání se správou projektu.
 
+Přesun commitů má zahrnovat novou i existující větev, uchování práce v cíli a následný úklid zdroje; samostatný postup popisuje nahrazení historie vzdálené větve jediným místním kořenovým commitem.
+
 Programování odděluje Balíčky od Vývojových nástrojů; přesun mezi skupinami sám nemění existující veřejnou cestu článku.
+
+Návody balíčků rozlišují obnovu s internetem, připravenou offline zálohu a nástroje používané mimo projekt; zkouška obnovy nesmí spoléhat na původní pracovní instalaci nebo skrytou cache.
 
 Zálohy image a provozních dat patří k Dockeru ve Virtualizaci a zálohy zdrojové historie k Gitu; přehled balíčků na ně odkazuje bez duplikace postupů.
 
