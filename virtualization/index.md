@@ -10,15 +10,15 @@ Kontejnery, lokální virtualizace, orchestrace a související správa prostře
 
 | Stránka | Popis |
 | --- | --- |
-| [WSL](wsl.md) | Moderní přehled instalace, nastavení a doporučení pro práci s WSL na Windows. |
-| [Docker](docker/index.md) | Přehled základních pojmů, příkazů, konfigurace a doporučení pro práci s Dockerem na Windows. |
-| [Kubernetes](kubernetes.md) | Přehled základních pojmů, principů a doporučení pro práci s Kubernetes. |
+| [WSL](wsl.md) | WSL umožňuje používat linuxové nástroje z Windows; WSL 2 spouští skutečné linuxové jádro v řízeném lehkém virtuálním stroji. |
+| [Docker](docker/index.md) | Docker spouští aplikace v izolovaných kontejnerech vytvořených z image; kontejner sdílí jádro hostitelského systému, zatímco jeho soubory a procesy mají vlastní prostředí. |
+| [Kubernetes](kubernetes.md) | Kubernetes řídí kontejnery podle požadovaného stavu, například „udržuj dvě instance této aplikace“. |
 
 ### Docker
 
 | Stránka | Popis |
 | --- | --- |
 | [Bezpečný upgrade stateful služby](docker/safe-stateful-upgrade.md) | Opakovatelný postup pro aktualizaci kontejnerové služby s databází a persistentními volumes tak, aby existoval ověřený bod obnovy a jasná kontrola výsledku. |
-| [Portainer](docker/portainer.md) | Moderní přehled spuštění, parametrů a doporučení pro práci s Portainerem v Dockeru. |
-| [Duplicati](docker/duplicati.md) | Moderní přehled nastavení složek, oprávnění a doporučení pro zálohování s Duplicati v Dockeru. |
-| [BusyBox](docker/busybox.md) | Moderní přehled zálohování dat z Docker volumes do lokální složky pomocí BusyBox. |
+| [Portainer](docker/portainer.md) | Portainer poskytuje webové rozhraní pro správu kontejnerů, image, sítí a volumes. |
+| [Duplicati](docker/duplicati.md) | Duplicati vytváří verzované a šifrované zálohy; zdrojové soubory musí být dostupné uvnitř jeho kontejneru. |
+| [BusyBox](docker/busybox.md) | BusyBox poskytuje malé linuxové nástroje; pomocný kontejner může vytvořit archiv pojmenovaného Docker volume. |

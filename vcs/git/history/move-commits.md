@@ -1,76 +1,47 @@
-# Git – Přesun commitů do nové nebo existující větve
+# Git – přesun commitů do jiné větve
 
-> Praktické rady, jak přesunout poslední commity ze jedné větve do nové nebo existující větve.
+Větev je ukazatel na commit; vytvořením nové větve lze hotovou práci zachovat a původní ukazatel přesunout zpět.
 
-![Přesun commitů](../../../images/9f2bcd1c-dba3-46b0-81ab-6f8ca2fec026.png)
+## Před použitím
 
-## Přesun commitů do **nové větve**
+Následující postup mění pouze **místní, dosud nepublikovanou** historii.
 
-<details>
-<summary>Krok 1: Vytvoření nové větve z aktuální</summary>
+Ověř `git status --short` a pokračuj s čistým pracovním stromem; počet `3` je příklad tří posledních lineárních commitů.
 
-```bash
-git checkout master
-git branch newbranch
-git checkout master
-```
-- Přepne se do zdrojové větve (`master`), vytvoří novou větev (`newbranch`) se stejnou historií.
-</details>
+## Přesun do nové větve
 
-<details>
-<summary>Krok 2: Odstranění commitů ze zdrojové větve</summary>
+Z aktuální chybně použité větve spusť:
 
 ```bash
-git reset --hard HEAD~3
+git log --oneline -5
+git branch feature/presunuta-prace
+git reset --keep HEAD~3
+git switch feature/presunuta-prace
 ```
-- Odstraní poslední 3 commity ze zdrojové větve (`master`).
 
-> [!WARNING]
-> Tento krok je **nevratný** – commity budou ze zdrojové větve smazány.
-</details>
+Nová větev nejprve uchová všechny commity; reset posune původní větev a `--keep` odmítne změny, které by přepsaly dotčené místní úpravy. [Reference git reset](https://git-scm.com/docs/git-reset)
 
-<details>
-<summary>Krok 3: Přepnutí do nové větve</summary>
+Přes `git log --oneline --all --graph -10` ověř, že práce zůstala v nové větvi.
+
+## Přenos do existující větve
+
+Pro jednotlivý commit použij `cherry-pick`, aby se nepřenesla celá zdrojová větev:
 
 ```bash
-git checkout newbranch
+# Ve zdrojové větvi uchovej poslední commit pojmenovaným ukazatelem.
+git branch backup/zdroj
+git switch cilova-vetev
+git cherry-pick backup/zdroj
 ```
-- Nová větev obsahuje původní commity, které byly odstraněny ze zdrojové větve.
-</details>
 
-## Přesun commitů do **existující větve**
+`cilova-vetev` nahraď existující cílovou větví; ukázka kopíruje pouze poslední commit, ne všechny commity ze zálohy.
 
-<details>
-<summary>Krok 1: Merge commitů do cílové větve</summary>
+Při více commitech vybírej jejich skutečná ID od nejstaršího; merge commity vyžadují samostatné posouzení. [Reference cherry-pick](https://git-scm.com/docs/git-cherry-pick)
 
-```bash
-git checkout existingbranch
-git merge branchToMoveCommitFrom
-```
-- Přepne se do cílové větve (`existingbranch`) a sloučí commity ze zdrojové větve (`branchToMoveCommitFrom`).
-</details>
+Při konfliktu oprav soubory, připrav je pomocí `git add` a pokračuj přes `git cherry-pick --continue`; zrušení provede `git cherry-pick --abort`.
 
-<details>
-<summary>Krok 2: Odstranění commitů ze zdrojové větve</summary>
+## Ověření a úklid
 
-```bash
-git checkout branchToMoveCommitFrom
-git reset --hard HEAD~3
-```
-- Odstraní poslední 3 commity ze zdrojové větve.
+Spusť testy cílové větve a prohlédni rozdíl, než odstraníš commit ze zdrojové větve.
 
-> [!WARNING]
-> Tento krok je **nevratný** – commity budou ze zdrojové větve smazány.
-</details>
-
-<details>
-<summary>Krok 3: Přepnutí do cílové větve</summary>
-
-```bash
-git checkout existingbranch
-```
-- Pokračuj v práci na cílové větvi s přesunutými commity.
-</details>
-
-> [!NOTE]
-> Více informací najdeš v [diskuzi na Stack Overflow](https://stackoverflow.com/questions/1628563/move-the-most-recent-commits-to-a-new-branch-with-git).
+U již publikované práce preferuj [revert](delete-commits.md); reset sdílené větve by změnil historii ostatním.

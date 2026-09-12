@@ -1,141 +1,132 @@
-# Vývojové vzory – Kompletní přehled a použití
+# Návrhové vzory
 
-> Praktické rady pro opakovaně použitelné návrhové vzory v softwarovém vývoji.
+Návrhový vzor je pojmenované řešení opakujícího se problému se vztahy mezi objekty nebo částmi programu.
 
-![Vývojové vzory](../images/1c750931-1fdb-47ec-882b-3781bbae6e7e.png)
+Pomáhá popsat návrh a jeho kompromisy; není to hotová knihovna ani požadavek přidávat do každého programu více tříd.
 
-## Co jsou vývojové vzory?
+## K čemu slouží
 
-<details>
-<summary>Definice a význam</summary>
+Nejprve pojmenuj konkrétní problém, například „výpočet dopravy se mění podle dopravce“.
 
-- **Vývojové vzory** jsou osvědčená řešení opakujících se problémů v návrhu softwaru.
-- Zlepšují čitelnost, údržbu a rozšiřitelnost kódu.
-- Vzory nejsou konkrétní kód, ale obecné postupy a struktury.
+Teprve potom vybírej strukturu, která změnu oddělí od zbytku programu.
 
-</details>
+Pokud vystačíš s přehlednou funkcí, není nutné zavádět složitější vzor.
 
-## Klasifikace návrhových vzorů
+## Přehled kategorií
 
-<details>
-<summary>Přehled kategorií</summary>
+| Kategorie | Řeší | Typické vzory |
+|---|---|---|
+| Vytvářecí | Jak vznikají objekty | Factory Method, Abstract Factory, Builder, Prototype, Singleton |
+| Strukturální | Jak se části skládají a přizpůsobují | Adapter, Bridge, Composite, Decorator, Facade, Flyweight, Proxy |
+| Vzory chování | Jak spolu části komunikují a mění chování | Strategy, Observer, Command, State, Chain of Responsibility, Iterator, Mediator, Memento, Template Method, Visitor, Interpreter |
 
-| Typ vzoru | Popis | Příklad použití |
-|-------------------|--------------------------------------------|-------------------------------|
-| **Creational** | Vytváření objektů | Singleton, Factory, Builder, Prototype, Abstract Factory |
-| **Structural** | Skládání objektů a tříd | Adapter, Decorator, Facade, Composite, Bridge, Proxy, Flyweight |
-| **Behavioral** | Komunikace a chování objektů | Observer, Strategy, Command, State, Chain of Responsibility, Mediator, Memento, Iterator, Template Method, Visitor, Interpreter |
+Singleton zavádí jedinou instanci, ale skrytý globální stav může komplikovat testování a souběh.
 
-</details>
+Pouhé `if` vybírající typ objektu bývá jednoduchá továrna; Factory Method v klasickém významu dovoluje podtřídám změnit vytvářený typ.
 
-## Ukázky hlavních vzorů
+## Před použitím ukázek
 
-<details>
-<summary>Creational vzory</summary>
+Ukázky jsou samostatný moderní JavaScript bez knihoven a lze je spustit v konzoli prohlížeče nebo jako soubor pomocí Node.js.
 
-| Vzor | Popis | Ukázka (JavaScript) |
-|---------------------|--------------------------------------------|-------------------------------|
-| **Singleton** | Jediná instance třídy | `class Singleton {... }` |
-| **Factory Method** | Vytváření objektů přes tovární metodu | `class CarFactory {... }` |
-| **Abstract Factory**| Vytváření rodin objektů | `class GUIFactory {... }` |
-| **Builder** | Složené vytváření objektů | `class CarBuilder {... }` |
-| **Prototype** | Klonování existujícího objektu | `const clone = Object.create(proto);` |
+Každý blok vlož do vlastního souboru `priklad.js` a v jeho složce spusť následující příkaz.
 
-</details>
+```bash
+# Node.js provede soubor a vypíše výsledky console.log do terminálu.
+node priklad.js
+```
 
-<details>
-<summary>Structural vzory</summary>
+## Strategy: zaměnitelný výpočet
 
-| Vzor | Popis | Ukázka (JavaScript) |
-|---------------------|--------------------------------------------|-------------------------------|
-| **Adapter** | Přizpůsobení rozhraní | `class NewApiAdapter {... }` |
-| **Decorator** | Přidání funkcionality | `function decorate(obj) {... }`|
-| **Facade** | Zjednodušené rozhraní pro složitý systém | `class Facade {... }` |
-| **Composite** | Skládání objektů do stromu | `class Component {... }` |
-| **Bridge** | Oddělení abstrakce od implementace | `class Bridge {... }` |
-| **Proxy** | Zástupce objektu | `class Proxy {... }` |
-| **Flyweight** | Sdílení dat mezi objekty | `class FlyweightFactory {... }`|
+Objednávka potřebuje cenu dopravy, ale nemusí znát pravidla každého dopravce.
 
-</details>
-
-<details>
-<summary>Behavioral vzory</summary>
-
-| Vzor | Popis | Ukázka (JavaScript) |
-|---------------------|--------------------------------------------|-------------------------------|
-| **Observer** | Sledování změn objektu | `class Subject {... }` |
-| **Strategy** | Zaměnitelné algoritmy | `class Strategy {... }` |
-| **Command** | Zapouzdření požadavku jako objektu | `class Command {... }` |
-| **State** | Změna chování podle stavu | `class State {... }` |
-| **Chain of Responsibility** | Řetězení zpracovatelů | `class Handler {... }` |
-| **Mediator** | Zprostředkování komunikace | `class Mediator {... }` |
-| **Memento** | Uložení a obnovení stavu | `class Memento {... }` |
-| **Iterator** | Procházení kolekcí | `class Iterator {... }` |
-| **Template Method** | Definice kostry algoritmu | `class Template {... }` |
-| **Visitor** | Přidání operací objektům | `class Visitor {... }` |
-| **Interpreter** | Interpretace jazyků | `class Interpreter {... }` |
-
-</details>
-
-## Ukázky implementace
-
-<details>
-<summary>Singleton</summary>
+V JavaScriptu může strategii představovat obyčejná funkce.
 
 ```javascript
-class Singleton {
-  static instance;
-  constructor() {
-    if (!Singleton.instance) {
-      Singleton.instance = this;
-    }
-    return Singleton.instance;
+// Parametrem je cena zboží v Kč; výstupem je cena dopravy v Kč.
+const personalPickup = () => 0;
+const courier = subtotal => subtotal >= 1500 ? 0 : 99;
+
+function totalPrice(subtotal, shippingStrategy) {
+  return subtotal + shippingStrategy(subtotal);
+}
+
+console.log(totalPrice(500, personalPickup)); // 500
+console.log(totalPrice(500, courier));        // 599
+```
+
+Částky `1500` a `99` jsou obchodní pravidla ukázkového dopravce a můžeš je změnit.
+
+V reálné aplikaci doplň validaci vstupů a dohodnutou reprezentaci peněz, například celé haléře.
+
+## Adapter: sjednocení rozhraní
+
+Adaptér překládá rozhraní existující služby na to, které očekává klientský kód.
+
+```javascript
+class LegacyCatalog {
+  getProductName(id) { return id === 1 ? 'Klávesnice' : null; }
+}
+
+class CatalogAdapter {
+  constructor(legacyCatalog) { this.legacyCatalog = legacyCatalog; }
+
+  findProduct(id) {
+    const name = this.legacyCatalog.getProductName(id);
+    // Klient dostává objekt nebo null, nikoli samotný řetězec.
+    return name === null ? null : { id, name };
   }
 }
+
+const catalog = new CatalogAdapter(new LegacyCatalog());
+console.log(catalog.findProduct(1)); // { id: 1, name: 'Klávesnice' }
+console.log(catalog.findProduct(2)); // null
 ```
-</details>
 
-<details>
-<summary>Factory Method</summary>
+Při výměně katalogu upravíš adaptér, zatímco klient může dál používat `findProduct`.
 
-```javascript
-class CarFactory {
-  createCar(type) {
-    if (type === 'electric') return new ElectricCar();
-    if (type === 'diesel') return new DieselCar();
-  }
-}
-```
-</details>
+Adaptér sám neřeší síťové chyby ani rozdílný význam dat; tyto rozdíly musí mít výslovné pravidlo.
 
-<details>
-<summary>Adapter</summary>
+## Observer: oznámení změny
 
-```javascript
-class OldApi {
-  getData() { return 'old data'; }
-}
-class NewApiAdapter {
-  constructor(oldApi) { this.oldApi = oldApi; }
-  fetch() { return this.oldApi.getData(); }
-}
-```
-</details>
-
-<details>
-<summary>Observer</summary>
+Pozorovatel umožňuje více odběratelům reagovat na událost, aniž by vydavatel znal jejich konkrétní implementaci.
 
 ```javascript
 class Subject {
-  constructor() { this.observers = []; }
-  subscribe(obs) { this.observers.push(obs); }
-  notify(data) { this.observers.forEach(o => o.update(data)); }
+  listeners = new Set();
+
+  subscribe(listener) {
+    this.listeners.add(listener);
+    // Odběratel dostane možnost ukončit odběr.
+    return () => this.listeners.delete(listener);
+  }
+
+  notify(value) {
+    // Snímek zabrání změně právě procházeného seznamu odběratelů.
+    for (const listener of [...this.listeners]) listener(value);
+  }
 }
+
+const saved = new Subject();
+const unsubscribe = saved.subscribe(id => console.log(`Uložena objednávka ${id}`));
+saved.notify(42); // Uložena objednávka 42
+unsubscribe();
+saved.notify(43); // Odhlášený odběratel už nic nevypíše.
 ```
-</details>
 
-## Další zdroje
+Tato varianta volá odběratele synchronně a chyba jednoho volání přeruší oznamování.
 
-- [📄 Dokument vývojových vzorů (PDF)](../pdf/dev_design_patterns.pdf)
-- [💡 Design Patterns – Refactoring Guru](https://refactoring.guru/design-patterns)
-- [📝 Přehled vzorů v JavaScriptu](https://www.patterns.dev/)
+Pro asynchronní události, izolaci chyb nebo frontu zpráv je potřeba navrhnout další pravidla.
+
+## Co lze upravit a jak ověřit návrh
+
+Názvy tříd, datové typy a konkrétní strategie přizpůsob doméně projektu.
+
+Zkontroluj, zda umíš přidat další variantu bez změny všech klientů a zda test pokrývá i chybový nebo prázdný vstup.
+
+Vzor má snížit počet míst, kterým musíš při změně rozumět; pokud jen přidává vrstvy bez přínosu, zjednoduš návrh.
+
+## Související témata
+
+[Rozhraní v C#](csharp/interface.md) ukazuje typový kontrakt, [komentáře](code-comments.md) vysvětlení záměru.
+
+[Starší přehled vzorů v PDF](../pdf/dev_design_patterns.pdf) slouží jako doplňkový studijní materiál, nikoli jako zdroj ověřených spustitelných ukázek této stránky.

@@ -1,154 +1,69 @@
-# Správa npm balíčků
+# npm – instalace, aktualizace a obnova balíčků
 
-> Pro správu balíčků je potřeba mít nainstalovaný **Node.js** a **npm**.
+npm spravuje JavaScriptové balíčky a projektové příkazy; `package.json` popisuje požadavky a `package-lock.json` zaznamenává konkrétní vyřešené závislosti.
 
-![npm](../../images/7021cbf6-ee66-45b6-903c-a751e0653eec.png)
+## Před použitím
 
-## Aktualizace balíčků
+Nainstaluj Node.js ve verzi požadované projektem a ověř `node --version` i `npm --version`.
 
-<details>
-<summary>Jak správně aktualizovat balíčky?</summary>
+Projektové příkazy spouštěj ve složce s `package.json`.
 
-1. 🚀 **Aktualizace Storybook:**
-   ```bash
-   npx storybook@latest upgrade
-   ```
-_Použije nejnovější verzi Storybook a provede upgrade._
+## Běžná práce
 
-2. 🕵️ **Zjištění zastaralých balíčků:**
-   ```bash
-   npm outdated
-   ```
-_Vypíše seznam balíčků, které mají novější verzi._
+| Úkol | Příkaz | Co změní |
+|---|---|---|
+| Obnova z existujícího lockfilu | `npm ci` | Znovu vytvoří `node_modules`, při nesouladu manifestu a lockfilu selže |
+| Přidání knihovny | `npm install knihovna` | Zapíše závislost a aktualizuje lockfile |
+| Přidání vývojového nástroje | `npm install --save-dev nastroj` | Zapíše nástroj mezi `devDependencies` |
+| Dostupné aktualizace | `npm outdated` | Vypíše stav bez instalace |
+| Aktualizace v povolených rozsazích | `npm update` | Obnoví verze podle rozsahů manifestu |
+| Odebrání | `npm uninstall knihovna` | Odebere deklaraci a upraví lockfile |
+| Dostupné projektové příkazy | `npm run` | Vypíše sekci `scripts` |
 
-3. 🛠️ **Aktualizace konkrétních balíčků:**
-   ```bash
-   npm install vite@latest @sveltejs/vite-plugin-svelte@latest
-   ```
-_Nainstaluje nejnovější verze vybraných balíčků._
+`knihovna` a `nastroj` jsou místa pro skutečné názvy z registru; do terminálu je nekopíruj bez nahrazení.
 
-> **Tip:** Po aktualizaci spusťte projekt a ověřte funkčnost. Některé aktualizace mohou vyžadovat úpravy v konfiguraci nebo kódu.
+`npm ci` nemění lockfile, ale může spouštět instalační skripty závislostí; `--ignore-scripts` použij jen tehdy, pokud projekt bez nich funguje. [Npm ci](https://docs.npmjs.com/cli/v11/commands/npm-ci/), [npm update](https://docs.npmjs.com/cli/v11/commands/npm-update/)
 
-</details>
+## Praktický příklad: changelog pomocí git-cliff
 
-## Globální balíčky
+V samostatném Git projektu s `package.json` spusť:
 
-<details>
-<summary>Kde najdu globální balíčky?</summary>
-
-| 🖥️ Operační systém | 📂 Umístění globálních balíčků |
-|--------------------|-----------------------------------------------|
-| 🪟 Windows | `C:\Users\<user>\AppData\Roaming\npm\node_modules` |
-| 🐧 Mac/Linux | `~/.npm-global/lib/node_modules` |
-
-🔍 **Zjištění cesty příkazem:**
-```bash
-npm root -g
-```
-</details>
-
-## Záloha globálních balíčků
-
-<details>
-<summary>Jak zálohovat globální balíčky?</summary>
-
-Tento PowerShell skript zálohuje seznam globálních balíčků a stáhne je pro offline použití.
-
-```powershell
-# Vytvoření cesty k souboru se seznamem balíčků
-$packageListFilePath = Join-Path $PWD.Path 'npm_global_packages.txt'
-$outputFolder = Join-Path $PWD.Path 'offline_packages'
-
-# Uložení seznamu balíčků
-npm list -g --depth=0 | Out-File $packageListFilePath -Encoding utf8
-
-# Vytvoření složky pro balíčky
-if (!(Test-Path $outputFolder)) { New-Item -ItemType Directory -Path $outputFolder | Out-Null }
-
-# Načtení balíčků a stažení .tgz souborů
-$content = Get-Content $packageListFilePath | Select-Object -Skip 1
-foreach ($line in $content) {
-    $line = $line.Trim() -replace '^[+`-]+\s*', ''
-    if ([string]::IsNullOrWhiteSpace($line)) { continue }
-    $parts = $line -split '@'
-    $packageName = $parts[0].Trim()
-    $version = if ($parts.Length -gt 1) { $parts[1].Trim() } else { '' }
-    $packageDir = Join-Path $outputFolder $packageName
-    if (!(Test-Path $packageDir)) { New-Item -ItemType Directory -Path $packageDir | Out-Null }
-    if ($version) {
-        npm pack "$packageName@$version" --pack-destination $packageDir
-    } else {
-        npm pack $packageName --pack-destination $packageDir
-    }
-}
-```
-</details>
-
-## Obnova balíčků z offline zálohy
-
-<details>
-<summary>Jak obnovit balíčky ze zálohy?</summary>
-
-Tento PowerShell skript nainstaluje všechny zálohované balíčky z offline složky.
-
-```powershell
-$packageFolder = Join-Path $PWD.Path 'offline_packages'
-$installBaseFolder = Join-Path $PWD.Path 'Installed'
-
-if (!(Test-Path $packageFolder)) { Write-Host "Složka s offline balíčky nebyla nalezena." -ForegroundColor Red; exit }
-if (!(Test-Path $installBaseFolder)) { New-Item -ItemType Directory -Path $installBaseFolder }
-
-$tgzFiles = Get-ChildItem $packageFolder -Filter *.tgz -Recurse
-foreach ($tgzFile in $tgzFiles) {
-    $packageName = [System.IO.Path]::GetFileNameWithoutExtension($tgzFile.Name)
-    $installDir = Join-Path $installBaseFolder $packageName
-    if (!(Test-Path $installDir)) { New-Item -ItemType Directory -Path $installDir }
-    npm install --prefix $installDir $tgzFile.FullName
-}
-```
-</details>
-
-## Aplikační balíčky
-
-<details>
-<summary>git-cliff</summary>
-
-**Generuje kategorizovaný changelog z Git historie a Conventional Commits.**
-
-### Instalace
 ```bash
 npm install --save-dev --save-exact git-cliff
-```
-
-Projektová instalace drží verzi v `package.json` a integritu v `package-lock.json`, takže lokální prostředí i CI používají stejný nástroj.
-
-### Vytvoření konfigurace
-```bash
 npm exec -- git-cliff --init
-```
-
-Příkaz vytvoří `cliff.toml`, ve kterém lze deklarativně nastavit skupiny commitů, šablonu, tagy, řazení a odkazy.
-
-### Generování changelogu
-```bash
 npm exec -- git-cliff --config cliff.toml --output CHANGELOG.md
 ```
 
-| ⚙️ Parametr | 💡 Význam |
-|---|---|
-| `--config` | Cesta k verzované TOML nebo YAML konfiguraci |
-| `--output` | Výstupní Markdown soubor |
-| `--repository` | Jiný Git repozitář než aktuální pracovní adresář |
-| `--include-path` / `--exclude-path` | Omezení historie podle změněných cest |
-| `--tag-pattern` | Regulární výraz určující release tagy |
-| `--sort` | Pořadí commitů `oldest` nebo `newest` |
-| `--offline` | Zakáže vzdálená API volání i při nastaveném remote |
+První příkaz uloží přesnou aktuálně vybranou verzi, druhý vytvoří konfiguraci a třetí zpracuje dostupnou Git historii do Markdownu.
 
-> **Tip:**
-> Přidejte stabilní projektový skript a v CI používejte úplnou Git historii:
-> ```bash
-> npm pkg set scripts.changelog:generate="git-cliff --config cliff.toml --output CHANGELOG.md"
-> npm run changelog:generate
-> ```
+Ve stávajícím projektu s `cliff.toml` inicializaci neopakuj; místo toho uprav jeho skupiny, šablonu a filtrování.
 
-</details>
+Možnosti popisuje [Git-cliff: použití](https://git-cliff.org/docs/category/usage/).
+
+Verzuj manifest, lockfile a konfiguraci společně; při generování úplné historie potřebuješ úplný klon.
+
+## Globální nástroje a jejich obnova
+
+```powershell
+npm list -g --depth=0 --json | Set-Content -Encoding utf8 npm-global.json
+npm root -g
+npm config get prefix
+```
+
+JSON uchovává strukturované názvy i verze, včetně názvů se scope jako `@scope/balicek`; druhé dva příkazy ukazují skutečné instalační cesty.
+
+Na novém počítači vyber z inventáře potřebné nástroje a nainstaluj je pomocí `npm install -g NAZEV@VERZE`, kde obě hodnoty nahradíš záznamem.
+
+## Offline instalace a omezení
+
+Samotný `npm pack` nevytváří úplnou offline zálohu všech tranzitivních závislostí.
+
+Pro opakovatelnou obnovu uchovej projekt a lockfile; v řízeném prostředí připrav registry mirror nebo naplněnou cache a vyzkoušej `npm ci --offline` bez sítě na stejné platformě.
+
+Chybějící položka cache tento příkaz zastaví; nativní balíčky a instalační skripty mohou potřebovat další platformní prostředky. [Npm cache](https://docs.npmjs.com/cli/v11/commands/npm-cache/), [npm pack](https://docs.npmjs.com/cli/v11/commands/npm-pack/)
+
+## Ověření aktualizace
+
+Před přechodem na hlavní verzi prostuduj migrační pokyny nástroje; `@latest` není záruka kompatibility s ostatními balíčky.
+
+Zkontroluj diff obou manifestů a spusť build i testy definované projektem.

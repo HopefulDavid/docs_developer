@@ -25,7 +25,7 @@ Samo nenahrazuje překladač, testy ani řízení celého release procesu. [Úlo
 | **OpenTofu** | Postaví infrastrukturu (servery, sítě, databáze) |
 | **Docker** | Zabalí aplikaci do kontejneru |
 | **CI/CD** | Nasadí kód do prostředí |
-| **Aplikace** | Samotný produkt (Next.js,.NET, Go…) |
+| **Aplikace** | Samotný produkt (Next.js, .NET, Go…) |
 
 ## Instalace
 
@@ -43,7 +43,7 @@ Příklad nevyžaduje cloudový účet, ale první `tofu init` potřebuje stáhn
 
 **1. Vytvoř složku projektu:**
 
-```
+```text
 C:\tofu-test
 ```
 
@@ -66,6 +66,12 @@ resource "local_file" "example" {
   filename = "${path.module}/vystup.txt"
 }
 ```
+
+`required_providers` vybírá plugin, `~> 2.5` dovoluje kompatibilní verze od 2.5 do další hlavní řady a lockfile připne konkrétně vybranou verzi.
+
+`resource` pojmenovává spravovaný soubor, `content` jeho obsah a `path.module` adresář aktuálního modulu; měnit můžeš obsah i název výstupu.
+
+Použij novou výukovou složku bez existujícího `vystup.txt`, protože provider bude tento soubor spravovat a při destroy jej odstraní.
 
 **3. Inicializuj projekt:**
 
@@ -108,7 +114,7 @@ tofu destroy   # potvrď 'yes'
 
 ## Doporučená struktura projektu
 
-```
+```text
 projekt/
 ├── main.tf          # Hlavní konfigurace zdrojů
 ├── variables.tf     # Definice proměnných

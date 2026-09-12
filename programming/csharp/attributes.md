@@ -56,7 +56,7 @@ Pro vlastní pravidlo lze odvodit `ValidationAttribute` a implementovat `IsValid
 
 FileHelpers mapuje textové záznamy na pole třídy podle atributů.
 
-V samostatném konzolovém projektu přidejte balíček:
+V samostatném konzolovém projektu přidej balíček:
 
 ```powershell
 dotnet add package FileHelpers
@@ -84,7 +84,7 @@ public sealed class Order
 }
 ```
 
-Pro soubory použijte `engine.ReadFile("Input.txt")` a `engine.WriteFile("Output.txt", orders)`. [FileHelpers: Quick Start](https://www.filehelpers.net/quickstart/).
+Pro soubory použij `engine.ReadFile("Input.txt")` a `engine.WriteFile("Output.txt", orders)`. [FileHelpers: Quick Start](https://www.filehelpers.net/quickstart/).
 
 | Atribut | Použití |
 |---|---|
@@ -95,4 +95,4 @@ Pro soubory použijte `engine.ReadFile("Input.txt")` a `engine.WriteFile("Output
 | `FieldConverter` | Konverze, například data s konkrétním formátem |
 | `FieldOrder` | Explicitní pořadí polí |
 
-Formát a pravidla konverze zvolte podle vstupu; možnosti knihovny nejsou omezené jen na jeden neměnný typ záznamu. [FileHelpers: dokumentace a příklady](https://www.filehelpers.net/).
+Formát a pravidla konverze zvol podle vstupu; možnosti knihovny nejsou omezené jen na jeden neměnný typ záznamu. [FileHelpers: dokumentace a příklady](https://www.filehelpers.net/).

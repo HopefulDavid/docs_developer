@@ -63,7 +63,7 @@ public class Person
 
 Serializátor sám escapuje ampersand a deserializovaný výstup je opět `Eva & Adam`.
 
-`StringWriter` vytváří text s deklarací UTF-16; pro zápis přímo do UTF-8 souboru použijte `XmlWriter` nad souborem s odpovídajícím nastavením kódování. [Microsoft: příklady serializace XML](https://learn.microsoft.com/en-us/dotnet/standard/serialization/examples-of-xml-serialization).
+`StringWriter` vytváří text s deklarací UTF-16; pro zápis přímo do UTF-8 souboru použij `XmlWriter` nad souborem s odpovídajícím nastavením kódování. [Microsoft: příklady serializace XML](https://learn.microsoft.com/en-us/dotnet/standard/serialization/examples-of-xml-serialization).
 
 Čtečka explicitně odmítá DTD a nenačítá externí zdroje. [DtdProcessing](https://learn.microsoft.com/en-us/dotnet/api/system.xml.xmlreadersettings.dtdprocessing), [XmlResolver](https://learn.microsoft.com/en-us/dotnet/api/system.xml.xmlreadersettings.xmlresolver).
 

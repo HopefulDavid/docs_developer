@@ -5,7 +5,7 @@
   items:
     - name: "Konfigurace"
       href: "git/configuration.md"
-    - name: "Úložiště"
+    - name: "Repozitář"
       href: "git/repository.md"
     - name: "Git server"
       href: "git/server.md"
@@ -35,5 +35,5 @@
           href: "git/history/fix-commits.md"
         - name: "Odstranění commitů"
           href: "git/history/delete-commits.md"
-        - name: "Lokální ignorování změn"
+        - name: "assume-unchanged a lokální konfigurace"
           href: "git/history/assume-unchanged.md"

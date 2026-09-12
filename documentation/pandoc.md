@@ -16,6 +16,10 @@ Příkazy spouštěj ve složce vstupního souboru:
 | HTML → Markdown | `pandoc dokument.html -t gfm -o dokument.md` |
 | Markdown → EPUB | `pandoc dokument.md -o dokument.epub` |
 
+`-o` určuje výstupní soubor, `-t gfm` zvolí GitHub Flavored Markdown a `--extract-media=media` uloží obrázky do složky `media`.
+
+Jména vstupu, výstupu a složky obrázků můžeš změnit, ale existující cílový soubor může být přepsán.
+
 Seznam dostupných formátů zobrazí `pandoc --list-input-formats` a `pandoc --list-output-formats`.
 
 ## HTML v jednom souboru

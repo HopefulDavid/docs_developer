@@ -1,118 +1,68 @@
-# WSL (Windows Subsystem for Linux) – Praktický průvodce a tipy
+# WSL – Linux ve Windows
 
-> Moderní přehled instalace, nastavení a doporučení pro práci s WSL na Windows.
+WSL umožňuje používat linuxové nástroje z Windows; WSL 2 spouští skutečné linuxové jádro v řízeném lehkém virtuálním stroji.
 
-![WSL](../images/94edf060-a2f9-476c-b93f-c4723e494cab.png)
+## Před použitím
 
-## Co je WSL?
+Následující instalace je pro podporované Windows 10 od verze 2004, sestavení 19041, nebo Windows 11.
 
-- **WSL** umožňuje instalaci a provoz linuxových distribucí přímo na Windows.
-- Umožňuje spouštět linuxové aplikace bez potřeby virtuálního stroje.
+Pro WSL 2 potřebuješ povolenou virtualizaci procesoru v UEFI; ve virtualizovaném hostiteli také podporovanou vnořenou virtualizaci.
 
-> [!NOTE]
-> Ideální pro vývojáře, kteří potřebují Linux nástroje na Windows.
+Intel VT-d ani obecné IOMMU není potřeba doporučovat jako samostatný univerzální předpoklad tohoto postupu.
 
 ## Instalace WSL na Windows
 
-<details>
-<summary>Krok 1: Povolení virtualizace v BIOS/UEFI</summary>
+V PowerShellu **jako správce** spusť:
 
-> [!IMPORTANT]
-> V BIOSu/UEFI povolte:
-> - **Podpora CPU virtualizace**
-> - Intel: `Intel VT-x`
-> - AMD: `AMD-V` nebo `SVM`
-> - **Virtualizační technologie**
-> - Intel: `VT-d`
-> - AMD: `AMD-Vi`
-> - **Vnořená virtualizace** (jen pokud potřebujete virtualizaci uvnitř WSL)
-
-**Kontrola povolení virtualizace:**
-1. Stiskněte `Ctrl + Shift + Esc`
-2. Přejděte na záložku **Výkon (Performance)**
-3. Dole najdete **Virtualization: Enabled**
-
-![WSL](../images/wv1G8UBxvy.png)
-</details>
-
-<details>
-<summary>Krok 2: Povolení WSL v systému</summary>
-
-1. Spusťte **PowerShell jako správce**
-![WSL](../images/pnAzi0NFm3.png)
-
-2. Aktivujte WSL:
-   ```bash
-   dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
-   ```
-![WSL](../images/mei8XmPaWt.png)
-</details>
-
-<details>
-<summary>Krok 3: Povolení Virtual Machine Platform a WSL 2</summary>
-
-Aktivujte platformu pro WSL 2:
-```bash
-dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
-```
-![WSL](../images/cADNNtfdn8.png)
-
-> [!IMPORTANT]
-> Po povolení funkcí **restartujte počítač**.
-</details>
-
-<details>
-<summary>Krok 4: Stažení aktualizace Linux jádra</summary>
-
-- Stáhněte a nainstalujte poslední [aktualizaci jádra](https://github.com/Microsoft/WSL/releases).
-- Řeší kompatibilitu s Dockerem a dalšími nástroji.
-
-> [!NOTE]
-> Doporučuji vždy instalovat nejnovější verzi jádra.
-</details>
-
-<details>
-<summary>Krok 5: Nastavení WSL 2 jako výchozí</summary>
-
-Nastavte WSL 2 jako výchozí:
-```bash
-wsl --set-default-version 2
-```
-![WSL](../images/LNHIGgBhcb.png)
-</details>
-
-<details>
-<summary>Krok 6: Instalace linuxové distribuce</summary>
-
-Stáhněte si RootFS (např. [Ubuntu](https://cloud-images.ubuntu.com/wsl/jammy/current/)) a nainstalujte:
-```bash
-wsl --import Ubuntu-22.04 C:\WSL\Ubuntu2204 C:\UbuntuRootFS\ubuntu-jammy-wsl-amd64-ubuntu22.04lts.rootfs.tar.gz --version 2
+```powershell
+wsl --install
 ```
 
-> [!NOTE]
-> - `Ubuntu-22.04` = Název distribuce
-> - `C:\WSL\Ubuntu2204` = Cesta k instalaci
-> - `C:\UbuntuRootFS\...` = Cesta k RootFS souboru
-> - `--version 2` = Použít WSL 2
+Příkaz připraví WSL a výchozí distribuci Ubuntu; pokud vyžádá restart, proveď jej a dokonči vytvoření linuxového uživatele.
 
-Ověření instalace:
-```bash
-wsl --list
+Jde o linuxový účet oddělený od účtu Windows. [Instalace WSL](https://learn.microsoft.com/en-us/windows/wsl/install)
+
+## Ověření a běžné použití
+
+V běžném terminálu Windows:
+
+```powershell
+wsl --status
+wsl --list --verbose
+wsl
 ```
 
-## Vypnutí všech WSL instancí
+Výpis ukáže distribuce a sloupec `VERSION`; poslední příkaz otevře výchozí distribuci.
+
+Uvnitř Linuxu ověř prostředí:
 
 ```bash
-wsl --shutdown
+whoami
+pwd
+uname -r
 ```
 
-> [!WARNING]
-> Odstranění špatně nainstalované distribuce:
-> ```bash
-> wsl --unregister <distro name>
-> ```
-> Např.: `wsl --unregister Ubuntu-22.04`
-</details>
+Příkazy vypíšou uživatele, pracovní adresář a jádro; `exit` se vrátí do Windows.
+
+## Co lze upravit
+
+| Příkaz ve Windows | Význam |
+|---|---|
+| `wsl --list --online` | Dostupné distribuce pro instalaci |
+| `wsl --install -d Debian` | Instalace jiné distribuce; název vyber z výpisu |
+| `wsl --set-default Ubuntu` | Zvolí výchozí existující distribuci |
+| `wsl --set-default-version 2` | Nastaví verzi pro další instalace, nemigruje existující distribuce |
+| `wsl --update` | Aktualizuje WSL |
+| `wsl --terminate Ubuntu` | Zastaví jednu pojmenovanou distribuci |
+| `wsl --shutdown` | Zastaví všechny distribuce i virtuální stroj WSL 2 |
+
+Před zastavením ulož práci; názvy `Ubuntu` a `Debian` nahraď skutečným názvem své distribuce. [Reference WSL](https://learn.microsoft.com/en-us/windows/wsl/basic-commands)
+
+## Import vlastní distribuce
+
+Archiv RootFS získaný od vydavatele odpovídající architektuře lze importovat pomocí `wsl --import`; stejný příkaz slouží k obnově exportu v následujícím postupu.
+
+Import sám nemusí vytvořit běžného uživatele ani nastavit jeho výchozí přihlášení.
 
 ## Přesun WSL distribuce na jiné místo
 

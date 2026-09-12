@@ -1,103 +1,64 @@
-# Git – Uživatelská konfigurace
+# Git – uživatelská konfigurace
 
-> Praktické rady pro globální nastavení Gitu, dlouhé cesty na Windows a konfiguraci vizuálních nástrojů.
+Konfigurace určuje identitu autora, chování Gitu a používané nástroje pro porovnávání a slučování.
 
-![Ollama](../../images/e159d23c-f2b8-4884-bc0b-800bae9db096.png)
+## Jak fungují rozsahy
 
-## Výběr SSH klienta
+`--local` platí pro aktuální repozitář, `--global` pro tvůj účet a `--system` pro instalaci Gitu; místní hodnota může přepsat obecnější nastavení.
 
-- [Zjistit klienta používaného Gitem](../../network/ssh/git.md#které-ssh-používá-git).
-- [Nastavit společného klienta pro Windows a Git](../../network/ssh/windows.md#jeden-klient-pro-windows-a-git).
+Příkazy níže používají osobní konfiguraci a nevyžadují správce systému. [Reference git config](https://git-scm.com/docs/git-config)
+
+## Praktické nastavení
+
+Jméno a e-mail nahraď údaji, které chceš mít uvedené u commitů:
+
+```bash
+git config --global user.name "Jana Novakova"
+git config --global user.email "jana@example.com"
+git config --show-origin --get user.email
+```
+
+Poslední příkaz ukáže účinnou hodnotu i soubor, ze kterého pochází; nastavení nemění autorství starých commitů.
 
 ## Povolení dlouhých cest ve Windows
 
 ```bash
-git config --system core.longpaths true
+git config --global core.longpaths true
+git config --show-origin --get core.longpaths
 ```
 
-povolí v Git podporu dlouhých cest na Windows, což často řeší chybu **„Filename too long“**.
+Volba rozšiřuje podporu dlouhých cest v Git for Windows; nezaručuje stejnou podporu ve všech editorech, build nástrojích a skriptech. [Git for Windows: dlouhé cesty](https://gitforwindows.org/faq.html)
 
-> **Pozor:**
-> - Tento příkaz se musí spustit s administrátorskými právy, protože mění systémovou konfiguraci Gitu.
->
-> - Musí mít ve Windows povolenou podporu dlouhých cest. (Pokud to není povolené, Git to nezvládne.)
+Při přetrvávajícím problému nejprve zkrať kořenovou cestu projektu, například na `C:\src\aplikace`.
 
-Pokud ještě nemáte povolené dlouhé cesty v systému, lze to udělat takto:
+## Nastavení Meld jako diff a merge nástroje
 
-1. Spusť `regedit`
-2. Najdi klíč: `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem`
-3. Najdi nebo vytvoř DWORD hodnotu `LongPathsEnabled` a nastav ji na `1`.
-4. Restartuj počítač.
+Nainstaluj [Meld](https://meldmerge.org/) a zjisti jeho skutečnou cestu.
 
-## Nastavení Meld jako diff/merge tool
+Ve Windows použij:
 
-**Meld** je vizuální nástroj pro porovnávání a slučování souborů.
+```bash
+git config --global diff.tool meld
+git config --global difftool.meld.path "C:/Program Files/Meld/Meld.exe"
+git config --global merge.tool meld
+git config --global mergetool.meld.path "C:/Program Files/Meld/Meld.exe"
+```
 
-Umožňuje přehledné zobrazení rozdílů a snadné řešení konfliktů.
+Na Linuxu s nainstalovaným Meld v `PATH` stačí nastavit `diff.tool` a `merge.tool`; vlastní cestu zadávej jen podle skutečné instalace.
 
-<details>
-<summary>Windows – Kompletní postup</summary>
+```bash
+# Porovná necommitované změny proti indexu.
+git difftool
+# Při nevyřešeném merge otevře soubory s konflikty.
+git mergetool
+```
 
-1. **Nainstalujte Meld**
-[Stáhnout Meld pro Windows](https://meldmerge.org/)
+Po řešení konfliktu zkontroluj výsledný kód a testy; úspěšné zavření nástroje samo nepotvrzuje správnou změnu. [Difftool](https://git-scm.com/docs/git-difftool), [mergetool](https://git-scm.com/docs/git-mergetool)
 
-2. **Nastavte Git pro použití Meld:**
+## Co lze upravit
 
-   ```bash
-   git config --global diff.tool meld
-   git config --global difftool.meld.path "C:\Program Files\Meld\Meld.exe"
-   git config --global difftool.prompt false
+Nahrazením `--global` za `--local` omezíš nové nastavení na aktuální repozitář.
 
-   git config --global merge.tool meld
-   git config --global mergetool.meld.path "C:\Program Files\Meld\Meld.exe"
-   git config --global mergetool.prompt false
-   ```
+Například `git config --global --unset diff.tool` odstraní osobní volbu porovnávacího nástroje; pokud hodnota neexistuje, příkaz vrátí nenulový kód.
 
-> [!NOTE]
-> Cestu k `Meld.exe` upravte podle umístění instalace.
-
-</details>
-
-<details>
-<summary>Linux – Kompletní postup</summary>
-
-1. **Nainstalujte Meld**
-   ```bash
-   sudo apt install meld
-   ```
-
-2. **Nastavte Git pro použití Meld:**
-
-   ```bash
-   git config --global diff.tool meld
-   git config --global difftool.meld.path "/usr/bin/meld"
-   git config --global difftool.prompt false
-
-   git config --global merge.tool meld
-   git config --global mergetool.meld.path "/usr/bin/meld"
-   git config --global mergetool.prompt false
-   ```
-
-</details>
-
-### Použití v praxi
-
-<details>
-<summary>Porovnání změn</summary>
-
-- Spusťte porovnání souborů:
-  ```bash
-  git difftool
-  ```
-
-</details>
-
-<details>
-<summary>Řešení konfliktů při slučování</summary>
-
-- Spusťte nástroj pro slučování:
-  ```bash
-  git mergetool
-  ```
-
-</details>
+Výběr SSH klienta řeší [Git přes SSH](../../network/ssh/git.md#které-ssh-používá-git) a [společný klient ve Windows](../../network/ssh/windows.md#jeden-klient-pro-windows-a-git).

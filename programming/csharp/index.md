@@ -43,7 +43,7 @@ Seznam `RuntimeIdentifiers` v projektu sám nevytvoří všechny výstupy jední
 
 Garbage collector spravuje paměť řízených objektů, ale nezavolá automaticky `Dispose` v okamžiku, kdy skončí práce se souborem nebo připojením.
 
-Pro objekty implementující `IDisposable` použijte `using`; pro `IAsyncDisposable` podle API `await using`.
+Pro objekty implementující `IDisposable` použij `using`; pro `IAsyncDisposable` podle API `await using`.
 
 ```csharp
 using var reader = new StreamReader("input.txt");

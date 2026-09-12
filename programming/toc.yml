@@ -7,9 +7,9 @@
       href: "platform-selection.md"
     - name: "Komentáře v kódu"
       href: "code-comments.md"
-    - name: "Vývojové vzory"
+    - name: "Návrhové vzory"
       href: "development-patterns.md"
-    - name: "Techniky"
+    - name: "Metodiky a konvence"
       href: "techniques.md"
 - name: "Programovací jazyky a frameworky"
   items:

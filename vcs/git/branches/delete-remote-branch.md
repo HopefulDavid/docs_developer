@@ -1,48 +1,30 @@
-# Git – Smazání vzdálené větve
+# Git – smazání vzdálené větve
 
-> Praktické rady pro bezpečné odstranění větve z Git serveru (např. GitHub, GitLab).
+Smazáním větve odstraníš její pojmenovaný ukazatel na serveru; místní kopie a jiné větve tím nezmizí.
 
-![Smazání vzdálené větve](../../../images/51fc64f1-0fc1-434d-8b9a-62915ece751a.png)
+## Před použitím
 
-## Upozornění
+Ověř dokončené review, začlenění práce a přesný název cíle; příklad maže krátkodobou větev `feature/hotovo`.
 
-> [!WARNING]
-> Smazání vzdálené větve je **nevratná operace**.
-> Ujisti se, že větev už nepotřebuješ a všechny důležité změny jsou začleněny jinde.
+Pokud si potřebuješ uchovat její aktuální commit, po `git fetch origin` vytvoř zálohu `git branch backup/hotovo origin/feature/hotovo`.
 
-## Postup krok za krokem
-
-<details>
-<summary>Krok 1: Zobrazení všech větví</summary>
+## Praktický postup
 
 ```bash
-git branch -a
+git fetch origin
+git log --oneline origin/main..origin/feature/hotovo
+git push origin --delete feature/hotovo
+git fetch origin --prune
 ```
-- Zobrazí seznam lokálních i vzdálených větví.
-</details>
 
-<details>
-<summary>Krok 2: Smazání vzdálené větve</summary>
+Výpis před smazáním ukazuje commity nedosažitelné z `origin/main`; při squash merge může obsahovat položky i po začlenění výsledného kódu, proto ověř také PR a změny.
 
-```bash
-git push origin --delete <nazev-vetve>
-# nebo kratší varianta
-git push origin :<nazev-vetve>
-```
-- Nahraď `<nazev-vetve>` skutečným názvem větve, kterou chceš smazat.
+`--delete` odstraní vzdálenou větev a `--prune` uklidí místní odkazy na již neexistující vzdálené větve. [Git push](https://git-scm.com/docs/git-push), [git fetch](https://git-scm.com/docs/git-fetch)
 
-> [!NOTE]
-> Obě varianty provedou totéž – smažou větev na serveru.
-</details>
+## Ověření a obnova
 
-<details>
-<summary>Krok 3: Vyčištění lokálních referencí</summary>
+`git ls-remote --heads origin feature/hotovo` už nemá vrátit tuto větev.
 
-```bash
-git fetch --prune
-```
-- Odstraní lokální reference na smazané vzdálené větve.
+Existující zálohu lze znovu publikovat pomocí `git push origin backup/hotovo:refs/heads/feature/hotovo`, pokud jméno zůstalo volné a máš oprávnění.
 
-> [!TIP]
-> Tento krok není povinný, ale pomáhá udržet repozitář přehledný.
-</details>
+Obnova není zaručena bez dostupného commitu; ochrana serveru může smazání i opětovné vytvoření odmítnout.

@@ -15,7 +15,7 @@ WPF zůstává technologií pro Windows i v moderním .NET. [Microsoft: WPF](htt
 
 ## Data Binding (Vazba dat)
 
-Nahraďte `MainWindow.xaml` následujícím obsahem:
+Nahraď `MainWindow.xaml` následujícím obsahem:
 
 ```xml
 <Window x:Class="WpfDemo.MainWindow"
@@ -38,7 +38,7 @@ Nahraďte `MainWindow.xaml` následujícím obsahem:
 </Window>
 ```
 
-Nahraďte `MainWindow.xaml.cs`:
+Nahraď `MainWindow.xaml.cs`:
 
 ```csharp
 using System.ComponentModel;
@@ -162,15 +162,15 @@ Následující samostatný fragment patří do `Window.Resources` před hlavní 
 </Window.Resources>
 ```
 
-Styl použijte například na tlačítku v jiném řádku formuláře:
+Styl použij například na tlačítku v jiném řádku formuláře:
 
 ```xml
 <Button Style="{StaticResource RoundedButton}" Content="_Uložit"/>
 ```
 
-Akci připojte přes `Command` nebo obsluhu `Click`; samotný styl data neukládá.
+Akci připoj přes `Command` nebo obsluhu `Click`; samotný styl data neukládá.
 
-Při vlastní šabloně ověřte stavy myši, stisku, klávesnicového fokusu a zakázání.
+Při vlastní šabloně ověř stavy myši, stisku, klávesnicového fokusu a zakázání.
 
 ## Prefixy v XAML
 
@@ -180,8 +180,8 @@ Prefix platí až po deklaraci příslušného `xmlns`.
 
 ## Animace
 
-Pro změny v čase použijte `Storyboard` a animaci vhodnou pro daný typ vlastnosti.
+Pro změny v čase použij `Storyboard` a animaci vhodnou pro daný typ vlastnosti.
 
 Například `ColorAnimation` na `(Background).(SolidColorBrush.Color)` vyžaduje pozadí typu `SolidColorBrush`.
 
-U vlastní šablony animujte skutečně zobrazovaný prvek; výchozí šablona může barvu tlačítka řídit svými stavy. [Microsoft: přehled animací](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/animation-overview).
+U vlastní šablony animuj skutečně zobrazovaný prvek; výchozí šablona může barvu tlačítka řídit svými stavy. [Microsoft: přehled animací](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/animation-overview).

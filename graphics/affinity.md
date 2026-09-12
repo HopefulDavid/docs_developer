@@ -13,7 +13,18 @@ V režimu **Basic** nastav **Spacing** a **Divisions** podle požadovaného roze
 
 ## Výpočet zarovnání na střed
 
-Příklad s hodnotami `gridWidth = 256 px`, `gridHeight = 256 px`, `offsetX = 256 px`:
+Pro obdélník šířky `imageWidth` a výšky `imageHeight` je poloha jeho levého horního rohu ve středu oblasti dána následujícím vztahem.
+
+```text
+x = (gridWidth - imageWidth) / 2 + offsetX
+y = (gridHeight - imageHeight) / 2
+```
+
+Odečtení rozměru obrázku rozdělí volné místo na obě strany a `offsetX` přidá posun doprava; pro posun doleva použij zápornou hodnotu.
+
+Při oblasti `256 × 256 px`, obrázku `146,2 × 244,6 px` a posunu `256 px` vychází `x = 310,9 px` a `y = 5,7 px`.
+
+V panelu Transform zvol referenční bod vlevo nahoře a stejnou souřadnicovou soustavu; při jiném bodu ukotvení mají X a Y jiný význam.
 
 ![Výpočet zarovnání na střed gridu](../images/2D_grid_calculation.png)
 

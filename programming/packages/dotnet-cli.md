@@ -164,37 +164,44 @@ Zmizení úvodní zprávy o telemetrii není důkazem vypnutí, protože `DOTNET
 
 Chceš-li zabránit i telemetrickému záznamu instalátoru .NET SDK, nastav proměnnou ještě před jeho spuštěním; pozdější změna nevrátí již odeslaný záznam. [Telemetrie instalátoru](https://learn.microsoft.com/en-us/dotnet/core/tools/telemetry#how-to-opt-out)
 
-## Umístění balíčků a nástrojů
+## Správa nástrojů .NET
 
-| 🖥️ Operační systém | 📁 Cesta k nástrojům | 🔍 Zjištění cesty ke spustitelnému souboru |
-|--------------------|-----------------------------|--------------------------------------------|
-| 🪟 Windows | `%USERPROFILE%\.dotnet\tools` | `where dotnet` |
-| 🐧 macOS / Linux | `~/.dotnet/tools` | `which dotnet` |
+.NET tool je spustitelný nástroj distribuovaný přes NuGet; knihovny připojené do aplikace řeší [správa NuGet balíčků](nuget.md).
 
-## Správa nástrojů (.NET Tools)
+Globální nástroj patří uživateli, lokální manifest v `.config/dotnet-tools.json` sdílí výběr nástrojů s projektem.
 
-| ⚡ Akce | 🌍 Globálně | 📂 Lokálně |
-|--------------------|---------------------------------------------|--------------------------------------------|
-| **Seznam nástrojů**| `dotnet tool list -g` | `dotnet tool list` |
-| **Instalace** | `dotnet tool install -g <název_balíčku>` | `dotnet tool install <název_balíčku>` |
-| **Zastaralé** | `dotnet tool list -g --outdated` | `dotnet tool list --outdated` |
-| **Aktualizace** | `dotnet tool update -g <název_balíčku>` | `dotnet tool update <název_balíčku>` |
-| **Odinstalace** | `dotnet tool uninstall -g <název_balíčku>` | `dotnet tool uninstall <název_balíčku>` |
+### Lokální nástroj pro projekt
 
-## Záloha a obnova globálních nástrojů
+V novém testovacím projektu bez manifestu spusť:
 
-### Záloha
+```powershell
+dotnet new tool-manifest
+dotnet tool install docfx
+dotnet tool list
+dotnet tool run docfx -- --version
+```
 
-1. 📋 Získejte seznam nainstalovaných nástrojů:
-`dotnet tool list -g`
-2. 📝 Zaznamenejte názvy a verze pro pozdější obnovu.
-3. 💾 Zálohujte adresář s nástroji:
-- 🪟 Windows: `%USERPROFILE%\.dotnet\tools`
-- 🐧 macOS / Linux: `~/.dotnet/tools`
+Manifest vytvoř jen jednou; instalace do něj zapíše vybranou verzi a poslední příkaz ověří spustitelnost nástroje.
 
-### Obnova
+Po klonování stejného projektu použij `dotnet tool restore`, který obnoví verze z manifestu. [Lokální nástroje](https://learn.microsoft.com/en-us/dotnet/core/tools/local-tools-how-to-use)
 
-1. 📂 Zkopírujte zálohovaný adresář zpět na původní místo.
-2. 🔄 Restartujte terminál.
-3. ✅ Ověřte instalaci:
-`dotnet tool list -g`
+### Příkazy a jejich rozsah
+
+| Účel | Globálně pro účet | Lokálně pro projekt |
+|---|---|---|
+| Seznam | `dotnet tool list -g` | `dotnet tool list` |
+| Instalace | `dotnet tool install -g docfx` | `dotnet tool install docfx` |
+| Aktualizace | `dotnet tool update -g docfx` | `dotnet tool update docfx` |
+| Odinstalace | `dotnet tool uninstall -g docfx` | `dotnet tool uninstall docfx` |
+
+`docfx` nahraď skutečným balíčkem nástroje; pro reprodukovatelnost při instalaci a aktualizaci přidej `--version` s vybraným číslem.
+
+`dotnet tool list` nemá přepínač `--outdated`; seznam zastaralých **knihoven** je jiný příkaz. [Reference tool list](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-list)
+
+### Umístění a obnova
+
+Výchozí spouštěče globálních nástrojů jsou v `%USERPROFILE%\.dotnet\tools` ve Windows a `~/.dotnet/tools` na Linuxu a macOS; samotný SDK hostitel `dotnet` může být jinde.
+
+V PowerShellu zjistíš hostitele přes `Get-Command dotnet`, v CMD přes `where.exe dotnet` a v Bashi přes `command -v dotnet`.
+
+Globální nástroje obnov z inventáře `dotnet tool list -g` opětovnou instalací stejných verzí; pouhá kopie složky není spolehlivá obnova pro jiný systém nebo runtime. [Správa .NET tools](https://learn.microsoft.com/en-us/dotnet/core/tools/global-tools)

@@ -1,71 +1,39 @@
-# Git – Pull Request (PR)
+# Git – pull request
 
-> Praktické rady, jak funguje **Pull Request**, kdy a proč ho použít.
+Pull request (PR) je návrh na začlenění změn mezi větvemi; poskytuje místo pro popis, kontrolu kódu a výsledky testů.
 
-![Pull request](../../../images/e0f402f8-94c5-417f-b4c3-0566724c4b7a.png)
+## Jak to funguje
 
-## Co je Pull Request?
+Zdrojová větev obsahuje tvoje změny a cílová větev určuje, kam se mají začlenit.
 
-- **Pull Request (PR)** je žádost o začlenění změn z jedné větve do jiné (typicky z `feature` do `main` nebo `develop`).
-- Umožňuje týmovou kontrolu, diskusi, testování a schválení změn před sloučením.
+PR spravuje hosting, nikoli samotný příkaz Git; GitLab používá název merge request. [GitHub: pull requesty](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests)
 
-## Typický workflow PR
+## Před použitím
 
-<details>
-<summary>Krok 1: Vytvoření nové větve</summary>
+Připrav samostatnou větev podle pravidel projektu, commitni zamýšlené změny a spusť relevantní kontroly.
 
-```bash
-git checkout -b feature/nova-funkce
-# Vývoj, commity...
-git push origin feature/nova-funkce
-```
-- Větev pushni na remote, aby byla dostupná pro PR.
-</details>
+## Praktický postup
 
-<details>
-<summary>Krok 2: Vytvoření PR na serveru</summary>
+1. [Publikuj pracovní větev](create-remote-branch.md).
+2. Na hostingu otevři nový PR a ověř zdrojovou i cílovou větev.
+3. Zkontroluj diff, napiš problém, výsledné chování a skutečně provedené testy.
+4. Vyřeš připomínky a případná selhání kontrol.
+5. Po splnění pravidel sluč PR podporovanou metodou.
 
-- Otevři webové rozhraní (GitHub, GitLab, Bitbucket).
-- Vyber zdrojovou (`feature/nova-funkce`) a cílovou (`main`/`develop`) větev.
-- Přidej popis změn, případně označ recenzenty.
+Nové commity do stejné zdrojové větve aktualizují otevřený PR; CI se spustí pouze tehdy, pokud je pro daný repozitář nastavené.
 
-> [!TIP]
-> Popiš stručně, co PR řeší a proč je důležitý.
-</details>
+## Způsoby sloučení
 
-<details>
-<summary>Krok 3: Code review a testy</summary>
+| Metoda | Co se stane s historií |
+|---|---|
+| Merge commit | Propojí obě historie novým commitem |
+| Squash | Vytvoří jeden souhrnný commit v cíli |
+| Rebase | Přehraje jednotlivé změny na cílovou historii |
 
-- Tým provede **code review** – komentáře, návrhy, schválení.
-- Automaticky se spustí **CI/CD pipeline** (testy, build).
-- Případné úpravy proveď v původní větvi, PR se automaticky aktualizuje.
+Dostupnost závisí na hostingu a nastavení repozitáře. [Metody sloučení](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/about-pull-request-merges)
 
-> [!NOTE]
-> Review zvyšuje kvalitu kódu a snižuje riziko chyb.
-</details>
+## Ověření po sloučení
 
-<details>
-<summary>Krok 4: Schválení a merge PR</summary>
+Zkontroluj stav **Merged**, cílovou větev a případné navazující nasazení.
 
-- Po schválení a úspěšných testech lze PR sloučit (merge).
-- Většina platforem nabízí různé typy merge:
-- **Merge commit** (zachová historii)
-- **Squash** (sloučí commity do jednoho)
-- **Rebase** (přepíše historii)
-
-> [!IMPORTANT]
-> Po merge PR se obvykle maže zdrojová větev.
-</details>
-
-## Výhody Pull Requestu
-
-<details>
-<summary>Proč používat PR?</summary>
-
-- Týmová kontrola a diskuse nad změnami
-- Automatizované testy před sloučením
-- Jasná historie, kdo co schválil
-- Možnost auditovat změny zpětně
-- Zvyšuje kvalitu a bezpečnost kódu
-
-</details>
+Krátkodobou větev lze po ověření odstranit; dlouhodobou integrační větev ponech podle týmového workflow.

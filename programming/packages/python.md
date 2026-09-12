@@ -1,51 +1,55 @@
-# Python – Balíčky a Tipy
+# Python – balíčky a offline instalace
 
-> Praktické rady pro správu Python balíčků, zálohování, offline instalaci a užitečné příkazy.
+Balíčky doplňují Python o knihovny; `pip` je instaluje do prostředí konkrétního interpretu.
 
-![Python](../../images/6f0214a6-361b-4c39-a7b8-0f43a8cd8459.png)
+## Před použitím
 
-## Co jsou Python balíčky?
+Příklad používá Python 3 a PowerShell ve Windows; ověř `python --version` a `python -m pip --version`.
 
-<details>
-<summary>Základní principy</summary>
+Pro projekt vytvoř samostatné virtuální prostředí, aby instalace neměnila jiné aplikace:
 
-- Balíčky rozšiřují možnosti Pythonu o nové knihovny a nástroje.
-- Správa balíčků probíhá nejčastěji pomocí **pip**.
-- Balíčky lze instalovat, zálohovat i používat offline.
-
-</details>
-
-## Záloha balíčků
-
-<details>
-<summary>Jak zálohovat balíčky?</summary>
-
-1. Použij příkaz pro stažení balíčku a jeho závislostí do složky:
-
-```bash
-pip download <název\_balíčku> -d <cesta\_k\_adresáři>
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip --version
 ```
 
-- Všechny potřebné soubory se uloží do zvolené složky.
-- Vhodné pro instalaci na počítač bez internetu.
+Na Linuxu a macOS použij při vytvoření `python3` a potom `.venv/bin/python`; aktivace prostředí není při plné cestě nutná. [Virtuální prostředí](https://docs.python.org/3/library/venv.html)
 
-</details>
+## Instalace a záznam verzí
 
-## Instalace balíčků ze zálohy
-
-<details>
-<summary>Offline instalace</summary>
-
-1. Nainstaluj balíčky ze zálohy pomocí:
-
-```bash
-pip install --no-index --find-links <cesta\_k\_adresáři>
+```powershell
+.\.venv\Scripts\python.exe -m pip install requests
+.\.venv\Scripts\python.exe -m pip freeze | Set-Content -Encoding utf8 requirements.txt
+.\.venv\Scripts\python.exe -m pip check
 ```
 
-- `--no-index` zakáže hledání online.
-- `--find-links` určí složku se staženými balíčky.
+`requests` je ukázková HTTP knihovna; první příkaz stáhne balíček, druhý zaznamená instalované verze a třetí zkontroluje deklarované závislosti.
 
-> [!NOTE]
-> Tento postup je ideální pro offline prostředí nebo firemní instalace.
+`freeze` není univerzální lockfile pro všechny platformy; uchovej také verzi Pythonu a způsob sestavení prostředí.
 
-</details>
+## Příprava offline instalace
+
+Na počítači s internetem a **stejným OS, architekturou a verzí Pythonu** připrav balíčky podle záznamu:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip download --only-binary=:all: --dest wheelhouse -r requirements.txt
+```
+
+`--only-binary=:all:` vyžaduje hotové wheel balíčky; pokud některý chybí, příkaz selže místo přípravy zdrojů vyžadujících další překladač a závislosti.
+
+Na cílový počítač přenes `requirements.txt` a celý `wheelhouse`, vytvoř nové `.venv` a spusť:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install --no-index --find-links=wheelhouse -r requirements.txt
+.\.venv\Scripts\python.exe -m pip check
+```
+
+`--no-index` vypne registry, `--find-links` určí složku balíčků a `-r` dodá seznam toho, co se má instalovat. [Pip: místní instalace](https://pip.pypa.io/en/stable/user_guide/#installing-from-local-packages)
+
+## Ověření a úpravy
+
+Pro tento příklad ověř import pomocí `.\.venv\Scripts\python.exe -c "import requests; print(requests.__version__)"` a potom spusť testy aplikace.
+
+Názvy prostředí a složky můžeš změnit, ale stejné cesty použij ve všech příkazech.
+
+Složku `.venv` nekopíruj jako přenosnou zálohu; rekonstruuj ji z uložených vstupů.

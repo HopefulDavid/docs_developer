@@ -6,7 +6,7 @@ Data zůstávají pouze v paměti jednoho procesu a po restartu zmizí.
 
 ## Vytvoření projektu
 
-V nové pracovní složce spusťte:
+V nové pracovní složce spusť:
 
 ```powershell
 dotnet new web -n NotesApi -f net10.0
@@ -17,7 +17,7 @@ Prázdná webová šablona umožní přidat jen služby potřebné pro tento př
 
 ## Vstupní bod aplikace
 
-Nahraďte celý `Program.cs`:
+Nahraď celý `Program.cs`:
 
 ```csharp
 var builder = WebApplication.CreateBuilder(args);
@@ -32,7 +32,7 @@ app.Run();
 
 ## Přidání kontroleru
 
-Vytvořte složku `Controllers` a soubor `Controllers/NotesController.cs`:
+Vytvoř složku `Controllers` a soubor `Controllers/NotesController.cs`:
 
 ```csharp
 using System.ComponentModel.DataAnnotations;
@@ -116,7 +116,7 @@ Atribut `ApiController` vrátí pro neplatný model automaticky HTTP 400.
 
 ## Spuštění a ověření
 
-Spusťte server s explicitním lokálním portem:
+Spusť server s explicitním lokálním portem:
 
 ```powershell
 dotnet run --no-launch-profile --urls http://127.0.0.1:5057

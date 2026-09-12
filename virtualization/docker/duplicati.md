@@ -1,71 +1,58 @@
-# Docker Duplicati – Praktický průvodce a tipy
+# Duplicati – zálohování souborů z kontejnerů
 
-> Moderní přehled nastavení složek, oprávnění a doporučení pro zálohování s Duplicati v Dockeru.
+Duplicati vytváří verzované a šifrované zálohy; zdrojové soubory musí být dostupné uvnitř jeho kontejneru.
 
-## Co je Duplicati?
+## Jak fungují cesty
 
-- **Open-source nástroj pro zálohování dat**
-- Umožňuje šifrované, komprimované a inkrementální zálohy
-- Snadná integrace s Dockerem
+| Umístění | Úloha |
+|---|---|
+| `/data` v oficiálním image | Konfigurace a místní databáze Duplicati |
+| Například `/source` | Připojená data, která má zálohovací úloha číst |
+| Cílové úložiště | Oddělené místo pro zálohu, například jiný disk nebo vzdálené úložiště |
 
-> [!NOTE]
-> Ideální pro automatizované zálohy v kontejnerizovaném prostředí.
+Jiné distribuce image mohou používat jiné cesty a uživatele; řiď se přesným image své instalace. [Duplicati v Dockeru](https://docs.duplicati.com/platform-specific-guides/using-duplicati-from-docker)
 
-## Krok 1: Vytvoření a nastavení složky pro zálohy
+## Před použitím
 
-<details>
-<summary>Vytvoření složky</summary>
+Nejprve vytvoř konzistentní zdroj: zastav zapisující aplikaci, pořiď podporovaný snapshot nebo databázový dump.
 
-```bash
-mkdir /cesta/k/tvojí/složce
+Nastav přihlášení do Duplicati a bezpečně uchovej šifrovací heslo záloh i klíč pro ochranu jeho konfigurace; nejde o stejnou věc.
+
+## Praktické připojení dat
+
+Do existující služby Duplicati v Compose přidej tento fragment; `app_data` musí být skutečný existující volume:
+
+```yaml
+services:
+  duplicati:
+    volumes:
+      # Zdroj je pouze pro čtení; nezmění oprávnění souborů aplikace.
+      - app_data:/source:ro
+
+volumes:
+  app_data:
+    external: true
 ```
-</details>
 
-<details>
-<summary>Nastavení oprávnění</summary>
+Jde o doplnění existujícího Compose, nikoli o kompletní instalaci; zachovej image, konfiguraci, `/data` i přihlašování.
 
-- Přístup pro všechny:
-  ```bash
-  chmod 777 /cesta/k/tvojí/složce
-  ```
+`external: true` zabrání tomu, aby překlep vytvořil nový prázdný volume; pro bind mount místo něj připoj skutečnou složku hostitele. [Compose volumes](https://docs.docker.com/reference/compose-file/volumes/)
 
-- Přístup pouze pro root:
-  ```bash
-  chmod 700 /cesta/k/tvojí/složce
-  ```
-</details>
+## Vytvoření a ověření úlohy
 
-## Krok 2: Nastavení oprávnění pro Docker volumes
+1. V rozhraní Duplicati vytvoř zálohu a jako zdroj vyber `/source`.
+2. Zvol oddělený cíl, šifrování, uchování verzí a interval podle změn dat.
+3. Spusť první zálohu a prohlédni varování i seznam zahrnutých souborů.
+4. Obnov známý soubor do nové složky a porovnej jeho obsah s původním.
 
-<details>
-<summary>Rekurzivní nastavení složek a souborů</summary>
+Před automatickým během musí být zdroj konzistentní i při dalších spuštěních; samotný plán zálohy nezastaví databázi.
 
-- Povolit rekurzivně pro složky:
-  ```bash
-  find /docker_XX -type d -exec chmod 755 {} \;
-  ```
+## Oprávnění a časté chyby
 
-- Povolit rekurzivně pro soubory:
-  ```bash
-  find /docker_XX -type f -exec chmod 644 {} \;
-  ```
-</details>
+Nepoužívej plošné `chmod 777` ani `chown -R root:root` nad aplikačními daty: mohly by rozbít provoz a odhalit soukromé soubory.
 
-| Popis | Cesta |
-|-------------------|------------------------------------------------------|
-| Host/volume | `/var/lib/docker/volumes` (cesta k diskům) |
-| Path in container | `/docker_XX` (vlastní cesta v kontejneru pro Volume) |
+Při `permission denied` zjisti UID/GID procesu, vlastníka souborů a požadovaný přístup; případnou úpravu omez na konkrétní zálohovaný adresář.
 
-> [!IMPORTANT]
-> V kontejneru Duplicati musí být typ svazku nastaven na **Bind**.
+Chybu ochrany datové složky Duplicati řeš správným připojením a oprávněním `/data`, nikoli automatickým vypnutím kontroly.
 
-## Obnovení výchozích oprávnění
-
-<details>
-<summary>Vrácení oprávnění na výchozí hodnoty</summary>
-
-```bash
-chown -R root:root /docker_XX
-```
-Tímto příkazem nastavíte vlastníka a skupinu všech souborů a složek v `/docker_XX` na `root`.
-</details>
+Zálohu volumes s přímým testem obnovy popisuje [BusyBox](busybox.md).

@@ -1,21 +1,62 @@
-![Go](../../images/fc6d2e6c-e9dc-477a-a28d-4243ee9948b8.png)
+# Go – první program a příkazy
 
-# Základní příkazy
+Go překládá zdrojové soubory do programu; modul v `go.mod` určuje jeho identitu a závislosti.
 
-| 🏷️ Sekce | 🛠️ Příkaz Go | Význam / Popis |
-|-------------------------------|---------------------|-----------------------------------------------------------|
-| 🏗️ Základní příkazy | `go run main.go` | Spustí Go program (bez kompilace do binárky) |
-| | `go build` | Zkompiluje aktuální projekt do spustitelného souboru |
-| | `go build.` | Zkompiluje všechny soubory v aktuálním adresáři |
-| | `go install` | Zkompiluje a nainstaluje balíček do `$GOPATH/bin` |
-| | `go clean` | Odstraní dočasné soubory a binárky |
-| 🧪 Testování a formátování | `go test` | Spustí testy v aktuálním projektu |
-| | `go test -v` | Spustí testy a vypíše podrobné informace |
-| | `go fmt./...` | Naformátuje všechny Go soubory v projektu podle standardu |
-| 📦 Správa závislostí (moduly) | `go mod init název` | Inicializuje nový Go modul (vytvoří `go.mod`) |
-| | `go mod tidy` | Odstraní nepoužívané závislosti a přidá chybějící |
-| | `go mod vendor` | Zkopíruje všechny závislosti do složky `vendor` |
-| | `go get balíček` | Přidá nebo aktualizuje závislost (balíček) |
-| 📚 Dokumentace a prostředí | `go doc` | Zobrazí dokumentaci k balíčku nebo funkci |
-| | `go env` | Vypíše aktuální nastavení prostředí pro Go |
-| | `go version` | Zobrazí verzi nainstalovaného Go |
+## Před použitím
+
+Nainstaluj Go a ověř `go version`; příkazy níže fungují v PowerShellu i Bashi.
+
+## Praktický příklad
+
+V nové složce projektu spusť:
+
+```bash
+mkdir pozdrav
+cd pozdrav
+go mod init example.com/pozdrav
+```
+
+`example.com/pozdrav` je učební identifikátor modulu; pro publikovaný modul použij odpovídající skutečnou cestu repozitáře.
+
+Vytvoř `main.go`:
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+    // fmt vypíše text na standardní výstup a přidá nový řádek.
+    fmt.Println("Ahoj z Go")
+}
+```
+
+Balíček `main` a funkce `main` tvoří vstupní bod spustitelného programu; `fmt` je součást standardní knihovny.
+
+```bash
+go run .
+go build .
+```
+
+První příkaz program **přeloží a spustí**, druhý uloží binární výstup do aktuální složky; očekávaný text je `Ahoj z Go`. [První program v Go](https://go.dev/doc/tutorial/getting-started)
+
+## Přehled příkazů
+
+| Příkaz | Význam |
+|---|---|
+| `go fmt ./...` | Naformátuje balíčky v aktuálním modulu |
+| `go test ./...` | Spustí jejich testy |
+| `go test -v ./...` | Přidá podrobný testovací výpis |
+| `go mod tidy` | Sjednotí závislosti s použitými importy; může změnit `go.mod` a `go.sum` |
+| `go mod vendor` | Připraví kopie závislostí ve složce `vendor` |
+| `go env GOBIN GOPATH` | Ukáže cesty používané pro instalované nástroje |
+| `go doc fmt.Println` | Zobrazí dokumentaci funkce |
+| `go help build` | Zobrazí nápovědu sestavení |
+
+Tečka znamená aktuální balíček, `./...` zahrne i podbalíčky. [Reference příkazu go](https://pkg.go.dev/cmd/go)
+
+## Co lze upravit
+
+Změň text ve `fmt.Println`, znovu spusť program a ověř výstup.
+
+Nové knihovny přidávej přes `go get` s cestou a vybranou verzí; samostatný nástroj instaluj přes `go install cesta@verze` a zkontroluj kompatibilitu s projektem.

@@ -1,50 +1,54 @@
-# Přístup k projektům v XAMPP
+# XAMPP: spuštění lokálního PHP projektu
 
-> Tento návod ukazuje, jak spravovat více projektů v XAMPP a pohodlně k nim přistupovat přes prohlížeč.
+XAMPP spojuje Apache, PHP a další nástroje pro místní vývoj.
 
-## 1. Spuštění Apache
+Apache přijme HTTP požadavek a pro `.php` soubor spustí PHP; prohlížeč dostane výsledek, nikoli zdrojový kód.
 
-<details>
-<summary>Jak spustit Apache server?</summary>
+## Před použitím
 
-1. Otevřete **XAMPP Control Panel**.
-2. Klikněte na tlačítko <kbd>Start</kbd> u služby **Apache**.
-3. Ujistěte se, že běží (zelený stav).
+Návod předpokládá XAMPP ve Windows v `C:\xampp` a volný HTTP port 80.
 
-> Doporučení: Spouštějte XAMPP jako administrátor pro správné oprávnění.
+Používej jej pro vývoj na vlastním počítači, ne jako hotovou konfiguraci veřejného produkčního serveru.
 
-</details>
+[Oficiální FAQ XAMPP](https://www.apachefriends.org/faq_windows.html) popisuje výchozí cesty, služby a omezení této sestavy.
 
-## 2. Vytvoření složek pro projekty
+## Praktické použití
 
-<details>
-<summary>Jak organizovat projekty?</summary>
+1. Vytvoř složku `C:\xampp\htdocs\moje-aplikace`.
+2. Ulož do ní soubor `index.php` s následujícím obsahem.
+3. V **XAMPP Control Panel** spusť **Apache** tlačítkem **Start**.
+4. Otevři `http://localhost/moje-aplikace/` a ověř zobrazení zprávy.
 
-Každý projekt vložte do vlastní složky v `htdocs`:
+```php
+<?php
+// HTTP hlavička popisuje formát odpovědi a kódování českých znaků.
+header('Content-Type: text/plain; charset=utf-8');
+echo "PHP projekt funguje.\n";
+```
 
-| 🏷️ Projekt | 📂 Umístění složky |
-|--------------|-----------------------------------|
-| project1 | `C:\xampp\htdocs\project1\` |
-| project2 | `C:\xampp\htdocs\project2\` |
-| project3 | `C:\xampp\htdocs\project3\` |
+Soubor neotevírej dvojklikem přes `file://`, protože tím obcházíš Apache a PHP se nespustí.
 
-> Složka `htdocs` je výchozí webový adresář Apache v XAMPP.
+Pro tuto ukázku není potřeba zapínat databázovou službu ani měnit práva na správce.
 
-</details>
+## Co lze upravit
 
-## 3. Přístup k projektům přes prohlížeč
+| Hodnota | Význam | Co změnit společně |
+|---|---|---|
+| `C:\xampp` | Místo instalace | Všechny odkazované konfigurační cesty |
+| `moje-aplikace` | Podsložka webového kořene | Stejnou část URL za `localhost/` |
+| Port 80 | HTTP naslouchání Apache | Při jiném portu přidat například `:8080` do URL |
 
-<details>
-<summary>Jak zobrazit projekty v prohlížeči?</summary>
+Další projekt může mít vlastní podsložku, například `htdocs\druha-aplikace`.
 
-Otevřete prohlížeč a zadejte URL podle názvu složky:
+Aplikaci vyžadující vlastní doménu nebo veřejný kořen `public` nastav jako [Virtual Host](virtual-hosts.md).
 
-| 🏷️ Projekt | 🌍 URL adresa |
-|--------------|----------------------------------|
-| project1 | `http://localhost/project1/` |
-| project2 | `http://localhost/project2/` |
-| project3 | `http://localhost/project3/` |
+## Časté problémy
 
-> Každý projekt má vlastní URL pod `localhost`.
+| Projev | Kontrola |
+|---|---|
+| Apache se nespustí | Chybový log a obsazení portu jinou službou |
+| 404 Not Found | Název podsložky, souboru a skutečný DocumentRoot |
+| Zobrazuje se zdroj PHP | Použití HTTP a aktivní konfigurace PHP v Apache |
+| Po změně nic nového | Správná URL, uložený soubor a případná cache |
 
-</details>
+Do veřejné složky nepatří zálohy, soukromé klíče ani konfigurace s hesly.

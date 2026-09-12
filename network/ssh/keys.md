@@ -31,7 +31,7 @@ V **PowerShellu** zobraz obsah; při jiném názvu uprav cestu:
 Get-Content -Encoding utf8 "$env:USERPROFILE\.ssh\id_ed25519.pub"
 ```
 
-Zkopíruj celý jediný řádek od `ssh-ed25519` včetně popisku a pokračuj [přidáním do GitHubu](git.md#připojení-ke-githubu) nebo [Gitea](../../vcs/git/server.md#ssh-přístup-ke-gitea).
+Zkopíruj celý jediný řádek od `ssh-ed25519` včetně popisku a pokračuj [přidáním do GitHubu](git.md#připojení-ke-githubu) nebo [Gitea](../../vcs/git/server.md#ssh-přístup).
 
 <details>
 <summary>Výpis v Git Bash, Linuxu, macOS nebo CMD</summary>

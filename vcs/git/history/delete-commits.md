@@ -1,82 +1,49 @@
-# Git – Nahrazení vzdálené větve z lokální větve
+# Git – vrácení změny a vytvoření historie od začátku
 
-> Praktický návod, jak kompletně nahradit historii vzdálené větve pomocí nové lokální větve.
+Vrácení chyby a odstranění historie jsou různé úkoly; pro běžnou opravu zveřejněné změny slouží nový revert commit.
 
-![Odstranění commitů](../../../images/8c61359f-a49a-4600-a86a-961c4a3dfe9d.png)
+## Před použitím
 
-## Kdy použít tento postup?
+Zkontroluj pracovní strom a požadovaný commit přes `git status` a `git log --oneline`.
 
-- Chceš začít s čistou historií commitů (např. po refaktoringu).
-- Potřebuješ odstranit veškerou předchozí historii z hlavní větve (`main`/`master`).
-- Vhodné pro projekty, kde je nutné kompletní "reset" repozitáře.
+Revert zachovává dohledatelnou historii; nová kořenová větev mění její návaznost a vyžaduje samostatné rozhodnutí.
 
-## Postup krok za krokem
-
-<details>
-<summary>Krok 1: Vytvoření nové větve bez historie</summary>
+## Praktické použití: vrácení poslední změny
 
 ```bash
-git checkout --orphan latest_branch
+# Příklad předpokládá, že poslední commit není merge.
+git revert HEAD
+git show --stat HEAD
 ```
-- Vytvoří novou větev bez historie commitů.
 
-> [!NOTE]
-> `--orphan` znamená, že větev nemá žádné předchozí commity.
-</details>
+První příkaz vytvoří nový commit s opačnou změnou; druhý ukáže, co obsahuje.
 
-<details>
-<summary>Krok 2: Přidání všech souborů</summary>
+Místo `HEAD` lze zadat ID konkrétního commitu; merge revert potřebuje zvolit hlavního rodiče a není zaměnitelný s tímto příkladem. [Reference git revert](https://git-scm.com/docs/git-revert)
+
+Při konfliktu oprav soubory, spusť `git add` a `git revert --continue`; návrat provede `git revert --abort`.
+
+## Pokročilé použití: samostatná kořenová větev
+
+Pro export současného stavu bez předků pracuj v oddělené kopii a nejprve zachovej původní větev:
 
 ```bash
-git add -A
+git branch backup/pred-novou-historii
+git checkout --orphan nova-historie
+git status
+git diff --cached --stat
+git commit -m "chore: zahajuje novou historii"
 ```
-- Přidá všechny soubory do stage.
-</details>
 
-<details>
-<summary>Krok 3: První commit</summary>
+`checkout --orphan` připraví index a pracovní strom z výchozího commitu, ale první nový commit nebude mít rodiče. [Reference git checkout](https://git-scm.com/docs/git-checkout)
 
-```bash
-git commit -am "Initialize commit"
-```
-- Vytvoří první commit v nové větvi.
+Ukázka vyžaduje čistou neprázdnou pracovní kopii a nesmaže původní větev.
 
-> [!TIP]
-> `-am` je zkrácený zápis pro `--all` a `--message`.
-</details>
+Pokud chceš novou větev sdílet k posouzení, `git push -u origin nova-historie` ji nahraje pod novým názvem.
 
-<details>
-<summary>Krok 4: Smazání původní hlavní větve</summary>
+## Důležité poznámky
 
-```bash
-git branch -D main
-```
-- Smaže hlavní větev (`main` nebo `master`).
+Přepsání větve nevymaže staré commity z cizích klonů, záloh ani všech referencí serveru.
 
-> [!WARNING]
-> Ověř název hlavní větve před smazáním!
-</details>
+Není to postup pro odstranění uniklého tajemství; nejprve zneplatni přístupový údaj a řeš historii podle hostingu.
 
-<details>
-<summary>Krok 5: Přejmenování nové větve na hlavní</summary>
-
-```bash
-git branch -m main
-```
-- Přejmenuje aktuální větev na `main`.
-
-> [!WARNING]
-> Použij správný název hlavní větve.
-</details>
-
-<details>
-<summary>Krok 6: Force push do vzdáleného repozitáře</summary>
-
-```bash
-git push -f origin main
-```
-- Nahraje novou historii do vzdáleného repozitáře.
-
-> [!TIP]
-> `-f` (force) přepíše historii na serveru.
-</details>
+Původní hlavní větev kvůli refaktoringu běžně nemaž.

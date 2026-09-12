@@ -1,53 +1,34 @@
-# Git – Vytvoření a push nové větve na remote
+# Git – vytvoření vzdálené větve
 
-> Praktické rady pro založení a umístění nové větve (`develop`) na Git server (např. GitHub, GitLab).
+Novou větev nejprve vytvoříš místně; prvním pushem ji zpřístupníš na serveru.
 
-![Vytvoření vzdálené větve](../../../images/6caa6198-1ee2-4529-8e40-2c62da4232c7.png)
+## Před použitím
 
-## Vytvoření nové větve
+V pracovním repozitáři ověř `git status --short --branch` a výchozí commit; nová větev začíná právě z aktuálního `HEAD`.
 
-<details>
-<summary>Krok 1: Založení větve</summary>
+Příklad používá název `feature/nova-funkce`, který můžeš nahradit podle týmových pravidel.
 
-```bash
-git checkout -b develop
-```
-- Vytvoří novou větev `develop` a přepne na ni.
-</details>
-
-## Nastavení vzdáleného repozitáře
-
-<details>
-<summary>Krok 2: Ověření remote</summary>
+## Praktický postup
 
 ```bash
+git switch -c feature/nova-funkce
 git remote -v
+git push -u origin feature/nova-funkce
 ```
-- Zobrazí nastavené vzdálené repozitáře.
 
-> [!NOTE]
-> Pokud není remote nastaven, použij:
-> `git remote add origin <url>`
-</details>
+`switch -c` vytvoří a vybere větev, `remote -v` ukáže cílové adresy a `push -u` publikuje větev včetně nastavení upstreamu.
 
-## Push větve na server
+Upstream je sledovaná vzdálená větev používaná například ve výpisu stavu. [Git push](https://git-scm.com/docs/git-push)
 
-<details>
-<summary>Krok 3: Push větve na remote</summary>
+Pokud `origin` chybí, nastav jej podle [návodu pro server](../server.md), než provedeš push.
+
+## Ověření
 
 ```bash
-git push -u origin develop
+git branch -vv
+git ls-remote --heads origin feature/nova-funkce
 ```
-- Nahraje větev `develop` na server a nastaví ji jako sledovanou vůči `origin/develop`.
 
-> [!NOTE]
-> Parametr `-u` zajistí automatické sledování větve.
-</details>
+První příkaz ukáže místní vazbu, druhý ověří existenci větve přímo na serveru.
 
-## Ověření online
-
-<details>
-<summary>Krok 4: Kontrola na webu</summary>
-
-- Otevři webové rozhraní (GitHub, GitLab apod.) a ověř, že se větev objevila mezi vzdálenými větvemi.
-</details>
+Chyba „branch already exists“ znamená, že máš použít `git switch feature/nova-funkce` nebo zvolit nový název, nikoli přepsat existující větev.

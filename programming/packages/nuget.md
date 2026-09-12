@@ -1,81 +1,62 @@
-# NuGet Packages
+# NuGet – balíčky v .NET
 
-> Pro správu balíčků je potřeba mít nainstalovaný **NuGet CLI** nebo používat integrované nástroje v IDE.
+NuGet obnovuje knihovny .NET podle závislostí deklarovaných projektem; pro moderní projekty stačí .NET SDK.
 
-![NuGet](../../images/231a19b5-84c6-4961-9189-91672e9435dc.png)
+## Jak funguje správa balíčků
 
-## Správa balíčků
+| Formát | Kde je deklarace | Co obnovuje |
+|---|---|---|
+| `PackageReference` | Projekt `.csproj`, případně společné verze v `Directory.Packages.props` | Přímé a odvozené závislosti do globální cache |
+| `packages.config` | Samostatný soubor staršího projektu | Uvedené balíčky, typicky do společné složky řešení |
 
-<details>
-<summary>Způsoby správy balíčků</summary>
+Formát určuje projekt, nikoli samotný rok jeho vzniku; starší `packages.config` může vyžadovat NuGet CLI nebo MSBuild. [PackageReference](https://learn.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files), [obnova balíčků](https://learn.microsoft.com/en-us/nuget/consume-packages/package-restore)
 
-| 💡 Typ | 📄 Popis | 🕒 Používáno od/do |
-|---------------------|-------------------------------------------------------------------------------------------|--------------------|
-| packages.config | Ukládá seznam všech balíčků v projektu **včetně závislostí**.<br>Balíčky jsou kopírovány do složky projektu.<br>Pomalejší buildy, větší repozitář. | < 2017 |
-| PackageReference | Balíčky se načítají přímo z **globální složky**.<br>Závislosti se spravují automaticky.<br>Rychlejší buildy, menší repozitář. | 2017+ |
+## Před použitím
 
-### Detaily
+Příklady pro .NET 10 spouštěj ve složce s jedním `.csproj`; v řešení s více projekty vyber konkrétní projekt.
 
-#### packages.config
-- Balíčky jsou uloženy v projektu (`packages` složka).
-- Závislosti jsou explicitně uvedeny.
-- Pomalejší buildy, větší velikost repozitáře.
-- Používané před rokem 2017.
+Ověř `dotnet --version` a zkontroluj čistý stav Gitu, aby byl rozdíl po instalaci čitelný.
 
-> Každý projekt má vlastní složku s balíčky, `.csproj` obsahuje pouze cesty.
+## Praktický postup
 
-#### PackageReference
-- Balíčky se nestahují do projektu, ale do **globální složky**.
-- Závislosti se spravují automaticky.
-- Rychlejší buildy, menší nároky na prostor.
-- Výchozí formát od roku 2017.
-
-> Balíčky jsou spravovány centrálně, projekt využívá globální umístění.
-
-</details>
-
-## Globální složka balíčků
-
-<details>
-<summary>Umístění globální složky</summary>
-
-| 🖥️ Operační systém | 📂 Cesta k balíčkům |
-|--------------------|-------------------------------------|
-| 🪟 Windows | `%userprofile%\.nuget\packages` |
-| 🐧 Mac/Linux | `~/.nuget/packages` |
-
-> Výchozí umístění lze změnit pomocí proměnné prostředí `NUGET_PACKAGES`.
-
-</details>
-
-Doplnil jsem příklad a tabulky příkazů pro práci s NuGet balíčky v .NET. Vložte následující úsek do souboru `programming/packages/nugetPackage.md` na vhodné místo (např. pod sekci "Správa balíčků").
-
-## ‍ Příklady použití balíčku
-
-```bash
-dotnet add package SixLabors.ImageSharp.Drawing --version 2.1.7
+```powershell
+# Příklad knihovny pro vlastní SQL dotazy.
+dotnet add package Dapper
+dotnet restore
+dotnet list package
+dotnet build
 ```
 
-## Přehled základních příkazů
+`add package` zapíše odkaz do projektu a provede obnovu; samostatný `restore` ukazuje způsob opětovného stažení již deklarovaných balíčků.
 
-### Správa balíčků
+Dapper můžeš nahradit potřebnou knihovnou; pro konkrétní ověřenou verzi přidej `--version` a její číslo.
 
-| Příkaz | Popis |
-|------------------------------------------------|----------------------------------------------------------------------------------------|
-| `dotnet add package <název> --version <verze>` | Přidá nebo aktualizuje konkrétní NuGet balíček na zadanou verzi v projektu. |
-| `dotnet remove package <název>` | Odebere balíček z projektu. |
-| `dotnet restore` | Obnoví všechny závislosti projektu podle souboru `csproj` nebo `packages.config`. |
+V .NET 10 existuje také pořadí `dotnet package add`; zde používané `dotnet add package` zachovává známý zápis ze starších SDK. [Přidání balíčku](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-package-add)
 
-### Kontrola a aktualizace
+## Kontrola a aktualizace
 
-| Příkaz | Popis |
-|------------------------------------------------|----------------------------------------------------------------------------------------|
-| `dotnet outdated` | Zobrazí seznam zastaralých NuGet balíčků v projektu a navrhne novější verze. |
-| `dotnet outdated --upgrade` | Automaticky aktualizuje všechny zastaralé NuGet balíčky na nejnovější verze. |
+```powershell
+dotnet list package --outdated
+dotnet list package --vulnerable --include-transitive
+```
 
-### Správa zdrojů a cache
+První příkaz vypíše dostupné aktualizace, druhý známé zranitelnosti včetně odvozených závislostí; oba potřebují dostupné zdroje metadat. [Výpis balíčků](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-package-list)
 
-| Příkaz | Popis |
-|------------------------------------------------|----------------------------------------------------------------------------------------|
-| `dotnet nuget list source` | Zobrazí seznam zdrojů NuGet balíčků (repozitářů). |
-| `dotnet nuget locals all --clear` | Vyčistí lokální cache NuGet balíčků (odstraní staré verze ze složky s balíčky). |
+Vybraný balíček aktualizuj přes `add package`, zkontroluj změny deklarací a spusť testy; `dotnet outdated` je samostatný nástroj a není součástí SDK.
+
+## Zdroje a cache
+
+| Příkaz | Význam |
+|---|---|
+| `dotnet nuget list source` | Vypíše nakonfigurované zdroje |
+| `dotnet nuget locals global-packages --list` | Ukáže skutečné umístění globálních balíčků |
+| `dotnet nuget locals all --clear` | Vymaže cache; příští obnova může vyžadovat síť |
+| `dotnet remove package Dapper` | Odebere přímou závislost; následně oprav používající kód |
+
+Cache není záloha projektu; její umístění může změnit `NUGET_PACKAGES`. [Správa cache](https://learn.microsoft.com/en-us/nuget/consume-packages/managing-the-global-packages-and-cache-folders)
+
+## Opakovatelná obnova
+
+U aplikace lze vytvořit a verzovat `packages.lock.json` pomocí `dotnet restore --use-lock-file`; následné `dotnet restore --locked-mode` odmítne neodpovídající změnu závislostí.
+
+Lockfile pravidla přizpůsob typu projektu a společné správě verzí. [Zamknutí závislostí](https://learn.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files#locking-dependencies)

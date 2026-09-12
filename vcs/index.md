@@ -10,28 +10,28 @@ Praktické postupy pro Git, větve, historii a běžnou správu repozitářů.
 
 | Stránka | Popis |
 | --- | --- |
-| [Konfigurace](git/configuration.md) | Praktické rady pro globální nastavení Gitu, dlouhé cesty na Windows a konfiguraci vizuálních nástrojů. |
-| [Úložiště](git/repository.md) | Praktické rady pro vytvoření a použití Git úložiště na lokálním i online prostředí. |
-| [Git server](git/server.md) | Praktické rady pro práci s Git repozitářem na serveru. |
-| [Submoduly](git/submodules.md) | Správa externích repozitářů jako podadresářů v Git projektu. |
-| [Git Flow](git/git-flow.md) | Praktické rady pro efektivní správu větví v týmu pomocí Git Flow. |
-| [Použití v praxi](git/in-practice.md) | Reálné postupy pro bezpečné přepsání remote větve, force push a práci s historií commitů. |
+| [Konfigurace](git/configuration.md) | Konfigurace určuje identitu autora, chování Gitu a používané nástroje pro porovnávání a slučování. |
+| [Repozitář](git/repository.md) | Git ukládá historii projektu do commitů; pracovní kopie navíc obsahuje soubory, které upravuješ v editoru. |
+| [Git server](git/server.md) | Git server uchovává vzdálené repozitáře; platformy jako Forgejo, Gitea, GitHub nebo GitLab navíc spravují účty, oprávnění a návrhy změn. |
+| [Submoduly](git/submodules.md) | Submodul připojuje samostatný repozitář do podadresáře projektu a hlavní repozitář zaznamenává jeho konkrétní commit. |
+| [Git Flow](git/git-flow.md) | Git Flow odděluje přípravu příští verze od stabilní verze a oprav již vydaného produktu. |
+| [Použití v praxi](git/in-practice.md) | Push přenáší místní commity do vzdáleného repozitáře; běžně smí vzdálenou větev pouze posunout dopředu. |
 
 ### Větve
 
 | Stránka | Popis |
 | --- | --- |
-| [Vytvoření vzdálené větve](git/branches/create-remote-branch.md) | Praktické rady pro založení a umístění nové větve (`develop`) na Git server (např. GitHub, GitLab). |
-| [Smazání vzdálené větve](git/branches/delete-remote-branch.md) | Praktické rady pro bezpečné odstranění větve z Git serveru (např. GitHub, GitLab). |
-| [Pull request](git/branches/pull-request.md) | Praktické rady, jak funguje **Pull Request**, kdy a proč ho použít. |
+| [Vytvoření vzdálené větve](git/branches/create-remote-branch.md) | Novou větev nejprve vytvoříš místně; prvním pushem ji zpřístupníš na serveru. |
+| [Smazání vzdálené větve](git/branches/delete-remote-branch.md) | Smazáním větve odstraníš její pojmenovaný ukazatel na serveru; místní kopie a jiné větve tím nezmizí. |
+| [Pull request](git/branches/pull-request.md) | Pull request (PR) je návrh na začlenění změn mezi větvemi; poskytuje místo pro popis, kontrolu kódu a výsledky testů. |
 
 ### Historie
 
 | Stránka | Popis |
 | --- | --- |
-| [.gitignore](git/history/update-gitignore.md) | Praktický průvodce, jak zajistit, aby Git ignoroval i soubory, které už dříve sledoval. |
-| [Přesun commitů](git/history/move-commits.md) | Praktické rady, jak přesunout poslední commity ze jedné větve do nové nebo existující větve. |
-| [Sloučení commitů](git/history/squash-branch-commits.md) | Nejbezpečnější způsob, jak sloučit všechny commity, které jsou na `develop` navíc oproti `main`, do jednoho commitu. |
-| [Oprava commitů](git/history/fix-commits.md) | Praktické rady, jak efektivně opravovat a slučovat commity pomocí `fixup!` a `squash!` v Gitu. |
-| [Odstranění commitů](git/history/delete-commits.md) | Praktický návod, jak kompletně nahradit historii vzdálené větve pomocí nové lokální větve. |
-| [Lokální ignorování změn](git/history/assume-unchanged.md) | Praktické rady, jak lze **lokálně ignorovat změny** ve složce nebo souborech, aniž by se to projevilo na vzdáleném repozitáři. |
+| [.gitignore](git/history/update-gitignore.md) | `.gitignore` ovlivňuje dosud nesledované soubory; již commitnutý soubor z historie ani z indexu neodstraní. |
+| [Přesun commitů](git/history/move-commits.md) | Větev je ukazatel na commit; vytvořením nové větve lze hotovou práci zachovat a původní ukazatel přesunout zpět. |
+| [Sloučení commitů](git/history/squash-branch-commits.md) | Squash spojí práci z několika commitů do jednoho záznamu; hodí se k úpravě vlastní pracovní větve před review. |
+| [Oprava commitů](git/history/fix-commits.md) | Opravný commit lze při interaktivním rebase spojit s původním commitem, aby historie popisovala ucelené změny. |
+| [Odstranění commitů](git/history/delete-commits.md) | Vrácení chyby a odstranění historie jsou různé úkoly; pro běžnou opravu zveřejněné změny slouží nový revert commit. |
+| [assume-unchanged a lokální konfigurace](git/history/assume-unchanged.md) | Příznak `assume-unchanged` je optimalizace kontroly sledovaného souboru; není spolehlivý způsob ukládání vlastní konfigurace mimo historii. |

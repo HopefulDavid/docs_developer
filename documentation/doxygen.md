@@ -26,6 +26,12 @@ GENERATE_LATEX = NO
 HAVE_DOT = NO
 ```
 
+`PROJECT_NAME` mění titulek, `OUTPUT_DIRECTORY` cíl generování a `INPUT` složku zdrojů.
+
+`RECURSIVE` zahrne podsložky; volby `EXTRACT_*` určují rozsah API a `GENERATE_*` požadované formáty výstupu.
+
+`HAVE_DOT = NO` umožní první sestavení bez Graphviz.
+
 Sestav dokumentaci:
 
 ```text

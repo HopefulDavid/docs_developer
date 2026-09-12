@@ -1,128 +1,114 @@
-# Git – Server s Gitem (např. Forgejo, Gitea, Github, Gitlab, atd.)
+# Git server: připojení, migrace a LFS
 
-> Praktické rady pro práci s Git repozitářem na serveru.
+Git server uchovává vzdálené repozitáře; platformy jako Forgejo, Gitea, GitHub nebo GitLab navíc spravují účty, oprávnění a návrhy změn.
 
-![Ollama](../../images/2356729c-7942-4f2c-8ecc-f2b712c6e5ad.png)
+Adresa Git remote, SSH port a endpoint velkých souborů LFS mohou používat odlišné protokoly.
+
+## Před použitím
+
+Zkopíruj clone URL přímo z konkrétního projektu na serveru a ověř své oprávnění pro čtení nebo zápis.
+
+Pro SSH nastav [klíč](../../network/ssh/keys.md) a při prvním spojení ověř otisk hostitele důvěryhodným kanálem.
 
 ## Správa remote URL
 
-### Přepnutí z HTTP na SSH
-
-<details>
-<summary>Změna remote URL na SSH</summary>
-
 ```bash
-git remote set-url origin ssh://git@127.0.0.1:2222/dslavik29/Unity_UITK-MMA.git
-```
-
-> [!NOTE]
-> SSH přístup vyžaduje správně nakonfigurovaný SSH klíč na Gitea serveru (viz sekce SSH níže).
-
-</details>
-
-### Přepnutí ze SSH na HTTP
-
-<details>
-<summary>Změna remote URL na HTTP</summary>
-
-```bash
-git remote set-url origin http://localhost:3010/dslavik29/Unity_UITK-MMA.git
-```
-
-> [!TIP]
-> HTTP je vhodné pro situace, kdy SSH není dostupné nebo při problémech s klíči.
-
-</details>
-
-### Zobrazení aktuální URL
-
-<details>
-<summary>Kontrola remote URL</summary>
-
-```bash
+# Výpis názvů remotes a URL pro fetch i push.
 git remote -v
+# Ukázkovou doménu, tým a projekt nahraď clone URL ze svého serveru.
+git remote set-url origin ssh://git@git.example.com:2222/tym/projekt.git
+# Ověří čtení referencí bez změny lokální pracovní kopie.
+git ls-remote origin
 ```
 
-</details>
+`origin` je běžný název remote, nikoli pevná součást protokolu.
 
-## Hromadný mirror repozitářů na Gitea (SSH)
+Port `2222` patří pouze ukázkovému SSH serveru; pro běžný port může clone URL vypadat jako `git@git.example.com:tym/projekt.git`.
 
-> Přesune všechny lokální `.git` repozitáře na SSH remote na Gitea serveru.
-
-<details>
-<summary>Bash skript pro hromadný mirror</summary>
+Pokud používáš HTTPS, změň pouze URL a použij přihlašovací postup podporovaný serverem.
 
 ```bash
-for repo in *.git; do
-  name=${repo%.git}
-  echo "=== $name ==="
-  cd "$repo"
-  git remote remove origin 2>/dev/null
-  git remote add origin ssh://git@127.0.0.1:2222/dslavik29/$name.git
-  git push --mirror origin
-  cd ..
-done
+# Heslo nebo token nevkládej přímo do URL.
+git remote set-url origin https://git.example.com/tym/projekt.git
 ```
 
-> [!IMPORTANT]
-> Skript je nutné spustit v Bash prostředí (např. Git Bash nebo WSL).
->
-> Ujisti se, že máš SSH klíč přidán do svého účtu na Gitea serveru.
+Změna URL nepřenáší data sama o sobě ani nepřiděluje oprávnění.
 
-> [!WARNING]
-> `git push --mirror` přepíše vzdálený repozitář kompletně – včetně všech větví a tagů.
-> Použij pouze při inicializaci nového remote nebo záměrném přepisu.
+## Přenos repozitáře pomocí mirroru
 
-</details>
+Mirror použij pro řízenou migraci do nového prázdného repozitáře, protože zrcadlí všechny Git reference a v cíli může reference také přepsat nebo smazat.
 
-## Git LFS s lokálním serverem
+Nezahrnuje issues, přístupová práva, CI tajemství ani soubory LFS automaticky.
 
-> Git LFS (Large File Storage) umožňuje verzovat velké soubory mimo Git historii.
-
-<details>
-<summary>LFS a SSH – důležité omezení</summary>
-
-Git LFS **nepodporuje SSH** pro přenos dat na vlastních serverech.
-I pokud je Git remote nastaven na SSH, LFS musí komunikovat přes HTTP.
-
-Pokud narazíš na chyby při `git push` se soubory LFS, nastav LFS URL ručně:
+V Bashi spusť pro každý repozitář samostatně následující postup a obě URL nahraď ověřenými adresami.
 
 ```bash
-git config lfs.url http://localhost:3020/dslavik29/Unity_MMA.git/info/lfs
+# Vytvoří bare kopii zdroje se všemi jeho referencemi.
+git clone --mirror https://git.example.com/tym/projekt.git projekt-mirror.git
+cd projekt-mirror.git
+# Samostatný remote zachová zdrojovou adresu pro kontrolu.
+git remote add destination ssh://git@novy.example.com/tym/projekt.git
+git ls-remote destination
+# Náhled změn v cíli; nic neodešle.
+git push --mirror --dry-run destination
 ```
 
-> [!NOTE]
-> - Port LFS serveru (`3020`) se může lišit od Git HTTP portu (`3010`).
-> - Tato konfigurace je **lokální** pro daný repozitář – uloží se do `.git/config`.
-
-</details>
-
-<details>
-<summary>Ověření LFS konfigurace</summary>
+Zkontroluj prázdný nebo výslovně určený migrační cíl a teprve potom proveď přenos.
 
 ```bash
+git push --mirror destination
+# Porovnej větve a tagy a ověř nový běžný clone v samostatné složce.
+git ls-remote --heads --tags destination
+```
+
+Automatický cyklus přes všechny složky bez kontroly cíle může přepsat nesouvisející repozitáře, proto nejprve ověř jednotlivý přenos.
+
+Přesné chování mirroru definuje [git push](https://git-scm.com/docs/git-push).
+
+## Git LFS s vlastním serverem
+
+Git LFS ukládá do Git historie malé ukazatele a obsah velkých souborů přenáší samostatně.
+
+SSH URL repozitáře nemusí znamenat přenos LFS přes SSH: běžné servery používají HTTPS, ale existuje i čistý SSH transport a jeho dostupnost závisí na klientovi a serveru.
+
+Princip vysvětluje [Git LFS](https://git-lfs.com/) a protokol [dokumentace SSH transportu](https://github.com/git-lfs/git-lfs/blob/main/docs/proposals/ssh_adapter.md).
+
+```bash
+# Verze klienta a skutečné endpointy; výstup před sdílením zkontroluj.
+git lfs version
 git lfs env
+# Soubory spravované LFS v aktuálně vybrané revizi.
+git lfs ls-files
 ```
 
-Výstup zobrazí aktuální LFS endpoint a stav konfigurace.
+Endpoint nepřepisuj naslepo, nejprve ověř clone URL, konfiguraci serveru a podporované přihlášení.
 
-</details>
+Pouze pokud správce skutečně poskytuje odlišný endpoint, lze nastavit lokální výjimku.
 
-## SSH přístup ke Gitea
-
-<details>
-<summary>Nastavení SSH klíče pro Gitea</summary>
-
-1. [Vytvoř SSH klíč a zkopíruj jeho veřejnou část](../../network/ssh/keys.md#vytvoření-klíče).
-2. Otevři Gitea → **Settings → SSH / GPG Keys → Add Key**, vyplň název a vlož zkopírovaný veřejný klíč.
-3. Otestuj připojení příkazem níže; adresu a port nahraď hodnotami svého serveru.
-
-```text
-ssh -T git@127.0.0.1 -p 2222
+```bash
+# Ukázkový endpoint nahraď přesnou adresou potvrzenou správcem.
+git config --local lfs.url https://git.example.com/tym/projekt.git/info/lfs
+# Návrat k automatickému určení, pokud výjimka už není potřebná.
+git config --local --unset lfs.url
 ```
 
-Při prvním připojení ověř otisk serveru u jeho správce a potvrď jej pouze při shodě.
+Při migraci repozitáře s LFS stáhni i historické objekty a odešli je do cíle před finálním ověřením.
 
-Případná výzva k zadání passphrase požaduje heslovou frázi tvého soukromého klíče.
+```bash
+# Spouští se v migrační kopii s remotes origin a destination z předchozího postupu.
+git lfs fetch --all origin
+git lfs push --all destination
+```
 
-</details>
+Tyto příkazy mohou přenášet velké množství dat; zkontroluj kvótu a poté stáhni LFS soubory z nového serveru v čerstvé pracovní kopii.
+
+## SSH přístup
+
+```bash
+# Test přihlášení k ukázkovému Git serveru, nikoli požadavek na interaktivní shell.
+ssh -T -p 2222 git@git.example.com
+```
+
+Git server může úspěšné přihlášení potvrdit zprávou a zároveň odmítnout shell; vyhodnoť text služby, ne pouze očekávání běžného SSH terminálu.
+
+Při `Permission denied (publickey)` postupuj podle [diagnostiky SSH pro Git](../../network/ssh/git.md).

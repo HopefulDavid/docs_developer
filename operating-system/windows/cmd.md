@@ -1,60 +1,91 @@
-# Windows CMD a optimalizace – Praktický průvodce a tipy
+# Windows CMD: dávkové skripty a správa disků
 
-> Moderní přehled práce s příkazovým řádkem, dávkovými skripty a optimalizací disků ve Windows.
+CMD je příkazový interpret Windows, ve kterém příkazy pracují převážně s textem a návratovými kódy.
 
-![Command Line](../../images/ad71ff83-1ef8-45b0-9e21-2e05c0075935.png)
+Soubor `.cmd` nebo `.bat` umožňuje opakovat stejnou posloupnost; jeho syntaxe se liší od [PowerShellu](powershell.md).
 
-## Příkazový řádek a dávkové skripty
+## Před použitím
 
-- **Batch skript** má příponu `.bat` nebo `.cmd`.
-- Umožňuje automatizovat úlohy ve Windows.
+Otevři **Příkazový řádek** nebo profil CMD ve Windows Terminalu a ověř aktuální složku.
 
-## Odstranění souborů a složek
+```cmd
+rem cd bez parametru vypise aktualni slozku; dir zobrazi jeji obsah.
+cd
+dir
+rem /d zmeni soucasne slozku i jednotku; cestu nahrad svym projektem.
+cd /d "C:\projekty\moje-aplikace"
+```
 
-Rozlišení `del` a `rd`, krátké názvy a rozšířené cesty najdeš v návodu [Windows – nelze odstranit soubor nebo složku](cannot-delete-item.md#cmd-rozlišení-souboru-a-složky).
+Cesty s mezerami piš do uvozovek a oprávnění správce používej jen pro operace, které je vyžadují.
 
 ## Spouštění SQL skriptů ze složky
 
-<details>
-<summary>Hromadné spuštění všech SQL skriptů</summary>
+Následující dávka je pro ručně zkontrolované skripty v testovací databázi a nainstalovaný `sqlcmd` s přihlášením Windows.
+
+Soubory pojmenuj například `001-schema.sql` a `002-data.sql`, aby řazení podle názvu odpovídalo požadovanému pořadí.
+
+Ulož `run-sql.cmd` vedle nich a uprav dvě konfigurační hodnoty.
 
 ```cmd
-for %%G in (*.sql) do sqlcmd /S serverTest /d CT46 -U userName -P password123 -i"%%G"
-pause
+@echo off
+setlocal
+rem Zmen pouze na server a testovaci databazi, ktere chces upravit.
+set "SQL_SERVER=localhost"
+set "SQL_DATABASE=MojeTestovaciDatabaze"
+rem Prepnuti do slozky skriptu zabrani pouziti souboru z jineho adresare.
+pushd "%~dp0" || exit /b 1
+if not exist "*.sql" (
+  echo Ve slozce nejsou SQL skripty.
+  popd
+  exit /b 1
+)
+for /f "delims=" %%G in ('dir /b /a-d /on *.sql') do (
+  echo Spoustim %%G
+  sqlcmd -S "%SQL_SERVER%" -d "%SQL_DATABASE%" -E -b -i "%%G"
+  if errorlevel 1 (
+    echo Chyba: dalsi skripty se nespusti.
+    popd
+    exit /b 1
+  )
+)
+popd
+exit /b 0
 ```
 
-> [!NOTE]
-> Smyčka `for %%G in (*.sql)` projde všechny `.sql` soubory v adresáři a spustí je pomocí `sqlcmd` na zadaném SQL serveru.
-> `pause` umožní zobrazit výsledek před zavřením okna.
+`-S` určuje server, `-d` databázi, `-E` použije identitu Windows, `-i` načte soubor a `-b` způsobí chybový návratový kód při odpovídající SQL chybě.
 
-</details>
+`%%G` patří do dávkového souboru; při ručním zápisu smyčky přímo do CMD se používá `%G`.
+
+Chyba zastaví další skripty, ale nevrátí dříve potvrzené změny; transakce a opakovatelnost musí řešit samotné SQL nebo migrační nástroj.
+
+Po spuštění ověř očekávané tabulky a data, ne pouze návratový kód.
+
+Při SQL autentizaci neukládej heslo do dávky ani nepoužívej `-P` s heslem v historii; způsob přihlášení a TLS nastav podle [dokumentace své varianty sqlcmd](https://learn.microsoft.com/en-us/sql/tools/sqlcmd/sqlcmd-utility).
 
 ## Optimalizace disků ve Windows
 
-<details>
-<summary>Automatická optimalizace SSD a HDD</summary>
+Windows má plánovanou údržbu v aplikaci **Defragmentovat a optimalizovat jednotky**.
 
-> [!NOTE]
-> Windows 10+ automaticky spouští TRIM na SSD jednou týdně. U HDD je doporučena defragmentace jednou měsíčně.
+Písmeno jednotky neurčuje, zda jde o SSD nebo HDD, a TRIM není bezpečné vymazání dat.
+
+Pro ruční diagnostiku spusť CMD jako správce.
 
 ```cmd
-defrag C: D: /O
+rem /A pouze analyzuje vybranou jednotku, /V vypise podrobnosti.
+defrag C: /A /V
 ```
 
-🔍 **Rozbor příkazu:**
-- `defrag` – Spustí optimalizaci disků.
-- `C: D:` – Vybere disky C: (SSD) a D: (HDD).
-- `/O` – Automaticky použije správnou metodu (TRIM pro SSD, defragmentaci pro HDD).
+Pokud je ruční optimalizace potřebná, nech Windows zvolit postup podle typu média.
 
-</details>
+```cmd
+rem /O zvoli vhodnou optimalizaci, /U ukazuje prubeh.
+defrag C: /O /U
+```
 
-<details>
-<summary>Co se stane po spuštění?</summary>
+`C:` nahraď konkrétní zamýšlenou jednotkou a zachovej běžnou plánovanou údržbu, pokud nemáš důvod ji měnit.
 
-1️⃣ **SSD (C:)**
-- Spustí se TRIM, který vymaže nepoužívané bloky a zlepší výkon SSD.
+Podporované volby a pravidla údržby SSD popisuje [Microsoft: defrag](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/defrag).
 
-2️⃣ **HDD (D:)**
-- Spustí se defragmentace, která přesune roztříštěné soubory a zrychlí čtení dat.
+## Odstranění souborů a složek
 
-</details>
+Rozlišení `del` a `rd`, rozšířené cesty a kontrolu cíle vlastní návod [nelze odstranit soubor nebo složku](cannot-delete-item.md#cmd-rozlišení-souboru-a-složky).

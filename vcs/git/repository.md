@@ -1,45 +1,67 @@
-# Git – Práce s úložištěm
+# Git – vytvoření a klonování úložiště
 
-> Praktické rady pro vytvoření a použití Git úložiště na lokálním i online prostředí.
+Git ukládá historii projektu do commitů; pracovní kopie navíc obsahuje soubory, které upravuješ v editoru.
 
-![Ollama](../../images/87aac7e6-0da1-4ada-8c7c-1710636e867a.png)
+## Jak úložiště funguje
 
-## Vytvoření úložiště
+Pracovní strom obsahuje rozpracované soubory, index připravuje obsah dalšího commitu a adresář `.git` uchovává historii a konfiguraci.
 
-<details>
-<summary>Kompletní postup</summary>
+Serverové **bare úložiště** nemá pracovní strom a slouží například jako cíl pro push.
 
-1. **Inicializace bare úložiště**
-Spusťte v terminálu:
+Přípona `.git` u názvu serverové složky je konvence, nikoli podmínka funkčnosti. [Reference git init](https://git-scm.com/docs/git-init)
 
-   ```bash
-   git init --bare <cesta>
-   ```
+## Před použitím
 
-- `<cesta>` = cílová složka, musí končit `.git`
-*Např.:* `C:\projekty\moje-repozitar.git`
+Nainstaluj Git a ověř `git --version`; před prvním commitem nastav [jméno a e-mail](configuration.md).
 
-> [!WARNING]
-> Cesta musí mít na konci `.git`, jinak nebude úložiště správně rozpoznáno.
+Následující příkazy fungují v PowerShellu i Bashi a používají nové složky, jejichž názvy můžeš změnit.
 
-</details>
+## Praktické použití
 
-## Klonování úložiště
+### Nový projekt
 
-<details>
-<summary>Použití v pracovním prostředí</summary>
+```bash
+# Vytvoří pracovní kopii s počáteční větví main.
+git init -b main moje-aplikace
+cd moje-aplikace
+git status
+```
 
-1. **Klonování úložiště**
-Spusťte v terminálu:
+V editoru vytvoř `README.md` s popisem projektu, potom ulož právě tento soubor do historie:
 
-   ```bash
-   git clone <cesta>
-   ```
+```bash
+git add README.md
+git diff --cached
+git commit -m "docs: přidává popis projektu"
+```
 
-- `<cesta>` = adresa k úložišti (lokální nebo online), musí končit `.git`
-*Např.:* `C:\projekty\moje-repozitar.git` nebo `https://github.com/uzivatel/projekt.git`
+`add` připraví obsah, `diff --cached` umožní jeho kontrolu a `commit` vytvoří místní záznam; na server se zatím nic neposílá.
 
-> [!TIP]
-> Cestu lze použít jak lokální, tak online (např. GitHub, GitLab).
+### Existující projekt
 
-</details>
+Zkopíruj klonovací adresu ze svého hostingu a nahraď jí ukázkovou URL:
+
+```bash
+git clone https://git.example.com/tym/aplikace.git moje-kopie
+cd moje-kopie
+git remote -v
+```
+
+`clone` stáhne historii a vytvoří pracovní kopii; vzdálený zdroj standardně pojmenuje `origin`. [Reference git clone](https://git-scm.com/docs/git-clone)
+
+### Lokální serverové úložiště
+
+```bash
+# Spusť ve složce pro testovací repozitáře, mimo předchozí projekt.
+git init --bare centralni.git
+git clone centralni.git pracovni-kopie
+```
+
+Varování o prázdném úložišti je v tomto případě očekávané.
+
+Do `centralni.git` nevkládej zdrojové soubory ručně; pracuj v `pracovni-kopie` a změny přenášej přes Git.
+
+## Související témata
+
+- [Připojení Git serveru](server.md).
+- [Vytvoření vzdálené větve](branches/create-remote-branch.md).

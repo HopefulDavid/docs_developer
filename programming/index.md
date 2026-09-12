@@ -10,17 +10,17 @@ Vývojové platformy, jazyky, frameworky, balíčky a opakovaně použitelné po
 
 | Stránka | Popis |
 | --- | --- |
-| [Výběr platformy pro vývoj](platform-selection.md) | Praktické rady pro výběr správné platformy a frameworku podle typu projektu. |
-| [Komentáře v kódu](code-comments.md) | Definuje sadu konvencí pro komentáře v kódu, které pomáhají vývojářům rychle identifikovat různé typy poznámek a úkolů. |
-| [Vývojové vzory](development-patterns.md) | Praktické rady pro opakovaně použitelné návrhové vzory v softwarovém vývoji. |
-| [Techniky](techniques.md) | Přehled metodologií řízení projektů, rychlého prototypování a konvencí pojmenování v kódu. |
+| [Výběr platformy pro vývoj](platform-selection.md) | Platformu vybírej podle toho, kde má aplikace fungovat, jaká zařízení potřebuje ovládat a kdo ji bude dlouhodobě udržovat. |
+| [Komentáře v kódu](code-comments.md) | Komentář vysvětluje záměr, omezení nebo důvod rozhodnutí, který není z kódu zřejmý. |
+| [Návrhové vzory](development-patterns.md) | Návrhový vzor je pojmenované řešení opakujícího se problému se vztahy mezi objekty nebo částmi programu. |
+| [Metodiky a konvence](techniques.md) | Metodika pomáhá týmu organizovat práci; konvence sjednocuje podobu kódu a prototyp ověřuje nápad před větší investicí. |
 
 ### Programovací jazyky a frameworky
 
 | Stránka | Popis |
 | --- | --- |
 | [C# a .NET](csharp/index.md) | Přístupnost členů, cílová platforma a životnost prostředků určují, jak lze knihovnu bezpečně použít v aplikaci. |
-| [Go](server/go.md) | Stránka zatím nemá krátký úvod. |
+| [Go](server/go.md) | Go překládá zdrojové soubory do programu; modul v `go.mod` určuje jeho identitu a závislosti. |
 
 ### C# a .NET
 
@@ -62,34 +62,34 @@ Vývojové platformy, jazyky, frameworky, balíčky a opakovaně použitelné po
 
 | Stránka | Popis |
 | --- | --- |
-| [Unity](unity/index.md) | Efektivní práce v Unity, rychlé prototypování a výběr správného typu projektu. |
+| [Unity](unity/index.md) | Unity spojuje editor scén, assety a C# komponenty do aplikace, kterou sestavíš pro cílovou platformu. |
 
 ### Unity
 
 | Stránka | Popis |
 | --- | --- |
-| [2D](unity/2d.md) | Praktické rady pro práci s 2D grafikou v Unity, nastavení Tilemap, velikosti obrázků, animace a řešení běžných problémů. |
+| [2D](unity/2d.md) | SpriteRenderer zobrazuje samostatný sprite, zatímco Tilemap skládá dlaždice do buněk mřížky. |
 | [Animace](unity/animation.md) | Praktické tipy pro efektivní práci s UMotion při ukládání změn animací. |
-| [Kamera](unity/camera.md) | Praktické rady pro nastavení kamery v Unity, rozdíly mezi ortografickou a perspektivní kamerou, a proč používat Pixel Perfect Camera v 2D hrách. |
-| [Navigace](unity/navigation.md) | Nastavení navigace, pohyb postav a využití NavMesh v Unity. |
-| [ScriptableObject](unity/scriptable-object.md) | Praktické rady pro použití ScriptableObject v Unity, jejich výhody, omezení a moderní patterny. |
-| [UI](unity/ui.md) | Praktické rady pro práci s UI v Unity, včetně nastavení tlačítek, detekce kliknutí a užitečných vlastností komponent. |
-| [UI Toolkit](unity/ui-toolkit.md) | Praktické rady pro práci s UI Toolkit v Unity, jeho výhody, základní principy a moderní patterny. |
-| [Vykreslování](unity/renderer.md) | Nastavení URP, globální konfigurace, Volume efekty a optimalizace renderování v Unity. |
+| [Kamera](unity/camera.md) | Kamera převádí scénu na obraz; projekce, rozlišení a vrstvy určují, co hráč skutečně uvidí. |
+| [Navigace](unity/navigation.md) | NavMesh popisuje schůdné plochy a propojení mezi nimi; NavMeshAgent podle něj plánuje a provádí pohyb. |
+| [ScriptableObject](unity/scriptable-object.md) | ScriptableObject je Unity objekt, který může existovat jako asset nezávislý na konkrétní scéně. |
+| [UI](unity/ui.md) | Unity UI neboli uGUI používá GameObjecty s komponentami, například Canvas, Image a Button. |
+| [UI Toolkit](unity/ui-toolkit.md) | UI Toolkit vytváří rozhraní jako strom prvků, který popisuje UXML, styluje USS a ovládá C#. |
+| [Vykreslování](unity/renderer.md) | Universal Render Pipeline neboli URP určuje, jak Unity připraví a vykreslí snímek. |
 
 ### Nástroje a balíčky
 
 | Stránka | Popis |
 | --- | --- |
 | [.NET CLI](packages/dotnet-cli.md) | Správa nástrojů .NET CLI a vypnutí i ověření telemetrie .NET SDK. |
-| [NuGet](packages/nuget.md) | Pro správu balíčků je potřeba mít nainstalovaný **NuGet CLI** nebo používat integrované nástroje v IDE. |
-| [npm](packages/npm.md) | Pro správu balíčků je potřeba mít nainstalovaný **Node.js** a **npm**. |
-| [Python](packages/python.md) | Praktické rady pro správu Python balíčků, zálohování, offline instalaci a užitečné příkazy. |
-| [Appcast feed](appcast.md) | Appcast je RSS feed ve formátu XML pro distribuci aktualizací aplikací pomocí technologie Sparkle. |
+| [NuGet](packages/nuget.md) | NuGet obnovuje knihovny .NET podle závislostí deklarovaných projektem; pro moderní projekty stačí .NET SDK. |
+| [npm](packages/npm.md) | npm spravuje JavaScriptové balíčky a projektové příkazy; `package.json` popisuje požadavky a `package-lock.json` zaznamenává konkrétní vyřešené závislosti. |
+| [Python](packages/python.md) | Balíčky doplňují Python o knihovny; `pip` je instaluje do prostředí konkrétního interpretu. |
+| [Appcast feed](appcast.md) | Appcast je RSS feed s rozšířeními, podle kterého updater Sparkle pro macOS vyhledá vhodnou aktualizaci a její archiv. |
 
 ### Lokální vývoj
 
 | Stránka | Popis |
 | --- | --- |
-| [XAMPP přístup](xampp/access.md) | Tento návod ukazuje, jak spravovat více projektů v XAMPP a pohodlně k nim přistupovat přes prohlížeč. |
-| [XAMPP virtual hosts](xampp/virtual-hosts.md) | Virtual Hosts umožňují přiřadit každému projektu vlastní doménu, např. `project1.local`, pro pohodlnější přístup a testování. |
+| [XAMPP přístup](xampp/access.md) | XAMPP spojuje Apache, PHP a další nástroje pro místní vývoj. |
+| [XAMPP virtual hosts](xampp/virtual-hosts.md) | Virtual Host vybírá web podle názvu v HTTP požadavku a přiřadí mu vlastní `DocumentRoot`. |

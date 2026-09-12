@@ -1,53 +1,59 @@
-# Komentářové konvence v kódu
+# Komentáře v kódu
 
-> Definuje sadu konvencí pro komentáře v kódu, které pomáhají vývojářům rychle identifikovat různé typy poznámek a úkolů.
+Komentář vysvětluje záměr, omezení nebo důvod rozhodnutí, který není z kódu zřejmý.
 
-![Komentáře v kódu](../images/ed2ba232-5b86-4f55-8ba5-9c3feb7e3c0b.png)
+Čitelný název proměnné nenahrazuje a opakování příkazu vlastními slovy obvykle nepřináší informaci.
 
-## // TODO: Co je potřeba dodělat
+## Praktické použití
 
-Označ místo, kde je potřeba něco dodělat nebo implementovat.
+Následující metoda přijímá časovou značku bez časového pásma ze starého exportu.
 
-```csharp
-// TODO: Přidat validaci vstupních dat
-```
-
-### // FIXME: Oprava chyby
-
-Označ místo, kde je chyba, kterou je nutné opravit.
+Komentář vysvětluje, proč je nutné pásmo určit výslovně, a názvy parametrů ukazují, které hodnoty dodává volající.
 
 ```csharp
-// FIXME: Metoda vrací špatný výsledek při nulovém vstupu
+using System;
+
+/// <summary>Převádí časové značky exportu podle známého zdrojového pásma.</summary>
+public static class ExportTime
+{
+    /// <summary>Převede jednoznačný místní čas exportu na UTC.</summary>
+    public static DateTimeOffset ToUtc(DateTime exportedTime, TimeZoneInfo sourceZone)
+    {
+        // Export neobsahuje pásmo; lokální pásmo počítače by měnilo výsledek mezi servery.
+        DateTime unspecified = DateTime.SpecifyKind(exportedTime, DateTimeKind.Unspecified);
+        if (sourceZone.IsInvalidTime(unspecified) || sourceZone.IsAmbiguousTime(unspecified))
+            throw new ArgumentException("Čas nelze jednoznačně převést kvůli změně letního času.");
+
+        return new DateTimeOffset(TimeZoneInfo.ConvertTimeToUtc(unspecified, sourceZone));
+    }
+}
 ```
 
-### // NOTE: Poznámka nebo vysvětlení
+`sourceZone` musí odpovídat původu exportu, nikoli místu spuštění programu.
 
-Použij pro poznámky nebo vysvětlení, proč je něco udělané určitým způsobem.
+Ukázka nejednoznačný čas odmítá, aby si nevymyslela okamžik bez doménového pravidla.
 
-```csharp
-// NOTE: Používáme synchronní volání kvůli kompatibilitě s legacy systémem
-```
+## Značky poznámek
 
-### // HACK: Rychlé (neideální) řešení
+Značky jsou týmová konvence a editor je nemusí všechny automaticky zvýrazňovat.
 
-Označ workaround nebo neideální řešení, které funguje.
+| Značka | Kdy má význam | Co musí obsahovat |
+|---|---|---|
+| `NOTE` | Důvod neobvyklého chování | Konkrétní omezení nebo odkaz na kontrakt |
+| `TODO` | Dohodnutá budoucí práce mimo dokončovaný rozsah | Odkaz na evidovaný úkol a podmínku řešení |
+| `FIXME` | Známá závada | Dopad a návaznost na evidovanou opravu |
+| `HACK` | Dočasné obejití problému závislosti | Příčinu, odkaz na problém a podmínku odstranění |
+| `REVIEW` | Potřeba odborného rozhodnutí | Přesnou otázku, kterou má reviewer zodpovědět |
+| `OPTIMIZE` | Změna odůvodněná měřením | Naměřený problém a očekávaný přínos |
 
-```csharp
-// HACK: Obcházíme bug v knihovně pomocí této kontroly
-```
+Značka nesmí zakrývat nedokončený požadavek právě dodávané změny.
 
-### // REVIEW: Kód ke kontrole
+Poznámku „později optimalizovat“ bez měření nahraď buď konkrétním úkolem, nebo ji odstraň.
 
-Použij, když si nejsi jistý a chceš kód později zkontrolovat nebo prodiskutovat.
+## Co lze upravit
 
-```csharp
-// REVIEW: Je tento algoritmus dostatečně efektivní pro velké množství dat?
-```
+Jazyk komentářů a podporované značky sjednoť podle projektu.
 
-### // OPTIMIZE: Prostor pro zlepšení
+Pro veřejné API používej dokumentační formát daného jazyka, například [XML komentáře C#](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/), aby IDE zobrazovalo parametry a návratovou hodnotu.
 
-Označ místo, které lze časem optimalizovat.
-
-```csharp
-// OPTIMIZE: Cyklus by šel paralelizovat pro vyšší výkon
-```
+Při změně chování aktualizuj i komentář; zastaralé vysvětlení je zavádějící i tehdy, když se program zkompiluje.

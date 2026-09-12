@@ -13,7 +13,7 @@ Síťové technologie, přístupy, certifikáty a bezpečné propojení prostře
 | [SSH – příkazy a připojení](ssh.md) | Přihlášení na server, kopírování souborů a nastavení připojení. |
 | [TLS certifikáty](certificates.md) | Důvěryhodný certifikát pro lokální vývoj pomocí mkcert. |
 | [Náhodná tajemství](secrets.md) | Generování náhodných hodnot pro aplikační tajemství pomocí OpenSSL. |
-| [VPN](vpn.md) | Přehled fungování VPN, výhod, příkladů použití a bezpečnostních doporučení. |
+| [VPN](vpn.md) | VPN vytváří spojení mezi zařízením a vzdálenou sítí nebo bránou; běžné VPN protokoly tento tunel šifrují. |
 
 ### SSH – příkazy a připojení
 

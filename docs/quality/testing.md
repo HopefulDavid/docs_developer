@@ -1,7 +1,7 @@
 ---
 canonical_for: testing-strategy
 status: accepted
-last_verified: 2026-08-29
+last_verified: 2026-09-11
 owner: quality
 ---
 
@@ -28,6 +28,9 @@ Nejvyšší rizika tohoto statického webu jsou rozbitá navigace, rozdílný ca
 | České rozhraní bez editačních odkazů | Node test globálních metadat a tokenů, poté skutečný DocFX build | Chrání `_lang`, `_disableContribution` a české popisky a potvrzuje jejich výsledné HTML |
 | Neúplný, nečitelný nebo prostředím ovlivněný changelog | Skutečný `git-cliff` nad víceletou dočasnou historií s tagem, conventional, breaking i legacy commitem ve dvou časových prostředích | Chrání úplnost historie, otevřené nejnovější období, sdělení o vynechávání prázdných roků, sbalená starší období, počty a kategorie v každém roce, stabilní kotvy, technické záznamy, breaking marker a determinismus výstupu |
 | `REQ-001`, `REQ-002` | Krokovatelný lokální smoke v prohlížeči | Zobrazení, navigace, vyhledávání a volba tématu jsou pozorovatelné až v reálném browserovém výstupu |
+| `REQ-005` | Obsahové review a provedení dostupných ukázek v izolovaném prostředí | Rozlišuje vysvětlení principu, syntaxi a skutečný běh místo předstírání podpory cizí služby |
+| `QLT-005` | Reálný prohlížeč, čtyři šířky a oba motivy podle příkazového dokumentu | Zachytí přetékání, nečitelné tabulky, klávesnicové problémy a změny rozložení po otevření menu |
+| `QLT-006` | Artifact check nad všemi HTML a cílené negativní testy | Ověří konkrétní cíle i kotvy bez závislosti na Windows toleranci casingu; externí URL nejsou součástí deterministického buildu |
 | Metadata a interní dokumentační odkazy | `tests/canonical-docs.test.js` | Mechanická pravidla mají rychlý deterministický důkaz bez zahrnutí interních dokumentů do veřejného buildu |
 
 Přesné příkazy, pořadí a technický smoke scénář vlastní [`../development/commands.md`](../development/commands.md).
@@ -199,3 +202,21 @@ Nový typ testu nebo nástroj se zavádí, pokud pokrývá důležité riziko l�
 Významná změna testovací architektury se prozkoumá a případně zaznamená v ADR.
 
 Konkrétní nástroje, umístění testů a CI artefakty se po inicializaci doplní sem nebo do odkazovaných strojových konfigurací bez kopírování verzí.
+
+## Ověření sjednocení dokumentace 2026-09-11
+
+`npm run verify` v připnutém projektovém prostředí prošel 19 testy a sestavil DocFX bez chyby nebo varování.
+
+Kontrola artefaktu ověřila 238 zdrojů a 479 výstupních souborů včetně lokálních HTML odkazů, kotev a přesného casingu.
+
+V prohlížeči byly zkontrolovány homepage, přehled Programování, Docker a Unity 2D při 320, 390, 768 a 1440 px v obou motivech: všech 32 kombinací zachovalo obsah v šířce stránky a mělo načtené obrázky bez chyby.
+
+Samostatné interakce ověřily vyhledávání a prázdný výsledek, přepnutí a zachování motivu, automatický motiv, obsah oblasti, přeskočení navigace, posun kódu klávesnicí, kopírování přesného textu a rozbalení obrázkového postupu.
+
+Spustitelné obsahové kontroly zahrnovaly 12 konzolových ukázek C#, ukázkové REST API se scénáři vytvoření, čtení, změny, smazání a chybných vstupů, tři příklady JavaScriptu a Git scénáře v izolovaných lokálních repozitářích.
+
+Parser PowerShellu přijal všech 77 kontrolovaných bloků bez syntaktické chyby; neznamená to provedení jejich systémových změn.
+
+Ukázky vyžadující Unity, Docker, Kubernetes, další nenainstalované nástroje nebo externí služby byly posouzeny podle primární dokumentace, nikoli vydávány za místně spuštěné integrační testy.
+
+Dostupnost všech externích odkazů nelze z tohoto prostředí potvrdit, protože některé servery odmítají automatické požadavky nebo je omezují; zjištěné neplatné adresy byly opraveny a tato kontrola není zaměňována za deterministickou kontrolu lokálních odkazů.

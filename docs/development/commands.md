@@ -1,7 +1,7 @@
 ---
 canonical_for: project-commands
 status: accepted
-last_verified: 2026-08-29
+last_verified: 2026-09-11
 owner: engineering
 ---
 
@@ -40,12 +40,12 @@ V takovém případě uveď pouze odkaz na tento zdroj a příkaz pro ověření
 
 | Varianta | Pracovní adresář | Přesný příkaz | Výstup | Úspěch znamená |
 |---|---|---|---|---|
-| Strict lokální sestavení | Kořen repozitáře | `npm run docs:build` | Ignorovaný `changelog.md` a čistý adresář `_site/` | Changelog se vytvoří z úplné historie, DocFX skončí s 0 warningy a 0 chybami a artifact check potvrdí veřejnou hranici |
+| Strict lokální sestavení | Kořen repozitáře | `npm run docs:build` | Ignorovaný `changelog.md` a čistý adresář `_site/` | Changelog se vytvoří z úplné historie, DocFX skončí s 0 warningy a 0 chybami a artifact check potvrdí veřejnou hranici i lokální odkazy včetně kotev |
 | Samotná kompilace pro diagnostiku | Kořen repozitáře | `npm run docs:compile` | Adresář podle [`docfx.json`](../../docfx.json) | DocFX skončí s 0 warningy a 0 chybami; příkaz sám nečistí ani nekontroluje stale výstup |
 
 `npm run docs:build` je jediný podporovaný kandidát pro publikování.
 
-Před kompilací odstraní pouze odvozený ignorovaný `_site/` a po kompilaci ověří manifest i fyzické výstupní cesty.
+Před kompilací odstraní pouze odvozený ignorovaný `_site/` a po kompilaci ověří manifest, fyzické výstupní cesty a odkazy v HTML včetně kotev a přesného casingu.
 
 ## Spuštění
 
@@ -82,12 +82,28 @@ Zde jsou pouze přesné podporované příkazy.
 
 | Úroveň | Přesný příkaz | Potřebné služby | Výstupní artefakty | Typická doba nebo rozsah |
 |---|---|---|---|---|
-| Cílený test veřejné hranice a normalizace | `node --test --test-isolation=none tests/generate-docs.test.js` | Žádné | Konzolový TAP výstup | 7 testů včetně zápisu .NET, zachování příkazů ve vloženém kódu, českých tokenů a vypnutého příspěvkového bloku; běžně pod 1 sekundu |
+| Cílený test veřejné hranice a normalizace | `node --test --test-isolation=none tests/generate-docs.test.js` | Žádné | Konzolový TAP výstup | Hranice veřejného obsahu, normalizace kódu, české tokeny, casing a odkazy včetně kotev; běžně pod 1 sekundu |
 | Cílený test changelogu | `node --test --test-isolation=none tests/changelog.test.mjs` | Lokální Git a obnovený `git-cliff` | Konzolový TAP výstup | Víceletá úplná fixture historie, otevřené nejnovější období, sdělení o vynechávání prázdných roků, sbalená starší období, jejich počty a kategorie, stabilní kotvy, breaking change, neklikací hashe a dvě časová prostředí |
-| Automatizované testy | `npm test` | Lokální Git a obnovené npm závislosti | Konzolový TAP výstup | Všechny soubory v `tests/`; 14 scénářů |
+| Automatizované testy | `npm test` | Lokální Git a obnovené npm závislosti | Konzolový TAP výstup | Všechny testovací soubory uvedené v `package.json`; aktuální počet vypíše runner |
 | Vizuální scénáře | `npm run docs:serve` a kroky níže | Předem vytvořený `_site/` a lokální prohlížeč | Vizuální pozorování, případně screenshot | Ruční smoke po rizikové změně UI, vyhledávání nebo navigace |
 | Integrační build | `npm run docs:build` | Obnovené npm závislosti a lokální DocFX | `changelog.md`, `_site/manifest.json`, HTML a konzolový souhrn | Veřejný changelog a ostatní stránky vzniknou bez warningu; běžně jednotky sekund na ověřeném stroji |
 | Úplná lokální kontrola | `npm run verify` | Obnovené npm závislosti a lokální DocFX | TAP, DocFX log, `changelog.md`, manifest a `_site/` | Kontrola driftu, syntax, testy, generování changelogu, strict build a artifact check |
+
+## Úprava nebo přidání článku
+
+1. Vyber existující tematickou složku a zkontroluj, zda postup už nevlastní jiný článek.
+2. Uprav jeho Markdown, nebo přidej nový soubor s malými písmeny a pomlčkami v názvu.
+3. U nového článku přidej položku `name` a relativní `href` do odpovídající skupiny `navigation` v [`scripts/generate-docs.js`](../../scripts/generate-docs.js).
+4. Spusť `npm run docs:generate`, zkontroluj Git diff a následně `npm run verify`.
+5. Otevři sestavenou stránku a ověř navigaci, příklad i zobrazení podle smoke scénáře níže.
+
+`sectionInfo` vlastní názvy a úvody hlavních oblastí, `sectionOrder` jejich pořadí a `navigation` podskupiny i články.
+
+`docs:generate` přepíše odvozené indexy a TOC a normalizuje veřejné zdroje, proto před spuštěním zkontroluj pracovní strom.
+
+Existující cesty nepřejmenovávej jen kvůli změně titulku a nový postup neduplikuj do více rozcestníků.
+
+Obsahový standard vlastní [správa dokumentace](../governance/documentation.md#čitelnost-veřejných-návodů).
 
 ## Changelog
 
@@ -114,6 +130,25 @@ Release tagy historii nerozdělují a commity se zobrazují pouze krátkým nekl
 |---|---|---|---|---|
 | `REQ-001`, `REQ-002` | `npm ci --ignore-scripts --no-audit --no-fund`, `dotnet tool restore` a `npm run verify` | Spusť `npm run docs:serve`, otevři `http://127.0.0.1:4173`, přejdi z homepage do tematického článku a vyhledej výraz `Docker` | Homepage, navigace, cílový článek i výsledky vyhledávání jsou viditelné bez konzolové chyby blokující scénář | Ukonči server pomocí `Ctrl+C`; `_site/` lze bezpečně odstranit přes `npm run docs:clean` |
 | `REQ-E002` | Žádná | Spusť `node --test --test-isolation=none tests/generate-docs.test.js` | Negativní příklady interních zdrojů a výstupů jsou odmítnuté a test přesného casingu projde | Žádný |
+
+### Vizuální kontrola po změně obsahu nebo šablony
+
+Na šířkách **320, 390, 768 a 1440 px** ověř světlý i tmavý motiv pro homepage, přehled Programování, Docker a reprezentativní článek s kódem, obrázky a rozbalovacím blokem.
+
+1. Otevři navigaci, přejdi do oblasti a článku a použij obsah stránky.
+2. Vyhledej `Docker`, otevři výsledek a potom ověř srozumitelný stav pro neexistující výraz.
+3. Klávesnicí použij odkaz **Přejít k obsahu**, ovladač motivu a rozbalení doplňujícího postupu.
+4. Ověř kopírování kódu, čitelnost syntaxe a vlastní vodorovný posuv pouze uvnitř široké ukázky nebo tabulky.
+5. Po změně motivu znovu načti stránku a ověř zachování volby; zkontroluj i automatický režim.
+6. Projdi konec dlouhého článku, obrázky a případné video, aby obsah nevytvářel vodorovný posuv celé stránky.
+
+Při selhání zaznamenej přesnou stránku, rozměr, motiv a pozorovaný problém; přepnutí do jiného prohlížeče není náhradou opravy reprodukovatelné regrese.
+
+Lokální DocFX server může vracet statické soubory s cache na 60 sekund.
+
+Po změně šablony a novém buildu použij úplné obnovení stránky bez cache; běžné obnovení může krátce ponechat starý dynamicky importovaný `main.js`.
+
+Externí odkazy kontroluj odděleně podle rizika; odmítnutí HTTP požadavku nebo rate limit není samo důkazem zániku cílového dokumentu.
 
 ## Shoda lokálního prostředí a CI
 

@@ -59,8 +59,8 @@ body {
     linear-gradient(180deg, color-mix(in srgb, var(--docs-accent-soft) 58%, transparent) 0, transparent 260px),
     var(--docs-bg);
   font-family: var(--bs-font-sans-serif);
-  font-size: 15px;
-  line-height: 1.58;
+  font-size: 16px;
+  line-height: 1.65;
   text-rendering: optimizeLegibility;
 }
 
@@ -118,6 +118,7 @@ header.bg-body {
 }
 
 .navbar-brand {
+  flex-shrink: 0;
   min-width: 0;
   max-width: 12rem;
   gap: 0.45rem;
@@ -156,11 +157,11 @@ header.bg-body {
   max-width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
-  scrollbar-width: none;
+  scrollbar-width: thin;
 }
 
 #navbar .navbar-nav::-webkit-scrollbar {
-  display: none;
+  height: 4px;
 }
 
 #navbar .nav-link {
@@ -493,6 +494,8 @@ pre .hljs {
   line-height: 1.56;
   box-shadow: none;
   white-space: pre;
+  /* The dark highlight theme otherwise moves scrolling into an unfocusable code node. */
+  overflow: visible !important;
 }
 
 /* Code blocks stay dark in both themes, so their syntax palette must too. */
@@ -549,11 +552,15 @@ pre code *::selection {
   background-color: rgba(125, 211, 252, 0.28);
 }
 
+/* Keep copy links in the keyboard order, revealing them when their block has focus. */
+pre .code-action { display: block; opacity: 0; pointer-events: none; }
+pre:hover .code-action, pre:focus-within .code-action { opacity: 1; pointer-events: auto; }
+
 article img {
   display: block;
   width: auto;
   max-width: min(100%, 760px);
-  max-height: min(46vh, 460px);
+  max-height: none;
   height: auto;
   margin: 0.95rem auto 1.2rem;
   padding: 0.42rem;
@@ -569,11 +576,6 @@ article p:has(> img:only-child) {
   display: flex;
   justify-content: center;
   max-width: none;
-}
-
-article > p:has(> img:only-child):first-of-type img {
-  max-width: min(100%, 520px);
-  max-height: min(40vh, 380px);
 }
 
 .alert {
@@ -596,8 +598,12 @@ article > p:has(> img:only-child):first-of-type img {
 }
 
 .alert > p {
-  margin-bottom: 0;
+  margin-bottom: 0.65rem;
   padding: 0;
+}
+
+.alert > :last-child {
+  margin-bottom: 0;
 }
 
 .alert > ul {
@@ -704,10 +710,6 @@ footer {
 }
 
 @media (max-width: 991px) {
-  body {
-    font-size: 14.5px;
-  }
-
   main.container-xxl {
     padding-top: 0.85rem;
   }
@@ -721,7 +723,7 @@ footer {
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 991px) {
   #autocollapse {
     min-height: 48px;
   }
@@ -773,23 +775,97 @@ footer {
     font-size: 1rem;
   }
 
-  article table th,
-  article table td {
-    min-width: 8rem;
-  }
-
-  article table th:last-child,
-  article table td:last-child {
-    min-width: 18rem;
-  }
-
   article img {
-    max-height: min(38vh, 340px);
+    max-height: none;
     padding: 0.3rem;
   }
 
-  article > p:has(> img:only-child):first-of-type img {
-    max-width: min(100%, 360px);
-    max-height: min(34vh, 300px);
-  }
+}
+
+/* Native table layout fills the reading column; only the wrapper scrolls. */
+.docs-table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 0.85rem 0 1.25rem;
+  border: 1px solid var(--docs-border);
+  border-radius: var(--docs-radius);
+  scrollbar-color: var(--docs-border-strong) transparent;
+}
+.docs-table-scroll > table {
+  display: table;
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+article td, article th {
+  min-width: 7rem;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+article td code { overflow-wrap: anywhere; white-space: normal; }
+article a { overflow-wrap: anywhere; }
+article iframe {
+  display: block;
+  width: 100%;
+  max-width: 760px;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  margin: 1rem 0;
+  border: 0;
+}
+:focus-visible {
+  outline: 3px solid var(--docs-link);
+  outline-offset: 3px;
+}
+article:focus { outline: none; }
+body[data-search="true"] { overflow-anchor: none; }
+.docs-skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 2000;
+  padding: 0.65rem 1rem;
+  background: var(--docs-surface);
+  border: 2px solid var(--docs-link);
+  border-radius: var(--docs-radius);
+  transform: translateY(-200%);
+}
+.docs-skip-link:focus { transform: translateY(0); }
+.docs-areas > ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  padding: 0;
+  list-style: none;
+}
+.docs-areas > ul > li {
+  margin: 0;
+  padding: 1rem 1.2rem 1rem 0;
+  border-bottom: 1px solid var(--docs-border);
+}
+.docs-areas strong { display: block; margin-bottom: 0.25rem; }
+.docs-areas li > p { margin: 0; }
+@media (max-width: 991px) {
+  .docs-areas > ul { grid-template-columns: 1fr; }
+  .docs-areas > ul > li { padding-right: 0; }
+  header.bg-body { height: auto; }
+  .navbar .container-xxl { flex-wrap: wrap !important; }
+  .navbar [data-bs-target="#navpanel"] { display: block !important; }
+  .navbar.navbar-expand-md .navbar-collapse:not(.show) { display: none !important; }
+  .navbar.navbar-expand-md .navbar-collapse.show { display: block !important; }
+  #navpanel { flex-basis: 100%; }
+  #navpanel.show { max-height: 70dvh; overflow-y: auto; }
+  .navbar #navbar { display: block; }
+  .navbar #navbar .navbar-nav { width: 100%; }
+  body[data-search="true"] #navbar .navbar-nav { display: none; }
+  .navbar #navbar form.search { margin: 0.75rem 0; flex: none; }
+  .navbar #navbar form.icons { margin: 0; justify-content: flex-end; }
+  .navbar #navbar .nav-link { min-height: 44px; display: flex; align-items: center; }
+  .navbar .btn, .actionbar .btn { min-height: 44px; min-width: 44px; }
+  article table th, article table td { padding: 0.55rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
 }

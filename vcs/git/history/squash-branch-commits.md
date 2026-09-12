@@ -1,57 +1,49 @@
-# Git – Sloučení commitů větve do jednoho commitu
+# Git – sloučení commitů do jednoho
 
-> Nejbezpečnější způsob, jak sloučit všechny commity, které jsou na `develop` navíc oproti `main`, do jednoho commitu.
+Squash spojí práci z několika commitů do jednoho záznamu; hodí se k úpravě vlastní pracovní větve před review.
 
-## Postup krok za krokem
+## Před použitím
 
-<details>
-<summary>Krok 1: Přepnutí na větev develop a vytvoření zálohy</summary>
+Příklad je pro **Bash nebo Git Bash**, vlastní větev `feature/nova-funkce` a cílovou `origin/main`.
 
-```bash
-git checkout develop
-git branch backup/develop-before-squash
-```
+Pracovní strom i index musí být čisté; názvy větví uprav podle projektu a nepoužívej postup automaticky na dlouhodobé sdílené větve.
 
-- Přepne se na větev `develop`.
-- Vytvoří záložní větev `backup/develop-before-squash` pro případ, že by se něco pokazilo.
-
-> [!TIP]
-> Zálohu větve smažeš až po ověření, že je vše v pořádku: `git branch -d backup/develop-before-squash`
-</details>
-
-<details>
-<summary>Krok 2: Stažení aktuálního stavu z remote</summary>
+## Praktický postup
 
 ```bash
+git switch feature/nova-funkce
+git status --short
 git fetch origin
+git branch backup/pred-squash
+base=$(git merge-base HEAD origin/main)
+git log --oneline "$base"..HEAD
 ```
 
-- Stáhne aktuální stav vzdáleného repozitáře bez automatického sloučení.
-</details>
+`base` je společný předek; výpis ukáže commity, které přepis zahrne.
 
-<details>
-<summary>Krok 3: Soft reset na společný předek s main</summary>
+Pokračuj jen tehdy, když je to zamýšlený rozsah:
 
 ```bash
-git reset --soft $(git merge-base develop origin/main)
+git reset --soft "$base"
+git diff --cached --stat
+git commit -m "feat: přidává novou funkci"
 ```
 
-- Najde společného předka větví `develop` a `origin/main`.
-- Soft resetem přesune HEAD na tento bod – všechny změny z commitů na `develop` navíc zůstanou ve stage.
+`--soft` přesune větev, ale zachová index i pracovní soubory; nový commit proto obsahuje jejich souhrnný stav. [Reference git reset](https://git-scm.com/docs/git-reset)
 
-> [!NOTE]
-> `--soft` zachová všechny změny ve staging area (index), takže je lze hned znovu zakomitovat.
-</details>
-
-<details>
-<summary>Krok 4: Vytvoření souhrnného commitu</summary>
+## Ověření výsledku
 
 ```bash
-git commit -m "Souhrnný commit pro develop"
+git diff backup/pred-squash HEAD
+git log --oneline "$base"..HEAD
 ```
 
-- Vytvoří jediný nový commit obsahující všechny dříve samostatné změny na větvi `develop`.
+První výpis má být prázdný a druhý obsahovat jediný nový commit; následně spusť testy projektu.
 
-> [!WARNING]
-> Tímto krokem přepíšeš historii větve `develop`. Pokud větev sdílíš s ostatními, nezapomeň je informovat a použít `git push --force-with-lease origin develop`.
-</details>
+Zveřejněnou vlastní větev aktualizuj podle [postupu pro přepis s lease](../in-practice.md), jehož očekávaný vzdálený commit je nutné zaznamenat před přepisem.
+
+## Alternativa bez přepisu zdrojové větve
+
+Pokud hosting nabízí **Squash and merge**, lze vytvořit jeden commit až při sloučení PR; možnost musí povolovat pravidla projektu.
+
+Zálohu ponech do ověření výsledku a publikování.

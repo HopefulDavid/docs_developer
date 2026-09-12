@@ -4,7 +4,7 @@ NUnit umožňuje spouštět automatizované testy a zapisovat očekávání pomo
 
 ## Založení a spuštění testů
 
-Se SDK .NET 10 vytvořte projekt a spusťte jeho testy:
+Se SDK .NET 10 vytvoř projekt a spusť jeho testy:
 
 ```powershell
 dotnet new nunit -n NUnitDemo -f net10.0
@@ -18,7 +18,7 @@ dotnet test
 
 Více souvisejících ověření jednoho výsledku seskupte do `Assert.Multiple`.
 
-Soubor `UnitTest1.cs` nahraďte úplnou ukázkou:
+Soubor `UnitTest1.cs` nahraď úplnou ukázkou:
 
 ```csharp
 using System.Numerics;
@@ -41,7 +41,7 @@ public sealed class ComplexTests
 }
 ```
 
-Znovu spusťte `dotnet test`; očekáván je jeden úspěšný test.
+Znovu spusť `dotnet test`; očekáván je jeden úspěšný test.
 
 Ukázka demonstruje syntaxi na standardním typu; v aplikaci tímto způsobem ověřujte výsledky vlastního kódu.
 

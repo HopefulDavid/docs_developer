@@ -1,7 +1,7 @@
 ---
 canonical_for: documentation-governance
 status: accepted
-last_verified: 2026-08-28
+last_verified: 2026-09-11
 owner: maintainers
 ---
 
@@ -140,15 +140,61 @@ Neopisuj cílovou pasáž pouze pro pohodlí čtenáře.
 
 ## Čitelnost veřejných návodů
 
-Veřejný návod začíná nejkratším použitelným postupem a pouze nezbytnými předpoklady.
+Veřejný článek vysvětluje jeden praktický cíl jazykem srozumitelným juniornímu programátorovi.
 
-Vysvětlení principů, alternativy a podrobnou diagnostiku umísti za hlavní postup nebo do pojmenovaných rozbalovacích bloků.
+Výchozí pořadí je **co to je → k čemu to slouží → jak to funguje → předpoklady → praktické použití → příkazy a příklady → možnosti úprav → důležité poznámky**.
 
-Podmínky, oprávnění a upozornění nutná pro správné provedení ponech přímo u příslušného kroku.
+Jde o pořadí informací, nikoli povinnost vytvořit osm nadpisů.
 
-Každá stránka řeší jasný praktický cíl; související návody seskup v navigaci a odkazuj přímo na potřebný postup.
+Krátký opravný postup může spojit účel a princip v úvodu, referenční článek použít tabulku a koncepční srovnání místo příkazů popsat rozhodovací kritéria.
 
-Úvody, obrázky a opakované rozcestníky nesmějí zbytečně oddalovat první užitečný krok.
+Používej předvídatelné názvy jako **Před použitím**, **Praktické použití**, **Ověření výsledku**, **Co lze upravit** a **Časté problémy**, případně je zpřesni podle tématu.
+
+Prázdné nebo opakující se sekce nevytvářej.
+
+### Příkazy a ukázky
+
+Před ukázkou uveď prostředí, potřebnou verzi či kompatibilitu, pracovní složku, oprávnění a existující vstupy v rozsahu nutném pro její použití.
+
+Každý blok má identifikátor jazyka; pro výpis, cestu nebo strukturu souborů použij `text`.
+
+U kompletního programu napiš název souboru a způsob spuštění; u fragmentu přesné místo vložení a vztah k předchozí ukázce.
+
+Komentář nebo bezprostřední vysvětlení objasní účel příkazu, význam netriviálních parametrů, očekávaný výsledek a hodnoty, které lze bezpečně změnit.
+
+Ukázkové názvy a cesty jsou konkrétní a výslovně vysvětlené, nikoli nevysvětlené zástupné značky.
+
+Příkaz měnící data má před sebou podmínky použití a kontrolu cíle; jeho návratový kód nenahrazuje ověření skutečného výsledku nebo obnovy.
+
+Významnou technickou změnu dolož relevantní primární dokumentací a dostupným spustitelným ověřením, přičemž rozlišuj ověření zdroje, syntaxe a skutečného běhu služby.
+
+### Struktura a navigace
+
+Používej jeden H1 a logickou hierarchii H2/H3 bez přeskakování úrovní.
+
+Základní vysvětlení a potřebné kroky nech viditelné; `<details>` používej pro samostatné alternativy, rozšiřující diagnostiku nebo rozsáhlé přílohy.
+
+Tabulka porovnává souběžné možnosti, seznam zachycuje kroky nebo stručný výčet a upozornění označuje konkrétní důsledek u příslušného kroku.
+
+Snímek obrazovky ani video nesmějí být jediným nositelem zásadního postupu; obrázek má popisný alternativní text a video smysluplný titulek.
+
+Dekorativní úvodní obrázky, emoji v každé buňce a nepodložená označení jako „kompletní“ nebo „nejlepší“ nepřidávají orientační hodnotu.
+
+Související postup vlastní jedna stránka a ostatní na ni odkazují.
+
+Při přidání tématu uprav registr v generátoru podle [projektových příkazů](../development/commands.md#úprava-nebo-přidání-článku), nikoli generované rozcestníky a TOC.
+
+Změna nadpisu musí zahrnout kontrolu příchozích odkazů na kotvu; veřejné cesty a jejich casing zachovávej.
+
+### Vizuální kontrola
+
+Ověř čitelnost světlého i tmavého motivu na desktopu, tabletu a mobilu včetně šířky 320 px.
+
+Běžný text se zalamuje bez vodorovného posuvu stránky, zatímco široká tabulka nebo kód může mít vlastní dostupnou posuvnou oblast.
+
+Kontrola zahrnuje navigaci klávesnicí, viditelný fokus, přepnutí motivu, vyhledávání, rozbalovací bloky, obrázky a dlouhé řádky kódu.
+
+Konkrétní reprodukovatelné scénáře vlastní [testovací příkazy](../development/commands.md#reprezentativní-smoke-scénář).
 
 ## Mermaid diagramy
 

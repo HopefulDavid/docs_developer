@@ -1,66 +1,47 @@
-# Portainer – Praktický průvodce a tipy
+# Portainer – místní správa Dockeru
 
-> Moderní přehled spuštění, parametrů a doporučení pro práci s Portainerem v Dockeru.
+Portainer poskytuje webové rozhraní pro správu kontejnerů, image, sítí a volumes.
 
-## Co je Portainer?
+## Před použitím
 
-- **Webové rozhraní pro správu Docker kontejnerů**
-- Umožňuje snadnou správu, monitoring a konfiguraci kontejnerů, image, volume a sítí
-- Podporuje Docker, Docker Swarm, Kubernetes
+Příklad předpokládá linuxový Docker engine s Unix socketem `/var/run/docker.sock`, například Docker Desktop v režimu linuxových kontejnerů.
 
-> [!NOTE]
-> Portainer výrazně zjednodušuje správu Docker prostředí.
+Přístup k socketu dává Portaineru rozsáhlou kontrolu nad enginem; přístup k webovému rozhraní proto patří správcům.
 
-## Spuštění Portaineru
+## Praktické spuštění
 
-<details>
-<summary>Krok 1: Spuštění kontejneru</summary>
+Pro novou instalaci v PowerShellu nebo Bashi:
 
-```cmd
-docker run -d -p 9000:9000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:2.27.5
+```bash
+docker volume create portainer_data
+docker run --detach --name portainer --restart=unless-stopped --publish 127.0.0.1:9443:9443 --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock --mount type=volume,src=portainer_data,dst=/data portainer/portainer-ce:lts
 ```
 
-| Parametr | Význam |
-|---------------------------------|------------------------------------------------------------------------|
-| `-d` | Spustí kontejner na pozadí |
-| `-p 9000:9000` | Mapuje port 9000 hostitele na port 9000 v kontejneru |
-| `--name portainer` | Pojmenuje kontejner jako "portainer" |
-| `--restart always` | Automatický restart při chybě nebo restartu hostitele |
-| `-v /var/run/docker.sock:/var/run/docker.sock` | Umožňuje Portaineru komunikovat s Docker daemonem |
-| `-v portainer_data:/data` | Ukládá data Portaineru do trvalého úložiště (Volume) |
-| `portainer/portainer-ce:2.27.5` | Použitý Docker image Portaineru |
+`portainer_data` uchovává konfiguraci mezi vytvořeními kontejneru, socket propojuje správu enginu a port `9443` nabízí HTTPS pouze místnímu počítači.
 
-</details>
+`lts` je pohyblivý kanál z instalační dokumentace; pro řízené nasazení zvol konkrétní ověřený tag nebo digest. [Instalace Portainer CE](https://docs.portainer.io/start/install-ce/server/docker/linux)
 
-## Přístup k Portaineru
+## První přihlášení a ověření
 
-<details>
-<summary>Krok 2: Otevření webového rozhraní</summary>
+1. Otevři `https://localhost:9443` na hostiteli enginu.
+2. Ověř certifikát vlastní instalace; výchozí certifikát je podepsaný sám sebou, pro důvěryhodné prostředí nastav vlastní TLS certifikát.
+3. Pokud verze žádá setup token, načti jej lokálně přes `docker logs portainer` a nesdílej tento výpis.
+4. Vytvoř správce, připoj místní prostředí a porovnej seznam kontejnerů s `docker container ls --all`.
 
-- Po spuštění kontejneru otevřete prohlížeč a zadejte:
-`http://localhost:9000`
-- Nastavte administrátorské heslo a připojte se k Docker endpointu.
+Novější instalace chrání úvodní nastavení jednorázovým tokenem. [Setup token](https://docs.portainer.io/faqs/installing/setup-token)
 
-</details>
+## Co lze upravit
+
+Pokud je místní port obsazený, změň v mapování první `9443`, například na `9543`, a použij odpovídající URL.
+
+Port `8000` není pro tento místní příklad potřeba; používá se pro Edge funkce.
 
 ## Řešení problémů
 
-<details>
-<summary>Port 9000 je obsazený</summary>
+| Projev | Ověření |
+|---|---|
+| Název portainer již existuje | Prohlédni existující kontejner; instalaci nepřepisuj bez zálohy |
+| Rozhraní není dostupné | Stav `docker container ls --all`, mapování portu a log |
+| Nelze připojit engine | Režim kontejnerů a skutečné umístění socketu |
 
-- Změňte port v příkazu, např.:
-  ```cmd
-  docker run -d -p 9100:9000 ...
-  ```
-- Ověřte, zda není jiný kontejner na stejném portu:
-  ```cmd
-  docker ps
-  ```
-</details>
-
-<details>
-<summary>Chyba při připojení k Docker daemonu</summary>
-
-- Ověřte, že Docker běží a máte správně namapovaný `docker.sock`.
-- Zkontrolujte oprávnění k souboru `/var/run/docker.sock`.
-</details>
+Upgrade konfigurace připrav podle [postupu pro stateful služby](safe-stateful-upgrade.md).

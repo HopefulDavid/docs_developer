@@ -1,168 +1,149 @@
-# PowerShell – Průvodce a reference
+# PowerShell: prostředí, soubory a diagnostika
 
-> Správa balíčků, oprávnění, přizpůsobení prostředí, práce se soubory a síť v PowerShellu.
+PowerShell je shell a skriptovací jazyk, jehož příkazy mohou předávat objekty s vlastnostmi místo pouhého textu.
 
-## SSH ve Windows
+Hodí se pro automatizaci Windows i opakovatelné vývojářské úlohy.
 
-Instalace a nastavení: [SSH ve Windows](../../network/ssh/windows.md).
+## Před použitím
 
-## Správa balíčků
+Windows PowerShell 5.1 (`powershell.exe`) a PowerShell 7 (`pwsh.exe`) jsou odlišná prostředí a mohou mít jiné profily i moduly.
 
-Umístění modulů: `C:\Users\{xxx}\Documents\PowerShell\Modules`
-
-## Vypnutí telemetrie .NET SDK
-
-Trvalé nastavení pro uživatele nebo celý počítač a kontrolu uložené i aktuální hodnoty popisuje návod [.NET CLI – vypnutí telemetrie SDK](../../programming/packages/dotnet-cli.md#vypnutí-telemetrie-net-sdk).
-
-## Přizpůsobení prostředí (Oh My Posh)
-
-<details>
-<summary>Modernizace prostředí PowerShellu krok za krokem</summary>
-
-**Původní vs. nový vzhled:**
-
-![Původní PowerShell](https://miro.medium.com/v2/resize:fit:4800/format:webp/1*lelcpOyX-WuXlYR5oy2g4Q.png)
-
-![Nový PowerShell](https://miro.medium.com/v2/resize:fit:720/format:webp/1*SI0w1Cg7iVzG6mZMtBfWqQ.png)
-
-**Postup:**
-
-1. **Instalace PowerShell 7+** – zjisti verzi: `$PSVersionTable` → [Stáhnout](https://github.com/PowerShell/PowerShell)
-
-2. **Instalace Windows Terminal** → [Stáhnout](https://github.com/microsoft/terminal)
-
-3. **Spusť PowerShell jako administrátor**
-
-![Spuštění jako administrátor](../../images/runAsAdministatorPowerShell.png)
-
-4. **Nastav oprávnění na Bypass:**
-   ```powershell
-   Set-ExecutionPolicy -Scope CurrentUser Bypass
-   ```
-
-5. **Rozdělení okna na části** – klávesová zkratka: `Alt` + `Left Click`
-
-![Options PowerShell](../../images/optionsPowerShell.png)
-
-6. **Instalace Oh My Posh a posh-git:**
-   ```powershell
-   Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://ohmyposh.dev/install.ps1'))
-   Install-Module posh-git
-   ```
-
-7. **Nastavení tématu:**
-   ```powershell
-   oh-my-posh init pwsh --config 'C:\Users\{xxx}\Themes\PowerShell\aliens.omp.json' | Invoke-Expression
-   Import-Module posh-git
-   ```
-
-8. **Trvalé nastavení v profilu:**
-   ```powershell
-   notepad $PROFILE
-   ```
-Vlož do souboru:
-   ```powershell
-   Import-Module posh-git
-   oh-my-posh init pwsh --config 'C:\Users\{xxx}\themes\aliens.omp.json' | Invoke-Expression
-   ```
-
-9. **Vrať oprávnění na RemoteSigned:**
-   ```powershell
-   Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
-   ```
-
-</details>
-
-### Výběr a změna tématu
+Ukázky jsou určené pro PowerShell 7 ve Windows; síťové příkazy vyžadují příslušné moduly Windows.
 
 ```powershell
-# Zobrazení dostupných témat
-Get-PoshThemes
-
-# Aplikace tématu v profilu
-oh-my-posh init pwsh --config 'C:\Users\{xxx}\Documents\themes\catppuccin.omp.json' | Invoke-Expression
+# Verze shellu, aktualni slozka a napoveda konkretniho prikazu.
+$PSVersionTable.PSVersion
+Get-Location
+Get-Help Copy-Item -Examples
 ```
 
-[Šablony ke stažení](https://github.com/JanDeDobbeleer/oh-my-posh/tree/main/themes)
+Příkazy spouštěj v uvedeném prostředí; [CMD](cmd.md) smyčku `for /D` nelze vložit do PowerShellu.
 
-## Historie příkazů
+## Jak funguje roura
 
 ```powershell
-# Umístění souboru s historií
-(Get-PSReadlineOption).HistorySavePath
+# Get-ChildItem vraci objekty souboru; Where-Object vybira podle vlastnosti Length.
+Get-ChildItem -LiteralPath . -File |
+    Where-Object Length -gt 1MB |
+    Select-Object Name, Length
 ```
 
-## Oprávnění
+Tečka označuje aktuální složku, `-File` vynechá adresáře a `1MB` je hranice velikosti, kterou můžeš upravit.
 
-### Zjištění aktuálního nastavení
+## Správa modulů
+
+Modul přidává další příkazy a jeho umístění závisí na verzi PowerShellu i rozsahu instalace.
 
 ```powershell
-Get-ExecutionPolicy -Scope CurrentUser
+# Vyhledavaci cesty a skutecne dostupne verze modulu na tomto pocitaci.
+$env:PSModulePath -split [IO.Path]::PathSeparator
+Get-Module -ListAvailable | Select-Object Name, Version, Path
 ```
 
-| Hodnota | Popis |
-|---------|-------|
-| `Restricted` | Skripty nejsou povoleny |
-| `AllSigned` | Pouze digitálně podepsané skripty |
-| `RemoteSigned` | Skripty z internetu musí být podepsané |
-| `Unrestricted` | Všechny skripty povoleny bez omezení |
-| `Undefined` | Výchozí systémové nastavení |
+Instalace pro aktuálního uživatele obvykle nevyžaduje správce, ale před instalací ověř zdroj a vydavatele balíčku.
 
-### Změna oprávnění
+## Přizpůsobení prostředí: Oh My Posh
+
+Oh My Posh mění prompt, například zobrazuje větev Gitu; nevylepšuje oprávnění ani nemění syntaxi shellu.
+
+Následující instalace používá Windows Package Manager a vyžaduje dostupný `winget`.
 
 ```powershell
-Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+# Presne ID vybira konkretni balicek; po instalaci otevri novy terminal.
+winget install --id JanDeDobbeleer.OhMyPosh --exact
 ```
 
-[Dokumentace parametrů](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.4#-executionpolicy)
-
-### Spuštění skriptu bez trvalé změny oprávnění
+V novém terminálu ověř program a zkus dodané téma.
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File "C:\{xxx}\Downloads\skript.ps1"
+oh-my-posh version
+# Promenna ukazuje na temata instalace, nenastavuj natvrdo cestu jineho uzivatele.
+Get-ChildItem -LiteralPath $env:POSH_THEMES_PATH -Filter '*.omp.json'
+oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/jandedobbeleer.omp.json" | Invoke-Expression
 ```
+
+Zde `Invoke-Expression` provádí inicializační kód lokálně nainstalovaného nástroje, nikoli libovolný vzdálený skript.
+
+Pokud cesta k tématům není nastavena, ověř instalaci podle [oficiálního postupu pro Windows](https://ohmyposh.dev/docs/installation/windows).
+
+Pro trvalé použití nejprve vytvoř profil, pokud chybí, a otevři jej bez přepsání existujícího obsahu.
+
+```powershell
+if (-not (Test-Path -LiteralPath $PROFILE)) {
+    New-Item -ItemType File -Path $PROFILE -Force | Out-Null
+}
+notepad $PROFILE
+```
+
+Na konec profilu přidej stejný příkaz `oh-my-posh init pwsh ... | Invoke-Expression`, který už fungoval v aktuálním okně.
+
+Chybějící symboly řeš výběrem podporovaného Nerd Font v nastavení terminálu; přepínání témat samotné font nenainstaluje.
+
+## Execution Policy
+
+Execution Policy řídí pravidla spouštění skriptů, není bezpečnostní hranicí ani oprávněním k souborům.
+
+Nejprve zjisti efektivní hodnotu a všechna nastavení, protože firemní zásady mají přednost.
+
+```powershell
+Get-ExecutionPolicy
+Get-ExecutionPolicy -List
+```
+
+Pokud spravuješ vlastní prostředí a potřebuješ spouštět své lokální skripty, lze nastavit uživatelský rozsah.
+
+```powershell
+# RemoteSigned vyzaduje podpis pro skripty oznacene jako stazene z internetu.
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+```
+
+Před změnou si poznamenej předchozí hodnotu pro případ obnovení; plošné `Bypass` není potřebným krokem instalace promptu.
+
+Význam jednotlivých hodnot a prioritu rozsahů vysvětluje [Microsoft: Execution Policies](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies).
 
 ## Práce se soubory
 
-### Když soubor nebo složka nejde odstranit
-
-Kontrolu cílové cesty, náhled pomocí `-WhatIf` a odstranění přes `-LiteralPath` popisuje návod [Windows – nelze odstranit soubor nebo složku](cannot-delete-item.md#powershell-kontrola-a-odstranění).
-
-### Změna metadat souboru
+`-LiteralPath` interpretuje cestu doslova, takže hranaté závorky v názvu nejsou hledací vzor.
 
 ```powershell
-# Změna času posledního zápisu
-(Get-Item "C:\Users\{xxx}\FileA.docx").LastWriteTime = "2024.10.10 17:00:00"
+# Zdroj musi existovat; cestu uprav podle vlastniho projektu.
+$source = Join-Path (Get-Location) 'module.xml'
+$destination = Join-Path (Get-Location) 'export'
+New-Item -ItemType Directory -Path $destination -Force | Out-Null
+Copy-Item -LiteralPath $source -Destination $destination -WhatIf
 ```
 
-**Úprava celkového času dokumentu Word:**
+`-WhatIf` zobrazí plán a nekopíruje; po kontrole spusť poslední řádek bez tohoto přepínače.
 
-1. Přejmenuj `.docx` na `.zip`
-2. Rozbal archiv
-3. V souboru `docProps/app.xml` uprav hodnotu `<TotalTime>`
-4. Zazipuj zpět a přejmenuj na `.docx`
+Existující stejnojmenný soubor v cíli může být přepsán, proto pro nový export používej samostatnou složku.
 
-### Kopírování souborů
+Kontrolu před mazáním vlastní návod [nelze odstranit soubor nebo složku](cannot-delete-item.md#powershell-kontrola-a-odstranění).
+
+### Časy a metadata
 
 ```powershell
-# Kopírování souboru ze síťového zdroje
-xcopy /y /z "\\192.xxx.xx.xx\files\module.xml" "C:\Users\Test\Downloads\*"
-
-# Kopírování do podsložek
-for /D %%G in ("C:\Users\Test\Downloads\*") DO (
-  xcopy /y /z "C:\Users\Test\Downloads\module.xml" "%%G\SubDirectory\*"
-)
+# Zobrazeni casu souboru nic nemeni.
+Get-Item -LiteralPath './module.xml' | Select-Object Name, CreationTime, LastWriteTime
 ```
 
-## Síť
+Změna `LastWriteTime` mění metadata souborového systému, nikoli údaje uvnitř Word dokumentu ani skutečnou historii práce.
+
+Úpravu obsahu `.docx` řeš nástrojem, který zachová strukturu dokumentu, ne ručním přejmenováním a přebalením archivu.
+
+## Historie a síť
 
 ```powershell
-# Zjištění hostname podle IP adresy
-Resolve-DnsName -Name <IP adresa> -Type PTR
-
-# Zobrazení všech fyzických adaptérů
-Get-NetAdapter -physical
-
-# Zobrazení pouze aktivních adaptérů
-Get-NetAdapter -physical | where status -eq 'up'
+# Soubor dlouhodobe historie modulu PSReadLine muze obsahovat citlive prikazy.
+(Get-PSReadLineOption).HistorySavePath
+# Fyzicke aktivni adaptery Windows; virtualni VPN adaptery zde nejsou.
+Get-NetAdapter -Physical | Where-Object Status -eq 'Up'
+# example.com nahrad serverem, ktery potrebujes diagnostikovat.
+Resolve-DnsName -Name 'example.com'
+Test-NetConnection -ComputerName 'example.com' -Port 443
 ```
+
+Do příkazové historie nevkládej hesla ani tokeny a její obsah nesdílej bez kontroly.
+
+## Související témata
+
+Instalaci SSH vlastní [SSH ve Windows](../../network/ssh/windows.md), vypnutí telemetrie SDK [návod .NET CLI](../../programming/packages/dotnet-cli.md#vypnutí-telemetrie-net-sdk).

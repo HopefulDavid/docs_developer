@@ -1,44 +1,61 @@
-# Docker BusyBox – Praktický průvodce zálohováním volumes
+# Docker – záloha a obnova volume pomocí BusyBox
 
-> Moderní přehled zálohování dat z Docker volumes do lokální složky pomocí BusyBox.
+BusyBox poskytuje malé linuxové nástroje; pomocný kontejner může vytvořit archiv pojmenovaného Docker volume.
 
-## Co je BusyBox?
+## Před použitím
 
-- **Minimalistický Linux image s základními Unix nástroji**
-- Ideální pro jednoduché operace v Docker kontejnerech (kopírování, skripty, testování)
+Příklad používá PowerShell, linuxový Docker engine a **existující** volume `app_data`.
 
-> [!NOTE]
-> BusyBox je často využíván pro rychlé utility v kontejnerizovaném prostředí.
+Zastav všechny procesy zapisující do volume; pro běžící databázi použij její nativní zálohu, nikoli prosté archivování souborů.
 
-## Krok 1: Zjištění dostupných Docker volumes
-
-<details>
-<summary>Zobrazit seznam volumes</summary>
-
-```bash
-docker volume ls
-```
-</details>
-
-## Krok 2: Záloha dat z Docker volume do počítače
-
-<details>
-<summary>Přenesení dat pomocí BusyBox</summary>
-
-```bash
-docker run --rm -v projekty_planka_config:/volume -v C:\Users\xxx\Docker_Volumes\planka:/backup busybox:1.37.0-glibc sh -c "cp -r /volume/. /backup/"
+```powershell
+docker volume inspect app_data
+if ($LASTEXITCODE -ne 0) { throw 'Zdrojový volume neexistuje.' }
+$backupPath = Join-Path $PWD.Path ('zaloha-' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
+New-Item -ItemType Directory -Path $backupPath -ErrorAction Stop
 ```
 
-> [!NOTE]
-> **Základní parametry:**
-> - `--rm` – automaticky odstraní kontejner po dokončení
-> - šetří místo na disku a udržuje systém čistý
->
-> **Připojení volumes:**
-> - `-v projekty_planka_config:/volume` – připojí Docker volume jako `/volume`
-> - `-v C:\Users\xxx\Docker_Volumes\planka:/backup` – připojí lokální složku jako `/backup`
->
-> **Použitý image a příkaz:**
-> - `busybox:1.37.0-glibc` – minimalistický image s glibc
-> - `sh -c "cp -r /volume/. /backup/"` – rekurzivní kopírování obsahu volume do zálohy
-</details>
+Kontrola názvu brání nechtěné záloze nového prázdného volume; adresář s časem odděluje jednotlivé zálohy.
+
+## Vytvoření archivu
+
+```powershell
+docker run --rm --mount type=volume,src=app_data,dst=/source,readonly --mount "type=bind,src=$backupPath,dst=/backup" busybox:1.37.0-glibc tar -czf /backup/app_data.tar.gz -C /source .
+if ($LASTEXITCODE -ne 0) { throw 'Záloha selhala.' }
+Get-FileHash -LiteralPath (Join-Path $backupPath 'app_data.tar.gz') -Algorithm SHA256
+```
+
+Zdroj se připojí pouze pro čtení, výstup patří hostiteli a `--rm` odstraní pouze pomocný kontejner.
+
+`tar -czf` vytvoří komprimovaný archiv; `-C /source .` zahrne obsah včetně skrytých položek.
+
+Běžný tar nezachová automaticky všechna rozšířená metadata nebo ACL; požadavky aplikace ověř samostatně. [Zálohy Docker volumes](https://docs.docker.com/engine/storage/volumes/#back-up-restore-or-migrate-data-volumes)
+
+## Kontrola a zkušební obnova
+
+```powershell
+docker run --rm --mount "type=bind,src=$backupPath,dst=/backup,readonly" busybox:1.37.0-glibc tar -tzf /backup/app_data.tar.gz
+if ($LASTEXITCODE -ne 0) { throw 'Archiv nelze přečíst.' }
+```
+
+Výpis potvrzuje čitelnost archivu; nenahrazuje test aplikace nad obnovenými daty.
+
+Zvol dosud nepoužitý název obnovovacího volume:
+
+```powershell
+$restoreVolume = 'docs-restore-' + (Get-Date -Format 'yyyyMMdd-HHmmss')
+docker volume create $restoreVolume
+if ($LASTEXITCODE -ne 0) { throw 'Obnovovací volume nevznikl.' }
+docker run --rm --mount "type=volume,src=$restoreVolume,dst=/restore" --mount "type=bind,src=$backupPath,dst=/backup,readonly" busybox:1.37.0-glibc tar -xzf /backup/app_data.tar.gz -C /restore
+if ($LASTEXITCODE -ne 0) { throw 'Obnova selhala.' }
+```
+
+Zkušební aplikaci připoj k novému volume a ověř známé soubory, vlastníky i chování; původní volume zůstává zachovaný.
+
+## Co lze upravit
+
+Změň název zdroje, záložní složku a image podle svého prostředí; cesty bind mountu se vyhodnocují na hostiteli Docker enginu.
+
+Po testu a odpojení zkušební aplikace lze přes `docker volume rm $restoreVolume` odstranit pouze zkušební kopii.
+
+Pro řízenou aktualizaci navazuje [upgrade stateful služby](safe-stateful-upgrade.md).

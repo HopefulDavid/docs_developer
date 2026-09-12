@@ -2,10 +2,11 @@
 
 > Praktické tipy pro efektivní práci s UMotion při ukládání změn animací.
 
-## Uložení změn v UMotion
+UMotion je doplněk editoru pro práci s animacemi; potřebuješ nainstalovanou kompatibilní verzi, otevřený UMotion projekt a vybraný klip.
 
-<details>
-<summary>Jak klíčovat změny?</summary>
+Změna pózy sama není uložený animační klíč ani exportovaný AnimationClip.
+
+## Uložení změn v UMotion
 
 | 🏷️ Způsob | 💡 Popis |
 |-------------------|--------------------------------------------------------------------------|
@@ -15,16 +16,19 @@
 
 ![UMotion Key Dialog](../../images/WHDIpG6Uzg.png)
 
-</details>
-
 ## Postup klíčování
-
-<details>
-<summary>Krok za krokem</summary>
 
 1. Vyber kosti nebo transformace, které chceš animovat.
 2. Použij **Key Selected** pro ruční klíčování, nebo aktivuj **Auto Key** pro automatické klíčování.
 3. Otevři **Key Dialog** pro kontrolu a úpravu klíčů.
 4. Ulož změny animace.
 
-</details>
+## Ověření a důležité poznámky
+
+Po vytvoření klíče přesuň časový kurzor jinam a vrať jej zpět; očekávaná póza musí zůstat zachovaná.
+
+Ulož UMotion projekt a při použití v Animatoru ověř i exportovaný klip, protože jde o samostatné artefakty.
+
+Auto Key zapínej vědomě, aby při pouhé úpravě pózy nevznikly nechtěné klíče.
+
+Detaily exportu a rozdíly formátů ověř v [manuálu UMotion](https://soxware.com/umotion-manual/ImportExport.html).

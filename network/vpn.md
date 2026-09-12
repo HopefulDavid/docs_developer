@@ -1,41 +1,63 @@
-# VPN – Průvodce a přehled
+# VPN: tunel, směrování a ověření přístupu
 
-> Přehled fungování VPN, výhod, příkladů použití a bezpečnostních doporučení.
+VPN vytváří spojení mezi zařízením a vzdálenou sítí nebo bránou; běžné VPN protokoly tento tunel šifrují.
 
-![VPN](../images/9b4ddeea-a06a-4666-883e-855ceb443a3b.png)
-
-## Co je VPN?
-
-**Virtual Private Network** je technologie pro šifrované a zabezpečené připojení přes internet.
-
-Hlavní funkce:
-- Šifruje síťovou komunikaci.
-- Chrání identitu a data před třetími stranami.
-- Umožňuje bezpečný vzdálený přístup k firemním zdrojům.
-- Maskuje skutečnou IP adresu a geografickou polohu.
+Vývojář ji používá například pro přístup k internímu Git serveru, databázi nebo testovacímu prostředí.
 
 ## Jak VPN funguje
 
-**Šifrování** – veškerá komunikace je při přenosu šifrována, takže ji třetí strany nemohou číst.
+Klient ověří server, vytvoří tunel a podle směrovací tabulky do něj posílá vybraný provoz.
 
-**Tunelování** – data procházejí zabezpečeným tunelem oddělujícím komunikaci od veřejné sítě.
+Za VPN bránou už ochrana samotného tunelu končí, proto mají aplikace dál používat HTTPS, SSH nebo jiné koncové šifrování.
 
-**Maskování IP** – VPN server přidělí uživateli novou IP adresu, čímž skryje jeho skutečné umístění.
+| Režim | Co prochází tunelem | Praktický důsledek |
+|---|---|---|
+| Split tunnel | Jen vybrané sítě nebo adresy | Interní server může být dostupný, zatímco běžný web dál používá domácí připojení |
+| Full / force tunnel | Výchozí směrování vede přes VPN, podle konfigurace mohou existovat výjimky | Internetový provoz může vystupovat přes VPN bránu a závisí na její kapacitě |
 
-**Řízení přístupu** – umožňuje přístup k obsahu nebo systémům, které jsou jinak regionálně nebo síťově omezené.
+Přesné chování určuje konfigurace IPv4, IPv6, DNS a výjimek, nikoli pouze zelená ikona klienta.
 
-## Srovnání: provoz s VPN a bez VPN
+Princip rozdělení provozu popisuje [Microsoft: směrování VPN](https://learn.microsoft.com/en-us/windows/security/operating-system-security/network-security/vpn/vpn-routing).
 
-| Oblast | S VPN | Bez VPN |
-|--------|-------|---------|
-| **Zabezpečení dat** | Šifrováno, chráněno | Nešifrováno, riziko zachycení |
-| **Přístup k firemním zdrojům** | Bezpečný vzdálený přístup | Omezený nebo nemožný |
-| **Viditelnost IP adresy** | Skryta za VPN serverem | Plně viditelná |
-| **Ochrana na veřejné Wi-Fi** | Komunikace chráněna | Vysoce riziková |
+## Co je potřeba vědět před použitím
 
-## Doporučení pro použití
+Získej od správce schváleného klienta, adresu serveru, způsob přihlášení a název služby, ke které máš mít přístup.
 
-- Vždy používejte VPN při připojení přes veřejné Wi-Fi sítě.
-- Pro firemní přístup volte VPN ověřenou oddělením IT.
-- Pravidelně aktualizujte VPN klienta.
-- Ověřte, zda váš VPN provozovatel neuchovává logy aktivity.
+Soubor konfigurace může obsahovat soukromý klíč, proto jej nesdílej jako běžnou ukázku.
+
+VPN neuděluje automaticky oprávnění k databázi a nenahrazuje aktualizace systému, vícefaktorové přihlášení ani kontrolu certifikátu.
+
+## Praktické použití a kontrola
+
+1. Připoj se schváleným klientem a dokonči požadované ověření identity.
+2. Otevři konkrétní interní službu, kterou máš oprávnění používat.
+3. Pokud nefunguje, rozliš překlad názvu, dosažitelnost portu a přihlášení do aplikace.
+
+Ve Windows lze v PowerShellu ověřit interní web následujícím způsobem; ukázkový název nahraď názvem od správce.
+
+```powershell
+# DNS musí vrátit adresu očekávaného interního serveru.
+Resolve-DnsName -Name 'git.firma.example'
+# Kontrola TCP spojení na HTTPS; neověřuje přihlášení ani platnost certifikátu.
+Test-NetConnection -ComputerName 'git.firma.example' -Port 443
+```
+
+`TcpTestSucceeded: True` znamená dostupné TCP spojení, nikoli zaručeně funkční web.
+
+## Časté problémy
+
+| Projev | Co prověřit |
+|---|---|
+| Název neexistuje | Přidělené DNS servery a správnost názvu |
+| DNS funguje, port ne | Směrování, firewall a oprávnění dané VPN skupiny |
+| Přihlášení je odmítnuto | Účet aplikace a jeho oprávnění |
+| Nefunguje jen část sítí | Split tunnel, IPv6 nebo překryv domácí a firemní podsítě |
+| Certifikát neodpovídá serveru | Správnou adresu a certifikát se správcem; chybu neobcházej |
+
+## Důležité poznámky
+
+HTTPS chrání obsah webové komunikace i bez VPN, pokud používáš důvěryhodný server a platný certifikát.
+
+VPN přesouvá část důvěry k provozovateli brány; sama nezaručuje anonymitu, protože web tě může poznat podle účtu nebo cookies.
+
+Změněná veřejná IP adresa není důkazem, že všechny aplikace a DNS dotazy používají tunel.

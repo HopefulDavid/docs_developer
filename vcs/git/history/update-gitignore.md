@@ -1,52 +1,46 @@
-# Git – Jak správně aktualizovat `.gitignore` a odstranit sledované soubory
+# Git – změna.gitignore pro již sledované soubory
 
-> Praktický průvodce, jak zajistit, aby Git ignoroval i soubory, které už dříve sledoval.
+`.gitignore` ovlivňuje dosud nesledované soubory; již commitnutý soubor z historie ani z indexu neodstraní.
 
-![Ollama](../../../images/ed2c9789-9939-4dc7-b8e1-80b50214c6eb.png)
+## Před použitím
 
-## Proč aktualizovat `.gitignore`?
+Příklad vyřazuje sdílení složky `.idea/`; předem ověř, že její obsah tým skutečně nechce verzovat.
 
-- Soubor `.gitignore` říká Gitu, které soubory nemá sledovat.
-- Pravidla `.gitignore` se aplikují pouze na soubory, které Git zatím nesleduje (untracked).
+`--cached` ponechá místní soubory na disku, ale commit jejich odstranění se při načtení změny projeví také ostatním.
 
-> [!NOTE]
-> Soubory, které už Git sleduje, je potřeba odebrat z indexu ručně.
+## Praktický postup
 
-## Postup krok za krokem
+Do kořenového `.gitignore` přidej:
 
-### Varianta A: Odebrání konkrétní složky
+```gitignore
+# Osobní nastavení IDE nemá být součástí dalšího commitu.
+.idea/
+```
 
-1. **Zkontroluj, že v `.gitignore` máš řádek:**
-    ```gitignore
-    .idea/
-    ```
+Ve stejném repozitáři spusť:
 
-2. **Odeber složku z Git indexu (ale ne z disku):**
-    ```bash
-    git rm -r --cached .idea
-    ```
+```bash
+git rm -r --cached -- .idea
+git add .gitignore
+git diff --cached
+git commit -m "chore: vyřazuje místní nastavení IDE"
+```
 
-3. **Ulož změny:**
-    ```bash
-    git commit -m "Remove .idea from tracking"
-    ```
+`-r` zahrne celý adresář a `--` odděluje volby od cesty; kontrola diffu před commitem má ukázat jen zamýšlené odstranění a nové pravidlo. [Git rm](https://git-scm.com/docs/git-rm)
 
-### Varianta B: Hromadné odebrání všech sledovaných souborů a znovu přidání podle `.gitignore`
+## Ověření
 
-1. **Odeber všechny soubory z indexu:**
-    ```bash
-    git rm -r --cached .
-    ```
+```bash
+git ls-files -- .idea
+git check-ignore -v .idea/workspace.xml
+```
 
-2. **Znovu přidej soubory podle `.gitignore`:**
-    ```bash
-    git add .
-    ```
+První výpis má být prázdný, druhý ukazuje odpovídající ignorovací pravidlo; název souboru nahraď skutečnou položkou. [Gitignore](https://git-scm.com/docs/gitignore)
 
-3. **Commitni změny:**
-    ```bash
-    git commit -m "Refresh .gitignore rules"
-    ```
+## Důležité poznámky
 
-> [!WARNING]
-> Tento postup odstraní všechny soubory z Git indexu a znovu je přidá.
+Kvůli jedné složce není potřeba odebrat a znovu přidat celý index.
+
+Starší commity stále obsahují původní soubory; tajné údaje již uložené do historie vyžadují samostatnou nápravu.
+
+Pouze místní ignorování nesledovaných souborů řeší [`.git/info/exclude`](assume-unchanged.md).

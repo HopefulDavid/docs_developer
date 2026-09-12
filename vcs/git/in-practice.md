@@ -1,47 +1,58 @@
-# Praktické použití Gitu
+# Git – bezpečný push a přepis vlastní větve
 
-> Reálné postupy pro bezpečné přepsání remote větve, force push a práci s historií commitů.
+Push přenáší místní commity do vzdáleného repozitáře; běžně smí vzdálenou větev pouze posunout dopředu.
 
-## Proč někdy přepisujeme vzdálenou větev?
+## Jak funguje ochrana historie
 
-- 🔄 Po `rebase` nebo `commit --amend` se mění historie větve.
-- 🚫 Při push může vzniknout chyba **`non-fast-forward`** – remote větev má nové commity, které nejsou v lokální větvi.
-- 🛡️ Chceme zachovat vlastní změny, ale **nechceme přijít o cizí práci**.
+**Fast-forward** znamená, že dosavadní vzdálený commit je předkem nového.
 
-## Jak Git chrání historii?
+Odmítnutí **non-fast-forward** může způsobit nová cizí práce i tvůj rebase nebo amend, který vytvořil jiné commity.
 
-- 🚧 **Non-fast-forward** push je zablokován, aby se nechtěně nepřepsaly cizí commity.
-- ✅ Git vyžaduje explicitní potvrzení, že víš, co děláš.
+## Před použitím
 
-## Doporučený workflow krok za krokem
+Příklady jsou pro **Git Bash nebo Bash** a vlastní krátkodobou větev `feature/nova-funkce`.
 
-1️⃣ **Aktualizuj si remote:**
-   ```bash
-   git fetch origin
-   ```
-📥 Získáš aktuální stav vzdálené větve.
+Přepis historie použij jen tam, kde jej dovolují pravidla repozitáře a domluva s ostatními; ochranu sdílené větve neobcházej.
 
-2️⃣ **Proveď změny** (např. `rebase`, `commit --amend`)
+## Běžný push
 
-3️⃣ **Bezpečně pushni změny:**
-   ```bash
-   git push origin main --force-with-lease
-   ```
-🛡️ Přepíše vzdálenou větev **jen pokud se nezměnila od tvého posledního fetch/pullu**.
+```bash
+git status --short --branch
+git fetch origin
+git log --oneline --graph --all -15
+git push origin feature/nova-funkce
+```
 
-## Co dělat při chybě?
+První tři příkazy umožní zkontrolovat místní práci a vztah větví; poslední publikuje konkrétní větev.
 
-- ❌ Push s `--force-with-lease` selže, pokud někdo mezitím pushnul nové změny.
-- 🔄 Stáhni je (`git fetch`), vyřeš konflikty a workflow opakuj.
+Při odmítnutí nejprve prohlédni rozdíly a začleň vzdálené změny podle týmového workflow.
 
-## Rizika a doporučení
+## Přepis po rebase nebo amend
 
-- 💣 **`git push --force`** přepíše remote bez kontroly – použij **jen pokud jsi jediný na větvi**!
-- 📢 Vždy informuj tým, pokud musíš přepisovat historii.
+Ještě **před úpravou historie** zaznamenej přesný vzdálený commit:
 
-## Slovníček pojmů
+```bash
+git fetch origin
+expected=$(git rev-parse refs/remotes/origin/feature/nova-funkce)
+git branch backup/pred-upravou
+```
 
-- ⏩ **Fast-forward**: Push bez konfliktu, remote větev je přímo navazující.
-- 🚫 **Non-fast-forward**: Remote větev má nové commity, které nejsou v tvé větvi.
-- 💣 **Force push**: Přepíše remote větev bez kontroly.
-- 🛡️ **Force-with-lease**: Přepíše remote větev jen pokud se nezměnila od tvého posledního fetch/pullu.
+Proměnná `expected` je očekávaný stav serveru a záložní větev zachová původní místní historii.
+
+Po [ověřené úpravě commitů](history/fix-commits.md) porovnej výsledek a publikuj:
+
+```bash
+git log --oneline --graph -15
+git diff backup/pred-upravou HEAD
+git push --force-with-lease=refs/heads/feature/nova-funkce:"$expected" origin HEAD:refs/heads/feature/nova-funkce
+```
+
+Explicitní lease dovolí přepis pouze tehdy, pokud server stále ukazuje na zaznamenaný commit; automatický fetch v IDE tuto uloženou hodnotu neposune. [Reference git push](https://git-scm.com/docs/git-push)
+
+## Když push selže
+
+Znovu načti a prohlédni vzdálenou historii, zachovej cizí změny a dohodni další postup.
+
+Nepřepisuj jen hodnotu `expected` a neopakuj příkaz bez kontroly: tím bys mohl sám odsouhlasit odstranění nových commitů.
+
+Záložní větev chrání commity, nikoli necommitované soubory.

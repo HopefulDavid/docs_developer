@@ -156,7 +156,7 @@ const navigation = {
       name: 'Git',
       items: [
         { name: 'Konfigurace', href: 'git/configuration.md' },
-        { name: 'Úložiště', href: 'git/repository.md' },
+        { name: 'Repozitář', href: 'git/repository.md' },
         { name: 'Git server', href: 'git/server.md' },
         { name: 'Submoduly', href: 'git/submodules.md' },
         { name: 'Git Flow', href: 'git/git-flow.md' },
@@ -177,7 +177,7 @@ const navigation = {
             { name: 'Sloučení commitů', href: 'git/history/squash-branch-commits.md' },
             { name: 'Oprava commitů', href: 'git/history/fix-commits.md' },
             { name: 'Odstranění commitů', href: 'git/history/delete-commits.md' },
-            { name: 'Lokální ignorování změn', href: 'git/history/assume-unchanged.md' },
+            { name: 'assume-unchanged a lokální konfigurace', href: 'git/history/assume-unchanged.md' },
           ],
         },
       ],
@@ -198,8 +198,8 @@ const navigation = {
       items: [
         { name: 'Výběr platformy pro vývoj', href: 'platform-selection.md' },
         { name: 'Komentáře v kódu', href: 'code-comments.md' },
-        { name: 'Vývojové vzory', href: 'development-patterns.md' },
-        { name: 'Techniky', href: 'techniques.md' },
+        { name: 'Návrhové vzory', href: 'development-patterns.md' },
+        { name: 'Metodiky a konvence', href: 'techniques.md' },
       ],
     },
     {
@@ -359,7 +359,7 @@ const navigation = {
       items: [
         { name: 'Instalátor nevidí SSD', href: 'windows/installation-missing-ssd.md' },
         { name: 'Nelze odstranit položku', href: 'windows/cannot-delete-item.md' },
-        { name: 'Command Line', href: 'windows/cmd.md' },
+        { name: 'Příkazový řádek (CMD)', href: 'windows/cmd.md' },
         { name: 'PowerShell', href: 'windows/powershell.md' },
       ],
     },
@@ -930,20 +930,37 @@ function generatedPage(file, title, body) {
 
 function renderRootIndex() {
   const file = 'index.md';
-  const sectionRows = sectionOrder.map((section) => {
-    const pages = flattenItems(navigation[section] || []).filter((item) => item.href);
+  const areas = sectionOrder.map((section) => {
     const info = sectionInfo[section];
-    return [
-      link(file, info.title, `${section}/index.md`),
-      String(pages.length),
-      info.intro,
-    ];
-  });
+    return `- **${link(file, info.title, `${section}/index.md`)}** ${info.intro}`;
+  }).join('\n');
 
-  const body = `Praktické návody, příkazy a vysvětlení pro každodenní vývoj.\n\nVyber oblast nebo vyhledej konkrétní nástroj v horní liště.\n\n## Oblasti\n\n${table(
-    ['Oblast', 'Stránek', 'Záměr'],
-    sectionRows
-  )}\nHistorii úprav najdeš na stránce ${link(file, 'Změny', 'changelog.md')}.`;
+  const body = `České návody pro každodenní vývoj: od principu přes použitelný příklad až po ověření výsledku.
+
+Vyber oblast nebo vyhledej nástroj v horní liště; na mobilu ji otevřeš tlačítkem navigace.
+
+## Začni podle cíle
+
+- ${link(file, 'Založit repozitář a rozumět změnám v Gitu', 'vcs/git/repository.md')}.
+- ${link(file, 'Spustit aplikaci v Dockeru', 'virtualization/docker/index.md')}.
+- ${link(file, 'Vybrat platformu podle požadavků', 'programming/platform-selection.md')}.
+- ${link(file, 'Zprovoznit SSH připojení', 'network/ssh.md')}.
+
+## Oblasti
+
+<div class="docs-areas">
+
+${areas}
+
+</div>
+
+## Jak návody používat
+
+Nejprve ověř uvedený systém, verzi nástroje a pracovní složku, potom postupuj podle příkladu a porovnej očekávaný výsledek.
+
+Ukázkové názvy, cesty a porty přizpůsob podle vysvětlení u kódu; rozšiřující varianty a diagnostiku najdeš za hlavním postupem.
+
+Historii úprav najdeš na stránce ${link(file, 'Změny', 'changelog.md')}.`;
 
   generatedPage(file, 'Dokumentace pro vývojáře', body);
 }
@@ -1227,6 +1244,66 @@ function cleanArtifact(outputArgument) {
   console.log(`Připraven čistý DocFX výstup: ${toPosix(path.relative(root, outputRoot))}`);
 }
 
+/** Decode the character references used in DocFX HTML attribute values. */
+function decodeHtmlAttribute(value) {
+  return value.replace(/&(#x[0-9a-f]+|#\d+|amp|quot|apos|lt|gt);/gi, (match, entity) => {
+    if (entity[0] === '#') {
+      const hex = entity[1].toLowerCase() === 'x';
+      const code = Number.parseInt(entity.slice(hex ? 2 : 1), hex ? 16 : 10);
+      return code <= 0x10ffff ? String.fromCodePoint(code) : match;
+    }
+    return { amp: '&', quot: '"', apos: "'", lt: '<', gt: '>' }[entity.toLowerCase()];
+  });
+}
+
+/**
+ * Check local links against actual generated filenames and anchors, including casing.
+ * This reads quoted attributes in controlled DocFX output, not arbitrary user HTML.
+ *
+ * @param {Map<string, string>} htmlByPath Generated HTML indexed by artifact-relative path.
+ * @param {Set<string>} artifactPaths All artifact-relative file paths.
+ * @returns {string[]} Broken local links with the source page and reason.
+ */
+function collectHtmlLinkErrors(htmlByPath, artifactPaths) {
+  const failures = [];
+  const idsByPath = new Map();
+  const markupByPath = new Map();
+  for (const [file, html] of htmlByPath) {
+    const markup = html.replace(/<!--[\s\S]*?-->|<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+    markupByPath.set(file, markup);
+    const ids = new Set();
+    for (const tag of markup.matchAll(/<[a-z][^>]*>/gi)) {
+      const id = tag[0].match(/\sid\s*=\s*(?:"([^"]*)"|'([^']*)')/i);
+      if (id) ids.add(decodeHtmlAttribute(id[1] ?? id[2]));
+    }
+    idsByPath.set(file, ids);
+  }
+
+  for (const [file, markup] of markupByPath) {
+    for (const tag of markup.matchAll(/<(?:a|img|link|iframe|source)\b[^>]*>/gi)) {
+      const attribute = tag[0].match(/\s(?:href|src)\s*=\s*(?:"([^"]*)"|'([^']*)')/i);
+      if (!attribute) continue;
+      const target = decodeHtmlAttribute(attribute[1] ?? attribute[2]);
+      if (!target || /^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(target)) continue;
+      let url;
+      try {
+        url = new URL(target, `https://docfx.invalid/${file}`);
+        const pathname = decodeURIComponent(url.pathname).replace(/^\//, '');
+        const destination = pathname.endsWith('/') ? `${pathname}index.html` : pathname;
+        if (!artifactPaths.has(destination)) {
+          failures.push(`${file} -> ${target}: neexistující cesta nebo nesprávný casing`);
+        } else if (url.hash && idsByPath.has(destination) &&
+                   !idsByPath.get(destination).has(decodeURIComponent(url.hash.slice(1)))) {
+          failures.push(`${file} -> ${target}: neexistující kotva`);
+        }
+      } catch {
+        failures.push(`${file} -> ${target}: neplatné kódování URL`);
+      }
+    }
+  }
+  return failures;
+}
+
 function verifyArtifact(outputArgument) {
   const outputRoot = resolveArtifactOutput(outputArgument);
 
@@ -1334,8 +1411,12 @@ function verifyArtifact(outputArgument) {
     artifactErrors.push('výstup neobsahuje index.html');
   }
 
+  const htmlByPath = new Map(artifactFiles.filter((file) => file.endsWith('.html'))
+    .map((file) => [file, fs.readFileSync(path.join(outputRoot, file), 'utf8')]));
+  artifactErrors.push(...collectHtmlLinkErrors(htmlByPath, new Set(artifactFiles)));
+
   if (artifactErrors.length) {
-    console.error('DocFX artefakt neodpovídá veřejné obsahové hranici:');
+    console.error('DocFX artefakt neodpovídá veřejné hranici nebo obsahuje neplatné odkazy:');
     for (const error of artifactErrors) {
       console.error(`- ${error}`);
     }
@@ -1343,7 +1424,7 @@ function verifyArtifact(outputArgument) {
   }
 
   console.log(
-    `DocFX artefakt je veřejně ohraničený (${manifestSources.size} zdrojů, ${artifactFiles.length} souborů).`,
+    `DocFX artefakt je veřejně ohraničený a odkazy včetně kotev jsou platné (${manifestSources.size} zdrojů, ${artifactFiles.length} souborů).`,
   );
 }
 
@@ -1374,4 +1455,4 @@ if (require.main === module) {
   runCli();
 }
 
-module.exports = { cleanInline, descriptionFromMarkdown, isInternalArtifactPath, isInternalPath };
+module.exports = { cleanInline, collectHtmlLinkErrors, descriptionFromMarkdown, isInternalArtifactPath, isInternalPath };

@@ -1,59 +1,47 @@
-# Unity – Kamera a Tipy
+# Unity: kamera a velikost záběru
 
-> Praktické rady pro nastavení kamery v Unity, rozdíly mezi ortografickou a perspektivní kamerou, a proč používat Pixel Perfect Camera v 2D hrách.
+Kamera převádí scénu na obraz; projekce, rozlišení a vrstvy určují, co hráč skutečně uvidí.
+
+Pro 2D hru často vyhovuje ortografická projekce, ale výběr závisí na zamýšleném obrazu, nikoli jen na typu projektu.
+
+## Ortografická a perspektivní kamera
+
+| Vlastnost | Orthographic | Perspective |
+|---|---|---|
+| Velikost stejného objektu | Nemění se s jeho vzdáleností od kamery | Se vzdáleností se zmenšuje |
+| Hlavní parametr záběru | Orthographic Size | Field of View |
+| Typické použití | 2D hra, izometrie, technický pohled | Prostorový pohled, 3D hra |
+
+Ortografická kamera stále používá ořezové roviny a pořadí vykreslení, takže vzdálenost není zcela bez významu.
+
+## Praktické nastavení 2D kamery
+
+Pro výukovou scénu v Unity 6 umísti sprite na `(0, 0, 0)` a kameru na `(0, 0, -10)` s nulovou rotací.
+
+Nastav **Projection → Orthographic**, **Size → 5** a ověř, že Culling Mask obsahuje vrstvu spritu.
+
+`Size = 5` znamená polovinu výšky záběru, tedy deset světových jednotek na výšku.
+
+Při poměru 16:9 je šířka přibližně `10 × 16 / 9 = 17,78` jednotky; při změně poměru stran se proto mění viditelná šířka.
+
+Význam parametru definuje [Camera.orthographicSize](https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Camera-orthographicSize.html).
 
 ## Pixel Perfect Camera
 
-<details>
-<summary>Proč ji použít v 2D?</summary>
+Pixel Perfect Camera je nástroj pro pixel art, kde je důležité konzistentní mapování pixelů grafiky na obrazovku.
 
-- Zabrání deformacím a trhání obrazu.
-- Zajistí ostré vykreslení pixelové grafiky.
-- Doporučeno pro všechny 2D projekty.
+Není povinná pro všechny 2D hry a sama neopraví chybný atlas, souběh pohybových skriptů ani nestabilní snímkování.
 
-> Přidej komponentu **Pixel Perfect Camera** na hlavní kameru v Inspectoru.
+Před přidáním ověř podporu komponenty pro použitou renderovací pipeline a verzi balíčku.
 
-</details>
+Sjednoť **Assets Pixels Per Unit** s importem spritů a nastav referenční rozlišení podle výtvarného návrhu, například `320 × 180` pro ukázkovou pixelovou scénu.
 
-## Ortografická Kamera
+Nastavení zvětšování a ořezu ověř na více poměrech stran podle [návodu 2D Pixel Perfect](https://docs.unity3d.com/Packages/com.unity.2d.pixel-perfect@5.0/manual/index.html).
 
-<details>
-<summary>Vlastnosti a použití</summary>
+## Co lze upravit a ověřit
 
-| 🏷️ Vlastnost | 💡 Popis |
-|----------------------|-----------------------------------------------|
-| Zobrazení | Objektivní, bez perspektivního zkreslení |
-| Velikost objektů | Stejná bez ohledu na vzdálenost |
-| Použití | 2D hry, izometrie, architektura |
-| Nastavení | **Orthographic Size** určuje záběr |
-| Linie | Rovnoběžné linie zůstávají rovnoběžné |
+Změň Size nebo FOV podle rozsahu scény a ověř Game view i samostatný build při cílovém rozlišení.
 
-> Ideální pro 2D projekty!
+Při neviditelném objektu zkontroluj Culling Mask, near/far clipping, polohu, Sorting Layer a aktivní kameru.
 
-</details>
-
-## Perspektivní Kamera
-
-<details>
-<summary>Vlastnosti a použití</summary>
-
-| 🏷️ Vlastnost | 💡 Popis |
-|----------------------|-----------------------------------------------|
-| Zobrazení | Simuluje reálnou perspektivu |
-| Velikost objektů | Menší s rostoucí vzdáleností |
-| Použití | 3D hry, realistická hloubka |
-| Nastavení | **Field of View (FOV)** určuje šířku záběru |
-| Linie | Rovnoběžné linie se sbíhají do jednoho bodu |
-
-> Vhodné pro 3D projekty!
-
-</details>
-
-## Novinky a Video
-
-<details>
-<summary>Co je nového v Unity kamerách?</summary>
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/OL0bLrb8DV4?si=cYRtPAg8tjvLExw6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-</details>
+Pro neostré sprity a spáry mezi dlaždicemi pokračuj na [diagnostiku Unity 2D](2d.md#řešení-chyb-při-vykreslování-spritu).

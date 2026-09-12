@@ -6,12 +6,48 @@ const test = require('node:test');
 const docfx = require('../docfx.json');
 const {
   cleanInline,
+  collectHtmlLinkErrors,
   descriptionFromMarkdown,
   isInternalArtifactPath,
   isInternalPath,
 } = require('../scripts/generate-docs.js');
 
 const root = path.resolve(__dirname, '..');
+
+test('HTML odkazy rozlišují kotvy, URL kódování, query a relativní cestu', () => {
+  const pages = new Map([
+    ['index.html', '<a href="guide/?mode=1&amp;lang=cs#p%C5%99%C3%ADklad">Návod</a>'],
+    ['guide/index.html', '<h2 id="příklad">Příklad</h2><a href="#příklad">Zpět</a><img src="../images/a.png">'],
+  ]);
+  const files = new Set([...pages.keys(), 'images/a.png']);
+  assert.deepEqual(collectHtmlLinkErrors(pages, files), []);
+});
+
+test('artefakt odmítá neexistující kotvu i casing, který Windows toleruje', () => {
+  const pages = new Map([
+    ['index.html', '<a href="guide.html#old">Starý nadpis</a><a href="Guide.html">Chybná cesta</a>'],
+    ['guide.html', '<h2 id="new">Nový nadpis</h2>'],
+  ]);
+  const errors = collectHtmlLinkErrors(pages, new Set(pages.keys()));
+  assert.equal(errors.length, 2);
+  assert.match(errors[0], /guide.html#old: neexistující kotva/);
+  assert.match(errors[1], /Guide.html: neexistující cesta nebo nesprávný casing/);
+});
+
+test('HTML kontrola neinterpretuje externí odkazy, komentáře a escapované ukázky jako navigaci', () => {
+  const pages = new Map([['index.html', `
+    <a href="https://example.com/#unknown">Web</a><a href="mailto:a@example.com">Email</a>
+    <a href="//example.com/file">CDN</a><img src="data:image/png;base64,AA==">
+    <!-- <a href="missing.html">Neaktivní</a> -->
+    <code>&lt;a href="missing.html"&gt;</code>
+    <script>const sample = '<a href="missing.html">';</script>`]]);
+  assert.deepEqual(collectHtmlLinkErrors(pages, new Set(pages.keys())), []);
+});
+
+test('HTML kontrola vysvětlí neplatné procentové kódování místo pádu', () => {
+  const pages = new Map([['index.html', '<a href="bad%ZZ.html">Chyba</a>']]);
+  assert.match(collectHtmlLinkErrors(pages, new Set(pages.keys()))[0], /neplatné kódování URL/);
+});
 
 test('přehled nepřenáší relativní odkazy z úvodu do jiné složky', () => {
   const intro = '# Projekt\n\nNejprve ověř [instalaci SDK](setup-and-configuration.md).\n';

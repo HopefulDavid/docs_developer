@@ -49,7 +49,7 @@ Parser hlásí neplatně zapsaný záznam výjimkou `MalformedLineException`; ch
 
 ## Kódování a BOM
 
-Pro skutečný soubor můžete místo `StringReader` použít následující vstup; soubor bez BOM bude interpretován jako UTF-8:
+Pro skutečný soubor můžeš místo `StringReader` použít následující vstup; soubor bez BOM bude interpretován jako UTF-8:
 
 ```csharp
 using var input = new StreamReader(

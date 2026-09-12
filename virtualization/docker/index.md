@@ -1,17 +1,155 @@
-# Docker – Průvodce a reference
+# Docker – kontejnery, příkazy a data
 
-> Přehled základních pojmů, příkazů, konfigurace a doporučení pro práci s Dockerem na Windows.
+Docker spouští aplikace v izolovaných kontejnerech vytvořených z image; kontejner sdílí jádro hostitelského systému, zatímco jeho soubory a procesy mají vlastní prostředí.
 
-![Docker](../../images/bfdff689-3382-451c-872a-5f566bacdca2.png)
+## Jak Docker funguje
 
-## Co je Docker?
+| Pojem | Význam |
+|---|---|
+| Image | Vrstvená šablona aplikace a jejích závislostí |
+| Kontejner | Konkrétní spuštěná nebo zastavená instance image |
+| Dockerfile | Předpis pro sestavení image |
+| Engine | Služba, která spravuje kontejnery; CLI se k ní připojuje |
+| Registry | Úložiště image, například Docker Hub |
+| Compose | Popis více služeb a jejich propojení v `compose.yaml` |
+| Volume | Datové úložiště spravované Dockerem mimo životnost kontejneru |
+| Bind mount | Připojení konkrétní složky hostitele do kontejneru |
 
-- Platforma pro vývoj, doručování a běh aplikací pomocí **kontejnerizace**.
-- Izoluje aplikace v kontejnerech se všemi jejich závislostmi.
-- Kontejnery jsou rychlejší a efektivnější než klasická virtualizace.
+Docker Desktop spouští linuxový engine ve Windows prostřednictvím virtualizovaného prostředí; více o [WSL](../wsl.md).
 
-> [!NOTE]
-> Pro použití Docker Desktopu s backendem WSL 2 ve Windows nejprve připrav [WSL](../wsl.md).
+## Před použitím
+
+Nainstaluj Docker Desktop, přepni jej na linuxové kontejnery a ověř běžící engine:
+
+```bash
+docker version
+docker context ls
+```
+
+`version` musí ukázat klienta i server; aktivní kontext určuje, který engine příkazy ovládají, včetně případného vzdáleného serveru.
+
+Jednořádkové příkazy níže fungují v PowerShellu i Bashi; první stažení image vyžaduje síť.
+
+## Praktické použití
+
+```bash
+# Spustí jednorázový test a po skončení odstraní jeho kontejner.
+docker run --rm hello-world
+```
+
+Očekávej text `Hello from Docker!`; image zůstane na disku.
+
+Pro lokální webový server:
+
+```bash
+docker run --detach --name docs-web --publish 127.0.0.1:8080:80 nginx:stable-alpine
+docker container ls
+docker logs docs-web
+```
+
+Otevři `http://127.0.0.1:8080`; port `8080` patří tvému počítači a `80` serveru v kontejneru.
+
+Vazba na `127.0.0.1` omezuje přístup na místní počítač; název a vnější port můžeš změnit.
+
+```bash
+# Ukončení tohoto příkladu; nepřidávej sem mazání jiných kontejnerů.
+docker stop docs-web
+docker rm docs-web
+```
+
+Tag `stable-alpine` je pohyblivý; pro reprodukovatelné nasazení zvol ověřenou konkrétní verzi nebo digest. [Spuštění kontejneru](https://docs.docker.com/reference/cli/docker/container/run/)
+
+## Příkazy a restartování
+
+| Úkol | Příkaz | Význam |
+|---|---|---|
+| Všechny kontejnery | `docker container ls --all` | Zahrne i zastavené |
+| Místní image | `docker image ls` | Šablony dostupné na enginu |
+| Restartovací pravidlo | `docker update --restart=unless-stopped docs-web` | Obnovuje běh s výjimkou ručně zastaveného kontejneru |
+| Vypnutí restartování | `docker update --restart=no docs-web` | Vyžaduje ruční spuštění |
+| Export image | `docker save --output web-image.tar nginx:stable-alpine` | Uchová image, nikoli data volumes |
+| Import image | `docker load --input web-image.tar` | Načte uloženou image |
+| Compose konfigurace | `docker compose config --quiet` | Ověří a sloučí konfigurační vstupy |
+| Spuštění služeb | `docker compose up --detach` | Vytvoří nebo aktualizuje služby definované Compose |
+| Ukončení projektu | `docker compose down` | Odstraní jeho kontejnery a běžné projektové sítě |
+
+Příkazy pro `docs-web` vyžadují existující kontejner z příkladu; restartovací politika `yes` neexistuje. [Restartovací pravidla](https://docs.docker.com/engine/containers/start-containers-automatically/)
+
+## Dockerfile pro konzolovou aplikaci .NET 10
+
+Ve složce s jediným konzolovým projektem cíleným na `net10.0` vytvoř `Dockerfile`:
+
+```dockerfile
+# SDK obsahuje překladač; první fáze připraví aplikaci.
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+COPY . .
+RUN dotnet publish -c Release -o /out --no-self-contained
+
+# Výsledný image obsahuje pouze runtime a publikovanou aplikaci.
+FROM mcr.microsoft.com/dotnet/runtime:10.0
+WORKDIR /app
+COPY --from=build /out .
+ENTRYPOINT ["dotnet", "MojeAplikace.dll"]
+```
+
+`MojeAplikace.dll` nahraď názvem assembly svého projektu; u ASP.NET Core použij odpovídající `aspnet` image a nastav naslouchání a porty aplikace.
+
+Do `.dockerignore` přidej:
+
+```text
+bin/
+obj/
+.git/
+.env
+```
+
+Tím vynecháš místní výstupy a běžný soubor tajných hodnot z kontextu sestavení; další soukromé soubory vyluč podle projektu.
+
+```bash
+docker build --tag moje-aplikace:local .
+docker run --rm moje-aplikace:local
+```
+
+Samostatná tečka za mezerou určuje kontext sestavení; výstup má odpovídat lokálnímu běhu aplikace. [Microsoft: .NET v Dockeru](https://learn.microsoft.com/en-us/dotnet/core/docker/build-container)
+
+Pokud už máš publikovaný výstup, stačí runtime fáze s `COPY ./publish .`; lokální NuGet zdroj přidej do projektového `NuGet.Config` a zahrň potřebné balíčky do kontextu, ale ne jeho přihlašovací údaje.
+
+## Volumes a zálohy
+
+Změny ve zapisovatelné vrstvě kontejneru zmizí při jeho odstranění; data potřebná mezi vytvořeními ukládej do volume nebo bind mountu.
+
+Pojmenované volumes běžné `docker compose down` zachová; přidáním `--volumes` bys je odstranil.
+
+[Záloha a zkušební obnova volume](busybox.md) vysvětluje rozdíl mezi archivem, kontrolou přenosu a skutečnou obnovou.
+
+Pro aktualizace databázových služeb pokračuj [bezpečným upgradem](safe-stateful-upgrade.md).
+
+### Export schématu PostgreSQL z kontejneru
+
+Následující příklad předpokládá běžící kontejner `supabase-db`, klienta `pg_dump`, databázi `postgres` a platné přihlašování uvnitř kontejneru:
+
+```bash
+docker exec supabase-db pg_dump -U postgres -d postgres --schema-only --file=/tmp/schema.sql
+docker cp supabase-db:/tmp/schema.sql ./schema.sql
+```
+
+Příkazy spusť postupně a při chybě exportu nepokračuj; `--schema-only` ukládá strukturu bez řádků dat.
+
+Výstup nevede přes terminál s pseudo-TTY ani přes překódování shellu.
+
+Při importu do nástroje jako sqlc ověř podporu formátu dumpu a verze PostgreSQL; příkazy `psql` z exportu neodstraňuj bez posouzení kompatibility. [Pg_dump](https://www.postgresql.org/docs/current/app-pgdump.html)
+
+## Řešení problémů
+
+| Projev | Co zkontrolovat |
+|---|---|
+| Chybí část Server | Běh Docker Desktopu a aktivní kontext |
+| Port je obsazený | Zvol volný vnější port a správnou URL |
+| Kontejner se ukončil | `docker container ls --all` a jeho log |
+| Po aktualizaci chybí data | Jméno Compose projektu, připojené volumes a aplikační migrace |
+
+Restart síťové služby Windows není první krok diagnostiky; nejprve ověř mapování portu a naslouchání aplikace.
 
 ## Docker Desktop a WSL 2 ve Windows
 
@@ -278,126 +416,3 @@ Zkontroluj konkrétní uložená data, například záznamy v databázi nebo nah
 Původní zálohy ponech do dokončení kontroly; při návratu k předchozímu cílovému stavu Docker Desktop opět úplně ukonči a stejným postupem vrať jeho disk ze složky `Docker-pred-obnovou`.
 
 </details>
-
-## Klíčové pojmy
-
-| Pojem | Popis |
-|-------|-------|
-| **Dockerfile** | Textový soubor s instrukcemi pro sestavení Docker image |
-| **Docker image** | Komprimovaná šablona aplikace, ze které se spouští kontejner |
-| **Docker run** | Příkaz pro spuštění kontejneru z image |
-| **Docker Hub** | Oficiální veřejné úložiště Docker images |
-| **Docker Engine** | Jádro Dockeru – klient-server architektura spravující kontejnery |
-| **Docker Compose** | Definice a správa více kontejnerů přes soubor `docker-compose.yml` |
-
-## Klíčové soubory
-
-| Soubor | Účel |
-|--------|------|
-| `dockerd.exe` | Spouští Docker Daemon – hlavní službu pro správu kontejnerů |
-| `docker.exe` | Klientský nástroj pro ovládání Dockeru (`docker run`, `docker ps`) |
-| `docker-compose.exe` | Nástroj pro správu více kontejnerů v jedné aplikaci |
-| `docker-compose.yml` | Konfigurační soubor – služby, porty, volumes, proměnné prostředí |
-
-## Základní příkazy
-
-| Kategorie | Příkaz | Popis |
-|-----------|--------|-------|
-| Zobrazení | `docker ps` | Zobrazí běžící kontejnery |
-| | `docker images` | Zobrazí všechny lokální images |
-| Automatické spouštění | `docker update --restart=yes <id>` | Zapne autostart kontejneru |
-| | `docker update --restart=no <id>` | Vypne autostart kontejneru |
-| Stažení | `docker pull <image>` | Stáhne image z Docker Hub |
-| Záloha | `docker save -o <cesta>.tar <image>` | Exportuje image do souboru |
-| | `docker load -i <cesta>.tar` | Importuje image ze souboru |
-| Sestavení | `docker build -t <název>.` | Sestaví image z Dockerfile |
-| Spuštění | `docker run <image>` | Spustí kontejner |
-| | `docker run -p 70:80 <image>` | Spustí s mapováním portu |
-| | `docker run --rm <image>` | Spustí a po ukončení automaticky smaže |
-| | `docker run -it <image>` | Spustí v interaktivním módu |
-| Docker Compose | `docker compose up -d` | Spustí všechny služby na pozadí |
-| | `docker compose down` | Zastaví a odstraní kontejnery |
-| Zastavení | `docker stop <id>` | Zastaví kontejner |
-| | `docker rm <id>` | Odstraní zastaveý kontejner |
-| | `docker rmi <image>` | Odstraní image |
-
-## Dockerfile – příklady
-
-<details>
-<summary>.NET Core aplikace (pouze runtime)</summary>
-
-```dockerfile
-FROM mcr.microsoft.com/dotnet/core/runtime:3.1
-WORKDIR /app
-COPY ./publish .
-ENTRYPOINT ["dotnet", "myapp.dll"]
-```
-</details>
-
-<details>
-<summary>C# aplikace s buildem uvnitř kontejneru</summary>
-
-```dockerfile
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1
-WORKDIR /app
-COPY . .
-RUN dotnet restore
-RUN dotnet publish -c Release -o out
-ENTRYPOINT ["dotnet", "out/myapp.dll"]
-```
-</details>
-
-<details>
-<summary>Aplikace s lokálními NuGet balíčky</summary>
-
-```dockerfile
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1
-WORKDIR /app
-COPY . .
-RUN dotnet restore --source ./nuget
-RUN dotnet publish -c Release -o out
-ENTRYPOINT ["dotnet", "out/myapp.dll"]
-```
-</details>
-
-## Volumes a data
-
-### Propojení složky z Windows s kontejnerem
-
-| Nastavení | Cesta |
-|-----------|-------|
-| Host / Volume | `/run/desktop/mnt/host/c/Program Files/Unity/Hub/Editor/6000.0.33f1/Editor` |
-| Cesta v kontejneru | `/app/unity` |
-
-### Zachování dat z kontejneru na lokálním disku
-
-![Docker – zachování dat lokálně](../../images/dockerKeepDataOnLocal.png)
-
-## Získání dat z kontejneru
-
-<details>
-<summary>Export databázového schématu (PostgreSQL/Supabase)</summary>
-
-```cmd
-docker exec -t supabase-db pg_dump -U postgres -s postgres > D:\schema.sql
-```
-
-Příkaz se připojí k běžícímu kontejneru `supabase-db` a exportuje schéma databáze do souboru `D:\schema.sql`.
-
-> [!WARNING]
-> Pro `sqlc generate` je potřeba z exportovaného souboru odstranit nebo zakomentovat řádek začínající `\unrestrict`.
-</details>
-
-## Řešení problémů
-
-### Port není dostupný
-
-Restartujte službu Windows NAT:
-
-```cmd
-net stop winnat
-net start winnat
-```
-
-> [!NOTE]
-> Tento postup uvolní zablokované síťové porty pro Docker kontejnery.
