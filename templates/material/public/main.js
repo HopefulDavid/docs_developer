@@ -144,6 +144,10 @@ function enhanceReading() {
   });
   const tocLabel = document.querySelector("#tocOffcanvasLabel");
   if (tocLabel?.textContent === "Table of Contents") tocLabel.textContent = "Obsah oblasti";
+  // Internal search results follow normal article navigation in the current tab.
+  document.querySelectorAll('#search-results a[target="_blank"]').forEach((link) => {
+    if (new URL(link.href).origin === window.location.origin) link.removeAttribute("target");
+  });
   // A new query starts at its first result, even when the article was scrolled down.
   const query = document.body.dataset.search === "true"
     ? document.querySelector("#search-query")?.value.trim() || ""

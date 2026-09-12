@@ -1,7 +1,7 @@
 ---
 canonical_for: testing-strategy
 status: accepted
-last_verified: 2026-09-11
+last_verified: 2026-09-12
 owner: quality
 ---
 
@@ -23,6 +23,7 @@ Nejvyšší rizika tohoto statického webu jsou rozbitá navigace, rozdílný ca
 |---|---|---|
 | `REQ-003`, `REQ-E001`, `QLT-001` | `npm run docs:check` | Ověřuje skutečný registr, všechny veřejné stránky, lokální odkazy a generovaný drift bez zápisu |
 | Poškození příkazů při normalizaci Markdownu | Cílený Node test normalizace a kontrola sestaveného článku | Chrání mezery, interpunkci a znaky shellu uvnitř vloženého kódu v textu i tabulkách včetně různě dlouhých oddělovačů |
+| `REQ-006`, `REQ-E004` a rozměry obrázků | Testy popisných metadat a zachování šířky, poté kontrola skutečného HTML | Odmítají návrat k úvodním odstavcům v rozcestníku a chrání autorem posouzené rozměry při regeneraci |
 | `REQ-E002`, `QLT-003`, `QLT-004` | Node testy v [`tests/`](../../tests) a artifact check | Negativní příklady chrání klasifikaci a celý sestavený výstup potvrzuje integrační hranici |
 | `REQ-E003`, `QLT-002` | `npm run docs:build` s warningy jako chybami | Testuje skutečný DocFX, šablonu, manifest a výsledné HTML místo náhrady build systému |
 | České rozhraní bez editačních odkazů | Node test globálních metadat a tokenů, poté skutečný DocFX build | Chrání `_lang`, `_disableContribution` a české popisky a potvrzuje jejich výsledné HTML |
@@ -220,3 +221,41 @@ Parser PowerShellu přijal všech 77 kontrolovaných bloků bez syntaktické chy
 Ukázky vyžadující Unity, Docker, Kubernetes, další nenainstalované nástroje nebo externí služby byly posouzeny podle primární dokumentace, nikoli vydávány za místně spuštěné integrační testy.
 
 Dostupnost všech externích odkazů nelze z tohoto prostředí potvrdit, protože některé servery odmítají automatické požadavky nebo je omezují; zjištěné neplatné adresy byly opraveny a tato kontrola není zaměňována za deterministickou kontrolu lokálních odkazů.
+
+## Ověření praktických návodů 2026-09-12
+
+Kontroly po přepsání návodů prošly 20 projektovými testy, strict sestavením bez varování a kontrolou 252 zdrojů a 493 výstupních souborů včetně lokálních kotev a casingu.
+
+V prohlížeči prošlo 17 reprezentativních stránek na šířkách 320, 390, 768 a 1440 px v obou motivech, celkem 136 kombinací, bez vodorovného přetékání stránky, chyb načítání obrázků nebo nepřístupných posuvných tabulek.
+
+Výběr zahrnoval homepage, rozcestníky Verzování a Programování, syntaxi, Ollamu, regex, offline balíčky, .NET tools, Kubernetes, Docker, základy sítě a všech šest článků s návodovými obrázky.
+
+V dalších osmi kombinacích se otevřely všechny čtyři rozbalovací postupy Unity 2D a ověřila viditelnost všech jejich snímků.
+
+Celkem 16 obrázků má individuálně posouzenou šířku a odkaz na originál; zkouška otevřela také původní rozlišení snímku z článku o animaci.
+
+Interakce zahrnovaly mobilní obsah oblasti, hledání offline návodů a nenalezeného výrazu, vymazání hledání, přechod na výsledek, kopírování kódu, přeskočení navigace a změnu motivu klávesnicí.
+
+Samostatný závěrečný scénář hledání prošel všemi osmi kombinacemi šířky a motivu: interní výsledek se otevřel ve stejné kartě a dlouhé URL nepřesahovaly stránku ani při 320 px.
+
+Víceřádkový odkaz nyní zahrnuje i plochu mezi řádky, kde původní inline odkaz při kliknutí nereagoval.
+
+Kontrola vykreslené syntaxe odhalila viditelné zpětné lomítko před alternativami v tabulkách; HTML entity nyní zobrazují správně samotné svislítko.
+
+| Obsahová oblast | Provedený důkaz | Hranice ověření |
+|---|---|---|
+| Git | 19 kontrol indexu, restore, merge a abort, stash, reset, revert, reflog, worktree, bundle, squash a odmítnutého pushe s následným fetch/rebase | Izolované repozitáře a místní bare remote, bez zápisu na hosting |
+| Java regex | 10 příkladů přes Java Pattern v JBR JetBrains | Převod velikosti písmen v poli Replace ověřen v dokumentaci IDE, nikoli zaměněn za vlastnost Java Matcher |
+| npm a pnpm | U každého offline instalace tranzitivní závislosti do nového projektu, nezměněný lockfile a očekávané selhání prázdné cache | npm 11 a pnpm 12 ve Windows; nevynucuje síťová pravidla cizích instalačních skriptů |
+| Python | Instalace requests a závislostí z wheelhouse do nového venv, `pip check` a použití knihovny | `--no-index` bez dotazu do registru |
+| NuGet | Obnova uzamčeného projektu z místního feedu do prázdné cache a build; obnova z kopie globální složky bez zdrojů; očekávané selhání prázdné cache | .NET SDK 10, PackageReference a jeden balíček s reálným sestavením |
+| .NET tools | Instalace do nové tool-path složky i oddělená obnova lokálního manifestu z vlastního feedu s prázdnou evidencí CLI; spuštění DocFX | Praktický test odhalil, že změna samotného `NUGET_PACKAGES` nemusí naplnit zálohu; návod proto odděluje také `DOTNET_CLI_HOME` |
+| PowerShell | Parser přijal všech 76 veřejných bloků | Kontrola syntaxe, nikoli provedení systémových změn |
+| Místní HTTPS | Publikovaný Node server odpověděl přes TLS s ověřeným dočasným certifikátem | Důvěra předaná jen testovacímu klientovi, bez instalace CA do systému |
+| Kubernetes | YAML parser a shoda selectorů, Pod labelů, portu Service a readiness kontroly | Cluster nebyl místně spuštěn |
+
+Jednorázové testy a jejich výstupy vznikly v ignorované `private/docs-review`; nejsou novým veřejným build profilem ani závislostí projektu.
+
+Dart/Flutter, Docker, skutečný cluster Kubernetes a OpenTofu nebyly v této revizi místně provozované; jejich změněné postupy byly ověřeny podle odkazovaných primárních zdrojů.
+
+Úspěšný statický build se nevydává za provozní zkoušku těchto prostředí ani za ověření každého externího odkazu.

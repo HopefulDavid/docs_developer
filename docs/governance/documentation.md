@@ -1,7 +1,7 @@
 ---
 canonical_for: documentation-governance
 status: accepted
-last_verified: 2026-09-11
+last_verified: 2026-09-12
 owner: maintainers
 ---
 
@@ -169,6 +169,8 @@ Referenční tabulky používají obecnou syntaxi: pevné části se píší dos
 Konkrétní spustitelný příklad je označený jako příklad a bezprostředně vysvětluje vybrané názvy a hodnoty; tabulka rozebírající právě tento příklad smí jeho hodnoty opakovat.
 
 Výukový význam značek vlastní veřejný [klíč syntaxe příkazů](../../operating-system/command-line-syntax.md); skutečné operátory shellu a syntaxe programovacího jazyka se nezaměňují s touto dokumentační notací.
+
+Svislou čáru uvnitř buňky této verze DocFX zapisuj jako HTML entitu v elementu code, například `<code>{a&#124;b}</code>`; escapování zpětným lomítkem v Markdown kódu může lomítko chybně zobrazit čtenáři.
 
 Příkaz měnící data má před sebou podmínky použití a kontrolu cíle; jeho návratový kód nenahrazuje ověření skutečného výsledku nebo obnovy.
 

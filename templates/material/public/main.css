@@ -832,6 +832,9 @@ article iframe {
 }
 article:focus { outline: none; }
 body[data-search="true"] { overflow-anchor: none; }
+#search-results { overflow-wrap: anywhere; }
+/* A wrapped result title remains clickable between its lines. */
+#search-results .item-title a { display: block; }
 .docs-skip-link {
   position: fixed;
   top: 0.5rem;

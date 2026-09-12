@@ -1,7 +1,7 @@
 ---
 canonical_for: project-commands
 status: accepted
-last_verified: 2026-09-11
+last_verified: 2026-09-12
 owner: engineering
 ---
 
@@ -143,7 +143,7 @@ Release tagy historii nerozdělují a commity se zobrazují pouze krátkým nekl
 Na šířkách **320, 390, 768 a 1440 px** ověř světlý i tmavý motiv pro homepage, přehled Programování, Docker a reprezentativní článek s kódem, obrázky a rozbalovacím blokem.
 
 1. Otevři navigaci, přejdi do oblasti a článku a použij obsah stránky.
-2. Vyhledej `Docker`, otevři výsledek a potom ověř srozumitelný stav pro neexistující výraz.
+2. Vyhledej `Docker`, otevři výsledek ve stejné kartě a potom ověř srozumitelný stav pro neexistující výraz.
 3. Klávesnicí použij odkaz **Přejít k obsahu**, ovladač motivu a rozbalení doplňujícího postupu.
 4. Ověř kopírování kódu, čitelnost syntaxe a vlastní vodorovný posuv pouze uvnitř široké ukázky nebo tabulky.
 5. Po změně motivu znovu načti stránku a ověř zachování volby; zkontroluj i automatický režim.

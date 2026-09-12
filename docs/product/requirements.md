@@ -1,7 +1,7 @@
 ---
 canonical_for: product-requirements
 status: accepted
-last_verified: 2026-09-11
+last_verified: 2026-09-12
 owner: product
 ---
 
@@ -63,6 +63,23 @@ Pracovní záznamy, testy a změny odkazují na identifikátor místo kopírová
 | `REQ-003` | Správce upravil zdrojový článek nebo registr navigace | Spustí podporované generování a kontrolu | Přehledy, TOC, cesty a lokální odkazy jsou deterministicky sjednocené a následná kontrola nehlásí drift | Must | `npm run docs:generate` a následné `npm run docs:check` |
 | `REQ-004` | Změna na větvi `main` splnila projektové kontroly | GitHub Actions spustí publikační workflow | Workflow sestaví jediný ověřený statický artefakt, veřejný changelog v něm zachová úplnou historii, nejnovější rok změn nechá otevřený, roky bez změn vynechá, starší zobrazené roky sbalí a web publikuje bez změny zdrojové větve | Must | Cílený changelogový test, konfigurace workflow a úspěšný vzdálený běh po publikování změny |
 | `REQ-005` | Junior otevře návod bez znalosti konkrétního nástroje | Přečte úvod, předpoklady a provede popsaný příklad | Rozumí účelu, vztahu částí, upravitelným hodnotám i očekávanému výsledku; nezbytné informace nejsou ukryté v rozbalovacím bloku | Must | Obsahové review podle pravidel čitelnosti a dostupné ověření ukázky |
+| `REQ-006` | Čtenář vybírá článek nebo používá příkazovou referenci | Prohlédne rozcestník a tabulku příkazů | Popis rovnou označuje obsah cíle; syntaxe odlišuje dosazované parametry od vysvětleného spustitelného příkladu | Must | Kontrola metadat, obsahové review a skutečně vykreslené tabulky |
+| `REQ-007` | Solo vývojář zná jen základy Gitu | Vybere způsob práce a řeší běžnou operaci nebo chybu | Rozumí více workflow, změně pracovního stromu, indexu a historie i bezpečnému pokračování nebo návratu | Must | Praktické scénáře v izolovaných repozitářích a kontrola návaznosti návodů |
+| `REQ-008` | Čtenář připravuje přesun projektu bez internetu | Zálohuje balíčky a obnoví je na jiném kompatibilním počítači | Pro NuGet, .NET tools, npm, pnpm, Python a Dart rozliší přenositelnou složku, manifesty a vnější nástroje; ověří skutečnou obnovu a chybějící závislosti | Must | Izolované obnovy dostupných správců a primární zdroje pro zbývající prostředí |
+
+### Uspořádání praktických témat
+
+Verzování rozlišuje začátky, každodenní práci, historii s řešením problémů a vydávání se správou projektu.
+
+Programování odděluje Balíčky od Vývojových nástrojů; přesun mezi skupinami sám nemění existující veřejnou cestu článku.
+
+Zálohy image a provozních dat patří k Dockeru ve Virtualizaci a zálohy zdrojové historie k Gitu; přehled balíčků na ně odkazuje bez duplikace postupů.
+
+Na výslovnou žádost vlastníka byly odstraněny Docker podstránky Bezpečný upgrade stateful služby, Portainer, Duplicati a BusyBox a sekce klávesových zkratek JetBrains.
+
+Regulární výrazy JetBrains mají samostatný návod a význam zápisu příkazů společný článek v OS.
+
+Síť začíná vztahy adres, názvů a portů; OS odděluje rychlé použití shellu od jeho nastavení a SQL dávku vlastní databázová oblast.
 
 ## Chybové a hraniční scénáře
 
@@ -71,6 +88,7 @@ Pracovní záznamy, testy a změny odkazují na identifikátor místo kopírová
 | `REQ-E001` | Veřejný článek chybí v registru, lokální odkaz neexistuje nebo se generovaný soubor liší | Kontrola skončí nenulovým kódem a uvede konkrétní cestu; změna se nesmí považovat za připravenou | Rozbitá navigace nebo nedostupný obsah | Negativní test generátoru a `npm run docs:check` |
 | `REQ-E002` | DocFX manifest nebo výstup obsahuje interní `docs/`, agentní instrukci, README nebo jinou vyloučenou cestu | Ověření artefaktu skončí nenulovým kódem a publikování se zastaví | Únik interních pracovních informací | Jednotkové testy hranice a `npm run docs:artifact-check` |
 | `REQ-E003` | DocFX při sestavení zjistí warning nebo chybu | Strict build skončí nenulovým kódem a nevznikne publikovatelný výsledek | Neúplný nebo nekonzistentní web | `npm run docs:compile` s `--warningsAsErrors` |
+| `REQ-E004` | Navigovaný článek nemá platný stručný popis | Generátor uvede konkrétní soubor a skončí chybou bez náhrady úvodním odstavcem | Nejasné, duplicitní nebo rozbité popisy rozcestníku | Negativní test metadat a `docs:check` |
 
 ## Kvalitativní očekávání
 

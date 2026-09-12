@@ -20,7 +20,9 @@ ollama list
 ollama run llama3.2
 ```
 
-První spuštění stáhne chybějící model; počítej s připojením k internetu a místem pro jeho soubory.
+`--version` vypíše verzi programu, `list` uložené modely a `run llama3.2` otevře konverzaci s ukázkovým modelem.
+
+Při prvním `run` se chybějící model stáhne; počítej s připojením k internetu a místem pro jeho soubory.
 
 ## Příkazy pro správu modelů
 

@@ -28,8 +28,8 @@ Používáme [konvenci Microsoftu pro zápis syntaxe](https://learn.microsoft.co
 | `příkaz --volba` | Pevný text | Opiš jej beze změny |
 | `<hodnota>` | Zástupný parametr | Doplň vlastní hodnotu bez závorek |
 | `[část]` | Nepovinná část | Buď ji vynech celou, nebo ji doplň |
-| `{a\|b}` | Povinný výběr jedné možnosti | Zapiš pouze `a` nebo pouze `b` |
-| `[a\|b]` | Nepovinný výběr | Vynech, nebo zapiš jednu možnost |
+| <code>{a&#124;b}</code> | Povinný výběr jedné možnosti | Zapiš pouze `a` nebo pouze `b` |
+| <code>[a&#124;b]</code> | Nepovinný výběr | Vynech, nebo zapiš jednu možnost |
 | `<soubor>...` | Opakovaná hodnota | Doplň jeden nebo více souborů |
 | `[<soubor>...]` | Volitelné opakování | Nemusíš zadat žádný soubor |
 

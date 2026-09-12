@@ -55,7 +55,7 @@ Příkazy vypíšou uživatele, pracovní adresář a jádro; `exit` se vrátí 
 | `wsl --list --online` | Dostupné distribuce pro instalaci |
 | `wsl --install -d <distribuce>` | Instaluje distribuci; název vyber z online výpisu |
 | `wsl --set-default <distribuce>` | Zvolí výchozí již nainstalovanou distribuci |
-| `wsl --set-default-version {1\|2}` | Nastaví verzi pro další instalace, nemigruje existující distribuce |
+| <code>wsl --set-default-version {1&#124;2}</code> | Nastaví verzi pro další instalace, nemigruje existující distribuce |
 | `wsl --update` | Aktualizuje WSL |
 | `wsl --terminate <distribuce>` | Zastaví jednu již nainstalovanou distribuci |
 | `wsl --shutdown` | Zastaví všechny distribuce i virtuální stroj WSL 2 |

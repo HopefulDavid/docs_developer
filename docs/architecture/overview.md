@@ -1,7 +1,7 @@
 ---
 canonical_for: system-architecture
 status: accepted
-last_verified: 2026-08-29
+last_verified: 2026-09-12
 owner: architecture
 ---
 
@@ -109,6 +109,14 @@ Interní dokumentace je pouze řídicí kontext a obě zpracovatelské hranice j
 
 K 2026-09-11 rozcestník odvozuje přehled oblastí z téhož registru jako TOC a přidává krátké vstupy podle praktického cíle.
 
+Od 2026-09-12 vlastní stručný popis řádku rozcestníku jednořádkové metadata `description` cílového článku; generátor odmítá prázdnou či neplatnou hodnotu a neodvozuje ji z úvodu.
+
+Formát je řetězec v dvojitých uvozovkách s JSON escapováním, kompatibilní s YAML; pole nesmí obsahovat další řádek, Markdown odkaz nebo svislou čáru rozdělující tabulku.
+
+Normalizace zachovává HTML obrázky s kladným atributem `width`, takže autor může posoudit rozměr každého snímku bez ztráty při regeneraci.
+
+CSS omezuje obrázek dostupnou šířkou a zachovává poměr stran; odkaz pod snímkem zpřístupňuje původní rozlišení.
+
 Aktivní `main.js` doplňuje přístupnost generovaného DocFX HTML bez změny textu ukázek: klávesnicové ovládání motivu, přeskočení navigace, lokalizaci přístupných názvů a obal pro posuv tabulek.
 
 Doplňující tab stop vzniká pouze u skutečně přetékající tabulky nebo kódu a přepočítává se při změně rozměru i rozbalení obsahu.
@@ -116,6 +124,10 @@ Doplňující tab stop vzniká pouze u skutečně přetékající tabulky nebo k
 Kopírování zajišťuje DocFX; šablona zpřístupňuje jeho odkazy klávesnici a přidává čitelný název.
 
 Na mobilu a tabletu se hlavní nabídka rozbaluje a při hledání uvolňuje místo výsledkům; nová hledaná fráze se zobrazí od prvního výsledku.
+
+Interní výsledky vyhledávání se otevírají ve stejné kartě jako běžné odkazy na články; browserový doplněk odstraňuje výchozí `target="_blank"` pouze u výsledků stejného originu.
+
+Víceřádkový název výsledku má souvislou klikací plochu a dlouhé URL i úryvky se zalamují uvnitř dostupné šířky.
 
 Ověření odkazů zpracovává citované atributy a ID kontrolovaného výstupu DocFX; nejde o obecný HTML parser ani o kontrolu dostupnosti externích serverů.
 

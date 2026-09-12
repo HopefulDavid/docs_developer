@@ -693,6 +693,7 @@ function normalizeLinks(content, currentRel) {
     });
 }
 
+/** Převede běžný HTML obrázek na Markdown a zachová snímky s autorem zvolenou šířkou. */
 function htmlImageToMarkdown(line, relPath, pageTitle) {
   const match = line.match(/^(\s*(?:>\s*)?)<img\b([^>]*)\/?>\s*$/i);
   if (!match) {

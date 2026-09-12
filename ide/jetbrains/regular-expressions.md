@@ -105,9 +105,9 @@ Pro tuto úlohu nepoužívej neurčité `\s+`, protože `\s` zahrnuje také konc
 | `\t`, `\n`, `\R` | Tabulátor, LF, libovolný konec řádku | `\R` zahrne i CRLF |
 | `*`, `+`, `?` | Nula a více, jedna a více, nula nebo jedna | `colou?r` najde `color` i `colour` |
 | `{n}`, `{n,m}`, `{n,}` | Přesný počet, rozsah, nejméně n | `\d{2,4}` |
-| `a\|b` | Jedna z alternativ | `cat\|dog` |
+| <code>a&#124;b</code> | Jedna z alternativ | <code>cat&#124;dog</code> |
 | `(...)`, `(?<name>...)` | Číselná nebo pojmenovaná skupina | `ID=(?<id>\d+)` |
-| `(?:...)` | Skupina bez zachycení pro náhradu | `(?:cat\|dog)s?` |
+| `(?:...)` | Skupina bez zachycení pro náhradu | <code>(?:cat&#124;dog)s?</code> |
 | `\b` | Hranice slova | `\bcat\b` nenajde část `category` |
 | `^`, `$` | Začátek a konec; s `(?m)` pro jednotlivé řádky | `(?m)^ERROR.*$` |
 | `\A`, `\z` | Začátek a konec celého vstupu | `\A\d+\z` |
