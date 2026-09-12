@@ -1,90 +1,59 @@
-# Pandoc – Praktický průvodce a tipy
+---
+description: "Převody Markdownu, HTML, Wordu a PDF s volbou šablony."
+---
 
-> Moderní přehled základních pojmů, příkazů a doporučení pro práci s Pandoc.
+# Pandoc – převody dokumentů
 
-![Pandoc](../images/c5ecf7de-7ac5-488a-806b-93c271cb5998.png)
+Pandoc převádí strukturu dokumentu mezi formáty; po převodu ověř také tabulky, obrázky a stránkování.
 
-## Co je Pandoc?
+## Základní použití
 
-- **Univerzální konvertor dokumentů**
-- Podporuje širokou škálu formátů: Markdown, HTML, LaTeX, DOCX, PDF, EPUB, RTF a další
-- Umožňuje převádět soubory mezi různými značkovacími formáty
+Nainstaluj Pandoc podle [oficiálního postupu](https://pandoc.org/installing.html) a ověř `pandoc --version`.
 
-> [!NOTE]
-> Pandoc je ideální pro automatizaci převodů dokumentů v projektech.
+Příkazy spouštěj ve složce vstupního souboru:
 
-## Přehled příkazů
+`<vstup>` a `<výstup>` nahraď cestami k souborům v uvedených formátech; příponu výstupu Pandoc používá při výběru formátu.
 
-<details>
-<summary>Tabulka převodů a možností</summary>
+| Převod | Syntaxe |
+|---|---|
+| Markdown → DOCX | `pandoc <vstup.md> -o <výstup.docx>` |
+| DOCX → Markdown a obrázky | `pandoc <vstup.docx> -t gfm --extract-media=<složka-obrázků> -o <výstup.md>` |
+| Markdown → HTML | `pandoc <vstup.md> --standalone -o <výstup.html>` |
+| HTML → Markdown | `pandoc <vstup.html> -t gfm -o <výstup.md>` |
+| Markdown → EPUB | `pandoc <vstup.md> -o <výstup.epub>` |
 
-| **Vstupní Formát** | **Výstupní Formát** | **Příkaz** | **Poznámka** | **Užitečné Možnosti** |
-|--------------------|---------------------|------------|--------------|-----------------------|
-| 📝 Markdown (.md) | 📄 DOCX (.docx) | `pandoc soubor.md -o soubor.docx` | Markdown → Word | `--standalone`, `--template=moje-sablona.tex`, `--metadata title="Název dokumentu"` |
-| 📝 Markdown (.md) | 🌐 HTML (.html) | `pandoc soubor.md -o soubor.html` | Markdown → HTML | `--self-contained`, `--css=style.css`, `--metadata title="Titul stránky"` |
-| 📝 Markdown (.md) | 📑 PDF (.pdf) | `pandoc soubor.md -o soubor.pdf` | Markdown → PDF (vyžaduje LaTeX) | `--pdf-engine=xelatex`, `--template=moje-sablona.tex`, `--toc` |
-| 📝 Markdown (.md) | 📚 EPUB (.epub) | `pandoc soubor.md -o soubor.epub` | Markdown → e-kniha | `--epub-metadata=metadata.xml`, `--css=style.css`, `--epub-cover-image=image.jpg` |
-| 📄 DOCX (.docx) | 📝 Markdown (.md) | `pandoc soubor.docx -o soubor.md` | Word → Markdown | `--extract-media=.` |
-| 📄 DOCX (.docx) | 🌐 HTML (.html) | `pandoc soubor.docx -o soubor.html` | Word → HTML | `--self-contained`, `--css=style.css` |
-| 📄 DOCX (.docx) | 📑 PDF (.pdf) | `pandoc soubor.docx -o soubor.pdf` | Word → PDF | `--pdf-engine=xelatex`, `--template=moje-sablona.tex`, `--toc` |
-| 📄 DOCX (.docx) | 📚 EPUB (.epub) | `pandoc soubor.docx -o soubor.epub` | Word → e-kniha | `--epub-metadata=metadata.xml`, `--css=style.css` |
-| 🌐 HTML (.html) | 📝 Markdown (.md) | `pandoc soubor.html -o soubor.md` | HTML → Markdown | `--standalone`, `--self-contained` |
-| 🌐 HTML (.html) | 📄 DOCX (.docx) | `pandoc soubor.html -o soubor.docx` | HTML → Word | `--self-contained`, `--extract-media=.` |
-| 🌐 HTML (.html) | 📑 PDF (.pdf) | `pandoc soubor.html -o soubor.pdf` | HTML → PDF | `--pdf-engine=xelatex`, `--template=moje-sablona.tex`, `--toc` |
-| 🌐 HTML (.html) | 📚 EPUB (.epub) | `pandoc soubor.html -o soubor.epub` | HTML → e-kniha | `--epub-metadata=metadata.xml`, `--css=style.css` |
-| 📑 LaTeX (.tex) | 📝 Markdown (.md) | `pandoc soubor.tex -o soubor.md` | LaTeX → Markdown | `--standalone`, `--self-contained` |
-| 📑 LaTeX (.tex) | 📄 DOCX (.docx) | `pandoc soubor.tex -o soubor.docx` | LaTeX → Word | `--pdf-engine=xelatex`, `--extract-media=.` |
-| 📑 LaTeX (.tex) | 🌐 HTML (.html) | `pandoc soubor.tex -o soubor.html` | LaTeX → HTML | `--self-contained`, `--standalone` |
-| 📑 LaTeX (.tex) | 📑 PDF (.pdf) | `pandoc soubor.tex -o soubor.pdf` | LaTeX → PDF | `--pdf-engine=xelatex`, `--template=moje-sablona.tex`, `--toc` |
-| 📑 LaTeX (.tex) | 📚 EPUB (.epub) | `pandoc soubor.tex -o soubor.epub` | LaTeX → e-kniha | `--epub-metadata=metadata.xml`, `--css=style.css` |
-| 📚 EPUB (.epub) | 📝 Markdown (.md) | `pandoc soubor.epub -o soubor.md` | EPUB → Markdown | `--standalone`, `--self-contained` |
-| 📚 EPUB (.epub) | 📄 DOCX (.docx) | `pandoc soubor.epub -o soubor.docx` | EPUB → Word | `--extract-media=.` |
-| 📚 EPUB (.epub) | 🌐 HTML (.html) | `pandoc soubor.epub -o soubor.html` | EPUB → HTML | `--self-contained`, `--standalone` |
-| 📚 EPUB (.epub) | 📑 PDF (.pdf) | `pandoc soubor.epub -o soubor.pdf` | EPUB → PDF | `--pdf-engine=xelatex`, `--template=moje-sablona.tex`, `--toc` |
-| 📄 RTF (.rtf) | 📝 Markdown (.md) | `pandoc soubor.rtf -o soubor.md` | RTF → Markdown | `--standalone`, `--self-contained` |
-| 📄 RTF (.rtf) | 📄 DOCX (.docx) | `pandoc soubor.rtf -o soubor.docx` | RTF → Word | `--extract-media=.` |
-| 📄 RTF (.rtf) | 🌐 HTML (.html) | `pandoc soubor.rtf -o soubor.html` | RTF → HTML | `--self-contained`, `--standalone` |
-| 📄 RTF (.rtf) | 📑 PDF (.pdf) | `pandoc soubor.rtf -o soubor.pdf` | RTF → PDF | `--pdf-engine=xelatex`, `--template=moje-sablona.tex`, `--toc` |
+Například `pandoc navod.md -o navod.docx` převede existující Markdown ve tvé pracovní složce do dokumentu Word; jména souborů změň podle potřeby a zvol výstup, který můžeš vytvořit nebo přepsat.
 
-</details>
+`-o` určuje výstupní soubor, `-t gfm` zvolí GitHub Flavored Markdown a `--extract-media=media` uloží obrázky do složky `media`.
 
-## Užitečné možnosti pro konfiguraci výstupů
+Jména vstupu, výstupu a složky obrázků můžeš změnit, ale existující cílový soubor může být přepsán.
 
-<details>
-<summary>Nastavení metadat, šablon a výstupů</summary>
+Seznam dostupných formátů zobrazí `pandoc --list-input-formats` a `pandoc --list-output-formats`.
 
-- **Nastavení metadat (title, author, date):**
-  ```sh
-  pandoc soubor.md -o soubor.pdf --metadata title="Titul dokumentu" --metadata author="Autor"
-  ```
+## HTML v jednom souboru
 
-- **Použití vlastní šablony pro PDF/HTML:**
-  ```sh
-  pandoc soubor.md -o soubor.pdf --template=moje-sablona.tex
-  ```
+```text
+pandoc dokument.md --standalone --embed-resources -o dokument.html
+```
 
-- **Generování samostatného souboru pro HTML/PDF (včetně obrázků):**
-  ```sh
-  pandoc soubor.md -o soubor.html --standalone
-  ```
+`--standalone` přidává strukturu dokumentu; teprve `--embed-resources` vkládá podporované prostředky do HTML.
 
-- **Přidání obrázků přímo do HTML (base64):**
-  ```sh
-  pandoc soubor.md -o soubor.html --self-contained
-  ```
+Starší `--self-contained` je zastaralý ekvivalent této kombinace.
 
-- **Vložení obrázků (s externími cestami):**
-  ```sh
-  pandoc soubor.md -o soubor.html --extract-media=./media
-  ```
+## Styly DOCX
 
-- **Zobrazení obsahu (TOC):**
-  ```sh
-  pandoc soubor.md -o soubor.pdf --toc
-  ```
+```text
+pandoc dokument.md --reference-doc=styly.docx -o dokument.docx
+```
 
-- **Výběr formátu pro PDF engine (xelatex, pdflatex, etc.):**
-  ```sh
-  pandoc soubor.md -o soubor.pdf --pdf-engine=xelatex
-  ```
-</details>
+Soubor `styly.docx` poskytuje referenční styly a vlastnosti dokumentu; parametr `--template` není náhradou tohoto postupu.
+
+## PDF
+
+```text
+pandoc dokument.md --pdf-engine=xelatex -o dokument.pdf
+```
+
+Příklad vyžaduje nainstalovaný XeLaTeX a používané fonty.
+
+PDF je výstupní formát, nikoli obecně podporovaný vstup pro převod PDF zpět na DOCX. [Manuál Pandocu](https://pandoc.org/MANUAL.html)

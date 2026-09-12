@@ -1,64 +1,55 @@
-# Git – Lokální ignorování změn (`assume-unchanged`)
+---
+description: "Oddělení lokální konfigurace a limity příznaků sledovaných souborů."
+---
 
-> Praktické rady, jak lze **lokálně ignorovat změny** ve složce nebo souborech, aniž by se to projevilo na vzdáleném repozitáři.
+# Git – lokální konfigurace a assume-unchanged
 
-![Lokální ignorování změn](../../../images/b4541721-315d-4189-b9fc-b3002d1596c8.png)
+Příznak `assume-unchanged` je optimalizace kontroly sledovaného souboru; není spolehlivý způsob ukládání vlastní konfigurace mimo historii.
 
-## Kdy použít?
+## Proč tím neskrývat vlastní úpravy
 
-- Pokud je potřeba **fyzicky smazat** nebo upravit soubory/složku pouze lokálně, ale **neovlivnit remote** při push.
-- Když má Git **ignorovat změny** v konkrétních souborech/složkách pouze na daném počítači.
+Gitu slibuješ, že soubor neměníš, takže může vynechat některé kontroly pracovního stromu.
 
-## Postup krok za krokem
+Git může změnu přesto rozpoznat nebo při merge vyžadovat odstranění příznaku. [Význam assume-unchanged](https://git-scm.com/docs/git-update-index#_using_assume_unchanged_bit)
 
-> [!NOTE]
-> xargs = „vezmi řádky a udělej z nich parametry“
->
-> Takže například `git ls-files a.txt b.txt` vypíše `a.txt` a `b.txt`, a `xargs git update-index --assume-unchanged` spustí příkaz pro oba soubory:
-> `git update-index --assume-unchanged a.txt b.txt`
+## Před použitím
 
-<details>
-<summary>Ignorování změn ve složce/souborech</summary>
+Rozliš, zda je soubor sledovaný; ověř jej příkazem `git ls-files -- config.local.json`.
 
-```bash
-git ls-files cesta/xxx/Directory | xargs git update-index --assume-unchanged
+Pokud příkaz nic nevypíše, soubor není v indexu a lze jej ignorovat běžným pravidlem.
+
+## Praktické použití: vlastní konfigurace
+
+Verzuj výchozí konfiguraci bez tajemství a aplikaci nastav tak, aby ji mohla doplnit místním souborem.
+
+Do `.gitignore` přidej:
+
+```gitignore
+# Místní hodnoty; sdílená výchozí konfigurace zůstává verzovaná.
+config.local.json
 ```
 
-- Git přestane sledovat změny v zadaných souborech/složce **jen lokálně**.
-- Soubory lze smazat nebo upravit, ale při push se remote **nezmění**.
+Pro pravidlo platné jen ve tvé kopii použij stejný řádek v `.git/info/exclude`.
 
-> [!IMPORTANT]
-> Je nutné spustit tento příkaz v bashovém prostředí (např. Git Bash).
+Ignorování již sledovaného souboru vyžaduje [samostatnou změnu indexu](update-gitignore.md), která se po commitu projeví i ostatním.
 
-> [!NOTE]
-> Pokud se necommituje smazání, remote zůstane nedotčený i při `git push -f`.
-</details>
+## Kontrola a zrušení příznaku
 
-<details>
-<summary>Vrácení zpět (opětovné sledování změn)</summary>
+Pokud někdo příznak dříve nastavil, obnov běžnou kontrolu:
 
 ```bash
-git ls-files cesta/xxx/Directory | xargs git update-index --no-assume-unchanged
+# Nahraď cestu skutečným sledovaným souborem.
+git ls-files -v -- config.json
+git update-index --no-assume-unchanged -- config.json
+git diff -- config.json
 ```
-- Git začne opět sledovat změny v souborech/složce.
 
-</details>
+Malé počáteční písmeno ve výpisu `ls-files -v` označuje `assume-unchanged`; poslední příkaz ukáže místní změny. [Reference git ls-files](https://git-scm.com/docs/git-ls-files)
 
-## Upozornění na rizika
+Samotné nastavení by mělo podobu `git update-index --assume-unchanged -- <sledovaný-soubor>`, ale pro lokální úpravy použij oddělenou konfiguraci výše.
 
-- **Změny jsou pouze lokální** – ostatní členové týmu je nevidí.
-- Pokud se commitne smazání nebo úprava souborů, push už remote ovlivní.
-- Vhodné pro dočasné úpravy, testování, nebo když je potřeba něco skrýt před Gitem.
+## Důležité poznámky
 
-## Slovníček pojmů
+Ani `skip-worktree` není obecná ochrana vlastních změn; jeho hlavní použití souvisí se sparse checkoutem. [Poznámky k indexu](https://git-scm.com/docs/git-update-index#_notes)
 
-- **assume-unchanged**: Git ignoruje změny v souboru/složce pouze na daném počítači.
-- **no-assume-unchanged**: Git opět začne změny sledovat.
-
-## Shrnutí
-
-- Lokální ignorování změn je **bezpečné** pro push, dokud se necommitne smazání nebo úprava.
-- Remote repozitář zůstane **beze změny**.
-
-> [!TIP]
-> Pro trvalé ignorování se používá `.gitignore`, pro dočasné lokální ignorování slouží `assume-unchanged`.
+Pokud se tajemství dostalo do commitu, ignorovací příznak je neodstraní z historie ani nezneplatní.

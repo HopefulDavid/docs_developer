@@ -1,56 +1,38 @@
-# OpenTofu – Infrastructure as Code
+---
+description: "Popis infrastruktury v souborech, kontrola změn a ochrana stavového souboru."
+---
 
-> Průvodce nástrojem OpenTofu pro popis a správu infrastruktury jako kódu (IaC).
+# OpenTofu – infrastruktura jako kód
 
-![OpenTofu](../images/a188d4ef-a7b4-4028-9107-0bd99f101e30.png)
+OpenTofu vytváří a upravuje prostředky podle konfigurace, například server, síť, databázi nebo soubor.
 
-## Co je OpenTofu?
+Místo opakovaného ručního nastavování uchováváš požadovaný stav v souborech, které lze porovnávat a verzovat.
 
-OpenTofu je nástroj pro **Infrastructure as Code** – místo ručního klikání v cloudovém rozhraní popíšeš infrastrukturu v souborech a OpenTofu ji podle toho vytvoří nebo upraví.
+## Jak součásti spolupracují
 
-OpenTofu se používá na:
-- vytváření serverů a sítí,
-- zakládání databází,
-- správu cloudové infrastruktury,
-- opakovatelné a předvídatelné nasazování.
+| Součást | Úloha |
+|---|---|
+| Konfigurace HCL v `.tf` | Popis požadovaných prostředků a hodnot |
+| Provider | Plugin pro komunikaci s konkrétní službou nebo systémem |
+| State | Vazba mezi konfigurací a skutečně spravovanými objekty |
+| Plan | Návrh vytvoření, změn a odstranění |
+| Apply | Provedení odsouhlaseného plánu |
 
-> [!NOTE]
-> OpenTofu je open-source fork Terraformu. Syntaxe a příkazy jsou prakticky identické.
+Provider cloudu například zakládá server přes jeho API; provider `local` v následující ukázce spravuje místní soubor.
 
-## Co OpenTofu není
+OpenTofu může spravovat i aplikační prostředky podporované providerem; sestavení aplikace, její testy a řízení CI jsou samostatné kroky.
 
-OpenTofu **nevytváří** ani **nespravuje**:
-- samotnou aplikaci (to řeší Docker, CI/CD),
-- prostředí pro běh kódu – jen infrastrukturu pro něj.
+## Před použitím
 
-| Nástroj | Role |
-|---------|------|
-| **OpenTofu** | Postaví infrastrukturu (servery, sítě, databáze) |
-| **Docker** | Zabalí aplikaci do kontejneru |
-| **CI/CD** | Nasadí kód do prostředí |
-| **Aplikace** | Samotný produkt (Next.js,.NET, Go…) |
+Nainstaluj OpenTofu podle [oficiálního postupu](https://opentofu.org/docs/intro/install/) a ověř `tofu version`.
 
-## Instalace
+První inicializace potřebuje internet pro provider, pokud už není připravený místní mirror.
 
-1. Stáhni z [opentofu.org/docs/intro/install](https://opentofu.org/docs/intro/install/).
-2. Rozbal archiv a přidej do `PATH`.
-3. Ověř:
+Ukázku spouštěj v **nové prázdné složce**, protože vytvořený soubor bude nástroj později měnit i mazat.
 
-```bash
-tofu version
-```
+## 1. Popiš požadovaný soubor
 
-## První test – bez cloudu
-
-Nejjednodušší ověření funkčnosti bez cloudového účtu.
-
-**1. Vytvoř složku projektu:**
-
-```
-C:\tofu-test
-```
-
-**2. Vytvoř soubor `main.tf`:**
+Ulož `main.tf`:
 
 ```hcl
 terraform {
@@ -62,92 +44,102 @@ terraform {
   }
 }
 
-provider "local" {}
+variable "zprava" {
+  type    = string
+  default = "Ahoj z OpenTofu."
+}
 
-resource "local_file" "example" {
-  content  = "Ahoj, OpenTofu funguje."
+resource "local_file" "pozdrav" {
+  content  = var.zprava
   filename = "${path.module}/vystup.txt"
+}
+
+output "vytvoreny_soubor" {
+  value = local_file.pozdrav.filename
 }
 ```
 
-**3. Inicializuj projekt:**
+| Zápis | Význam |
+|---|---|
+| `terraform` | Konfigurační blok tohoto formátu, jehož název používá i OpenTofu |
+| `hashicorp/local` | Zdroj provideru pro místní prostředky |
+| `~> 2.5` | Verze od 2.5.0 do, ale ne včetně 3.0.0 |
+| `variable "zprava"` | Textový vstup s výchozí hodnotou |
+| `local_file.pozdrav` | Adresa prostředku: typ a vlastní jméno |
+| `path.module` | Složka aktuálního modulu |
+| `output` | Hodnota zpřístupněná po aplikaci změny |
+
+Konkrétní vybranou verzi provideru zaznamená `.terraform.lock.hcl`.
+
+## 2. Inicializuj a prohlédni plán
+
+V této složce v PowerShellu nebo Bashi:
 
 ```bash
 tofu init
+tofu fmt
+tofu validate
+tofu plan -out=prvni.tfplan
 ```
 
-**4. Zkontroluj plán:**
+`init` připraví provider a stavové úložiště, `fmt` upraví formát a `validate` ověří vnitřní konzistenci konfigurace.
+
+Plán má v této prázdné ukázce navrhovat **jeden soubor k vytvoření**; při jiném nebo nečekaném cíli nepokračuj.
+
+Uložený plán určuje přesnou sadu změn a může obsahovat citlivé hodnoty.
+
+## 3. Proveď a ověř změnu
 
 ```bash
+tofu apply prvni.tfplan
+tofu output vytvoreny_soubor
 tofu plan
 ```
 
-**5. Použij změny:**
+Apply s uloženým plánem provádí jeho změny bez nového potvrzovacího dotazu, proto ho prohlédni **před tímto krokem**.
 
-```bash
-tofu apply   # potvrď 'yes'
-```
+Otevři `vystup.txt` a ověř zprávu; další plan má oznámit, že nejsou potřeba změny.
 
-Ve složce se vytvoří soubor `vystup.txt`.
+Alternativní `tofu apply` bez souboru nejprve vytvoří nový plán a požádá o potvrzení.
 
-**6. Úklid:**
+## 4. Změň hodnotu
 
-```bash
-tofu destroy   # potvrď 'yes'
-```
-
-## Přehled příkazů
-
-| Příkaz | Popis |
-|--------|-------|
-| `tofu init` | Připraví projekt a stáhne pluginy |
-| `tofu plan` | Zobrazí, co se změní |
-| `tofu apply` | Provede změny v infrastruktuře |
-| `tofu destroy` | Smaže vytvořené zdroje |
-| `tofu fmt` | Naformátuje `.tf` soubory |
-| `tofu validate` | Ověří syntaxi konfigurace |
-| `tofu output` | Zobrazí výstupní hodnoty |
-| `tofu version` | Zobrazí nainstalovanou verzi |
-
-## Doporučená struktura projektu
-
-```
-projekt/
-├── main.tf          # Hlavní konfigurace zdrojů
-├── variables.tf     # Definice proměnných
-├── outputs.tf       # Výstupní hodnoty po apply
-├── terraform.tfvars # Konkrétní hodnoty proměnných
-└── README.md        # Popis projektu
-```
-
-> [!TIP]
-> Soubor `terraform.tfvars` přidej do `.gitignore`, pokud obsahuje hesla nebo tokeny.
-
-## Základní syntaxe HCL
+Do `terraform.tfvars` ulož:
 
 ```hcl
-# Definice proměnné
-variable "prostedi" {
-  type    = string
-  default = "dev"
-}
-
-# Použití proměnné
-resource "local_file" "konfig" {
-  content  = "Prostředí: ${var.prostedi}"
-  filename = "config.txt"
-}
-
-# Výstup po apply
-output "cesta_souboru" {
-  value = local_file.konfig.filename
-}
+# Konkrétní hodnota vstupu pro tuto pracovní složku.
+zprava = "Upravený obsah souboru."
 ```
 
-> [!NOTE]
-> HCL je deklarativní jazyk – popisuješ **co** chceš mít, ne **jak** to vytvořit.
+Spusť nový `tofu plan`, prohlédni rozdíl, potom `tofu apply` a ověř nový obsah.
 
-## Užitečné odkazy
+Text i jméno souboru můžeš měnit, ale některé změny prostředku vyžadují jeho nahrazení; rozhoduje plán.
 
-- [Dokumentace OpenTofu](https://opentofu.org/docs/)
-- [Registry providerů](https://registry.opentofu.org/)
+## 5. Ukliď výukový prostředek
+
+```bash
+tofu plan -destroy
+tofu destroy
+```
+
+První příkaz jen ukáže návrh odstranění a druhý po potvrzení odstraní spravovaný `vystup.txt`.
+
+Konfigurace zůstane; v reálném prostředí může destroy odstranit databázi i její data.
+
+## Co verzovat a zálohovat
+
+| Obsah | Zacházení |
+|---|---|
+| `.tf` a nesoukromé vstupy | Verzovat |
+| `.terraform.lock.hcl` | Verzovat výběr providerů |
+| `.terraform/` | Obnovitelná pracovní data, běžně ignorovat |
+| `terraform.tfstate` a zálohy | Chránit a zálohovat mimo veřejný Git |
+| `.tfvars` s tajemstvími a uložené plány | Uchovávat jako citlivé soubory |
+
+I solo práce z více počítačů musí používat správný společný stav a zabránit neřízeným souběžným změnám.
+
+Pro dlouhodobou infrastrukturu vyber backend s odpovídajícím přístupem, zálohou a zamykáním, které konkrétní backend podporuje.
+
+Označení `sensitive` skrývá některé výpisy, ale samo neodstraňuje citlivé hodnoty ze stavu.
+
+Zdroje: [workflow](https://opentofu.org/docs/intro/core-workflow/), [providers](https://opentofu.org/docs/language/providers/), [plan](https://opentofu.org/docs/cli/commands/plan/), [citlivý stav](https://opentofu.org/docs/language/state/sensitive-data/).

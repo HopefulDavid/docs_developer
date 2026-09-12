@@ -1,60 +1,69 @@
-# Unity – UI systém a Tipy
+---
+description: "Nastavení Canvasu a omezení klikání podle průhlednosti tlačítka."
+---
 
-> Praktické rady pro práci s UI v Unity, včetně nastavení tlačítek, detekce kliknutí a užitečných vlastností komponent.
+# Unity UI: Canvas a tvar klikacího tlačítka
 
-## Co je UI systém v Unity?
+Unity UI neboli uGUI používá GameObjecty s komponentami, například Canvas, Image a Button.
 
-<details>
-<summary>Základní principy UI</summary>
+Je odlišný od [UI Toolkitu](ui-toolkit.md), takže jeho komponenty a události nelze zaměňovat.
 
-- Umožňuje vytvářet interaktivní prvky (tlačítka, texty, obrázky).
-- Prvky UI jsou spravovány pomocí **Canvas**.
-- Podporuje animace, eventy a dynamické změny.
+## Jak funguje kliknutí
 
-</details>
+Canvas vykresluje grafické prvky, Graphic Raycaster vyhledává zásahy a EventSystem s vhodným vstupním modulem předává události.
 
-## Tlačítko (Button)
+Button musí být interaktivní a jeho grafika musí přijímat raycasty.
 
-<details>
-<summary>Vlastnosti tlačítka</summary>
+## Před použitím
 
-- Tlačítko je základní interaktivní prvek UI.
-- Lze mu přiřadit akce na kliknutí.
-- Podporuje různé vizuální styly a animace.
+V projektu Unity 6 s Unity UI vytvoř tlačítko přes **GameObject → UI → Button** a ověř Canvas, Graphic Raycaster a EventSystem.
 
-</details>
+Vstupní modul musí odpovídat používanému Input Systemu projektu.
+
+Nejprve ověř běžné obdélníkové tlačítko, teprve potom přidávej test průhlednosti.
 
 ## Rozsah detekce kliknutí podle průhlednosti
 
-<details>
-<summary>`alphaHitTestMinimumThreshold`</summary>
+`Image.alphaHitTestMinimumThreshold` odmítá pixel spritu, jehož alfa je menší než zadaný práh.
 
-| 🏷️ Vlastnost | 💡 Popis |
-|-----------------------------|--------------------------------------------------------------------------|
-| `alphaHitTestMinimumThreshold` | Určuje minimální alfa hodnotu pro detekci kliknutí na obrázek. |
-| Rozsah hodnot | 0 (klik i na průhledné části) až 1 (jen zcela neprůhledné části) |
-| Použití | Ideální pro kruhová nebo nepravidelná tlačítka |
+Hodnota `0` ponechá obdélníkový zásah a například `0.5` vyžaduje alespoň poloviční krytí pixelu.
 
-> Nastav hodnotu podle požadované citlivosti na průhlednost.
+V importu textury zapni **Read/Write**, přiřaď sprite s průhlednými okraji a pro tuto ukázku jej vynech ze Sprite Atlasu.
 
-### Příklad použití v C#:
+Čtení pixelů může zvýšit paměťové nároky; alfa barvy komponenty `Image.color` se při tomto testu nepoužívá.
+
+Ulož komponentu jako `AlphaHitButton.cs` a přidej ji přímo na objekt s Image tlačítka.
 
 ```csharp
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ExampleClass : MonoBehaviour
+/// <summary>Nastavuje klikací oblast Image podle průhlednosti spritu.</summary>
+[RequireComponent(typeof(Image))]
+public class AlphaHitButton : MonoBehaviour
 {
-    public Image theButton;
+    [SerializeField, Range(0f, 1f)] private float threshold = 0.5f;
 
-    void Start()
+    private void Awake()
     {
-        theButton.alphaHitTestMinimumThreshold = 0.5f;
+        // Práh ovlivní test pixelů spritu, nikoli jeho vykreslenou průhlednost.
+        GetComponent<Image>().alphaHitTestMinimumThreshold = threshold;
     }
 }
 ```
 
-> [!TIP]
-> Vhodné například pro kruhová tlačítka, kde nechceme registrovat kliknutí na průhledné okraje.
+## Ověření výsledku
 
-</details>
+Přiřaď tlačítku viditelnou akci přes **On Click**, spusť Play a vyzkoušej neprůhledný střed i průhledný roh.
+
+Střed má akci vyvolat a průhledný roh ji vyvolat nemá.
+
+Pokud roh dál reaguje, vypni **Raycast Target** na dekorativním textu nebo jiných překrývajících grafikách a zkontroluj, který prvek zásah skutečně přijímá.
+
+## Co lze upravit
+
+`threshold` měň v Inspectoru podle okrajů spritu, ale zachovej dostatečně velkou ovládací plochu pro dotyk.
+
+Práh neovlivňuje aktivaci tlačítka klávesnicí nebo gamepadem; ověř i tuto cestu.
+
+Podmínky čitelnosti textury popisuje [API Image](https://docs.unity3d.com/Packages/com.unity.ugui@2.0/api/UnityEngine.UI.Image.html#UnityEngine_UI_Image_alphaHitTestMinimumThreshold).

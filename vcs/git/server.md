@@ -1,143 +1,83 @@
-# Git – Server s Gitem (např. Forgejo, Gitea, Github, Gitlab, atd.)
+---
+description: "Připojení remote, volba HTTPS nebo SSH a změna cílové adresy."
+---
 
-> Praktické rady pro práci s Git repozitářem na serveru.
+# Git – připojení ke vzdálenému repozitáři
 
-![Ollama](../../images/2356729c-7942-4f2c-8ecc-f2b712c6e5ad.png)
+Remote je pojmenovaná adresa jiného repozitáře, ze kterého načítáš commity nebo do něj posíláš svoji práci.
 
-## Správa remote URL
+GitHub, GitLab, Forgejo i vlastní bare repozitář mohou plnit tuto úlohu; samotný Git nevyžaduje konkrétní hosting.
 
-### Přepnutí z HTTP na SSH
+## Vyber přihlášení
 
-<details>
-<summary>Změna remote URL na SSH</summary>
+| Protokol | Co potřebuješ | Typická adresa |
+|---|---|---|
+| HTTPS | Účet a přihlášení podporované hostingem, často přes správce přihlašovacích údajů nebo token | `https://git.example.com/ucet/projekt.git` |
+| SSH | Klíč registrovaný u účtu a ověřený server | `git@git.example.com:ucet/projekt.git` |
+| Místní cesta | Přístup k disku s repozitářem | `../centralni.git` |
 
-```bash
-git remote set-url origin ssh://git@127.0.0.1:2222/dslavik29/Unity_UITK-MMA.git
+Ukázkové domény představují syntaxi adres, nejsou servery určené k připojení.
+
+U SSH nemusí být `git` tvé uživatelské jméno na hostingu; často jde o společný technický účet a identita se určí podle klíče.
+
+## Připojení nového projektu
+
+Na hostingu vytvoř prázdný repozitář **bez automatického README**, pokud už máš místní historii.
+
+Zkopíruj jeho clone URL a v kořeni své pracovní kopie použij:
+
+```text
+git remote add origin <clone-URL>
+git push -u origin <místní-větev>
 ```
 
-> [!NOTE]
-> SSH přístup vyžaduje správně nakonfigurovaný SSH klíč na Gitea serveru (viz sekce SSH níže).
+`origin` je zvolený název spojení; `<místní-větev>` zjistíš přes `git branch --show-current`.
 
-</details>
-
-### Přepnutí ze SSH na HTTP
-
-<details>
-<summary>Změna remote URL na HTTP</summary>
-
-```bash
-git remote set-url origin http://localhost:3010/dslavik29/Unity_UITK-MMA.git
-```
-
-> [!TIP]
-> HTTP je vhodné pro situace, kdy SSH není dostupné nebo při problémech s klíči.
-
-</details>
-
-### Zobrazení aktuální URL
-
-<details>
-<summary>Kontrola remote URL</summary>
+Před odesláním ověř cílovou adresu:
 
 ```bash
 git remote -v
+git status --short --branch
 ```
 
-</details>
+Pokud server už má vlastní první commit, zvaž naklonování serverové verze a přenos svých souborů do ní; odmítnutí push není důvod k automatickému přepsání serveru.
 
-## Hromadný mirror repozitářů na Gitea (SSH)
+## Existující remote nebo změna adresy
 
-> Přesune všechny lokální `.git` repozitáře na SSH remote na Gitea serveru.
+| Syntaxe | Účinek |
+|---|---|
+| `git remote -v` | Vypíše názvy a URL pro načítání i odesílání |
+| `git remote add <název> <URL>` | Přidá nové spojení |
+| `git remote set-url <název> <URL>` | Změní adresu existujícího spojení |
+| `git remote remove <název>` | Odstraní místní konfiguraci spojení, ne repozitář na serveru |
+| `git ls-remote <název>` | Ověří přístup ke čtení referencí na serveru |
 
-<details>
-<summary>Bash skript pro hromadný mirror</summary>
+Například po přejmenování vlastního projektu nahradíš URL přes `set-url`; žádná z těchto konfiguračních změn sama nepřenáší historii.
+
+Token ani heslo nevkládej do URL, kde by zůstaly v konfiguraci a historii terminálu.
+
+## Praktické vyzkoušení bez hostingu
+
+V nové složce určené pro pokus spusť:
 
 ```bash
-for repo in *.git; do
-  name=${repo%.git}
-  echo "=== $name ==="
-  cd "$repo"
-  git remote remove origin 2>/dev/null
-  git remote add origin ssh://git@127.0.0.1:2222/dslavik29/$name.git
-  git push --mirror origin
-  cd ..
-done
+git init --bare --initial-branch=main centralni.git
+git clone centralni.git pracovni-kopie
 ```
 
-> [!IMPORTANT]
-> Skript je nutné spustit v Bash prostředí (např. Git Bash nebo WSL).
->
-> Ujisti se, že máš SSH klíč přidán do svého účtu na Gitea serveru.
+`centralni.git` bude místní serverová kopie bez pracovních souborů a `pracovni-kopie` místo pro editaci a commity.
 
-> [!WARNING]
-> `git push --mirror` přepíše vzdálený repozitář kompletně – včetně všech větví a tagů.
-> Použij pouze při inicializaci nového remote nebo záměrném přepisu.
+Varování o prázdném klonu je očekávané; vytvoř v pracovní kopii první soubor a commit podle [založení repozitáře](repository.md), potom použij `git push -u origin main`.
 
-</details>
+Bare složku neupravuj jako běžný projekt a své soubory do ní ručně nekopíruj.
 
-## Git LFS s lokálním serverem
+## Časté problémy
 
-> Git LFS (Large File Storage) umožňuje verzovat velké soubory mimo Git historii.
+- `remote origin already exists`: prohlédni `remote -v` a podle potřeby použij `set-url`.
+- Úspěšné čtení a odmítnutý push: účet nemusí mít právo zápisu nebo větev chrání pravidlo.
+- `Permission denied (publickey)`: pokračuj [diagnostikou Git přes SSH](../../network/ssh/git.md).
+- Velké soubory zůstaly jako textové ukazatele: ověř instalaci a přístup [Git LFS](backups.md#git-lfs-a-submoduly).
 
-<details>
-<summary>LFS a SSH – důležité omezení</summary>
+[Zálohu a migraci](backups.md) řeš odděleně od běžné synchronizace.
 
-Git LFS **nepodporuje SSH** pro přenos dat na vlastních serverech.
-I pokud je Git remote nastaven na SSH, LFS musí komunikovat přes HTTP.
-
-Pokud narazíš na chyby při `git push` se soubory LFS, nastav LFS URL ručně:
-
-```bash
-git config lfs.url http://localhost:3020/dslavik29/Unity_MMA.git/info/lfs
-```
-
-> [!NOTE]
-> - Port LFS serveru (`3020`) se může lišit od Git HTTP portu (`3010`).
-> - Tato konfigurace je **lokální** pro daný repozitář – uloží se do `.git/config`.
-
-</details>
-
-<details>
-<summary>Ověření LFS konfigurace</summary>
-
-```bash
-git lfs env
-```
-
-Výstup zobrazí aktuální LFS endpoint a stav konfigurace.
-
-</details>
-
-## SSH přístup ke Gitea
-
-<details>
-<summary>Nastavení SSH klíče pro Gitea</summary>
-
-1. **Vygeneruj SSH klíč** (pokud ještě nemáš):
-
-   ```bash
-   ssh-keygen -t rsa -b 4096 -C "tvuj@email.com"
-   ```
-
-2. **Zobraz veřejný klíč:**
-
-**Windows:**
-   ```bash
-   type %userprofile%\.ssh\id_rsa.pub
-   ```
-
-**Linux/macOS:**
-   ```bash
-   cat ~/.ssh/id_rsa.pub
-   ```
-
-3. **Přidej klíč do Gitea:**
-- Otevři Gitea → **Settings → SSH / GPG Keys → Add Key**
-
-4. **Otestuj připojení:**
-
-   ```bash
-   ssh -T git@127.0.0.1 -p 2222
-   ```
-
-</details>
+Zdroje: [git remote](https://git-scm.com/docs/git-remote), [Git na serveru](https://git-scm.com/book/en/v2/Git-on-the-Server-The-Protocols).

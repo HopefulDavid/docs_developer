@@ -1,78 +1,79 @@
-# .NET – Práce se soubory: Oddělovače a Escape sekvence
+---
+description: "Čtení a zápis textu, CSV a volba správného kódování."
+---
 
-> Praktické rady pro detekci oddělovače v souboru, práci s BOM a speciálními znaky v .NET.
+# .NET – Textové soubory, CSV a kódování
 
-## Vyhledání oddělovače v souboru
+Při čtení dat určete kódování, oddělovač a očekávané sloupce podle smluveného formátu souboru.
 
-<details>
-<summary>Algoritmus detekce oddělovače</summary>
+## CSV s hodnotami v uvozovkách
 
-- Prochází řádky souboru a počítá výskyt oddělovačů (`;`, `,`).
-- Vybere nejčastější oddělovač, pokud je jednoznačný.
-- Pokud není jednoznačný (jiný oddělovač se vyskytuje alespoň v 70% případů), vyhodí chybu.
+Počítání čárek a středníků nerozliší oddělovač od interpunkce uvnitř hodnoty.
 
-**Příklad kódu:**
+Pro import s neznámým formátem nechte uživatele potvrdit náhled a oddělovač; samotný odhad není validace.
+
+`TextFieldParser` z `Microsoft.VisualBasic.FileIO` lze použít také v C# a v běžném projektu .NET nevyžaduje další NuGet balíček.
+
+Následující úplný `Program.cs` pro konzolový projekt .NET 10 načte dvě pole včetně středníku uvnitř uvozovek:
+
 ```csharp
-public static StreamReader FindDelimiter(StreamReader reader, out char delimiter, int? linesToRead = null)
+using Microsoft.VisualBasic.FileIO;
+
+const string csv = """
+Name;Note
+Eva;"Praha; centrum"
+""";
+
+using var input = new StringReader(csv);
+using var parser = new TextFieldParser(input)
 {
-    const char semicolon = ';';
-    const char comma = ',';
+    TextFieldType = FieldType.Delimited,
+    HasFieldsEnclosedInQuotes = true,
+    TrimWhiteSpace = false
+};
+parser.SetDelimiters(";");
 
-    Dictionary<char, int> delimiters = new Dictionary<char, int>
-    {
-        { semicolon, 0 },
-        { comma, 0 },
-    };
+var header = parser.ReadFields();
+if (header is null || !header.SequenceEqual(new[] { "Name", "Note" }))
+    throw new FormatException("Očekávána hlavička Name;Note.");
 
-    string line;
-    int linesRead = 0;
-    while ((line = reader.ReadLine()) != null && (!linesToRead.HasValue || linesRead < linesToRead.Value))
-    {
-        foreach (char c in line)
-        {
-            switch (c)
-            {
-                case semicolon: delimiters[semicolon]++; break;
-                case comma: delimiters[comma]++; break;
-            }
-        }
-        linesRead++;
-    }
+while (!parser.EndOfData)
+{
+    var fields = parser.ReadFields();
+    if (fields is null || fields.Length != 2)
+        throw new FormatException("Každý záznam musí mít dvě pole.");
 
-    delimiters = delimiters.Where(i => i.Value != 0).ToDictionary(i => i.Key, i => i.Value);
-
-    if (delimiters.Count == 0)
-        throw new Exception("Nepodařilo se dohledat jakýkoli oddělovač.");
-
-    var highest = delimiters.Aggregate((item1, item2) => item1.Value > item2.Value ? item1 : item2);
-
-    const int failPercentage = 70;
-    if ((from val in delimiters
-         where val.Key != highest.Key
-         select new decimal(val.Value) / new decimal(highest.Value) * 100).Any(diff => diff >= failPercentage))
-        throw new Exception("Typ oddělovače se nepodařilo jednoznačně identifikovat.");
-
-    delimiter = highest.Key;
-
-    reader.DiscardBufferedData();
-    reader.BaseStream.Seek(0, System.IO.SeekOrigin.Begin);
-    return reader;
+    Console.WriteLine($"{fields[0]}: {fields[1]}");
 }
 ```
-</details>
 
-## Escape sekvence v souborech
+Výstup je `Eva: Praha; centrum`.
 
-<details>
-<summary>Nejčastější speciální znaky</summary>
+Parser hlásí neplatně zapsaný záznam výjimkou `MalformedLineException`; chybný import má zobrazit místo a důvod chyby, nikoli záznam tiše zahodit. [Microsoft: čtení oddělených polí](https://learn.microsoft.com/en-us/dotnet/visual-basic/developing-apps/programming/drives-directories-files/how-to-read-from-comma-delimited-text-files).
 
-| Sekvence | Název | Popis |
-|------------|--------------------------|-----------------------------------------------------------------------|
-| `\uFEFF` | Byte Order Mark (BOM) | Určuje pořadí bajtů, může způsobit problémy při čtení souborů. |
-| `\u0000` | Null znak | Označuje konec řetězce, může komplikovat parsování dat. |
+## Kódování a BOM
 
-> [!WARNING]
-> BOM i null znak mohou způsobit potíže s některými knihovnami a nástroji.
-> Doporučuje se je odstraňovat nebo správně ošetřit při zpracování dat.
+Pro skutečný soubor můžeš místo `StringReader` použít následující vstup; soubor bez BOM bude interpretován jako UTF-8:
 
-</details>
+```csharp
+using var input = new StreamReader(
+    "input.csv",
+    new System.Text.UTF8Encoding(false, true),
+    detectEncodingFromByteOrderMarks: true);
+```
+
+BOM je posloupnost bajtů na začátku souboru, podle které čtečka může rozpoznat podporované kódování.
+
+Není to pokyn odstranit všechny znaky `\uFEFF` z již načteného obsahu. [StreamReader a rozpoznání kódování](https://learn.microsoft.com/en-us/dotnet/api/system.io.streamreader.-ctor).
+
+| Zápis v C# | Význam |
+|---|---|
+| `\n` | Přechod na nový řádek LF |
+| `\r\n` | Konce řádků CRLF |
+| `\t` | Tabulátor |
+| `\uFEFF` | Znak používaný v úvodní signatuře Unicode |
+| `\0` | Nulový znak uvnitř řetězce |
+
+Nulový znak neukončuje řetězec `System.String`; například `"A\0B".Length` je `3`.
+
+Rozdílná pravidla mohou platit při předání řetězce nativnímu API. [Microsoft: řetězce v C#](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/).

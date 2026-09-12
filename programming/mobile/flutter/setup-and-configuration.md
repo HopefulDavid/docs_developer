@@ -1,49 +1,50 @@
-# Flutter
+---
+description: "Příprava SDK a ověření nástrojů pro cílové platformy."
+---
 
-Flutter je framework pro vývoj mobilních aplikací pro **Android** a **iOS**. Používá programovací jazyk **Dart**.
+# Flutter – instalace a nastavení
 
-![Instalace a nastavení](../../../images/efa2074c-d98f-49b1-a30e-8cabddd3a06d.png)
+Flutter používá Dart pro vývoj aplikací pro mobilní zařízení, web a desktop; potřebné nástroje se liší podle cílové platformy.
 
-## Instalace
+## Instalace ve Windows
 
-> **Důležité:**
-> Flutter používá `Git` pro správu závislostí, proto je nutné mít nainstalovaný `Git`.
-> Pro vývoj pro Android je potřeba mít nainstalovaný `Android Studio`.
+1. Nainstaluj Git for Windows.
+2. Stáhni stabilní Flutter SDK z [oficiálního instalačního postupu](https://docs.flutter.dev/install/manual).
+3. Rozbal SDK například do `C:\src\flutter`, mimo chráněné systémové složky a cesty s mezerami.
+4. Přidej `C:\src\flutter\bin` do uživatelské proměnné `PATH`.
+5. Znovu otevři terminál i IDE a ověř instalaci:
 
-### Windows
-
-1. Stáhněte Flutter SDK z [oficiálních stránek](https://flutter.dev/docs/get-started/install/windows).
-2. Rozbalte ZIP do složky, např. `C:\src\flutter`.
-> **Poznámka:** Cesta nesmí obsahovat mezery ani speciální znaky.
-3. Přidejte cestu k `flutter\bin` do proměnné prostředí `PATH`.
-4. Ověřte instalaci:
-   ```bash
-   flutter doctor
-   ```
-5. Vypněte analyzování:
-   ```bash
-   flutter config --no-analytics
-   ```
-6. Pro kontrolu nastavení:
-   ```bash
-   flutter config
-   ```
-
-### Android toolchain
-
-1. Ujistěte se, že je nainstalován `Android Studio`.
-2. Nastavte Android toolchain podle obrázků:
--![Obrázek 1](../../../images/77fb408804c94851a06078aae17e694f.png)
--![Obrázek 2](../../../images/5d7ee05eacb549d5ada6e1edef7a2e59.png)
-
-### Vývoj webových aplikací
-
-Pokud chcete použít jiný prohlížeč než Google Chrome:
-```bash
-flutter config --no-web-browser
+```powershell
+flutter --version
+flutter doctor -v
 ```
-Spusťte aplikaci:
-```bash
-flutter run -d web-server
+
+`doctor` vypíše chybějící nástroje; řeš především platformu, pro kterou budeš aplikaci sestavovat.
+
+## Android toolchain
+
+Připrav [SDK, emulátor nebo telefon v Android Studiu](../android-studio.md).
+
+Pro sestavování iOS potřebuješ macOS a Xcode. [Nastavení iOS](https://docs.flutter.dev/platform-integration/ios/setup)
+
+## Vývoj webových aplikací
+
+Ze složky projektu spusť:
+
+```powershell
+flutter run -d chrome
 ```
-Otevřete ve vlastním prohlížeči adresu `http://localhost:PORT/`.
+
+Ve Windows lze zvolit také `-d edge`; pro ruční otevření jiného prohlížeče použij `flutter run -d web-server` a adresu vypsanou terminálem. [Spuštění webové aplikace](https://docs.flutter.dev/platform-integration/web/building)
+
+## Telemetrie
+
+Odesílání analytických údajů a hlášení pádů vypneš příkazem:
+
+```powershell
+flutter --disable-analytics
+```
+
+Tato volba nevypíná statickou analýzu kódu. [Hlášení pádů a telemetrie](https://docs.flutter.dev/reference/crash-reporting)
+
+Pokračuj [vytvořením projektu](create-project.md).

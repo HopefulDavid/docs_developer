@@ -6,8 +6,8 @@ Infrastruktura, automatizace a provozní postupy pro vývojářské prostředí.
 
 ## Přehled stránek
 
-### Infrastructure as Code
+### Infrastruktura jako kód
 
 | Stránka | Popis |
 | --- | --- |
-| [OpenTofu](opentofu.md) | Průvodce nástrojem OpenTofu pro popis a správu infrastruktury jako kódu (IaC). |
+| [OpenTofu](opentofu.md) | Popis infrastruktury v souborech, kontrola změn a ochrana stavového souboru. |

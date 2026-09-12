@@ -1,48 +1,67 @@
-# Git – Smazání vzdálené větve
+---
+description: "Úklid dokončené místní i vzdálené větve a možnost obnovení."
+---
 
-> Praktické rady pro bezpečné odstranění větve z Git serveru (např. GitHub, GitLab).
+# Git – odstranění dokončené větve
 
-![Smazání vzdálené větve](../../../images/51fc64f1-0fc1-434d-8b9a-62915ece751a.png)
+Odstraněním větve zrušíš její jméno; místní a vzdálená větev jsou samostatné reference.
 
-## Upozornění
+Nejdříve ověř, že její práce je začleněná nebo ji už nepotřebuješ.
 
-> [!WARNING]
-> Smazání vzdálené větve je **nevratná operace**.
-> Ujisti se, že větev už nepotřebuješ a všechny důležité změny jsou začleněny jinde.
+## Zkontroluj výsledek
 
-## Postup krok za krokem
-
-<details>
-<summary>Krok 1: Zobrazení všech větví</summary>
+Příklad používá dokončenou `feature/hledani` a cílovou `main`; před přepnutím musí být pracovní strom čistý.
 
 ```bash
-git branch -a
+git switch main
+git fetch origin
+git log --oneline main..feature/hledani
 ```
-- Zobrazí seznam lokálních i vzdálených větví.
-</details>
 
-<details>
-<summary>Krok 2: Smazání vzdálené větve</summary>
+Výpis ukazuje commity pracovní větve, které nejsou dosažitelné z místní `main`; po serverovém PR nejprve [aktualizuj main](../synchronization.md).
+
+Při squash nebo rebase merge mohou mít začleněné změny jiná ID, proto navíc ověř skutečný obsah a stav PR.
+
+## Místní větev
 
 ```bash
-git push origin --delete <nazev-vetve>
-# nebo kratší varianta
-git push origin :<nazev-vetve>
+git branch -d feature/hledani
 ```
-- Nahraď `<nazev-vetve>` skutečným názvem větve, kterou chceš smazat.
 
-> [!NOTE]
-> Obě varianty provedou totéž – smažou větev na serveru.
-</details>
+`-d` používá kontrolu začlenění do upstreamu, případně do HEAD, pokud upstream není nastavený; není náhradou vlastní kontroly zamýšlené cílové větve.
 
-<details>
-<summary>Krok 3: Vyčištění lokálních referencí</summary>
+Když kontrola selže po ověřeném squash, můžeš si nejprve ponechat záložní jméno a vědomě odstranit původní:
 
 ```bash
-git fetch --prune
+git branch backup/hledani feature/hledani
+git branch -D feature/hledani
 ```
-- Odstraní lokální reference na smazané vzdálené větve.
 
-> [!TIP]
-> Tento krok není povinný, ale pomáhá udržet repozitář přehledný.
-</details>
+`-D` kontrolu sloučení obchází, proto ho nepoužívej jen kvůli odstranění chybového hlášení.
+
+## Vzdálená větev
+
+```bash
+git push origin --delete feature/hledani
+git fetch origin --prune
+git ls-remote --heads origin feature/hledani
+```
+
+První příkaz odstraní jméno na serveru a druhý uklidí místní odkazy na zaniklé vzdálené větve.
+
+Poslední příkaz už nemá vypsat odstraněnou větev; místní `backup/hledani` zůstane zachovaná.
+
+## Obnova
+
+Pokud máš záložní větev a název je volný:
+
+```bash
+git branch feature/hledani backup/hledani
+git push -u origin feature/hledani
+```
+
+Obnovíš místní i vzdálené pojmenování původního commitu.
+
+Bez zálohy může pomoci místní [reflog](../recovery.md), jeho dostupnost ale není trvalá.
+
+Zdroje: [git branch](https://git-scm.com/docs/git-branch), [git push](https://git-scm.com/docs/git-push).

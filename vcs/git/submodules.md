@@ -1,139 +1,77 @@
-# Git – Submoduly
+---
+description: "Připojení cizího repozitáře na konkrétní commit a jeho aktualizace."
+---
 
-> Správa externích repozitářů jako podadresářů v Git projektu.
+# Git – submoduly
 
-![Ollama](../../images/bcf90266-2493-4e1c-8f54-8d37b4e4e4a7.png)
+Submodul připojuje samostatný repozitář do podadresáře projektu a hlavní repozitář zaznamenává jeho konkrétní commit.
 
-## Co jsou submoduly?
+## Jak to funguje
 
-- Umožňují vložit jeden Git repozitář do jiného jako podadresář.
-- Oba repozitáře zůstávají nezávislé.
-- Vhodné pro správu závislostí, sdílený kód nebo rozdělené projekty.
+Soubor `.gitmodules` obsahuje cesty a URL; samotný gitlink v historii určuje verzi závislosti.
 
-```
-HlavniProjekt/
-  ├── .git/
-  ├── .gitmodules
-  ├── BeznyAdresar/
-  └── Submodul/
-      └── .git/
-```
+Submodul má vlastní historii a jeho `.git` bývá soubor odkazující do úložiště hlavního projektu. [Model submodulů](https://git-scm.com/docs/gitsubmodules)
 
-## Základní příkazy
+## Před použitím
 
-### Přidání submodulu
+Potřebuješ přístup do obou repozitářů; nepoužívej submodul jen jako náhradu správce balíčků, pokud potřebuješ běžnou publikovanou knihovnu.
+
+Příkazy spouštěj z kořene hlavního projektu, `libs/knihovna` je ukázková cesta.
+
+## Přidání a klonování
 
 ```bash
-git submodule add https://github.com/uzivatel/knihovna libs/knihovna
+# URL nahraď existujícím repozitářem knihovny.
+git submodule add https://git.example.com/tym/knihovna.git libs/knihovna
+git add .gitmodules libs/knihovna
+git commit -m "build: přidává submodul knihovny"
 ```
 
-### Klonování projektu se submoduly
+Pro nový klon hlavního projektu použij `git clone --recurse-submodules <URL> [<cílová-složka>]`, kde `<URL>` nahradíš adresou hlavního projektu.
+
+V již naklonovaném projektu obnov přesně zapsané verze:
 
 ```bash
-# Vše najednou
-git clone --recursive https://github.com/uzivatel/projekt
-
-# Postupně (pokud projekt byl klonován bez --recursive)
-git submodule init
-git submodule update
+git submodule update --init --recursive
+git submodule status --recursive
 ```
 
-### Aktualizace submodulů
+Tento postup obnovuje připnuté commity, nikoli automaticky nejnovější verzi knihovny. [Příkazy submodule](https://git-scm.com/docs/git-submodule)
+
+## Změna verze
 
 ```bash
-# Všechny submoduly na nejnovější verzi
-git submodule update --remote
-
-# Konkrétní submodul ručně
-cd cesta/k/submodulu
-git checkout main
-git pull
-cd ../..
-git add cesta/k/submodulu
-git commit -m "Aktualizován submodul na nejnovější verzi"
+git -C libs/knihovna fetch --tags
+git -C libs/knihovna switch --detach v2.0.0
+git diff --submodule
+git add libs/knihovna
+git commit -m "build: připíná knihovnu na verzi 2.0.0"
 ```
 
-### Přepnutí na konkrétní verzi
+Nahraď `v2.0.0` existujícím ověřeným tagem; `-C` spouští Git v daném adresáři bez změny tvého terminálu.
 
-```bash
-cd cesta/k/submodulu
-git checkout v2.0.0
-cd ../..
-git add cesta/k/submodulu
-git commit -m "Změněna verze submodulu na v2.0.0"
-```
+Před commitem hlavního projektu otestuj aplikaci s novou verzí závislosti.
 
-### Úpravy v submodulu
+## Úpravy uvnitř submodulu
 
-```bash
-cd cesta/k/submodulu
-git checkout -b oprava-chyby
-# proveďte změny
-git commit -am "Oprava chyby"
-git push origin oprava-chyby
-# vytvořte pull request v repozitáři submodulu
-```
+Přes `git -C libs/knihovna switch -c oprava` vytvoř pracovní větev; úpravy commituj a publikuj v repozitáři knihovny.
 
-### Změna URL submodulu
+Až poté aktualizuj gitlink v hlavním projektu, aby jej ostatní dokázali stáhnout.
 
-```bash
-git config --file=.gitmodules submodule.nazev.url NOVA_URL
-git submodule sync
-```
+Stav **detached HEAD** je při obnově připnuté verze očekávaný; sám o sobě není závada.
 
-### Odstranění submodulu
+## Změna adresy nebo odstranění
 
-```bash
-git submodule deinit cesta/k/submodulu
-git rm --cached cesta/k/submodulu
-rm -rf cesta/k/submodulu
-rm -rf .git/modules/cesta/k/submodulu
-git commit -m "Odstraněn submodul"
-```
+`git submodule set-url <cesta-submodulu> <nová-URL>` změní adresu a synchronizuje místní konfiguraci; obě hodnoty nahraď podle své knihovny a commituj `.gitmodules`.
 
-### Kontrola stavu
+Po uchování vlastní práce lze submodul odstranit přes `git rm libs/knihovna`, zkontrolovat `git diff --cached` a vytvořit commit.
 
-```bash
-git submodule status
-```
+Neodstraňuj ručně `.git/modules` jako běžný úklid; může obsahovat jediné kopie místních commitů. [Odstranění a obnova submodulů](https://git-scm.com/docs/gitsubmodules)
 
-## Příklad: Unity projekt se submoduly
+## Když je složka prázdná nebo ukazuje jinou verzi
 
-```
-UnityProjekt/
-  ├── .git/
-  ├── .gitmodules
-  └── Assets/
-      └── Plugins/
-          ├── UI-Framework/
-          └── Network/
-```
+Po běžném pull hlavního projektu spusť `git submodule update --init --recursive`; tím obnovíš verze zapsané hlavním projektem, aniž bys vybíral nejnovější vzdálenou větev.
 
-```bash
-cd UnityProjekt
-git submodule add https://github.com/author/ui-framework Assets/Plugins/UI-Framework
-git submodule add https://github.com/author/network-lib Assets/Plugins/Network
-```
+Znak `+` před ID ve výpisu `git submodule status` znamená jiný vybraný commit než ten zapsaný v hlavním indexu, `-` neinicializovaný submodul a `U` konflikt.
 
-## Řešení problémů
-
-**Submodul je v "detached HEAD" stavu:**
-
-```bash
-cd cesta/k/submodulu
-git checkout main
-```
-
-**Submodul ukazuje změny i když žádné nemáš:**
-
-```bash
-git submodule update
-```
-
-## Výhody a nevýhody
-
-| Výhody | Nevýhody |
-|--------|----------|
-| Přesná kontrola verzí závislostí | Složitější správa oproti přímému kódu |
-| Možnost přímých úprav závislostí | Nutnost synchronizace po změnách |
-| Lepší organizace komplexních projektů | Strmější učící křivka pro nové členy |
+Před aktualizací prohlédni vlastní změny přes `git -C libs/knihovna status` a zachovej je, pokud nejsou hotové.

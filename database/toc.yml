@@ -11,6 +11,8 @@
       href: "postgresql.md"
 - name: "Přístup k datům"
   items:
+    - name: "SQL skripty přes sqlcmd"
+      href: "sqlcmd.md"
     - name: "Entity Framework"
       href: "entity-framework.md"
     - name: "Dapper"

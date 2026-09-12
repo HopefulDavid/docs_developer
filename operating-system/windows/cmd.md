@@ -1,56 +1,94 @@
-# Windows CMD a optimalizace – Praktický průvodce a tipy
+---
+description: "Základní orientace v CMD, soubory, proměnné a dávkové skripty."
+---
 
-> Moderní přehled práce s příkazovým řádkem, dávkovými skripty a optimalizací disků ve Windows.
+# CMD – příkazový řádek Windows
 
-![Command Line](../../images/ad71ff83-1ef8-45b0-9e21-2e05c0075935.png)
+CMD spouští příkazy Windows a dávkové soubory `.cmd` nebo `.bat`.
 
-## Příkazový řádek a dávkové skripty
+Jeho syntaxe používá například `%PROMENNA%` a není zaměnitelná s PowerShellem ani Bashem.
 
-- **Batch skript** má příponu `.bat` nebo `.cmd`.
-- Umožňuje automatizovat úlohy ve Windows.
+## Začni ve správné složce
 
-## Spouštění SQL skriptů ze složky
-
-<details>
-<summary>Hromadné spuštění všech SQL skriptů</summary>
+Otevři profil **Příkazový řádek** ve Windows Terminalu nebo spusť `cmd.exe`.
 
 ```cmd
-for %%G in (*.sql) do sqlcmd /S serverTest /d CT46 -U userName -P password123 -i"%%G"
-pause
+rem Vypise aktualni slozku a jeji obsah.
+cd
+dir
+rem /d prejde i na jinou jednotku; cestu nahrad vlastnim projektem.
+cd /d "C:\projekty\moje-aplikace"
 ```
 
-> [!NOTE]
-> Smyčka `for %%G in (*.sql)` projde všechny `.sql` soubory v adresáři a spustí je pomocí `sqlcmd` na zadaném SQL serveru.
-> `pause` umožní zobrazit výsledek před zavřením okna.
+Při neexistující cestě oprav název; další příkazy jinak zůstanou v předchozí složce.
 
-</details>
+## Nejčastější operace
 
-## Optimalizace disků ve Windows
+| Syntaxe CMD | Účinek |
+|---|---|
+| `dir [<cesta>]` | Vypíše obsah složky |
+| `dir /a /x [<cesta>]` | Zahrne skryté položky a existující krátké názvy |
+| `cd /d "<cesta>"` | Změní složku i jednotku |
+| `mkdir "<složka>"` | Vytvoří složku |
+| `copy "<zdroj>" "<cíl>"` | Zkopíruje soubor; zkontroluj případné přepsání cíle |
+| `type "<soubor>"` | Vypíše textový obsah |
+| `where.exe <program>` | Vyhledá program v cestách |
+| `<příkaz> /?` | U většiny vestavěných příkazů zobrazí nápovědu |
 
-<details>
-<summary>Automatická optimalizace SSD a HDD</summary>
+Mazání souboru a celé složky se liší; použij [cílený postup](cannot-delete-item.md#cmd-rozlišení-souboru-a-složky).
 
-> [!NOTE]
-> Windows 10+ automaticky spouští TRIM na SSD jednou týdně. U HDD je doporučena defragmentace jednou měsíčně.
+## Proměnné a přesměrování
 
 ```cmd
-defrag C: D: /O
+set "PROJECT_NAME=moje-aplikace"
+echo %PROJECT_NAME%
+dir /b > soubory.txt
 ```
 
-🔍 **Rozbor příkazu:**
-- `defrag` – Spustí optimalizaci disků.
-- `C: D:` – Vybere disky C: (SSD) a D: (HDD).
-- `/O` – Automaticky použije správnou metodu (TRIM pro SSD, defragmentaci pro HDD).
+`set` nastaví proměnnou pro aktuální proces, `echo` ji vypíše a `>` přepíše výstupní soubor seznamem názvů.
 
-</details>
+`>>` by připojovalo na konec a `|` předává textový výstup dalšímu příkazu.
 
-<details>
-<summary>Co se stane po spuštění?</summary>
+Použij nový výstupní soubor, protože přesměrování může bez dalšího dotazu nahradit jeho obsah.
 
-1️⃣ **SSD (C:)**
-- Spustí se TRIM, který vymaže nepoužívané bloky a zlepší výkon SSD.
+## Malý opakovatelný skript
 
-2️⃣ **HDD (D:)**
-- Spustí se defragmentace, která přesune roztříštěné soubory a zrychlí čtení dat.
+Do nové složky ulož `seznam.cmd`:
 
-</details>
+```cmd
+@echo off
+setlocal
+rem Zacni ve slozce tohoto skriptu; pri neuspechu okamzite skonci.
+pushd "%~dp0" || exit /b 1
+dir /b
+popd
+exit /b 0
+```
+
+Spusť `seznam.cmd` v CMD; skript vypíše obsah své složky, vrátí původní pracovní adresář a oznámí úspěch kódem `0`.
+
+`@echo off` skryje vypisování samotných příkazů, `setlocal` omezí změny prostředí a `%~dp0` označuje disk a cestu dávky.
+
+Nenulový návrat signalizuje chybu podle použitého programu; v dávce `if errorlevel 1` kontroluje hodnotu alespoň jedna.
+
+Ve smyčce dávkového souboru se používá například `%%G`, zatímco stejná ručně zadaná smyčka v CMD používá `%G`.
+
+Pro konkrétní databázový postup pokračuj na [spouštění SQL souborů přes sqlcmd](../../database/sqlcmd.md).
+
+## Kontrola a optimalizace disku
+
+Windows běžně zajišťuje plánovanou údržbu přes **Defragmentovat a optimalizovat jednotky**.
+
+Pokud potřebuješ ruční analýzu, v CMD jako správce:
+
+```cmd
+defrag C: /A /V
+```
+
+`/A` jen analyzuje a `/V` vypíše podrobnosti; `C:` nahraď skutečně kontrolovanou jednotkou.
+
+Pro vědomě požadovanou optimalizaci `defrag C: /O /U` nechá Windows zvolit postup podle typu média a zobrazí průběh.
+
+Písmeno jednotky neurčuje SSD/HDD a TRIM nepředstavuje bezpečné vymazání dat.
+
+Zdroje: [CMD](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd), [set](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/set_1), [defrag](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/defrag).

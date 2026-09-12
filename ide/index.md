@@ -10,5 +10,11 @@ Nastavení a používání vývojových prostředí pro každodenní práci.
 
 | Stránka | Popis |
 | --- | --- |
-| [JetBrains](jetbrains.md) | Propojení s Androidem, XML komentáře, klávesové zkratky a regulární výrazy v JetBrains Rider. |
-| [Visual Studio](visual-studio.md) | Praktické rady pro stažení a instalaci Visual Studio Community offline. |
+| [JetBrains](jetbrains.md) | Připojení Android zařízení a hledání i nahrazování textu pomocí regexu. |
+| [Visual Studio](visual-studio.md) | Příprava instalačního archivu a instalace IDE bez internetu. |
+
+### JetBrains
+
+| Stránka | Popis |
+| --- | --- |
+| [Regulární výrazy](jetbrains/regular-expressions.md) | Hledání a nahrazování podle vzoru, skupiny, více řádků a převod písmen. |

@@ -1,154 +1,146 @@
-# Správa npm balíčků
+---
+description: "Obnova Node.js projektu z lockfilu, přenos celé npm cache a záloha globálních nástrojů."
+---
 
-> Pro správu balíčků je potřeba mít nainstalovaný **Node.js** a **npm**.
+# npm – záloha a obnova balíčků
 
-![npm](../../images/7021cbf6-ee66-45b6-903c-a751e0653eec.png)
+npm instaluje závislosti Node.js podle `package.json`; jejich konkrétní vyřešené verze uchovává `package-lock.json`.
 
-## Aktualizace balíčků
+S internetem stačí obnovitelné zdroje projektu, zatímco bez registru potřebuješ také naplněnou instalační cache.
 
-<details>
-<summary>Jak správně aktualizovat balíčky?</summary>
+## Obnova s internetem
 
-1. 🚀 **Aktualizace Storybook:**
-   ```bash
-   npx storybook@latest upgrade
-   ```
-_Použije nejnovější verzi Storybook a provede upgrade._
+Zálohuj celý zdrojový projekt, lockfile, všechny workspaces a projektové `.npmrc` bez přihlašovacích tokenů.
 
-2. 🕵️ **Zjištění zastaralých balíčků:**
-   ```bash
-   npm outdated
-   ```
-_Vypíše seznam balíčků, které mají novější verzi._
+Na cíli nainstaluj stejnou verzi Node.js a npm a v kořeni projektu spusť:
 
-3. 🛠️ **Aktualizace konkrétních balíčků:**
-   ```bash
-   npm install vite@latest @sveltejs/vite-plugin-svelte@latest
-   ```
-_Nainstaluje nejnovější verze vybraných balíčků._
-
-> **Tip:** Po aktualizaci spusťte projekt a ověřte funkčnost. Některé aktualizace mohou vyžadovat úpravy v konfiguraci nebo kódu.
-
-</details>
-
-## Globální balíčky
-
-<details>
-<summary>Kde najdu globální balíčky?</summary>
-
-| 🖥️ Operační systém | 📂 Umístění globálních balíčků |
-|--------------------|-----------------------------------------------|
-| 🪟 Windows | `C:\Users\<user>\AppData\Roaming\npm\node_modules` |
-| 🐧 Mac/Linux | `~/.npm-global/lib/node_modules` |
-
-🔍 **Zjištění cesty příkazem:**
 ```bash
-npm root -g
+npm ci --include=dev --no-audit --no-fund
+npm ls --all
 ```
-</details>
 
-## Záloha globálních balíčků
+`npm ci` obnoví uzamčené verze, odmítne nesoulad manifestu s lockfilem a odstraní stávající `node_modules`. [Npm ci](https://docs.npmjs.com/cli/v11/commands/npm-ci/)
 
-<details>
-<summary>Jak zálohovat globální balíčky?</summary>
+Proto postup zkoušej v pracovní kopii, nikoli ve složce s ručními úpravami instalovaných balíčků.
 
-Tento PowerShell skript zálohuje seznam globálních balíčků a stáhne je pro offline použití.
+## Offline záloha a obnova
 
-```powershell
-# Vytvoření cesty k souboru se seznamem balíčků
-$packageListFilePath = Join-Path $PWD.Path 'npm_global_packages.txt'
-$outputFolder = Join-Path $PWD.Path 'offline_packages'
+Příklady jsou pro npm 11 a fungují v PowerShellu i Bashi.
 
-# Uložení seznamu balíčků
-npm list -g --depth=0 | Out-File $packageListFilePath -Encoding utf8
+Zachovej instalační nastavení projektu, zejména volby jako `legacy-peer-deps` nebo `install-links`, se kterými vznikl lockfile.
 
-# Vytvoření složky pro balíčky
-if (!(Test-Path $outputFolder)) { New-Item -ItemType Directory -Path $outputFolder | Out-Null }
+### 1. Naplň samostatnou cache s internetem
 
-# Načtení balíčků a stažení .tgz souborů
-$content = Get-Content $packageListFilePath | Select-Object -Skip 1
-foreach ($line in $content) {
-    $line = $line.Trim() -replace '^[+`-]+\s*', ''
-    if ([string]::IsNullOrWhiteSpace($line)) { continue }
-    $parts = $line -split '@'
-    $packageName = $parts[0].Trim()
-    $version = if ($parts.Length -gt 1) { $parts[1].Trim() } else { '' }
-    $packageDir = Join-Path $outputFolder $packageName
-    if (!(Test-Path $packageDir)) { New-Item -ItemType Directory -Path $packageDir | Out-Null }
-    if ($version) {
-        npm pack "$packageName@$version" --pack-destination $packageDir
-    } else {
-        npm pack $packageName --pack-destination $packageDir
-    }
-}
-```
-</details>
+V pracovní kopii projektu s hotovým lockfile:
 
-## Obnova balíčků z offline zálohy
-
-<details>
-<summary>Jak obnovit balíčky ze zálohy?</summary>
-
-Tento PowerShell skript nainstaluje všechny zálohované balíčky z offline složky.
-
-```powershell
-$packageFolder = Join-Path $PWD.Path 'offline_packages'
-$installBaseFolder = Join-Path $PWD.Path 'Installed'
-
-if (!(Test-Path $packageFolder)) { Write-Host "Složka s offline balíčky nebyla nalezena." -ForegroundColor Red; exit }
-if (!(Test-Path $installBaseFolder)) { New-Item -ItemType Directory -Path $installBaseFolder }
-
-$tgzFiles = Get-ChildItem $packageFolder -Filter *.tgz -Recurse
-foreach ($tgzFile in $tgzFiles) {
-    $packageName = [System.IO.Path]::GetFileNameWithoutExtension($tgzFile.Name)
-    $installDir = Join-Path $installBaseFolder $packageName
-    if (!(Test-Path $installDir)) { New-Item -ItemType Directory -Path $installDir }
-    npm install --prefix $installDir $tgzFile.FullName
-}
-```
-</details>
-
-## Aplikační balíčky
-
-<details>
-<summary>git-cliff</summary>
-
-**Generuje kategorizovaný changelog z Git historie a Conventional Commits.**
-
-### Instalace
 ```bash
-npm install --save-dev --save-exact git-cliff
+node --version
+npm --version
+npm ci --include=dev --cache ../zaloha-npm/npm-cache --no-audit --no-fund
+npm cache verify --cache ../zaloha-npm/npm-cache
 ```
 
-Projektová instalace drží verzi v `package.json` a integritu v `package-lock.json`, takže lokální prostředí i CI používají stejný nástroj.
+`--include=dev` zahrne vývojové závislosti i při nastaveném `NODE_ENV=production`, aby na cíli nechyběly nástroje pro build a testy.
 
-### Vytvoření konfigurace
+`cache verify` prověří integritu uložených dat, **nikoli úplnost zálohy pro projekt**. [Npm cache](https://docs.npmjs.com/cli/v11/commands/npm-cache/)
+
+Úplnost ověří až instalace v nové složce níže.
+
+### 2. Přenes zálohu
+
+Po skončení instalací přenes:
+
+```text
+zaloha-npm/
+  projekt/       zdroje, package.json, package-lock.json, konfigurace a workspaces
+  npm-cache/     celá cache z předchozího příkazu
+  verze.txt      Node.js, npm, operační systém a architektura
+```
+
+Projekt přenes bez `node_modules`; přidej také skutečné lokální `file:` závislosti v odpovídajících relativních cestách.
+
+Cache npm nemá záruky trvalého archivu, proto dokončenou a vyzkoušenou kopii ulož odděleně od běžně používané cache.
+
+Ve Windows zvol krátkou cílovou cestu: cache obsahuje dlouhé názvy a kopírovací nástroj bez podpory dlouhých cest může část souborů vynechat nebo skončit chybou.
+
+### 3. Obnov bez internetu
+
+Na kompatibilním cíli v `zaloha-npm/projekt`:
+
 ```bash
-npm exec -- git-cliff --init
+npm ci --offline --include=dev --cache ../npm-cache --no-audit --no-fund
+npm ls --all
 ```
 
-Příkaz vytvoří `cliff.toml`, ve kterém lze deklarativně nastavit skupiny commitů, šablonu, tagy, řazení a odkazy.
+`--offline` zakáže síťové požadavky npm a při chybějícím balíčku instalace selže; `--prefer-offline` chybějící obsah naopak smí stáhnout. [Konfigurace offline režimu](https://docs.npmjs.com/cli/v11/using-npm/config/#offline)
 
-### Generování changelogu
+Nakonec spusť skutečné skripty projektu, například jeho build a testy.
+
+`--no-audit` vynechá síťový audit; kontrolu zranitelností proveď online při přípravě a po návratu k registru.
+
+## Záloha celé již používané cache
+
+Její skutečné umístění zjistíš:
+
 ```bash
-npm exec -- git-cliff --config cliff.toml --output CHANGELOG.md
+npm config get cache
 ```
 
-| ⚙️ Parametr | 💡 Význam |
+Po dokončení instalací zkopíruj celý vypsaný adresář jako `npm-cache` a ověř z něj obnovu každého požadovaného projektu.
+
+Výchozí cesta bývá ve Windows `%LOCALAPPDATA%\npm-cache`, na Linuxu a macOS `~/.npm`; rozhoduje však skutečná konfigurace.
+
+Nekopíruj jen jednotlivé soubory z `_cacache` a před archivací cache nečisti.
+
+## Globální nástroje
+
+Nejdříve si ulož inventář `npm list --global --depth=0`; `npm root --global` ukazuje instalované balíčky, nikoli jejich instalační cache.
+
+S internetem je na cíli obnovíš přes `npm install --global <balíček>@<verze>`.
+
+Pro offline obnovu konkrétního nástroje naplň cache jeho instalací do **nové pomocné složky**, například pro TypeScript:
+
+```bash
+npm install --global --prefix ../zaloha-npm/priprava-tools typescript@5.9.3 --cache ../zaloha-npm/npm-cache --no-audit --no-fund
+```
+
+Tím připravíš balíček i potřebné závislosti bez změny běžné globální instalace. [Npm install](https://docs.npmjs.com/cli/v11/commands/npm-install/)
+
+Na cíli ze složky `zaloha-npm/projekt`:
+
+```bash
+npm install --global typescript@5.9.3 --offline --cache ../npm-cache --no-audit --no-fund
+tsc --version
+```
+
+Název a verzi nahraď inventářem a postup zopakuj pro další nástroje.
+
+Pro zkoušku na původním počítači přidej k cílové instalaci `--prefix ../obnovene-tools` a spusť nový spouštěč z této složky; ve Windows například `../obnovene-tools/tsc.cmd --version`. [Umístění spouštěčů](https://docs.npmjs.com/cli/v11/configuring-npm/folders/)
+
+Globální instalace nemá projektový lockfile pro celý strom závislostí, proto pro dlouhodobě opakovatelný výběr nástroje preferuj samostatný projekt s přesnou závislostí a lockfilem.
+
+## Co samotná cache nepokrývá
+
+| Potřeba | Jak ji zajistit |
 |---|---|
-| `--config` | Cesta k verzované TOML nebo YAML konfiguraci |
-| `--output` | Výstupní Markdown soubor |
-| `--repository` | Jiný Git repozitář než aktuální pracovní adresář |
-| `--include-path` / `--exclude-path` | Omezení historie podle změněných cest |
-| `--tag-pattern` | Regulární výraz určující release tagy |
-| `--sort` | Pořadí commitů `oldest` nebo `newest` |
-| `--offline` | Zakáže vzdálená API volání i při nastaveném remote |
+| Jiný OS, CPU nebo Node.js ABI | Připrav a vyzkoušej samostatnou zálohu pro cílovou platformu |
+| Binární data stahovaná instalačním skriptem | Zálohuj je podle dokumentace konkrétního balíčku |
+| Git a lokální závislosti | Uchovej i zdrojové repozitáře či soubory a ověř čistou instalaci |
+| Výstup build skriptů | Proveď skutečný build; `--ignore-scripts` může nechat instalaci nefunkční |
 
-> **Tip:**
-> Přidejte stabilní projektový skript a v CI používejte úplnou Git historii:
-> ```bash
-> npm pkg set scripts.changelog:generate="git-cliff --config cliff.toml --output CHANGELOG.md"
-> npm run changelog:generate
-> ```
+`npm pack` vytvoří archiv jednoho balíčku, ale běžně do něj nepřibalí všechny jeho závislosti, takže nenahrazuje zálohu projektu. [Npm pack](https://docs.npmjs.com/cli/v11/commands/npm-pack/)
 
-</details>
+Při `ENOTCACHED` doplň zálohu online pro stejný lockfile a zkoušku opakuj od čisté instalace.
+
+## Běžná správa
+
+| Syntaxe | Účel |
+|---|---|
+| `npm install <balíček>[@<verze>]` | Přidání nebo změna závislosti |
+| `npm install --save-dev <balíček>[@<verze>]` | Vývojová závislost |
+| `npm uninstall <balíček>` | Odebrání závislosti |
+| `npm outdated` | Přehled novějších verzí |
+| `npm update` | Aktualizace v povolených rozsazích |
+| `npm run [<skript>]` | Výpis nebo spuštění projektového skriptu |
+
+Po záměrné aktualizaci uchovej nový manifest i lockfile a připrav novou zálohu.

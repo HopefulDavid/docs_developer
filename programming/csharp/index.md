@@ -1,160 +1,85 @@
-# .NET – Modifikátory, Runtimes a PInvoke
+---
+description: "Přístupnost členů, cílové platformy a použití nativních knihoven."
+---
 
-> Praktické rady pro správu přístupu, multiplatformní nasazení, uvolnění zdrojů a volání nativních DLL v .NET.
+# .NET – Přístup, nasazení a nativní knihovny
 
-![C# a.NET](../../images/5b6c5417-6cb1-4ecf-8d08-c4d90783ae23.png)
+Přístupnost členů, cílová platforma a životnost prostředků určují, jak lze knihovnu bezpečně použít v aplikaci.
 
 ## Modifikátory přístupu
 
-<details>
-<summary>Přehled modifikátorů</summary>
+| Modifikátor | Dostupnost |
+|---|---|
+| `public` | Odkudkoli, kde je dostupný obsahující typ |
+| `private` | Uvnitř obsahujícího typu |
+| `protected` | V obsahujícím typu a odvozených typech |
+| `internal` | V rámci stejné assembly |
+| `protected internal` | Ve stejné assembly **nebo** v odvozeném typu |
+| `private protected` | V obsahujícím typu a potomcích ze stejné assembly |
 
-Určuje, kdo má přístup k danému prvku.
+Umístění dvou nesouvisejících tříd do stejného souboru jim nezpřístupní soukromé členy.
 
-| 📍 Odkud voláno | public | protected internal | protected | internal | private protected | private | file |
-|----------------------------------------|--------|--------------------|-----------|----------|-------------------|---------|------|
-| V rámci souboru | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ |
-| V rámci třídy | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ | ❌ |
-| Odvozená třída (stejná assembly) | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ | ❌ | ❌ |
-| Neodvozená třída (stejná assembly) | ✔️ | ✔️ | ❌ | ✔️ | ❌ | ❌ | ❌ |
-| Odvozená třída (jiná assembly) | ✔️ | ✔️ | ✔️ | ❌ | ❌ | ❌ | ❌ |
-| Neodvozená třída (jiná assembly) | ✔️ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+`file` omezuje viditelnost typu na soubor a používá se jen u typů nejvyšší úrovně, nikoli u metod nebo vlastností. [Microsoft: modifikátory přístupu](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/access-modifiers).
 
-📖 Více podrobností [zde](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/access-modifiers#summary-table).
-</details>
+## Složka runtimes a multiplatformní nasazení
 
-## Složka `runtimes` a multiplatformní nasazení
+NuGet balíček může ve složce `runtimes/<RID>` poskytovat prostředky pro konkrétní OS a architekturu.
 
-<details>
-<summary>K čemu slouží složka `runtimes`?</summary>
+RID jako `win-x64`, `linux-x64` nebo `osx-arm64` identifikuje cílovou platformu. [Microsoft: nativní prostředky NuGet](https://learn.microsoft.com/en-us/nuget/create-packages/native-files-in-net-packages).
 
-- Obsahuje **platformově specifické knihovny a binární soubory**.
-- Umožňuje běh aplikace na různých OS a architekturách.
-- V Unity obdobně slouží složka `Plugins`.
+| Nasazení | Co potřebuje cílový počítač |
+|---|---|
+| Framework-dependent | Kompatibilní nainstalovaný .NET runtime a systémové závislosti |
+| Self-contained | Systémové závislosti; .NET runtime je součástí výstupu |
 
-</details>
+V adresáři projektu publikujte každý cíl zvlášť:
 
-<details>
-<summary>Typy nasazení</summary>
-
-### Self-contained deployment
-
-- Aplikace obsahuje **vlastní.NET runtime**.
-- Běží nezávisle na systému uživatele.
-- Větší velikost, ale maximální kompatibilita.
-
-```xml
-<PropertyGroup>
-    <SelfContained>true</SelfContained>
-    <RuntimeIdentifiers>win-x64;linux-x64;osx-x64</RuntimeIdentifiers>
-</PropertyGroup>
+```powershell
+dotnet publish -c Release -r win-x64 --self-contained true -o publish/win-x64
+dotnet publish -c Release -r linux-x64 --self-contained true -o publish/linux-x64
 ```
 
-### Framework-dependent deployment
+Self-contained neodstraňuje závislost na OS, architektuře ani kompatibilních nativních knihovnách.
 
-- Aplikace **vyžaduje.NET runtime** na cílovém systému.
-- Menší velikost, závislost na prostředí.
-
-```xml
-<PropertyGroup>
-    <SelfContained>false</SelfContained>
-</PropertyGroup>
-```
-
-> [!TIP]
-> **Runtime Identifiers (RID)** určují cílovou platformu (např. `win-x64`, `linux-x64`, `osx-x64`).
-
-</details>
+Seznam `RuntimeIdentifiers` v projektu sám nevytvoří všechny výstupy jedním publikováním. [Microsoft: dotnet publish](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-publish).
 
 ## Uvolnění zdrojů
 
-<details>
-<summary>Řízené vs. neřízené zdroje</summary>
+Garbage collector spravuje paměť řízených objektů, ale nezavolá automaticky `Dispose` v okamžiku, kdy skončí práce se souborem nebo připojením.
 
-- **Řízené zdroje**: spravuje garbage collector, není nutné explicitně uvolňovat.
-- **Neřízené zdroje**: soubory, DB, síť – nutné explicitně uvolnit.
-
-</details>
-
-<details>
-<summary>Destruktor a Dispose</summary>
-
-### Destruktor
-
-- Syntaxe: `~ClassName()`
-- Volán automaticky GC, není deterministický.
-
-### Dispose
-
-- Implementace `IDisposable`.
-- Volán explicitně programátorem pro okamžité uvolnění zdrojů.
+Pro objekty implementující `IDisposable` použij `using`; pro `IAsyncDisposable` podle API `await using`.
 
 ```csharp
-public class MyResource : IDisposable
-{
-    public void Dispose()
-    {
-        // Uvolnění zdrojů
-    }
-}
+using var reader = new StreamReader("input.txt");
+Console.WriteLine(reader.ReadLine());
 ```
-</details>
+
+Čtečka se uvolní při opuštění rozsahu i při výjimce.
+
+Finalizér `~ClassName()` nemá deterministické načasování; vlastní finalizér není běžnou náhradou za `Dispose`. [Microsoft: uvolňování neřízených prostředků](https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/unmanaged).
 
 ## Volání funkcí z externích DLL (PInvoke)
 
-<details>
-<summary>Jak volat nativní kód?</summary>
-
-- Použij `DllImport` z `System.Runtime.InteropServices`.
+Následující úplný `Program.cs` pro .NET 10 zavolá Unicode variantu Windows MessageBox:
 
 ```csharp
 using System.Runtime.InteropServices;
 
-public class MyProgram
+if (!OperatingSystem.IsWindows())
+    throw new PlatformNotSupportedException("Ukázka vyžaduje Windows.");
+
+NativeMethods.MessageBoxW(IntPtr.Zero, "Příliš žluťoučký kůň", "Ukázka", 0);
+
+internal static class NativeMethods
 {
-    [DllImport("User32.dll")]
-    public static extern int MessageBox(IntPtr h, string m, string c, int type);
+    [DllImport("user32.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
+    internal static extern int MessageBoxW(
+        IntPtr window, string text, string caption, uint type);
 }
 ```
 
-> [!TIP]
-> Funkce z C++ DLL musí být exportována pomocí `extern "C"` a `__declspec(dllexport)`.
+Deklarace musí odpovídat nativnímu podpisu, volací konvenci a kódování řetězců.
 
-```c++
-extern "C" __declspec(dllexport) int MessageBox(HWND h, LPCSTR m, LPCSTR c, int type)
-{
-    return MessageBoxA(h, m, c, type);
-}
-```
-</details>
+Název DLL a její architektura musí odpovídat cílovému prostředí. [Microsoft: P/Invoke](https://learn.microsoft.com/en-us/dotnet/standard/native-interop/pinvoke), [MessageBoxW](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-messageboxw).
 
-<details>
-<summary>Speciální případ: `__Internal`</summary>
-
-- Funkce se hledá přímo v hlavním spustitelném souboru.
-
-```csharp
-[DllImport("__Internal")]
-public static extern int MyFunction();
-```
-</details>
-
-<details>
-<summary>PInvoke v Unity (AppleAuth příklad)</summary>
-
-```csharp
-private static class PInvoke
-{
-#if UNITY_IOS || UNITY_TVOS
-    private const string DllName = "__Internal";
-#elif UNITY_STANDALONE_OSX
-    private const string DllName = "MacOSAppleAuthManager";
-#endif
-
-    [DllImport(DllName)]
-    public static extern bool AppleAuth_IsCurrentPlatformSupported();
-}
-```
-
-📖 Více info [zde](https://github.com/lupidan/apple-signin-unity/blob/master/AppleAuth/AppleAuthManager.cs).
-</details>
+Unity má vlastní pravidla pro nativní pluginy; `__Internal` se například používá u staticky připojeného iOS pluginu a není univerzální název knihovny pro běžné .NET aplikace. [Unity: iOS pluginy](https://docs.unity3d.com/Manual/PluginsForIOS.html).

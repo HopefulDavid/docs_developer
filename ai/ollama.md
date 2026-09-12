@@ -1,36 +1,64 @@
-# Ollama - Lokální LLM (Large Language Model) pro Windows
+---
+description: "Spouštění místních modelů, jejich stahování, odstranění a nastavení serveru."
+---
 
-> Průvodce nastavením, spuštěním a správou Ollama na Windows.
+# Ollama – lokální modely ve Windows
 
-![Ollama](../images/cbaff73a-7ad7-489d-bb15-2fb847f6904e.png)
+Ollama spouští jazykové modely a poskytuje lokální API pro další aplikace.
 
-## Základní informace
+## Spuštění a ověření
 
-- Ollama naslouchá na adrese: [http://127.0.0.1:11434/](http://127.0.0.1:11434/)
-- Pro spuštění je nutné spustit soubor `ollama app.exe`.
+Nainstaluj Ollama pro Windows a otevři nový terminál.
+
+Aplikace po instalaci běží na pozadí a API standardně používá `http://localhost:11434`.
+
+Samostatný CLI server lze spustit přes `ollama serve`; nespouštěj druhý server na portu, který už používá aplikace. [Ollama ve Windows](https://docs.ollama.com/windows)
+
+```powershell
+ollama --version
+ollama list
+ollama run llama3.2
+```
+
+`--version` vypíše verzi programu, `list` uložené modely a `run llama3.2` otevře konverzaci s ukázkovým modelem.
+
+Při prvním `run` se chybějící model stáhne; počítej s připojením k internetu a místem pro jeho soubory.
 
 ## Příkazy pro správu modelů
 
-| Příkaz | Popis |
-|--------|-------|
-| `ollama list` | Zobrazí nainstalované modely |
-| `ollama run [model]` | Stáhne a spustí model |
-| `ollama rm [model]` | Odstraní model |
+`<model>` je název modelu, který doplníš bez závorek; značení vysvětluje [syntaxe příkazů](../operating-system/command-line-syntax.md).
+
+| Syntaxe | Co příkaz provede |
+|---|---|
+| `ollama list` | Modely uložené na disku |
+| `ollama ps` | Modely právě načtené v paměti |
+| `ollama pull <model>` | Stáhne nebo aktualizuje soubory zvoleného modelu |
+| `ollama run <model> [<zadání>]` | Spustí model, případně mu rovnou předá zadání |
+| `ollama stop <model>` | Uvolní model z paměti, ale ponechá jej na disku |
+| `ollama rm <model>` | Smaže místní model z disku |
+
+### Příklad: stažení jednoho modelu
+
+```powershell
+ollama pull llama3.2
+ollama list
+```
+
+`llama3.2` je konkrétní název, který můžeš změnit podle dostupné paměti a účelu; druhý příkaz ověří, že je model uložený.
+
+Jméno může obsahovat také tag, například `llama3.2:1b`; pokud jej použiješ při stahování, používej stejný název i při spuštění nebo odstranění. [Reference CLI](https://docs.ollama.com/cli)
 
 ## Změna naslouchací adresy
 
-1. Otevřete **System variables** ve Windows.
-2. Přidejte proměnnou prostředí `OLLAMA_HOST` s požadovanou adresou.
-3. Restartujte aplikaci `ollama app.exe`.
+1. Ukonči Ollama z ikony v oznamovací oblasti.
+2. V nastavení Windows vyhledej **Upravit proměnné prostředí pro váš účet**.
+3. Nastav `OLLAMA_HOST`, například `127.0.0.1:11435` pro jiný lokální port.
+4. Znovu spusť Ollama a nastav stejnou adresu i v klientské aplikaci.
 
-> [!IMPORTANT]
-> Změna se projeví až po restartu aplikace.
+Hodnota `0.0.0.0` zpřístupňuje server na všech rozhraních; použij ji jen při zamýšleném síťovém přístupu s odpovídajícím omezením přístupu. [Konfigurace serveru](https://docs.ollama.com/faq)
+
+Umístění modelů mění uživatelská proměnná `OLLAMA_MODELS`; i ta se projeví po restartu serveru. [Umístění modelů](https://docs.ollama.com/windows)
 
 ## Vypnutí automatického spuštění
 
-1. Stiskněte `Windows` + `R`.
-2. Zadejte `shell:startup` a potvrďte.
-3. Odstraňte zástupce na Ollama ze složky.
-
-> [!NOTE]
-> Ollama se ve výchozím stavu spouští automaticky při startu počítače.
+Ve **Správci úloh → Aplikace po spuštění** vyhledej Ollama a zvol **Zakázat**. [Automatické spuštění](https://docs.ollama.com/faq)

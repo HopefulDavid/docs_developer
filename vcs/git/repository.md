@@ -1,45 +1,94 @@
-# Git – Práce s úložištěm
+---
+description: "Založení projektu, klonování existující historie a první ověřený commit."
+---
 
-> Praktické rady pro vytvoření a použití Git úložiště na lokálním i online prostředí.
+# Git – založení a klonování repozitáře
 
-![Ollama](../../images/87aac7e6-0da1-4ada-8c7c-1710636e867a.png)
+Nový repozitář vytvoříš pomocí `init`; existující projekt s historií získáš přes `clone`.
 
-## Vytvoření úložiště
+Tyto možnosti jsou alternativy: do naklonovaného projektu už znovu `init` nepotřebuješ.
 
-<details>
-<summary>Kompletní postup</summary>
+## Před použitím
 
-1. **Inicializace bare úložiště**
-Spusťte v terminálu:
+Nainstaluj [Git](https://git-scm.com/downloads), ověř `git --version` a nastav [jméno a e-mail autora](configuration.md).
 
-   ```bash
-   git init --bare <cesta>
-   ```
+Příklady fungují v PowerShellu i Bashi a používají nové složky; do cizího existujícího repozitáře nevkládej další vnořený `.git`.
 
-- `<cesta>` = cílová složka, musí končit `.git`
-*Např.:* `C:\projekty\moje-repozitar.git`
+## Nový projekt
 
-> [!WARNING]
-> Cesta musí mít na konci `.git`, jinak nebude úložiště správně rozpoznáno.
+V rodičovské složce projektů spusť:
 
-</details>
+```bash
+git init -b main moje-aplikace
+cd moje-aplikace
+git status
+```
 
-## Klonování úložiště
+`init` založí složku `moje-aplikace` a historii uvnitř `.git`; `-b main` zvolí název počáteční větve.
 
-<details>
-<summary>Použití v pracovním prostředí</summary>
+V editoru vytvoř `README.md` s názvem a účelem projektu a přidej vhodný [`.gitignore`](history/update-gitignore.md) ještě před prvním hromadným přidáváním souborů.
 
-1. **Klonování úložiště**
-Spusťte v terminálu:
+```bash
+git add -- README.md .gitignore
+git diff --cached
+git commit -m "docs: zakládá projekt"
+git log --oneline -1
+```
 
-   ```bash
-   git clone <cesta>
-   ```
+První příkaz předpokládá oba vytvořené soubory; pokud `.gitignore` nepotřebuješ a nevytvořil jsi ho, vynech jeho název.
 
-- `<cesta>` = adresa k úložišti (lokální nebo online), musí končit `.git`
-*Např.:* `C:\projekty\moje-repozitar.git` nebo `https://github.com/uzivatel/projekt.git`
+Zkontrolovaný obsah indexu se uloží jako první místní commit a poslední příkaz zobrazí jeho ID.
 
-> [!TIP]
-> Cestu lze použít jak lokální, tak online (např. GitHub, GitLab).
+### Už mám soubory bez Gitu
 
-</details>
+V kořeni této složky použij `git init -b main` bez názvu dalšího adresáře.
+
+Pak nejprve projdi `git status --short` a přidávej jen požadované soubory; konfigurace s hesly, velké exporty a výstup buildů obvykle do historie nepatří.
+
+## Existující projekt na serveru
+
+Obecná syntaxe:
+
+```text
+git clone <URL-nebo-místní-cesta> [<cílová-složka>]
+```
+
+Adresu zkopíruj z tlačítka Clone nebo Code na svém hostingu; vyber HTTPS nebo SSH podle [způsobu přihlášení](server.md).
+
+Tento veřejný příklad lze vyzkoušet bez účtu:
+
+```bash
+git clone https://github.com/octocat/Hello-World.git git-ukazka
+cd git-ukazka
+git status
+git remote -v
+```
+
+`git-ukazka` je volitelný místní název složky; `clone` stáhne historii a vytvoří remote `origin` podle zdrojové adresy.
+
+Výchozí větev přebírá ze serveru, proto nepředpokládej automaticky `main`; tento ukázkový repozitář používá `master`.
+
+Stažený ZIP obsahuje soubory, ale nezachovává repozitářovou historii jako `clone`.
+
+## Ověření a další krok
+
+```bash
+git rev-parse --show-toplevel
+git branch --show-current
+git status --short --branch
+```
+
+Uvidíš kořen správného projektu, aktuální větev a stav změn.
+
+Nový lokální projekt připoj k [serveru](server.md); naklonovaný projekt je připravený pro [každodenní práci](in-practice.md).
+
+### Časté problémy
+
+| Hlášení | Co ověřit |
+|---|---|
+| `not a git repository` | Terminál není uvnitř pracovní kopie; přejdi do její složky |
+| Cílová složka není prázdná | Pro clone zvol novou složku a existující obsah nejprve prohlédni |
+| `Author identity unknown` | Nastav identitu před commitem |
+| `repository not found` | Zkontroluj přesnou URL a přístup svého účtu k privátnímu projektu |
+
+Podrobnosti: [git init](https://git-scm.com/docs/git-init), [git clone](https://git-scm.com/docs/git-clone).

@@ -152,42 +152,47 @@ const rootPages = [
 const navigation = {
   ai: [{ name: 'Modely a nástroje', items: [{ name: 'Ollama', href: 'ollama.md' }] }],
   vcs: [
-    {
-      name: 'Git',
-      items: [
-        { name: 'Konfigurace', href: 'git/configuration.md' },
-        { name: 'Úložiště', href: 'git/repository.md' },
-        { name: 'Git server', href: 'git/server.md' },
-        { name: 'Submoduly', href: 'git/submodules.md' },
-        { name: 'Git Flow', href: 'git/git-flow.md' },
-        { name: 'Použití v praxi', href: 'git/in-practice.md' },
-        {
-          name: 'Větve',
-          items: [
-            { name: 'Vytvoření vzdálené větve', href: 'git/branches/create-remote-branch.md' },
-            { name: 'Smazání vzdálené větve', href: 'git/branches/delete-remote-branch.md' },
-            { name: 'Pull request', href: 'git/branches/pull-request.md' },
-          ],
-        },
-        {
-          name: 'Historie',
-          items: [
-            { name: '.gitignore', href: 'git/history/update-gitignore.md' },
-            { name: 'Přesun commitů', href: 'git/history/move-commits.md' },
-            { name: 'Sloučení commitů', href: 'git/history/squash-branch-commits.md' },
-            { name: 'Oprava commitů', href: 'git/history/fix-commits.md' },
-            { name: 'Odstranění commitů', href: 'git/history/delete-commits.md' },
-            { name: 'Lokální ignorování změn', href: 'git/history/assume-unchanged.md' },
-          ],
-        },
-      ],
-    },
+    { name: 'Začínáme s Gitem', items: [
+      { name: 'Principy a orientace', href: 'git/basics.md' },
+      { name: 'Výběr způsobu práce', href: 'git/workflows.md' },
+      { name: 'Nastavení', href: 'git/configuration.md' },
+      { name: 'Založení a klonování', href: 'git/repository.md' },
+      { name: 'Připojení serveru', href: 'git/server.md' },
+    ] },
+    { name: 'Každodenní práce', items: [
+      { name: 'Běžný pracovní den', href: 'git/in-practice.md' },
+      { name: 'Vytvoření a výběr větve', href: 'git/branches/create-remote-branch.md' },
+      { name: 'Synchronizace a push', href: 'git/synchronization.md' },
+      { name: 'Slučování a konflikty', href: 'git/merging.md' },
+      { name: 'Pull request', href: 'git/branches/pull-request.md' },
+      { name: 'Stash a worktree', href: 'git/stash-worktree.md' },
+      { name: 'Odstranění větve', href: 'git/branches/delete-remote-branch.md' },
+      { name: '.gitignore', href: 'git/history/update-gitignore.md' },
+    ] },
+    { name: 'Historie a řešení problémů', items: [
+      { name: 'Obnova při chybě', href: 'git/recovery.md' },
+      { name: 'Čtení historie a bisect', href: 'git/history/reading.md' },
+      { name: 'Oprava commitů', href: 'git/history/fix-commits.md' },
+      { name: 'Vrácení změny', href: 'git/history/delete-commits.md' },
+      { name: 'Přesun commitů', href: 'git/history/move-commits.md' },
+      { name: 'Spojení commitů', href: 'git/history/squash-branch-commits.md' },
+      { name: 'Nahrazení celé historie', href: 'git/history/replace-history.md' },
+      { name: 'Lokální konfigurace', href: 'git/history/assume-unchanged.md' },
+    ] },
+    { name: 'Vydávání a správa projektu', items: [
+      { name: 'Tagy a vydání', href: 'git/releases.md' },
+      { name: 'Záloha a migrace', href: 'git/backups.md' },
+      { name: 'Submoduly', href: 'git/submodules.md' },
+      { name: 'Git Flow', href: 'git/git-flow.md' },
+    ] },
   ],
   ide: [
     {
       name: 'Vývojová prostředí',
       items: [
-        { name: 'JetBrains', href: 'jetbrains.md' },
+        { name: 'JetBrains', href: 'jetbrains.md', items: [
+          { name: 'Regulární výrazy', href: 'jetbrains/regular-expressions.md' },
+        ] },
         { name: 'Visual Studio', href: 'visual-studio.md' },
       ],
     },
@@ -198,8 +203,8 @@ const navigation = {
       items: [
         { name: 'Výběr platformy pro vývoj', href: 'platform-selection.md' },
         { name: 'Komentáře v kódu', href: 'code-comments.md' },
-        { name: 'Vývojové vzory', href: 'development-patterns.md' },
-        { name: 'Techniky', href: 'techniques.md' },
+        { name: 'Návrhové vzory', href: 'development-patterns.md' },
+        { name: 'Metodiky a konvence', href: 'techniques.md' },
       ],
     },
     {
@@ -209,9 +214,9 @@ const navigation = {
           name: 'C# a .NET',
           href: 'csharp/index.md',
           items: [
-            { name: 'Komponenty', href: 'csharp/components.md' },
-            { name: 'Interface', href: 'csharp/interface.md' },
-            { name: 'Datové typy', href: 'csharp/data-types.md' },
+            { name: 'Windows Workflow (WF)', href: 'csharp/components.md' },
+            { name: 'Rozhraní a kopírování', href: 'csharp/interface.md' },
+            { name: 'Kolekce a datové typy', href: 'csharp/data-types.md' },
             { name: 'Atributy', href: 'csharp/attributes.md' },
             { name: 'Enum', href: 'csharp/enum.md' },
             { name: 'Metody', href: 'csharp/methods.md' },
@@ -265,12 +270,21 @@ const navigation = {
       ],
     },
     {
-      name: 'Nástroje a balíčky',
+      name: 'Balíčky',
+      items: [
+        { name: 'Záloha a offline obnova', href: 'packages/offline.md' },
+        { name: 'NuGet', href: 'packages/nuget.md' },
+        { name: '.NET tools – offline obnova', href: 'packages/dotnet-tools.md' },
+        { name: 'npm', href: 'packages/npm.md' },
+        { name: 'pnpm', href: 'packages/pnpm.md' },
+        { name: 'Python', href: 'packages/python.md' },
+        { name: 'Dart a Flutter pub', href: 'packages/dart.md' },
+      ],
+    },
+    {
+      name: 'Vývojové nástroje',
       items: [
         { name: '.NET CLI', href: 'packages/dotnet-cli.md' },
-        { name: 'NuGet', href: 'packages/nuget.md' },
-        { name: 'npm', href: 'packages/npm.md' },
-        { name: 'Python', href: 'packages/python.md' },
         { name: 'Appcast feed', href: 'appcast.md' },
       ],
     },
@@ -294,13 +308,14 @@ const navigation = {
     {
       name: 'Přístup k datům',
       items: [
+        { name: 'SQL skripty přes sqlcmd', href: 'sqlcmd.md' },
         { name: 'Entity Framework', href: 'entity-framework.md' },
         { name: 'Dapper', href: 'dapper.md' },
       ],
     },
   ],
   devops: [
-    { name: 'Infrastructure as Code', items: [{ name: 'OpenTofu', href: 'opentofu.md' }] },
+    { name: 'Infrastruktura jako kód', items: [{ name: 'OpenTofu', href: 'opentofu.md' }] },
   ],
   documentation: [
     {
@@ -316,19 +331,7 @@ const navigation = {
       name: 'Prostředí',
       items: [
         { name: 'WSL', href: 'wsl.md' },
-        {
-          name: 'Docker',
-          href: 'docker/index.md',
-          items: [
-            {
-              name: 'Bezpečný upgrade stateful služby',
-              href: 'docker/safe-stateful-upgrade.md',
-            },
-            { name: 'Portainer', href: 'docker/portainer.md' },
-            { name: 'Duplicati', href: 'docker/duplicati.md' },
-            { name: 'BusyBox', href: 'docker/busybox.md' },
-          ],
-        },
+        { name: 'Docker', href: 'docker/index.md' },
         { name: 'Kubernetes', href: 'kubernetes.md' },
       ],
     },
@@ -337,18 +340,35 @@ const navigation = {
     {
       name: 'Síťové nástroje',
       items: [
-        { name: 'Certifikáty', href: 'certificates.md' },
+        { name: 'Základy a diagnostika sítě', href: 'basics.md' },
+        {
+          name: 'SSH – příkazy a připojení',
+          href: 'ssh.md',
+          items: [
+            { name: 'Windows a volba klienta', href: 'ssh/windows.md' },
+            { name: 'SSH klíče', href: 'ssh/keys.md' },
+            { name: 'Git přes SSH', href: 'ssh/git.md' },
+          ],
+        },
+        { name: 'TLS certifikáty', href: 'certificates.md' },
+        { name: 'Náhodná tajemství', href: 'secrets.md' },
         { name: 'VPN', href: 'vpn.md' },
       ],
     },
   ],
   'operating-system': [
+    { name: 'Příkazová řádka', items: [
+      { name: 'Jak číst zápis příkazů', href: 'command-line-syntax.md' },
+    ] },
     {
       name: 'Windows',
       href: 'windows/index.md',
       items: [
-        { name: 'Command Line', href: 'windows/cmd.md' },
+        { name: 'Instalátor nevidí SSD', href: 'windows/installation-missing-ssd.md' },
+        { name: 'Nelze odstranit položku', href: 'windows/cannot-delete-item.md' },
+        { name: 'Příkazový řádek (CMD)', href: 'windows/cmd.md' },
         { name: 'PowerShell', href: 'windows/powershell.md' },
+        { name: 'Prostředí PowerShellu', href: 'windows/terminal.md' },
       ],
     },
   ],
@@ -424,9 +444,6 @@ const legacyRenames = new Map([
   ['vcs/git/history/moveCommits.md', 'vcs/git/history/move-commits.md'],
   ['vcs/git/history/updateGitignore.md', 'vcs/git/history/update-gitignore.md'],
   ['virtualization/docker.md', 'virtualization/docker/index.md'],
-  ['virtualization/docker_busybox.md', 'virtualization/docker/busybox.md'],
-  ['virtualization/docker_duplicati.md', 'virtualization/docker/duplicati.md'],
-  ['virtualization/docker_portainer.md', 'virtualization/docker/portainer.md'],
 ]);
 
 const reverseRenames = new Map([...legacyRenames].map(([from, to]) => [to, from]));
@@ -677,6 +694,7 @@ function normalizeLinks(content, currentRel) {
     });
 }
 
+/** Převede běžný HTML obrázek na Markdown a zachová snímky s autorem zvolenou šířkou. */
 function htmlImageToMarkdown(line, relPath, pageTitle) {
   const match = line.match(/^(\s*(?:>\s*)?)<img\b([^>]*)\/?>\s*$/i);
   if (!match) {
@@ -685,6 +703,10 @@ function htmlImageToMarkdown(line, relPath, pageTitle) {
 
   const prefix = match[1];
   const attrs = match[2];
+  // Rozměr ručně posouzeného snímku je součástí článku, převod na Markdown by ho zahodil.
+  if (/\bwidth=["'][1-9]\d*["']/i.test(attrs)) {
+    return line;
+  }
   const src = attrs.match(/\bsrc=["']([^"']+)["']/i)?.[1];
   if (!src) {
     return line;
@@ -695,16 +717,24 @@ function htmlImageToMarkdown(line, relPath, pageTitle) {
   return `${prefix}![${alt}](${normalizedSrc})`;
 }
 
+/** Normalizuje mezery a interpunkci textu při zachování názvu .NET a Markdown kódu. */
 function cleanInline(value) {
-  return value
+  const codeSpans = [];
+  const prose = value.replace(/(?<!`)(`+)(?!`)[\s\S]*?(?<!`)\1(?!`)/g, (code) => {
+    codeSpans.push(code);
+    return `\u0000${codeSpans.length - 1}\u0000`;
+  });
+
+  return prose
     .replace(/\s&\s/g, ' a ')
     .replace(/[\u00A0\u202F]/g, ' ')
     .replace(/[ \t]{2,}/g, ' ')
-    .replace(/\s+([,.;:!?])/g, '$1')
+    .replace(/\s+([,;:!?]|\.(?!NET\b))/g, '$1')
     .replace(/\b(v|ve|s|se|pro|pomocí)\.NET/g, '$1 .NET')
     .replace(/\(\s+/g, '(')
     .replace(/\s+\)/g, ')')
-    .trim();
+    .trim()
+    .replace(/\u0000(\d+)\u0000/g, (_, index) => codeSpans[Number(index)]);
 }
 
 function normalizeHeadingTitle(title) {
@@ -855,26 +885,22 @@ function firstHeading(content) {
   return match ? cleanInline(match[1]) : '';
 }
 
+/** Čte samostatný popis rozcestníku; neplatná nebo chybějící metadata vrací jako prázdný text. */
 function descriptionFromMarkdown(content) {
-  const lines = content.split('\n');
-  const headingIndex = lines.findIndex((line) => /^#\s+/.test(line));
-
-  for (let index = Math.max(0, headingIndex + 1); index < lines.length; index += 1) {
-    const line = lines[index].trim();
-    if (!line || line.startsWith('<!--')) {
-      continue;
+  // Jednořádkový JSON řetězec je současně platný YAML a nepřenáší odkazy z těla.
+  const { frontMatter } = splitFrontMatter(content);
+  const metadata = frontMatter.match(/^description:\s*("(?:[^"\\]|\\.)*")\s*$/m);
+  if (metadata) {
+    try {
+      const description = JSON.parse(metadata[1]).trim();
+      if (description && !/[\r\n|]|\[[^\]]*\]\(/.test(description)) {
+        return description;
+      }
+    } catch {
+      return '';
     }
-    if (line.startsWith('#') || line.startsWith('![') || line.startsWith('|')) {
-      continue;
-    }
-    if (line.startsWith('> [!')) {
-      continue;
-    }
-
-    return cleanInline(line.replace(/^>\s*/, '').replace(/^\*\*.+?:\*\*\s*/, ''));
   }
-
-  return 'Stránka zatím nemá krátký úvod.';
+  return '';
 }
 
 function pageInfo(relPath) {
@@ -884,11 +910,15 @@ function pageInfo(relPath) {
   }
 
   const content = readFile(relPath);
+  const description = descriptionFromMarkdown(content);
+  if (!description) {
+    errors.push(`${relPath}: doplň neprázdný jednořádkový description v dvojitých uvozovkách, bez odkazů a znaku |`);
+  }
   return {
     relPath,
     title: firstHeading(content) || inferredTitle(relPath),
     navTitle: titleByPath.get(relPath) || firstHeading(content) || inferredTitle(relPath),
-    description: descriptionFromMarkdown(content),
+    description,
   };
 }
 
@@ -908,20 +938,37 @@ function generatedPage(file, title, body) {
 
 function renderRootIndex() {
   const file = 'index.md';
-  const sectionRows = sectionOrder.map((section) => {
-    const pages = flattenItems(navigation[section] || []).filter((item) => item.href);
+  const areas = sectionOrder.map((section) => {
     const info = sectionInfo[section];
-    return [
-      link(file, info.title, `${section}/index.md`),
-      String(pages.length),
-      info.intro,
-    ];
-  });
+    return `- **${link(file, info.title, `${section}/index.md`)}** ${info.intro}`;
+  }).join('\n');
 
-  const body = `Osobní vývojářská dokumentace sjednocená podle tematických oblastí. Přehledy a navigace se skládají automaticky ze zdrojových souborů, aby zůstaly konzistentní i při dalším rozšiřování.\n\n## Oblasti\n\n${table(
-    ['Oblast', 'Stránek', 'Záměr'],
-    sectionRows
-  )}\n## Údržba\n\n- Aktualizace přehledů a navigace: \`npm run docs:generate\`.\n- Kontrola bez zápisu: \`npm run docs:check\`.\n- Build DocFX výstupu: \`npm run docs:build\`.\n- Historie změn: ${link(file, 'Změny', 'changelog.md')}.`;
+  const body = `České návody pro každodenní vývoj: od principu přes použitelný příklad až po ověření výsledku.
+
+Vyber oblast nebo vyhledej nástroj v horní liště; na mobilu ji otevřeš tlačítkem navigace.
+
+## Začni podle cíle
+
+- ${link(file, 'Založit repozitář a rozumět změnám v Gitu', 'vcs/git/repository.md')}.
+- ${link(file, 'Spustit aplikaci v Dockeru', 'virtualization/docker/index.md')}.
+- ${link(file, 'Vybrat platformu podle požadavků', 'programming/platform-selection.md')}.
+- ${link(file, 'Zprovoznit SSH připojení', 'network/ssh.md')}.
+
+## Oblasti
+
+<div class="docs-areas">
+
+${areas}
+
+</div>
+
+## Jak návody používat
+
+Nejprve ověř uvedený systém, verzi nástroje a pracovní složku, potom postupuj podle příkladu a porovnej očekávaný výsledek.
+
+Ukázkové názvy, cesty a porty přizpůsob podle vysvětlení u kódu; rozšiřující varianty a diagnostiku najdeš za hlavním postupem.
+
+Historii úprav najdeš na stránce ${link(file, 'Změny', 'changelog.md')}.`;
 
   generatedPage(file, 'Dokumentace pro vývojáře', body);
 }
@@ -1205,6 +1252,66 @@ function cleanArtifact(outputArgument) {
   console.log(`Připraven čistý DocFX výstup: ${toPosix(path.relative(root, outputRoot))}`);
 }
 
+/** Decode the character references used in DocFX HTML attribute values. */
+function decodeHtmlAttribute(value) {
+  return value.replace(/&(#x[0-9a-f]+|#\d+|amp|quot|apos|lt|gt);/gi, (match, entity) => {
+    if (entity[0] === '#') {
+      const hex = entity[1].toLowerCase() === 'x';
+      const code = Number.parseInt(entity.slice(hex ? 2 : 1), hex ? 16 : 10);
+      return code <= 0x10ffff ? String.fromCodePoint(code) : match;
+    }
+    return { amp: '&', quot: '"', apos: "'", lt: '<', gt: '>' }[entity.toLowerCase()];
+  });
+}
+
+/**
+ * Check local links against actual generated filenames and anchors, including casing.
+ * This reads quoted attributes in controlled DocFX output, not arbitrary user HTML.
+ *
+ * @param {Map<string, string>} htmlByPath Generated HTML indexed by artifact-relative path.
+ * @param {Set<string>} artifactPaths All artifact-relative file paths.
+ * @returns {string[]} Broken local links with the source page and reason.
+ */
+function collectHtmlLinkErrors(htmlByPath, artifactPaths) {
+  const failures = [];
+  const idsByPath = new Map();
+  const markupByPath = new Map();
+  for (const [file, html] of htmlByPath) {
+    const markup = html.replace(/<!--[\s\S]*?-->|<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+    markupByPath.set(file, markup);
+    const ids = new Set();
+    for (const tag of markup.matchAll(/<[a-z][^>]*>/gi)) {
+      const id = tag[0].match(/\sid\s*=\s*(?:"([^"]*)"|'([^']*)')/i);
+      if (id) ids.add(decodeHtmlAttribute(id[1] ?? id[2]));
+    }
+    idsByPath.set(file, ids);
+  }
+
+  for (const [file, markup] of markupByPath) {
+    for (const tag of markup.matchAll(/<(?:a|img|link|iframe|source)\b[^>]*>/gi)) {
+      const attribute = tag[0].match(/\s(?:href|src)\s*=\s*(?:"([^"]*)"|'([^']*)')/i);
+      if (!attribute) continue;
+      const target = decodeHtmlAttribute(attribute[1] ?? attribute[2]);
+      if (!target || /^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(target)) continue;
+      let url;
+      try {
+        url = new URL(target, `https://docfx.invalid/${file}`);
+        const pathname = decodeURIComponent(url.pathname).replace(/^\//, '');
+        const destination = pathname.endsWith('/') ? `${pathname}index.html` : pathname;
+        if (!artifactPaths.has(destination)) {
+          failures.push(`${file} -> ${target}: neexistující cesta nebo nesprávný casing`);
+        } else if (url.hash && idsByPath.has(destination) &&
+                   !idsByPath.get(destination).has(decodeURIComponent(url.hash.slice(1)))) {
+          failures.push(`${file} -> ${target}: neexistující kotva`);
+        }
+      } catch {
+        failures.push(`${file} -> ${target}: neplatné kódování URL`);
+      }
+    }
+  }
+  return failures;
+}
+
 function verifyArtifact(outputArgument) {
   const outputRoot = resolveArtifactOutput(outputArgument);
 
@@ -1312,8 +1419,12 @@ function verifyArtifact(outputArgument) {
     artifactErrors.push('výstup neobsahuje index.html');
   }
 
+  const htmlByPath = new Map(artifactFiles.filter((file) => file.endsWith('.html'))
+    .map((file) => [file, fs.readFileSync(path.join(outputRoot, file), 'utf8')]));
+  artifactErrors.push(...collectHtmlLinkErrors(htmlByPath, new Set(artifactFiles)));
+
   if (artifactErrors.length) {
-    console.error('DocFX artefakt neodpovídá veřejné obsahové hranici:');
+    console.error('DocFX artefakt neodpovídá veřejné hranici nebo obsahuje neplatné odkazy:');
     for (const error of artifactErrors) {
       console.error(`- ${error}`);
     }
@@ -1321,7 +1432,7 @@ function verifyArtifact(outputArgument) {
   }
 
   console.log(
-    `DocFX artefakt je veřejně ohraničený (${manifestSources.size} zdrojů, ${artifactFiles.length} souborů).`,
+    `DocFX artefakt je veřejně ohraničený a odkazy včetně kotev jsou platné (${manifestSources.size} zdrojů, ${artifactFiles.length} souborů).`,
   );
 }
 
@@ -1352,4 +1463,4 @@ if (require.main === module) {
   runCli();
 }
 
-module.exports = { isInternalArtifactPath, isInternalPath };
+module.exports = { cleanInline, collectHtmlLinkErrors, descriptionFromMarkdown, htmlImageToMarkdown, isInternalArtifactPath, isInternalPath };

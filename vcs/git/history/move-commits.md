@@ -1,76 +1,140 @@
-# Git – Přesun commitů do nové nebo existující větve
+---
+description: "Přesun posledních commitů do nové i existující větve včetně úklidu zdroje, merge a cherry-pick."
+---
 
-> Praktické rady, jak přesunout poslední commity ze jedné větve do nové nebo existující větve.
+# Git – přesun commitů do jiné větve
 
-![Přesun commitů](../../../images/9f2bcd1c-dba3-46b0-81ab-6f8ca2fec026.png)
+Přesun má dvě části: nejprve zachováš práci v cílové větvi, potom ji odebereš ze zdrojové.
 
-## Přesun commitů do **nové větve**
+Vytvoření větve nebo merge zachová původní commity; `cherry-pick` přenáší vybrané změny a na jiném základu vytváří nové commity.
 
-<details>
-<summary>Krok 1: Vytvoření nové větve z aktuální</summary>
+## Před použitím
 
-```bash
-git checkout master
-git branch newbranch
-git checkout master
-```
-- Přepne se do zdrojové větve (`master`), vytvoří novou větev (`newbranch`) se stejnou historií.
-</details>
+Příklady fungují v PowerShellu i Bashi a přesouvají **poslední tři neodeslané lineární commity** z místní větve `main`.
 
-<details>
-<summary>Krok 2: Odstranění commitů ze zdrojové větve</summary>
+Názvy `main` a `feature/presunuta-prace` nahraď podle projektu; záložní větev `backup/pred-presunem` musí být nová.
+
+Nejdříve ověř čistý pracovní strom:
 
 ```bash
-git reset --hard HEAD~3
+git status --short
+git switch main
+git log --graph --oneline --decorate -8
+git branch --no-track backup/pred-presunem
+git log --reverse --oneline backup/pred-presunem~3..backup/pred-presunem
 ```
-- Odstraní poslední 3 commity ze zdrojové větve (`master`).
 
-> [!WARNING]
-> Tento krok je **nevratný** – commity budou ze zdrojové větve smazány.
-</details>
+Pokud první příkaz vypíše změny, nejprve je commitni nebo [odlož přes stash](../stash-worktree.md), pak začni znovu.
 
-<details>
-<summary>Krok 3: Přepnutí do nové větve</summary>
+Poslední výpis musí obsahovat právě commity, které chceš přesunout; `backup/pred-presunem~3` je jejich předchozí základ.
+
+Pro jiný počet uprav `~3` ve všech krocích, případně použij ověřené ID základního commitu.
+
+Rozsah `základ..konec` **nezahrnuje základ**, proto do něj nepatří ID prvního přesouvaného commitu.
+
+Při merge commitech nebo změnách promíchaných s cizí prací nepoužívej tento reset posledních tří commitů bez úpravy rozsahu.
+
+## Přesun commitů do nové větve
+
+Z výchozího stavu `A–B–C–D–E (main)` vznikne `A–B (main)`, zatímco nová větev zachová `A–B–C–D–E`.
+
+Po společné přípravě, stále na `main`:
 
 ```bash
-git checkout newbranch
+git branch --no-track feature/presunuta-prace backup/pred-presunem
+git reset --keep backup/pred-presunem~3
+git switch feature/presunuta-prace
+git log --graph --oneline --decorate --all -10
 ```
-- Nová větev obsahuje původní commity, které byly odstraněny ze zdrojové větve.
-</details>
 
-## Přesun commitů do **existující větve**
+Nová větev ukazuje na původní poslední commit ještě před resetem, takže práce i její ID zůstanou zachované.
 
-<details>
-<summary>Krok 1: Merge commitů do cílové větve</summary>
+`--keep` vrátí zdrojovou větev a dotčené soubory; při kolizi s necommitovanou úpravou skončí chybou místo jejího přepsání. [Git reset](https://git-scm.com/docs/git-reset)
+
+`--no-track` zabrání nechtěnému nastavení původní místní větve jako upstreamu, který by později ovlivňoval pull nebo rebase. [Git branch](https://git-scm.com/docs/git-branch)
+
+Potom ověř obsah a testy na nové větvi.
+
+## Přesun commitů do existující větve
+
+### Vybrané commity pomocí cherry-pick
+
+Po společné přípravě přepni na **již existující místní** cílovou větev:
 
 ```bash
-git checkout existingbranch
-git merge branchToMoveCommitFrom
+git switch feature/presunuta-prace
+git cherry-pick backup/pred-presunem~3..backup/pred-presunem
+git log --oneline -5
+git diff --stat backup/pred-presunem~3 backup/pred-presunem
 ```
-- Přepne se do cílové větve (`existingbranch`) a sloučí commity ze zdrojové větve (`branchToMoveCommitFrom`).
-</details>
 
-<details>
-<summary>Krok 2: Odstranění commitů ze zdrojové větve</summary>
+Přeneseš změny posledních tří commitů v pořadí od nejstaršího a zachováš vlastní práci cílové větve.
+
+Poslední příkaz připomene rozsah přenášených změn; správnost jejich začlenění ověř v cílových souborech a testech.
+
+Jednotlivé nesousedící commity můžeš vybrat syntaxí `git cherry-pick <nejstarší-ID> <další-ID> <nejnovější-ID>`; jejich závislosti musí být v cíli dostupné. [Git cherry-pick](https://git-scm.com/docs/git-cherry-pick)
+
+### Celá zdrojová větev pomocí merge
+
+Jestli do cíle patří **veškerá historie zdroje, která v něm chybí**, použij místo cherry-pick původní postup se sloučením:
 
 ```bash
-git checkout branchToMoveCommitFrom
-git reset --hard HEAD~3
+git switch feature/presunuta-prace
+git merge backup/pred-presunem
+git log --graph --oneline --decorate -10
 ```
-- Odstraní poslední 3 commity ze zdrojové větve.
 
-> [!WARNING]
-> Tento krok je **nevratný** – commity budou ze zdrojové větve smazány.
-</details>
+Merge zachová ID původních commitů; podle vztahu větví provede fast-forward nebo vytvoří merge commit.
 
-<details>
-<summary>Krok 3: Přepnutí do cílové větve</summary>
+Nepřenáší automaticky jen poslední tři commity, proto se pro přesný výběr z odlišné historie hodí předchozí cherry-pick. [Git merge](https://git-scm.com/docs/git-merge)
+
+### Odebrání ze zdrojové větve
+
+**Až po úspěšném přenosu a otestování cíle** dokonči jednu z předchozích variant:
 
 ```bash
-git checkout existingbranch
+git switch main
+git reset --keep backup/pred-presunem~3
+git switch feature/presunuta-prace
+git log --graph --oneline --decorate --all -12
 ```
-- Pokračuj v práci na cílové větvi s přesunutými commity.
-</details>
 
-> [!NOTE]
-> Více informací najdeš v [diskuzi na Stack Overflow](https://stackoverflow.com/questions/1628563/move-the-most-recent-commits-to-a-new-branch-with-git).
+Zdrojová `main` nyní končí před přesouvanými commity a cílová obsahuje jejich práci.
+
+Záložní větev do ověření výsledku ponech; reset zde nemaže jedinou existující kopii commitů.
+
+## Konflikt při přenosu
+
+| Operace | Po opravě konfliktů a `git add -- <soubor>` | Zrušení rozpracované operace |
+|---|---|---|
+| Cherry-pick | `git cherry-pick --continue` | `git cherry-pick --abort` |
+| Merge | `git merge --continue` | `git merge --abort` |
+
+Při konfliktu se ke kroku odebrání ze zdroje ještě nepřechází.
+
+Po abortu zůstane zdrojová historie i záložní větev zachovaná.
+
+## Pokud už byly commity odeslané
+
+Nejprve práci přenes a ověř v cíli; ve sdílené zdrojové větvi potom použij [revert](delete-commits.md), aby navazující historie zůstala platná.
+
+Pro tři uvedené lineární commity provedeš ze zdrojové větve opačné změny od nejnovějšího:
+
+```bash
+git switch main
+git revert --no-edit backup/pred-presunem backup/pred-presunem~1 backup/pred-presunem~2
+```
+
+Vzniknou tři nové vratné commity, které můžeš odeslat běžným pushem.
+
+Pokud později chceš stejnou práci vrátit přes merge, zohledni i tyto reverty; Git si pamatuje, že původní commity už ve zdroji byly.
+
+Novou cílovou větev zveřejníš přes `git push -u origin feature/presunuta-prace`; místní přesun neodeslaných commitů nevyžaduje force push zdroje.
+
+## Zatím jen rozpracované soubory
+
+Pokud ještě nemáš commit a současný základ je správný, stačí `git switch --no-track -c feature/presunuta-prace`.
+
+Necommitované úpravy zůstanou v pracovním stromu nové větve; pro jiný základ použij [stash nebo worktree](../stash-worktree.md).
+
+Další rozbor variant: [Stack Overflow – přesun posledních commitů](https://stackoverflow.com/questions/1628563/move-the-most-recent-commits-to-a-new-branch-with-git).

@@ -1,53 +1,63 @@
-# Git – Vytvoření a push nové větve na remote
+---
+description: "Založení větve ze zvoleného základu, přepínání a první push."
+---
 
-> Praktické rady pro založení a umístění nové větve (`develop`) na Git server (např. GitHub, GitLab).
+# Git – vytvoření a výběr větve
 
-![Vytvoření vzdálené větve](../../../images/6caa6198-1ee2-4529-8e40-2c62da4232c7.png)
+Nová větev oddělí jednu změnu nebo experiment a začíná z konkrétního existujícího commitu.
 
-## Vytvoření nové větve
+Dokud neuděláš push, existuje pouze ve tvé místní kopii.
 
-<details>
-<summary>Krok 1: Založení větve</summary>
+## Založení ze správného základu
+
+Příklad pro PowerShell i Bash předpokládá čistý strom a již aktualizovanou místní `main`.
 
 ```bash
-git checkout -b develop
+git status
+git switch main
+git switch -c feature/hledani
+git branch --show-current
 ```
-- Vytvoří novou větev `develop` a přepne na ni.
-</details>
 
-## Nastavení vzdáleného repozitáře
+`switch -c` větev vytvoří a zároveň vybere; poslední příkaz musí vypsat `feature/hledani`.
 
-<details>
-<summary>Krok 2: Ověření remote</summary>
+Používáš-li workflow s `develop`, začni z této větve místo `main`.
+
+## Další možnosti
+
+| Syntaxe | Účel |
+|---|---|
+| `git switch <větev>` | Přepne na existující místní větev |
+| `git switch -c <nová-větev> [<výchozí-commit>]` | Vytvoří a vybere větev z uvedeného základu nebo aktuálního HEAD |
+| `git branch <nová-větev> [<výchozí-commit>]` | Vytvoří ukazatel bez přepnutí pracovních souborů |
+| `git branch -a` | Vypíše místní i naposledy načtené vzdálené větve |
+| `git branch -m <nový-název>` | Přejmenuje aktuální místní větev, vzdálený název nezmění |
+
+Pro existující větev pouze na serveru nejprve načti aktuální seznam a pak ji začni sledovat:
+
+```bash
+git fetch origin
+git switch --track origin/feature/hledani
+```
+
+Tuto variantu použij, když místní `feature/hledani` ještě neexistuje.
+
+## První odeslání
 
 ```bash
 git remote -v
+git push -u origin feature/hledani
+git branch -vv
 ```
-- Zobrazí nastavené vzdálené repozitáře.
 
-> [!NOTE]
-> Pokud není remote nastaven, použij:
-> `git remote add origin <url>`
-</details>
+`-u` nastaví vazbu na `origin/feature/hledani`, kterou pak Git používá pro přehled stavu.
 
-## Push větve na server
+Push nepřenese rozpracované soubory a nevloží funkci do `main`; k tomu slouží samostatný [merge](../merging.md) nebo [PR](pull-request.md).
 
-<details>
-<summary>Krok 3: Push větve na remote</summary>
+## Když přepnutí odmítne
 
-```bash
-git push -u origin develop
-```
-- Nahraje větev `develop` na server a nastaví ji jako sledovanou vůči `origin/develop`.
+Hlášení o přepsání místních změn chrání necommitovanou práci; nejprve ji commitni nebo [odlož](../stash-worktree.md).
 
-> [!NOTE]
-> Parametr `-u` zajistí automatické sledování větve.
-</details>
+Při `branch already exists` použij běžný `switch`, pokud chceš právě tuto větev, nebo zvol jiné jméno.
 
-## Ověření online
-
-<details>
-<summary>Krok 4: Kontrola na webu</summary>
-
-- Otevři webové rozhraní (GitHub, GitLab apod.) a ověř, že se větev objevila mezi vzdálenými větvemi.
-</details>
+Zdroj: [git switch](https://git-scm.com/docs/git-switch), [git branch](https://git-scm.com/docs/git-branch).

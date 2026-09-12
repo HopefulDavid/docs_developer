@@ -1,117 +1,116 @@
-# Git Flow – Strategie větvení a workflow
+---
+description: "Oddělený vývoj, příprava vydání a naléhavé opravy při použití Git Flow."
+---
 
-> Praktické rady pro efektivní správu větví v týmu pomocí Git Flow.
+# Git Flow – větve pro plánovaná vydání
 
-![Ollama](../../images/43ae90ca-b78a-405d-bf23-06f2be45eb83.png)
+Git Flow odděluje přípravu příští verze od stabilní verze a oprav již vydaného produktu.
 
-## Co je Git Flow?
+## Kdy se hodí
 
-- **Git Flow** je osvědčená strategie pro řízení verzí a vývoj v týmech.
-- Umožňuje jasně oddělit vývoj, přípravu vydání a opravy chyb.
+Model dává smysl například při plánovaných vydáních a souběžné podpoře více verzí.
 
-## Hlavní větve
+Není univerzálním pravidlem pro každý repozitář; i autor modelu doporučuje pro průběžně dodávané webové aplikace zvážit jednodušší tok. [Původní model a doplnění autora](https://nvie.com/posts/a-successful-git-branching-model/)
 
-<details>
-<summary>Základní větve</summary>
+Pro jednodušší model nejprve porovnej [způsoby práce pro solo vývojáře](workflows.md).
 
-- **`main` (nebo `master`)**: Produkční verze kódu
-- **`develop`**: Připravované změny pro další vydání
+## Jak fungují větve
 
-</details>
+| Větev | Úloha | Začíná z | Změny se vracejí do |
+|---|---|---|---|
+| `main` | Vydané verze | Výchozí historie | — |
+| `develop` | Příští vydání | `main` | Přes release do `main` |
+| `feature/*` | Jedna funkce | `develop` | `develop` |
+| `release/*` | Stabilizace vydání | `develop` | `main` i `develop` |
+| `hotfix/*` | Oprava vydané verze | `main` | `main` i `develop` |
 
-<details>
-<summary>Pomocné větve</summary>
+## Před použitím
 
-- **`feature/*`**: Vývoj nových funkcí
-- **`release/*`**: Příprava vydání
-- **`hotfix/*`**: Rychlé opravy v produkci
+Pro vlastní projekt si zapiš názvy větví, způsob kontroly a vydávání; existující pravidla projektu mají přednost před tímto obecným příkladem.
 
-</details>
+Příkazy předpokládají čistý pracovní strom, existující `main` a `develop` a oprávnění slučovat; chráněné větve slučuj prostřednictvím PR.
 
-## Typické workflow
+## Praktické použití
 
-<details>
-<summary>Vývoj nové funkce</summary>
+### Příprava vývojové větve
+
+Pokud máš pouze čistou aktuální `main` s prvním commitem, jednorázově vytvoř `develop`:
 
 ```bash
-git checkout develop
-git checkout -b feature/nova-funkce
-# Vývoj...
-git checkout develop
-git merge feature/nova-funkce
+git switch main
+git switch -c develop
 ```
 
-> [!NOTE]
-> Vždy vytvářejte feature větve z aktuální `develop` větve.
+Tím začne vývojová větev ze stejného stavu jako stabilní; existující `develop` znovu nevytvářej.
 
-</details>
-
-<details>
-<summary>Příprava vydání</summary>
+### Nová funkce
 
 ```bash
-git checkout develop
-git checkout -b release/1.0.0
-# Finalizace...
-git checkout main
-git merge release/1.0.0
-git checkout develop
-git merge release/1.0.0
+git switch develop
+git switch -c feature/nova-funkce
+```
+
+Po implementaci vytvoř a otestuj commity; hotovou větev začleň:
+
+```bash
+git switch develop
+git merge --no-ff feature/nova-funkce
+```
+
+`--no-ff` zachová merge commit i tam, kde by šel provést prostý posun větve.
+
+### Vydání
+
+```bash
+git switch develop
+git switch -c release/1.0.0
+```
+
+Na release větvi dokonči opravy, verzi a testy, potom:
+
+```bash
+git switch main
+git merge --no-ff release/1.0.0
 git tag -a v1.0.0 -m "Verze 1.0.0"
+git switch develop
+git merge --no-ff release/1.0.0
 ```
 
-> [!TIP]
-> V release větvích provádějte pouze opravy chyb, úpravy dokumentace a metadat.
+Tag vzniká na vydaném commitu v `main`, ještě před přepnutím do `develop`.
 
-</details>
+### Oprava vydané verze
 
-<details>
-<summary>Oprava chyby v produkci</summary>
+V čistém stromu vyjdi ze skutečně vydaného stavu:
 
 ```bash
-git checkout main
-git checkout -b hotfix/oprava-chyby
-# Oprava...
-git checkout main
-git merge hotfix/oprava-chyby
-git tag -a v1.0.1 -m "Oprava 1.0.1"
-git checkout develop
-git merge hotfix/oprava-chyby
+git switch main
+git switch -c hotfix/oprava
 ```
 
-> [!IMPORTANT]
-> Hotfixy vždy slučujte do `main` i `develop`!
+Po opravě vytvoř běžný commit a otestuj výsledek, potom:
 
-</details>
-
-## Pravidla pro práci s Git Flow
-
-<details>
-<summary>Doporučené postupy</summary>
-
-1. Nikdy nepracujte přímo v `main` ani `develop`
-2. Každá funkce má vlastní feature větev
-3. Před sloučením proveďte code review
-4. Po sloučení release/hotfix větve označte verzi pomocí tagu
-5. Používejte smysluplné názvy větví (např. `feature/user-auth`)
-6. Udržujte commit zprávy jasné a popisné
-
-</details>
-
-## Vizualizace workflow
-
-<details>
-<summary>Schéma větvení</summary>
-
+```bash
+git switch main
+git merge --no-ff hotfix/oprava
+git tag -a v1.0.1 -m "Oprava verze 1.0.0"
+git switch develop
+git merge --no-ff hotfix/oprava
 ```
-main       ●────────●─────────●────────●
-            \        \         \        \
-develop     ●─────●───●─────●───●───●────●
-               \     /     /     /
-feature         ●───●     /     /
-                          /     /
-release                  ●─────●
-                              /
-hotfix                       ●
-```
-</details>
+
+Oprava musí přijít i do dalšího vývoje, aby se chyba nevrátila v příštím vydání.
+
+Číslo tagu přizpůsob skutečné verzi a při aktivní release větvi začleň opravu také do ní.
+
+## Ověření
+
+`git log --graph --oneline --all -20` zobrazí návaznost větví a tagů.
+
+Lokální merge ani tag nejsou automaticky zveřejněné; publikování proveď podle pravidel týmu. [Git merge](https://git-scm.com/docs/git-merge), [git tag](https://git-scm.com/docs/git-tag)
+
+## Publikování a úklid
+
+Při oprávněném lokálním slučování odešli ověřené větve přes `git push origin main develop` a konkrétní nový tag přes `git push origin <tag>`.
+
+Na hostingu s chráněnými větvemi nahraď místní slučování odpovídajícími PR a následně načti jejich výsledek, než označíš vydaný commit tagem.
+
+Dokončené feature, release a hotfix větve odstraň až po ověření všech cílových větví podle [návodu pro úklid](branches/delete-remote-branch.md).

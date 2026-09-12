@@ -1,139 +1,99 @@
-# Entity Framework – Průvodce a použití
+---
+description: "Mapování .NET objektů na databázi a řízení změn pomocí migrací."
+---
 
-> Praktické rady pro práci s Entity Framework jako ORM pro přístup k databázi v .NET.
+# Entity Framework Core – první databáze a migrace
 
-![Entity Framework](../images/9efd0d3e-ef5e-4e7a-8358-63fd4f8eb659.png)
+EF Core mapuje model .NET na databázi, překládá podporované LINQ dotazy a sleduje změny entit.
 
-## Entity Framework
+## Funkční minimum se SQLite
 
-### Kdy použít
+Příklad používá .NET 10, EF Core 10 a místní soubor SQLite, takže nepotřebuje databázový server.
 
-> [!NOTE]
-> Pro rychlý vývoj aplikací s menšími nároky na výkon a větší komplexitou modelů.
-
-- Výkon: Nižší výkon kvůli režii ORM (Object Relation Mapping)
-- Snadnost vývoje: Rychlý vývoj s minimálním SQL
-- Komplexní modely: Automatická správa modelů a migrací
-- Flexibilita dotazů: Omezenější – závisí na EF generátoru
-
-### Instalace
-
-```bash
-"C:\Program Files\dotnet\dotnet.exe" tool install --ignore-failed-sources --global dotnet-ef
+```powershell
+dotnet new console -n EfDemo -f net10.0
+cd EfDemo
+dotnet add package Microsoft.EntityFrameworkCore.Sqlite --version 10.0.12
+dotnet add package Microsoft.EntityFrameworkCore.Design --version 10.0.12
+dotnet new tool-manifest
+dotnet tool install dotnet-ef --version 10.0.12
 ```
 
-> [!NOTE]
-> Balíček bude uložen ve složce: `C:\Users\<TvéUživatelskéJméno>\.dotnet\tools`
->
-> Pro zálohu offline, zkopírujte obsah této složky na jiný počítač, kde nástroj `dotnet-ef` nebude dostupný online.
->
-> >[!Warning]
-> > Pokud složku umístíte na jinou cestu, ujistěte se, že ji přidáte do proměnných do `PATH`, aby byl nástroj dostupný z příkazového řádku.
+Příklad připíná ověřenou verzi 10.0.12; při aktualizaci změň společně provider, Design i nástroj a znovu ověř migrace.
 
-#### 1. Spusťte build pro zobrazení chyb
+Provider musí podporovat zvolenou hlavní verzi EF Core. [První aplikace](https://learn.microsoft.com/en-us/ef/core/get-started/overview/first-app), [Providery](https://learn.microsoft.com/en-us/ef/core/providers/)
 
-```bash
+Nahraď `Program.cs`:
+
+```csharp
+using Microsoft.EntityFrameworkCore;
+
+await using var db = new AppDbContext();
+db.Notes.Add(new Note { Text = "První poznámka" });
+await db.SaveChangesAsync();
+
+foreach (var note in await db.Notes.AsNoTracking().OrderBy(n => n.Id).ToListAsync())
+{
+    Console.WriteLine($"{note.Id}: {note.Text}");
+}
+
+/// <summary>Databázový kontext ukázky s lokálním úložištěm SQLite.</summary>
+public sealed class AppDbContext : DbContext
+{
+    /// <summary>Poznámky uložené v databázi.</summary>
+    public DbSet<Note> Notes => Set<Note>();
+
+    /// <inheritdoc/>
+    protected override void OnConfiguring(DbContextOptionsBuilder options)
+        => options.UseSqlite("Data Source=notes.db");
+}
+
+/// <summary>Jedna uložená poznámka.</summary>
+public sealed class Note
+{
+    /// <summary>Databázový identifikátor.</summary>
+    public int Id { get; set; }
+
+    /// <summary>Text poznámky.</summary>
+    public string Text { get; set; } = "";
+}
+```
+
+## Vytvoření schématu
+
+```powershell
 dotnet build
-```
-
-#### 2. Vytvořte první migraci
-
-> [!IMPORTANT]
-> Ujistěte se, že se nacházíte ve složce, kde se nachází váš `.csproj` soubor
-
-```bash
 dotnet ef migrations add InitialCreate
-```
-
-#### 3. Aktualizujte databázi pomocí migrace
-
-```bash
 dotnet ef database update
+dotnet run
 ```
 
-### Použití
+Očekávej soubor `notes.db` a vypsanou poznámku; každé další spuštění přidá další řádek.
 
-1. Instalace NuGet balíčku:
+Před aplikací migrace přečti její operace `Up` a `Down`, zvlášť pokud mění existující data. [Správa migrací](https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/managing)
 
-   ```bash
-   	dotnet add package Microsoft.EntityFrameworkCore
-   	dotnet add package Microsoft.EntityFrameworkCore.SqlServer
-   ```
+## Běžná správa
 
-2. Konfigurace a použití:
+`<migrace>` je název nové migrace, nebo existující migrace z výpisu podle konkrétního řádku.
 
-   ```bash
-    using System;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using Microsoft.EntityFrameworkCore;
+| Záměr | Syntaxe |
+|---|---|
+| Seznam migrací | `dotnet ef migrations list` |
+| Nová změna modelu | `dotnet ef migrations add <migrace>` |
+| Zrušení poslední dosud neaplikované migrace | `dotnet ef migrations remove` |
+| Nastavení databáze na konkrétní migraci | `dotnet ef database update <migrace>` |
+| Obnova lokálního nástroje z manifestu | `dotnet tool restore` |
 
-    // Model entity
-    public class User
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int Age { get; set; }
-    }
+Například `dotnet ef migrations add AddNotes` připraví migraci pojmenovanou `AddNotes`; teprve `dotnet ef database update AddNotes` ji aplikuje na nakonfigurovanou databázi.
 
-    // DbContext pro správu databáze
-    public class AppDbContext : DbContext
-    {
-        public DbSet<User> Users { get; set; }
+Před aktualizací ověř connection string a vytvoř zálohu dat; výběr starší migrace může provést její kroky Down a odstranit data.
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=myServer;Database=myDatabase;User Id=myUser;Password=myPassword;");
-        }
-    }
+Cílová migrace může znamenat i návrat zpět a ztrátu dat; aplikovanou sdílenou migraci neopravuj smazáním její historie. [CLI EF Core](https://learn.microsoft.com/en-us/ef/core/cli/dotnet)
 
-    // Služba pro práci s uživateli
-    public class UserService
-    {
-        private readonly AppDbContext _dbContext;
+## Použití v aplikaci
 
-        public UserService(AppDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
+Pro SQL Server změň provider a konfiguraci připojení podle cílového prostředí.
 
-        public async Task ShowUsersAsync()
-        {
-            var users = await _dbContext.Users
-                .Where(u => u.Age > 18)
-                .ToListAsync();
+Jednu instanci `DbContext` nesdílej mezi souběžnými operacemi.
 
-            foreach (var user in users)
-            {
-                Console.WriteLine($"ID: {user.Id}, Name: {user.Name}, Age: {user.Age}");
-            }
-        }
-    }
-
-    // Hlavní program
-    class Program
-    {
-        static async Task Main()
-        {
-            using var dbContext = new AppDbContext();
-            var userService = new UserService(dbContext);
-
-            await userService.ShowUsersAsync();
-        }
-    }
-   ```
-
-### Příkazy
-
-| **Příkaz** | **Popis** |
-|------------------------------------|------------------------------------------------------------------------------------------------|
-| `dotnet ef migrations add <Název>` | Vytvoří nový soubor pro migraci s názvem `<Název>`, který zachytí změny ve tvých modelech (entitách). |
-| `dotnet ef migrations remove` | Smaže poslední migraci, kterou jsi přidal, ale nezmění databázi (pouze vrátí kód zpět). |
-| `dotnet ef migrations list` | Zobrazí seznam všech migrací, které jsi vytvořil (ukazuje, jaké změny se postupně prováděly). |
-| `dotnet ef database update` | Aplikuje všechny migrace (změny) na databázi, aby se databáze aktualizovala podle aktuálních modelů. |
-| `dotnet ef database update <Název>`| Aplikuje migraci s názvem `<Název>` (pokud nechceš aplikovat všechny migrace). |
-| `dotnet ef database drop` | Smaže celou databázi – dávej pozor, tímto příkazem přijdeš o všechna data. |
-| `dotnet ef dbcontext list` | Ukáže všechny třídy DbContext ve tvém projektu (DbContext je hlavní třída pro práci s databází).|
-| `dotnet ef dbcontext info` | Zobrazí informace o tvojí DbContext třídě (užitečné pro zjištění detailů o konfiguraci). |
-| `dotnet ef dbcontext scaffold` | Vytvoří třídy (modely) podle existující databáze – tímto způsobem můžeš začít, pokud už máš databázi. |
-| `dotnet ef migrations script` | Vygeneruje SQL skript, který obsahuje všechny změny v migracích – vhodné pro manuální nasazení. |
+Výkon posuzuj podle generovaných SQL dotazů, projekce sloupců a objemu načtených dat. [Životnost DbContext](https://learn.microsoft.com/en-us/ef/core/dbcontext-configuration/)

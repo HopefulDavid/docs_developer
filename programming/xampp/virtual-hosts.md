@@ -1,79 +1,92 @@
-# Virtual Hosts v XAMPP
+---
+description: "Vlastní lokální domény a směrování na jednotlivé projekty."
+---
 
-> Virtual Hosts umožňují přiřadit každému projektu vlastní doménu, např. `project1.local`, pro pohodlnější přístup a testování.
+# XAMPP: vlastní lokální doména projektu
 
-## 1. Konfigurace Apache
+Virtual Host vybírá web podle názvu v HTTP požadavku a přiřadí mu vlastní `DocumentRoot`.
 
-<details>
-<summary>Jak nastavit Virtual Hosts?</summary>
+Hodí se pro aplikaci, která má běžet přímo na kořeni domény nebo vystavovat jen složku `public`.
 
-Otevřete soubor:
+## Jak spolu části souvisejí
 
+Soubor `hosts` přeloží `moje-aplikace.test` na místní IP adresu a Apache podle `ServerName` zvolí správnou složku.
+
+Samotný záznam v `hosts` nenastavuje server ani port.
+
+Doména `.test` je vyhrazená pro testování; `.local` může kolidovat s multicast DNS.
+
+## Před použitím
+
+Předpokladem je funkční [XAMPP](access.md), Apache 2.4 a existující soubor `C:\projekty\moje-aplikace\public\index.php`.
+
+Zálohuj upravované konfigurační soubory a ověř, že v `C:\xampp\apache\conf\httpd.conf` je aktivní tento řádek.
+
+```apache
+# Načte doplňkovou konfiguraci virtuálních hostitelů.
+Include conf/extra/httpd-vhosts.conf
 ```
-C:\xampp\apache\conf\extra\httpd-vhosts.conf
-```
 
-Přidejte bloky pro každý projekt:
+## Konfigurace Apache
+
+Do `C:\xampp\apache\conf\extra\httpd-vhosts.conf` vlož blok pro `localhost` jako první výchozí host a potom projekt.
+
+Pokud už hostitele máš, sluč změny s existující konfigurací a nevytvářej duplicitní názvy.
 
 ```apache
 <VirtualHost *:80>
-    DocumentRoot "C:/xampp/htdocs/project1"
-    ServerName project1.local
+    ServerName localhost
+    DocumentRoot "C:/xampp/htdocs"
+    <Directory "C:/xampp/htdocs">
+        Require local
+    </Directory>
 </VirtualHost>
 
 <VirtualHost *:80>
-    DocumentRoot "C:/xampp/htdocs/project2"
-    ServerName project2.local
+    ServerName moje-aplikace.test
+    DocumentRoot "C:/projekty/moje-aplikace/public"
+    <Directory "C:/projekty/moje-aplikace/public">
+        # Zákaz výpisu souborů a přístupu z jiných zařízení.
+        Options -Indexes
+        Require local
+        # Konfigurace se spravuje zde, nikoli souborem .htaccess.
+        AllowOverride None
+    </Directory>
 </VirtualHost>
-
-<VirtualHost *:80>
-    DocumentRoot "C:/xampp/htdocs/project3"
-    ServerName project3.local
-</VirtualHost>
-```
-</details>
-
-## 2. Úprava hosts souboru
-
-<details>
-<summary>Jak přidat domény do hosts?</summary>
-
-Otevřete soubor `hosts` jako administrátor:
-
-```
-C:\Windows\System32\drivers\etc\hosts
 ```
 
-Přidejte řádky:
+Cesta v `Directory` musí odpovídat veřejné složce a `Require local` dovoluje přístup pouze z místního počítače.
 
+Pokud framework vyžaduje `.htaccess`, povol jen potřebné direktivy a modul podle jeho dokumentace; samotná ukázka ještě nenastavuje přepis URL.
+
+## Překlad názvu a ověření
+
+V editoru spuštěném jako správce otevři `C:\Windows\System32\drivers\etc\hosts` a přidej následující záznam bez změny přípony souboru.
+
+```text
+127.0.0.1 moje-aplikace.test
 ```
-127.0.0.1 project1.local
-127.0.0.1 project2.local
-127.0.0.1 project3.local
+
+Řádek mapuje uvedený název na tento počítač, netýká se ostatních zařízení v síti.
+
+V PowerShellu ověř syntaxi a seznam hostitelů před restartem Apache.
+
+```powershell
+# -t kontroluje syntaxi, -S vypíše přiřazení virtuálních hostitelů.
+& 'C:/xampp/apache/bin/httpd.exe' -t
+& 'C:/xampp/apache/bin/httpd.exe' -S
 ```
-</details>
 
-## 3. Restart Apache
+Pokračuj po `Syntax OK`, restartuj Apache přes Control Panel a otevři `http://moje-aplikace.test/`.
 
-<details>
-<summary>Jak restartovat Apache?</summary>
+Zároveň ověř původní `http://localhost/`, aby první hostitel nepřesměroval jiné místní projekty do nové aplikace.
 
-1. Otevřete **XAMPP Control Panel**.
-2. Klikněte na <kbd>Stop</kbd> a poté <kbd>Start</kbd> u služby **Apache**.
-3. Ujistěte se, že server běží (zelený stav).
+## Co lze upravit a časté chyby
 
-</details>
+Název měň současně v `hosts` a `ServerName`, cestu současně v `DocumentRoot` a `Directory`.
 
-## 4. Přístup k projektům
+Při 403 prověř `Require` a oprávnění souborového systému, při zobrazení jiného webu výpis `httpd -S` a první výchozí host.
 
-<details>
-<summary>Jak přistupovat k projektům?</summary>
+Pro HTTPS přidej důvěryhodný [lokální certifikát](../../network/certificates.md) a odpovídající TLS Virtual Host; změna URL na `https://` sama nestačí.
 
-| 🏷️ Projekt | 🌐 URL adresa |
-|--------------|--------------------------|
-| project1 | `http://project1.local` |
-| project2 | `http://project2.local` |
-| project3 | `http://project3.local` |
-
-> Každý projekt má vlastní "friendly URL" místo `localhost/projectX`.
-</details>
+Příklady konfigurace vlastní [Apache HTTP Server](https://httpd.apache.org/docs/2.4/vhosts/examples.html), rezervované názvy [IANA](https://www.iana.org/assignments/special-use-domain-names/special-use-domain-names.xhtml).

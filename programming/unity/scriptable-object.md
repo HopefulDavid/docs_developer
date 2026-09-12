@@ -1,62 +1,86 @@
-# Unity – ScriptableObject a Tipy
+---
+description: "Sdílená konfigurační data oddělená od běhového stavu objektů."
+---
 
-> Praktické rady pro použití ScriptableObject v Unity, jejich výhody, omezení a moderní patterny.
+# Unity: sdílená konfigurace se ScriptableObject
 
-## Co je ScriptableObject?
+ScriptableObject je Unity objekt, který může existovat jako asset nezávislý na konkrétní scéně.
 
-<details>
-<summary>Základní principy</summary>
+Umožňuje například více nepřátelům sdílet definici vlastností bez kopírování stejných hodnot do každého prefabu.
 
-- **ScriptableObject** je speciální typ assetu v Unity.
-- Umožňuje ukládat data mimo scénu – přímo v projektu.
-- Vhodné pro konfigurace, globální data, nastavení, inventáře, atd.
+## Jak funguje a co připravit
 
-</details>
+C# třída definuje pole, asset uchovává jejich hodnoty a komponenta ve scéně dostane odkaz na asset přes Inspector.
 
-## Vytvoření ScriptableObject
+Následující příklad je určený pro Unity 6 a odděluje výchozí konfiguraci od měnícího se zdraví konkrétní postavy.
 
-<details>
-<summary>Jak vytvořit ScriptableObject?</summary>
+## Vytvoření konfigurace
 
-1. Vytvoř novou C# třídu dědící ze `ScriptableObject`.
-2. Přidej atribut `[CreateAssetMenu]` pro snadné vytvoření assetu.
-3. Vytvoř asset přes **Assets > Create** v Unity.
+Ulož soubor `EnemyConfig.cs`.
 
 ```csharp
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewConfig", menuName = "Config/Example")]
-public class ExampleConfig : ScriptableObject
+/// <summary>Sdílená výchozí konfigurace nepřítele.</summary>
+[CreateAssetMenu(fileName = "EnemyConfig", menuName = "Game/Enemy Config")]
+public class EnemyConfig : ScriptableObject
 {
-    public int value;
-    public string description;
+    [SerializeField, Min(1)] private int maxHealth = 100;
+    /// <summary>Výchozí maximum zdraví pro novou postavu.</summary>
+    public int MaxHealth => maxHealth;
 }
 ```
 
-</details>
+`CreateAssetMenu` přidá položku **Assets → Create → Game → Enemy Config** a `SerializeField` zpřístupní hodnotu v Inspectoru i při soukromém poli.
 
-## Ukládání a Obnovení dat
+`100` je výchozí herní hodnota ukázky a můžeš ji pro každý vytvořený asset změnit.
 
-<details>
-<summary>Omezení ScriptableObject</summary>
+## Praktické použití ve scéně
 
-- Data v ScriptableObject se **neukládají** mezi spuštěními hry.
-- Po zavření a opětovném otevření hry se obnoví na výchozí hodnoty assetu.
-- Pro trvalé ukládání použij **PlayerPrefs**, soubory nebo databázi.
+Ulož `EnemyHealth.cs`, přidej jej na postavu a do **Config** přetáhni vytvořený asset.
 
-> [!IMPORTANT]
-> ScriptableObjects slouží hlavně pro **konfiguraci** a **sdílení dat** v rámci projektu, ne pro runtime ukládání.
+```csharp
+using UnityEngine;
 
-</details>
+/// <summary>Uchovává zdraví jedné postavy odděleně od sdílené konfigurace.</summary>
+public class EnemyHealth : MonoBehaviour
+{
+    [SerializeField] private EnemyConfig config;
+    private int currentHealth;
 
-## Singleton pattern se ScriptableObject
+    private void Start()
+    {
+        if (config == null)
+        {
+            Debug.LogError("Chybí EnemyConfig.", this);
+            enabled = false;
+            return;
+        }
+        // Každá postava má vlastní stav, sdílený asset se při zásahu nemění.
+        currentHealth = config.MaxHealth;
+        Debug.Log($"Počáteční zdraví: {currentHealth}", this);
+    }
+}
+```
 
-<details>
-<summary>Jak na singleton ScriptableObject?</summary>
+Vytvoř dvě postavy se stejným assetem a ověř, že obě přečtou stejné maximum.
 
-- Umožňuje globální přístup k datům bez nutnosti vytvářet instanci ve scéně.
-- Vhodné pro nastavení, globální konfigurace, eventy.
+Další logika poškození má měnit `currentHealth` příslušné komponenty, nikoli sdílený `maxHealth`.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/O7ziNEzanWI?si=oymyfqzq4v0hDHn6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+## Ukládání a obnovení dat
 
-</details>
+V editoru se assety ukládají na disk a změny assetu během Play mohou přetrvat i po jeho ukončení.
+
+Ve vydané aplikaci nelze používat editorové ukládání assetů jako systém pro uložení postupu hráče.
+
+Pro save data navrhni samostatný formát a úložiště, například soubor v `Application.persistentDataPath`; citlivé údaje nepatří do nechráněného PlayerPrefs.
+
+Rozdíl editoru a buildu popisuje [Unity: ScriptableObject](https://docs.unity3d.com/6000.0/Documentation/Manual/class-ScriptableObject.html).
+
+## Co lze upravit
+
+Přidej konfigurační pole pro rychlost nebo vzhled a pojmenuj assety podle domény, například `EnemyConfig_Boss`.
+
+Sdílený odkaz není automaticky Singleton a obvykle není potřeba zavádět skryté globální vyhledávání assetu.
+
+Pokud potřebuješ měnit celou konfiguraci za běhu, vytvoř vlastní runtime kopii a výslovně urči její životnost.

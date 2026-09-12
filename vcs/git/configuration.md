@@ -1,98 +1,107 @@
-# Git – Uživatelská konfigurace
+---
+description: "Identita autora, editor, konce řádků a kontrola účinného nastavení."
+---
 
-> Praktické rady pro globální nastavení Gitu, dlouhé cesty na Windows a konfiguraci vizuálních nástrojů.
+# Git – nastavení pro vlastní projekty
 
-![Ollama](../../images/e159d23c-f2b8-4884-bc0b-800bae9db096.png)
+Konfigurace určuje identitu commitů a chování nástrojů; jméno a e-mail autora nejsou přihlašovací údaje k serveru.
 
-## Povolení dlouhých cest ve Windows
+## Nastav jednou pro svůj účet
+
+V PowerShellu nebo Bashi nahraď ukázkové údaje vlastními:
 
 ```bash
-git config --system core.longpaths true
+git config --global user.name "Jana Novakova"
+git config --global user.email "jana@example.com"
+git config --global init.defaultBranch main
 ```
 
-povolí v Git podporu dlouhých cest na Windows, což často řeší chybu **„Filename too long“**.
+Jméno a e-mail budou zapsané v nových commitech, které mohou být veřejné; na GitHubu lze použít přesnou soukromou noreply adresu uvedenou v nastavení účtu.
 
-> **Pozor:**
-> - Tento příkaz se musí spustit s administrátorskými právy, protože mění systémovou konfiguraci Gitu.
->
-> - Musí mít ve Windows povolenou podporu dlouhých cest. (Pokud to není povolené, Git to nezvládne.)
+`init.defaultBranch` určuje název větve nových repozitářů, existující větve nepřejmenuje.
 
-Pokud ještě nemáte povolené dlouhé cesty v systému, lze to udělat takto:
+## Osobní versus projektové nastavení
 
-1. Spusť `regedit`
-2. Najdi klíč: `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem`
-3. Najdi nebo vytvoř DWORD hodnotu `LongPathsEnabled` a nastav ji na `1`.
-4. Restartuj počítač.
+| Rozsah | Kde platí | Kdy jej použít |
+|---|---|---|
+| `--local` | Jen aktuální repozitář, zpravidla `.git/config` | Jiný e-mail pro pracovní projekt |
+| `--global` | Projekty tvého uživatelského účtu | Osobní výchozí nastavení |
+| `--system` | Instalace Gitu pro více uživatelů | Správa společného prostředí |
 
-## Nastavení Meld jako diff/merge tool
+Místní hodnota přebíjí globální; jednotlivý příkaz může navíc dostat dočasné nastavení přes `git -c <klíč>=<hodnota> <příkaz>`.
 
-**Meld** je vizuální nástroj pro porovnávání a slučování souborů.
+V kořeni pracovního projektu například:
 
-Umožňuje přehledné zobrazení rozdílů a snadné řešení konfliktů.
+```bash
+git config --local user.email "jana@firma.example"
+git config --show-origin --get user.email
+```
 
-<details>
-<summary>Windows – Kompletní postup</summary>
+Druhý příkaz ukáže účinnou hodnotu a zdrojový soubor; změna nepozmění autorství již vytvořených commitů.
 
-1. **Nainstalujte Meld**
-[Stáhnout Meld pro Windows](https://meldmerge.org/)
+## Editor zpráv commitů
 
-2. **Nastavte Git pro použití Meld:**
+Pokud používáš VS Code a jeho příkaz `code` funguje v terminálu, nastav:
 
-   ```bash
-   git config --global diff.tool meld
-   git config --global difftool.meld.path "C:\Program Files\Meld\Meld.exe"
-   git config --global difftool.prompt false
+```bash
+git config --global core.editor "code --wait"
+```
 
-   git config --global merge.tool meld
-   git config --global mergetool.meld.path "C:\Program Files\Meld\Meld.exe"
-   git config --global mergetool.prompt false
-   ```
+`--wait` nechá Git počkat na uložení a zavření editační karty.
 
-> [!NOTE]
-> Cestu k `Meld.exe` upravte podle umístění instalace.
+Můžeš zvolit jiný nainstalovaný editor s odpovídající volbou čekání, nebo editor nechat výchozí; `git commit -m "<zpráva>"` editor vůbec neotevírá.
 
-</details>
+## Konce řádků patří k pravidlům projektu
 
-<details>
-<summary>Linux – Kompletní postup</summary>
+LF a CRLF jsou dva způsoby ukončení textového řádku; nevhodné převody dokážou zobrazit celý soubor jako změněný.
 
-1. **Nainstalujte Meld**
-   ```bash
-   sudo apt install meld
-   ```
+Pokud projekt používá `.gitattributes`, respektuj ho a nenormalizuj hromadně cizí historii.
 
-2. **Nastavte Git pro použití Meld:**
+Pro nový projekt lze do `.gitattributes` uložit:
 
-   ```bash
-   git config --global diff.tool meld
-   git config --global difftool.meld.path "/usr/bin/meld"
-   git config --global difftool.prompt false
+```gitattributes
+# Rozpoznané texty ukládej do historie s normalizovanými konci řádků.
+* text=auto
+# Shell skripty potřebují LF, dávkové skripty Windows obvykle CRLF.
+*.sh text eol=lf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+```
 
-   git config --global merge.tool meld
-   git config --global mergetool.meld.path "/usr/bin/meld"
-   git config --global mergetool.prompt false
-   ```
+Pravidla jsou verzovaná společně s projektem; vlastní typy souborů můžeš doplnit podle nástrojů, které je čtou.
 
-</details>
+Změnu pravidel ve stávajícím projektu dělej v čistém stromu jako samostatnou změnu a nejprve prohlédni efekt `git add --renormalize .` přes `git diff --cached`.
 
-### Použití v praxi
+## Porovnávání v grafickém nástroji
 
-<details>
-<summary>Porovnání změn</summary>
+IDE obvykle umí zobrazit Git diff i vyřešit konflikt bez další konfigurace.
 
-- Spusťte porovnání souborů:
-  ```bash
-  git difftool
-  ```
+Pokud preferuješ samostatný Meld, nejprve jej nainstaluj a ve Windows ověř jeho skutečnou cestu:
 
-</details>
+```bash
+git config --global diff.tool meld
+git config --global difftool.meld.path "C:/Program Files/Meld/Meld.exe"
+git config --global merge.tool meld
+git config --global mergetool.meld.path "C:/Program Files/Meld/Meld.exe"
+```
 
-<details>
-<summary>Řešení konfliktů při slučování</summary>
+Na systému s příkazem `meld` v `PATH` obvykle stačí nastavit `diff.tool` a `merge.tool` bez vlastní cesty.
 
-- Spusťte nástroj pro slučování:
-  ```bash
-  git mergetool
-  ```
+`git difftool` porovná pracovní změny s indexem a `git mergetool` otevře existující konflikty; po jejich vyřešení vždy zkontroluj výsledný kód a testy.
 
-</details>
+## Diagnostika a vrácení volby
+
+```bash
+git config --show-origin --get core.editor
+git config --global --unset core.editor
+```
+
+První příkaz přečte nastavení a druhý odstraní jen osobní volbu editoru, čímž se uplatní případná jiná nebo výchozí hodnota.
+
+Nenulový návrat při neexistujícím klíči znamená, že není co číst či mazat.
+
+Při problému s dlouhou cestou ve Windows nejdříve zkrať umístění projektu, například na `C:\src\aplikace`; `git config --global core.longpaths true` rozšíří podporu v Git for Windows, nikoli automaticky ve všech ostatních programech.
+
+SSH klienta řeší [Git přes SSH](../../network/ssh/git.md).
+
+Zdroje: [git config](https://git-scm.com/docs/git-config), [gitattributes](https://git-scm.com/docs/gitattributes), [Git for Windows FAQ](https://gitforwindows.org/faq.html).

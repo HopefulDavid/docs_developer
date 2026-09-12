@@ -10,4 +10,4 @@ Nástroje a postupy pro týmovou komunikaci a organizaci práce.
 
 | Stránka | Popis |
 | --- | --- |
-| [Outlook](outlook.md) | Přehled funkcí zobrazení a správy kalendáře v Outlooku. |
+| [Outlook](outlook.md) | Zobrazení a překrytí více kalendářů. |

@@ -1,7 +1,7 @@
 ---
 canonical_for: product-requirements
 status: accepted
-last_verified: 2026-08-29
+last_verified: 2026-09-12
 owner: product
 ---
 
@@ -23,7 +23,7 @@ Správci umožňuje udržovat zdrojové články v Gitu a před publikováním m
 
 | Aktér | Potřeba | Kontext použití | Kritické omezení |
 |---|---|---|---|
-| Čtenář | Rychle najít praktický technický postup nebo referenci | Veřejný statický web v desktopovém nebo mobilním prohlížeči | Obsah musí zůstat čitelný bez účtu a serverové relace |
+| Čtenář včetně juniorního programátora | Rychle najít postup, pochopit jeho princip a přizpůsobit příklad | Veřejný statický web v desktopovém nebo mobilním prohlížeči | Obsah musí zůstat čitelný bez účtu a serverové relace |
 | Správce obsahu | Přidat, upravit a publikovat článek bez ruční synchronizace přehledů | Git checkout, lokální nástroje a GitHub Actions | Zdrojová a generovaná část musí zůstat jednoznačně rozlišená |
 
 ## Cíle
@@ -38,13 +38,11 @@ Správci umožňuje udržovat zdrojové články v Gitu a před publikováním m
 - Autentizace, uživatelské účty, komentáře a dynamická redakční administrace.
 - Úplná kopie nebo náhrada autoritativní dokumentace všech popisovaných technologií.
 - Serverový aplikační runtime, databáze a uživatelská data.
-- Plošná odborná revize všech historických článků v rámci jedné infrastrukturní změny.
+- Automatické spouštění publikovaných ukázek proti uživatelským účtům, produkčním službám nebo skutečným datům.
 
 ## Produktová omezení
 
-Zapiš pouze omezení, která mají skutečný produktový nebo obchodní původ.
-
-Technická omezení zaznamenej v architektonickém přehledu a zde na ně odkaž.
+Technická omezení vlastní [architektonický přehled](../architecture/overview.md).
 
 - Veřejný obsah a rozhraní webu jsou primárně v češtině.
 - Veřejné rozhraní nenabízí odkaz pro editaci stránky ani zobrazení zdrojového souboru.
@@ -64,6 +62,28 @@ Pracovní záznamy, testy a změny odkazují na identifikátor místo kopírová
 | `REQ-002` | Čtenář je na libovolné veřejné stránce | Zadá technický termín do vyhledávání | Web nabídne odpovídající stránky a umožní otevřít zvolený výsledek | Should | Vizuální smoke scénář nad vytvořeným vyhledávacím indexem |
 | `REQ-003` | Správce upravil zdrojový článek nebo registr navigace | Spustí podporované generování a kontrolu | Přehledy, TOC, cesty a lokální odkazy jsou deterministicky sjednocené a následná kontrola nehlásí drift | Must | `npm run docs:generate` a následné `npm run docs:check` |
 | `REQ-004` | Změna na větvi `main` splnila projektové kontroly | GitHub Actions spustí publikační workflow | Workflow sestaví jediný ověřený statický artefakt, veřejný changelog v něm zachová úplnou historii, nejnovější rok změn nechá otevřený, roky bez změn vynechá, starší zobrazené roky sbalí a web publikuje bez změny zdrojové větve | Must | Cílený changelogový test, konfigurace workflow a úspěšný vzdálený běh po publikování změny |
+| `REQ-005` | Junior otevře návod bez znalosti konkrétního nástroje | Přečte úvod, předpoklady a provede popsaný příklad | Rozumí účelu, vztahu částí, upravitelným hodnotám i očekávanému výsledku; nezbytné informace nejsou ukryté v rozbalovacím bloku | Must | Obsahové review podle pravidel čitelnosti a dostupné ověření ukázky |
+| `REQ-006` | Čtenář vybírá článek nebo používá příkazovou referenci | Prohlédne rozcestník a tabulku příkazů | Popis rovnou označuje obsah cíle; syntaxe odlišuje dosazované parametry od vysvětleného spustitelného příkladu | Must | Kontrola metadat, obsahové review a skutečně vykreslené tabulky |
+| `REQ-007` | Solo vývojář zná jen základy Gitu | Vybere způsob práce a řeší běžnou operaci nebo chybu | Rozumí více workflow, změně pracovního stromu, indexu a historie i bezpečnému pokračování nebo návratu | Must | Praktické scénáře v izolovaných repozitářích a kontrola návaznosti návodů |
+| `REQ-008` | Čtenář připravuje přesun projektu bez internetu | Zálohuje balíčky a obnoví je na jiném kompatibilním počítači | Pro NuGet, .NET tools, npm, pnpm, Python a Dart rozliší přenositelnou složku, manifesty a vnější nástroje; ověří skutečnou obnovu a chybějící závislosti | Must | Izolované obnovy dostupných správců a primární zdroje pro zbývající prostředí |
+
+### Uspořádání praktických témat
+
+Verzování rozlišuje začátky, každodenní práci, historii s řešením problémů a vydávání se správou projektu.
+
+Přesun commitů má zahrnovat novou i existující větev, uchování práce v cíli a následný úklid zdroje; samostatný postup popisuje nahrazení historie vzdálené větve jediným místním kořenovým commitem.
+
+Programování odděluje Balíčky od Vývojových nástrojů; přesun mezi skupinami sám nemění existující veřejnou cestu článku.
+
+Návody balíčků rozlišují obnovu s internetem, připravenou offline zálohu a nástroje používané mimo projekt; zkouška obnovy nesmí spoléhat na původní pracovní instalaci nebo skrytou cache.
+
+Zálohy image a provozních dat patří k Dockeru ve Virtualizaci a zálohy zdrojové historie k Gitu; přehled balíčků na ně odkazuje bez duplikace postupů.
+
+Na výslovnou žádost vlastníka byly odstraněny Docker podstránky Bezpečný upgrade stateful služby, Portainer, Duplicati a BusyBox a sekce klávesových zkratek JetBrains.
+
+Regulární výrazy JetBrains mají samostatný návod a význam zápisu příkazů společný článek v OS.
+
+Síť začíná vztahy adres, názvů a portů; OS odděluje rychlé použití shellu od jeho nastavení a SQL dávku vlastní databázová oblast.
 
 ## Chybové a hraniční scénáře
 
@@ -72,12 +92,11 @@ Pracovní záznamy, testy a změny odkazují na identifikátor místo kopírová
 | `REQ-E001` | Veřejný článek chybí v registru, lokální odkaz neexistuje nebo se generovaný soubor liší | Kontrola skončí nenulovým kódem a uvede konkrétní cestu; změna se nesmí považovat za připravenou | Rozbitá navigace nebo nedostupný obsah | Negativní test generátoru a `npm run docs:check` |
 | `REQ-E002` | DocFX manifest nebo výstup obsahuje interní `docs/`, agentní instrukci, README nebo jinou vyloučenou cestu | Ověření artefaktu skončí nenulovým kódem a publikování se zastaví | Únik interních pracovních informací | Jednotkové testy hranice a `npm run docs:artifact-check` |
 | `REQ-E003` | DocFX při sestavení zjistí warning nebo chybu | Strict build skončí nenulovým kódem a nevznikne publikovatelný výsledek | Neúplný nebo nekonzistentní web | `npm run docs:compile` s `--warningsAsErrors` |
+| `REQ-E004` | Navigovaný článek nemá platný stručný popis | Generátor uvede konkrétní soubor a skončí chybou bez náhrady úvodním odstavcem | Nejasné, duplicitní nebo rozbité popisy rozcestníku | Negativní test metadat a `docs:check` |
 
 ## Kvalitativní očekávání
 
-Kvalitativní požadavek formuluj jako ověřitelný scénář s podmínkou, očekávanou odezvou a měřitelnou hranicí.
-
-Konkrétní architektonická opatření patří do architektonického přehledu.
+Kvalitativní požadavky se ověřují nad zdrojovým obsahem i sestaveným webem.
 
 | ID | Oblast | Scénář | Měřítko nebo hranice | Priorita |
 |---|---|---|---|---|
@@ -85,12 +104,12 @@ Konkrétní architektonická opatření patří do architektonického přehledu.
 | `QLT-002` | Reprodukovatelnost | Čisté podporované prostředí obnoví deklarované nástroje a sestaví web | `npm run verify` skončí kódem 0, DocFX má 0 warningů a 0 chyb | Must |
 | `QLT-003` | Ochrana interního obsahu | Každý kandidátní artefakt projde kontrolou veřejné hranice | 0 interních zdrojů a 0 interních výstupních cest | Must |
 | `QLT-004` | Přenositelnost cest | Stejný checkout se ověřuje na Windows i linuxovém CI runneru | Kanonické cesty používají přesný lowercase casing a hranicové testy projdou v obou prostředích | Must |
+| `QLT-005` | Čitelnost a přístupnost | Čtenář používá mobil, tablet nebo desktop a zvolí světlý či tmavý motiv | Bez vodorovného přetékání celé stránky při 320, 390, 768 a 1440 px; dostupná navigace, fokus, čitelný text a kód v obou motivech | Must |
+| `QLT-006` | Odkazy na obsah | Sestavený článek odkazuje na jinou stránku nebo její nadpis | 0 neexistujících lokálních souborů, rozdílů casingu a neplatných kotev v HTML | Must |
 
 ## Slovník produktových pojmů
 
-Termín definuj pouze zde, pokud vyjadřuje produktový nebo doménový význam.
-
-Technické pojmy patří do architektonického slovníku.
+Technické pojmy vlastní [architektonický slovník](../architecture/overview.md#12-architektonický-slovník).
 
 | Termín | Kanonický význam |
 |---|---|

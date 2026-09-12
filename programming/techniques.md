@@ -1,97 +1,92 @@
+---
+description: "Organizace vývoje, pojmenování a rozhodování o struktuře kódu."
+---
+
 # Vývojové metodiky a konvence
 
-> Přehled metodologií řízení projektů, rychlého prototypování a konvencí pojmenování v kódu.
+Metodika pomáhá týmu organizovat práci; konvence sjednocuje podobu kódu a prototyp ověřuje nápad před větší investicí.
 
-![Techniky](../images/77bb3224-887c-410f-a232-f51a105d0b01.png)
+Tyto postupy řeší různé problémy a mohou se používat společně.
 
 ## Vývojové metodiky
 
-### Agilní metodika (Scrum)
+Nejprve si ujasni, jak často se mění požadavky, kdo rozhoduje o prioritách a podle čeho poznáte hotový výsledek.
 
-Zaměřuje se na spolupráci, zákaznickou spokojenost a rychlou reakci na změny. Práce probíhá v krátkých iteracích nazývaných **sprinty** (2–4 týdny).
+| Přístup | Jak funguje | Co vyžaduje v praxi |
+|---|---|---|
+| Scrum | Tým pracuje za společným cílem ve sprintech dlouhých nejvýše jeden měsíc | Product Ownera, Scrum Mastera, vývojáře, průběžnou kontrolu výsledku a společnou Definition of Done |
+| Kanban | Práce prochází viditelným tokem a tým omezuje počet současně rozpracovaných položek | Jasné podmínky přechodu mezi sloupci, WIP limity a sledování doby průchodu |
+| Sekvenční plánování | Analýza, návrh, implementace a ověření mají navazující výstupy | Řízení změn a zpětnou vazbu i před závěrečným testováním |
 
-| Fáze | Popis |
-|------|-------|
-| **Plánování sprintu** | Tým vybírá úkoly z backlogu a plánuje jejich provedení |
-| **Vývoj a Daily Scrum** | Denní schůzky, průběžné testování, řešení překážek |
-| **Revize sprintu** | Prezentace výsledků zákazníkovi, získání zpětné vazby |
-| **Retrospektiva** | Zhodnocení procesu, návrhy na zlepšení |
+Scrum je jedním z agilních rámců, nikoli synonymem agility.
 
-> [!NOTE]
-> Scrum je vhodný pro projekty s proměnnými požadavky a nutností rychlé adaptace. Nevhodné pro projekty s pevným plánem a jasně definovanými výstupy.
+Daily Scrum slouží vývojářům k úpravě plánu směrem k cíli sprintu, není to povinný reporting vedoucímu.
 
-### Vodopádová metodika
+Sprint Review kontroluje výsledek se zainteresovanými lidmi, retrospektiva zlepšuje způsob spolupráce.
 
-Sekvenční přístup – každá fáze musí být zcela dokončena před zahájením další.
+Přesné odpovědnosti a události definuje [Scrum Guide](https://scrumguides.org/scrum-guide.html).
 
-| Fáze | Popis |
-|------|-------|
-| **Analýza požadavků** | Shromažďování a analýza potřeb zákazníka |
-| **Návrh** | Plánování struktury a funkcí systému |
-| **Implementace** | Převod návrhu do zdrojového kódu |
-| **Testování** | Ověření funkčnosti a hledání chyb |
-| **Nasazení** | Přechod do produkčního prostředí |
-| **Údržba** | Opravy, vylepšení, sledování výkonu |
+Pevný termín sám o sobě nevylučuje Scrum ani Kanban; rozhodující je způsob plánování rozsahu a práce s nejistotou.
 
-> [!NOTE]
-> Vhodné pro projekty s jasně definovanými a neměnnými požadavky.
+## Praktické použití: malá týmová změna
 
-### Kanban
+1. Popiš výsledek z pohledu uživatele, například „objednávku lze vyhledat podle čísla“.
+2. Dohodni kritéria: oprávněný uživatel najde existující objednávku a pro neexistující číslo dostane srozumitelnou zprávu.
+3. Rozděl práci na ověřitelné části a zviditelni ji na tabuli **Připraveno → Rozpracováno → Kontrola → Hotovo**.
+4. Pro tříčlenný tým lze zkusit limit dvou rozpracovaných položek, aby někdo mohl pomáhat dokončovat kontrolu.
+5. Po dodání ověř skutečné použití a uprav pravidla podle zjištěných překážek.
 
-Vizuální řízení práce pomocí tabule a karet. Průběžná dodávka bez pevných iterací.
+Limit dvě je výchozí experiment pro uvedený tým, nikoli univerzální doporučení.
 
-- Tabule je rozdělena na sloupce (např. Backlog → In Progress → Done).
-- Karty reprezentují jednotlivé úkoly.
-- Klíčový princip: omezení počtu rozpracovaných úkolů (**WIP limit**).
-- Průběžné hodnocení procesu a optimalizace.
-
-> [!NOTE]
-> Kanban je vhodný pro provozní týmy a podpůrné procesy. Nevhodné pro projekty s pevnými termíny a milníky.
+Hotovo musí zahrnovat potřebné testy, kontrolu a dokumentaci; samotné napsání kódu nemusí být dodanou funkcí.
 
 ## Rychlé prototypování
 
-Rychlé prototypování slouží k ověření konceptu co nejdříve – cílem je funkční model, ne dokonalý produkt.
+Prototyp odpovídá na konkrétní otázku, například zda hráč pochopí ovládání nebo zda zvolená knihovna zvládne požadovaný formát.
 
-1. **Definice konceptu** – jasná představa, klíčové mechaniky a cíle.
-2. **Vytvoření základní scény** – např. v Unity nebo jiném nástroji.
-3. **Přidání objektů** – jednoduché tvary reprezentující prvky (krychle, koule).
-4. **Implementace mechanik** – skriptování, základní funkce.
-5. **Testování a iterace** – získání zpětné vazby, úpravy.
-6. **Opakování cyklu** – iterativní vylepšování.
+Stanov otázku, časový limit a měřitelný výsledek, vytvoř nejmenší ověřitelnou variantu a vyzkoušej ji s reálným vstupem.
 
-> [!IMPORTANT]
-> Rychlost a zpětná vazba jsou prioritou. Neztrácejte čas perfektní grafikou nebo architekturou v rané fázi.
+U prototypu hry lze použít jednoduché tvary místo finální grafiky, pokud právě grafika není předmětem ověření.
 
-## BEM metodika
+Před převzetím do produktu prověř chybové stavy, bezpečnost a údržbu; rychlý experiment automaticky nesplňuje podmínky produkčního kódu.
 
-**BEM = Block Element Modifier** – strukturované pojmenování tříd v HTML/CSS.
+## BEM: pojmenování CSS tříd
+
+BEM rozlišuje samostatný **blok**, jeho **prvek** a **modifikátor** vzhledu nebo stavu.
+
+Následující tlačítko má základní třídu i modifikátor, který pouze mění barvu.
 
 ```html
-<div class="block">
-  <div class="block__element"></div>
-  <div class="block__element--modifier"></div>
-</div>
+<button class="button button--primary" type="button">
+  <span class="button__label">Uložit změny</span>
+</button>
 ```
 
 ```css
-.block { ... }
-.block__element { ... }
-.block__element--modifier { ... }
+/* Blok vlastní společný vzhled všech tlačítek. */
+.button { padding: 0.6rem 1rem; border: 1px solid currentColor; }
+/* Prvek patří k bloku button. */
+.button__label { font-weight: 600; }
+/* Modifikátor se používá společně se základní třídou. */
+.button--primary { color: white; background: #175ba5; }
 ```
 
-| Typ | Oddělovač | Příklad |
-|-----|-----------|---------|
-| Block | *(žádný)* | `.menu` |
-| Element | `__` | `.menu__item` |
-| Modifier | `--` | `.menu__item--active` |
+Názvy a barvy můžeš změnit, zachovej však vztahy `blok__prvek` a `blok--modifikátor` v HTML i CSS.
+
+BEM nepřidává chování tlačítka ani nenahrazuje sémantické HTML.
+
+Konvenci popisuje [archivovaná dokumentace GetBEM](https://github.com/getbem/getbem.github.io/blob/master/src/pages/naming.mdx).
 
 ## Konvence pojmenování v kódu
 
-| Pravidlo | Příklad |
-|----------|---------|
-| Popisné názvy, bez zkratek | `userRepository` místo `ur` |
-| Boolovské proměnné s předponou `is`, `has`, `can` | `isAvailable`, `hasAccess` |
-| Název funkce začíná slovesem | `getUserName()`, `calculateTotalPrice()` |
-| Konzistentní styl napříč projektem | `camelCase` nebo `snake_case` |
-| Pole v množném čísle | `users`, `products`, `orders` |
-| Magické hodnoty jako pojmenované konstanty | `MAX_RETRIES = 3` místo `3` |
+| Záměr | Příklad | Proč pomáhá |
+|---|---|---|
+| Popsat účel | `userRepository` místo `ur` | Čtenář nemusí odhadovat zkratku |
+| Rozpoznat pravdivostní hodnotu | `isAvailable`, `hasAccess` | Název lze číst jako otázku |
+| Vyjádřit činnost | `calculateTotalPrice()` | Je zřejmé, co funkce provádí |
+| Rozlišit kolekci | `orders` | Název naznačuje více položek |
+| Pojmenovat rozhodnutí | `maxRetries` | Limit má význam a lze jej vysvětlit |
+
+Styl jako `camelCase`, `PascalCase` nebo `snake_case` přebírej z jazyka a projektu, nemíchej je nahodile.
+
+Důvod netriviálního omezení patří do [komentáře](code-comments.md), samotný název konstanty jej nevysvětlí.

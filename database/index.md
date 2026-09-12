@@ -10,13 +10,14 @@ Databázové systémy, dotazy a nástroje pro přístup k datům.
 
 | Stránka | Popis |
 | --- | --- |
-| [Microsoft SQL](mssql.md) | Moderní přehled SQL dotazů, postupů a tipů pro práci s Microsoft SQL Serverem. |
-| [MongoDB](mongodb.md) | Přehled základních pojmů, příkazů a doporučení pro práci s MongoDB. |
-| [PostgreSQL](postgresql.md) | Přehled základních pojmů, instalace, příkazů a doporučení pro práci s PostgreSQL. |
+| [Microsoft SQL](mssql.md) | SQL dotazy, vazby tabulek a diagnostika databáze. |
+| [MongoDB](mongodb.md) | Výběr databáze a čtení či změny dokumentů v mongosh. |
+| [PostgreSQL](postgresql.md) | Instalace, připojení přes psql a orientace v databázových objektech. |
 
 ### Přístup k datům
 
 | Stránka | Popis |
 | --- | --- |
-| [Entity Framework](entity-framework.md) | Praktické rady pro práci s Entity Framework jako ORM pro přístup k databázi v .NET. |
-| [Dapper](dapper.md) | Praktické rady pro práci s Dapper jako micro-ORM pro efektivní přístup k databázi v .NET. |
+| [SQL skripty přes sqlcmd](sqlcmd.md) | Spuštění seřazených SQL skriptů dávkou, zastavení při chybě a kontrola výsledku. |
+| [Entity Framework](entity-framework.md) | Mapování .NET objektů na databázi a řízení změn pomocí migrací. |
+| [Dapper](dapper.md) | Parametrizované SQL a mapování výsledků na .NET objekty. |

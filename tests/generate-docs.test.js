@@ -5,11 +5,105 @@ const test = require('node:test');
 
 const docfx = require('../docfx.json');
 const {
+  cleanInline,
+  collectHtmlLinkErrors,
+  descriptionFromMarkdown,
+  htmlImageToMarkdown,
   isInternalArtifactPath,
   isInternalPath,
 } = require('../scripts/generate-docs.js');
 
 const root = path.resolve(__dirname, '..');
+
+test('normalizace nezahodí autorem určenou šířku obrázku', () => {
+  const sized = '<img src="../images/dialog.png" alt="Nastavení dialogu" width="420">';
+  assert.equal(htmlImageToMarkdown(sized, 'ide/example.md', 'IDE'), sized);
+  assert.equal(
+    htmlImageToMarkdown('<img src="../images/dialog.png" alt="Dialog">', 'ide/example.md', 'IDE'),
+    '![Dialog](../images/dialog.png)',
+  );
+});
+
+test('HTML odkazy rozlišují kotvy, URL kódování, query a relativní cestu', () => {
+  const pages = new Map([
+    ['index.html', '<a href="guide/?mode=1&amp;lang=cs#p%C5%99%C3%ADklad">Návod</a>'],
+    ['guide/index.html', '<h2 id="příklad">Příklad</h2><a href="#příklad">Zpět</a><img src="../images/a.png">'],
+  ]);
+  const files = new Set([...pages.keys(), 'images/a.png']);
+  assert.deepEqual(collectHtmlLinkErrors(pages, files), []);
+});
+
+test('artefakt odmítá neexistující kotvu i casing, který Windows toleruje', () => {
+  const pages = new Map([
+    ['index.html', '<a href="guide.html#old">Starý nadpis</a><a href="Guide.html">Chybná cesta</a>'],
+    ['guide.html', '<h2 id="new">Nový nadpis</h2>'],
+  ]);
+  const errors = collectHtmlLinkErrors(pages, new Set(pages.keys()));
+  assert.equal(errors.length, 2);
+  assert.match(errors[0], /guide.html#old: neexistující kotva/);
+  assert.match(errors[1], /Guide.html: neexistující cesta nebo nesprávný casing/);
+});
+
+test('HTML kontrola neinterpretuje externí odkazy, komentáře a escapované ukázky jako navigaci', () => {
+  const pages = new Map([['index.html', `
+    <a href="https://example.com/#unknown">Web</a><a href="mailto:a@example.com">Email</a>
+    <a href="//example.com/file">CDN</a><img src="data:image/png;base64,AA==">
+    <!-- <a href="missing.html">Neaktivní</a> -->
+    <code>&lt;a href="missing.html"&gt;</code>
+    <script>const sample = '<a href="missing.html">';</script>`]]);
+  assert.deepEqual(collectHtmlLinkErrors(pages, new Set(pages.keys())), []);
+});
+
+test('HTML kontrola vysvětlí neplatné procentové kódování místo pádu', () => {
+  const pages = new Map([['index.html', '<a href="bad%ZZ.html">Chyba</a>']]);
+  assert.match(collectHtmlLinkErrors(pages, new Set(pages.keys()))[0], /neplatné kódování URL/);
+});
+
+test('přehled používá vlastní popis a odmítá chybějící nebo nebezpečný obsah tabulky', () => {
+  assert.equal(
+    descriptionFromMarkdown('---\ndescription: "Založení a obnova projektu."\n---\n\n# Git\n\nJiný úvod.'),
+    'Založení a obnova projektu.',
+  );
+  for (const content of [
+    '# Projekt\n\nÚvod se nesmí automaticky stát popisem.',
+    '---\ndescription: ""\n---\n',
+    '---\ndescription: "A | B"\n---\n',
+    '---\ndescription: "[Odkaz](../wrong.md)"\n---\n',
+    '---\ndescription: "Neplatné \\q"\n---\n',
+  ]) {
+    assert.equal(descriptionFromMarkdown(content), '');
+  }
+});
+
+test('normalizace zachovává čitelný název .NET v nadpisu i textu', () => {
+  for (const text of [
+    'Vypnutí telemetrie .NET SDK',
+    'Správa nástrojů .NET CLI a vypnutí telemetrie .NET SDK.',
+    'Telemetrii .NET SDK vypneš proměnnou prostředí.',
+    'Příkazy .NET CLI spouštěj v .NET SDK.',
+  ]) {
+    assert.equal(cleanInline(text), text);
+  }
+
+  assert.equal(cleanInline('  SDK  .NET : nastavení , ověření .  '),
+    'SDK .NET: nastavení, ověření.');
+});
+
+test('normalizace zachovává příkazy v Markdown kódu uvnitř tabulek a textu', () => {
+  for (const text of [
+    '| Nahrání | `scp ./soubor.txt uzivatel@server.example.com:/home/uzivatel/` |',
+    '| Stažení | `scp uzivatel@server.example.com:/home/uzivatel/soubor.txt ./` |',
+    '| Adresář | `scp -P 2222 -r ./slozka uzivatel@server.example.com:/home/uzivatel/` |',
+    'Příkaz `ssh server "echo A & echo B"` zachová argumenty.',
+    'PowerShell: ``Write-Output `"A  &  B`"``.',
+    'Vnořený oddělovač: ```text `` a ` .```.',
+  ]) {
+    assert.equal(cleanInline(text), text);
+  }
+
+  assert.equal(cleanInline('  Spusť  `ssh server "echo A & echo B"` , poté  `scp ./a ./b` .  '),
+    'Spusť `ssh server "echo A & echo B"`, poté `scp ./a ./b`.');
+});
 
 function hasExactPath(relPath) {
   let current = root;

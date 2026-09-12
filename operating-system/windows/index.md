@@ -1,70 +1,58 @@
-# Windows – Průvodce a tipy
+---
+description: "Místní účet, nastavení hodin a rychlé vstupy k běžným problémům Windows."
+---
 
-> Instalace, nastavení, klávesové zkratky a řešení problémů ve Windows.
+# Windows – nastavení a řešení problémů
 
-## Instalace Windows bez Microsoft účtu
+Vyber konkrétní úlohu; pro práci v terminálu vždy rozliš CMD a PowerShell.
 
-Na začátku instalace při výběru jazyka:
+## Kam pokračovat
 
-1. Stiskni `Shift` + `F10` pro otevření příkazového řádku.
-2. Zadej:
+| Potřebuji | Postup |
+|---|---|
+| Pochopit závorky a hodnoty v příkazu | [Klíč syntaxe](../command-line-syntax.md) |
+| Pracovat se soubory a skripty | [PowerShell](powershell.md) nebo [CMD](cmd.md) |
+| Nastavit profil a prompt | [Prostředí PowerShellu](terminal.md) |
+| Odstranit problematickou položku | [Diagnostika souboru a cesty](cannot-delete-item.md) |
+| Zpřístupnit SSD instalátoru | [Ovladač řadiče a výběr disku](installation-missing-ssd.md) |
 
-```
-start ms-cxh:localonly
-```
+## Místní účet místo Microsoft účtu
 
-> [!TIP]
-> Pokud příkaz nezafunguje, zkus místo toho:
-> ```
-> OOBE\BYPASSNRO
-> ```
+Ve funkčních osobních Windows:
 
-## Řešení neviditelného disku při instalaci
+1. Otevři **Nastavení → Účty → Vaše informace**.
+2. Zvol **Přihlásit se místo toho místním účtem**.
+3. Dokonči ověření a nastav místní jméno a heslo.
+4. Odhlas se, přihlas místním účtem a ověř své soubory i aplikace.
 
-<details>
-<summary>Postup načtení ovladače disku během instalace</summary>
+Přepnutí mění způsob přihlášení ke stávajícímu profilu; OneDrive a další aplikace mohou mít samostatné účty.
 
-1. Otevři příkazový řádek: `Shift` + `F10`
-2. Zjisti informace o discích:
-   ```
-   wmic diskdrive list brief
-   ```
-3. Stáhni ovladač podle typu řadiče:
-- **Intel RST VMD / Managed Controller** – pro RAID/NVMe/SATA
-- **Intel Optane Memory and Storage Management** – pro Optane
-- Ovladač stahuj z webu výrobce zařízení (Acer, Dell, HP…)
-4. Rozbal ovladač na USB disk.
-5. Na obrazovce výběru disků klikni na **Načíst ovladač (Load Driver)**.
-6. Vlož USB a vyber soubor ovladače.
+Volby během první instalace závisejí na edici, sestavení a správě zařízení, proto používej přímo nabízenou podporovanou možnost a nestav postup na neudržovaných obchvatech OOBE.
 
-> [!NOTE]
-> Novější verzi ovladače poznáš podle vyššího hexadecimálního čísla v názvu souboru (09AB > 08AB).
+Oficiální kroky a návrat popisuje [Microsoft: změna typu účtu](https://support.microsoft.com/en-us/accounts-billing/manage/change-from-a-local-account-to-a-microsoft-account-in-windows).
 
-> [!IMPORTANT]
-> Po načtení ovladače by měl být disk viditelný a připravený pro instalaci.
+## Sekundy v hodinách Windows 11
 
-</details>
+V nastavení **Datum a čas** vyhledej zobrazení času v oznamovací oblasti a zapni **Zobrazovat sekundy**.
 
-## Základní nastavení
+Ve starších sestaveních může být volba v **Přizpůsobení → Hlavní panel → Chování hlavního panelu**; následující snímek ukazuje nastavení v části Datum a čas.
 
-### Zobrazení sekund v dolním panelu
+<img src="../../images/t9hZzZp1FO.png" alt="Volba sekund v nastavení data a času" width="720">
 
-![Zobrazení sekund v taskbaru](../../images/t9hZzZp1FO.png)
+[Zobrazit obrázek v původní velikosti](../../images/t9hZzZp1FO.png)
 
-## Klávesové zkratky
+Zobrazení sekund může mírně zvýšit spotřebu; umístění volby popisuje [Microsoft: hlavní panel](https://support.microsoft.com/en-US/Windows/Experience/Personalization/customize-the-taskbar-in-windows).
 
-| Zkratka | Akce |
-|---------|------|
-| `Win` + `D` | Minimalizace / obnovení všech oken |
-| `Alt` + `D` | Přechod na adresní řádek v Průzkumníku |
-| `Shift` + `F10` | Náhrada chybějící kontextové klávesy |
+## Užitečné zkratky Průzkumníku
 
-### Skočení na adresní řádek
+| Zkratka | Výsledek |
+|---|---|
+| `Alt+D` | Vybere adresní řádek pro zadání nebo kopírování cesty |
+| `Shift+F10` | Otevře kontextovou nabídku vybrané položky |
+| `Win+D` | Zobrazí plochu nebo vrátí okna |
 
-![Adresní řádek ve Windows Průzkumníku](../../images/windows_keyboard_explorerAddressBar.png)
+<img src="../../images/windows_keyboard_explorerAddressBar.png" alt="Adresní řádek Průzkumníku vybraný pro zadání cesty" width="640">
 
-### Chybějící kontextová klávesa
+[Zobrazit obrázek v původní velikosti](../../images/windows_keyboard_explorerAddressBar.png)
 
-![Kontextová klávesa](https://filestore.community.support.microsoft.com/api/images/d42eb865-8390-4aa3-af19-e7272d95121e)
-
-Náhrada: `Shift` + `F10`
+Do vybraného řádku lze napsat `cmd` a otevřít CMD v této složce; neznamená to spuštění jako správce.

@@ -1,10 +1,20 @@
 # Tento soubor generuje npm run docs:generate. Neupravujte navigaci ani přehledy ručně.
 - name: "Přehled"
   href: "index.md"
+- name: "Příkazová řádka"
+  items:
+    - name: "Jak číst zápis příkazů"
+      href: "command-line-syntax.md"
 - name: "Windows"
   href: "windows/index.md"
   items:
-    - name: "Command Line"
+    - name: "Instalátor nevidí SSD"
+      href: "windows/installation-missing-ssd.md"
+    - name: "Nelze odstranit položku"
+      href: "windows/cannot-delete-item.md"
+    - name: "Příkazový řádek (CMD)"
       href: "windows/cmd.md"
     - name: "PowerShell"
       href: "windows/powershell.md"
+    - name: "Prostředí PowerShellu"
+      href: "windows/terminal.md"

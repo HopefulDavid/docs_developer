@@ -1,134 +1,146 @@
-# Klíče a certifikáty
+---
+description: "Důvěryhodné místní HTTPS, výběr certifikátu a zapojení do vývojového serveru."
+---
 
-> Generování bezpečnostních klíčů, práce s TLS certifikáty a nastavení SSH přístupu.
+# Certifikáty – HTTPS při místním vývoji
 
-![Certifikáty](../images/a36b0a0f-361c-4d7d-994e-eeef74bebaec.png)
+TLS certifikát pomáhá klientovi ověřit jméno serveru a vytvořit šifrované spojení.
 
-## Generování klíčů
+Nestačí mít soubor s příponou `.crt`: klient musí důvěřovat jeho vydavateli a navštívené jméno musí odpovídat certifikátu.
 
-### OpenSSL
+## Vyber nástroj podle cíle
+
+| Potřeba | Vhodná cesta |
+|---|---|
+| Vývoj ASP.NET Core na localhost | Vývojový certifikát `dotnet dev-certs` |
+| Místní server s vlastními názvy nebo jiným frameworkem | `mkcert` a vlastní místní certifikační autorita |
+| Veřejná produkční doména | Certifikát od veřejně důvěryhodné CA podle hostingu, obvykle s automatickou obnovou |
+
+Vývojová autorita mkcert ani vývojový certifikát .NET nepatří jako univerzální řešení pro veřejné produkční servery.
+
+## Co obsahují soubory
+
+| Pojem | Úloha |
+|---|---|
+| Certifikát | Veřejné údaje serveru, názvy SAN, platnost a podpis vydavatele |
+| Soukromý klíč serveru | Důkaz identity serveru, musí zůstat chráněný |
+| Kořenový certifikát CA | Veřejný základ důvěry v certifikáty vydané touto autoritou |
+| Soukromý klíč CA | Umožňuje vydávat další důvěryhodné certifikáty |
+| PEM | Textový formát; může obsahovat certifikát i klíč podle obsahu |
+| PFX / PKCS#12 | Kontejner pro certifikát a klíč, obvykle chráněný heslem |
+
+Přejmenování přípony samo formát nepřevede.
+
+## Varianta A: ASP.NET Core
+
+S nainstalovaným .NET SDK v PowerShellu nebo Bashi:
 
 ```bash
-# Base64 secret (JWT, API keys)
-openssl rand -base64 32
-
-# HEX secret (konfigurační klíče)
-openssl rand -hex 64
+dotnet dev-certs https --trust
+dotnet dev-certs https --check --trust
 ```
 
-## TLS certifikáty – mkcert
+První příkaz vytvoří nebo najde vývojový certifikát a požádá o jeho důvěryhodnost; druhý jen ověří platnost a důvěru.
 
-`mkcert` vytváří lokálně důvěryhodné certifikáty pro vývoj bez nutnosti akceptovat bezpečnostní varování prohlížeče.
+Spusť aplikaci s HTTPS profilem uvedeným v `Properties/launchSettings.json` a použij přesnou adresu z výpisu serveru.
 
-### Instalace
+Na Linuxu a v některých prohlížečích se správa důvěry liší; postupuj podle instrukcí konkrétního SDK a výsledku kontroly.
 
-1. Stáhni `mkcert.exe` z [github.com/FiloSottile/mkcert/releases](https://github.com/FiloSottile/mkcert/releases).
-2. Ulož například do `C:\mkcert`.
-3. Volitelně přidej složku do systémové proměnné `PATH`.
+`dotnet dev-certs https --clean` odstraní vývojové HTTPS certifikáty, a proto ho nepoužívej jako první univerzální opravu.
 
-### Instalace lokální CA
+## Varianta B: mkcert pro vlastní server
+
+Nainstaluj [mkcert z oficiálních vydání](https://github.com/FiloSottile/mkcert/releases), ověř jeho původ a dostupnost `mkcert -version`.
+
+Ve Windows lze odpovídající binární soubor pojmenovat `mkcert.exe` a jeho složku přidat do Path.
+
+V samostatné výukové složce:
 
 ```bash
 mkcert -install
+mkcert -cert-file localhost.pem -key-file localhost-key.pem localhost 127.0.0.1 ::1
 ```
 
-CA se nainstaluje do Windows a do Chrome/Edge. Firefox vyžaduje ruční přidání:
+`-install` vytvoří a nainstaluje místní kořen důvěry, což může vyžadovat potvrzení systému.
 
-1. Otevři `about:preferences#privacy`
-2. **Certificates → View Certificates → Authorities → Import**
-3. Importuj soubor: `C:\Users\<User>\AppData\Local\mkcert\rootCA.pem`
-4. Zaškrtni *Trust this CA to identify websites*
+Druhý příkaz vydá certifikát pro uvedená jména a adresy; výstupy nepřepisuj v adresáři s již používanými klíči.
 
-### Vytvoření certifikátu
+Pro vlastní jméno přidej například `app.test` do seznamu a zajisti jeho překlad na cílovou IP, například v místním souboru hosts.
 
-```bash
-# Jeden host
-mkcert localhost
+mkcert nastaví certifikáty, ale sám nespustí ani nenakonfiguruje HTTPS aplikaci.
 
-# Více hostů
-mkcert localhost 127.0.0.1 myapp.local
+### Spustitelný příklad Node.js
+
+Vedle obou PEM souborů ulož `server.cjs`:
+
+```javascript
+const https = require('node:https');
+const fs = require('node:fs');
+const path = require('node:path');
+
+// Cesty vycházejí ze složky skriptu, nikoli z náhodné aktuální složky terminálu.
+const options = {
+  cert: fs.readFileSync(path.join(__dirname, 'localhost.pem')),
+  key: fs.readFileSync(path.join(__dirname, 'localhost-key.pem')),
+};
+
+https.createServer(options, (_request, response) => {
+  response.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+  response.end('Místní HTTPS funguje.\n');
+}).listen(8443, '127.0.0.1', () => {
+  console.log('Otevři https://localhost:8443');
+});
 ```
 
-Výstup: `localhost.pem` a `localhost-key.pem`
+S nainstalovaným Node.js spusť `node server.cjs` a otevři uvedenou adresu; `Ctrl+C` server ukončí.
 
-### Použití certifikátů
+`cert` je veřejný certifikát, `key` soukromý klíč, `8443` zvolený volný port a `127.0.0.1` omezuje naslouchání na tento počítač.
 
-Soubory `.pem` lze použít přímo v:
-Go, Node.js, Nginx, Caddy, Docker kontejnerech.
+Port můžeš změnit, ale nové jméno serveru musí být zároveň uvedené v certifikátu.
 
-**Převod na PFX (.NET / Windows):**
+## Aplikace vyžaduje PFX
+
+S dostupným OpenSSL ve složce certifikátů:
 
 ```bash
 openssl pkcs12 -export -out server.pfx -inkey localhost-key.pem -in localhost.pem
 ```
 
-**Převod na CRT/KEY (Apache, Nginx):**
+Program se zeptá na exportní heslo; `server.pfx` pak obsahuje klíč i certifikát a heslo použij podle nastavení konkrétního serveru.
 
-```
-localhost.pem     →  server.crt
-localhost-key.pem →  server.key
-```
+Heslo nepiš přímo jako veřejný argument do skriptu.
 
-**Použití v Go:**
+## Ověření a časté chyby
 
-```go
-e.StartTLS(":8080", "server.crt", "server.key")
-```
+| Projev | Co zkontrolovat |
+|---|---|
+| Neznámý vydavatel | Důvěru v CA na tomto počítači a v konkrétním klientovi |
+| Nesouhlas názvu | URL proti SAN certifikátu; certifikát pro localhost neplatí automaticky pro IP v LAN |
+| Vypršený certifikát | Platnost a systémový čas; vydat a nasadit nový certifikát |
+| Prohlížeč funguje, nástroj ne | Nástroj může používat vlastní úložiště CA |
+| Jiný počítač nedůvěřuje | Jeho vlastní důvěryhodné autority, nikoli jen certifikát uložený na serveru |
 
-## SSH – nastavení pro GitHub
+`mkcert -CAROOT` ukáže složku místní autority; pro důvěru na dalším vlastním testovacím zařízení přenášej pouze veřejný `rootCA.pem`.
 
-SSH využívá pár klíčů (veřejný + soukromý) místo hesla. Je bezpečnější a pohodlnější pro každodenní práci s Gitem.
+`rootCA-key.pem` nesdílej a necommituj, protože umožňuje vydávat důvěryhodné certifikáty pro libovolná jména na zařízeních důvěřujících této CA.
 
-### Nastavení krok za krokem
+`mkcert -uninstall` odebere místní důvěru, ale nepředstavuje smazání všech vytvořených souborů.
 
-**1. Generování SSH klíče**
+Zdroje: [mkcert](https://github.com/FiloSottile/mkcert), [dotnet dev-certs](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-dev-certs), [Node.js HTTPS](https://nodejs.org/api/https.html), [OpenSSL PKCS#12](https://docs.openssl.org/master/man1/openssl-pkcs12/).
 
-```bash
-ssh-keygen -t rsa -b 4096 -C "tvuj@email.com"
-```
-
-**2. Zobrazení veřejného klíče**
-
-```bash
-# Windows
-type %userprofile%\.ssh\id_rsa.pub
-
-# Linux / macOS
-cat ~/.ssh/id_rsa.pub
-```
-
-**3. Přidání klíče na GitHub**
-
-GitHub → **Settings → SSH and GPG keys → New SSH key**
-
-**4. Test připojení**
-
-```bash
-ssh -T git@github.com
-```
-
-**5. Klonování přes SSH**
-
-```bash
-git clone git@github.com:username/repository.git
-```
-
-**6. Změna remote URL na SSH**
-
-```bash
-git remote set-url origin git@github.com:username/repository.git
-```
-
-**7. Zobrazení remote URL**
-
-```bash
-git remote -v
-```
-
-**8. Oddělené URL pro fetch a push**
-
-```bash
-git remote set-url origin <fetch-url>
-git remote set-url --push origin <push-url>
-git remote -v
-```
+<a id="klíče-a-certifikáty"></a>
+<a id="tls-certifikáty--mkcert"></a>
+<a id="instalace"></a>
+<a id="instalace-lokální-ca"></a>
+<a id="použití-certifikátů"></a>
+<a id="ssh-klíč-s-heslovou-frází"></a>
+<a id="vytvoření-klíče"></a>
+<a id="soukromý-a-veřejný-soubor"></a>
+<a id="dodatečné-nastavení-nebo-změna-heslové-fráze"></a>
+<a id="volitelné-odemykání-přes-ssh-agent"></a>
+<a id="ssh--nastavení-pro-github"></a>
+<a id="přidání-klíče-do-účtu"></a>
+<a id="test-připojení"></a>
+<a id="použití-v-git-repozitáři"></a>
+<a id="generování-klíčů"></a>
+<a id="openssl"></a>

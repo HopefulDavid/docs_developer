@@ -1,156 +1,107 @@
-# PowerShell – Průvodce a reference
+---
+description: "Objekty v rouře, soubory, proměnné, skripty a čitelné zacházení s chybami."
+---
 
-> Správa balíčků, oprávnění, přizpůsobení prostředí, práce se soubory a síť v PowerShellu.
+# PowerShell – každodenní práce
 
-## Správa balíčků
+PowerShell předává mezi příkazy objekty s vlastnostmi, takže můžeš filtrovat soubory či procesy podle skutečných údajů.
 
-Umístění modulů: `C:\Users\{xxx}\Documents\PowerShell\Modules`
+Windows PowerShell 5.1 a PowerShell 7 jsou různá prostředí; následující příklady míří na PowerShell 7 ve Windows.
 
-## Přizpůsobení prostředí (Oh My Posh)
-
-<details>
-<summary>Modernizace prostředí PowerShellu krok za krokem</summary>
-
-**Původní vs. nový vzhled:**
-
-![Původní PowerShell](https://miro.medium.com/v2/resize:fit:4800/format:webp/1*lelcpOyX-WuXlYR5oy2g4Q.png)
-
-![Nový PowerShell](https://miro.medium.com/v2/resize:fit:720/format:webp/1*SI0w1Cg7iVzG6mZMtBfWqQ.png)
-
-**Postup:**
-
-1. **Instalace PowerShell 7+** – zjisti verzi: `$PSVersionTable` → [Stáhnout](https://github.com/PowerShell/PowerShell)
-
-2. **Instalace Windows Terminal** → [Stáhnout](https://github.com/microsoft/terminal)
-
-3. **Spusť PowerShell jako administrátor**
-
-![Spuštění jako administrátor](../../images/runAsAdministatorPowerShell.png)
-
-4. **Nastav oprávnění na Bypass:**
-   ```powershell
-   Set-ExecutionPolicy -Scope CurrentUser Bypass
-   ```
-
-5. **Rozdělení okna na části** – klávesová zkratka: `Alt` + `Left Click`
-
-![Options PowerShell](../../images/optionsPowerShell.png)
-
-6. **Instalace Oh My Posh a posh-git:**
-   ```powershell
-   Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://ohmyposh.dev/install.ps1'))
-   Install-Module posh-git
-   ```
-
-7. **Nastavení tématu:**
-   ```powershell
-   oh-my-posh init pwsh --config 'C:\Users\{xxx}\Themes\PowerShell\aliens.omp.json' | Invoke-Expression
-   Import-Module posh-git
-   ```
-
-8. **Trvalé nastavení v profilu:**
-   ```powershell
-   notepad $PROFILE
-   ```
-Vlož do souboru:
-   ```powershell
-   Import-Module posh-git
-   oh-my-posh init pwsh --config 'C:\Users\{xxx}\themes\aliens.omp.json' | Invoke-Expression
-   ```
-
-9. **Vrať oprávnění na RemoteSigned:**
-   ```powershell
-   Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
-   ```
-
-</details>
-
-### Výběr a změna tématu
+## Orientace a nápověda
 
 ```powershell
-# Zobrazení dostupných témat
-Get-PoshThemes
-
-# Aplikace tématu v profilu
-oh-my-posh init pwsh --config 'C:\Users\{xxx}\Documents\themes\catppuccin.omp.json' | Invoke-Expression
+$PSVersionTable.PSVersion
+Get-Location
+Get-Help Copy-Item -Examples
 ```
 
-[Šablony ke stažení](https://github.com/JanDeDobbeleer/oh-my-posh/tree/main/themes)
+Zjistíš verzi shellu, aktuální složku a příklady konkrétního příkazu.
 
-## Historie příkazů
+| Syntaxe | Účel |
+|---|---|
+| `Set-Location -LiteralPath <složka>` | Přejde do existující složky |
+| `Get-ChildItem -LiteralPath <cesta> [-Force]` | Vypíše položky, případně i skryté |
+| `Get-Content -LiteralPath <soubor>` | Přečte text |
+| `Copy-Item -LiteralPath <zdroj> -Destination <cíl> [-WhatIf]` | Zkopíruje nebo pouze předvede operaci |
+| `Get-Command <název>` | Zjistí dostupný příkaz a jeho původ |
+
+`-LiteralPath` zachová doslovný název včetně hranatých závorek; `-Path` u mnoha příkazů naopak podporuje zástupné vzory.
+
+## Roura: vyber soubory větší než 1 MB
 
 ```powershell
-# Umístění souboru s historií
-(Get-PSReadlineOption).HistorySavePath
+Get-ChildItem -LiteralPath . -File |
+    Where-Object Length -gt 1MB |
+    Select-Object Name, Length
 ```
 
-## Oprávnění
+Tečka znamená aktuální složku, první příkaz vrací soubory, filtr porovnává jejich vlastnost `Length` a poslední příkaz vybírá sloupce.
 
-### Zjištění aktuálního nastavení
+`1MB` můžeš změnit podle potřeb; tato ukázka nic neupravuje.
+
+## Proměnné a spuštění programu
 
 ```powershell
-Get-ExecutionPolicy -Scope CurrentUser
+$projectPath = "C:\projekty\moje-aplikace"
+Set-Location -LiteralPath $projectPath
+& "C:\Program Files\nodejs\node.exe" --version
 ```
 
-| Hodnota | Popis |
-|---------|-------|
-| `Restricted` | Skripty nejsou povoleny |
-| `AllSigned` | Pouze digitálně podepsané skripty |
-| `RemoteSigned` | Skripty z internetu musí být podepsané |
-| `Unrestricted` | Všechny skripty povoleny bez omezení |
-| `Undefined` | Výchozí systémové nastavení |
+Obě cesty přizpůsob své instalaci; `&` spustí program, jehož cesta je v uvozovkách.
 
-### Změna oprávnění
+Vnější programy jako Git nebo Node předávají návratový kód v `$LASTEXITCODE`, zatímco PowerShell cmdlety používají také vlastní chybové záznamy.
+
+Proměnná prostředí používá zápis `$env:NÁZEV` a změna platí jen pro současný proces a jeho potomky, pokud ji výslovně neuložíš trvale.
+
+## Kopie souboru s kontrolou
+
+V projektové složce s existujícím `module.xml`:
 
 ```powershell
-Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+$sourceFile = Join-Path (Get-Location) "module.xml"
+$exportDirectory = Join-Path (Get-Location) "export"
+New-Item -ItemType Directory -Path $exportDirectory -Force | Out-Null
+Copy-Item -LiteralPath $sourceFile -Destination $exportDirectory -WhatIf
 ```
 
-[Dokumentace parametrů](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.4#-executionpolicy)
+`Join-Path` bezpečně sestaví cestu a `-WhatIf` zobrazí plán bez kopírování.
 
-### Spuštění skriptu bez trvalé změny oprávnění
+Po ověření cíle zopakuj poslední řádek bez `-WhatIf`; již existující stejnojmenný soubor může být přepsán.
 
-```powershell
-powershell -ExecutionPolicy Bypass -File "C:\{xxx}\Downloads\skript.ps1"
-```
+Pro mazání použij samostatný [postup s ověřením cíle](cannot-delete-item.md#powershell-kontrola-a-odstranění).
 
-## Práce se soubory
+## Skript a chyba
 
-### Změna metadat souboru
+Ulož jako `kontrola-souboru.ps1`:
 
 ```powershell
-# Změna času posledního zápisu
-(Get-Item "C:\Users\{xxx}\FileA.docx").LastWriteTime = "2024.10.10 17:00:00"
-```
-
-**Úprava celkového času dokumentu Word:**
-
-1. Přejmenuj `.docx` na `.zip`
-2. Rozbal archiv
-3. V souboru `docProps/app.xml` uprav hodnotu `<TotalTime>`
-4. Zazipuj zpět a přejmenuj na `.docx`
-
-### Kopírování souborů
-
-```powershell
-# Kopírování souboru ze síťového zdroje
-xcopy /y /z "\\192.xxx.xx.xx\files\module.xml" "C:\Users\Test\Downloads\*"
-
-# Kopírování do podsložek
-for /D %%G in ("C:\Users\Test\Downloads\*") DO (
-  xcopy /y /z "C:\Users\Test\Downloads\module.xml" "%%G\SubDirectory\*"
+param(
+    [Parameter(Mandatory)]
+    [string]$FilePath
 )
+
+try {
+    # Stop prevede i beznou chybu cmdletu na chybu zachycenou v catch.
+    Get-Item -LiteralPath $FilePath -ErrorAction Stop |
+        Select-Object FullName, Length, LastWriteTime
+} catch {
+    Write-Error "Soubor nelze přečíst: $($_.Exception.Message)"
+    exit 1
+}
 ```
 
-## Síť
+Spusť `.\kontrola-souboru.ps1 -FilePath .\module.xml`; parametr vybírá soubor a při chybě skript končí nenulovým kódem.
 
-```powershell
-# Zjištění hostname podle IP adresy
-Resolve-DnsName -Name <IP adresa> -Type PTR
+Pokud spouštění blokuje politika, ověř [Execution Policy](terminal.md#execution-policy), nikoli náhodné vypínání kontrol.
 
-# Zobrazení všech fyzických adaptérů
-Get-NetAdapter -physical
+## Další běžné úlohy
 
-# Zobrazení pouze aktivních adaptérů
-Get-NetAdapter -physical | where status -eq 'up'
-```
+- [Profil, moduly a Oh My Posh](terminal.md).
+- [DNS, porty a síťová diagnostika](../../network/basics.md).
+- [SSH klient ve Windows](../../network/ssh/windows.md).
+- [Telemetrie a nástroje .NET](../../programming/packages/dotnet-cli.md).
+
+`(Get-PSReadLineOption).HistorySavePath` ukáže soubor dlouhodobé historie příkazů; může obsahovat citlivé argumenty a `Clear-History` tuto uloženou historii sám nevymaže.
+
+Zdroje: [PowerShell pipeline](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_pipelines), [Copy-Item](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/copy-item), [chyby](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_try_catch_finally).
