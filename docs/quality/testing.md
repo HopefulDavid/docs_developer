@@ -42,6 +42,12 @@ Projekt nemá schválenou pixelovou baseline ani automatizovaný end-to-end brow
 
 Automatický vizuální nástroj se zavede pouze tehdy, když opakované UI regrese nebo rozsah interakce ospravedlní jeho závislosti a údržbu.
 
+Jednorázové testovací repozitáře, instalace balíčků a jejich cache vytvářej mimo pracovní checkout, například v samostatné složce systémového TEMP.
+
+Ani ignorovaná složka uvnitř projektu není vhodná pro vnořené Git repozitáře: vývojové prostředí je může zobrazovat jako další projekty a větve.
+
+Do kanonické dokumentace přenes důkaz a jeho omezení; po ověření ukliď jednorázové prostředí a případné logy ponech mimo projekt.
+
 ## Volba typu testu
 
 Nejprve určuj, co musí být pozorovatelné a jaké riziko test snižuje.
@@ -285,7 +291,7 @@ Zkouška pnpm bez metadat skutečně skončila `ERR_PNPM_NO_OFFLINE_META`; návo
 
 První kopírování npm fixture přes Python `shutil` selhalo na délce cesty ve Windows; úspěšné opakování použilo kratší pracovní kořen a návod tuto praktickou hranici uvádí.
 
-Logy a výsledky jednorázových experimentů zůstávají v ignorovaných `private/docs-review/followup/*-revision-20260912`, `private/docs-review/revision-20260912/*-proof` a `private/npm-r12`; nepřidávají projektu závislost ani nový podporovaný build příkaz.
+Logy a výsledky jednorázových experimentů původně vznikly v ignorovaných `private/docs-review/followup/*-revision-20260912`, `private/docs-review/revision-20260912/*-proof` a `private/npm-r12`; při následném úklidu byly všechny tyto složky přesunuty mimo projekt do systémového TEMP.
 
 Parser PowerShellu přijal všech 27 bloků ve složkách balíčků a historie Gitu bez syntaktické chyby.
 
@@ -302,3 +308,27 @@ Víceslovný dotaz `nahrazení celé historie` výsledek nevrátil, ačkoli jedn
 Affinity má v desktopovém článku šířky 760 a 482 px a shodné automatické levé i pravé okraje; rozdílné odsazení odpovídá pouze různé šířce snímků a bylo podle zadání zachováno.
 
 Git testy neměnily skutečný hosting; plný platformní build Flutteru a legacy `packages.config` nebyly součástí provedených integračních zkoušek.
+
+## Ověření zjednodušených offline záloh 2026-09-12
+
+Následná revize sjednotila návody na přípravu, přenos a obnovu a zachovala odlišnosti jednotlivých správců.
+
+Nová dočasná prostředí mimo checkout prošla 18 cílenými kontrolami ve stejných verzích nástrojů uvedených výše:
+
+| Oblast | Kontrol | Provedený důkaz |
+|---|---|---|
+| NuGet a .NET tools | 6 | Obnova knihovny přímo přes `--source ../balicky`, nezměněný lockfile, build a spuštění aplikace; lokální nástroj z kopie NuGet složky; globální `.store`, seznam a spuštění po přesunu k jinému testovacímu účtu s nedostupnou původní instalací |
+| npm | 4 | Přenesená cache obnovila běžné i vývojové závislosti při `NODE_ENV=production`, lockfile se nezměnil, prázdná cache selhala a globální TypeScript se obnovil do nové prefix složky |
+| pnpm | 4 | Jediný přípravný `install --frozen-lockfile` bez `fetch` naplnil store i metadata; offline obnova zachovala lockfile a fungující běžné i vývojové závislosti; chybějící archiv a metadata samostatně selhaly |
+| Python | 1 | Nové venv se obnovilo z kopie wheelhouse bez indexu i pip cache, prošlo `pip check` a import připnuté verze requests |
+| Dart | 3 | Přesunutá pub cache obnovila nezměněný lockfile, prošla analýza a spuštění aplikace i samostatného CLI nástroje |
+
+Obnovy používaly nové pracovní instalace, explicitní offline režim nebo místní zdroj a nedostupnou HTTP/HTTPS proxy.
+
+Tato izolace ověřuje dostupné ukázky; nenahrazuje zkoušku libovolných vlastních skriptů při fyzicky odpojené síti ani platformní build Flutteru.
+
+Přenesený globální DocFX navíc skutečně sestavil malou dokumentaci s 0 chybami a 0 varováními.
+
+Parser PowerShellu přijal všech 11 aktuálních bloků balíčků bez syntaktické chyby.
+
+Projektové `npm run verify` prošlo 20 testy a strict buildem s 0 chybami a 0 varováními; kontrola artefaktu ověřila 253 zdrojů a 494 výstupních souborů.

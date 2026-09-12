@@ -77,6 +77,10 @@ Programování odděluje Balíčky od Vývojových nástrojů; přesun mezi skup
 
 Návody balíčků rozlišují obnovu s internetem, připravenou offline zálohu a nástroje používané mimo projekt; zkouška obnovy nesmí spoléhat na původní pracovní instalaci nebo skrytou cache.
 
+Hlavní offline postup má přímo uvést, co připravit, co přenést a co spustit na cíli; diagnostická izolace testovacího prostředí není povinným krokem běžné obnovy na novém počítači.
+
+Globální .NET tools mají jednoduchý postup přenosu celé instalační složky pro kompatibilní prostředí; lokální nástroje mají samostatnou obnovu manifestu z přenesených balíčků.
+
 Zálohy image a provozních dat patří k Dockeru ve Virtualizaci a zálohy zdrojové historie k Gitu; přehled balíčků na ně odkazuje bez duplikace postupů.
 
 Na výslovnou žádost vlastníka byly odstraněny Docker podstránky Bezpečný upgrade stateful služby, Portainer, Duplicati a BusyBox a sekce klávesových zkratek JetBrains.

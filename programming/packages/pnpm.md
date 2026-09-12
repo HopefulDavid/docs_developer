@@ -1,113 +1,81 @@
 ---
-description: "Záloha pnpm store i metadat a obnova projektu s uzamčenými verzemi bez registru."
+description: "Záloha pnpm projektu se store a metadaty, poté obnova jedním instalačním příkazem bez internetu."
 ---
 
 # pnpm – záloha a obnova balíčků
 
-pnpm ukládá obsah balíčků do sdíleného **store** a z něj vytváří projektové `node_modules`.
+Pro offline obnovu pnpm uchovej **projekt, store a cache metadat**.
 
-Samostatná **cache metadat** obsahuje informace o balíčcích a výsledcích kontrol, které mohou být potřeba i při offline instalaci. [Store](https://pnpm.io/settings/store), [cacheDir](https://pnpm.io/settings/other#cachedir)
+Store obsahuje samotné balíčky; metadata jsou informace o nich, které pnpm může při obnově také potřebovat.
 
-Pro přenositelnou offline zálohu proto připrav oba adresáře.
+Postup je pro pnpm 12 se stejnou verzí pnpm, Node.js, OS a architektury na obou počítačích.
 
-## Obnova s internetem
+## 1. Připrav zálohu s internetem
 
-Uchovej celý zdrojový projekt s `package.json`, `pnpm-lock.yaml`, `pnpm-workspace.yaml`, používanými patchemi a hooky `.pnpmfile.*`.
+Vytvoř `zaloha-pnpm/projekt` jako kopii projektu bez `node_modules`.
 
-Na cíli se stejnou verzí pnpm a Node.js:
+Zachovej `package.json`, `pnpm-lock.yaml`, celý workspace, místní závislosti, patche a hooky `.pnpmfile.*`.
 
-```bash
-pnpm install --frozen-lockfile
-pnpm list --depth Infinity
-```
-
-`--frozen-lockfile` odmítne změnu uzamčeného výběru závislostí. [Pnpm install](https://pnpm.io/cli/install)
-
-## 1. Připrav záložní kopii projektu
-
-Následující postup je ověřený s **pnpm 12**, se stejnou verzí správce, Node.js, OS a architektury na obou počítačích.
-
-Vytvoř `zaloha-pnpm/projekt` jako kopii celého projektu bez `node_modules`.
-
-Do existujícího `projekt/pnpm-workspace.yaml` **doplň nebo uprav pouze tyto dva klíče**, ostatní konfiguraci zachovej:
+V kopii projektu doplň nebo uprav v `pnpm-workspace.yaml` tyto dva klíče; ostatní nastavení ponech:
 
 ```yaml
 storeDir: ../store
 cacheDir: ../metadata
 ```
 
-Pokud tento soubor neexistuje a jde o samostatný projekt, vytvoř ho s uvedeným obsahem.
+U samostatného projektu bez tohoto souboru jej vytvoř; u monorepa uprav soubor v kořeni workspace. [Nastavení pnpm](https://pnpm.io/settings)
 
-Cesty jsou zvolené pro záložní kopii; neměň kvůli nim konfiguraci původního pracovního projektu. [Konfigurace pnpm](https://pnpm.io/settings)
-
-U monorepa kopíruj celý workspace a nastavení uprav v jeho kořeni.
-
-## 2. Naplň zálohu s internetem
-
-V `zaloha-pnpm/projekt`:
+Ve stejném kořeni spusť:
 
 ```bash
-node --version
-pnpm --version
-pnpm fetch
-pnpm install --offline --frozen-lockfile
-pnpm store path
+pnpm install --frozen-lockfile
 ```
 
-`fetch` připraví závislosti podle lockfilu; instalace z nich vytvoří pracovní `node_modules`. [Pnpm fetch](https://pnpm.io/cli/fetch)
+Instalace připraví balíčky i metadata ve zvolených složkách a zachová lockfile.
 
-Pro zálohu na vývoj a build neomezuj přípravu pomocí `--prod`; zachovej všechny potřebné vývojové i volitelné závislosti.
+Pro pozdější build a testy instaluj všechny závislosti včetně vývojových; přípravu neomezuj pomocí `--prod` nebo filtru projektů.
 
-Ověř, že `pnpm store path` ukazuje dovnitř zálohy a že vznikla také složka `metadata`.
-
-Výsledek bude:
+## 2. Přenes celou složku
 
 ```text
 zaloha-pnpm/
-  projekt/       zdroje, lockfile a úplná konfigurace workspace
-  store/         obsah balíčků včetně indexu a verzovaných podadresářů
-  metadata/      cache metadat použitá při přípravě
-  verze.txt      pnpm, Node.js, OS a architektura
+  projekt/       zdroje, lockfile a úplná konfigurace
+  store/         balíčky včetně indexu a verzovaných podsložek
+  metadata/      cache metadat
 ```
 
-Po dokončení všech procesů uchovej celý kořen zálohy; před kopírováním nespouštěj `pnpm store prune`.
+Přípravné `node_modules` nepřenášej; po skončení instalace zkopíruj celý kořen zálohy a předtím nepoužívej `pnpm store prune`.
 
-Přípravné `node_modules` nejsou součástí přenosu, protože na cíli vzniknou znovu.
+Přilož verze z `node --version` a `pnpm --version` a připrav jejich instalátory či archivy pro cílový počítač.
 
-## 3. Obnov na cílovém počítači
+## 3. Obnov bez internetu
 
-Rozbal zálohu do pracovní složky a v jejím `projekt`, bez původního `node_modules`, spusť:
+Na cíli rozbal pracovní kopii zálohy a v jejím `projekt` spusť:
 
 ```bash
 pnpm install --offline --frozen-lockfile
 pnpm list --depth Infinity
 ```
 
-Relativní `storeDir` a `cacheDir` z přenesené konfigurace použijí sousední záložní adresáře i po změně absolutní cesty.
+Relativní cesty v přeneseném `pnpm-workspace.yaml` najdou obě sousední složky i po přesunu zálohy jinam.
 
-`--offline` odmítne chybějící obsah; `--prefer-offline` by jej smělo stáhnout.
+`--offline` zakáže stahování a `--frozen-lockfile` zachová uzamčené verze. [Pnpm install](https://pnpm.io/cli/install)
 
-Potom spusť build a testy projektu bez sítě a zkontroluj, že se lockfile nezměnil.
+Nakonec spusť build, testy a běžnou aplikaci bez připojení; ve workspace můžeš pro výpis všech projektů použít `pnpm -r list --depth Infinity`.
 
-Ve workspace použij pro výpis všech projektů `pnpm -r list --depth Infinity`.
+## Chci převzít existující store
 
-## Záloha existujícího sdíleného úložiště
+Nemusíš balíčky stahovat znovu: zjisti `pnpm store path` a skutečné nastavení `cacheDir`, poté zkopíruj oba adresáře do zálohy jako `store` a `metadata`.
 
-Pokud chceš uchovat balíčky pro více projektů, zjisti `pnpm store path` a účinné nastavení `storeDir` i `cacheDir`.
+Pokud první příkaz vypíše například `.../store/v11`, kopíruj **celý rodičovský `store`**, aby zůstala zachovaná jeho struktura.
 
-Zkopíruj celé odpovídající kořeny jako `store` a `metadata` a nastav v záložních projektech jejich nové relativní cesty.
+Výchozí metadata jsou ve Windows obvykle `%LOCALAPPDATA%/pnpm-cache`; rozhoduje však nastavení `cacheDir` a případně `XDG_CACHE_HOME`. [Cache metadat](https://pnpm.io/settings/other#cachedir)
 
-Pokud `pnpm store path` vypíše například `.../store/v11`, zachovej **celý rodičovský kořen `store`**, nikoli samotný podadresář přejmenovaný na `store`.
+V záložní kopii projektu nastav stejné relativní cesty jako v kroku 1 a ověř obnovu každého projektu, pro který zálohu pořizuješ.
 
-Výchozí metadata jsou ve Windows obvykle `%LOCALAPPDATA%/pnpm-cache`; skutečnou cestu může změnit `cacheDir` nebo `XDG_CACHE_HOME`.
+## Nástroje mimo projekt
 
-Zálohu pořizuj po ukončení instalací a ověř obnovou každého požadovaného projektu. [Pnpm store](https://pnpm.io/cli/store)
-
-## Nástroje používané mimo projekt
-
-Seznam globálních nástrojů vypíše `pnpm list --global --depth=0`; s internetem je obnovíš přes `pnpm add --global <balíček>@<verze>`.
-
-Pro offline používání s uzamčenými nepřímými závislostmi vytvoř **samostatnou složku nástrojů** a používej ji jako projekt:
+Pro snadnou offline obnovu nástroje s lockfilem použij samostatný projekt, například v nové prázdné složce:
 
 ```bash
 pnpm init
@@ -115,24 +83,21 @@ pnpm add --save-exact typescript@5.9.3
 pnpm exec tsc --version
 ```
 
-První příkaz patří do nové prázdné složky; název a verzi TypeScriptu nahraď vlastním nástrojem.
+Tuto složku zazálohuj výše uvedenými třemi kroky a nástroj na cíli spouštěj přes `pnpm exec` z obnoveného projektu.
 
-Složku potom zazálohuj a obnov stejnými třemi kroky výše, včetně store, metadat a lockfilu.
+Názvy a verze svých globálních nástrojů zjistíš přes `pnpm list --global --depth=0`.
 
-Nástroje spouštěj z obnovené složky přes `pnpm exec`; běžná globální instalace v účtu tím zůstává nezávislá.
+S internetem je lze znovu instalovat pomocí `pnpm add --global <balíček>@<verze>`.
 
-## Důležité rozdíly a problémy
+## Když něco chybí
 
-| Situace | Řešení |
+| Projev | Co doplnit |
 |---|---|
-| `ERR_PNPM_NO_OFFLINE_META` | Doplň i metadata, nikoli pouze store |
-| `ERR_PNPM_NO_OFFLINE_TARBALL` | Doplň chybějící balíček pro přesný lockfile a platformu |
-| Starší verze pnpm | Použij její původní verzi i konfigurační formát; záloha není důvod pro upgrade |
-| `file:` nebo `link:` závislost | Přenes také místní zdroje; fetch je nenahrazuje |
-| Chybí nativní nástroj | Ověř platformu, povolený build skript a jeho externí data |
+| `ERR_PNPM_NO_OFFLINE_META` | Složku metadat, samotný store nestačí |
+| `ERR_PNPM_NO_OFFLINE_TARBALL` | Chybějící balíček pro uložený lockfile a platformu |
+| Chybí `file:` nebo `link:` závislost | Příslušné místní zdroje |
+| Instalace projde, build selže | Povolené build skripty, nativní nástroje nebo jejich externí data |
 
-U pnpm 12 nestačí všechny historické volby uložit do `.npmrc`: kromě registrů a autentizace patří nastavení do `pnpm-workspace.yaml`. [Nastavení](https://pnpm.io/settings)
+Používáš-li starší pnpm, zachovej jeho verzi a konfigurační formát; u pnpm 12 patří běžné nastavení do `pnpm-workspace.yaml` a `.npmrc` slouží registrům a autentizaci.
 
-Kontroly stáří a důvěry balíčků mohou vyžadovat metadata i pro existující lockfile; nevypínej je jen kvůli chybějící záloze. [Pravidla výběru závislostí](https://pnpm.io/settings/dependency-resolution)
-
-Zachovej schválení build skriptů a zvlášť připrav runtime či binární data, která si instalace stahuje mimo správce balíčků.
+S internetem stačí v přeneseném projektu `pnpm install --frozen-lockfile`; metadata a schválení build skriptů zachovej i tehdy. [Pravidla výběru závislostí](https://pnpm.io/settings/dependency-resolution)
