@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Unity: kamera a velikost z&#225;běru | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Unity: kamera a velikost z&#225;běru | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="V&#253;počet velikosti z&#225;běru a přizpůsoben&#237; kamery poměru stran.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/unity/camera.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="unity-kamera-a-velikost-záběru">Unity: kamera a velikost záběru</h1>
+
+<p>Kamera převádí scénu na obraz; projekce, rozlišení a vrstvy určují, co hráč skutečně uvidí.</p>
+<p>Pro 2D hru často vyhovuje ortografická projekce, ale výběr závisí na zamýšleném obrazu, nikoli jen na typu projektu.</p>
+<h2 id="ortografická-a-perspektivní-kamera">Ortografická a perspektivní kamera</h2>
+<table>
+<thead>
+<tr>
+<th>Vlastnost</th>
+<th>Orthographic</th>
+<th>Perspective</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Velikost stejného objektu</td>
+<td>Nemění se s jeho vzdáleností od kamery</td>
+<td>Se vzdáleností se zmenšuje</td>
+</tr>
+<tr>
+<td>Hlavní parametr záběru</td>
+<td>Orthographic Size</td>
+<td>Field of View</td>
+</tr>
+<tr>
+<td>Typické použití</td>
+<td>2D hra, izometrie, technický pohled</td>
+<td>Prostorový pohled, 3D hra</td>
+</tr>
+</tbody>
+</table>
+<p>Ortografická kamera stále používá ořezové roviny a pořadí vykreslení, takže vzdálenost není zcela bez významu.</p>
+<h2 id="praktické-nastavení-2d-kamery">Praktické nastavení 2D kamery</h2>
+<p>Pro výukovou scénu v Unity 6 umísti sprite na <code>(0, 0, 0)</code> a kameru na <code>(0, 0, -10)</code> s nulovou rotací.</p>
+<p>Nastav <strong>Projection → Orthographic</strong>, <strong>Size → 5</strong> a ověř, že Culling Mask obsahuje vrstvu spritu.</p>
+<p><code>Size = 5</code> znamená polovinu výšky záběru, tedy deset světových jednotek na výšku.</p>
+<p>Při poměru 16:9 je šířka přibližně <code>10 × 16 / 9 = 17,78</code> jednotky; při změně poměru stran se proto mění viditelná šířka.</p>
+<p>Význam parametru definuje <a href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Camera-orthographicSize.html">Camera.orthographicSize</a>.</p>
+<h2 id="pixel-perfect-camera">Pixel Perfect Camera</h2>
+<p>Pixel Perfect Camera je nástroj pro pixel art, kde je důležité konzistentní mapování pixelů grafiky na obrazovku.</p>
+<p>Není povinná pro všechny 2D hry a sama neopraví chybný atlas, souběh pohybových skriptů ani nestabilní snímkování.</p>
+<p>Před přidáním ověř podporu komponenty pro použitou renderovací pipeline a verzi balíčku.</p>
+<p>Sjednoť <strong>Assets Pixels Per Unit</strong> s importem spritů a nastav referenční rozlišení podle výtvarného návrhu, například <code>320 × 180</code> pro ukázkovou pixelovou scénu.</p>
+<p>Nastavení zvětšování a ořezu ověř na více poměrech stran podle <a href="https://docs.unity3d.com/Packages/com.unity.2d.pixel-perfect@5.0/manual/index.html">návodu 2D Pixel Perfect</a>.</p>
+<h2 id="co-lze-upravit-a-ověřit">Co lze upravit a ověřit</h2>
+<p>Změň Size nebo FOV podle rozsahu scény a ověř Game view i samostatný build při cílovém rozlišení.</p>
+<p>Při neviditelném objektu zkontroluj Culling Mask, near/far clipping, polohu, Sorting Layer a aktivní kameru.</p>
+<p>Pro neostré sprity a spáry mezi dlaždicemi pokračuj na <a href="2d.html#%C5%99e%C5%A1en%C3%AD-chyb-p%C5%99i-vykreslov%C3%A1n%C3%AD-spritu">diagnostiku Unity 2D</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

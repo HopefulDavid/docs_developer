@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Git – slučov&#225;n&#237; větv&#237; a konflikty | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git – slučov&#225;n&#237; větv&#237; a konflikty | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Fast-forward, merge, squash a rebase včetně vyřešen&#237; nebo zrušen&#237; konfliktu.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/merging.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git--slučování-větví-a-konflikty">Git – slučování větví a konflikty</h1>
+
+<p>Sloučením přeneseš hotovou práci do cílové větve; metoda určuje, jak se výsledek zapíše do historie.</p>
+<p>Nejdříve si ujasni <strong>zdroj</strong> změn a <strong>cíl</strong>, do kterého mají přijít.</p>
+<h2 id="před-použitím">Před použitím</h2>
+<p>Příklady používají hotovou <code>feature/hledani</code> a cílovou <code>main</code> v jednom repozitáři.</p>
+<p>Před začátkem musí být pracovní strom čistý, obě větve aktuální a práce otestovaná; příkazy fungují v PowerShellu i Bashi.</p>
+<pre><code class="lang-bash">git status
+git switch main
+git diff main...feature/hledani
+git log --oneline main..feature/hledani
+</code></pre>
+<p><code>diff</code> se třemi tečkami ukazuje změnu pracovní větve od společného předka; <code>log</code> se dvěma tečkami vypíše její commity, které cílová větev nemá.</p>
+<h2 id="zvol-jednu-metodu">Zvol jednu metodu</h2>
+<h3 id="fast-forward-jednoduchý-posun">Fast-forward: jednoduchý posun</h3>
+<pre><code class="lang-bash">git merge --ff-only feature/hledani
+</code></pre>
+<p>Povolí jen posunutí <code>main</code> na již existující commit pracovní větve.</p>
+<p>Pokud na <code>main</code> mezitím přibyly jiné commity, skončí chybou bez zahájení konfliktu; pro takovou situaci vyber merge nebo nejprve aktualizuj pracovní větev.</p>
+<h3 id="merge-commit-zachování-obou-linií">Merge commit: zachování obou linií</h3>
+<pre><code class="lang-bash">git merge --no-ff feature/hledani
+</code></pre>
+<p>Vytvoří spojovací commit i v případě, kdy by šel pouhý posun; editor zprávy ulož a zavři.</p>
+<p>Historie zachová jednotlivé pracovní commity i informaci, která větev se začlenila.</p>
+<h3 id="squash-jedna-ucelená-změna-v-cíli">Squash: jedna ucelená změna v cíli</h3>
+<pre><code class="lang-bash">git merge --squash feature/hledani
+git diff --cached
+git commit -m &quot;feat: přidává hledání&quot;
+</code></pre>
+<p>První příkaz připraví výslednou změnu do indexu, ale commit ještě nevytvoří.</p>
+<p>Po kontrole a testech ji uložíš jako jeden commit; původní pracovní větev se nepřepisuje, ale její commity nejsou předky nového commitu.</p>
+<p>Proto po squash může <code>git branch -d</code> odmítnout smazání pracovní větve, přestože výsledný kód už je začleněný.</p>
+<h2 id="aktualizace-pracovní-větve-pomocí-rebase">Aktualizace pracovní větve pomocí rebase</h2>
+<p>Na vlastní, dosud nesdílené pracovní větvi můžeš přesunout základ vývoje:</p>
+<pre><code class="lang-bash">git switch feature/hledani
+git branch backup/pred-rebase
+git rebase main
+</code></pre>
+<p>Git přehraje vlastní commity nad místní <code>main</code> a vytvoří jim nová ID; nejprve proto aktualizuj <code>main</code> ze serveru, pokud má být základem jeho aktuální stav.</p>
+<p>Záložní větev uchovává původní commity, nikoli necommitované soubory.</p>
+<p>Po úspěšném rebase znovu otestuj funkci a na <code>main</code> ji můžeš začlenit například přes fast-forward.</p>
+<h2 id="konflikt-git-potřebuje-rozhodnutí-o-obsahu">Konflikt: Git potřebuje rozhodnutí o obsahu</h2>
+<p>Konflikt typicky vznikne, když obě větve jinak upravily stejnou část souboru.</p>
+<pre><code class="lang-bash">git status
+git diff --name-only --diff-filter=U
+</code></pre>
+<p>Příkazy ukážou probíhající operaci a nevyřešené soubory.</p>
+<p>V textovém souboru můžeš uvidět:</p>
+<pre><code class="lang-text">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+title = &quot;Seznam&quot;
+=======
+title = &quot;Moje poznámky&quot;
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/hledani
+</code></pre>
+<p>V editoru zvol správný výsledný text, případně obě změny smysluplně spoj, a všechny značky odstraň.</p>
+<p>Tlačítka „ours/theirs“ neposuzuj jen podle názvu: při rebase představují strany jiný kontext než při běžném merge.</p>
+<h3 id="dokončení">Dokončení</h3>
+<p>Pro upravený soubor, například <code>src/settings.js</code>:</p>
+<pre><code class="lang-bash">git add -- src/settings.js
+git status
+</code></pre>
+<p>Přidej všechny vyřešené soubory, spusť testy a pokračuj podle skutečně běžící operace:</p>
+<table>
+<thead>
+<tr>
+<th>Operace</th>
+<th>Pokračování</th>
+<th>Zrušení</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Merge</td>
+<td><code>git merge --continue</code></td>
+<td><code>git merge --abort</code></td>
+</tr>
+<tr>
+<td>Rebase</td>
+<td><code>git rebase --continue</code></td>
+<td><code>git rebase --abort</code></td>
+</tr>
+<tr>
+<td>Cherry-pick</td>
+<td><code>git cherry-pick --continue</code></td>
+<td><code>git cherry-pick --abort</code></td>
+</tr>
+<tr>
+<td>Revert</td>
+<td><code>git revert --continue</code></td>
+<td><code>git revert --abort</code></td>
+</tr>
+</tbody>
+</table>
+<p>Rebase může zastavit na dalším commitu s dalším konfliktem; <code>--skip</code> použij jen při vědomém vynechání právě přehrávané změny.</p>
+<p>Squash nezakládá běžný stav merge: po vyřešení jeho konfliktů použij <code>git commit</code>.</p>
+<p>Chceš-li squash zahodit a začínal jsi skutečně s čistým stromem, <code>git restore --source=HEAD --staged --worktree -- .</code> vrátí sledované soubory k cílovému commitu a zahodí i případné další místní úpravy; před tím si případnou novou práci odlož mimo repozitář.</p>
+<h2 id="ověření-výsledku">Ověření výsledku</h2>
+<pre><code class="lang-bash">git status
+git log --graph --oneline --all -12
+</code></pre>
+<p>Ověř čistý stav, zamýšlenou návaznost historie a testy celého výsledku; Git umí vytvořit bezkonfliktní merge, který přesto obsahuje logickou chybu aplikace.</p>
+<p>Pak následuje <a href="synchronization.html">push</a> a případný <a href="branches/delete-remote-branch.html">úklid pracovní větve</a>.</p>
+<p>Zdroje: <a href="https://git-scm.com/docs/git-merge">git merge</a>, <a href="https://git-scm.com/docs/git-rebase">git rebase</a>, <a href="https://git-scm.com/docs/git-diff">git diff</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

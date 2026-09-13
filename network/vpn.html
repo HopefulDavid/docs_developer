@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>VPN – př&#237;stup do vzd&#225;len&#233; s&#237;tě | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="VPN – př&#237;stup do vzd&#225;len&#233; s&#237;tě | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Připojen&#237; do soukrom&#233; s&#237;tě, rozdělen&#237; provozu a diagnostika DNS, tras a portů.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/network/vpn.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="vpn--přístup-do-vzdálené-sítě">VPN – přístup do vzdálené sítě</h1>
+
+<p>VPN vytvoří tunel mezi tvým zařízením a vzdálenou bránou nebo dalším zařízením.</p>
+<p>Vývojář přes něj může dosáhnout na interní Git, databázi či server, které nejsou přímo dostupné z internetu.</p>
+<h2 id="jak-spojení-funguje">Jak spojení funguje</h2>
+<pre><code class="lang-text">tvůj počítač → VPN tunel → vzdálená brána → interní služba
+</code></pre>
+<p>Směrování určuje, který provoz se do tunelu pošle, a DNS může pro interní jména potřebovat jiný resolver než běžný internet.</p>
+<p>VPN přístup do sítě sám neuděluje účet ani databázové oprávnění.</p>
+<h2 id="vyber-podle-skutečné-infrastruktury">Vyber podle skutečné infrastruktury</h2>
+<table>
+<thead>
+<tr>
+<th>Situace</th>
+<th>Co použít</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Firemní síť</td>
+<td>Klienta a profil určený správcem</td>
+</tr>
+<tr>
+<td>Vlastní WireGuard server</td>
+<td>WireGuard klienta a konfiguraci konkrétního peeru</td>
+</tr>
+<tr>
+<td>Server poskytuje OpenVPN</td>
+<td>Odpovídající klient a profil serveru</td>
+</tr>
+<tr>
+<td>Brána poskytuje protokol podporovaný Windows</td>
+<td>Vestavěné VPN připojení se správným typem ověření</td>
+</tr>
+<tr>
+<td>Jen jedna neveřejná TCP služba za SSH</td>
+<td>Může stačit <a href="ssh.html#lok%C3%A1ln%C3%AD-tunel-k-neve%C5%99ejn%C3%A9-slu%C5%BEb%C4%9B">SSH tunel</a></td>
+</tr>
+</tbody>
+</table>
+<p>Nainstalování libovolného VPN klienta nevytvoří kompatibilní server; profil musí odpovídat protokolu a nastavení protistrany.</p>
+<h2 id="split-tunnel-a-celý-provoz">Split tunnel a celý provoz</h2>
+<table>
+<thead>
+<tr>
+<th>Režim</th>
+<th>Chování</th>
+<th>Jak ho poznat při použití</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Split tunnel</td>
+<td>Tunelem jdou jen vybrané sítě</td>
+<td>Interní server je dostupný, veřejný internet může dál používat místní bránu</td>
+</tr>
+<tr>
+<td>Full / force tunnel</td>
+<td>Výchozí trasa vede přes VPN, mohou existovat výjimky</td>
+<td>Běžný internetový provoz zpravidla vystupuje u VPN brány</td>
+</tr>
+</tbody>
+</table>
+<p>IPv4, IPv6 a DNS se mohou směrovat samostatně, takže změna veřejné IP sama neprokazuje úplný průchod všech aplikací tunelem.</p>
+<p>U WireGuardu <code>AllowedIPs</code> ovlivňuje výběr provozu pro peer a povolené zdrojové adresy; nejde o seznam uživatelů a nemá se bez důvodu změnit na všechny sítě.</p>
+<h2 id="praktické-připojení">Praktické připojení</h2>
+<ol>
+<li>Získej správný profil, přihlašovací údaje a přesný název či IP interní služby.</li>
+<li>Importuj profil do odpovídajícího klienta a zkontroluj, pro jakou síť je určený.</li>
+<li>Připoj se a dokonči požadované vícefaktorové ověření.</li>
+<li>Otevři konkrétní interní službu a přihlas se i do ní.</li>
+<li>Po práci se odpoj, pokud VPN nepotřebuješ trvale.</li>
+</ol>
+<p>Ve Windows se vestavěné připojení spravuje v <strong>Nastavení → Síť a internet → VPN</strong>; WireGuard nebo OpenVPN obvykle používají vlastní klientské rozhraní.</p>
+<p>Profil může obsahovat soukromý klíč, a proto jej uchovávej jako přístupový údaj.</p>
+<h2 id="diagnostika-ve-windows">Diagnostika ve Windows</h2>
+<p>Příkazy v PowerShellu nic nepřesměrovávají; ukázkový název nahraď interní službou od správce.</p>
+<pre><code class="lang-powershell">Resolve-DnsName -Name &quot;git.firma.example&quot;
+Test-NetConnection -ComputerName &quot;git.firma.example&quot; -Port 443
+Get-NetIPConfiguration
+</code></pre>
+<p>První příkaz ověří DNS, druhý TCP port a třetí zobrazí síťová rozhraní včetně relevantní konfigurace.</p>
+<table>
+<thead>
+<tr>
+<th>Projev</th>
+<th>Co ověřit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VPN se nepřipojí</td>
+<td>Adresu brány, přihlášení, čas zařízení a log klienta</td>
+</tr>
+<tr>
+<td>VPN je připojená, interní jméno neexistuje</td>
+<td>DNS přidělené VPN a správný název</td>
+</tr>
+<tr>
+<td>DNS funguje, TCP ne</td>
+<td>Trasu, pravidla firewallu, běh služby a oprávnění VPN skupiny</td>
+</tr>
+<tr>
+<td>TCP funguje, aplikace odmítá přihlášení</td>
+<td>Samostatný účet a práva aplikace</td>
+</tr>
+<tr>
+<td>Nefunguje jen určitá síť</td>
+<td>Překryv domácí a vzdálené podsítě nebo split tunnel</td>
+</tr>
+<tr>
+<td>Po připojení přestane fungovat internet</td>
+<td>Výchozí trasu, DNS, kapacitu brány a požadovanou politiku přístupu</td>
+</tr>
+</tbody>
+</table>
+<p>Při překryvu například dvou sítí <code>192.168.1.0/24</code> může počítač hledat vzdálený server v domácí síti; neopravuj to náhodným mazáním tras a nejprve vyřeš adresní plán se správcem.</p>
+<h2 id="co-vpn-nezajišťuje-sama">Co VPN nezajišťuje sama</h2>
+<p>Tunel končí na vzdálené straně, proto služby dál používej přes HTTPS nebo SSH.</p>
+<p>VPN nezaručuje anonymitu a web tě může poznat podle přihlášení či cookies.</p>
+<p>Další rozlišení chyb je v <a href="basics.html">síťové diagnostice</a>.</p>
+<p>Zdroje: <a href="https://learn.microsoft.com/en-us/windows/security/operating-system-security/network-security/vpn/vpn-routing">Microsoft: VPN routing</a>, <a href="https://www.wireguard.com/#cryptokey-routing">WireGuard: principy</a>, <a href="https://openvpn.net/community-docs/">OpenVPN dokumentace</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

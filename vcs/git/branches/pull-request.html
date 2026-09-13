@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Git – pull request pro solo v&#253;voj&#225;ře | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git – pull request pro solo v&#253;voj&#225;ře | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Vlastn&#237; kontrola změny na hostingu, sloučen&#237; a n&#225;sledn&#225; aktualizace m&#237;stn&#237; kopie.">
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/branches/pull-request.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git--pull-request-pro-solo-vývojáře">Git – pull request pro solo vývojáře</h1>
+
+<p>Pull request je návrh změny mezi dvěma větvemi na hostingu, kde společně vidíš popis, celý diff a výsledky automatických kontrol.</p>
+<p>I jako jediný vývojář ho můžeš využít jako poslední kontrolní místo před změnou stabilní větve.</p>
+<h2 id="kdy-pr-použít">Kdy PR použít</h2>
+<ul>
+<li>Chceš před sloučením vidět všechny commity jako jeden přehled změny.</li>
+<li>Hosting vyžaduje kontroly CI nebo chrání cílovou větev.</li>
+<li>Chceš uchovat důvod změny a odkazy na řešený problém.</li>
+</ul>
+<p>Pro lokální projekt bez těchto potřeb stačí <a href="../merging.html">místní merge</a>.</p>
+<p>PR není příkaz Gitu; GitLab stejný záměr označuje jako merge request.</p>
+<h2 id="příprava-a-kontrola">Příprava a kontrola</h2>
+<ol>
+<li>Dokonči a otestuj práci na <code>feature/hledani</code>.</li>
+<li>Odešli ji přes <code>git push -u origin feature/hledani</code>.</li>
+<li>Na hostingu vytvoř PR ze zdrojové <code>feature/hledani</code> do cílové <code>main</code> nebo jiné větve svého workflow.</li>
+<li>Projdi celý diff, nejen seznam commitů, a ověř skutečné výsledky CI.</li>
+<li>Napiš, co bylo chybně nebo chybělo, jak se chování mění a čím jsi změnu ověřil.</li>
+</ol>
+<p>Názvy větví jsou příklad; <strong>base/target</strong> je cíl a <strong>compare/source</strong> je tvoje práce.</p>
+<p>Při výběru opačného směru bys navrhoval jinou změnu.</p>
+<h2 id="rozpracovaný-pr-a-opravy">Rozpracovaný PR a opravy</h2>
+<p>Draft PR můžeš otevřít dříve jako pracovní přehled, pokud ho hosting podporuje.</p>
+<p>Další commity do stejné zdrojové větve PR aktualizují; nový PR kvůli každé opravě nezakládej.</p>
+<p>CI běží jen tehdy, když je v repozitáři nastavené, a zelená kontrola dokládá pouze testy, které skutečně provedla.</p>
+<h2 id="vyber-způsob-sloučení">Vyber způsob sloučení</h2>
+<table>
+<thead>
+<tr>
+<th>Metoda</th>
+<th>Co zůstane v cíli</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Merge commit</td>
+<td>Pracovní commity a nový spojovací commit</td>
+</tr>
+<tr>
+<td>Squash and merge</td>
+<td>Jeden nový commit s celou změnou</td>
+</tr>
+<tr>
+<td>Rebase and merge</td>
+<td>Jednotlivé změny přehrané nad cílem, zpravidla s novými ID</td>
+</tr>
+</tbody>
+</table>
+<p>Vyber metodu podle <a href="../workflows.html">vlastního workflow</a> a možností serveru.</p>
+<h2 id="po-sloučení">Po sloučení</h2>
+<p>Ověř stav <strong>Merged</strong>, správnou cílovou větev a případný build či deployment; samotné sloučení ještě nedokazuje úspěšné nasazení.</p>
+<p>V čisté místní kopii:</p>
+<pre><code class="lang-bash">git switch main
+git fetch origin
+git merge --ff-only origin/main
+git log --oneline -5
+</code></pre>
+<p>Tyto příkazy načtou serverový výsledek i při squash, kdy původní pracovní commit nemá stejné ID jako commit v <code>main</code>.</p>
+<p>Pokud fast-forward selže, nejdříve <a href="../synchronization.html">prohlédni rozchod historie</a>.</p>
+<p>Dokončenou krátkou větev pak <a href="delete-remote-branch.html">odstraň</a>; dlouhodobou <code>develop</code> ponech podle svého modelu.</p>
+<p>Zdroje: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests">GitHub: PR</a>, <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/about-pull-request-merges">metody sloučení</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

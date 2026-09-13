@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>SSH ve Windows – klient a agent | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="SSH ve Windows – klient a agent | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Instalace klienta, volba Windows OpenSSH nebo Git SSH a společn&#253; agent.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/network/ssh/windows.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="ssh-ve-windows--klient-a-agent">SSH ve Windows – klient a agent</h1>
+
+<p>Windows OpenSSH, Git for Windows a WSL mohou mít každý svůj SSH program i vlastní prostředí.</p>
+<p>Pro bezproblémové používání zvol klienta vědomě a načítej klíče do agenta, se kterým tento klient skutečně komunikuje.</p>
+<h2 id="které-ssh-se-spouští">Které SSH se spouští</h2>
+<p>V běžném PowerShellu:</p>
+<pre><code class="lang-powershell">Get-Command ssh -All | Select-Object CommandType, Name, Source, Definition
+where.exe ssh
+ssh -V
+</code></pre>
+<p><code>Get-Command</code> ukáže i případný alias nebo funkci, <code>where.exe</code> cesty nalezených programů a <code>-V</code> verzi skutečně spuštěného klienta.</p>
+<table>
+<thead>
+<tr>
+<th>Typická cesta</th>
+<th>Prostředí</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>C:\Windows\System32\OpenSSH\ssh.exe</code></td>
+<td>Windows OpenSSH</td>
+</tr>
+<tr>
+<td><code>C:\Program Files\Git\usr\bin\ssh.exe</code></td>
+<td>OpenSSH dodané s Git for Windows</td>
+</tr>
+<tr>
+<td><code>/usr/bin/ssh</code> ve WSL</td>
+<td>Linuxová instalace ve zvolené distribuci</td>
+</tr>
+</tbody>
+</table>
+<p>Stejná cesta <code>/usr/bin/ssh</code> v Git Bash označuje jeho vlastní prostředí, nikoli automaticky WSL.</p>
+<p>V Bashi pomůže <code>type -a ssh</code> a <code>command -v ssh</code>; v CMD použij <code>where.exe ssh</code>.</p>
+<h2 id="instalace-windows-openssh">Instalace Windows OpenSSH</h2>
+<p>Pro odchozí přihlášení nebo Git potřebuješ <strong>Client</strong>, nikoli službu SSH Server.</p>
+<p>Pokud klient chybí, otevři 64bitový Windows PowerShell jako správce:</p>
+<pre><code class="lang-powershell">Get-WindowsCapability -Online -Name 'OpenSSH.Client*'
+Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
+</code></pre>
+<p>Instalační příkaz použij jen při stavu <code>NotPresent</code>; vyžaduje dostupný zdroj funkcí Windows.</p>
+<p>Při požadovaném restartu restartuj počítač a v novém běžném terminálu ověř:</p>
+<pre><code class="lang-powershell">&amp; &quot;$env:WINDIR\System32\OpenSSH\ssh.exe&quot; -V
+</code></pre>
+<p>Alternativně vyhledej ve Windows <strong>Volitelné funkce → OpenSSH Client</strong>.</p>
+<h2 id="jeden-klient-pro-windows-a-git">Jeden klient pro Windows a Git</h2>
+<h3 id="varianta-a-windows-openssh">Varianta A: Windows OpenSSH</h3>
+<p>Nejprve si poznamenej současné nastavení:</p>
+<pre><code class="lang-powershell">git config --show-origin --show-scope --get-all core.sshCommand
+Get-ChildItem Env:GIT_SSH*
+</code></pre>
+<p>Pro aktuální terminál můžeš Windows klienta upřednostnit:</p>
+<pre><code class="lang-powershell">$env:Path = &quot;$env:WINDIR\System32\OpenSSH;$env:Path&quot;
+git config --global core.sshCommand C:/Windows/System32/OpenSSH/ssh.exe
+</code></pre>
+<p>První změna platí pouze pro toto okno, druhá nastaví klienta Gitu pro uživatelský účet; cestu uprav, pokud jsou Windows jinde.</p>
+<p>Pro trvalou volbu terminálu uprav pořadí položek Path v nastavení prostředí a zachovej ostatní adresáře.</p>
+<p>Potom úplně restartuj terminál i IDE; prioritu místních výjimek a proměnných vysvětluje <a href="git.html#kter%C3%A9-ssh-pou%C5%BE%C3%ADv%C3%A1-git">Git přes SSH</a>.</p>
+<h3 id="varianta-b-openssh-z-git-for-windows">Varianta B: OpenSSH z Git for Windows</h3>
+<p>Pokud používáš převážně Git Bash, lze ponechat klienta této instalace a načítat klíče do jeho agenta.</p>
+<p>Následující příkaz je kvůli vnořeným uvozovkám určený pro <strong>Git Bash</strong>:</p>
+<pre><code class="lang-bash">git config --global core.sshCommand '&quot;C:/Program Files/Git/usr/bin/ssh.exe&quot;'
+</code></pre>
+<p>Cestu ověř podle své instalace a postup pro agenta vyber v <a href="keys.html#agent-v-git-bash-linuxu-a-macos">SSH klíčích</a>.</p>
+<p>Obě varianty jsou alternativy; není potřeba je střídavě nastavovat.</p>
+<h2 id="agent-windows-openssh">Agent Windows OpenSSH</h2>
+<p>Agent zpřístupní odemčený klíč klientovi bez opakovaného zadávání heslové fráze.</p>
+<p>V PowerShellu <strong>jako správce</strong>:</p>
+<pre><code class="lang-powershell">Get-Service ssh-agent | Select-Object Name, Status, StartType
+Set-Service ssh-agent -StartupType Automatic
+Start-Service ssh-agent
+</code></pre>
+<p>První příkaz zachytí původní stav, další zapnou automatické spouštění a současný běh služby.</p>
+<p>V běžném PowerShellu <strong>pod vlastním účtem</strong> načti svůj existující klíč:</p>
+<pre><code class="lang-powershell">&amp; &quot;$env:WINDIR\System32\OpenSSH\ssh-add.exe&quot; &quot;$env:USERPROFILE\.ssh\id_ed25519&quot;
+&amp; &quot;$env:WINDIR\System32\OpenSSH\ssh-add.exe&quot; -l
+</code></pre>
+<p>Poslední příkaz musí vypsat jeho otisk; heslovou frázi zadáváš jen při odemčení.</p>
+<p>Název souboru přizpůsob svému klíči a Windows službu nezaměňuj s agentem spuštěným uvnitř Git Bash nebo WSL.</p>
+<h2 id="ověření-a-návrat">Ověření a návrat</h2>
+<p>Ověř běžné <code>ssh &lt;alias&gt;</code> a u Git projektu s SSH adresou <code>git ls-remote origin HEAD</code>.</p>
+<p>Pokud terminál funguje a Git nikoli, zjisti <a href="git.html#ov%C4%9B%C5%99en%C3%AD-spu%C5%A1t%C4%9Bn%C3%A9ho-p%C5%99%C3%ADkazu">skutečně spuštěný klient</a>.</p>
+<p>Pro návrat obnov původní konfigurační hodnoty, Path a případně původní režim služby; pouze pokud předtím globální volba neexistovala, odstraň ji přes <code>git config --global --unset-all core.sshCommand</code>.</p>
+<h2 id="kdy-potřebuješ-ssh-server">Kdy potřebuješ SSH Server</h2>
+<p>Server instaluj jen tehdy, pokud se chceš vzdáleně přihlašovat <strong>na tento počítač</strong>.</p>
+<p>Vyžaduje samostatné nastavení služby <code>sshd</code>, firewallu a uživatelského přístupu; u administrátorských účtů Windows má soubor veřejných klíčů odlišné výchozí umístění i požadavky na oprávnění.</p>
+<p>Postup správy serveru vlastní <a href="https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse">Microsoft OpenSSH</a>; <a href="https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_keymanagement">správa klíčů</a> popisuje také <code>administrators_authorized_keys</code>.</p>
+<p>Zdroje: <a href="https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse">instalace OpenSSH</a>, <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent?platform=windows#adding-your-ssh-key-to-the-ssh-agent">Windows SSH agent pro Git</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Bal&#237;čky – z&#225;loha a obnova | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Bal&#237;čky – z&#225;loha a obnova | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Co zkop&#237;rovat pro offline z&#225;lohu bal&#237;čků a jak ověřit obnovu bez původn&#237; instalace.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/packages/offline.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="balíčky--záloha-a-obnova">Balíčky – záloha a obnova</h1>
+
+<p>Pro obnovu bez internetu potřebuješ <strong>projekt i samotné balíčky</strong>; seznam verzí nebo lockfile jejich instalační data neobsahuje.</p>
+<p>U každého správce níže najdeš tři kroky: <strong>připravit s internetem → přenést zálohu → obnovit bez internetu</strong>.</p>
+<h2 id="vyber-správce">Vyber správce</h2>
+<table>
+<thead>
+<tr>
+<th>Správce</th>
+<th>Co uložit vedle zdrojů projektu</th>
+<th>Návod</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NuGet</td>
+<td>Složku balíčků včetně <code>.nupkg</code></td>
+<td><a href="nuget.html">Knihovny .NET</a></td>
+</tr>
+<tr>
+<td>.NET tools</td>
+<td>U globálních celou <code>tools</code> včetně <code>.store</code>; u lokálních manifest a balíčky</td>
+<td><a href="dotnet-tools.html">.NET tools</a></td>
+</tr>
+<tr>
+<td>npm</td>
+<td>Celou naplněnou <code>npm-cache</code></td>
+<td><a href="npm.html">Npm</a></td>
+</tr>
+<tr>
+<td>pnpm</td>
+<td><code>store</code> i <code>metadata</code> a nastavení jejich cest</td>
+<td><a href="pnpm.html">Pnpm</a></td>
+</tr>
+<tr>
+<td>Python / pip</td>
+<td>Seznam verzí a <code>wheelhouse</code> s balíčky <code>.whl</code></td>
+<td><a href="python.html">Python</a></td>
+</tr>
+<tr>
+<td>Dart / Flutter</td>
+<td><code>pubspec.lock</code> a celou <code>pub-cache</code></td>
+<td><a href="dart.html">Dart a Flutter pub</a></td>
+</tr>
+</tbody>
+</table>
+<p>Cache je pracovní složka stažených balíčků; pro zálohu pořizuj její úplnou kopii po skončení instalací.</p>
+<h2 id="nejjednodušší-postup">Nejjednodušší postup</h2>
+<ol>
+<li><strong>Na původním počítači s internetem</strong> připrav balíčky podle příslušného návodu a ověř, že projekt funguje.</li>
+<li><strong>Zkopíruj zálohu na jiné úložiště</strong>, včetně zdrojů, manifestů, lockfilů, konfigurace a případných místních závislostí.</li>
+<li><strong>Na cíli bez internetu</strong> rozbal pracovní kopii zálohy, obnov balíčky a spusť aplikaci, build i testy.</li>
+</ol>
+<p>Původní uloženou zálohu ponech odděleně od pracovní kopie, kterou zkoušíš nebo dále používáš.</p>
+<p>Pro více projektů můžeš sdílet složku balíčků jednoho správce, ale uchovej zdroje a uzamčené verze každého projektu zvlášť.</p>
+<h2 id="co-připravit-také">Co připravit také</h2>
+<ul>
+<li><strong>SDK a správce balíčků:</strong> archiv či instalátor odpovídající verze .NET, Node.js, Pythonu, Dartu nebo Flutteru.</li>
+<li><strong>Stejné prostředí:</strong> kompatibilní OS a architekturu, případně nativní knihovny a překladače.</li>
+<li><strong>Další data aplikace:</strong> například databázi, modely, pluginy nebo prohlížeč stažený instalačním skriptem.</li>
+</ul>
+<p>Pro vývoj, build a testy zahrň také vývojové závislosti; soukromé tokeny uchovávej odděleně od veřejných zdrojů.</p>
+<h2 id="jak-poznáš-že-je-záloha-úplná">Jak poznáš, že je záloha úplná</h2>
+<p>Obnova musí fungovat bez původních pracovních instalací a cache, ideálně na novém účtu nebo druhém kompatibilním počítači.</p>
+<p>Úspěšný výpis správce nestačí: spusť také běžnou operaci aplikace bez připojení, protože vlastní instalační nebo build skript může stahovat další data mimo správce balíčků.</p>
+<p>Pokud něco chybí, doplň zálohu na počítači s internetem a znovu vyzkoušej její pracovní kopii.</p>
+<p>Před zálohováním nepoužívej <code>cache clean</code>, <code>store prune</code> ani jiné čištění stažených dat.</p>
+<p>Pokud při obnově internet máš, většinou stačí projekt s manifestem a lockfilem; jednotlivé návody uvádějí i tuto kratší variantu.</p>
+<h2 id="související-zálohy">Související zálohy</h2>
+<p><a href="../../vcs/git/backups.html">Záloha Gitu</a> uchovává historii zdrojů a <a href="../../virtualization/docker/index.html">záloha Dockeru</a> image i provozní data kontejnerů.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

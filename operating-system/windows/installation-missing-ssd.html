@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Instal&#225;tor Windows nevid&#237; SSD | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Instal&#225;tor Windows nevid&#237; SSD | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Kontrola detekce SSD, načten&#237; spr&#225;vn&#233;ho ovladače a ověřen&#237; c&#237;lov&#233;ho disku.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/operating-system/windows/installation-missing-ssd.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="instalátor-windows-nevidí-ssd">Instalátor Windows nevidí SSD</h1>
+
+<p>Chybějící SSD v instalátoru může znamenat chybějící ovladač řadiče, například Intel RST/VMD, nikoli nutně vadný nebo prázdný disk.</p>
+<h2 id="1-rozliš-příčinu">1. Rozliš příčinu</h2>
+<table>
+<thead>
+<tr>
+<th>Stav</th>
+<th>Další krok</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SSD je ve firmware / RST, ale ne v instalátoru</td>
+<td>Ověř a načti ovladač řadiče</td>
+</tr>
+<tr>
+<td>SSD není ani v informacích o úložišti UEFI</td>
+<td>Ověř hardware a diagnostiku výrobce</td>
+</tr>
+<tr>
+<td>Disk je vidět, ale instalace hlásí GPT/MBR</td>
+<td>Řeš režim bootování a rozdělení disku, ne jiný ovladač</td>
+</tr>
+<tr>
+<td>Vidíš pouze USB</td>
+<td>Interní SSD zatím není prokázané; pokračuj kontrolou řadiče</td>
+</tr>
+</tbody>
+</table>
+<p>Seznam bootovacích položek není seznam fyzických disků; prázdné SSD nemusí mít Windows Boot Manager.</p>
+<div class="WARNING">
+<h5>Varov&#225;n&#237;</h5>
+<p>Pokud na disku očekáváš data a instalátor ho ukazuje jako celý nepřidělený, nepokračuj instalací ani vytvářením oddílů.</p>
+</div>
+<h2 id="2-připrav-správný-ovladač">2. Připrav správný ovladač</h2>
+<p>Na funkčním počítači:</p>
+<ol>
+<li>Zjisti přesný model cílového zařízení a verzi Windows.</li>
+<li>Otevři oficiální podporu výrobce tohoto modelu.</li>
+<li>Stáhni kompatibilní ovladač úložiště označený například RST, VMD nebo F6.</li>
+<li>Rozbal ho a ověř přítomnost <code>.inf</code> a odpovídajících <code>.sys</code> a <code>.cat</code>.</li>
+<li>Zkopíruj celou rozbalenou složku na USB, například do <code>Drivers\IRST</code>.</li>
+</ol>
+<p>Samotný ZIP nebo běžný instalační EXE nestačí pro volbu <strong>Načíst ovladač</strong>.</p>
+<h3 id="intel-setuprstexe">Intel SetupRST.exe</h3>
+<p>Pouze u podporovaného balíčku Intel lze v PowerShellu ve složce staženého instalátoru použít:</p>
+<pre><code class="lang-powershell">.\SetupRST.exe -extractdrivers .\RST-extracted
+</code></pre>
+<p>Příkaz rozbalí ovladače do <code>RST-extracted</code>; tuto složku pak přenes na USB včetně podsložek.</p>
+<p>U jiného instalačního balíčku se řiď postupem výrobce, protože přepínače nemusí být stejné.</p>
+<h2 id="3-načti-ovladač-v-instalátoru">3. Načti ovladač v instalátoru</h2>
+<ol>
+<li>Na obrazovce výběru disku zvol <strong>Načíst ovladač → Procházet</strong>.</li>
+<li>Vyber rozbalenou složku VMD/F6.</li>
+<li>Ponech zapnuté skrývání nekompatibilních ovladačů.</li>
+<li>Vyber řadič odpovídající hardwaru a potvrď načtení.</li>
+<li>Očekávej nově zobrazený interní disk.</li>
+</ol>
+<p>Číslo či PCI kód v názvu řadiče není pořadím vhodnosti ovladačů; rozhoduje podporovaný hardware.</p>
+<p>Pokud filtr nenabízí kompatibilní řadič, vrať se k přesnému modelu a balíčku místo vynucování jiné položky.</p>
+<h2 id="4-ověř-který-disk-je-cílový">4. Ověř, který disk je cílový</h2>
+<p>Porovnej <strong>model, celkovou kapacitu, číslo fyzického disku a jeho oddíly</strong>.</p>
+<p>Více řádků oddílů může patřit stejnému SSD nebo instalačnímu USB.</p>
+<p>Pro čtecí kontrolu stiskni v instalátoru <code>Shift+F10</code>:</p>
+<pre><code class="lang-text">diskpart
+list disk
+</code></pre>
+<p>Podle skutečného seznamu vyber číslo disku; následující blok je syntaxe, ve které <code>&lt;číslo&gt;</code> nahradíš:</p>
+<pre><code class="lang-text">select disk &lt;číslo&gt;
+detail disk
+list partition
+exit
+</code></pre>
+<p>Tyto operace pouze vybírají a vypisují disk; <code>clean</code>, <code>format</code> ani <code>delete partition</code> nejsou součástí diagnostiky.</p>
+<h2 id="5-pokračuj-podle-obsahu-disku">5. Pokračuj podle obsahu disku</h2>
+<table>
+<thead>
+<tr>
+<th>Disk</th>
+<th>Postup</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ověřené nové nebo záměrně prázdné SSD</td>
+<td>Vyber jeho nepřidělené místo a pokračuj</td>
+</tr>
+<tr>
+<td>Disk s potřebnými oddíly</td>
+<td>Nejdříve ověř zálohu a rozsah zamýšlené přeinstalace</td>
+</tr>
+<tr>
+<td>Nečekaně nepřidělený disk s dřívějšími daty</td>
+<td>Zastav zápisy a řeš obnovu dat</td>
+</tr>
+<tr>
+<td>Instalační USB</td>
+<td>Jeho oddíly ponech a nevybírej jako cíl</td>
+</tr>
+</tbody>
+</table>
+<p>Edice Home/Pro musí odpovídat licenci, ale sama neřeší viditelnost SSD.</p>
+<h2 id="když-disk-stále-chybí">Když disk stále chybí</h2>
+<ul>
+<li>Ověř detekci ve správné nabídce UEFI, nikoli jen seznam bootování.</li>
+<li>Zkontroluj režim řadiče a balíček pro přesnou architekturu a model.</li>
+<li>Intel Optane správcovská aplikace nenahrazuje potřebný instalační ovladač VMD.</li>
+<li>VMD nebo RAID/AHCI nepřepínej bez postupu výrobce; existující Windows mohou přestat bootovat.</li>
+</ul>
+<p>Pro další instalaci uchovej rozbalený funkční ovladač, verzi balíčku, model zařízení a původní režim řadiče.</p>
+<p>Zdroje: <a href="https://www.intel.com/content/www/us/en/support/articles/000091139/memory-and-storage.html">Intel: chybějící disk</a>, <a href="https://www.intel.com/content/www/us/en/support/articles/000094664/technologies/intel-rapid-storage-technology-intel-rst.html">extrakce SetupRST</a>, <a href="https://www.intel.com/content/www/us/en/support/articles/000057787/memory-and-storage/intel-optane-memory.html">Intel VMD</a>, <a href="https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/windows-setup-installing-using-the-mbr-or-gpt-partition-style?view=windows-11">Microsoft: UEFI a GPT/MBR</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

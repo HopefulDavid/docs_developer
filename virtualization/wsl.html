@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>WSL – Linux ve Windows | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="WSL – Linux ve Windows | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Instalace Linuxu ve Windows, spr&#225;va distribuc&#237; a jejich přenos.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/virtualization/wsl.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="wsl--linux-ve-windows">WSL – Linux ve Windows</h1>
+
+<p>WSL umožňuje používat linuxové nástroje z Windows; WSL 2 spouští skutečné linuxové jádro v řízeném lehkém virtuálním stroji.</p>
+<h2 id="před-použitím">Před použitím</h2>
+<p>Následující instalace je pro podporované Windows 10 od verze 2004, sestavení 19041, nebo Windows 11.</p>
+<p>Pro WSL 2 potřebuješ povolenou virtualizaci procesoru v UEFI; ve virtualizovaném hostiteli také podporovanou vnořenou virtualizaci.</p>
+<p>Intel VT-d ani obecné IOMMU není potřeba doporučovat jako samostatný univerzální předpoklad tohoto postupu.</p>
+<h2 id="instalace-wsl-na-windows">Instalace WSL na Windows</h2>
+<p>V PowerShellu <strong>jako správce</strong> spusť:</p>
+<pre><code class="lang-powershell">wsl --install
+</code></pre>
+<p>Příkaz připraví WSL a výchozí distribuci Ubuntu; pokud vyžádá restart, proveď jej a dokonči vytvoření linuxového uživatele.</p>
+<p>Jde o linuxový účet oddělený od účtu Windows. <a href="https://learn.microsoft.com/en-us/windows/wsl/install">Instalace WSL</a></p>
+<h2 id="ověření-a-běžné-použití">Ověření a běžné použití</h2>
+<p>V běžném terminálu Windows:</p>
+<pre><code class="lang-powershell">wsl --status
+wsl --list --verbose
+wsl
+</code></pre>
+<p>Výpis ukáže distribuce a sloupec <code>VERSION</code>; poslední příkaz otevře výchozí distribuci.</p>
+<p>Uvnitř Linuxu ověř prostředí:</p>
+<pre><code class="lang-bash">whoami
+pwd
+uname -r
+</code></pre>
+<p>Příkazy vypíšou uživatele, pracovní adresář a jádro; <code>exit</code> se vrátí do Windows.</p>
+<h2 id="co-lze-upravit">Co lze upravit</h2>
+<table>
+<thead>
+<tr>
+<th>Syntaxe ve Windows</th>
+<th>Význam</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>wsl --list --online</code></td>
+<td>Dostupné distribuce pro instalaci</td>
+</tr>
+<tr>
+<td><code>wsl --install -d &lt;distribuce&gt;</code></td>
+<td>Instaluje distribuci; název vyber z online výpisu</td>
+</tr>
+<tr>
+<td><code>wsl --set-default &lt;distribuce&gt;</code></td>
+<td>Zvolí výchozí již nainstalovanou distribuci</td>
+</tr>
+<tr>
+<td><code>wsl --set-default-version {1|2}</code></td>
+<td>Nastaví verzi pro další instalace, nemigruje existující distribuce</td>
+</tr>
+<tr>
+<td><code>wsl --update</code></td>
+<td>Aktualizuje WSL</td>
+</tr>
+<tr>
+<td><code>wsl --terminate &lt;distribuce&gt;</code></td>
+<td>Zastaví jednu již nainstalovanou distribuci</td>
+</tr>
+<tr>
+<td><code>wsl --shutdown</code></td>
+<td>Zastaví všechny distribuce i virtuální stroj WSL 2</td>
+</tr>
+</tbody>
+</table>
+<p><code>&lt;distribuce&gt;</code> nahraď přesným názvem a u volby <code>{1|2}</code> zadej jedno číslo bez závorek, například <code>wsl --set-default-version 2</code>.</p>
+<p>Například <code>wsl --install -d Debian</code> instaluje Debian, zatímco <code>wsl --terminate Debian</code> tuto existující distribuci zastaví.</p>
+<p>Před zastavením ulož práci; názvy <code>Ubuntu</code> a <code>Debian</code> nahraď skutečným názvem své distribuce. <a href="https://learn.microsoft.com/en-us/windows/wsl/basic-commands">Reference WSL</a></p>
+<h2 id="import-vlastní-distribuce">Import vlastní distribuce</h2>
+<p>Archiv RootFS získaný od vydavatele odpovídající architektuře lze importovat pomocí <code>wsl --import</code>; stejný příkaz slouží k obnově exportu v následujícím postupu.</p>
+<p>Import sám nemusí vytvořit běžného uživatele ani nastavit jeho výchozí přihlášení.</p>
+<h2 id="přesun-wsl-distribuce-na-jiné-místo">Přesun WSL distribuce na jiné místo</h2>
+<p>Export a import umožní přenést vlastní Ubuntu na jiný počítač s Windows nebo obnovit jeho kopii na jiném disku stejného počítače.</p>
+<p>Přenáší se souborový systém distribuce včetně nainstalovaných balíčků, linuxových uživatelů, nastavení a souborů v jejich domovských adresářích.</p>
+<p>Složky Windows připojené například pod <code>/mnt/c</code>, externí disky a nastavení Windows v souboru <code>%UserProfile%\.wslconfig</code> přenes samostatně.</p>
+<p>Data Docker Desktopu mají <a href="docker/index.html#p%C5%99enos-dat-docker-desktopu-na-jin%C3%BD-po%C4%8D%C3%ADta%C4%8D">vlastní postup přenosu</a>.</p>
+<p>Následující příkazy zadávej ve <strong>Windows PowerShellu</strong> pod účtem Windows, který danou distribuci používá.</p>
+<p>Příklady počítají s WSL 2 a se stejnou architekturou obou počítačů, například x64; názvy distribucí a cesty nahraď svými skutečnými hodnotami.</p>
+<p>Na export, přenášený archiv i obnovenou distribuci potřebuješ dostatek místa; pro soubory větší než 4 GB nepoužívej přenosový disk s FAT32.</p>
+<details>
+<summary>Zdrojový počítač: export Ubuntu</summary>
+<h3 id="1-zjisti-název-distribuce-a-uživatele">1. Zjisti název distribuce a uživatele</h3>
+<pre><code class="lang-text">wsl --list --verbose
+wsl --distribution Ubuntu-22.04 --exec whoami
+</code></pre>
+<p>V dalších příkazech je zdrojovou distribucí <code>Ubuntu-22.04</code>; poznamenej si také vypsané linuxové uživatelské jméno pro přihlášení po importu.</p>
+<h3 id="2-ulož-práci-a-zastav-distribuci">2. Ulož práci a zastav distribuci</h3>
+<p>Nejprve řádně ukonči aplikace a databáze uvnitř Ubuntu, aby se jejich data dopsala na disk, a zavři jeho terminály i připojená vývojová prostředí.</p>
+<pre><code class="lang-text">wsl --terminate Ubuntu-22.04
+</code></pre>
+<p>Tento příkaz zastaví pouze uvedenou distribuci; po dobu exportu ji znovu nespouštěj.</p>
+<h3 id="3-vytvoř-export-a-zaznamenej-kontrolní-součet">3. Vytvoř export a zaznamenej kontrolní součet</h3>
+<p>Zvol novou záložní složku mimo exportovanou distribuci, například na přenosovém disku <code>E:</code>.</p>
+<pre><code class="lang-text">New-Item -ItemType Directory -Path 'E:\Prenos\WSL' -ErrorAction Stop
+wsl --export Ubuntu-22.04 'E:\Prenos\WSL\Ubuntu-22.04.tar'
+if ($LASTEXITCODE -ne 0) { throw 'Export Ubuntu se nezdařil.' }
+Get-FileHash -LiteralPath 'E:\Prenos\WSL\Ubuntu-22.04.tar' -Algorithm SHA256
+</code></pre>
+<p>Počkej na úspěšné dokončení exportu a ulož si hodnotu <code>Hash</code>, abys ji mohl porovnat na cílovém počítači.</p>
+<p>Výsledkem je archiv TAR; původní Ubuntu zůstává nainstalované a po exportu ho můžeš znovu používat.</p>
+<p>Záloha zachycuje stav v okamžiku exportu, takže pozdější změny se do ní již nedoplní.</p>
+<p>Archiv může obsahovat hesla, SSH klíče i další soukromé soubory; přenášej a uchovávej jej jako citlivá data.</p>
+<p><a href="https://learn.microsoft.com/en-us/windows/wsl/basic-commands#export-a-distribution">Dokumentace exportu WSL</a></p>
+</details>
+<details>
+<summary>Cílový počítač: import a ověření Ubuntu</summary>
+<h3 id="1-připrav-wsl-a-ověř-přenesený-archiv">1. Připrav WSL a ověř přenesený archiv</h3>
+<p>Na cílovém počítači musí fungovat WSL 2; před importem není potřeba instalovat novou distribuci Ubuntu z Microsoft Storu.</p>
+<p>Přenes archiv na cílový počítač nebo připoj přenosový disk a zkontroluj jej:</p>
+<pre><code class="lang-text">wsl --status
+wsl --list --verbose
+Get-FileHash -LiteralPath 'E:\Prenos\WSL\Ubuntu-22.04.tar' -Algorithm SHA256
+</code></pre>
+<p>Hodnota <code>Hash</code> musí přesně odpovídat hodnotě zaznamenané po exportu; při neshodě archiv znovu přenes a nepokračuj v importu.</p>
+<h3 id="2-importuj-pod-volným-názvem-do-nové-složky">2. Importuj pod volným názvem do nové složky</h3>
+<p>Název <code>Ubuntu-22.04-Prenesena</code> nesmí být v předchozím výpisu a cílová složka musí být nová nebo prázdná.</p>
+<p>Odlišný název umožní ponechat původní Ubuntu i při přesunu na stejném počítači.</p>
+<pre><code class="lang-text">New-Item -ItemType Directory -Path 'D:\WSL\Ubuntu2204-Prenesena' -ErrorAction Stop
+wsl --import Ubuntu-22.04-Prenesena 'D:\WSL\Ubuntu2204-Prenesena' 'E:\Prenos\WSL\Ubuntu-22.04.tar' --version 2
+if ($LASTEXITCODE -ne 0) { throw 'Import Ubuntu se nezdařil.' }
+wsl --list --verbose
+</code></pre>
+<p>V seznamu očekávej novou distribuci s <code>VERSION 2</code>; její pracovní disk vznikne v cílové složce, archiv TAR zůstane samostatnou zálohou.</p>
+<p><a href="https://learn.microsoft.com/en-us/windows/wsl/basic-commands#import-a-distribution">Dokumentace importu WSL</a></p>
+<h3 id="3-přihlas-se-a-ověř-svoje-data">3. Přihlas se a ověř svoje data</h3>
+<p>V následujícím příkazu nahraď <code>vyvojar</code> existujícím linuxovým uživatelským jménem zaznamenaným na zdroji:</p>
+<pre><code class="lang-text">wsl --distribution Ubuntu-22.04-Prenesena --user vyvojar
+</code></pre>
+<p>Uvnitř Ubuntu ověř uživatele a obsah jeho domovského adresáře:</p>
+<pre><code class="lang-text">whoami
+cd ~
+ls -la
+</code></pre>
+<p>Otevři své projekty a ověř potřebné aplikace i jejich uložená data; shodný kontrolní součet potvrzuje neporušený přenos archivu, nikoli funkčnost celého prostředí.</p>
+<p>Pokud se distribuce bez přepínače <code>--user</code> spouští jako <code>root</code>, nastav v jejím <code>/etc/wsl.conf</code> výchozího uživatele; uvnitř Ubuntu můžeš soubor otevřít například editorem Nano:</p>
+<pre><code class="lang-text">sudo nano /etc/wsl.conf
+</code></pre>
+<p>Zachovej ostatní sekce a existující sekci <code>[user]</code> uprav místo jejího opětovného přidání; také zde nahraď <code>vyvojar</code> svým linuxovým uživatelským jménem:</p>
+<pre><code class="lang-ini">[user]
+default=vyvojar
+</code></pre>
+<p><a href="https://ubuntu.com/wsl/docs/latest/howto/manage-and-configure/#using-the-restored-backup">Nastavení uživatele obnoveného Ubuntu</a></p>
+<p>V editoru Nano ulož změnu pomocí <code>Ctrl+O</code>, potvrď Enterem a editor zavři pomocí <code>Ctrl+X</code>.</p>
+<p>Zavři práci v Ubuntu a příkazem <code>exit</code> se vrať do PowerShellu, kde distribuci restartuj a ověř výchozí přihlášení:</p>
+<pre><code class="lang-text">wsl --terminate Ubuntu-22.04-Prenesena
+wsl --distribution Ubuntu-22.04-Prenesena --exec whoami
+</code></pre>
+<p>V případě potřeby nastav obnovené Ubuntu také jako výchozí distribuci pro samotný příkaz <code>wsl</code>:</p>
+<pre><code class="lang-text">wsl --set-default Ubuntu-22.04-Prenesena
+</code></pre>
+<h3 id="4-původní-distribuci-odstraň-jen-při-skutečném-přesunu">4. Původní distribuci odstraň jen při skutečném přesunu</h3>
+<p>Při kopírování nebo zálohování není potřeba původní Ubuntu odstraňovat.</p>
+<p>Pokud je chceš odstranit, proveď následující krok <strong>na zdrojovém počítači až po ověření obnovených dat a při zachované záloze TAR</strong>:</p>
+<pre><code class="lang-text">wsl --unregister Ubuntu-22.04
+</code></pre>
+<div class="WARNING">
+<h5>Varov&#225;n&#237;</h5>
+<p>Odregistrace nevratně smaže souborový systém, nastavení i programy uvedené distribuce, proto před spuštěním ověř její přesný název.</p>
+</div>
+<p><a href="https://learn.microsoft.com/en-us/windows/wsl/basic-commands#unregister-or-uninstall-a-linux-distribution">Dopad odregistrace WSL</a></p>
+</details>
+<h2 id="docker-desktop-a-vlastní-ubuntu">Docker Desktop a vlastní Ubuntu</h2>
+<p>Rozdíl mezi distribucemi <code>Ubuntu-22.04</code> a <code>docker-desktop</code>, zapnutí integrace, ověření Dockeru z Ubuntu i význam disku <code>docker_data.vhdx</code> vysvětluje <a href="docker/index.html#docker-desktop-a-wsl-2-ve-windows">Docker Desktop a WSL 2 ve Windows</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

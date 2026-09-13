@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>PostgreSQL – instalace a připojen&#237; | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="PostgreSQL – instalace a připojen&#237; | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Instalace, připojen&#237; přes psql a orientace v datab&#225;zov&#253;ch objektech.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/database/postgresql.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="postgresql--instalace-a-připojení">PostgreSQL – instalace a připojení</h1>
+
+<p>PostgreSQL je relační databázový systém; pro práci lze použít konzoli psql nebo grafický klient pgAdmin.</p>
+<h2 id="instalace-postgresql-ve-windows">Instalace PostgreSQL ve Windows</h2>
+<ol>
+<li>Vyber podporovanou verzi a instalátor z <a href="https://www.postgresql.org/download/windows/">oficiálního rozcestníku</a>.</li>
+<li>V instalátoru EDB zvol server a <strong>Command Line Tools</strong>, případně také <strong>pgAdmin 4</strong>.</li>
+<li>Vyber datový adresář, nastav heslo databázového správce a poznamenej si port; běžný výchozí port je <code>5432</code>.</li>
+<li>Dokonči instalaci a ověř běh databázové služby.</li>
+</ol>
+<p>pgAdmin je samostatný klient; jeho přítomnost závisí na distribuci a volbě komponent.</p>
+<h3 id="výběr-komponent">Výběr komponent</h3>
+<img src="../images/wqiRRNNKOT.png" alt="Komponenty instalátoru PostgreSQL pro Windows" width="545">
+<p><a href="../images/wqiRRNNKOT.png">Zobrazit obrázek v původní velikosti</a></p>
+<h2 id="připojení-z-příkazového-řádku">Připojení z příkazového řádku</h2>
+<p>Otevři <strong>SQL Shell (psql)</strong>, nebo v terminálu s dostupným <code>psql</code> spusť:</p>
+<pre><code class="lang-text">psql -h localhost -p 5432 -U postgres -d postgres
+</code></pre>
+<p>Heslo zadej do výzvy, nikoli jako součást příkazu.</p>
+<p>Po přihlášení ověř:</p>
+<pre><code class="lang-sql">SELECT version();
+SELECT current_database(), current_user;
+</code></pre>
+<p>V konzoli lze použít také:</p>
+<table>
+<thead>
+<tr>
+<th>Syntaxe v konzoli psql</th>
+<th>Význam</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\l</code></td>
+<td>Seznam databází</td>
+</tr>
+<tr>
+<td><code>\dt</code></td>
+<td>Tabulky v aktuálním vyhledávacím schématu</td>
+</tr>
+<tr>
+<td><code>\d &lt;schéma&gt;.&lt;tabulka&gt;</code></td>
+<td>Struktura vybrané tabulky; doplň její schéma a název</td>
+</tr>
+<tr>
+<td><code>\q</code></td>
+<td>Ukončení konzole</td>
+</tr>
+</tbody>
+</table>
+<p>Například <code>\d public.notes</code> zobrazí strukturu existující tabulky <code>notes</code> ve schématu <code>public</code>; zadává se do konzole psql, nikoli přímo do PowerShellu.</p>
+<p><a href="https://www.postgresql.org/docs/current/app-psql.html">Reference psql</a></p>
+<h2 id="připojení-v-pgadminu">Připojení v pgAdminu</h2>
+<p>Zaregistruj server a vyplň hostitele, port, databázi pro první připojení, uživatele a heslo odpovídající instalaci.</p>
+<p>V <strong>Query Tool</strong> spusť stejný ověřovací dotaz jako v psql. <a href="https://www.pgadmin.org/docs/pgadmin4/latest/server_dialog.html">Dialog serveru</a></p>
+<p>Pro aplikace vytvoř samostatný účet s potřebnými oprávněními; správce <code>postgres</code> v tomto návodu slouží k ověření nové lokální instalace.</p>
+<h2 id="když-se-připojení-nedaří">Když se připojení nedaří</h2>
+<table>
+<thead>
+<tr>
+<th>Chyba</th>
+<th>Co ověřit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>psql</code> nenalezen</td>
+<td>Instalaci Command Line Tools a cestu k adresáři <code>bin</code></td>
+</tr>
+<tr>
+<td>Connection refused</td>
+<td>Běh serveru, hostitele a port</td>
+</tr>
+<tr>
+<td>Password authentication failed</td>
+<td>Jméno databázového uživatele a jeho heslo</td>
+</tr>
+<tr>
+<td>No pg_hba.conf entry</td>
+<td>Pravidla přístupu pro konkrétního klienta a databázi</td>
+</tr>
+</tbody>
+</table>
+<p>Jazyk konzole není důvod měnit konfiguraci serveru; řeš konkrétní chybu připojení. <a href="https://www.postgresql.org/docs/current/auth-pg-hba-conf.html">Konfigurace přístupu</a></p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

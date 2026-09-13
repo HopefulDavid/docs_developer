@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Git – nastaven&#237; pro vlastn&#237; projekty | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git – nastaven&#237; pro vlastn&#237; projekty | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Identita autora, editor, konce ř&#225;dků a kontrola &#250;činn&#233;ho nastaven&#237;.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/configuration.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git--nastavení-pro-vlastní-projekty">Git – nastavení pro vlastní projekty</h1>
+
+<p>Konfigurace určuje identitu commitů a chování nástrojů; jméno a e-mail autora nejsou přihlašovací údaje k serveru.</p>
+<h2 id="nastav-jednou-pro-svůj-účet">Nastav jednou pro svůj účet</h2>
+<p>V PowerShellu nebo Bashi nahraď ukázkové údaje vlastními:</p>
+<pre><code class="lang-bash">git config --global user.name &quot;Jana Novakova&quot;
+git config --global user.email &quot;jana@example.com&quot;
+git config --global init.defaultBranch main
+</code></pre>
+<p>Jméno a e-mail budou zapsané v nových commitech, které mohou být veřejné; na GitHubu lze použít přesnou soukromou noreply adresu uvedenou v nastavení účtu.</p>
+<p><code>init.defaultBranch</code> určuje název větve nových repozitářů, existující větve nepřejmenuje.</p>
+<h2 id="osobní-versus-projektové-nastavení">Osobní versus projektové nastavení</h2>
+<table>
+<thead>
+<tr>
+<th>Rozsah</th>
+<th>Kde platí</th>
+<th>Kdy jej použít</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--local</code></td>
+<td>Jen aktuální repozitář, zpravidla <code>.git/config</code></td>
+<td>Jiný e-mail pro pracovní projekt</td>
+</tr>
+<tr>
+<td><code>--global</code></td>
+<td>Projekty tvého uživatelského účtu</td>
+<td>Osobní výchozí nastavení</td>
+</tr>
+<tr>
+<td><code>--system</code></td>
+<td>Instalace Gitu pro více uživatelů</td>
+<td>Správa společného prostředí</td>
+</tr>
+</tbody>
+</table>
+<p>Místní hodnota přebíjí globální; jednotlivý příkaz může navíc dostat dočasné nastavení přes <code>git -c &lt;klíč&gt;=&lt;hodnota&gt; &lt;příkaz&gt;</code>.</p>
+<p>V kořeni pracovního projektu například:</p>
+<pre><code class="lang-bash">git config --local user.email &quot;jana@firma.example&quot;
+git config --show-origin --get user.email
+</code></pre>
+<p>Druhý příkaz ukáže účinnou hodnotu a zdrojový soubor; změna nepozmění autorství již vytvořených commitů.</p>
+<h2 id="editor-zpráv-commitů">Editor zpráv commitů</h2>
+<p>Pokud používáš VS Code a jeho příkaz <code>code</code> funguje v terminálu, nastav:</p>
+<pre><code class="lang-bash">git config --global core.editor &quot;code --wait&quot;
+</code></pre>
+<p><code>--wait</code> nechá Git počkat na uložení a zavření editační karty.</p>
+<p>Můžeš zvolit jiný nainstalovaný editor s odpovídající volbou čekání, nebo editor nechat výchozí; <code>git commit -m &quot;&lt;zpráva&gt;&quot;</code> editor vůbec neotevírá.</p>
+<h2 id="konce-řádků-patří-k-pravidlům-projektu">Konce řádků patří k pravidlům projektu</h2>
+<p>LF a CRLF jsou dva způsoby ukončení textového řádku; nevhodné převody dokážou zobrazit celý soubor jako změněný.</p>
+<p>Pokud projekt používá <code>.gitattributes</code>, respektuj ho a nenormalizuj hromadně cizí historii.</p>
+<p>Pro nový projekt lze do <code>.gitattributes</code> uložit:</p>
+<pre><code class="lang-gitattributes"># Rozpoznané texty ukládej do historie s normalizovanými konci řádků.
+* text=auto
+# Shell skripty potřebují LF, dávkové skripty Windows obvykle CRLF.
+*.sh text eol=lf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+</code></pre>
+<p>Pravidla jsou verzovaná společně s projektem; vlastní typy souborů můžeš doplnit podle nástrojů, které je čtou.</p>
+<p>Změnu pravidel ve stávajícím projektu dělej v čistém stromu jako samostatnou změnu a nejprve prohlédni efekt <code>git add --renormalize .</code> přes <code>git diff --cached</code>.</p>
+<h2 id="porovnávání-v-grafickém-nástroji">Porovnávání v grafickém nástroji</h2>
+<p>IDE obvykle umí zobrazit Git diff i vyřešit konflikt bez další konfigurace.</p>
+<p>Pokud preferuješ samostatný Meld, nejprve jej nainstaluj a ve Windows ověř jeho skutečnou cestu:</p>
+<pre><code class="lang-bash">git config --global diff.tool meld
+git config --global difftool.meld.path &quot;C:/Program Files/Meld/Meld.exe&quot;
+git config --global merge.tool meld
+git config --global mergetool.meld.path &quot;C:/Program Files/Meld/Meld.exe&quot;
+</code></pre>
+<p>Na systému s příkazem <code>meld</code> v <code>PATH</code> obvykle stačí nastavit <code>diff.tool</code> a <code>merge.tool</code> bez vlastní cesty.</p>
+<p><code>git difftool</code> porovná pracovní změny s indexem a <code>git mergetool</code> otevře existující konflikty; po jejich vyřešení vždy zkontroluj výsledný kód a testy.</p>
+<h2 id="diagnostika-a-vrácení-volby">Diagnostika a vrácení volby</h2>
+<pre><code class="lang-bash">git config --show-origin --get core.editor
+git config --global --unset core.editor
+</code></pre>
+<p>První příkaz přečte nastavení a druhý odstraní jen osobní volbu editoru, čímž se uplatní případná jiná nebo výchozí hodnota.</p>
+<p>Nenulový návrat při neexistujícím klíči znamená, že není co číst či mazat.</p>
+<p>Při problému s dlouhou cestou ve Windows nejdříve zkrať umístění projektu, například na <code>C:\src\aplikace</code>; <code>git config --global core.longpaths true</code> rozšíří podporu v Git for Windows, nikoli automaticky ve všech ostatních programech.</p>
+<p>SSH klienta řeší <a href="../../network/ssh/git.html">Git přes SSH</a>.</p>
+<p>Zdroje: <a href="https://git-scm.com/docs/git-config">git config</a>, <a href="https://git-scm.com/docs/gitattributes">gitattributes</a>, <a href="https://gitforwindows.org/faq.html">Git for Windows FAQ</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

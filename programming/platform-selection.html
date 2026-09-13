@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>V&#253;běr platformy podle požadavků projektu | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="V&#253;běr platformy podle požadavků projektu | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="V&#253;běr platformy podle zař&#237;zen&#237;, distribuce, v&#253;konu a zkušenost&#237;.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/platform-selection.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="výběr-platformy-podle-požadavků-projektu">Výběr platformy podle požadavků projektu</h1>
+
+<p>Platformu vybírej podle toho, kde má aplikace fungovat, jaká zařízení potřebuje ovládat a kdo ji bude dlouhodobě udržovat.</p>
+<p>Následující přehled je pomůcka pro porovnání kandidátů, nikoli žebříček univerzálně nejlepších frameworků.</p>
+<h2 id="co-zjistit-před-výběrem">Co zjistit před výběrem</h2>
+<table>
+<thead>
+<tr>
+<th>Otázka</th>
+<th>Dopad na rozhodnutí</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kdo a na čem aplikaci používá?</td>
+<td>Prohlížeč, telefon, firemní Windows nebo více desktopových systémů</td>
+</tr>
+<tr>
+<td>Musí fungovat offline?</td>
+<td>Lokální data, synchronizace a řešení konfliktů</td>
+</tr>
+<tr>
+<td>Potřebuje kameru, Bluetooth nebo systémové služby?</td>
+<td>Dostupnost API a nativních modulů</td>
+</tr>
+<tr>
+<td>Jaké jsou nároky na odezvu a dostupnost?</td>
+<td>Měřitelné cíle pro prototyp, provoz a testy</td>
+</tr>
+<tr>
+<td>Co tým zná a kdo systém převezme?</td>
+<td>Náklady na vývoj, nábor a dlouhodobou údržbu</td>
+</tr>
+<tr>
+<td>Jak se aplikace distribuuje?</td>
+<td>Webový hosting, firemní instalace nebo pravidla obchodů</td>
+</tr>
+</tbody>
+</table>
+<p>Před přijetím ověř podporované verze, licence, dostupnost potřebných knihoven a náklady provozu přímo u dodavatelů.</p>
+<h2 id="webové-aplikace">Webové aplikace</h2>
+<p>Frontend řeší rozhraní v prohlížeči, backend zpracování požadavků a přístup k datům; nejde vždy o vzájemně zaměnitelné nástroje.</p>
+<table>
+<thead>
+<tr>
+<th>Potřeba</th>
+<th>Kandidáti k posouzení</th>
+<th>Co vyzkoušet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Interaktivní komponentové rozhraní</td>
+<td>React, Vue, Angular, Svelte</td>
+<td>Formuláře, navigaci, přístupnost a sestavení</td>
+</tr>
+<tr>
+<td>Serverová aplikace v C#</td>
+<td>ASP.NET Core</td>
+<td>Přihlášení, API a nasazení do cílového prostředí</td>
+</tr>
+<tr>
+<td>Server s konvencemi a aplikačními moduly</td>
+<td>Django, Laravel, Ruby on Rails, Spring Boot</td>
+<td>Práci s doménou, databází a rozšíření mimo výchozí konvence</td>
+</tr>
+<tr>
+<td>Menší HTTP server v JavaScriptu</td>
+<td>Express</td>
+<td>Validaci, chybové odpovědi a způsob skládání middleware</td>
+</tr>
+</tbody>
+</table>
+<p>React je knihovna rozhraní a pro celou aplikaci potřebuješ také rozhodnout o směrování, získávání dat a sestavení; možnosti vysvětluje <a href="https://react.dev/learn/creating-a-react-app">Creating a React App</a>.</p>
+<p>Velikost firmy sama neurčuje, zda je Vue vhodné, a použití virtuálního DOM samo nedokazuje vyšší výkon.</p>
+<h2 id="mobilní-aplikace">Mobilní aplikace</h2>
+<table>
+<thead>
+<tr>
+<th>Přístup</th>
+<th>Příklady</th>
+<th>Rozhodující kontrola</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nativní aplikace</td>
+<td>Swift / SwiftUI pro Apple, Kotlin pro Android</td>
+<td>Využití platformních API a náklady oddělených implementací</td>
+</tr>
+<tr>
+<td>Sdílené UI a část logiky</td>
+<td>Flutter, React Native, .NET MAUI</td>
+<td>Dostupnost pluginů a chování na skutečném iOS i Android zařízení</td>
+</tr>
+<tr>
+<td>Sdílení vybraných vrstev</td>
+<td>Kotlin Multiplatform</td>
+<td>Co konkrétně sdílíš a co zůstává nativní</td>
+</tr>
+<tr>
+<td>Webové UI v aplikačním obalu</td>
+<td>Ionic s Capacitor, případně existující Cordova projekt</td>
+<td>Omezení WebView, offline provoz a systémové integrace</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://flutter.dev/multi-platform">Flutter</a> podporuje více typů platforem, ale dostupnost konkrétního pluginu musíš ověřit zvlášť.</p>
+<p>Pro existující Xamarin projekt řeš <a href="https://learn.microsoft.com/en-us/dotnet/maui/migration/">migraci na podporované .NET varianty</a>, místo abys jej vybíral jako nový výchozí stack.</p>
+<p><a href="https://learn.microsoft.com/en-us/dotnet/maui/what-is-maui">.NET MAUI</a> zahrnuje Android, iOS, macOS přes Mac Catalyst a Windows; nepředpokládej automaticky podporu všech desktopových systémů.</p>
+<h2 id="počítačové-aplikace">Počítačové aplikace</h2>
+<table>
+<thead>
+<tr>
+<th>Požadavek</th>
+<th>Kandidáti</th>
+<th>Co ověřit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Aplikace pro Windows v .NET</td>
+<td>WPF, WinForms</td>
+<td>Datové vazby, přístupnost, instalaci a potřebné ovládací prvky</td>
+</tr>
+<tr>
+<td>Webové technologie na desktopu</td>
+<td>Electron</td>
+<td>Paměť, aktualizace a oddělení webového obsahu od systémových oprávnění</td>
+</tr>
+<tr>
+<td>UI pro více systémů</td>
+<td>Qt, JavaFX, GTK nebo framework odpovídající týmu</td>
+<td>Podporované cíle, balení, licenci a chování systémových dialogů</td>
+</tr>
+</tbody>
+</table>
+<p>Existující Swing nebo Tcl/Tk aplikaci neposuzuj jen podle stáří nástroje, ale podle udržovatelnosti a konkrétního migračního přínosu.</p>
+<p>Praktické základy pro .NET obsahují <a href="csharp/wpf.html">WPF</a> a <a href="csharp/index.html">přehled .NET</a>.</p>
+<h2 id="databázový-vývoj">Databázový vývoj</h2>
+<table>
+<thead>
+<tr>
+<th>Potřeba</th>
+<th>Kandidáti</th>
+<th>Co změřit nebo navrhnout</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Relační data a transakce mezi více klienty</td>
+<td>PostgreSQL, SQL Server, MySQL, MariaDB, Oracle Database</td>
+<td>Dotazy, souběh, migrace a obnovu zálohy</td>
+</tr>
+<tr>
+<td>Vestavěná lokální databáze</td>
+<td>SQLite</td>
+<td>Počet současných zapisovatelů a umístění souboru</td>
+</tr>
+<tr>
+<td>Dokumentový model</td>
+<td>MongoDB</td>
+<td>Dotazy, validaci dokumentů, indexy a transakční hranice</td>
+</tr>
+<tr>
+<td>Cache nebo rychlé datové struktury</td>
+<td>Redis</td>
+<td>Expiraci, persistenci a chování při ztrátě cache</td>
+</tr>
+<tr>
+<td>Distribuované zápisy nebo vyhledávání</td>
+<td>Cassandra, Elasticsearch podle problému</td>
+<td>Model dat, konzistenci a provozní náklady</td>
+</tr>
+</tbody>
+</table>
+<p>Databáze nejsou zaměnitelné jen podle dostupnosti na operačním systému.</p>
+<p>SQLite není obecně „nevhodné pro velké aplikace“; rozhodují konkrétní způsoby použití a souběhu popsané v <a href="https://www.sqlite.org/whentouse.html">oficiálním přehledu SQLite</a>.</p>
+<p>Pro praktické návody pokračuj na <a href="../database/index.html">databáze</a>.</p>
+<h2 id="herní-vývoj">Herní vývoj</h2>
+<p>Zvaž Unity, Unreal Engine nebo Godot podle požadované grafiky, cílových zařízení, pracovního postupu týmu a dostupných nástrojů.</p>
+<p>Pro úžeji zaměřenou hru může dávat smysl také GameMaker, RPG Maker, Construct nebo webový Phaser, pokud pokryjí konkrétní mechaniky a export.</p>
+<p>V každém kandidátovi vytvoř stejnou malou scénu s reálným vstupem, sestav ji pro cílové zařízení a změř dobu snímku i velikost distribuce.</p>
+<p>Licenční podmínky engine a assetů ověř pro vlastní způsob distribuce; neodvozuj je z obecného označení „zdarma“.</p>
+<h2 id="ci-a-cd">CI a CD</h2>
+<p>Začni u platformy repozitáře, například GitHub Actions, GitLab CI/CD, Azure Pipelines nebo Bitbucket Pipelines.</p>
+<p>Jenkins, TeamCity, Bamboo, CircleCI či další službu posuzuj podle potřeby vlastních runnerů, podporovaných systémů, správy tajemství a provozního vlastnictví.</p>
+<p>Požaduj opakovatelné sestavení z čistého checkoutu a oddělení ověření změny od oprávnění publikovat.</p>
+<p>Aktuální platformy a nabídku runnerů ověř například v <a href="https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners">dokumentaci GitHub Actions</a>.</p>
+<h2 id="testování">Testování</h2>
+<p>Testovací nástroj vybírej podle vrstvy a jazyka: například NUnit pro .NET, JUnit pro JVM, pytest pro Python a nástroje ekosystému JavaScript pro jeho kód.</p>
+<p>Selenium, Playwright nebo Cypress posuzuj pro skutečné uživatelské scénáře v prohlížeči, nikoli jako náhradu všech menších testů.</p>
+<p>Ověř podporované prohlížeče, běh v CI, stabilitu čekání a kvalitu diagnostiky selhání v <a href="https://playwright.dev/docs/intro">dokumentaci vybraného nástroje</a>.</p>
+<h2 id="praktické-rozhodnutí">Praktické rozhodnutí</h2>
+<p>Vyber nejvýše několik kandidátů a pro každý otestuj stejný průřez: přihlášení, hlavní operaci s daty, chybový stav a nasazení.</p>
+<p>Zapiš měření, potřebné doplňky, omezení a důvod výběru včetně podmínek, při kterých se má rozhodnutí znovu posoudit.</p>
+<p>Výsledek typu „funguje na našem zařízení, splňuje požadovanou odezvu a tým jej umí nasadit“ je užitečnější než obecná tvrzení o modernosti nebo škálovatelnosti.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

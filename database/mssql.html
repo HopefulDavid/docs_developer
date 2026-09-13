@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>SQL Server – dotazy a diagnostika | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="SQL Server – dotazy a diagnostika | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="SQL dotazy, vazby tabulek a diagnostika datab&#225;ze.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/database/mssql.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="sql-server--dotazy-a-diagnostika">SQL Server – dotazy a diagnostika</h1>
+
+<p>Dotazy spouštěj v kontextu zamýšlené databáze; přístup k metadatům a diagnostickým pohledům závisí na oprávnění účtu.</p>
+<h2 id="získání-informací-o-serveru-a-databázi">Získání informací o serveru a databázi</h2>
+<pre><code class="lang-sql">SELECT
+    SERVERPROPERTY('ServerName') AS ServerName,
+    SERVERPROPERTY('Edition') AS Edition,
+    SERVERPROPERTY('ProductVersion') AS ProductVersion,
+    DB_NAME() AS DatabaseName,
+    CONNECTIONPROPERTY('net_transport') AS Transport,
+    CONNECTIONPROPERTY('local_tcp_port') AS LocalTcpPort;
+</code></pre>
+<p>Port může být <code>NULL</code>, pokud spojení nepoužívá TCP. <a href="https://learn.microsoft.com/en-us/sql/t-sql/functions/connectionproperty-transact-sql">Connection properties</a></p>
+<h3 id="sloupce-tabulky">Sloupce tabulky</h3>
+<p>Nahraď <code>dbo.Users</code> skutečným schématem a tabulkou:</p>
+<pre><code class="lang-sql">SELECT COLUMN_NAME, DATA_TYPE, IS_NULLABLE, CHARACTER_MAXIMUM_LENGTH
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_SCHEMA = N'dbo' AND TABLE_NAME = N'Users'
+ORDER BY ORDINAL_POSITION;
+</code></pre>
+<h3 id="velikost-tabulek">Velikost tabulek</h3>
+<p>Pro běžné diskové tabulky lze sečíst alokace všech indexů a počet řádků pouze z heapu nebo clustered indexu:</p>
+<pre><code class="lang-sql">SELECT
+    SCHEMA_NAME(t.schema_id) AS SchemaName,
+    t.name AS TableName,
+    SUM(CASE WHEN p.index_id IN (0, 1) THEN p.row_count ELSE 0 END) AS ApproxRows,
+    CAST(SUM(p.reserved_page_count) * 8.0 / 1024 AS decimal(18, 2)) AS ReservedMB,
+    CAST(SUM(p.used_page_count) * 8.0 / 1024 AS decimal(18, 2)) AS UsedMB
+FROM sys.tables AS t
+JOIN sys.dm_db_partition_stats AS p ON p.object_id = t.object_id
+WHERE t.is_ms_shipped = 0
+GROUP BY t.schema_id, t.name
+ORDER BY ReservedMB DESC;
+</code></pre>
+<p>Počet řádků je odhad z metadat; paměťově optimalizované tabulky vyžadují vlastní statistiky.</p>
+<p>V SQL Serveru 2022 a novějším tento DMV vyžaduje <code>VIEW DATABASE PERFORMANCE STATE</code> a <code>VIEW SECURITY DEFINITION</code>; starší verze mají odlišné požadavky. <a href="https://learn.microsoft.com/en-us/sql/relational-databases/system-dynamic-management-views/sys-dm-db-partition-stats-transact-sql?view=sql-server-ver17">Statistiky oddílů</a></p>
+<p>Pro jednu tabulku použij také <code>EXEC sys.sp_spaceused N'dbo.Users';</code>. <a href="https://learn.microsoft.com/sql/relational-databases/system-stored-procedures/sp-spaceused-transact-sql?view=sql-server-ver17">Sp_spaceused</a></p>
+<h3 id="využití-indexů">Využití indexů</h3>
+<pre><code class="lang-sql">SELECT
+    OBJECT_SCHEMA_NAME(s.object_id) AS SchemaName,
+    OBJECT_NAME(s.object_id) AS TableName,
+    i.name AS IndexName,
+    s.user_seeks + s.user_scans + s.user_lookups AS [Reads],
+    s.user_updates AS [Updates]
+FROM sys.dm_db_index_usage_stats AS s
+JOIN sys.indexes AS i
+    ON i.object_id = s.object_id AND i.index_id = s.index_id
+WHERE s.database_id = DB_ID()
+  AND OBJECTPROPERTY(s.object_id, 'IsUserTable') = 1
+ORDER BY [Reads] DESC, [Updates] ASC;
+</code></pre>
+<p>Statistiky se resetují například při restartu enginu; chybějící řádek není důkazem, že index nikdy není potřeba.</p>
+<p>V SQL Serveru 2022 a novějším je potřeba <code>VIEW SERVER PERFORMANCE STATE</code>. <a href="https://learn.microsoft.com/en-us/sql/relational-databases/system-dynamic-management-views/sys-dm-db-index-usage-stats-transact-sql?view=sql-server-ver17">Význam čítačů a oprávnění</a></p>
+<h2 id="hledání-v-databázi">Hledání v databázi</h2>
+<h3 id="najít-tabulku-podle-sloupce">Najít tabulku podle sloupce</h3>
+<pre><code class="lang-sql">SELECT SCHEMA_NAME(t.schema_id) AS SchemaName,
+       t.name AS TableName, c.name AS ColumnName
+FROM sys.tables AS t
+JOIN sys.columns AS c ON c.object_id = t.object_id
+WHERE c.name LIKE N'%Name%'
+ORDER BY SchemaName, TableName, ColumnName;
+</code></pre>
+<h3 id="hledat-hodnotu-v-textových-a-číselných-sloupcích">Hledat hodnotu v textových a číselných sloupcích</h3>
+<p>Pro běžnou práci použij konkrétní tabulku, sloupec a parametr.</p>
+<p>Následující diagnostika prohledává běžné textové a číselné typy jako text a vrací nejvýše 20 nálezů na sloupec; na velké databázi může být nákladná, proto ji nejprve použij na vývojové kopii.</p>
+<details>
+<summary>Úplný skript pro vývojovou databázi</summary>
+<pre><code class="lang-sql">DECLARE @Search nvarchar(100) = N'hledaná hodnota';
+DECLARE @Schema sysname, @Table sysname, @Column sysname;
+DECLARE @Sql nvarchar(max), @Source nvarchar(776);
+
+IF LEN(@Search) = 0
+    THROW 50000, N'Hledaná hodnota nesmí být prázdná.', 1;
+
+CREATE TABLE #DocSearchResults (
+    SourceColumn nvarchar(776),
+    FoundValue nvarchar(max)
+);
+
+DECLARE columnsToSearch CURSOR LOCAL FAST_FORWARD FOR
+SELECT SCHEMA_NAME(t.schema_id), t.name, c.name
+FROM sys.tables AS t
+JOIN sys.columns AS c ON c.object_id = t.object_id
+WHERE t.is_ms_shipped = 0
+  AND c.system_type_id IN (48, 52, 56, 127, 59, 62, 106, 108, 60, 122, 167, 175, 231, 239)
+ORDER BY t.schema_id, t.name, c.column_id;
+
+OPEN columnsToSearch;
+FETCH NEXT FROM columnsToSearch INTO @Schema, @Table, @Column;
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    SET @Source = QUOTENAME(@Schema) + N'.' + QUOTENAME(@Table) + N'.' + QUOTENAME(@Column);
+    SET @Sql = N'INSERT INTO #DocSearchResults (SourceColumn, FoundValue)
+        SELECT TOP (20) @Source, CONVERT(nvarchar(max), ' + QUOTENAME(@Column) + N')
+        FROM ' + QUOTENAME(@Schema) + N'.' + QUOTENAME(@Table) + N'
+        WHERE CHARINDEX(@Search, CONVERT(nvarchar(max), ' + QUOTENAME(@Column) + N')) &gt; 0;';
+    EXEC sys.sp_executesql @Sql,
+        N'@Search nvarchar(100), @Source nvarchar(776)',
+        @Search = @Search, @Source = @Source;
+    FETCH NEXT FROM columnsToSearch INTO @Schema, @Table, @Column;
+END;
+CLOSE columnsToSearch;
+DEALLOCATE columnsToSearch;
+
+SELECT SourceColumn, FoundValue FROM #DocSearchResults ORDER BY SourceColumn;
+DROP TABLE #DocSearchResults;
+</code></pre>
+<p>Skript vyžaduje právo číst prohledávané tabulky.</p>
+<p>Identifikátory se ohraničují pomocí <code>QUOTENAME</code>, hledaná hodnota zůstává parametrem <code>sp_executesql</code>. <a href="https://learn.microsoft.com/en-us/sql/t-sql/functions/quotename-transact-sql?view=sql-server-ver17">QUOTENAME</a>, <a href="https://learn.microsoft.com/en-us/sql/relational-databases/system-stored-procedures/sp-executesql-transact-sql?view=sql-server-ver17">Sp_executesql</a></p>
+</details>
+<h3 id="nejstarší-nejnovější-a-nejčastější-hodnoty">Nejstarší, nejnovější a nejčastější hodnoty</h3>
+<p>Příklady předpokládají tabulku <code>dbo.Orders</code> se sloupci <code>CreatedAt</code> a <code>Status</code>:</p>
+<pre><code class="lang-sql">SELECT MIN(CreatedAt) AS Oldest, MAX(CreatedAt) AS Newest FROM dbo.Orders;
+
+SELECT Status, COUNT_BIG(*) AS Occurrences
+FROM dbo.Orders
+GROUP BY Status
+ORDER BY Occurrences DESC;
+</code></pre>
+<h2 id="výkon-a-statistiky">Výkon a statistiky</h2>
+<p>Před dotazem zapni měření a po něm jej vypni:</p>
+<pre><code class="lang-sql">SET STATISTICS IO ON;
+SET STATISTICS TIME ON;
+
+SELECT Id, Name FROM dbo.Users WHERE Id = 1;
+
+SET STATISTICS TIME OFF;
+SET STATISTICS IO OFF;
+</code></pre>
+<p>Výsledky čti spolu se skutečným plánem dotazu a reprezentativními daty. <a href="https://learn.microsoft.com/en-us/sql/t-sql/statements/set-statistics-io-transact-sql">STATISTICS IO</a></p>
+<h2 id="konfigurace-vzdáleného-přístupu">Konfigurace vzdáleného přístupu</h2>
+<p>Pro klientské TCP připojení ve Windows zkontroluj <strong>SQL Server Configuration Manager → SQL Server Network Configuration → Protocols for danou instanci → TCP/IP</strong>.</p>
+<p>Změna protokolu vyžaduje restart služby; firewall musí povolit skutečně nastavený port pouze požadovaným klientům. <a href="https://learn.microsoft.com/en-us/sql/database-engine/configure-windows/enable-or-disable-a-server-network-protocol?view=sql-server-ver17">Síťové protokoly serveru</a></p>
+<p>Volba <code>sp_configure 'remote access'</code> řídí historické vzdálené spouštění uložených procedur mezi servery a nepotvrzuje dostupnost klientského TCP spojení. <a href="https://learn.microsoft.com/en-us/sql/database-engine/configure-windows/configure-the-remote-access-server-configuration-option">Význam remote access</a></p>
+<h2 id="spojování-tabulek">Spojování tabulek</h2>
+<table>
+<thead>
+<tr>
+<th>Operace</th>
+<th>Výsledek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>INNER JOIN</code></td>
+<td>Kombinace řádků splňující podmínku spojení</td>
+</tr>
+<tr>
+<td><code>LEFT JOIN</code></td>
+<td>Navíc všechny řádky levé strany; chybějící pravé hodnoty jsou NULL</td>
+</tr>
+<tr>
+<td><code>RIGHT JOIN</code></td>
+<td>Navíc všechny řádky pravé strany; chybějící levé hodnoty jsou NULL</td>
+</tr>
+<tr>
+<td><code>FULL OUTER JOIN</code></td>
+<td>Všechny odpovídající i nespárované řádky obou stran</td>
+</tr>
+<tr>
+<td><code>CROSS APPLY</code></td>
+<td>Pravý tabulkový výraz vyhodnocený pro řádky vlevo; prázdný výsledek levý řádek vyřadí</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://learn.microsoft.com/en-us/sql/t-sql/queries/from-transact-sql?view=sql-server-ver17">Microsoft: JOIN a APPLY</a>.</p>
+<h2 id="spojování-hodnot-ze-sloupce-do-řetězce">Spojování hodnot ze sloupce do řetězce</h2>
+<p>Pro SQL Server 2017 a novější s úrovní kompatibility databáze alespoň 110 kvůli řazení <code>WITHIN GROUP</code>:</p>
+<pre><code class="lang-sql">SELECT Status,
+       STRING_AGG(CONVERT(nvarchar(max), Id), N';')
+           WITHIN GROUP (ORDER BY Id) AS OrderIds
+FROM dbo.Orders
+GROUP BY Status;
+</code></pre>
+<p>Převod na <code>nvarchar(max)</code> před agregací omezuje riziko překročení délky výsledku; <code>NULL</code> hodnoty se vynechávají. <a href="https://learn.microsoft.com/en-us/sql/t-sql/functions/string-agg-transact-sql">STRING_AGG</a></p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

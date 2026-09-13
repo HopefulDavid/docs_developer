@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>OpenTofu – infrastruktura jako k&#243;d | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="OpenTofu – infrastruktura jako k&#243;d | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Popis infrastruktury v souborech, kontrola změn a ochrana stavov&#233;ho souboru.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/devops/opentofu.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="opentofu--infrastruktura-jako-kód">OpenTofu – infrastruktura jako kód</h1>
+
+<p>OpenTofu vytváří a upravuje prostředky podle konfigurace, například server, síť, databázi nebo soubor.</p>
+<p>Místo opakovaného ručního nastavování uchováváš požadovaný stav v souborech, které lze porovnávat a verzovat.</p>
+<h2 id="jak-součásti-spolupracují">Jak součásti spolupracují</h2>
+<table>
+<thead>
+<tr>
+<th>Součást</th>
+<th>Úloha</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Konfigurace HCL v <code>.tf</code></td>
+<td>Popis požadovaných prostředků a hodnot</td>
+</tr>
+<tr>
+<td>Provider</td>
+<td>Plugin pro komunikaci s konkrétní službou nebo systémem</td>
+</tr>
+<tr>
+<td>State</td>
+<td>Vazba mezi konfigurací a skutečně spravovanými objekty</td>
+</tr>
+<tr>
+<td>Plan</td>
+<td>Návrh vytvoření, změn a odstranění</td>
+</tr>
+<tr>
+<td>Apply</td>
+<td>Provedení odsouhlaseného plánu</td>
+</tr>
+</tbody>
+</table>
+<p>Provider cloudu například zakládá server přes jeho API; provider <code>local</code> v následující ukázce spravuje místní soubor.</p>
+<p>OpenTofu může spravovat i aplikační prostředky podporované providerem; sestavení aplikace, její testy a řízení CI jsou samostatné kroky.</p>
+<h2 id="před-použitím">Před použitím</h2>
+<p>Nainstaluj OpenTofu podle <a href="https://opentofu.org/docs/intro/install/">oficiálního postupu</a> a ověř <code>tofu version</code>.</p>
+<p>První inicializace potřebuje internet pro provider, pokud už není připravený místní mirror.</p>
+<p>Ukázku spouštěj v <strong>nové prázdné složce</strong>, protože vytvořený soubor bude nástroj později měnit i mazat.</p>
+<h2 id="1-popiš-požadovaný-soubor">1. Popiš požadovaný soubor</h2>
+<p>Ulož <code>main.tf</code>:</p>
+<pre><code class="lang-hcl">terraform {
+  required_providers {
+    local = {
+      source  = &quot;hashicorp/local&quot;
+      version = &quot;~&gt; 2.5&quot;
+    }
+  }
+}
+
+variable &quot;zprava&quot; {
+  type    = string
+  default = &quot;Ahoj z OpenTofu.&quot;
+}
+
+resource &quot;local_file&quot; &quot;pozdrav&quot; {
+  content  = var.zprava
+  filename = &quot;${path.module}/vystup.txt&quot;
+}
+
+output &quot;vytvoreny_soubor&quot; {
+  value = local_file.pozdrav.filename
+}
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Zápis</th>
+<th>Význam</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>terraform</code></td>
+<td>Konfigurační blok tohoto formátu, jehož název používá i OpenTofu</td>
+</tr>
+<tr>
+<td><code>hashicorp/local</code></td>
+<td>Zdroj provideru pro místní prostředky</td>
+</tr>
+<tr>
+<td><code>~&gt; 2.5</code></td>
+<td>Verze od 2.5.0 do, ale ne včetně 3.0.0</td>
+</tr>
+<tr>
+<td><code>variable &quot;zprava&quot;</code></td>
+<td>Textový vstup s výchozí hodnotou</td>
+</tr>
+<tr>
+<td><code>local_file.pozdrav</code></td>
+<td>Adresa prostředku: typ a vlastní jméno</td>
+</tr>
+<tr>
+<td><code>path.module</code></td>
+<td>Složka aktuálního modulu</td>
+</tr>
+<tr>
+<td><code>output</code></td>
+<td>Hodnota zpřístupněná po aplikaci změny</td>
+</tr>
+</tbody>
+</table>
+<p>Konkrétní vybranou verzi provideru zaznamená <code>.terraform.lock.hcl</code>.</p>
+<h2 id="2-inicializuj-a-prohlédni-plán">2. Inicializuj a prohlédni plán</h2>
+<p>V této složce v PowerShellu nebo Bashi:</p>
+<pre><code class="lang-bash">tofu init
+tofu fmt
+tofu validate
+tofu plan -out=prvni.tfplan
+</code></pre>
+<p><code>init</code> připraví provider a stavové úložiště, <code>fmt</code> upraví formát a <code>validate</code> ověří vnitřní konzistenci konfigurace.</p>
+<p>Plán má v této prázdné ukázce navrhovat <strong>jeden soubor k vytvoření</strong>; při jiném nebo nečekaném cíli nepokračuj.</p>
+<p>Uložený plán určuje přesnou sadu změn a může obsahovat citlivé hodnoty.</p>
+<h2 id="3-proveď-a-ověř-změnu">3. Proveď a ověř změnu</h2>
+<pre><code class="lang-bash">tofu apply prvni.tfplan
+tofu output vytvoreny_soubor
+tofu plan
+</code></pre>
+<p>Apply s uloženým plánem provádí jeho změny bez nového potvrzovacího dotazu, proto ho prohlédni <strong>před tímto krokem</strong>.</p>
+<p>Otevři <code>vystup.txt</code> a ověř zprávu; další plan má oznámit, že nejsou potřeba změny.</p>
+<p>Alternativní <code>tofu apply</code> bez souboru nejprve vytvoří nový plán a požádá o potvrzení.</p>
+<h2 id="4-změň-hodnotu">4. Změň hodnotu</h2>
+<p>Do <code>terraform.tfvars</code> ulož:</p>
+<pre><code class="lang-hcl"># Konkrétní hodnota vstupu pro tuto pracovní složku.
+zprava = &quot;Upravený obsah souboru.&quot;
+</code></pre>
+<p>Spusť nový <code>tofu plan</code>, prohlédni rozdíl, potom <code>tofu apply</code> a ověř nový obsah.</p>
+<p>Text i jméno souboru můžeš měnit, ale některé změny prostředku vyžadují jeho nahrazení; rozhoduje plán.</p>
+<h2 id="5-ukliď-výukový-prostředek">5. Ukliď výukový prostředek</h2>
+<pre><code class="lang-bash">tofu plan -destroy
+tofu destroy
+</code></pre>
+<p>První příkaz jen ukáže návrh odstranění a druhý po potvrzení odstraní spravovaný <code>vystup.txt</code>.</p>
+<p>Konfigurace zůstane; v reálném prostředí může destroy odstranit databázi i její data.</p>
+<h2 id="co-verzovat-a-zálohovat">Co verzovat a zálohovat</h2>
+<table>
+<thead>
+<tr>
+<th>Obsah</th>
+<th>Zacházení</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.tf</code> a nesoukromé vstupy</td>
+<td>Verzovat</td>
+</tr>
+<tr>
+<td><code>.terraform.lock.hcl</code></td>
+<td>Verzovat výběr providerů</td>
+</tr>
+<tr>
+<td><code>.terraform/</code></td>
+<td>Obnovitelná pracovní data, běžně ignorovat</td>
+</tr>
+<tr>
+<td><code>terraform.tfstate</code> a zálohy</td>
+<td>Chránit a zálohovat mimo veřejný Git</td>
+</tr>
+<tr>
+<td><code>.tfvars</code> s tajemstvími a uložené plány</td>
+<td>Uchovávat jako citlivé soubory</td>
+</tr>
+</tbody>
+</table>
+<p>I solo práce z více počítačů musí používat správný společný stav a zabránit neřízeným souběžným změnám.</p>
+<p>Pro dlouhodobou infrastrukturu vyber backend s odpovídajícím přístupem, zálohou a zamykáním, které konkrétní backend podporuje.</p>
+<p>Označení <code>sensitive</code> skrývá některé výpisy, ale samo neodstraňuje citlivé hodnoty ze stavu.</p>
+<p>Zdroje: <a href="https://opentofu.org/docs/intro/core-workflow/">workflow</a>, <a href="https://opentofu.org/docs/language/providers/">providers</a>, <a href="https://opentofu.org/docs/cli/commands/plan/">plan</a>, <a href="https://opentofu.org/docs/language/state/sensitive-data/">citlivý stav</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

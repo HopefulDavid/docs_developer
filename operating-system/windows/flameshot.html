@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Flameshot m&#237;sto V&#253;střižků na Print Screen | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Flameshot m&#237;sto V&#253;střižků na Print Screen | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Spouštěn&#237; Flameshotu kl&#225;vesou Print Screen, automatick&#253; start a ověřen&#237; sn&#237;mku ve Windows.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/operating-system/windows/flameshot.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="flameshot-místo-výstřižků-na-print-screen">Flameshot místo Výstřižků na Print Screen</h1>
+
+<p>Flameshot je aplikace pro snímání vybrané části obrazovky, do které můžeš hned přidat šipku, rámeček nebo text.</p>
+<p>Hodí se například pro obrázkové návody a hlášení chyb.</p>
+<p>Aby se otevřel po stisku <code>Print Screen</code>, musí běžet na pozadí a Windows nesmí stejnou klávesou spouštět své Výstřižky.</p>
+<h2 id="před-použitím">Před použitím</h2>
+<ul>
+<li>Potřebuješ nainstalovaný Flameshot; pokud ho nemáš, použij <a href="https://flameshot.org/docs/installation/installation-windows/">oficiální postup instalace pro Windows</a>.</li>
+<li>Spusť Flameshot z nabídky Start a ověř jeho ikonu v oznamovací oblasti u hodin; může být schovaná pod šipkou skrytých ikon.</li>
+<li>Na klávesnici hledej <code>Print Screen</code>, <code>PrtSc</code> nebo <code>PrtScn</code>; na některých noteboocích je potřeba také <code>Fn</code>.</li>
+</ul>
+<h2 id="1-uvolni-print-screen-ve-windows">1. Uvolni Print Screen ve Windows</h2>
+<ol>
+<li>Otevři <strong>Start → Nastavení → Bluetooth a zařízení → Klávesnice</strong>.</li>
+<li>Najdi část <strong>Zástupci a klávesové zkratky</strong>.</li>
+<li>U volby <strong>K otevření snímku obrazovky použijte klávesu Print Screen</strong> nastav <strong>Vypnuto</strong>.</li>
+</ol>
+<p>Pokud se volba v této části nenachází, ve starších sestaveních Windows 11 hledej <strong>Usnadnění → Klávesnice</strong> nebo v Nastavení vyhledej <code>Print Screen</code>.</p>
+<p>Tato volba pouze uvolní klávesu; sama Flameshot nespustí.</p>
+<p>Umístění ve starších Windows popisují také <a href="https://support.microsoft.com/en-us/servicing/os/configuration-updates/2023/05/may-24-2023-windows-configuration-update">Microsoft</a> a <a href="https://flameshot.org/docs/guide/windows-help/#how-to-disable-windows-snipping-tool-when-i-press-printscreen">nápověda Flameshotu</a>.</p>
+<h2 id="2-zapni-spouštění-flameshotu-při-přihlášení">2. Zapni spouštění Flameshotu při přihlášení</h2>
+<ol>
+<li>Klikni pravým tlačítkem na ikonu Flameshotu u hodin a otevři <strong>Nastavení</strong>.</li>
+<li>Přejdi na kartu <strong>Obecné</strong>.</li>
+<li>Zaškrtni <strong>Launch in background at startup</strong> (spouštění na pozadí při přihlášení; v jiných verzích <strong>Spouštět při přihlášení</strong>).</li>
+<li>Zavři okno nastavení a nech aplikaci běžet v oznamovací oblasti.</li>
+</ol>
+<p>Automatický start zajistí běh po příštím přihlášení; pro první zkoušku musí být Flameshot spuštěný už teď.</p>
+<h2 id="3-ověř-pořízení-snímku">3. Ověř pořízení snímku</h2>
+<ol>
+<li>Zobraz okno, které chceš zachytit, a stiskni samotný <code>Print Screen</code>.</li>
+<li>Ověř, že se objeví výběr oblasti Flameshotu.</li>
+<li>Tažením myší označ malou oblast; kolem výběru se zobrazí nástroje Flameshotu.</li>
+<li>Stiskni <code>Ctrl+C</code> a vlož snímek pomocí <code>Ctrl+V</code> do rozepsaného dokumentu nebo obrázkového editoru.</li>
+<li>Zkontroluj, že vložený obrázek obsahuje právě vybranou oblast.</li>
+</ol>
+<p>Pokud chceš obrázek uložit do souboru, použij během výběru <code>Ctrl+S</code>; samotné kopírování do schránky soubor neukládá.</p>
+<p>Rozpracovaný výběr zrušíš klávesou <code>Esc</code>.</p>
+<p>Zkratky pro výběr, kopírování a uložení uvádí <a href="https://flameshot.org/docs/guide/key-bindings/">oficiální přehled Flameshotu</a>.</p>
+<p>Při příštím běžném přihlášení ověř ikonu u hodin a zopakuj zkoušku <code>Print Screen</code>, aby se potvrdil i automatický start.</p>
+<h2 id="časté-problémy">Časté problémy</h2>
+<table>
+<thead>
+<tr>
+<th>Projev</th>
+<th>Co zkontrolovat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Otevřou se Výstřižky</td>
+<td>Znovu ověř vypnutou volbu Windows z prvního kroku, zejména po aktualizaci systému.</td>
+</tr>
+<tr>
+<td>Po stisku se nic nestane</td>
+<td>Spusť Flameshot z nabídky Start, ověř ikonu u hodin a případnou kombinaci s <code>Fn</code>.</td>
+</tr>
+<tr>
+<td>Flameshot běží, ale klávesa nereaguje</td>
+<td>Ukonči ho přes nabídku jeho ikony a znovu spusť; ověř, zda stejnou klávesu nepoužívá další aplikace pro snímání.</td>
+</tr>
+<tr>
+<td>Po přihlášení Flameshot chybí</td>
+<td>Ověř volbu automatického startu z druhého kroku a případné zakázání Flameshotu ve <strong>Správci úloh → Aplikace po spuštění</strong>.</td>
+</tr>
+<tr>
+<td>Změna zkratky se neprojeví</td>
+<td>Ulož rozpracovanou práci a restartuj Windows, pokud nepomohlo opětovné spuštění Flameshotu.</td>
+</tr>
+</tbody>
+</table>
+<p>Pokud už je volba Windows vypnutá a automatický start zaškrtnutý, nic nepřepínej a přejdi rovnou k ověření snímku.</p>
+<h2 id="návrat-k-výstřižkům">Návrat k Výstřižkům</h2>
+<ol>
+<li>V nabídce ikony Flameshotu aplikaci ukonči.</li>
+<li>Ve Windows znovu zapni volbu Print Screen z prvního kroku.</li>
+<li>Stiskni <code>Print Screen</code> a ověř otevření Výstřižků.</li>
+</ol>
+<p>Pokud Flameshot nechceš používat ani po přihlášení, před ukončením vypni jeho automatické spouštění.</p>
+<p>Tento postup mění chování samotného <code>Print Screen</code>; zkratka <code>Win+Shift+S</code> má vlastní nastavení a není součástí této změny.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

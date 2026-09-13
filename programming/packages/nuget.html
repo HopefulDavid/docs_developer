@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>NuGet – z&#225;loha a obnova knihoven .NET | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="NuGet – z&#225;loha a obnova knihoven .NET | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Z&#225;loha knihoven .NET do jedn&#233; složky a obnova projektu bez internetu.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/packages/nuget.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="nuget--záloha-a-obnova-knihoven-net">NuGet – záloha a obnova knihoven .NET</h1>
+
+<p>Pro obnovu bez internetu potřebuješ <strong>zdrojový projekt a složku s jeho balíčky</strong>.</p>
+<p>Níže je postup pro projekty s <code>PackageReference</code>, například běžnou aplikaci v .NET 8 nebo 10.</p>
+<p>Na obou počítačích použij odpovídající .NET SDK a stejnou cílovou platformu; příkazy fungují v PowerShellu i Bashi.</p>
+<h2 id="1-připrav-zálohu-s-internetem">1. Připrav zálohu s internetem</h2>
+<p>Vytvoř složku <code>zaloha-nuget/projekt</code> a zkopíruj do ní celý projekt bez generovaných <code>bin</code> a <code>obj</code>.</p>
+<p>Zachovej také soubory řešení, <code>global.json</code>, <code>NuGet.Config</code>, <code>Directory.*.props/targets</code> a <code>packages.lock.json</code>.</p>
+<p>V této kopii projektu spusť:</p>
+<pre><code class="lang-bash">dotnet restore --locked-mode --packages ../balicky
+dotnet build --no-restore
+</code></pre>
+<p><code>--packages</code> stáhne balíčky do sousední složky <code>balicky</code>, takže je máš pohromadě k přenosu.</p>
+<p>Pokud projekt ještě nemá lockfile, vytvoř jej nejprve příkazem <code>dotnet restore --use-lock-file</code> a uchovej ho se zdroji.</p>
+<p><code>--locked-mode</code> potom chrání zaznamenané verze před změnou. <a href="https://learn.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files#locking-dependencies">Uzamčení závislostí</a></p>
+<h2 id="2-přenes-celou-složku">2. Přenes celou složku</h2>
+<pre><code class="lang-text">zaloha-nuget/
+  projekt/       zdroje, konfigurace a lockfily
+  balicky/       všechny stažené balíčky
+</code></pre>
+<p>Balíčky kopíruj celé, včetně souborů <code>.nupkg</code> a skrytých metadat; není potřeba je rozbalovat ani přesouvat do jiné struktury. <a href="https://learn.microsoft.com/en-us/nuget/hosting-packages/local-feeds">Místní zdroj NuGet</a></p>
+<p>Přidej si výstup <code>dotnet --info</code> a instalátor potřebného SDK pro cílový počítač.</p>
+<h2 id="3-obnov-bez-internetu">3. Obnov bez internetu</h2>
+<p>Na druhém počítači rozbal pracovní kopii zálohy a v jejím <code>projekt</code> spusť:</p>
+<pre><code class="lang-bash">dotnet restore --locked-mode --source ../balicky -p:NuGetAudit=false
+dotnet build --no-restore
+</code></pre>
+<p><code>--source ../balicky</code> použije přenesenou složku místo online zdrojů; pro tento běžný postup nepotřebuješ další konfigurační soubor. <a href="https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-restore">Dotnet restore</a></p>
+<p><code>NuGetAudit=false</code> vynechá online kontrolu zranitelností během této obnovy; audit proveď při přípravě s internetem.</p>
+<p>Nakonec spusť testy projektu přes <code>dotnet test --no-restore</code> a běžnou aplikaci bez sítě.</p>
+<p>Úplnost zálohy ověř na účtu nebo počítači bez původních balíčků; při zkoušce na původním stroji přidej k restore <code>--packages ../zkusebni-balicky --no-http-cache</code> s novou prázdnou složkou.</p>
+<h2 id="chci-zálohovat-všechny-již-stažené-balíčky">Chci zálohovat všechny již stažené balíčky</h2>
+<p>Místo samostatného stahování zjisti používanou složku:</p>
+<pre><code class="lang-bash">dotnet nuget locals global-packages --list
+</code></pre>
+<p>Zkopíruj celý vypsaný adresář jako <code>balicky</code> a obnovuj stejným postupem výše.</p>
+<p>Před kopírováním dokonči restore všech projektů, které chceš později obnovovat; společná cache obsahuje pouze to, co se do ní skutečně stáhlo.</p>
+<p>Pro více řešení můžeš také opakovat přípravu se stejnou cestou <code>--packages</code>, ale zdroje a lockfily každého projektu uchovej zvlášť.</p>
+<h2 id="co-přizpůsobit-projektu">Co přizpůsobit projektu</h2>
+<table>
+<thead>
+<tr>
+<th>Situace</th>
+<th>Co udělat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ve složce je více řešení</td>
+<td>Za <code>restore</code> i <code>build</code> uveď konkrétní soubor řešení</td>
+</tr>
+<tr>
+<td>Publikování pro konkrétní runtime</td>
+<td>Připrav a obnov i tuto variantu, například s <code>-r win-x64</code></td>
+</tr>
+<tr>
+<td>Vlastní mapování zdrojů nebo podpisy</td>
+<td>Zachovej pravidla projektu a přizpůsob mapování místnímu zdroji</td>
+</tr>
+<tr>
+<td>Starší <code>packages.config</code></td>
+<td>Použij jeho původní NuGet/MSBuild postup, například <code>nuget restore reseni.sln -Source ../balicky</code></td>
+</tr>
+<tr>
+<td>Obnova s internetem</td>
+<td>V přeneseném projektu stačí <code>dotnet restore --locked-mode</code></td>
+</tr>
+</tbody>
+</table>
+<p>SDK, workloady a data stahovaná vlastními build skripty nejsou automaticky součástí NuGet zálohy.</p>
+<p>Spustitelné nástroje jako DocFX mají samostatný postup <a href="dotnet-tools.html">.NET tools</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

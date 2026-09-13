@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Appcast: bezpečn&#233; vyd&#225;n&#237; aktualizace přes Sparkle | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Appcast: bezpečn&#233; vyd&#225;n&#237; aktualizace přes Sparkle | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Vytvořen&#237; a podepisov&#225;n&#237; aktualizačn&#237;ho feedu aplikace pro Sparkle.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/appcast.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="appcast-bezpečné-vydání-aktualizace-přes-sparkle">Appcast: bezpečné vydání aktualizace přes Sparkle</h1>
+
+<p>Appcast je RSS feed s rozšířeními, podle kterého updater Sparkle pro macOS vyhledá vhodnou aktualizaci a její archiv.</p>
+<p>XML popisuje nabídku verzí; samotnou aktualizaci provádí Sparkle integrované v aplikaci.</p>
+<h2 id="jak-spolu-části-souvisejí">Jak spolu části souvisejí</h2>
+<table>
+<thead>
+<tr>
+<th>Část</th>
+<th>Úloha</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Aplikace</td>
+<td>Obsahuje aktuální build číslo, adresu feedu a veřejný ověřovací klíč</td>
+</tr>
+<tr>
+<td>Appcast</td>
+<td>Nabízí verze, požadavky a odkaz na archiv</td>
+</tr>
+<tr>
+<td>Archiv aktualizace</td>
+<td>Obsahuje skutečný distribuovaný build</td>
+</tr>
+<tr>
+<td>Podpis aktualizace</td>
+<td>Umožní klientovi ověřit, že archiv pochází od držitele klíče</td>
+</tr>
+<tr>
+<td>HTTPS hosting</td>
+<td>Zpřístupní feed i soubory klientům</td>
+</tr>
+</tbody>
+</table>
+<h2 id="před-použitím">Před použitím</h2>
+<p>Potřebuješ macOS, integrované Sparkle 2, připravený distribuční build a podpisový klíč odpovídající veřejnému klíči zabudovanému do aplikace.</p>
+<p><code>CFBundleVersion</code> musí růst a <code>SUFeedURL</code> musí ukazovat na plánovanou HTTPS adresu feedu.</p>
+<p>Vytvoření a ochranu klíče i integraci updateru proveď podle <a href="https://sparkle-project.org/documentation/">oficiálního postupu Sparkle</a>.</p>
+<p>Soukromý klíč nepatří do Git repozitáře ani na veřejný server s aktualizacemi.</p>
+<h2 id="praktické-použití-generování-ze-skutečného-archivu">Praktické použití: generování ze skutečného archivu</h2>
+<p>V terminálu macOS spusť příkazy ze složky distribuce Sparkle, která obsahuje adresář <code>bin</code>.</p>
+<p>Ukázka předpokládá hotovou aplikaci <code>MyApp.app</code> v aktuální složce; název a umístění nahraď vlastním sestavením.</p>
+<pre><code class="lang-bash"># Složka uchovává vydané archivy pro generování feedu a případných delt.
+mkdir -p updates
+# Vytvoří ZIP se zachováním struktury macOS aplikačního balíčku.
+ditto -c -k --sequesterRsrc --keepParent MyApp.app updates/MyApp.zip
+# Z archivu získá metadata, velikost a podpis; používá příslušný klíč v Keychain.
+./bin/generate_appcast updates
+</code></pre>
+<p>Nástroj vytvoří appcast a podle dostupných předchozích verzí případně delta soubory.</p>
+<p>Pro další vydání používej odlišný název archivu obsahující verzi, aby klienti a cache nezaměnili starý a nový soubor.</p>
+<p>Před zveřejněním zkontroluj URL ve vygenerovaném feedu a nastavení nástroje příkazem <code>./bin/generate_appcast -h</code>.</p>
+<p>Generování a podpisy popisuje <a href="https://sparkle-project.org/documentation/publishing/">Publishing an update</a>.</p>
+<h2 id="struktura-feedu">Struktura feedu</h2>
+<p>Následující tabulka slouží ke čtení skutečně vygenerovaného XML; velikost a podpis se nesmějí nahradit odhadnutými hodnotami z univerzální ukázky.</p>
+<table>
+<thead>
+<tr>
+<th>Element nebo atribut</th>
+<th>Význam</th>
+<th>Co lze upravit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>rss</code> a <code>xmlns:sparkle</code></td>
+<td>RSS kořen a namespace rozšíření</td>
+<td>Namespace zachovat přesně podle Sparkle</td>
+</tr>
+<tr>
+<td><code>channel</code></td>
+<td>Metadata kanálu</td>
+<td>Název a popis produktu</td>
+</tr>
+<tr>
+<td><code>item</code></td>
+<td>Jedno vydání</td>
+<td>Poznámky a pravidla výběru dané verze</td>
+</tr>
+<tr>
+<td><code>sparkle:version</code></td>
+<td>Strojové build číslo</td>
+<td>Musí odpovídat <code>CFBundleVersion</code> archivu</td>
+</tr>
+<tr>
+<td><code>sparkle:shortVersionString</code></td>
+<td>Čitelné označení vydání</td>
+<td>Má odpovídat verzi aplikace</td>
+</tr>
+<tr>
+<td><code>enclosure url</code></td>
+<td>Adresa distribučního souboru</td>
+<td>Musí vést na přesně podepsaný archiv</td>
+</tr>
+<tr>
+<td><code>length</code> a <code>sparkle:edSignature</code></td>
+<td>Velikost v bajtech a podpis</td>
+<td>Generovat z hotového souboru</td>
+</tr>
+<tr>
+<td><code>sparkle:releaseNotesLink</code></td>
+<td>Odkaz na poznámky k vydání</td>
+<td>Zveřejnit skutečně dostupný dokument</td>
+</tr>
+<tr>
+<td><code>sparkle:minimumSystemVersion</code></td>
+<td>Nejnižší podporovaný macOS</td>
+<td>Musí odpovídat požadavkům buildu</td>
+</tr>
+<tr>
+<td><code>pubDate</code></td>
+<td>Datum vydání v RSS formátu</td>
+<td>Správný den, čas a pásmo</td>
+</tr>
+</tbody>
+</table>
+<p>Doplňková RSS metadata nejsou náhradou za specifická pravidla Sparkle, například minimální verzi systému nebo kritickou aktualizaci.</p>
+<h2 id="delta-aktualizace">Delta aktualizace</h2>
+<p>Delta obsahuje rozdíl mezi konkrétní výchozí a cílovou verzí, nikoli univerzální patch pro libovolnou starší instalaci.</p>
+<p>Nech ji vytvořit nástrojem z dostupných archivů a zachovej i plnou aktualizaci pro klienty, kteří deltu použít nemohou.</p>
+<h2 id="ověření-před-vydáním">Ověření před vydáním</h2>
+<ol>
+<li>Ověř podpis a distribuční požadavky samotné macOS aplikace včetně požadované notarizace.</li>
+<li>Nahraj archivy a případné delty, ověř jejich dostupnost a teprve potom nabídni odpovídající feed.</li>
+<li>Vyzkoušej aktualizaci ze skutečné starší podporované verze v odděleném testovacím prostředí.</li>
+<li>Ověř zobrazení poznámek, odmítnutí nekompatibilního systému a spuštění nové verze se zachováním uživatelských dat.</li>
+</ol>
+<p>Změna bajtů podepsaného archivu vyžaduje nový podpis a metadata.</p>
+<p>Pokud aplikace vyžaduje i podepsaný feed (<code>SURequireSignedFeed</code>), po úpravě feedu nebo poznámek obnov také jejich podpisy podle dokumentace použité verze Sparkle.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

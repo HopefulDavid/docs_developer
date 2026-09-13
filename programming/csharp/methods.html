@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>C# – parametry, metody a asynchronn&#237; pr&#225;ce | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="C# – parametry, metody a asynchronn&#237; pr&#225;ce | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Před&#225;v&#225;n&#237; parametrů, n&#225;vratov&#233; hodnoty a asynchronn&#237; vol&#225;n&#237;.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/csharp/methods.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="c--parametry-metody-a-asynchronní-práce">C# – parametry, metody a asynchronní práce</h1>
+
+<p>Podpis metody určuje předávané hodnoty a výsledek; způsob předání je důležitý zejména u měnitelných objektů.</p>
+<h2 id="parametry">Parametry</h2>
+<table>
+<thead>
+<tr>
+<th>Zápis</th>
+<th>Význam</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bez modifikátoru</td>
+<td>Předání hodnotou; u třídy se kopíruje reference, nikoli objekt</td>
+</tr>
+<tr>
+<td><code>ref</code></td>
+<td>Metoda může číst i měnit proměnnou volajícího</td>
+</tr>
+<tr>
+<td><code>out</code></td>
+<td>Metoda musí při běžném návratu přiřadit výstup</td>
+</tr>
+<tr>
+<td><code>in</code></td>
+<td>Reference pro čtení; neznamená hlubokou neměnnost odkazovaného objektu</td>
+</tr>
+<tr>
+<td><code>params</code></td>
+<td>Proměnný počet argumentů, například <code>params int[] values</code></td>
+</tr>
+<tr>
+<td>Volitelný parametr</td>
+<td>Použije výchozí hodnotu, pokud argument chybí</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters">Pravidla parametrů</a></p>
+<p>Příklad s lokálními funkcemi v konzolovém <code>Program.cs</code>:</p>
+<pre><code class="lang-csharp">var number = 1;
+var values = new List&lt;int&gt; { 1 };
+
+ChangeValue(number);
+Console.WriteLine(number); // 1
+
+ChangeReference(ref number);
+Console.WriteLine(number); // 2
+
+Append(values);
+Console.WriteLine(values.Count); // 2
+
+static void ChangeValue(int value) =&gt; value = 2;
+static void ChangeReference(ref int value) =&gt; value = 2;
+static void Append(List&lt;int&gt; items) =&gt; items.Add(2);
+</code></pre>
+<p>Metoda <code>Append</code> dostává kopii reference, ale mění společný objekt seznamu.</p>
+<h2 id="druhy-metod">Druhy metod</h2>
+<ul>
+<li>Instanční metoda pracuje s konkrétním objektem; <code>static</code> metoda instanci nepotřebuje.</li>
+<li>Přetížení má stejné jméno a jiný podpis parametrů; samotný návratový typ nestačí.</li>
+<li><code>virtual</code> umožňuje přepsání v potomkovi přes <code>override</code>.</li>
+<li>Rozšiřující metoda poskytuje syntaxi volání nad existujícím typem.</li>
+<li>Delegát představuje typované volání metody; například <code>Func&lt;int, int&gt;</code> přijme a vrátí číslo.</li>
+</ul>
+<p><a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/methods">Metody v C#</a></p>
+<h2 id="asynchronní-zpracování">Asynchronní zpracování</h2>
+<p><code>async</code> samo nezakládá nové vlákno.</p>
+<p>Pro I/O používej asynchronní API a <code>await</code>; pro výpočetně náročnou práci lze podle prostředí použít <code>Task.Run</code>. <a href="https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/async-scenarios">Asynchronní scénáře</a></p>
+<p>Příklad vyžaduje existující soubor <code>vstup.txt</code> v pracovní složce:</p>
+<pre><code class="lang-csharp">using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+string text = await File.ReadAllTextAsync(&quot;vstup.txt&quot;, cancellation.Token);
+Console.WriteLine(text.Length);
+</code></pre>
+<p>Operace může skončit chybou souboru nebo zrušením; rozhodni, kde je aplikace zachytí a oznámí.</p>
+<p>Vyhýbej se <code>async void</code> kromě obsluhy událostí; vrácený <code>Task</code> dovoluje čekat na dokončení a pozorovat výjimku. <a href="https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/async-return-types">Návratové typy async</a></p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

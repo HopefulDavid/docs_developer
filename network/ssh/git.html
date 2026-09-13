@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Git přes SSH | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git přes SSH | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Přihl&#225;šen&#237; GitHub kl&#237;čem, dva &#250;čty na jednom poč&#237;tači a diagnostika klienta.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/network/ssh/git.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git-přes-ssh">Git přes SSH</h1>
+
+<p>Git používá SSH jako přenos a ověření přístupu ke vzdálenému repozitáři.</p>
+<p>Klíč rozhoduje o účtu na serveru, zatímco <code>git config user.name</code> a <code>user.email</code> pouze určují autora commitů.</p>
+<h2 id="připojení-ke-githubu">Připojení ke GitHubu</h2>
+<ol>
+<li><a href="keys.html#vytvo%C5%99en%C3%AD-kl%C3%AD%C4%8De">Vytvoř klíč</a> nebo vyber svůj existující.</li>
+<li>V GitHubu otevři <strong>Settings → SSH and GPG keys → New SSH key</strong>.</li>
+<li>Zvol <strong>Authentication Key</strong>, pojmenuj zařízení a vlož celý obsah veřejného <code>.pub</code> souboru.</li>
+<li>Ulož a otestuj spojení:</li>
+</ol>
+<pre><code class="lang-bash">ssh -T git@github.com
+</code></pre>
+<p>Při prvním připojení porovnej otisk s <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints">oficiálními otisky GitHubu</a>.</p>
+<p>Úspěšná odpověď obsahuje tvůj účet a informaci, že ověření prošlo, ale GitHub neposkytuje shell; tento test vrací kód <code>1</code> i při úspěšném přihlášení.</p>
+<p>Připojovací účet je <code>git</code> a konkrétní GitHub identitu určí přijatý klíč.</p>
+<h2 id="připoj-konkrétní-repozitář">Připoj konkrétní repozitář</h2>
+<p>Zkopíruj SSH adresu z <strong>Code → SSH</strong>:</p>
+<pre><code class="lang-text">git clone &lt;SSH-URL&gt; [&lt;cílová-složka&gt;]
+</code></pre>
+<p>Pro existující místní projekt místo klonování:</p>
+<pre><code class="lang-text">git remote -v
+git remote set-url origin &lt;SSH-URL&gt;
+git ls-remote origin HEAD
+</code></pre>
+<p>Nahraď <code>&lt;SSH-URL&gt;</code> skutečnou adresou; například tvar <code>git@github.com:&lt;vlastník&gt;/&lt;repozitář&gt;.git</code> obsahuje dvě hodnoty z tvého projektu.</p>
+<p>Příkaz <code>ls-remote</code> ověřuje čtení daného repozitáře, zatímco samotný <code>ssh -T</code> prokazuje pouze přihlášení k účtu.</p>
+<p>Adresa začínající <code>https://</code> nepoužívá SSH; pokud má remote samostatnou push URL, zkontroluj také <code>git remote get-url --push --all origin</code> a podle záměru ji změň pomocí <code>git remote set-url --push origin &lt;SSH-URL&gt;</code>.</p>
+<h2 id="dva-účty-na-jednom-počítači">Dva účty na jednom počítači</h2>
+<p>Vytvoř samostatný klíč pro každou identitu a registruj veřejné části do příslušných účtů.</p>
+<p>V <code>~/.ssh/config</code>, ve Windows zpravidla <code>%USERPROFILE%\.ssh\config</code>:</p>
+<pre><code class="lang-sshconfig">Host github-osobni
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_osobni
+    IdentitiesOnly yes
+
+Host github-prace
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_prace
+    IdentitiesOnly yes
+</code></pre>
+<p><code>Host</code> vytváří dvě místní zkratky stejného serveru, které se liší vybraným soukromým klíčem.</p>
+<pre><code class="lang-bash">ssh -T github-osobni
+ssh -T github-prace
+</code></pre>
+<p>Odpovědi mají identifikovat příslušné dva účty.</p>
+<p>V remote URL pak použij alias, například syntaxi <code>git@github-prace:&lt;organizace&gt;/&lt;repozitář&gt;.git</code>, a projektovou identitu autora nastav samostatně přes <code>git config --local user.email &quot;&lt;pracovní-e-mail&gt;&quot;</code>.</p>
+<h2 id="které-ssh-používá-git">Které SSH používá Git</h2>
+<p>V PowerShellu uvnitř problémového repozitáře:</p>
+<pre><code class="lang-powershell">git config --show-origin --show-scope --get-all core.sshCommand
+git config --show-origin --show-scope --get-all ssh.variant
+Get-ChildItem Env:GIT_SSH*
+</code></pre>
+<p>Prázdná konfigurace s návratovým kódem <code>1</code> může jen znamenat, že klíč není nastavený.</p>
+<table>
+<thead>
+<tr>
+<th>Pořadí</th>
+<th>Zdroj volby klienta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Proměnná <code>GIT_SSH_COMMAND</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Účinné <code>core.sshCommand</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Proměnná <code>GIT_SSH</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Příkaz <code>ssh</code> nalezený v prostředí procesu Gitu</td>
+</tr>
+</tbody>
+</table>
+<p>Místní konfigurace může přebít globální a dočasné <code>git -c</code> může přebít obě; <code>ssh.variant</code> a <code>GIT_SSH_VARIANT</code> určují podobu argumentů klienta, nikoli jeho cestu.</p>
+<p>Společný Windows nebo Git klient nastav podle <a href="windows.html#jeden-klient-pro-windows-a-git">návodu pro Windows</a>.</p>
+<h3 id="ověření-spuštěného-příkazu">Ověření spuštěného příkazu</h3>
+<p>Čtecí test pro SSH remote v PowerShellu:</p>
+<pre><code class="lang-powershell">$previousGitTrace = $env:GIT_TRACE
+try {
+    $env:GIT_TRACE = &quot;1&quot;
+    git ls-remote origin HEAD
+} finally {
+    $env:GIT_TRACE = $previousGitTrace
+}
+</code></pre>
+<p>Výpis ukáže spouštěný příkaz a <code>finally</code> obnoví původní nastavení trasování.</p>
+<p>Pokud výpis obsahuje pouze <code>ssh</code> bez celé cesty, její dohledání stále závisí na prostředí Gitu.</p>
+<p>Nechtěné přepsání oprav pouze v nalezeném rozsahu; například <code>git config --local --unset-all core.sshCommand</code> odstraní místní volbu a nechá se uplatnit nižší nastavení.</p>
+<h2 id="diagnostika">Diagnostika</h2>
+<table>
+<thead>
+<tr>
+<th>Projev</th>
+<th>Co zkontrolovat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Přihlášení funguje, repozitář ne</td>
+<td>Oprávnění daného účtu, přesnou URL, případně organizací vyžadované SSO</td>
+</tr>
+<tr>
+<td>Nabízí se jiný účet</td>
+<td>Alias v URL, <code>IdentityFile</code> a <code>IdentitiesOnly</code></td>
+</tr>
+<tr>
+<td><code>Permission denied (publickey)</code></td>
+<td>Výpis <code>ssh -vvv -T &lt;alias&gt;</code>, registrovaný veřejný klíč a agenta</td>
+</tr>
+<tr>
+<td>Terminál funguje, IDE ne</td>
+<td>Git a SSH cestu IDE, zděděné prostředí a restart po změně konfigurace</td>
+</tr>
+<tr>
+<td>Opakované zadávání fráze</td>
+<td>Správného <a href="keys.html#odemyk%C3%A1n%C3%AD-p%C5%99es-agenta">agenta</a></td>
+</tr>
+</tbody>
+</table>
+<p>Zdroje: <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection">test GitHub SSH</a>, <a href="https://git-scm.com/docs/git#Documentation/git.txt-GITSSH">proměnné Gitu</a>, <a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-coresshCommand">core.sshCommand</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

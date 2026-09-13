@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>SSH – připojen&#237; k jin&#233;mu poč&#237;tači | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="SSH – připojen&#237; k jin&#233;mu poč&#237;tači | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Přihl&#225;šen&#237; na server, přenos souborů, konfigurace spojen&#237; a lok&#225;ln&#237; tunel.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/network/ssh.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="ssh--připojení-k-jinému-počítači">SSH – připojení k jinému počítači</h1>
+
+<p>SSH je šifrované spojení, přes které se přihlásíš na vzdálený počítač, spustíš příkaz nebo přeneseš soubor.</p>
+<p>Na tvém počítači běží <strong>klient</strong> a na cíli musí běžet dostupný <strong>SSH server</strong>; instalace klienta sama nepovolí příchozí přístup k tvému zařízení.</p>
+<h2 id="co-potřebuješ-před-připojením">Co potřebuješ před připojením</h2>
+<table>
+<thead>
+<tr>
+<th>Údaj</th>
+<th>Příklad</th>
+<th>Kdo ho určuje</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Adresa</td>
+<td><code>server.example.com</code> nebo IP</td>
+<td>Správce cílového počítače</td>
+</tr>
+<tr>
+<td>Uživatelský účet</td>
+<td><code>jana</code></td>
+<td>Účet existující na cíli</td>
+</tr>
+<tr>
+<td>Port</td>
+<td><code>22</code>, případně jiný</td>
+<td>Konfigurace SSH serveru a firewallu</td>
+</tr>
+<tr>
+<td>Přihlášení</td>
+<td>Heslo nebo <a href="ssh/keys.html">SSH klíč</a></td>
+<td>Povolený způsob na serveru</td>
+</tr>
+<tr>
+<td>Otisk serveru</td>
+<td>SHA256 otisk hostitelského klíče</td>
+<td>Správce nebo oficiální dokumentace služby</td>
+</tr>
+</tbody>
+</table>
+<p>Adresa <code>server.example.com</code> je ukázková a musíš ji nahradit svým skutečným serverem.</p>
+<p>Ve Windows nejprve ověř <a href="ssh/windows.html">instalaci a výběr klienta</a>.</p>
+<h2 id="první-přihlášení">První přihlášení</h2>
+<p>Obecná syntaxe:</p>
+<pre><code class="lang-text">ssh [-p &lt;port&gt;] [-i &lt;soukromý-klíč&gt;] &lt;uživatel&gt;@&lt;server&gt;
+</code></pre>
+<p>Příklad pro účet <code>jana</code> na serveru s výchozím portem:</p>
+<pre><code class="lang-bash">ssh jana@server.example.com
+</code></pre>
+<p>Při prvním připojení porovnej zobrazený otisk s nezávisle získaným otiskem serveru a až při shodě potvrď důvěru.</p>
+<p>Otisk se uloží do <code>known_hosts</code>, aby klient při příštím spojení poznal stejný server.</p>
+<p>Po přihlášení příkazy spouštíš <strong>na cílovém počítači</strong> a používáš jeho shell; příkaz <code>exit</code> vzdálené přihlášení ukončí.</p>
+<p>Heslo účtu nebo fráze klíče se při zadávání běžně nezobrazuje.</p>
+<h2 id="ulož-připojení-pod-názvem">Ulož připojení pod názvem</h2>
+<p>Do <code>%USERPROFILE%\.ssh\config</code> ve Windows nebo <code>~/.ssh/config</code> v Linuxu a macOS ulož:</p>
+<pre><code class="lang-sshconfig">Host vyvoj
+    HostName server.example.com
+    User jana
+    Port 2222
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+</code></pre>
+<p>Soubor nemá příponu <code>.txt</code> a uvedené údaje musí odpovídat tvému serveru.</p>
+<table>
+<thead>
+<tr>
+<th>Nastavení</th>
+<th>Co můžeš změnit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Host</code></td>
+<td>Vlastní krátký název spojení</td>
+</tr>
+<tr>
+<td><code>HostName</code></td>
+<td>Skutečnou adresu serveru</td>
+</tr>
+<tr>
+<td><code>User</code></td>
+<td>Cílový účet</td>
+</tr>
+<tr>
+<td><code>Port</code></td>
+<td>Skutečný naslouchající port; <code>2222</code> je pouze příklad</td>
+</tr>
+<tr>
+<td><code>IdentityFile</code></td>
+<td>Cestu k vlastnímu soukromému klíči</td>
+</tr>
+<tr>
+<td><code>IdentitiesOnly yes</code></td>
+<td>Omezí nabídku na nakonfigurované identity místo libovolných dalších klíčů agenta</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="lang-bash">ssh -G vyvoj
+ssh vyvoj
+</code></pre>
+<p><code>-G</code> vypíše účinnou konfiguraci bez přihlášení a druhý příkaz použije zkratku.</p>
+<p>Konkrétní bloky dávej před obecný <code>Host *</code>, protože pro běžné jednotlivé volby se použije první získaná hodnota.</p>
+<h2 id="přenos-souborů">Přenos souborů</h2>
+<p>Příklady předpokládají nastavený alias <code>vyvoj</code> a linuxový cílový server, na kterém máš právo zapisovat do domovské složky.</p>
+<pre><code class="lang-bash">scp ./poznamky.txt vyvoj:./poznamky.txt
+scp vyvoj:./poznamky.txt ./stazene-poznamky.txt
+</code></pre>
+<p>První příkaz nahraje existující místní soubor do domovské složky cílového účtu a druhý jej stáhne pod jiným místním názvem.</p>
+<p>Před kopírováním ověř cílový název, protože existující soubor lze přepsat.</p>
+<table>
+<thead>
+<tr>
+<th>Syntaxe</th>
+<th>Účel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>scp [-P &lt;port&gt;] &lt;místní-soubor&gt; &lt;uživatel&gt;@&lt;server&gt;:&lt;cílová-cesta&gt;</code></td>
+<td>Nahrání souboru</td>
+</tr>
+<tr>
+<td><code>scp [-P &lt;port&gt;] &lt;uživatel&gt;@&lt;server&gt;:&lt;soubor&gt; &lt;místní-cesta&gt;</code></td>
+<td>Stažení souboru</td>
+</tr>
+<tr>
+<td><code>scp -r &lt;místní-adresář&gt; &lt;alias&gt;:&lt;cílová-cesta&gt;</code></td>
+<td>Rekurzivní kopie adresáře</td>
+</tr>
+<tr>
+<td><code>sftp [-P &lt;port&gt;] &lt;uživatel&gt;@&lt;server&gt;</code></td>
+<td>Interaktivní přenos s příkazy <code>ls</code>, <code>get</code>, <code>put</code> a <code>exit</code></td>
+</tr>
+</tbody>
+</table>
+<p>SSH používá pro port <code>-p</code>, ale SCP a SFTP <code>-P</code>; při použití aliasu si port převezmou z jeho konfigurace.</p>
+<p>Novější OpenSSH používá pro SCP standardně protokol SFTP; kompatibilitu se starým serverem ověř, než budeš měnit transport.</p>
+<h2 id="lokální-tunel-k-neveřejné-službě">Lokální tunel k neveřejné službě</h2>
+<p>Představ si web na portu <code>80</code>, který je dostupný pouze ze SSH serveru.</p>
+<pre><code class="lang-bash">ssh -N -L 127.0.0.1:8080:127.0.0.1:80 vyvoj
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Část</th>
+<th>Význam</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-N</code></td>
+<td>Neotevře vzdálený shell, pouze tunel</td>
+</tr>
+<tr>
+<td>První <code>127.0.0.1:8080</code></td>
+<td>Naslouchání jen na tvém počítači na portu 8080</td>
+</tr>
+<tr>
+<td>Druhé <code>127.0.0.1:80</code></td>
+<td>Cíl z pohledu SSH serveru, tedy jeho vlastní port 80</td>
+</tr>
+<tr>
+<td><code>vyvoj</code></td>
+<td>Server, který vytvoří vzdálenou část spojení</td>
+</tr>
+</tbody>
+</table>
+<p>Po dobu běhu otevři <code>http://127.0.0.1:8080</code>; <code>Ctrl+C</code> tunel ukončí.</p>
+<p>Místní port můžeš změnit na volný, ale cílovou adresu a port musíš znát a server musí tunelování povolovat.</p>
+<p><code>-L</code> zpřístupňuje cíl lokálně, <code>-R</code> vytváří naslouchání na vzdálené straně a <code>-D</code> místní SOCKS proxy; vzdálené či veřejné naslouchání nastavuj jen pro konkrétní zamýšlený přístup.</p>
+<h2 id="diagnostika-podle-chyby">Diagnostika podle chyby</h2>
+<table>
+<thead>
+<tr>
+<th>Projev</th>
+<th>Co znamená a co ověřit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Could not resolve hostname</code></td>
+<td>Chybný název nebo DNS; zkontroluj také potřebnou VPN</td>
+</tr>
+<tr>
+<td><code>Connection timed out</code></td>
+<td>Cesta k serveru, firewall, VPN nebo nesprávná adresa</td>
+</tr>
+<tr>
+<td><code>Connection refused</code></td>
+<td>Cíl spojení odmítl; ověř běžící server a správný port</td>
+</tr>
+<tr>
+<td><code>Permission denied</code></td>
+<td>Spojení došlo k ověření identity; kontroluj účet a nabízený klíč</td>
+</tr>
+<tr>
+<td>Změna hostitelského klíče</td>
+<td>Může jít o reinstalaci i cizí server; ověř nový otisk jiným kanálem</td>
+</tr>
+</tbody>
+</table>
+<p><code>ssh -vvv &lt;alias&gt;</code> vypíše podrobnosti přihlášení; před sdílením logu odstraň soukromá jména, adresy a místní cesty.</p>
+<p>Po nezávislém ověření legitimní změny můžeš odstranit starý záznam pomocí <code>ssh-keygen -R &lt;server&gt;</code>, u jiného portu <code>ssh-keygen -R &quot;[&lt;server&gt;]:&lt;port&gt;&quot;</code>, a při dalším spojení ověřit nový otisk.</p>
+<p>Zdroje: <a href="https://man.openbsd.org/ssh">ssh</a>, <a href="https://man.openbsd.org/ssh_config">ssh_config</a>, <a href="https://man.openbsd.org/scp">scp</a>, <a href="https://man.openbsd.org/sftp">sftp</a>.</p>
+<p><a id="ssh--windows-git-a-volba-klienta"></a>
+<a id="kde-začít"></a>
+<a id="klient-server-a-agent"></a>
+<a id="které-ssh-se-skutečně-spouští"></a>
+<a id="powershell-a-cmd"></a>
+<a id="git-bash-linux-a-macos"></a>
+<a id="instalace-windows-openssh"></a>
+<a id="klient-přes-powershell"></a>
+<a id="klient-přes-nastavení"></a>
+<a id="kdy-instalovat-server"></a>
+<a id="sjednocení-na-windows-openssh"></a>
+<a id="1-zkontroluj-přepsání-a-poznamenej-původní-stav"></a>
+<a id="2-vyber-primární-ssh-v-terminálu"></a>
+<a id="3-nastav-stejného-klienta-gitu"></a>
+<a id="4-načti-klíč-do-windows-agenta"></a>
+<a id="5-ověř-výsledek"></a>
+<a id="alternativa-openssh-z-git-for-windows"></a>
+<a id="návrat-k-původní-volbě"></a>
+<a id="agent-v-git-bash-linuxu-a-macos"></a>
+<a id="rychlá-správa-agenta"></a>
+<a id="které-ssh-používá-git"></a>
+<a id="ověření-skutečně-spuštěného-příkazu"></a></p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

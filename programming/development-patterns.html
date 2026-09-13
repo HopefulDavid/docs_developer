@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>N&#225;vrhov&#233; vzory | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="N&#225;vrhov&#233; vzory | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Řešen&#237; opakovan&#253;ch n&#225;vrhov&#253;ch probl&#233;mů na mal&#253;ch př&#237;kladech.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/development-patterns.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="návrhové-vzory">Návrhové vzory</h1>
+
+<p>Návrhový vzor je pojmenované řešení opakujícího se problému se vztahy mezi objekty nebo částmi programu.</p>
+<p>Pomáhá popsat návrh a jeho kompromisy; není to hotová knihovna ani požadavek přidávat do každého programu více tříd.</p>
+<h2 id="k-čemu-slouží">K čemu slouží</h2>
+<p>Nejprve pojmenuj konkrétní problém, například „výpočet dopravy se mění podle dopravce“.</p>
+<p>Teprve potom vybírej strukturu, která změnu oddělí od zbytku programu.</p>
+<p>Pokud vystačíš s přehlednou funkcí, není nutné zavádět složitější vzor.</p>
+<h2 id="přehled-kategorií">Přehled kategorií</h2>
+<table>
+<thead>
+<tr>
+<th>Kategorie</th>
+<th>Řeší</th>
+<th>Typické vzory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vytvářecí</td>
+<td>Jak vznikají objekty</td>
+<td>Factory Method, Abstract Factory, Builder, Prototype, Singleton</td>
+</tr>
+<tr>
+<td>Strukturální</td>
+<td>Jak se části skládají a přizpůsobují</td>
+<td>Adapter, Bridge, Composite, Decorator, Facade, Flyweight, Proxy</td>
+</tr>
+<tr>
+<td>Vzory chování</td>
+<td>Jak spolu části komunikují a mění chování</td>
+<td>Strategy, Observer, Command, State, Chain of Responsibility, Iterator, Mediator, Memento, Template Method, Visitor, Interpreter</td>
+</tr>
+</tbody>
+</table>
+<p>Singleton zavádí jedinou instanci, ale skrytý globální stav může komplikovat testování a souběh.</p>
+<p>Pouhé <code>if</code> vybírající typ objektu bývá jednoduchá továrna; Factory Method v klasickém významu dovoluje podtřídám změnit vytvářený typ.</p>
+<h2 id="před-použitím-ukázek">Před použitím ukázek</h2>
+<p>Ukázky jsou samostatný moderní JavaScript bez knihoven a lze je spustit v konzoli prohlížeče nebo jako soubor pomocí Node.js.</p>
+<p>Každý blok vlož do vlastního souboru <code>priklad.js</code> a v jeho složce spusť následující příkaz.</p>
+<pre><code class="lang-bash"># Node.js provede soubor a vypíše výsledky console.log do terminálu.
+node priklad.js
+</code></pre>
+<h2 id="strategy-zaměnitelný-výpočet">Strategy: zaměnitelný výpočet</h2>
+<p>Objednávka potřebuje cenu dopravy, ale nemusí znát pravidla každého dopravce.</p>
+<p>V JavaScriptu může strategii představovat obyčejná funkce.</p>
+<pre><code class="lang-javascript">// Parametrem je cena zboží v Kč; výstupem je cena dopravy v Kč.
+const personalPickup = () =&gt; 0;
+const courier = subtotal =&gt; subtotal &gt;= 1500 ? 0 : 99;
+
+function totalPrice(subtotal, shippingStrategy) {
+  return subtotal + shippingStrategy(subtotal);
+}
+
+console.log(totalPrice(500, personalPickup)); // 500
+console.log(totalPrice(500, courier));        // 599
+</code></pre>
+<p>Částky <code>1500</code> a <code>99</code> jsou obchodní pravidla ukázkového dopravce a můžeš je změnit.</p>
+<p>V reálné aplikaci doplň validaci vstupů a dohodnutou reprezentaci peněz, například celé haléře.</p>
+<h2 id="adapter-sjednocení-rozhraní">Adapter: sjednocení rozhraní</h2>
+<p>Adaptér překládá rozhraní existující služby na to, které očekává klientský kód.</p>
+<pre><code class="lang-javascript">class LegacyCatalog {
+  getProductName(id) { return id === 1 ? 'Klávesnice' : null; }
+}
+
+class CatalogAdapter {
+  constructor(legacyCatalog) { this.legacyCatalog = legacyCatalog; }
+
+  findProduct(id) {
+    const name = this.legacyCatalog.getProductName(id);
+    // Klient dostává objekt nebo null, nikoli samotný řetězec.
+    return name === null ? null : { id, name };
+  }
+}
+
+const catalog = new CatalogAdapter(new LegacyCatalog());
+console.log(catalog.findProduct(1)); // { id: 1, name: 'Klávesnice' }
+console.log(catalog.findProduct(2)); // null
+</code></pre>
+<p>Při výměně katalogu upravíš adaptér, zatímco klient může dál používat <code>findProduct</code>.</p>
+<p>Adaptér sám neřeší síťové chyby ani rozdílný význam dat; tyto rozdíly musí mít výslovné pravidlo.</p>
+<h2 id="observer-oznámení-změny">Observer: oznámení změny</h2>
+<p>Pozorovatel umožňuje více odběratelům reagovat na událost, aniž by vydavatel znal jejich konkrétní implementaci.</p>
+<pre><code class="lang-javascript">class Subject {
+  listeners = new Set();
+
+  subscribe(listener) {
+    this.listeners.add(listener);
+    // Odběratel dostane možnost ukončit odběr.
+    return () =&gt; this.listeners.delete(listener);
+  }
+
+  notify(value) {
+    // Snímek zabrání změně právě procházeného seznamu odběratelů.
+    for (const listener of [...this.listeners]) listener(value);
+  }
+}
+
+const saved = new Subject();
+const unsubscribe = saved.subscribe(id =&gt; console.log(`Uložena objednávka ${id}`));
+saved.notify(42); // Uložena objednávka 42
+unsubscribe();
+saved.notify(43); // Odhlášený odběratel už nic nevypíše.
+</code></pre>
+<p>Tato varianta volá odběratele synchronně a chyba jednoho volání přeruší oznamování.</p>
+<p>Pro asynchronní události, izolaci chyb nebo frontu zpráv je potřeba navrhnout další pravidla.</p>
+<h2 id="co-lze-upravit-a-jak-ověřit-návrh">Co lze upravit a jak ověřit návrh</h2>
+<p>Názvy tříd, datové typy a konkrétní strategie přizpůsob doméně projektu.</p>
+<p>Zkontroluj, zda umíš přidat další variantu bez změny všech klientů a zda test pokrývá i chybový nebo prázdný vstup.</p>
+<p>Vzor má snížit počet míst, kterým musíš při změně rozumět; pokud jen přidává vrstvy bez přínosu, zjednoduš návrh.</p>
+<h2 id="související-témata">Související témata</h2>
+<p><a href="csharp/interface.html">Rozhraní v C#</a> ukazuje typový kontrakt, <a href="code-comments.html">komentáře</a> vysvětlení záměru.</p>
+<p><a href="../pdf/dev_design_patterns.pdf">Starší přehled vzorů v PDF</a> slouží jako doplňkový studijní materiál, nikoli jako zdroj ověřených spustitelných ukázek této stránky.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

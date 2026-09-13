@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>PowerShell – každodenn&#237; pr&#225;ce | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="PowerShell – každodenn&#237; pr&#225;ce | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Objekty v rouře, soubory, proměnn&#233;, skripty a čiteln&#233; zach&#225;zen&#237; s chybami.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/operating-system/windows/powershell.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="powershell--každodenní-práce">PowerShell – každodenní práce</h1>
+
+<p>PowerShell předává mezi příkazy objekty s vlastnostmi, takže můžeš filtrovat soubory či procesy podle skutečných údajů.</p>
+<p>Windows PowerShell 5.1 a PowerShell 7 jsou různá prostředí; následující příklady míří na PowerShell 7 ve Windows.</p>
+<h2 id="orientace-a-nápověda">Orientace a nápověda</h2>
+<pre><code class="lang-powershell">$PSVersionTable.PSVersion
+Get-Location
+Get-Help Copy-Item -Examples
+</code></pre>
+<p>Zjistíš verzi shellu, aktuální složku a příklady konkrétního příkazu.</p>
+<table>
+<thead>
+<tr>
+<th>Syntaxe</th>
+<th>Účel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Set-Location -LiteralPath &lt;složka&gt;</code></td>
+<td>Přejde do existující složky</td>
+</tr>
+<tr>
+<td><code>Get-ChildItem -LiteralPath &lt;cesta&gt; [-Force]</code></td>
+<td>Vypíše položky, případně i skryté</td>
+</tr>
+<tr>
+<td><code>Get-Content -LiteralPath &lt;soubor&gt;</code></td>
+<td>Přečte text</td>
+</tr>
+<tr>
+<td><code>Copy-Item -LiteralPath &lt;zdroj&gt; -Destination &lt;cíl&gt; [-WhatIf]</code></td>
+<td>Zkopíruje nebo pouze předvede operaci</td>
+</tr>
+<tr>
+<td><code>Get-Command &lt;název&gt;</code></td>
+<td>Zjistí dostupný příkaz a jeho původ</td>
+</tr>
+</tbody>
+</table>
+<p><code>-LiteralPath</code> zachová doslovný název včetně hranatých závorek; <code>-Path</code> u mnoha příkazů naopak podporuje zástupné vzory.</p>
+<h2 id="roura-vyber-soubory-větší-než-1-mb">Roura: vyber soubory větší než 1 MB</h2>
+<pre><code class="lang-powershell">Get-ChildItem -LiteralPath . -File |
+    Where-Object Length -gt 1MB |
+    Select-Object Name, Length
+</code></pre>
+<p>Tečka znamená aktuální složku, první příkaz vrací soubory, filtr porovnává jejich vlastnost <code>Length</code> a poslední příkaz vybírá sloupce.</p>
+<p><code>1MB</code> můžeš změnit podle potřeb; tato ukázka nic neupravuje.</p>
+<h2 id="proměnné-a-spuštění-programu">Proměnné a spuštění programu</h2>
+<pre><code class="lang-powershell">$projectPath = &quot;C:\projekty\moje-aplikace&quot;
+Set-Location -LiteralPath $projectPath
+&amp; &quot;C:\Program Files\nodejs\node.exe&quot; --version
+</code></pre>
+<p>Obě cesty přizpůsob své instalaci; <code>&amp;</code> spustí program, jehož cesta je v uvozovkách.</p>
+<p>Vnější programy jako Git nebo Node předávají návratový kód v <code>$LASTEXITCODE</code>, zatímco PowerShell cmdlety používají také vlastní chybové záznamy.</p>
+<p>Proměnná prostředí používá zápis <code>$env:NÁZEV</code> a změna platí jen pro současný proces a jeho potomky, pokud ji výslovně neuložíš trvale.</p>
+<h2 id="kopie-souboru-s-kontrolou">Kopie souboru s kontrolou</h2>
+<p>V projektové složce s existujícím <code>module.xml</code>:</p>
+<pre><code class="lang-powershell">$sourceFile = Join-Path (Get-Location) &quot;module.xml&quot;
+$exportDirectory = Join-Path (Get-Location) &quot;export&quot;
+New-Item -ItemType Directory -Path $exportDirectory -Force | Out-Null
+Copy-Item -LiteralPath $sourceFile -Destination $exportDirectory -WhatIf
+</code></pre>
+<p><code>Join-Path</code> bezpečně sestaví cestu a <code>-WhatIf</code> zobrazí plán bez kopírování.</p>
+<p>Po ověření cíle zopakuj poslední řádek bez <code>-WhatIf</code>; již existující stejnojmenný soubor může být přepsán.</p>
+<p>Pro mazání použij samostatný <a href="cannot-delete-item.html#powershell-kontrola-a-odstran%C4%9Bn%C3%AD">postup s ověřením cíle</a>.</p>
+<h2 id="skript-a-chyba">Skript a chyba</h2>
+<p>Ulož jako <code>kontrola-souboru.ps1</code>:</p>
+<pre><code class="lang-powershell">param(
+    [Parameter(Mandatory)]
+    [string]$FilePath
+)
+
+try {
+    # Stop prevede i beznou chybu cmdletu na chybu zachycenou v catch.
+    Get-Item -LiteralPath $FilePath -ErrorAction Stop |
+        Select-Object FullName, Length, LastWriteTime
+} catch {
+    Write-Error &quot;Soubor nelze přečíst: $($_.Exception.Message)&quot;
+    exit 1
+}
+</code></pre>
+<p>Spusť <code>.\kontrola-souboru.ps1 -FilePath .\module.xml</code>; parametr vybírá soubor a při chybě skript končí nenulovým kódem.</p>
+<p>Pokud spouštění blokuje politika, ověř <a href="terminal.html#execution-policy">Execution Policy</a>, nikoli náhodné vypínání kontrol.</p>
+<h2 id="další-běžné-úlohy">Další běžné úlohy</h2>
+<ul>
+<li><a href="terminal.html">Profil, moduly a Oh My Posh</a>.</li>
+<li><a href="../../network/basics.html">DNS, porty a síťová diagnostika</a>.</li>
+<li><a href="../../network/ssh/windows.html">SSH klient ve Windows</a>.</li>
+<li><a href="../../programming/packages/dotnet-cli.html">Telemetrie a nástroje .NET</a>.</li>
+</ul>
+<p><code>(Get-PSReadLineOption).HistorySavePath</code> ukáže soubor dlouhodobé historie příkazů; může obsahovat citlivé argumenty a <code>Clear-History</code> tuto uloženou historii sám nevymaže.</p>
+<p>Zdroje: <a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_pipelines">PowerShell pipeline</a>, <a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/copy-item">Copy-Item</a>, <a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_try_catch_finally">chyby</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

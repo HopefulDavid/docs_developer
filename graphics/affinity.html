@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Affinity Designer 2 – mř&#237;žka a okraje | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Affinity Designer 2 – mř&#237;žka a okraje | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Nastaven&#237; mř&#237;žky a přesn&#233; rozměry či okraje grafiky.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/graphics/affinity.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="affinity-designer-2--mřížka-a-okraje">Affinity Designer 2 – mřížka a okraje</h1>
+
+<p>Mřížka a okraje jsou pomocné čáry pro rozvržení dokumentu v Affinity Designeru 2 pro desktop.</p>
+<h2 id="mřížka-grid">Mřížka (Grid)</h2>
+<p><strong>Zobrazení a nastavení:</strong></p>
+<ol>
+<li><strong>View → Show Grid</strong> – zobrazí mřížku</li>
+<li><strong>View → Grid and Axis…</strong> – nastavení parametrů mřížky</li>
+</ol>
+<p>V režimu <strong>Basic</strong> nastav <strong>Spacing</strong> a <strong>Divisions</strong> podle požadovaného rozestupu a dělení. <a href="https://affinity.help/designer2/en-US.lproj/pages/DesignAids/grids.html">Nastavení mřížky</a></p>
+<h2 id="výpočet-zarovnání-na-střed">Výpočet zarovnání na střed</h2>
+<p>Pro obdélník šířky <code>imageWidth</code> a výšky <code>imageHeight</code> je poloha jeho levého horního rohu ve středu oblasti dána následujícím vztahem.</p>
+<pre><code class="lang-text">x = (gridWidth - imageWidth) / 2 + offsetX
+y = (gridHeight - imageHeight) / 2
+</code></pre>
+<p>Odečtení rozměru obrázku rozdělí volné místo na obě strany a <code>offsetX</code> přidá posun doprava; pro posun doleva použij zápornou hodnotu.</p>
+<p>Při oblasti <code>256 × 256 px</code>, obrázku <code>146,2 × 244,6 px</code> a posunu <code>256 px</code> vychází <code>x = 310,9 px</code> a <code>y = 5,7 px</code>.</p>
+<p>V panelu Transform zvol referenční bod vlevo nahoře a stejnou souřadnicovou soustavu; při jiném bodu ukotvení mají X a Y jiný význam.</p>
+<h2 id="řešení-problémů">Řešení problémů</h2>
+<h3 id="modrý-čtverec-uvnitř-stránky">Modrý čtverec uvnitř stránky</h3>
+<p>Modrá obrysová čára může označovat okraje dokumentu; přepnutím <strong>View → Show Margins</strong> ověř, zda jde právě o tuto pomůcku.</p>
+<p>Velikost okrajů upravíš v nastavení dokumentu; nejde o skutečný grafický objekt. <a href="https://affinity.help/designer2/en-US.lproj/pages/DesignAids/margins.html">Okraje dokumentu</a></p>
+<p><strong>Při vytváření nového dokumentu:</strong></p>
+<img src="../images/wNNBV4Lsm4.png" alt="Nastavení margins při vytváření dokumentu" width="760">
+<p><a href="../images/wNNBV4Lsm4.png">Zobrazit obrázek v původní velikosti</a></p>
+<p><strong>Pro již otevřený dokument:</strong></p>
+<img src="../images/sOYccHNNHx.png" alt="Nastavení margins pro otevřený dokument" width="482">
+<p><a href="../images/sOYccHNNHx.png">Zobrazit obrázek v původní velikosti</a></p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

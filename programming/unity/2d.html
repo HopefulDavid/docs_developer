@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Unity 2D: sprity, Tilemap a velikost grafiky | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Unity 2D: sprity, Tilemap a velikost grafiky | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Sprity, Tilemap, kostra postavy a řešen&#237; mezer v grafice.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/unity/2d.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="unity-2d-sprity-tilemap-a-velikost-grafiky">Unity 2D: sprity, Tilemap a velikost grafiky</h1>
+
+<p>SpriteRenderer zobrazuje samostatný sprite, zatímco Tilemap skládá dlaždice do buněk mřížky.</p>
+<p>Pro opakované pozadí nebo mapu se hodí Tilemap, pro samostatně pohyblivou postavu obvykle SpriteRenderer.</p>
+<h2 id="před-použitím">Před použitím</h2>
+<p>Ukázka je pro Unity 6 s 2D Tilemap Editor a běžným Tile assetem.</p>
+<p>Vytvoř <strong>Grid → Tilemap</strong>, připrav dlaždici se spritem a ověř, že ji kamera vidí.</p>
+<h2 id="tilemap-vytvoření-a-obarvení-dlaždic">Tilemap: vytvoření a obarvení dlaždic</h2>
+<p>Ulož <code>TilemapExample.cs</code>, přidej jej na samostatný objekt a v Inspectoru přiřaď výukovou Tilemap i Tile asset.</p>
+<p>Ukázka při startu vymaže obsah přiřazené Tilemap, proto nepoužívej hotovou ručně vytvořenou mapu.</p>
+<pre><code class="lang-csharp">using UnityEngine;
+using UnityEngine.Tilemaps;
+
+/// &lt;summary&gt;Vytvoří a obarví obdélník dlaždic ve výukové mapě.&lt;/summary&gt;
+public class TilemapExample : MonoBehaviour
+{
+    [SerializeField] private Tilemap tilemap;
+    [SerializeField] private TileBase tile;
+    [SerializeField, Min(1)] private int width = 8;
+    [SerializeField, Min(1)] private int height = 4;
+    [SerializeField] private Color tint = Color.cyan;
+
+    private void Start()
+    {
+        if (tilemap == null || tile == null)
+        {
+            Debug.LogError(&quot;Přiřaď Tilemap i Tile asset.&quot;, this);
+            return;
+        }
+        tilemap.ClearAllTiles();
+        for (int x = 0; x &lt; width; x++)
+        for (int y = 0; y &lt; height; y++)
+        {
+            var position = new Vector3Int(x, y, 0);
+            tilemap.SetTile(position, tile);
+            // Odemkni jen barvu; ostatní příznaky dlaždice zachovej.
+            var flags = tilemap.GetTileFlags(position);
+            tilemap.SetTileFlags(position, flags &amp; ~TileFlags.LockColor);
+            tilemap.SetColor(position, tint);
+        }
+    }
+}
+</code></pre>
+<p>Po spuštění očekávej obdélník 8 × 4 dlaždic s azurovým tónováním.</p>
+<p>Dva oddělené cykly nejsou obecnou podmínkou změny barvy; zásadní je pořadí vložení dlaždice a příznak <code>LockColor</code>.</p>
+<p>Příznaky vysvětluje <a href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Tilemaps.TileFlags.html">Unity TileFlags</a>.</p>
+<p>Vlastní RuleTile může při obnově nastavovat vlastní barvu, proto u něj ověř i implementaci pravidel.</p>
+<h2 id="velikost-obrázku-a-ppu">Velikost obrázku a PPU</h2>
+<p><strong>Pixels Per Unit</strong> určuje počet pixelů zdrojového spritu na jednu světovou jednotku při měřítku Transformu 1.</p>
+<p>Šířka ve scéně je <code>šířka v pixelech / PPU</code>, nikoli pevně daná vzdáleností od kamery.</p>
+<table>
+<thead>
+<tr>
+<th>Sprite</th>
+<th>PPU</th>
+<th>Velikost ve scéně</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>32 × 32 px</td>
+<td>32</td>
+<td>1 × 1 jednotka</td>
+</tr>
+<tr>
+<td>64 × 32 px</td>
+<td>32</td>
+<td>2 × 1 jednotka</td>
+</tr>
+<tr>
+<td>256 × 256 px</td>
+<td>256</td>
+<td>1 × 1 jednotka</td>
+</tr>
+</tbody>
+</table>
+<p>Pro společnou pixelovou kresbu drž konzistentní PPU a rozlišení vybírej podle požadovaného detailu při cílovém zobrazení.</p>
+<p>Mocniny dvou mohou být relevantní pro textury, kompresi a atlas, ale nejsou univerzální povinností pro rozměr každého jednotlivého spritu.</p>
+<h2 id="animace-předpoklady">Animace: předpoklady</h2>
+<p>Následující obrázkové postupy vyžadují kompatibilní balíček <strong>2D Animation</strong>, Sprite Editor a připravenou geometrii spritu.</p>
+<p>Kosti určují transformace, weights vliv kostí na vrcholy a depth pořadí překrývajících se částí.</p>
+<p>Při kopírování rigu ověř názvy kostí, geometrii a váhy nového spritu; podobný obrázek sám nezaručuje stejné deformace.</p>
+<h2 id="animace-obrázku">Animace obrázku</h2>
+<details>
+<summary>Hloubka (Depth) u kostí</summary>
+<blockquote>
+<p>Hloubka ovlivňuje pořadí vykreslení Sprite Mesh.</p>
+</blockquote>
+<ol>
+<li>Otevři <code>Sprite Editor</code></li>
+<li>Přepni do <code>Skinning Editor</code></li>
+<li>Nastav hloubku u kostí</li>
+</ol>
+<img src="../../images/2D_rigging_depth.png" alt="Sloupec Depth určuje pořadí kostí ve Skinning Editoru" width="385">
+<p><a href="../../images/2D_rigging_depth.png">Zobrazit obrázek v původní velikosti</a></p>
+</details>
+<details>
+<summary>Univerzální Rigging</summary>
+<ol>
+<li>Otevři <code>Sprite Editor</code></li>
+<li>Přepni do <code>Skinning Editor</code> (aktivuj <code>Visibility</code>)</li>
+<li>Vytvoř kosti (bones)</li>
+<li>Nastav Geometry a Weights</li>
+</ol>
+<blockquote>
+<p>Pokud se část nevykresluje barevně, zkontroluj nastavení posuvníků:</p>
+</blockquote>
+<img src="../../images/2D_rigging_skinWeight.png" alt="Posuvníky zobrazení barev a vah v panelu Visibility" width="402">
+<p><a href="../../images/2D_rigging_skinWeight.png">Zobrazit obrázek v původní velikosti</a></p>
+<ol start="5">
+<li><p>Zkopíruj rig</p>
+<img src="../../images/2D_rigging_copy.png" alt="Copy Rig zkopíruje připravenou kostru spritu" width="620">
+</li>
+</ol>
+<p><a href="../../images/2D_rigging_copy.png">Zobrazit obrázek v původní velikosti</a></p>
+<ol start="6">
+<li><p>Otevři nový sprite</p>
+</li>
+<li><p>Vlož rig</p>
+<img src="../../images/2D_rigging_paste.png" alt="Paste Rig vloží kostru do nového spritu" width="680">
+</li>
+</ol>
+<p><a href="../../images/2D_rigging_paste.png">Zobrazit obrázek v původní velikosti</a></p>
+</details>
+<h2 id="řešení-chyb-při-vykreslování-spritu">Řešení chyb při vykreslování spritu</h2>
+<p>Nejprve ověř import textury, atlas a cílové rozlišení; <a href="camera.html#pixel-perfect-camera">Pixel Perfect Camera</a> pomáhá pixel artu, ale není povinná pro všechny 2D projekty.</p>
+<details>
+<summary>Černé čáry</summary>
+<img src="../../images/2D_sprite_blackLines.png" alt="Nežádoucí tmavá čára u horního okraje hlavy postavy" width="400">
+<p><a href="../../images/2D_sprite_blackLines.png">Zobrazit obrázek v původní velikosti</a></p>
+<p><strong>Řešení:</strong></p>
+<ul>
+<li><p>Zkontroluj umístění obrázku</p>
+<img src="../../images/2D_sprite_blackLines_solution.png" alt="Zdrojová kresba zasahuje k hornímu a dolnímu okraji textury" width="640">
+</li>
+</ul>
+<p><a href="../../images/2D_sprite_blackLines_solution.png">Zobrazit obrázek v původní velikosti</a></p>
+<ul>
+<li><p>Nastav padding v <code>TexturePacker</code></p>
+<img src="../../images/2D_sprite_blackLines_solution2.png" alt="Border padding a Shape padding v nastavení TexturePackeru" width="319">
+</li>
+</ul>
+<p><a href="../../images/2D_sprite_blackLines_solution2.png">Zobrazit obrázek v původní velikosti</a></p>
+<table>
+<thead>
+<tr>
+<th>Typ paddingu</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Border padding</td>
+<td>Mezera kolem okrajů celého sheetu</td>
+</tr>
+<tr>
+<td>Shape padding</td>
+<td>Mezera mezi jednotlivými sprites na sheetu</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Zvyš padding, pokud se problém opakuje.</p>
+</blockquote>
+</details>
+<details>
+<summary>Problikávání</summary>
+<p>Zkontroluj měřítko v herním okně, že je nastaveno na <strong>1x</strong>.</p>
+<img src="../../images/2D_sprite_blackLines_solutionCamera.png" alt="Měřítko náhledu Game nastavené na 1x" width="687">
+<p><a href="../../images/2D_sprite_blackLines_solutionCamera.png">Zobrazit obrázek v původní velikosti</a></p>
+</details>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

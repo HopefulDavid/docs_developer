@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>pnpm – z&#225;loha a obnova bal&#237;čků | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="pnpm – z&#225;loha a obnova bal&#237;čků | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Z&#225;loha pnpm projektu se store a metadaty, pot&#233; obnova jedn&#237;m instalačn&#237;m př&#237;kazem bez internetu.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/packages/pnpm.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="pnpm--záloha-a-obnova-balíčků">pnpm – záloha a obnova balíčků</h1>
+
+<p>Pro offline obnovu pnpm uchovej <strong>projekt, store a cache metadat</strong>.</p>
+<p>Store obsahuje samotné balíčky; metadata jsou informace o nich, které pnpm může při obnově také potřebovat.</p>
+<p>Postup je pro pnpm 12 se stejnou verzí pnpm, Node.js, OS a architektury na obou počítačích.</p>
+<h2 id="1-připrav-zálohu-s-internetem">1. Připrav zálohu s internetem</h2>
+<p>Vytvoř <code>zaloha-pnpm/projekt</code> jako kopii projektu bez <code>node_modules</code>.</p>
+<p>Zachovej <code>package.json</code>, <code>pnpm-lock.yaml</code>, celý workspace, místní závislosti, patche a hooky <code>.pnpmfile.*</code>.</p>
+<p>V kopii projektu doplň nebo uprav v <code>pnpm-workspace.yaml</code> tyto dva klíče; ostatní nastavení ponech:</p>
+<pre><code class="lang-yaml">storeDir: ../store
+cacheDir: ../metadata
+</code></pre>
+<p>U samostatného projektu bez tohoto souboru jej vytvoř; u monorepa uprav soubor v kořeni workspace. <a href="https://pnpm.io/settings">Nastavení pnpm</a></p>
+<p>Ve stejném kořeni spusť:</p>
+<pre><code class="lang-bash">pnpm install --frozen-lockfile
+</code></pre>
+<p>Instalace připraví balíčky i metadata ve zvolených složkách a zachová lockfile.</p>
+<p>Pro pozdější build a testy instaluj všechny závislosti včetně vývojových; přípravu neomezuj pomocí <code>--prod</code> nebo filtru projektů.</p>
+<h2 id="2-přenes-celou-složku">2. Přenes celou složku</h2>
+<pre><code class="lang-text">zaloha-pnpm/
+  projekt/       zdroje, lockfile a úplná konfigurace
+  store/         balíčky včetně indexu a verzovaných podsložek
+  metadata/      cache metadat
+</code></pre>
+<p>Přípravné <code>node_modules</code> nepřenášej; po skončení instalace zkopíruj celý kořen zálohy a předtím nepoužívej <code>pnpm store prune</code>.</p>
+<p>Přilož verze z <code>node --version</code> a <code>pnpm --version</code> a připrav jejich instalátory či archivy pro cílový počítač.</p>
+<h2 id="3-obnov-bez-internetu">3. Obnov bez internetu</h2>
+<p>Na cíli rozbal pracovní kopii zálohy a v jejím <code>projekt</code> spusť:</p>
+<pre><code class="lang-bash">pnpm install --offline --frozen-lockfile
+pnpm list --depth Infinity
+</code></pre>
+<p>Relativní cesty v přeneseném <code>pnpm-workspace.yaml</code> najdou obě sousední složky i po přesunu zálohy jinam.</p>
+<p><code>--offline</code> zakáže stahování a <code>--frozen-lockfile</code> zachová uzamčené verze. <a href="https://pnpm.io/cli/install">Pnpm install</a></p>
+<p>Nakonec spusť build, testy a běžnou aplikaci bez připojení; ve workspace můžeš pro výpis všech projektů použít <code>pnpm -r list --depth Infinity</code>.</p>
+<h2 id="chci-převzít-existující-store">Chci převzít existující store</h2>
+<p>Nemusíš balíčky stahovat znovu: zjisti <code>pnpm store path</code> a skutečné nastavení <code>cacheDir</code>, poté zkopíruj oba adresáře do zálohy jako <code>store</code> a <code>metadata</code>.</p>
+<p>Pokud první příkaz vypíše například <code>.../store/v11</code>, kopíruj <strong>celý rodičovský <code>store</code></strong>, aby zůstala zachovaná jeho struktura.</p>
+<p>Výchozí metadata jsou ve Windows obvykle <code>%LOCALAPPDATA%/pnpm-cache</code>; rozhoduje však nastavení <code>cacheDir</code> a případně <code>XDG_CACHE_HOME</code>. <a href="https://pnpm.io/settings/other#cachedir">Cache metadat</a></p>
+<p>V záložní kopii projektu nastav stejné relativní cesty jako v kroku 1 a ověř obnovu každého projektu, pro který zálohu pořizuješ.</p>
+<h2 id="nástroje-mimo-projekt">Nástroje mimo projekt</h2>
+<p>Pro snadnou offline obnovu nástroje s lockfilem použij samostatný projekt, například v nové prázdné složce:</p>
+<pre><code class="lang-bash">pnpm init
+pnpm add --save-exact typescript@5.9.3
+pnpm exec tsc --version
+</code></pre>
+<p>Tuto složku zazálohuj výše uvedenými třemi kroky a nástroj na cíli spouštěj přes <code>pnpm exec</code> z obnoveného projektu.</p>
+<p>Názvy a verze svých globálních nástrojů zjistíš přes <code>pnpm list --global --depth=0</code>.</p>
+<p>S internetem je lze znovu instalovat pomocí <code>pnpm add --global &lt;balíček&gt;@&lt;verze&gt;</code>.</p>
+<h2 id="když-něco-chybí">Když něco chybí</h2>
+<table>
+<thead>
+<tr>
+<th>Projev</th>
+<th>Co doplnit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ERR_PNPM_NO_OFFLINE_META</code></td>
+<td>Složku metadat, samotný store nestačí</td>
+</tr>
+<tr>
+<td><code>ERR_PNPM_NO_OFFLINE_TARBALL</code></td>
+<td>Chybějící balíček pro uložený lockfile a platformu</td>
+</tr>
+<tr>
+<td>Chybí <code>file:</code> nebo <code>link:</code> závislost</td>
+<td>Příslušné místní zdroje</td>
+</tr>
+<tr>
+<td>Instalace projde, build selže</td>
+<td>Povolené build skripty, nativní nástroje nebo jejich externí data</td>
+</tr>
+</tbody>
+</table>
+<p>Používáš-li starší pnpm, zachovej jeho verzi a konfigurační formát; u pnpm 12 patří běžné nastavení do <code>pnpm-workspace.yaml</code> a <code>.npmrc</code> slouží registrům a autentizaci.</p>
+<p>S internetem stačí v přeneseném projektu <code>pnpm install --frozen-lockfile</code>; metadata a schválení build skriptů zachovej i tehdy. <a href="https://pnpm.io/settings/dependency-resolution">Pravidla výběru závislostí</a></p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

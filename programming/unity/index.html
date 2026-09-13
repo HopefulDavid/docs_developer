@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Unity: orientace v projektu a Play Mode | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Unity: orientace v projektu a Play Mode | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Orientace ve sc&#233;n&#225;ch, komponent&#225;ch a assetech a nastaven&#237; Play Mode.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/unity/index.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="unity-orientace-v-projektu-a-play-mode">Unity: orientace v projektu a Play Mode</h1>
+
+<p>Unity spojuje editor scén, assety a C# komponenty do aplikace, kterou sestavíš pro cílovou platformu.</p>
+<p>Tyto návody jsou určené juniorovi se základy C# a rozlišují nastavení editoru od chování vydané hry.</p>
+<h2 id="jak-se-v-projektu-orientovat">Jak se v projektu orientovat</h2>
+<table>
+<thead>
+<tr>
+<th>Část</th>
+<th>Účel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scene</td>
+<td>Uložená sestava herních objektů</td>
+</tr>
+<tr>
+<td>GameObject a komponenty</td>
+<td>Objekt a jeho jednotlivé schopnosti, například kamera nebo skript</td>
+</tr>
+<tr>
+<td>Prefab</td>
+<td>Opakovaně použitelná definice objektu</td>
+</tr>
+<tr>
+<td>Asset</td>
+<td>Soubor projektu, například sprite, zvuk nebo konfigurace</td>
+</tr>
+<tr>
+<td>Inspector</td>
+<td>Vlastnosti právě vybraného objektu nebo assetu</td>
+</tr>
+<tr>
+<td>Console</td>
+<td>Chyby kompilace, runtime výjimky a diagnostika</td>
+</tr>
+</tbody>
+</table>
+<p>Změny objektů scény provedené v Play se obvykle po ukončení vrátí, ale změny souborů a assetů nemusí být dočasné.</p>
+<h2 id="praktický-začátek">Praktický začátek</h2>
+<p>V Unity Hub zvol editor a šablonu odpovídající projektu, ulož první scénu a vytvoř jeden viditelný objekt.</p>
+<p>Spusť Play, ověř konzoli a ještě před rozšiřováním prototypu vyzkoušej build pro zamýšlenou platformu.</p>
+<p>Pro grafiku pokračuj na <a href="2d.html">2D</a>, <a href="camera.html">kameru</a> a <a href="renderer.html">URP</a>, pro ovládání rozhraní na <a href="ui-toolkit.html">UI Toolkit</a> nebo <a href="ui.html">Canvas UI</a>.</p>
+<p>Sdílená data řeší <a href="scriptable-object.html">ScriptableObject</a>, pohyb postav <a href="navigation.html">NavMesh</a> a klíčování <a href="animation.html">UMotion</a>.</p>
+<h2 id="rychlejší-vstup-do-play-módu">Rychlejší vstup do Play módu</h2>
+<p>V Unity 6 otevři <strong>Edit → Project Settings → Editor → Enter Play Mode Settings</strong>.</p>
+<p>Nejprve změř výchozí stav a měň jen jednu volbu, aby šlo poznat příčinu rozdílu.</p>
+<table>
+<thead>
+<tr>
+<th>Volba</th>
+<th>Co se změní při vypnutí</th>
+<th>Co musíš ověřit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reload Domain</td>
+<td>Statická pole a odběry událostí se automaticky nevynulují</td>
+<td>Opakovaný Play nezačíná se starým stavem ani duplicitními odběry</td>
+</tr>
+<tr>
+<td>Reload Scene</td>
+<td>Přeskočí se běžné načtení scény z disku</td>
+<td>Inicializace objektů odpovídá očekávání i ve skutečném buildu</td>
+</tr>
+</tbody>
+</table>
+<h2 id="příklad-explicitního-resetu">Příklad explicitního resetu</h2>
+<p>Soubor <code>SessionState.cs</code> ukazuje stav jedné herní relace; není potřeba jej přidávat jako komponentu.</p>
+<pre><code class="lang-csharp">using UnityEngine;
+
+/// &lt;summary&gt;Uchovává a resetuje stav jedné herní relace.&lt;/summary&gt;
+public static class SessionState
+{
+    /// &lt;summary&gt;Skóre aktuální relace, při startu resetované na nulu.&lt;/summary&gt;
+    public static int Score { get; set; }
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void Reset()
+    {
+        // Nová herní relace musí začít stejně i bez Domain Reload.
+        Score = 0;
+    }
+}
+</code></pre>
+<p>Reset vlastního čítače neopraví jiné statické kolekce nebo odběry událostí; každý musí mít vlastní pravidlo životnosti.</p>
+<p>Spusť a zastav Play alespoň dvakrát a porovnej chování s čistým spuštěním buildu.</p>
+<p>Podmínky popisuje <a href="https://docs.unity3d.com/6000.0/Documentation/Manual/domain-reloading.html">Unity: Domain Reload</a>.</p>
+<h2 id="důležité-poznámky">Důležité poznámky</h2>
+<p>Optimalizace editoru nezrychlí automaticky start vydané hry.</p>
+<p>Při ladění problému obnov výchozí reload nastavení a ověř, zda chyba nezávisí na předchozím běhu.</p>
+<p>Verzi editoru a závislostí přebírej ze stávajícího projektu, ne z označení „nejnovější“ v obecném návodu.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

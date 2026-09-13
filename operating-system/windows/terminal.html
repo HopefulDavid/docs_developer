@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>PowerShell – nastaven&#237; prostřed&#237; | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="PowerShell – nastaven&#237; prostřed&#237; | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Profily PowerShellu, moduly, Execution Policy a nastaven&#237; promptu Oh My Posh.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/operating-system/windows/terminal.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="powershell--nastavení-prostředí">PowerShell – nastavení prostředí</h1>
+
+<p>Profil je skript spouštěný při otevření konkrétního prostředí PowerShellu; moduly přidávají příkazy a prompt upravuje vzhled vstupního řádku.</p>
+<p>Každou změnu nejprve vyzkoušej v aktuálním okně a teprve funkční nastavení ukládej do profilu.</p>
+<h2 id="profil-bez-přepsání-existujícího-nastavení">Profil bez přepsání existujícího nastavení</h2>
+<p>V PowerShellu:</p>
+<pre><code class="lang-powershell">$PROFILE
+if (-not (Test-Path -LiteralPath $PROFILE)) {
+    New-Item -ItemType File -Path $PROFILE -Force | Out-Null
+}
+notepad $PROFILE
+</code></pre>
+<p>První řádek ukáže profil aktuálního hostitele a verze PowerShellu; podmínka vytvoří soubor pouze tehdy, když chybí.</p>
+<p>Do již existujícího profilu přidávej řádky, nepřepisuj ho cizí kompletní konfigurací.</p>
+<p>Nové okno ověří načtení profilu; <code>pwsh -NoProfile</code> pomůže otevřít PowerShell 7 bez vadného profilu.</p>
+<h2 id="moduly">Moduly</h2>
+<pre><code class="lang-powershell">$env:PSModulePath -split [IO.Path]::PathSeparator
+Get-Module -ListAvailable | Select-Object Name, Version, Path
+</code></pre>
+<p>První příkaz vypíše prohledávané adresáře a druhý dostupné moduly včetně verzí.</p>
+<p>Modul nainstalovaný pro Windows PowerShell 5.1 nemusí být kompatibilní s PowerShellem 7; před instalací ověř vydavatele a požadované prostředí.</p>
+<h2 id="execution-policy">Execution Policy</h2>
+<p>Politika určuje pravidla spouštění skriptů; není náhradou zabezpečení ani oprávněním k souborům.</p>
+<pre><code class="lang-powershell">Get-ExecutionPolicy
+Get-ExecutionPolicy -List
+</code></pre>
+<p>Nejprve prohlédni efektivní hodnotu a zdroj nastavení.</p>
+<p>Na vlastním nespravovaném zařízení můžeš pro své lokální skripty použít:</p>
+<pre><code class="lang-powershell">Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+</code></pre>
+<p><code>CurrentUser</code> omezuje změnu na účet a <code>RemoteSigned</code> vyžaduje podpis skriptů označených jako stažené z internetu.</p>
+<p>Poznamenej si původní hodnotu pro návrat; firemní Group Policy může mít přednost.</p>
+<p>Pokud jsi důvěryhodný stažený skript skutečně zkontroloval, <code>Unblock-File -LiteralPath &lt;skript.ps1&gt;</code> odebere jeho internetové označení bez plošného přepínání na Bypass.</p>
+<h2 id="oh-my-posh">Oh My Posh</h2>
+<p>Oh My Posh může zobrazit například Git větev a stav projektu v promptu; nemění syntaxi ani oprávnění shellu.</p>
+<p>S dostupným Windows Package Managerem:</p>
+<pre><code class="lang-powershell">winget install --id JanDeDobbeleer.OhMyPosh --exact
+</code></pre>
+<p>Přesné ID vybírá balíček nástroje; po instalaci otevři nový terminál.</p>
+<pre><code class="lang-powershell">oh-my-posh version
+Get-ChildItem -LiteralPath $env:POSH_THEMES_PATH -Filter &quot;*.omp.json&quot;
+oh-my-posh init pwsh --config &quot;$env:POSH_THEMES_PATH/jandedobbeleer.omp.json&quot; | Invoke-Expression
+</code></pre>
+<p>Ověříš program, dostupná témata a vyzkoušíš jedno z nich; pokud proměnná témat není dostupná, nejprve ověř instalaci a použij existující místní konfigurační soubor.</p>
+<p><code>Invoke-Expression</code> zde vykonává inicializační kód lokálně nainstalovaného nástroje.</p>
+<p>Stejný funkční inicializační řádek přidej do profilu; pro návrat ho zase odstraň nebo zakomentuj a otevři nové okno.</p>
+<p>Chybějící ikony řeší odpovídající Nerd Font vybraný v nastavení terminálu, nikoli opakovaná změna Execution Policy.</p>
+<p>Zdroje: <a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_profiles">profily</a>, <a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies">Execution Policy</a>, <a href="https://ohmyposh.dev/docs/installation/windows">Oh My Posh pro Windows</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Git – odstraněn&#237; dokončen&#233; větve | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git – odstraněn&#237; dokončen&#233; větve | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="&#218;klid dokončen&#233; m&#237;stn&#237; i vzd&#225;len&#233; větve a možnost obnoven&#237;.">
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/branches/delete-remote-branch.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git--odstranění-dokončené-větve">Git – odstranění dokončené větve</h1>
+
+<p>Odstraněním větve zrušíš její jméno; místní a vzdálená větev jsou samostatné reference.</p>
+<p>Nejdříve ověř, že její práce je začleněná nebo ji už nepotřebuješ.</p>
+<h2 id="zkontroluj-výsledek">Zkontroluj výsledek</h2>
+<p>Příklad používá dokončenou <code>feature/hledani</code> a cílovou <code>main</code>; před přepnutím musí být pracovní strom čistý.</p>
+<pre><code class="lang-bash">git switch main
+git fetch origin
+git log --oneline main..feature/hledani
+</code></pre>
+<p>Výpis ukazuje commity pracovní větve, které nejsou dosažitelné z místní <code>main</code>; po serverovém PR nejprve <a href="../synchronization.html">aktualizuj main</a>.</p>
+<p>Při squash nebo rebase merge mohou mít začleněné změny jiná ID, proto navíc ověř skutečný obsah a stav PR.</p>
+<h2 id="místní-větev">Místní větev</h2>
+<pre><code class="lang-bash">git branch -d feature/hledani
+</code></pre>
+<p><code>-d</code> používá kontrolu začlenění do upstreamu, případně do HEAD, pokud upstream není nastavený; není náhradou vlastní kontroly zamýšlené cílové větve.</p>
+<p>Když kontrola selže po ověřeném squash, můžeš si nejprve ponechat záložní jméno a vědomě odstranit původní:</p>
+<pre><code class="lang-bash">git branch backup/hledani feature/hledani
+git branch -D feature/hledani
+</code></pre>
+<p><code>-D</code> kontrolu sloučení obchází, proto ho nepoužívej jen kvůli odstranění chybového hlášení.</p>
+<h2 id="vzdálená-větev">Vzdálená větev</h2>
+<pre><code class="lang-bash">git push origin --delete feature/hledani
+git fetch origin --prune
+git ls-remote --heads origin feature/hledani
+</code></pre>
+<p>První příkaz odstraní jméno na serveru a druhý uklidí místní odkazy na zaniklé vzdálené větve.</p>
+<p>Poslední příkaz už nemá vypsat odstraněnou větev; místní <code>backup/hledani</code> zůstane zachovaná.</p>
+<h2 id="obnova">Obnova</h2>
+<p>Pokud máš záložní větev a název je volný:</p>
+<pre><code class="lang-bash">git branch feature/hledani backup/hledani
+git push -u origin feature/hledani
+</code></pre>
+<p>Obnovíš místní i vzdálené pojmenování původního commitu.</p>
+<p>Bez zálohy může pomoci místní <a href="../recovery.html">reflog</a>, jeho dostupnost ale není trvalá.</p>
+<p>Zdroje: <a href="https://git-scm.com/docs/git-branch">git branch</a>, <a href="https://git-scm.com/docs/git-push">git push</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

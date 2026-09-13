@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>.NET tools – z&#225;loha a obnova | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=".NET tools – z&#225;loha a obnova | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Jednoduch&#225; z&#225;loha a obnova .NET n&#225;strojů podle toho, zda jsou glob&#225;ln&#237;, nebo patř&#237; k projektu.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/packages/dotnet-tools.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="net-tools--záloha-a-obnova">.NET tools – záloha a obnova</h1>
+
+<p>.NET tools jsou příkazové nástroje, například DocFX.</p>
+<p><strong>Nejdříve vyber, jak je máš nainstalované:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Typ instalace</th>
+<th>Jak ji poznáš</th>
+<th>Co zálohovat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Globální, pro celý účet</td>
+<td>Nástroj je ve výpisu <code>dotnet tool list --global</code></td>
+<td>Celou složku <code>tools</code></td>
+</tr>
+<tr>
+<td>Lokální, pro jeden projekt</td>
+<td>Projekt má <code>.config/dotnet-tools.json</code></td>
+<td>Projekt a balíčky NuGet</td>
+</tr>
+<tr>
+<td>Vlastní složka <code>--tool-path</code></td>
+<td>Při instalaci jsi zadal vlastní cestu</td>
+<td>Celou tuto složku</td>
+</tr>
+</tbody>
+</table>
+<p>Příklady jsou pro PowerShell ve Windows; na druhém počítači připrav stejný OS, architekturu a odpovídající .NET SDK či runtime.</p>
+<h2 id="globální-nástroje-zkopíruj-celou-složku">Globální nástroje: zkopíruj celou složku</h2>
+<h3 id="1-záloha-na-původním-počítači">1. Záloha na původním počítači</h3>
+<p>Ulož si výpis <code>dotnet tool list --global</code> a verzi prostředí z <code>dotnet --info</code>.</p>
+<p>Zavři běžící nástroje a v Průzkumníku zkopíruj tuto <strong>celou složku včetně skryté <code>.store</code></strong> na záložní disk:</p>
+<pre><code class="lang-text">%USERPROFILE%\.dotnet\tools
+</code></pre>
+<p>V <code>.store</code> jsou vlastní soubory nástrojů; samotné spouštěče <code>.exe</code> nestačí. <a href="https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-install#installation-locations">Umístění instalace</a></p>
+<p>Pro vlastní <code>--tool-path</code> kopíruj celý zadaný adresář; na Linuxu a macOS je běžná globální cesta <code>~/.dotnet/tools</code>.</p>
+<p>Pokud používáš vlastní <code>DOTNET_CLI_HOME</code>, vycházej ze skutečného umístění instalace.</p>
+<h3 id="2-obnova-bez-internetu">2. Obnova bez internetu</h3>
+<p>Na cílovém počítači nainstaluj připravené .NET SDK či runtime a vrať uloženou složku <code>tools</code> do jeho <code>%USERPROFILE%\.dotnet</code>.</p>
+<p>Pokud tam už jiné nástroje máš, původní složku nejprve odlož stranou; dvě instalace neslévej naslepo.</p>
+<p>Nástroje se z této kopie spouštějí přímo, bez nového stahování balíčků.</p>
+<h3 id="3-ověření">3. Ověření</h3>
+<p>Pro ukázkový DocFX spusť:</p>
+<pre><code class="lang-powershell">dotnet tool list --global
+&amp; &quot;$env:USERPROFILE/.dotnet/tools/docfx.exe&quot; --version
+</code></pre>
+<p>Porovnej seznam a verze se zálohou a vyzkoušej běžnou práci nástroje bez připojení.</p>
+<p>Pro spouštění samotným <code>docfx</code> musí být složka <code>tools</code> v <code>PATH</code>; příkaz s úplnou cestou výše to nevyžaduje.</p>
+<h2 id="lokální-nástroje-přenes-projekt-a-balíčky">Lokální nástroje: přenes projekt a balíčky</h2>
+<p>Lokální nástroje obnovuje soubor <code>.config/dotnet-tools.json</code>; nepřenášej je kopií globální složky <code>tools</code>.</p>
+<h3 id="1-záloha-s-internetem">1. Záloha s internetem</h3>
+<p>V projektu nejprve obnov nástroje a zjisti složku stažených balíčků:</p>
+<pre><code class="lang-powershell">dotnet tool restore
+dotnet nuget locals global-packages --list
+</code></pre>
+<p>Zkopíruj <strong>celý projekt včetně skryté <code>.config</code></strong> a celý vypsaný adresář balíčků do této zálohy:</p>
+<pre><code class="lang-text">zaloha-tools/
+  projekt/       projekt včetně .config/dotnet-tools.json
+  balicky/       kopie složky NuGet včetně .nupkg a metadat
+</code></pre>
+<p>Pro více projektů obnov každý z nich a potom pořizuj společnou kopii balíčků.</p>
+<h3 id="2-obnova-bez-internetu-1">2. Obnova bez internetu</h3>
+<p>Na cíli pracuj s rozbalenou kopií zálohy a v <code>projekt</code> vytvoř soubor <code>NuGet.Offline.Config</code>:</p>
+<pre><code class="lang-xml">&lt;configuration&gt;
+  &lt;packageSources&gt;
+    &lt;clear /&gt;
+    &lt;add key=&quot;offline&quot; value=&quot;../balicky&quot; /&gt;
+  &lt;/packageSources&gt;
+&lt;/configuration&gt;
+</code></pre>
+<p>Tím určíš, že se mají balíčky hledat jen v přenesené složce.</p>
+<p>Ve stejném projektu spusť:</p>
+<pre><code class="lang-powershell">dotnet tool restore --configfile NuGet.Offline.Config
+dotnet tool list
+dotnet tool run docfx -- --version
+</code></pre>
+<p>V posledním řádku nahraď DocFX vlastním nástrojem z manifestu a ověř jeho běžnou práci. <a href="https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-restore">Obnova lokálních nástrojů</a></p>
+<p>Úplnost zálohy zkoušej na novém účtu nebo počítači bez původní instalace; obnovení na stejném účtu může využít jeho staré balíčky.</p>
+<h2 id="když-máš-při-obnově-internet">Když máš při obnově internet</h2>
+<p>Lokálním nástrojům stačí projekt s manifestem a <code>dotnet tool restore</code>.</p>
+<p>Globální nástroje nainstaluj podle uloženého seznamu, například:</p>
+<pre><code class="lang-powershell">dotnet tool install --global docfx --version 2.78.5
+</code></pre>
+<p><code>docfx</code> a <code>2.78.5</code> jsou ukázkové hodnoty; dosaď názvy a verze ze své zálohy.</p>
+<p>Složka nástrojů neobsahuje .NET runtime ani všechna vlastní data, pluginy či šablony nástroje; ty zálohuj také, pokud je používáš.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Git – lok&#225;ln&#237; konfigurace a assume-unchanged | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git – lok&#225;ln&#237; konfigurace a assume-unchanged | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Oddělen&#237; lok&#225;ln&#237; konfigurace a limity př&#237;znaků sledovan&#253;ch souborů.">
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/history/assume-unchanged.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git--lokální-konfigurace-a-assume-unchanged">Git – lokální konfigurace a assume-unchanged</h1>
+
+<p>Příznak <code>assume-unchanged</code> je optimalizace kontroly sledovaného souboru; není spolehlivý způsob ukládání vlastní konfigurace mimo historii.</p>
+<h2 id="proč-tím-neskrývat-vlastní-úpravy">Proč tím neskrývat vlastní úpravy</h2>
+<p>Gitu slibuješ, že soubor neměníš, takže může vynechat některé kontroly pracovního stromu.</p>
+<p>Git může změnu přesto rozpoznat nebo při merge vyžadovat odstranění příznaku. <a href="https://git-scm.com/docs/git-update-index#_using_assume_unchanged_bit">Význam assume-unchanged</a></p>
+<h2 id="před-použitím">Před použitím</h2>
+<p>Rozliš, zda je soubor sledovaný; ověř jej příkazem <code>git ls-files -- config.local.json</code>.</p>
+<p>Pokud příkaz nic nevypíše, soubor není v indexu a lze jej ignorovat běžným pravidlem.</p>
+<h2 id="praktické-použití-vlastní-konfigurace">Praktické použití: vlastní konfigurace</h2>
+<p>Verzuj výchozí konfiguraci bez tajemství a aplikaci nastav tak, aby ji mohla doplnit místním souborem.</p>
+<p>Do <code>.gitignore</code> přidej:</p>
+<pre><code class="lang-gitignore"># Místní hodnoty; sdílená výchozí konfigurace zůstává verzovaná.
+config.local.json
+</code></pre>
+<p>Pro pravidlo platné jen ve tvé kopii použij stejný řádek v <code>.git/info/exclude</code>.</p>
+<p>Ignorování již sledovaného souboru vyžaduje <a href="update-gitignore.html">samostatnou změnu indexu</a>, která se po commitu projeví i ostatním.</p>
+<h2 id="kontrola-a-zrušení-příznaku">Kontrola a zrušení příznaku</h2>
+<p>Pokud někdo příznak dříve nastavil, obnov běžnou kontrolu:</p>
+<pre><code class="lang-bash"># Nahraď cestu skutečným sledovaným souborem.
+git ls-files -v -- config.json
+git update-index --no-assume-unchanged -- config.json
+git diff -- config.json
+</code></pre>
+<p>Malé počáteční písmeno ve výpisu <code>ls-files -v</code> označuje <code>assume-unchanged</code>; poslední příkaz ukáže místní změny. <a href="https://git-scm.com/docs/git-ls-files">Reference git ls-files</a></p>
+<p>Samotné nastavení by mělo podobu <code>git update-index --assume-unchanged -- &lt;sledovaný-soubor&gt;</code>, ale pro lokální úpravy použij oddělenou konfiguraci výše.</p>
+<h2 id="důležité-poznámky">Důležité poznámky</h2>
+<p>Ani <code>skip-worktree</code> není obecná ochrana vlastních změn; jeho hlavní použití souvisí se sparse checkoutem. <a href="https://git-scm.com/docs/git-update-index#_notes">Poznámky k indexu</a></p>
+<p>Pokud se tajemství dostalo do commitu, ignorovací příznak je neodstraní z historie ani nezneplatní.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

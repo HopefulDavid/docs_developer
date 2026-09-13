@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Unity: UI Toolkit od UXML ke kliknut&#237; | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Unity: UI Toolkit od UXML ke kliknut&#237; | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Propojen&#237; UXML, stylů USS a reakc&#237; na ud&#225;losti v C#.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/unity/ui-toolkit.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="unity-ui-toolkit-od-uxml-ke-kliknutí">Unity: UI Toolkit od UXML ke kliknutí</h1>
+
+<p>UI Toolkit vytváří rozhraní jako strom prvků, který popisuje UXML, styluje USS a ovládá C#.</p>
+<p>Používá se pro editorové nástroje i runtime rozhraní; tento návod ukazuje runtime tlačítko v Unity 6.</p>
+<h2 id="jak-spolu-části-souvisejí">Jak spolu části souvisejí</h2>
+<table>
+<thead>
+<tr>
+<th>Část</th>
+<th>Úloha</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UXML</td>
+<td>Definuje prvky a jejich názvy</td>
+</tr>
+<tr>
+<td>USS</td>
+<td>Určuje rozměry, barvy a rozložení</td>
+</tr>
+<tr>
+<td>UIDocument</td>
+<td>Připojí dokument ke scéně</td>
+</tr>
+<tr>
+<td>Panel Settings</td>
+<td>Řídí vykreslení a škálování panelu</td>
+</tr>
+<tr>
+<td>C# komponenta</td>
+<td>Najde prvek a reaguje na jeho události</td>
+</tr>
+</tbody>
+</table>
+<p>USS se podobá CSS, ale nepodporuje automaticky všechny webové vlastnosti.</p>
+<h2 id="před-použitím">Před použitím</h2>
+<p>Vytvoř složku <code>Assets/UI</code> a ulož do ní oba následující soubory se stejnými názvy.</p>
+<p>Ukázka používá pouze runtime namespace <code>UnityEngine.UIElements</code>; prvky z <code>UnityEditor</code> do výsledné hry nepatří.</p>
+<h2 id="uxml-a-uss">UXML a USS</h2>
+<p>Soubor <code>Menu.uxml</code> načítá styl relativně ke svému umístění.</p>
+<pre><code class="lang-xml">&lt;ui:UXML xmlns:ui=&quot;UnityEngine.UIElements&quot;&gt;
+  &lt;Style src=&quot;Menu.uss&quot; /&gt;
+  &lt;ui:VisualElement class=&quot;menu&quot;&gt;
+    &lt;ui:Label name=&quot;status&quot; text=&quot;Připraveno&quot; /&gt;
+    &lt;ui:Button name=&quot;start-button&quot; text=&quot;Spustit&quot; /&gt;
+  &lt;/ui:VisualElement&gt;
+&lt;/ui:UXML&gt;
+</code></pre>
+<p><code>name</code> slouží k vyhledání konkrétního prvku v C#, <code>class</code> ke společnému stylování.</p>
+<p>Soubor <code>Menu.uss</code> zarovná obsah do středu a nastaví čitelné tlačítko.</p>
+<pre><code class="lang-css">.menu {
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(24, 30, 40);
+    color: white;
+}
+#start-button {
+    min-width: 160px;
+    height: 44px;
+    margin-top: 12px;
+    background-color: rgb(30, 90, 160);
+    color: white;
+    font-size: 18px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+</code></pre>
+<p>Rozměry a barvy jsou výchozí vzhled ukázky, zatímco selektor <code>#start-button</code> musí odpovídat názvu v UXML.</p>
+<h2 id="propojení-s-c-a-scénou">Propojení s C# a scénou</h2>
+<p>Ulož následující komponentu jako <code>MenuController.cs</code>.</p>
+<pre><code class="lang-csharp">using UnityEngine;
+using UnityEngine.UIElements;
+
+/// &lt;summary&gt;Propojuje runtime UXML menu s akcí tlačítka.&lt;/summary&gt;
+[RequireComponent(typeof(UIDocument))]
+public class MenuController : MonoBehaviour
+{
+    private Button startButton;
+    private Label status;
+
+    private void OnEnable()
+    {
+        var root = GetComponent&lt;UIDocument&gt;().rootVisualElement;
+        startButton = root.Q&lt;Button&gt;(&quot;start-button&quot;);
+        status = root.Q&lt;Label&gt;(&quot;status&quot;);
+        if (startButton == null || status == null)
+        {
+            Debug.LogError(&quot;Menu.uxml nemá očekávané prvky.&quot;, this);
+            return;
+        }
+        startButton.clicked += HandleStart;
+    }
+
+    private void OnDisable()
+    {
+        // Odhlášení zabrání opakovaným odběrům při opětovné aktivaci objektu.
+        if (startButton != null) startButton.clicked -= HandleStart;
+    }
+
+    private void HandleStart() =&gt; status.text = &quot;Tlačítko funguje&quot;;
+}
+</code></pre>
+<ol>
+<li>Vytvoř <strong>Panel Settings</strong> přes <strong>Assets → Create → UI Toolkit</strong>.</li>
+<li>Přidej do scény GameObject s <strong>UIDocument</strong> a přiřaď <code>Menu.uxml</code> do <strong>Source Asset</strong> i vytvořený Panel Settings.</li>
+<li>Na stejný objekt přidej <code>MenuController</code>.</li>
+<li>Spusť Play a klikni na tlačítko; popisek se musí změnit na „Tlačítko funguje“.</li>
+</ol>
+<h2 id="co-lze-upravit-a-ověřit">Co lze upravit a ověřit</h2>
+<p>Obsluhu <code>HandleStart</code> nahraď akcí aplikace; při přejmenování prvků uprav UXML i řetězce v <code>Q</code>.</p>
+<p>V Panel Settings zvol škálování podle cílového rozlišení a ověř Game view v úzkém i širokém poměru stran.</p>
+<p>Pokud rozhraní chybí, zkontroluj přiřazení dokumentu, aktivitu GameObjectu, Panel Settings a chyby importu UXML v konzoli.</p>
+<p>Princip runtime dokumentu popisuje <a href="https://docs.unity3d.com/6000.0/Documentation/Manual/UIE-HowTo-CreateRuntimeUI.html">oficiální návod UI Toolkit</a>.</p>
+<p>Pro rozhraní založené na Canvas pokračuj na <a href="ui.html">Unity UI</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

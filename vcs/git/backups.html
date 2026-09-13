@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Git – z&#225;loha a obnova projektu | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git – z&#225;loha a obnova projektu | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Přenos cel&#233;ho projektu, offline bundle, LFS a ř&#237;zen&#225; migrace na jin&#253; server.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/backups.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git--záloha-a-obnova-projektu">Git – záloha a obnova projektu</h1>
+
+<p>Záloha musí obsahovat to, co chceš obnovit: historie Gitu, necommitované soubory, LFS objekty a data hostingu jsou různé části.</p>
+<p>Push je užitečná další kopie commitů, ale nepřenese automaticky vše z pracovního počítače.</p>
+<h2 id="vyber-typ-zálohy">Vyber typ zálohy</h2>
+<table>
+<thead>
+<tr>
+<th>Možnost</th>
+<th>Co zachová</th>
+<th>Co potřebuje navíc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kopie celé pracovní složky včetně <code>.git</code></td>
+<td>Historii, místní nastavení a přítomné rozpracované soubory</td>
+<td>Samostatná data mimo složku, skutečné cíle propojených worktrees a submodulů</td>
+</tr>
+<tr>
+<td><code>git bundle</code></td>
+<td>Vybrané Git reference a objekty v jednom offline souboru</td>
+<td>Necommitované a ignorované soubory, LFS data, nastavení a externí závislosti</td>
+</tr>
+<tr>
+<td>Mirror klon serveru</td>
+<td>Reference a historii dostupnou ze serveru</td>
+<td>LFS, issues, přílohy release, oprávnění a CI tajemství</td>
+</tr>
+</tbody>
+</table>
+<p>Pro preferovanou složkovou zálohu zavři IDE a procesy měnící projekt a zkopíruj celý adresář včetně skrytých položek na jiné úložiště.</p>
+<p>Pokud <code>.git</code> není adresář, ale odkazový soubor, jde například o worktree či submodul; samotná kopie této složky nemusí obsahovat vlastní historii.</p>
+<h2 id="offline-soubor-s-historií">Offline soubor s historií</h2>
+<p>V běžném repozitáři v PowerShellu nebo Bashi:</p>
+<pre><code class="lang-bash">git status
+git bundle create ../projekt.bundle --all
+git bundle verify ../projekt.bundle
+git bundle list-heads ../projekt.bundle
+</code></pre>
+<p><code>--all</code> zahrne místní reference včetně větví a tagů; neobstará commity, které místní repozitář nikdy nestáhl.</p>
+<p>Pokud má být záloha aktuální vůči serveru, před tvorbou proveď <code>git fetch --all --tags</code> a vyhodnoť případné chyby jednotlivých remotes.</p>
+<p><code>verify</code> kontroluje strukturu a případné potřebné předchozí objekty; test obnovy navíc ověří skutečné použití.</p>
+<h3 id="obnova-na-jiném-počítači">Obnova na jiném počítači</h3>
+<p>Přenes bundle a vedle něj spusť:</p>
+<pre><code class="lang-bash">git clone projekt.bundle projekt-obnoveny
+git -C projekt-obnoveny log --oneline -5
+git -C projekt-obnoveny branch -a
+git -C projekt-obnoveny fsck --full
+</code></pre>
+<p>Vznikne nová pracovní kopie bez internetu; další větve z klonu případně vyber přes <code>git switch --track origin/&lt;větev&gt;</code>.</p>
+<p>Remote <code>origin</code> zatím ukazuje na soubor zálohy, takže před dalším běžným pushem nastav skutečnou serverovou URL podle <a href="server.html">připojení remote</a>.</p>
+<p>Na cíli obnov také <a href="../../programming/packages/offline.html">balíčky projektu</a>, SDK a soukromou konfiguraci.</p>
+<h2 id="git-lfs-a-submoduly">Git LFS a submoduly</h2>
+<p>Git LFS ukládá do historie textové ukazatele, zatímco velká data žijí samostatně.</p>
+<p>Před úplnou zálohou projektu s LFS potřebuješ nainstalovaný Git LFS a dostupný původní server:</p>
+<pre><code class="lang-bash">git lfs version
+git lfs env
+git lfs fetch --all origin
+git lfs fsck
+</code></pre>
+<p><code>fetch --all</code> stáhne LFS objekty dosažitelné z místních referencí, takže před ním načti potřebné větve a tagy.</p>
+<p>U běžného repozitáře je lokální LFS úložiště zpravidla uvnitř <code>.git/lfs</code>; přesné <code>LocalMediaDir</code> zjistíš ve výpisu <code>git lfs env</code>, protože umístění lze změnit konfigurací.</p>
+<p>Pro složkovou obnovu přenes i tento skutečný adresář a po přepnutí na požadovanou verzi použij <code>git lfs checkout</code> k doplnění pracovních souborů z místních objektů.</p>
+<p>Samotný bundle LFS objekty neobsahuje.</p>
+<p>Každý <a href="submodules.html">submodul</a> je další repozitář, který musí mít dostupný připnutý commit i vlastní zálohu; URL v <code>.gitmodules</code> se na offline počítači samy nezmění na místní cestu.</p>
+<h2 id="migrace-serveru-pomocí-mirroru">Migrace serveru pomocí mirroru</h2>
+<p>Tuto variantu používej pro <strong>nový prázdný cílový repozitář</strong>, protože <code>push --mirror</code> může cílové reference přepsat i odstranit.</p>
+<p>Obecná syntaxe po nahrazení obou URL:</p>
+<pre><code class="lang-text">git clone --mirror &lt;zdrojová-URL&gt; projekt-mirror.git
+cd projekt-mirror.git
+git remote add destination &lt;cílová-URL&gt;
+git ls-remote destination
+git push --mirror --dry-run destination
+</code></pre>
+<p>Prohlédni cíl a navržené změny; zdrojový <code>origin</code> zůstává zachovaný a <code>destination</code> označuje pouze nový server.</p>
+<p>Po potvrzení správného prázdného cíle a u projektů s již staženými LFS objekty nejprve proveď <code>git lfs push --all destination</code>.</p>
+<p>Vlastní Git reference odešli:</p>
+<pre><code class="lang-bash">git push --mirror destination
+git ls-remote --heads --tags destination
+</code></pre>
+<p>Naklonuj nový server do další čisté složky, ověř větve, tagy, obsah LFS a spuštění projektu.</p>
+<p>Mirror nepřenáší issues, účty, nastavení CI, release přílohy ani tajemství hostingu; ty exportuj nástroji konkrétní platformy.</p>
+<p>Zdroje: <a href="https://git-scm.com/docs/git-bundle">git bundle</a>, <a href="https://git-scm.com/docs/git-clone">git clone</a>, <a href="https://github.com/git-lfs/git-lfs/blob/main/docs/man/git-lfs-fetch.adoc">Git LFS fetch</a>, <a href="https://github.com/git-lfs/git-lfs/blob/main/docs/man/git-lfs-checkout.adoc">Git LFS checkout</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

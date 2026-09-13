@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Git – vytvořen&#237; a v&#253;běr větve | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git – vytvořen&#237; a v&#253;běr větve | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Založen&#237; větve ze zvolen&#233;ho z&#225;kladu, přep&#237;n&#225;n&#237; a prvn&#237; push.">
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/branches/create-remote-branch.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git--vytvoření-a-výběr-větve">Git – vytvoření a výběr větve</h1>
+
+<p>Nová větev oddělí jednu změnu nebo experiment a začíná z konkrétního existujícího commitu.</p>
+<p>Dokud neuděláš push, existuje pouze ve tvé místní kopii.</p>
+<h2 id="založení-ze-správného-základu">Založení ze správného základu</h2>
+<p>Příklad pro PowerShell i Bash předpokládá čistý strom a již aktualizovanou místní <code>main</code>.</p>
+<pre><code class="lang-bash">git status
+git switch main
+git switch -c feature/hledani
+git branch --show-current
+</code></pre>
+<p><code>switch -c</code> větev vytvoří a zároveň vybere; poslední příkaz musí vypsat <code>feature/hledani</code>.</p>
+<p>Používáš-li workflow s <code>develop</code>, začni z této větve místo <code>main</code>.</p>
+<h2 id="další-možnosti">Další možnosti</h2>
+<table>
+<thead>
+<tr>
+<th>Syntaxe</th>
+<th>Účel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>git switch &lt;větev&gt;</code></td>
+<td>Přepne na existující místní větev</td>
+</tr>
+<tr>
+<td><code>git switch -c &lt;nová-větev&gt; [&lt;výchozí-commit&gt;]</code></td>
+<td>Vytvoří a vybere větev z uvedeného základu nebo aktuálního HEAD</td>
+</tr>
+<tr>
+<td><code>git branch &lt;nová-větev&gt; [&lt;výchozí-commit&gt;]</code></td>
+<td>Vytvoří ukazatel bez přepnutí pracovních souborů</td>
+</tr>
+<tr>
+<td><code>git branch -a</code></td>
+<td>Vypíše místní i naposledy načtené vzdálené větve</td>
+</tr>
+<tr>
+<td><code>git branch -m &lt;nový-název&gt;</code></td>
+<td>Přejmenuje aktuální místní větev, vzdálený název nezmění</td>
+</tr>
+</tbody>
+</table>
+<p>Pro existující větev pouze na serveru nejprve načti aktuální seznam a pak ji začni sledovat:</p>
+<pre><code class="lang-bash">git fetch origin
+git switch --track origin/feature/hledani
+</code></pre>
+<p>Tuto variantu použij, když místní <code>feature/hledani</code> ještě neexistuje.</p>
+<h2 id="první-odeslání">První odeslání</h2>
+<pre><code class="lang-bash">git remote -v
+git push -u origin feature/hledani
+git branch -vv
+</code></pre>
+<p><code>-u</code> nastaví vazbu na <code>origin/feature/hledani</code>, kterou pak Git používá pro přehled stavu.</p>
+<p>Push nepřenese rozpracované soubory a nevloží funkci do <code>main</code>; k tomu slouží samostatný <a href="../merging.html">merge</a> nebo <a href="pull-request.html">PR</a>.</p>
+<h2 id="když-přepnutí-odmítne">Když přepnutí odmítne</h2>
+<p>Hlášení o přepsání místních změn chrání necommitovanou práci; nejprve ji commitni nebo <a href="../stash-worktree.html">odlož</a>.</p>
+<p>Při <code>branch already exists</code> použij běžný <code>switch</code>, pokud chceš právě tuto větev, nebo zvol jiné jméno.</p>
+<p>Zdroj: <a href="https://git-scm.com/docs/git-switch">git switch</a>, <a href="https://git-scm.com/docs/git-branch">git branch</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Git – připojen&#237; ke vzd&#225;len&#233;mu repozit&#225;ři | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git – připojen&#237; ke vzd&#225;len&#233;mu repozit&#225;ři | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Připojen&#237; remote, volba HTTPS nebo SSH a změna c&#237;lov&#233; adresy.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/server.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git--připojení-ke-vzdálenému-repozitáři">Git – připojení ke vzdálenému repozitáři</h1>
+
+<p>Remote je pojmenovaná adresa jiného repozitáře, ze kterého načítáš commity nebo do něj posíláš svoji práci.</p>
+<p>GitHub, GitLab, Forgejo i vlastní bare repozitář mohou plnit tuto úlohu; samotný Git nevyžaduje konkrétní hosting.</p>
+<h2 id="vyber-přihlášení">Vyber přihlášení</h2>
+<table>
+<thead>
+<tr>
+<th>Protokol</th>
+<th>Co potřebuješ</th>
+<th>Typická adresa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HTTPS</td>
+<td>Účet a přihlášení podporované hostingem, často přes správce přihlašovacích údajů nebo token</td>
+<td><code>https://git.example.com/ucet/projekt.git</code></td>
+</tr>
+<tr>
+<td>SSH</td>
+<td>Klíč registrovaný u účtu a ověřený server</td>
+<td><code>git@git.example.com:ucet/projekt.git</code></td>
+</tr>
+<tr>
+<td>Místní cesta</td>
+<td>Přístup k disku s repozitářem</td>
+<td><code>../centralni.git</code></td>
+</tr>
+</tbody>
+</table>
+<p>Ukázkové domény představují syntaxi adres, nejsou servery určené k připojení.</p>
+<p>U SSH nemusí být <code>git</code> tvé uživatelské jméno na hostingu; často jde o společný technický účet a identita se určí podle klíče.</p>
+<h2 id="připojení-nového-projektu">Připojení nového projektu</h2>
+<p>Na hostingu vytvoř prázdný repozitář <strong>bez automatického README</strong>, pokud už máš místní historii.</p>
+<p>Zkopíruj jeho clone URL a v kořeni své pracovní kopie použij:</p>
+<pre><code class="lang-text">git remote add origin &lt;clone-URL&gt;
+git push -u origin &lt;místní-větev&gt;
+</code></pre>
+<p><code>origin</code> je zvolený název spojení; <code>&lt;místní-větev&gt;</code> zjistíš přes <code>git branch --show-current</code>.</p>
+<p>Před odesláním ověř cílovou adresu:</p>
+<pre><code class="lang-bash">git remote -v
+git status --short --branch
+</code></pre>
+<p>Pokud server už má vlastní první commit, zvaž naklonování serverové verze a přenos svých souborů do ní; odmítnutí push není důvod k automatickému přepsání serveru.</p>
+<h2 id="existující-remote-nebo-změna-adresy">Existující remote nebo změna adresy</h2>
+<table>
+<thead>
+<tr>
+<th>Syntaxe</th>
+<th>Účinek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>git remote -v</code></td>
+<td>Vypíše názvy a URL pro načítání i odesílání</td>
+</tr>
+<tr>
+<td><code>git remote add &lt;název&gt; &lt;URL&gt;</code></td>
+<td>Přidá nové spojení</td>
+</tr>
+<tr>
+<td><code>git remote set-url &lt;název&gt; &lt;URL&gt;</code></td>
+<td>Změní adresu existujícího spojení</td>
+</tr>
+<tr>
+<td><code>git remote remove &lt;název&gt;</code></td>
+<td>Odstraní místní konfiguraci spojení, ne repozitář na serveru</td>
+</tr>
+<tr>
+<td><code>git ls-remote &lt;název&gt;</code></td>
+<td>Ověří přístup ke čtení referencí na serveru</td>
+</tr>
+</tbody>
+</table>
+<p>Například po přejmenování vlastního projektu nahradíš URL přes <code>set-url</code>; žádná z těchto konfiguračních změn sama nepřenáší historii.</p>
+<p>Token ani heslo nevkládej do URL, kde by zůstaly v konfiguraci a historii terminálu.</p>
+<h2 id="praktické-vyzkoušení-bez-hostingu">Praktické vyzkoušení bez hostingu</h2>
+<p>V nové složce určené pro pokus spusť:</p>
+<pre><code class="lang-bash">git init --bare --initial-branch=main centralni.git
+git clone centralni.git pracovni-kopie
+</code></pre>
+<p><code>centralni.git</code> bude místní serverová kopie bez pracovních souborů a <code>pracovni-kopie</code> místo pro editaci a commity.</p>
+<p>Varování o prázdném klonu je očekávané; vytvoř v pracovní kopii první soubor a commit podle <a href="repository.html">založení repozitáře</a>, potom použij <code>git push -u origin main</code>.</p>
+<p>Bare složku neupravuj jako běžný projekt a své soubory do ní ručně nekopíruj.</p>
+<h2 id="časté-problémy">Časté problémy</h2>
+<ul>
+<li><code>remote origin already exists</code>: prohlédni <code>remote -v</code> a podle potřeby použij <code>set-url</code>.</li>
+<li>Úspěšné čtení a odmítnutý push: účet nemusí mít právo zápisu nebo větev chrání pravidlo.</li>
+<li><code>Permission denied (publickey)</code>: pokračuj <a href="../../network/ssh/git.html">diagnostikou Git přes SSH</a>.</li>
+<li>Velké soubory zůstaly jako textové ukazatele: ověř instalaci a přístup <a href="backups.html#git-lfs-a-submoduly">Git LFS</a>.</li>
+</ul>
+<p><a href="backups.html">Zálohu a migraci</a> řeš odděleně od běžné synchronizace.</p>
+<p>Zdroje: <a href="https://git-scm.com/docs/git-remote">git remote</a>, <a href="https://git-scm.com/book/en/v2/Git-on-the-Server-The-Protocols">Git na serveru</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

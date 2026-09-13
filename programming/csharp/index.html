@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>.NET – Př&#237;stup, nasazen&#237; a nativn&#237; knihovny | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=".NET – Př&#237;stup, nasazen&#237; a nativn&#237; knihovny | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Př&#237;stupnost členů, c&#237;lov&#233; platformy a použit&#237; nativn&#237;ch knihoven.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/csharp/index.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="net--přístup-nasazení-a-nativní-knihovny">.NET – Přístup, nasazení a nativní knihovny</h1>
+
+<p>Přístupnost členů, cílová platforma a životnost prostředků určují, jak lze knihovnu bezpečně použít v aplikaci.</p>
+<h2 id="modifikátory-přístupu">Modifikátory přístupu</h2>
+<table>
+<thead>
+<tr>
+<th>Modifikátor</th>
+<th>Dostupnost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>public</code></td>
+<td>Odkudkoli, kde je dostupný obsahující typ</td>
+</tr>
+<tr>
+<td><code>private</code></td>
+<td>Uvnitř obsahujícího typu</td>
+</tr>
+<tr>
+<td><code>protected</code></td>
+<td>V obsahujícím typu a odvozených typech</td>
+</tr>
+<tr>
+<td><code>internal</code></td>
+<td>V rámci stejné assembly</td>
+</tr>
+<tr>
+<td><code>protected internal</code></td>
+<td>Ve stejné assembly <strong>nebo</strong> v odvozeném typu</td>
+</tr>
+<tr>
+<td><code>private protected</code></td>
+<td>V obsahujícím typu a potomcích ze stejné assembly</td>
+</tr>
+</tbody>
+</table>
+<p>Umístění dvou nesouvisejících tříd do stejného souboru jim nezpřístupní soukromé členy.</p>
+<p><code>file</code> omezuje viditelnost typu na soubor a používá se jen u typů nejvyšší úrovně, nikoli u metod nebo vlastností. <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/access-modifiers">Microsoft: modifikátory přístupu</a>.</p>
+<h2 id="složka-runtimes-a-multiplatformní-nasazení">Složka runtimes a multiplatformní nasazení</h2>
+<p>NuGet balíček může ve složce <code>runtimes/&lt;RID&gt;</code> poskytovat prostředky pro konkrétní OS a architekturu.</p>
+<p>RID jako <code>win-x64</code>, <code>linux-x64</code> nebo <code>osx-arm64</code> identifikuje cílovou platformu. <a href="https://learn.microsoft.com/en-us/nuget/create-packages/native-files-in-net-packages">Microsoft: nativní prostředky NuGet</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Nasazení</th>
+<th>Co potřebuje cílový počítač</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Framework-dependent</td>
+<td>Kompatibilní nainstalovaný .NET runtime a systémové závislosti</td>
+</tr>
+<tr>
+<td>Self-contained</td>
+<td>Systémové závislosti; .NET runtime je součástí výstupu</td>
+</tr>
+</tbody>
+</table>
+<p>V adresáři projektu publikujte každý cíl zvlášť:</p>
+<pre><code class="lang-powershell">dotnet publish -c Release -r win-x64 --self-contained true -o publish/win-x64
+dotnet publish -c Release -r linux-x64 --self-contained true -o publish/linux-x64
+</code></pre>
+<p>Self-contained neodstraňuje závislost na OS, architektuře ani kompatibilních nativních knihovnách.</p>
+<p>Seznam <code>RuntimeIdentifiers</code> v projektu sám nevytvoří všechny výstupy jedním publikováním. <a href="https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-publish">Microsoft: dotnet publish</a>.</p>
+<h2 id="uvolnění-zdrojů">Uvolnění zdrojů</h2>
+<p>Garbage collector spravuje paměť řízených objektů, ale nezavolá automaticky <code>Dispose</code> v okamžiku, kdy skončí práce se souborem nebo připojením.</p>
+<p>Pro objekty implementující <code>IDisposable</code> použij <code>using</code>; pro <code>IAsyncDisposable</code> podle API <code>await using</code>.</p>
+<pre><code class="lang-csharp">using var reader = new StreamReader(&quot;input.txt&quot;);
+Console.WriteLine(reader.ReadLine());
+</code></pre>
+<p>Čtečka se uvolní při opuštění rozsahu i při výjimce.</p>
+<p>Finalizér <code>~ClassName()</code> nemá deterministické načasování; vlastní finalizér není běžnou náhradou za <code>Dispose</code>. <a href="https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/unmanaged">Microsoft: uvolňování neřízených prostředků</a>.</p>
+<h2 id="volání-funkcí-z-externích-dll-pinvoke">Volání funkcí z externích DLL (PInvoke)</h2>
+<p>Následující úplný <code>Program.cs</code> pro .NET 10 zavolá Unicode variantu Windows MessageBox:</p>
+<pre><code class="lang-csharp">using System.Runtime.InteropServices;
+
+if (!OperatingSystem.IsWindows())
+    throw new PlatformNotSupportedException(&quot;Ukázka vyžaduje Windows.&quot;);
+
+NativeMethods.MessageBoxW(IntPtr.Zero, &quot;Příliš žluťoučký kůň&quot;, &quot;Ukázka&quot;, 0);
+
+internal static class NativeMethods
+{
+    [DllImport(&quot;user32.dll&quot;, CharSet = CharSet.Unicode, ExactSpelling = true)]
+    internal static extern int MessageBoxW(
+        IntPtr window, string text, string caption, uint type);
+}
+</code></pre>
+<p>Deklarace musí odpovídat nativnímu podpisu, volací konvenci a kódování řetězců.</p>
+<p>Název DLL a její architektura musí odpovídat cílovému prostředí. <a href="https://learn.microsoft.com/en-us/dotnet/standard/native-interop/pinvoke">Microsoft: P/Invoke</a>, <a href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-messageboxw">MessageBoxW</a>.</p>
+<p>Unity má vlastní pravidla pro nativní pluginy; <code>__Internal</code> se například používá u staticky připojeného iOS pluginu a není univerzální název knihovny pro běžné .NET aplikace. <a href="https://docs.unity3d.com/Manual/PluginsForIOS.html">Unity: iOS pluginy</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
