@@ -23,10 +23,13 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
 
-      - name: Instalace připnutého .NET SDK
+      - name: Instalace podporovaného .NET SDK
         uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        env:
+          DOTNET_INSTALL_DIR: ${{ runner.temp }}/dotnet
         with:
-          global-json-file: global.json
+          dotnet-version: '10.0.x'
+          dotnet-quality: ga
 
       - name: Instalace připnutého Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
@@ -39,7 +42,9 @@ jobs:
         run: npm ci --ignore-scripts --no-audit --no-fund
 
       - name: Obnovení připnutého DocFX
-        run: dotnet tool restore
+        run: |
+          dotnet --version
+          dotnet tool restore
 
       - name: Ověření a sestavení dokumentace
         run: npm run verify

@@ -44,7 +44,7 @@ Workflow smí přidat platformní přípravu, cache, artifact upload a podmínky
 | Fáze CI | Projektový příkaz | Platformní obal | Výstupní důkaz |
 |---|---|---|---|
 | Obnova changelog nástroje | `npm ci --ignore-scripts --no-audit --no-fund` | `setup-node` podle `package.json` a npm cache podle lockfilu | Přesná integrita `git-cliff` z `package-lock.json` |
-| Obnova DocFX | `dotnet tool restore` | `setup-dotnet` podle `global.json` | Konzolový záznam o obnovené verzi |
+| Obnova DocFX | `dotnet --version` a `dotnet tool restore` | `setup-dotnet` podle kanálu ve workflow se stabilní kvalitou `ga` | Konzolový záznam o zvoleném SDK a obnoveném DocFX |
 | Kontrola, testy, changelog a build | `npm run verify` | Úplný checkout pomocí `fetch-depth: 0` | TAP výstup, vygenerovaný `changelog.md`, DocFX log, `_site/manifest.json` a ověřený `_site/` |
 | Publikování | Lokální build kontrakt končí hotovým `_site/` | Připnutá `peaceiris/actions-gh-pages` předá obsah do `gh-pages` s `force_orphan: true` | Jediný kořenový deployment commit a log GitHub Actions |
 
@@ -117,7 +117,13 @@ Hodnotu tajemství nikdy nezapisuj do tohoto dokumentu.
 
 ## Reprodukovatelnost a dostupnost
 
-CI používá stejné lockfily, verze nástrojů a podporované registry jako lokální prostředí.
+CI používá stejné lockfily, deklarace nástrojů a podporované registry jako lokální prostředí.
+
+Připnutá `setup-dotnet` instaluje kanál deklarovaný přímo v obou workflow podle [`ADR-0004`](../architecture/decisions/ADR-0004-vyber-dotnet-sdk.md); `dotnet-quality: ga` omezuje instalaci na stabilní vydání a `dotnet --version` zaznamenává skutečně vybrané SDK.
+
+`DOTNET_INSTALL_DIR` směřuje do `runner.temp`, aby bez projektového `global.json` výběr SDK neovlivnily novější předinstalované verze runneru; akce přidá tuto instalaci do PATH a nastaví DOTNET_ROOT.
+
+Lokální instalace a pozdější CI běh mohou použít různé verze SDK, takže opakování starého buildu se stejným SDK vyžaduje verzi z jeho logu a její explicitní výběr v izolovaném prostředí.
 
 Oba workflow checkouty načítají úplnou Git historii, protože mělký klon nemůže vytvořit úplný changelog.
 

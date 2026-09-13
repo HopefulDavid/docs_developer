@@ -374,3 +374,19 @@ Rozměrová regrese homepage, Programování, Dockeru, Unity 2D a obou rozcestn�
 Samostatné interakce ověřily odkaz z Windows, mobilní obsah oblasti, vyhledání Flameshotu a prázdný výsledek, ovládání motivu klávesnicí, zachování tmavého motivu po načtení a shodu automatického motivu se systémem.
 
 Regresní kontrola Unity 2D potvrdila rozbalení obrázkového postupu klávesnicí a přesné zkopírování ukázky kódu; kontrolovaný prohlížeč nezaznamenal JavaScript chybu.
+
+## Ověření výběru SDK 2026-09-13
+
+Izolovaný experiment ve Windows s minimem 10.0.301 a jediným systémovým SDK 10.0.401 potvrdil odmítnutí při `disable` a `latestPatch` a úspěšný výběr 10.0.401 při `latestFeature` i bez `global.json`.
+
+Experiment proběhl v samostatných složkách TEMP bez úpravy projektové konfigurace a jeho soubory byly odstraněné.
+
+Podporu přímé deklarace kanálu, stabilní kvality a odděleného instalačního adresáře v CI potvrdilo čtení dokumentace a zdroje přesné připnuté revize `setup-dotnet`, které jsou odkazované v [`ADR-0004`](../architecture/decisions/ADR-0004-vyber-dotnet-sdk.md).
+
+Po odstranění projektového `global.json` vybral `dotnet --version` SDK 10.0.401 a `dotnet tool restore` úspěšně obnovil DocFX.
+
+`npm run verify` prošlo 20 testy, strict buildem s 0 chybami a 0 varováními a kontrolou 254 zdrojů a 495 výstupních souborů včetně lokálních odkazů a kotev.
+
+Článek Flameshot po odstranění věty prošel rozměrovou kontrolou při 320, 390, 768 a 1440 px v obou motivech bez přetékání stránky; desktopový a mobilní snímek potvrdily čitelnost a prohlížeč nezaznamenal JavaScript chybu.
+
+Kontroly vyžadovaly běh mimo sandbox kvůli přístupu git-cliff a NuGet konfigurace; vzdálený běh upravených workflow ani budoucí verze SDK se při této lokální změně neověřovaly.

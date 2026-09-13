@@ -19,7 +19,7 @@ Zde se uvádí jejich podporovaný způsob vyvolání, pracovní adresář, pož
 |---|---|---|---|---|
 | Node.js | Přesná verze v [`package.json`](../../package.json) | [`package.json`](../../package.json) | Lokální instalace; GitHub Actions ji obnovuje přes `setup-node` | `node --version` |
 | npm | Verze dodaná podporovanou instalací Node.js | Distribuce Node.js a [`../../package-lock.json`](../../package-lock.json) | Lokální instalace a GitHub runner; obnovuje uzamčený changelog nástroj | `npm --version` |
-| .NET SDK | Přesná verze a roll-forward pravidlo v [`global.json`](../../global.json) | [`global.json`](../../global.json) | Lokální instalace; GitHub Actions ji obnovuje přes `setup-dotnet` | `dotnet --version` |
+| .NET SDK | Stabilní SDK kompatibilní s připnutým DocFX; lokálně platí [pravidla výběru](dependencies.md#výběr-net-sdk) | Instalační kanál CI v [quality workflow](../../.github/workflows/quality.yml) a [publish workflow](../../.github/workflows/main.yml) | Lokální instalace; GitHub Actions ji obnovuje přes `setup-dotnet` | `dotnet --version` |
 | DocFX | Přesná verze v [`.config/dotnet-tools.json`](../../.config/dotnet-tools.json) | [`.config/dotnet-tools.json`](../../.config/dotnet-tools.json) | Lokální .NET tool obnovený do řízené cache | `dotnet tool run docfx -- --version` |
 | Git | Libovolná udržovaná verze podporující projektový workflow | Git instalace a [`workflow.md`](workflow.md) | Lokální | `git --version` |
 
@@ -35,6 +35,10 @@ V takovém případě uveď pouze odkaz na tento zdroj a příkaz pro ověření
 | Obnovení připnutého DocFX | Kořen repozitáře | `dotnet tool restore` | Příkaz obnoví přesnou verzi z tool manifestu a skončí kódem 0 | První obnova vyžaduje NuGet nebo odpovídající cache |
 
 `npm ci` znovu vytvoří ignorovaný `node_modules/` a nesmí změnit `package-lock.json`.
+
+Při hlášení o chybějícím SDK spusť z kořene repozitáře `dotnet --list-sdks` pro seznam instalací a `dotnet --version` pro ověření skutečného výběru.
+
+Obnovení přes `dotnet tool restore` instaluje DocFX, nikoli chybějící SDK; pravidla aktualizace nástrojů vlastní [politika závislostí](dependencies.md).
 
 ## Sestavení
 
