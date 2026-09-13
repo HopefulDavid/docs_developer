@@ -352,3 +352,25 @@ Kopírování .NET restore i víceřádkového Python bloku přesně zachovalo t
 Affinity nadále používá snímky šířky 760 a 482 px se shodným pravidlem centrování, takže odlišné odsazení odpovídá pouze jejich šířce.
 
 Úklid VCS přesunul vnořené testovací repozitáře i staré instalační experimenty mimo checkout; závěrečná kontrola našla jen skutečnou projektovou `.git`, jeden worktree a místní `main` a `develop`, se zachovanou vzdálenou `gh-pages`.
+
+## Ověření návodu Flameshot 2026-09-13
+
+Návod [Flameshot místo Výstřižků](../../operating-system/windows/flameshot.md) byl obsahově ověřen proti primární dokumentaci a skutečným volbám Windows 11 25H2 a Flameshotu 14.0.0.
+
+Vypnutá systémová volba Print Screen, zaškrtnuté automatické spouštění a otevření výběru Flameshotu po stisku Print Screen byly vizuálně potvrzené.
+
+Automatizace neuměla cílit překryvné okno pro tažení výběru, takže kopírování snímku ani běh po novém přihlášení nebyly místně ověřené; článek obsahuje kroky pro jejich ověření čtenářem.
+
+Na následnou žádost vlastníka je výsledný návod textový a obrázky doplní vlastník samostatně.
+
+`npm run verify` prošlo všemi 20 testy a strict buildem bez varování; po odstranění obrázků znovu prošlo `npm run docs:build` s 0 chybami a 0 varováními a kontrolou 254 zdrojů a 495 výstupních souborů.
+
+Kontroly vyžadovaly existující připnuté uživatelské SDK a běh mimo sandbox, který odepíral přístup SDK a nástroji git-cliff; toto omezení prostředí se neřešilo změnou projektových verzí.
+
+Finální článek prošel kontrolou rozměrů při 320, 390, 768 a 1440 px ve světlém i tmavém motivu bez vodorovného přetékání stránky; celý text byl vizuálně zkontrolován na desktopu a mobilní zobrazení na šířce 320 px.
+
+Rozměrová regrese homepage, Programování, Dockeru, Unity 2D a obou rozcestníků OS a Windows zahrnula dalších 48 kombinací rozměru a motivu bez přetékání stránky, chyb načítání obrázků nebo nepřístupných posuvných bloků.
+
+Samostatné interakce ověřily odkaz z Windows, mobilní obsah oblasti, vyhledání Flameshotu a prázdný výsledek, ovládání motivu klávesnicí, zachování tmavého motivu po načtení a shodu automatického motivu se systémem.
+
+Regresní kontrola Unity 2D potvrdila rozbalení obrázkového postupu klávesnicí a přesné zkopírování ukázky kódu; kontrolovaný prohlížeč nezaznamenal JavaScript chybu.

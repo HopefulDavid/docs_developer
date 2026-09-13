@@ -364,6 +364,7 @@ const navigation = {
       name: 'Windows',
       href: 'windows/index.md',
       items: [
+        { name: 'Flameshot místo Výstřižků', href: 'windows/flameshot.md' },
         { name: 'Instalátor nevidí SSD', href: 'windows/installation-missing-ssd.md' },
         { name: 'Nelze odstranit položku', href: 'windows/cannot-delete-item.md' },
         { name: 'Příkazový řádek (CMD)', href: 'windows/cmd.md' },

@@ -17,6 +17,7 @@ Praktické poznámky k operačním systémům a jejich příkazovým nástrojům
 | Stránka | Popis |
 | --- | --- |
 | [Windows](windows/index.md) | Místní účet, nastavení hodin a rychlé vstupy k běžným problémům Windows. |
+| [Flameshot místo Výstřižků](windows/flameshot.md) | Spouštění Flameshotu klávesou Print Screen, automatický start a ověření snímku ve Windows. |
 | [Instalátor nevidí SSD](windows/installation-missing-ssd.md) | Kontrola detekce SSD, načtení správného ovladače a ověření cílového disku. |
 | [Nelze odstranit položku](windows/cannot-delete-item.md) | Rozlišení zamčeného souboru, oprávnění a chybné cesty před přesným odstraněním. |
 | [Příkazový řádek (CMD)](windows/cmd.md) | Základní orientace v CMD, soubory, proměnné a dávkové skripty. |
