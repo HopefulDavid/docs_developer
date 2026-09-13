@@ -7,7 +7,7 @@ owners:
   - engineering
   - delivery
 supersedes: null
-superseded_by: null
+superseded_by: ADR-0004-vyber-dotnet-sdk.md
 ---
 
 # ADR-0002: Bezpečný a reprodukovatelný veřejný DocFX build
@@ -129,5 +129,7 @@ Datová migrace ani rollback schématu nejsou potřebné, protože web je plně 
 ## Stav a nahrazení
 
 Rozhodnutí je přijaté.
+
+Přesné připnutí .NET SDK nahrazuje [`ADR-0004`](ADR-0004-vyber-dotnet-sdk.md); ostatní části tohoto rozhodnutí zůstávají platné.
 
 Případnou změnu veřejné hranice, build toolchainu nebo distribučního modelu zaznamená nový ADR, který tento záznam výslovně nahradí podle [`README.md`](README.md).

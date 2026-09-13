@@ -81,13 +81,13 @@ Vývojové platformy, jazyky, frameworky, balíčky a opakovaně použitelné po
 
 | Stránka | Popis |
 | --- | --- |
-| [Záloha a offline obnova](packages/offline.md) | Výběr zálohy podle správce balíčků, obnova s internetem i bez něj a kontrola úplnosti. |
-| [NuGet](packages/nuget.md) | Záloha knihoven .NET do složky a obnova projektu z místního zdroje nebo původní cache. |
-| [.NET tools – offline obnova](packages/dotnet-tools.md) | Záloha lokálních i globálních nástrojů .NET a jejich opětovná instalace z místních balíčků. |
-| [npm](packages/npm.md) | Obnova Node.js projektu z lockfilu, přenos celé npm cache a záloha globálních nástrojů. |
-| [pnpm](packages/pnpm.md) | Záloha pnpm store i metadat a obnova projektu s uzamčenými verzemi bez registru. |
-| [Python](packages/python.md) | Záloha Python prostředí jako seznam verzí a složka wheelů, včetně vlastních balíčků. |
-| [Dart a Flutter pub](packages/dart.md) | Záloha pub cache a uzamčených závislostí Dart či Flutter, včetně offline používání CLI nástrojů. |
+| [Záloha a offline obnova](packages/offline.md) | Co zkopírovat pro offline zálohu balíčků a jak ověřit obnovu bez původní instalace. |
+| [NuGet](packages/nuget.md) | Záloha knihoven .NET do jedné složky a obnova projektu bez internetu. |
+| [.NET tools](packages/dotnet-tools.md) | Jednoduchá záloha a obnova .NET nástrojů podle toho, zda jsou globální, nebo patří k projektu. |
+| [npm](packages/npm.md) | Příprava jedné npm cache, její přenos a obnova projektu či globálních nástrojů bez internetu. |
+| [pnpm](packages/pnpm.md) | Záloha pnpm projektu se store a metadaty, poté obnova jedním instalačním příkazem bez internetu. |
+| [Python](packages/python.md) | Uložení verzí Python balíčků, příprava složky wheelhouse a obnova nového prostředí bez internetu. |
+| [Dart a Flutter pub](packages/dart.md) | Přenos Dart nebo Flutter projektu s celou pub cache a obnova uzamčených balíčků bez internetu. |
 
 ### Vývojové nástroje
 

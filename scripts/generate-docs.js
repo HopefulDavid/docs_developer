@@ -274,7 +274,7 @@ const navigation = {
       items: [
         { name: 'Záloha a offline obnova', href: 'packages/offline.md' },
         { name: 'NuGet', href: 'packages/nuget.md' },
-        { name: '.NET tools – offline obnova', href: 'packages/dotnet-tools.md' },
+        { name: '.NET tools', href: 'packages/dotnet-tools.md' },
         { name: 'npm', href: 'packages/npm.md' },
         { name: 'pnpm', href: 'packages/pnpm.md' },
         { name: 'Python', href: 'packages/python.md' },
@@ -364,6 +364,7 @@ const navigation = {
       name: 'Windows',
       href: 'windows/index.md',
       items: [
+        { name: 'Flameshot místo Výstřižků', href: 'windows/flameshot.md' },
         { name: 'Instalátor nevidí SSD', href: 'windows/installation-missing-ssd.md' },
         { name: 'Nelze odstranit položku', href: 'windows/cannot-delete-item.md' },
         { name: 'Příkazový řádek (CMD)', href: 'windows/cmd.md' },

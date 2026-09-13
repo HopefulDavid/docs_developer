@@ -26,7 +26,7 @@ Přechodové stavy jsou soustředěné v části [Známá rizika, dluh a přecho
 | Priorita | Kvalitativní cíl | Navázaný požadavek | Jak architektura podporuje ověření |
 |---|---|---|---|
 | 1 | Interní projektová metadata nikdy nevstoupí do veřejného artefaktu | `QLT-003` | Sdílená klasifikace cest, DocFX exclusions, testy a kontrola manifestu i výstupu |
-| 2 | Stejný zdroj vytvoří lokálně i v CI stejný ověřitelný web | `QLT-001`, `QLT-002` | Generátor je deterministický a runtime i DocFX mají strojově připnuté verze |
+| 2 | Stejný zdroj vytvoří lokálně i v CI stejný ověřitelný web | `QLT-001`, `QLT-002` | Generátor je deterministický, nástroje mají strojově deklarované verze a výběr SDK řídí `ADR-0004` |
 | 3 | Veřejné cesty se chovají shodně na Windows a Linuxu | `QLT-004` | Registr používá přesný lowercase casing a test kontroluje skutečné názvy v souborovém systému |
 
 ## 2. Omezení
@@ -67,7 +67,7 @@ Diagram ukazuje autorství, sestavení a veřejné čtení bez serverové aplika
 ## 4. Strategie řešení
 
 - Veřejný obsah je explicitní allowlist tematických oblastí a zdrojových příloh, nikoli každý Markdown nalezený v repozitáři.
-- [`ADR-0002`](decisions/ADR-0002-verejny-docfx-build.md) sjednocuje veřejnou hranici, připnutý toolchain a kontrolu sestaveného artefaktu do jednoho build kontraktu.
+- [`ADR-0002`](decisions/ADR-0002-verejny-docfx-build.md) sjednocuje veřejnou hranici, deklarovaný toolchain a kontrolu sestaveného artefaktu do jednoho build kontraktu; jeho přesné připnutí SDK nahrazuje [`ADR-0004`](decisions/ADR-0004-vyber-dotnet-sdk.md).
 - [`scripts/generate-docs.js`](../../scripts/generate-docs.js) vlastní názvy, pořadí a cesty veřejné navigace; generované indexy a TOC nejsou ručně upravované zdroje pravdy.
 - [`cliff.toml`](../../cliff.toml) deklarativně převádí úplnou Git historii na ignorovaný veřejný changelog podle [`ADR-0003`](decisions/ADR-0003-generovani-changelogu-pomoci-git-cliff.md).
 - `package.json` poskytuje stejné lidské vstupní příkazy lokálnímu vývoji i GitHub Actions.
@@ -84,7 +84,7 @@ Diagram ukazuje autorství, sestavení a veřejné čtení bez serverové aplika
 | DocFX build | Převádí povolené zdroje a aktivní šablonu na statický web | npm profil `docs:build` a adresář `_site/` | Generovaný i zdrojový veřejný obsah, resources a `templates/material` | Engineering |
 | Vlastní šablona | Přizpůsobuje vzhled, české popisky, volbu tématu, přeskočení navigace a klávesnicově dostupné posuvné tabulky; příspěvkový blok DocFX zůstává vypnutý | `templates/material/` a `docfx.json` | Podporované veřejné assety, tokeny a globální metadata DocFX | Design a engineering |
 | Kontrola artefaktu | Ověřuje manifest, veřejné stránky, nepřítomnost interních cest a lokální odkazy v HTML včetně kotev a casingu | npm profil `docs:artifact-check` | Čistý DocFX výstup | Quality |
-| GitHub workflow | Obnovuje připnuté nástroje, volá `npm run verify` a publikuje výstup | Workflow pro `develop`, pull request a `main` | GitHub Actions, build kontrakt a `GITHUB_TOKEN` pouze při publikování | Delivery |
+| GitHub workflow | Obnovuje deklarované nástroje, volá `npm run verify` a publikuje výstup | Workflow pro `develop`, pull request a `main` | GitHub Actions, build kontrakt a `GITHUB_TOKEN` pouze při publikování | Delivery |
 
 ```mermaid
 flowchart LR
@@ -169,7 +169,7 @@ Tyto doplňky používají stávající JavaScript a standardní Node API bez no
 | Cesty a casing | Registr i fyzický soubor používají shodný lowercase název, pokud je tak cesta kanonizovaná | Generátor a filesystem test | Historické URL jsou přechod `ARCH-RISK-001` |
 | Generovaný obsah | Upravuje se zdrojový registr nebo článek, nikdy odvozený markerový soubor | `docs:check` a Git review | Žádné |
 | Chyby | Kontrola selže nahlas s konkrétní cestou a nenulovým kódem | Node CLI, testy a DocFX `--warningsAsErrors` | Žádné tiché retry |
-| Konfigurace nástrojů | Přesná verze má jednu strojovou autoritu | `package.json`, `global.json`, `.config/dotnet-tools.json` | Lokální novější instalace není autoritou |
+| Konfigurace nástrojů | Verze nástrojů mají strojovou autoritu; CI vlastní instalační kanál SDK | `package.json`, `.config/dotnet-tools.json` a `.github/workflows/` | Lokální SDK se nepřipíná podle `ADR-0004` |
 | Tajemství | Build je bez tajemství; publikační token se předává pouze deploy akci | Workflow permissions a explicitní `github_token` | Přechodně má celý publish job `contents: write`, viz `ARCH-RISK-002` |
 
 ## 10. Bezpečnost a ochrana dat

@@ -1,7 +1,7 @@
 ---
 canonical_for: development-workflow
 status: accepted
-last_verified: 2026-08-28
+last_verified: 2026-09-12
 owner: maintainers
 ---
 
@@ -51,6 +51,8 @@ Nevytvářej `develop` z jiné větve pouze proto, aby práce mohla okamžitě p
 Existenci vzdálené větve a pravidla jejího publikování ověř podle platformy projektu.
 
 ## Role větví a propagace
+
+V pracovním projektu udržuj pouze místní větve `main` a `develop`; vzdálenou publikační větev `gh-pages` zachovej.
 
 `develop` je integrační větev a jediné místo, na kterém se běžně zpracovávají úkoly.
 

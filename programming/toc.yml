@@ -90,7 +90,7 @@
       href: "packages/offline.md"
     - name: "NuGet"
       href: "packages/nuget.md"
-    - name: ".NET tools – offline obnova"
+    - name: ".NET tools"
       href: "packages/dotnet-tools.md"
     - name: "npm"
       href: "packages/npm.md"

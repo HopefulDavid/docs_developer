@@ -1,146 +1,103 @@
 ---
-description: "Obnova Node.js projektu z lockfilu, přenos celé npm cache a záloha globálních nástrojů."
+description: "Příprava jedné npm cache, její přenos a obnova projektu či globálních nástrojů bez internetu."
 ---
 
 # npm – záloha a obnova balíčků
 
-npm instaluje závislosti Node.js podle `package.json`; jejich konkrétní vyřešené verze uchovává `package-lock.json`.
+Záloha pro npm má dvě části: **zdrojový projekt s lockfilem a naplněnou npm cache**.
 
-S internetem stačí obnovitelné zdroje projektu, zatímco bez registru potřebuješ také naplněnou instalační cache.
+Cache je složka se staženými instalačními daty; `node_modules` na cíli vytvoří npm znovu.
 
-## Obnova s internetem
+Postup je pro npm 11 a funguje v PowerShellu i Bashi; na cíli použij stejnou verzi Node.js, npm, OS a architekturu.
 
-Zálohuj celý zdrojový projekt, lockfile, všechny workspaces a projektové `.npmrc` bez přihlašovacích tokenů.
+## 1. Připrav zálohu s internetem
 
-Na cíli nainstaluj stejnou verzi Node.js a npm a v kořeni projektu spusť:
+Vytvoř `zaloha-npm/projekt` jako kopii projektu bez `node_modules`.
 
-```bash
-npm ci --include=dev --no-audit --no-fund
-npm ls --all
-```
+Zachovej `package.json`, `package-lock.json`, celý workspace, místní závislosti a instalační nastavení `.npmrc`; přihlašovací tokeny uchovávej zvlášť.
 
-`npm ci` obnoví uzamčené verze, odmítne nesoulad manifestu s lockfilem a odstraní stávající `node_modules`. [Npm ci](https://docs.npmjs.com/cli/v11/commands/npm-ci/)
-
-Proto postup zkoušej v pracovní kopii, nikoli ve složce s ručními úpravami instalovaných balíčků.
-
-## Offline záloha a obnova
-
-Příklady jsou pro npm 11 a fungují v PowerShellu i Bashi.
-
-Zachovej instalační nastavení projektu, zejména volby jako `legacy-peer-deps` nebo `install-links`, se kterými vznikl lockfile.
-
-### 1. Naplň samostatnou cache s internetem
-
-V pracovní kopii projektu s hotovým lockfile:
+V této kopii projektu spusť:
 
 ```bash
-node --version
-npm --version
-npm ci --include=dev --cache ../zaloha-npm/npm-cache --no-audit --no-fund
-npm cache verify --cache ../zaloha-npm/npm-cache
+npm ci --include=dev --cache ../npm-cache --no-audit --no-fund
 ```
 
-`--include=dev` zahrne vývojové závislosti i při nastaveném `NODE_ENV=production`, aby na cíli nechyběly nástroje pro build a testy.
+Tím se připraví přesné verze z lockfilu a jejich instalační data v sousední `npm-cache`.
 
-`cache verify` prověří integritu uložených dat, **nikoli úplnost zálohy pro projekt**. [Npm cache](https://docs.npmjs.com/cli/v11/commands/npm-cache/)
+`--include=dev` zahrne také nástroje pro build a testy, i při nastaveném `NODE_ENV=production`. [Npm ci](https://docs.npmjs.com/cli/v11/commands/npm-ci/)
 
-Úplnost ověří až instalace v nové složce níže.
-
-### 2. Přenes zálohu
-
-Po skončení instalací přenes:
+## 2. Přenes celou složku
 
 ```text
 zaloha-npm/
-  projekt/       zdroje, package.json, package-lock.json, konfigurace a workspaces
-  npm-cache/     celá cache z předchozího příkazu
-  verze.txt      Node.js, npm, operační systém a architektura
+  projekt/       zdroje, manifest, lockfile a konfigurace
+  npm-cache/     celá připravená cache
 ```
 
-Projekt přenes bez `node_modules`; přidej také skutečné lokální `file:` závislosti v odpovídajících relativních cestách.
+Přípravné `node_modules` nepřenášej; cache kopíruj až po skončení instalace a nečisti ji.
 
-Cache npm nemá záruky trvalého archivu, proto dokončenou a vyzkoušenou kopii ulož odděleně od běžně používané cache.
+Přilož verze z `node --version` a `npm --version` i instalátor Node.js pro cílový počítač.
 
-Ve Windows zvol krátkou cílovou cestu: cache obsahuje dlouhé názvy a kopírovací nástroj bez podpory dlouhých cest může část souborů vynechat nebo skončit chybou.
+Ve Windows zvol krátkou cestu k záloze, protože cache obsahuje dlouhé názvy souborů.
 
-### 3. Obnov bez internetu
+## 3. Obnov bez internetu
 
-Na kompatibilním cíli v `zaloha-npm/projekt`:
+Na cíli rozbal pracovní kopii zálohy a v jejím `projekt` spusť:
 
 ```bash
 npm ci --offline --include=dev --cache ../npm-cache --no-audit --no-fund
 npm ls --all
 ```
 
-`--offline` zakáže síťové požadavky npm a při chybějícím balíčku instalace selže; `--prefer-offline` chybějící obsah naopak smí stáhnout. [Konfigurace offline režimu](https://docs.npmjs.com/cli/v11/using-npm/config/#offline)
+`--offline` použije pouze přenesenou cache; chybějící balíček skončí chybou `ENOTCACHED`. [Offline režim](https://docs.npmjs.com/cli/v11/using-npm/config/#offline)
 
-Nakonec spusť skutečné skripty projektu, například jeho build a testy.
+Nakonec spusť build, testy a běžnou aplikaci bez připojení; lockfile se nemá změnit.
 
-`--no-audit` vynechá síťový audit; kontrolu zranitelností proveď online při přípravě a po návratu k registru.
+`npm ci` nahrazuje stávající `node_modules`, proto zkoušej obnovu v pracovní kopii.
 
-## Záloha celé již používané cache
+## Chci zálohovat celou používanou cache
 
-Její skutečné umístění zjistíš:
+Její cestu zjistíš příkazem:
 
 ```bash
 npm config get cache
 ```
 
-Po dokončení instalací zkopíruj celý vypsaný adresář jako `npm-cache` a ověř z něj obnovu každého požadovaného projektu.
+Zkopíruj celý vypsaný adresář jako `npm-cache` a použij stejný příkaz obnovy výše.
 
-Výchozí cesta bývá ve Windows `%LOCALAPPDATA%\npm-cache`, na Linuxu a macOS `~/.npm`; rozhoduje však skutečná konfigurace.
+Pro více projektů předem proveď jejich instalaci a uchovej zdroje i lockfile každého z nich.
 
-Nekopíruj jen jednotlivé soubory z `_cacache` a před archivací cache nečisti.
+`npm cache verify` kontroluje integritu cache, ale její úplnost pro projekt prokáže až úspěšná obnova. [Npm cache](https://docs.npmjs.com/cli/v11/commands/npm-cache/)
 
 ## Globální nástroje
 
-Nejdříve si ulož inventář `npm list --global --depth=0`; `npm root --global` ukazuje instalované balíčky, nikoli jejich instalační cache.
+Ulož si seznam `npm list --global --depth=0` a připrav přesné verze nástrojů.
 
-S internetem je na cíli obnovíš přes `npm install --global <balíček>@<verze>`.
-
-Pro offline obnovu konkrétního nástroje naplň cache jeho instalací do **nové pomocné složky**, například pro TypeScript:
+Například TypeScript stáhneš do stejné zálohy z její složky `projekt`:
 
 ```bash
-npm install --global --prefix ../zaloha-npm/priprava-tools typescript@5.9.3 --cache ../zaloha-npm/npm-cache --no-audit --no-fund
+npm install --global --prefix ../priprava-tools typescript@5.9.3 --cache ../npm-cache --no-audit --no-fund
 ```
 
-Tím připravíš balíček i potřebné závislosti bez změny běžné globální instalace. [Npm install](https://docs.npmjs.com/cli/v11/commands/npm-install/)
+Pomocná `priprava-tools` slouží jen k naplnění cache a nepřenáší se.
 
-Na cíli ze složky `zaloha-npm/projekt`:
+Na cíli ze stejné relativní složky:
 
 ```bash
 npm install --global typescript@5.9.3 --offline --cache ../npm-cache --no-audit --no-fund
 tsc --version
 ```
 
-Název a verzi nahraď inventářem a postup zopakuj pro další nástroje.
+Název a verzi nahraď podle uloženého seznamu; při zkoušce na původním počítači použij novou vlastní `--prefix` složku. [Npm install](https://docs.npmjs.com/cli/v11/commands/npm-install/)
 
-Pro zkoušku na původním počítači přidej k cílové instalaci `--prefix ../obnovene-tools` a spusť nový spouštěč z této složky; ve Windows například `../obnovene-tools/tsc.cmd --version`. [Umístění spouštěčů](https://docs.npmjs.com/cli/v11/configuring-npm/folders/)
+Globální instalace neuzamyká všechny nepřímé závislosti lockfilem; pro přesně opakovatelnou dlouhodobou zálohu nástroje jej můžeš spravovat v samostatném projektu s lockfilem.
 
-Globální instalace nemá projektový lockfile pro celý strom závislostí, proto pro dlouhodobě opakovatelný výběr nástroje preferuj samostatný projekt s přesnou závislostí a lockfilem.
+## Co ještě zachovat
 
-## Co samotná cache nepokrývá
+- Lokální a Git závislosti, patche a nastavení, se kterými vznikl lockfile, například `legacy-peer-deps`.
+- Nativní nástroje a data stahovaná instalačními skripty, například prohlížeče nebo binární knihovny.
+- Původní uloženou zálohu odděleně od pracovní cache; cache npm nemá záruku trvalého archivu.
 
-| Potřeba | Jak ji zajistit |
-|---|---|
-| Jiný OS, CPU nebo Node.js ABI | Připrav a vyzkoušej samostatnou zálohu pro cílovou platformu |
-| Binární data stahovaná instalačním skriptem | Zálohuj je podle dokumentace konkrétního balíčku |
-| Git a lokální závislosti | Uchovej i zdrojové repozitáře či soubory a ověř čistou instalaci |
-| Výstup build skriptů | Proveď skutečný build; `--ignore-scripts` může nechat instalaci nefunkční |
+`--prefer-offline` může použít internet a `npm pack` běžně nezabalí celý strom závislostí, proto tyto příkazy nenahrazují uvedenou obnovu.
 
-`npm pack` vytvoří archiv jednoho balíčku, ale běžně do něj nepřibalí všechny jeho závislosti, takže nenahrazuje zálohu projektu. [Npm pack](https://docs.npmjs.com/cli/v11/commands/npm-pack/)
-
-Při `ENOTCACHED` doplň zálohu online pro stejný lockfile a zkoušku opakuj od čisté instalace.
-
-## Běžná správa
-
-| Syntaxe | Účel |
-|---|---|
-| `npm install <balíček>[@<verze>]` | Přidání nebo změna závislosti |
-| `npm install --save-dev <balíček>[@<verze>]` | Vývojová závislost |
-| `npm uninstall <balíček>` | Odebrání závislosti |
-| `npm outdated` | Přehled novějších verzí |
-| `npm update` | Aktualizace v povolených rozsazích |
-| `npm run [<skript>]` | Výpis nebo spuštění projektového skriptu |
-
-Po záměrné aktualizaci uchovej nový manifest i lockfile a připrav novou zálohu.
+S internetem stačí v přeneseném projektu `npm ci --include=dev`; audit zranitelností proveď při online přípravě a po návratu k registru.

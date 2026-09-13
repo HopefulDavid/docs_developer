@@ -208,4 +208,4 @@ V PowerShellu zjistíš hostitele přes `Get-Command dotnet`, v CMD přes `where
 
 Globální nástroje obnov z inventáře `dotnet tool list -g` opětovnou instalací stejných verzí; pouhá kopie složky není spolehlivá obnova pro jiný systém nebo runtime. [Správa .NET tools](https://learn.microsoft.com/en-us/dotnet/core/tools/global-tools)
 
-Konkrétní přenos manifestu, balíčkových archivů a opětovnou instalaci bez registru popisuje [offline obnova .NET tools](dotnet-tools.md).
+Konkrétní postup podle typu instalace popisuje [záloha a obnova .NET tools](dotnet-tools.md).
