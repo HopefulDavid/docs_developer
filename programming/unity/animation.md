@@ -6,7 +6,9 @@ description: "Klíčování pohybu a nastavení automatického záznamu animace.
 
 > Praktické tipy pro efektivní práci s UMotion při ukládání změn animací.
 
-UMotion je doplněk editoru pro práci s animacemi; potřebuješ nainstalovanou kompatibilní verzi, otevřený UMotion projekt a vybraný klip.
+UMotion je doplněk editoru pro práci s animacemi.
+
+Potřebuješ nainstalovanou kompatibilní verzi, otevřený UMotion projekt a vybraný klip.
 
 Změna pózy sama není uložený animační klíč ani exportovaný AnimationClip.
 
@@ -31,7 +33,9 @@ Změna pózy sama není uložený animační klíč ani exportovaný AnimationCl
 
 ## Ověření a důležité poznámky
 
-Po vytvoření klíče přesuň časový kurzor jinam a vrať jej zpět; očekávaná póza musí zůstat zachovaná.
+Po vytvoření klíče přesuň časový kurzor jinam a vrať jej zpět.
+
+Očekávaná póza musí zůstat zachovaná.
 
 Ulož UMotion projekt a při použití v Animatoru ověř i exportovaný klip, protože jde o samostatné artefakty.
 

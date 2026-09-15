@@ -10,7 +10,9 @@ Na rozdíl od větve se při dalších commitech automaticky neposouvá.
 
 ## Před vydáním
 
-Ověř správnou větev, čistý pracovní strom a testy; číslo verze musí odpovídat tomu, co skutečně vydáváš.
+Ověř správnou větev, čistý pracovní strom a testy.
+
+Číslo verze musí odpovídat tomu, co skutečně vydáváš.
 
 | Označení | Co představuje |
 |---|---|
@@ -30,7 +32,9 @@ git show --no-patch v1.0.0
 git push origin v1.0.0
 ```
 
-`-a` vytvoří anotovaný tag se zprávou a údaji autora; samostatný push odešle právě tento tag.
+`-a` vytvoří anotovaný tag se zprávou a údaji autora.
+
+Samostatný push odešle právě tento tag.
 
 Číslo i zprávu změň podle své verze a používej nové dosud volné jméno.
 
@@ -47,7 +51,9 @@ git status
 
 Pracovní soubory se přepnou na vydaný commit bez vybrané větve.
 
-Pro návrat použij `git switch main`; pro opravu této vydané verze založ vlastní větev přes `git switch -c hotfix/verze-1` a změnu následně začleň i do dalšího vývoje.
+Pro návrat použij `git switch main`.
+
+Pro opravu této vydané verze založ vlastní větev přes `git switch -c hotfix/verze-1` a změnu následně začleň i do dalšího vývoje.
 
 ## Chybný tag
 
@@ -55,6 +61,8 @@ Místní dosud neodeslaný tag lze odstranit příkazem `git tag -d <tag>` a vyt
 
 Již publikované vydání obvykle oprav novou verzí místo přesouvání stejného tagu, aby stejné označení neznamenalo pro různé lidi jiný obsah.
 
-Obecná syntaxe `git tag -a <tag> [<commit>] -m "<zpráva>"` dovoluje označit i starší vybraný commit; vynechání commitu znamená HEAD.
+Obecná syntaxe `git tag -a <tag> [<commit>] -m "<zpráva>"` dovoluje označit i starší vybraný commit.
+
+Vynechání commitu znamená HEAD.
 
 Zdroje: [git tag](https://git-scm.com/docs/git-tag), [Git Book: tagování](https://git-scm.com/book/en/v2/Git-Basics-Tagging).

@@ -4,7 +4,9 @@ description: "Místní účet, nastavení hodin a rychlé vstupy k běžným pro
 
 # Windows – nastavení a řešení problémů
 
-Vyber konkrétní úlohu; pro práci v terminálu vždy rozliš CMD a PowerShell.
+Vyber konkrétní úlohu.
+
+Pro práci v terminálu vždy rozliš CMD a PowerShell.
 
 ## Kam pokračovat
 
@@ -26,7 +28,9 @@ Ve funkčních osobních Windows:
 3. Dokonči ověření a nastav místní jméno a heslo.
 4. Odhlas se, přihlas místním účtem a ověř své soubory i aplikace.
 
-Přepnutí mění způsob přihlášení ke stávajícímu profilu; OneDrive a další aplikace mohou mít samostatné účty.
+Přepnutí mění způsob přihlášení ke stávajícímu profilu.
+
+OneDrive a další aplikace mohou mít samostatné účty.
 
 Volby během první instalace závisejí na edici, sestavení a správě zařízení, proto používej přímo nabízenou podporovanou možnost a nestav postup na neudržovaných obchvatech OOBE.
 
@@ -36,13 +40,17 @@ Oficiální kroky a návrat popisuje [Microsoft: změna typu účtu](https://sup
 
 V nastavení **Datum a čas** vyhledej zobrazení času v oznamovací oblasti a zapni **Zobrazovat sekundy**.
 
-Ve starších sestaveních může být volba v **Přizpůsobení → Hlavní panel → Chování hlavního panelu**; následující snímek ukazuje nastavení v části Datum a čas.
+Ve starších sestaveních může být volba v **Přizpůsobení → Hlavní panel → Chování hlavního panelu**.
+
+Následující snímek ukazuje nastavení v části Datum a čas.
 
 <img src="../../images/t9hZzZp1FO.png" alt="Volba sekund v nastavení data a času" width="720">
 
 [Zobrazit obrázek v původní velikosti](../../images/t9hZzZp1FO.png)
 
-Zobrazení sekund může mírně zvýšit spotřebu; umístění volby popisuje [Microsoft: hlavní panel](https://support.microsoft.com/en-US/Windows/Experience/Personalization/customize-the-taskbar-in-windows).
+Zobrazení sekund může mírně zvýšit spotřebu.
+
+Umístění volby popisuje [Microsoft: hlavní panel](https://support.microsoft.com/en-US/Windows/Experience/Personalization/customize-the-taskbar-in-windows).
 
 ## Užitečné zkratky Průzkumníku
 
@@ -56,4 +64,6 @@ Zobrazení sekund může mírně zvýšit spotřebu; umístění volby popisuje 
 
 [Zobrazit obrázek v původní velikosti](../../images/windows_keyboard_explorerAddressBar.png)
 
-Do vybraného řádku lze napsat `cmd` a otevřít CMD v této složce; neznamená to spuštění jako správce.
+Do vybraného řádku lze napsat `cmd` a otevřít CMD v této složce.
+
+Neznamená to spuštění jako správce.

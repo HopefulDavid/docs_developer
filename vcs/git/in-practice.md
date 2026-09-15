@@ -6,7 +6,9 @@ description: "Kontrola změn, příprava části souboru, commit a dokončení b
 
 Jedna logická změna má projít kontrolou, testem a commitem, aby ses později dokázal vrátit k jejímu smyslu i obsahu.
 
-Následující postup funguje v PowerShellu i Bashi; předpokládá existující repozitář a [zvolený způsob práce](workflows.md).
+Následující postup funguje v PowerShellu i Bashi.
+
+Předpokládá existující repozitář a [zvolený způsob práce](workflows.md).
 
 ## 1. Zjisti, kde začínáš
 
@@ -15,7 +17,9 @@ git status --short --branch
 git branch --show-current
 ```
 
-Pokud už máš rozpracované soubory, nejdříve je dokonči nebo [odlož](stash-worktree.md); nesynchronizuj a nepřepínej bez pochopení jejich stavu.
+Pokud už máš rozpracované soubory, nejdříve je dokonči nebo [odlož](stash-worktree.md).
+
+Nesynchronizuj a nepřepínej bez pochopení jejich stavu.
 
 Používáš-li server, aktualizuj výchozí větev podle [synchronizace](synchronization.md).
 
@@ -25,7 +29,9 @@ Pro samostatnou funkci vytvoř větev z právě zkontrolovaného základu:
 git switch -c feature/hledani
 ```
 
-`feature/hledani` je volitelný název tvého úkolu; při práci na jediné větvi tento krok vynech.
+`feature/hledani` je volitelný název tvého úkolu.
+
+Při práci na jediné větvi tento krok vynech.
 
 ## 2. Uprav soubory a zkontroluj rozdíl
 
@@ -36,7 +42,9 @@ git status --short
 git diff
 ```
 
-`status` ukáže i nové soubory, které `diff` zatím nezobrazuje; jejich obsah prohlédni v editoru.
+`status` ukáže i nové soubory, které `diff` zatím nezobrazuje.
+
+Jejich obsah prohlédni v editoru.
 
 Výpis `diff` může otevřít prohlížeč textu, ze kterého se běžně vrací klávesou `q`.
 
@@ -60,13 +68,17 @@ git add -- README.md
 git diff --cached
 ```
 
-Do commitu půjde přesně zobrazený rozdíl; pokud po `add` soubor ještě upravíš, spusť `add` znovu jen tehdy, chceš-li zahrnout i novou úpravu.
+Do commitu půjde přesně zobrazený rozdíl.
+
+Pokud po `add` soubor ještě upravíš, spusť `add` znovu jen tehdy, chceš-li zahrnout i novou úpravu.
 
 Při `add -p` volba `y` přijme kus změny, `n` jej přeskočí, `s` jej podle možností rozdělí a `?` zobrazí nápovědu.
 
 ## 4. Otestuj a ulož
 
-Spusť build nebo testy, které projekt skutečně používá; univerzální příkaz pro všechny projekty neexistuje.
+Spusť build nebo testy, které projekt skutečně používá.
+
+Univerzální příkaz pro všechny projekty neexistuje.
 
 Pokud testuješ s dalšími nepřipravenými změnami, mysli na to, že testuješ pracovní strom, zatímco commit bude obsahovat jen index.
 
@@ -79,7 +91,9 @@ git status
 
 `--check` upozorní například na některé chyby v bílých znacích, commit uloží připravený stav a `show` zobrazí právě uloženou změnu.
 
-Zpráva má říct účel změny; prefix `docs:` je konvence pro dokumentaci, kterou můžeš přizpůsobit pravidlům projektu.
+Zpráva má říct účel změny.
+
+Prefix `docs:` je konvence pro dokumentaci, kterou můžeš přizpůsobit pravidlům projektu.
 
 Hlášení `nothing to commit` znamená, že index neobsahuje rozdíl oproti poslednímu commitu.
 
@@ -102,7 +116,9 @@ git mv <stará-cesta> <nová-cesta>
 git rm -- <soubor>
 ```
 
-Po nich opět použij `git diff --cached`; `git rm` fyzicky odstraní soubor, zatímco varianta `git rm --cached` pouze ukončí sledování.
+Po nich opět použij `git diff --cached`.
+
+`git rm` fyzicky odstraní soubor, zatímco varianta `git rm --cached` pouze ukončí sledování.
 
 Pokud se něco nepovedlo, vyber odpovídající postup v [obnově](recovery.md).
 

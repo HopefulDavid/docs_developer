@@ -8,7 +8,9 @@ Pro obnovu bez internetu potřebuješ **zdrojový projekt a složku s jeho balí
 
 Níže je postup pro projekty s `PackageReference`, například běžnou aplikaci v .NET 8 nebo 10.
 
-Na obou počítačích použij odpovídající .NET SDK a stejnou cílovou platformu; příkazy fungují v PowerShellu i Bashi.
+Na obou počítačích použij odpovídající .NET SDK a stejnou cílovou platformu.
+
+Příkazy fungují v PowerShellu i Bashi.
 
 ## 1. Připrav zálohu s internetem
 
@@ -37,7 +39,9 @@ zaloha-nuget/
   balicky/       všechny stažené balíčky
 ```
 
-Balíčky kopíruj celé, včetně souborů `.nupkg` a skrytých metadat; není potřeba je rozbalovat ani přesouvat do jiné struktury. [Místní zdroj NuGet](https://learn.microsoft.com/en-us/nuget/hosting-packages/local-feeds)
+Balíčky kopíruj celé, včetně souborů `.nupkg` a skrytých metadat.
+
+Není potřeba je rozbalovat ani přesouvat do jiné struktury. [Místní zdroj NuGet](https://learn.microsoft.com/en-us/nuget/hosting-packages/local-feeds)
 
 Přidej si výstup `dotnet --info` a instalátor potřebného SDK pro cílový počítač.
 
@@ -50,13 +54,19 @@ dotnet restore --locked-mode --source ../balicky -p:NuGetAudit=false
 dotnet build --no-restore
 ```
 
-`--source ../balicky` použije přenesenou složku místo online zdrojů; pro tento běžný postup nepotřebuješ další konfigurační soubor. [Dotnet restore](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-restore)
+`--source ../balicky` použije přenesenou složku místo online zdrojů.
 
-`NuGetAudit=false` vynechá online kontrolu zranitelností během této obnovy; audit proveď při přípravě s internetem.
+Pro tento běžný postup nepotřebuješ další konfigurační soubor. [Dotnet restore](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-restore)
+
+`NuGetAudit=false` vynechá online kontrolu zranitelností během této obnovy.
+
+Audit proveď při přípravě s internetem.
 
 Nakonec spusť testy projektu přes `dotnet test --no-restore` a běžnou aplikaci bez sítě.
 
-Úplnost zálohy ověř na účtu nebo počítači bez původních balíčků; při zkoušce na původním stroji přidej k restore `--packages ../zkusebni-balicky --no-http-cache` s novou prázdnou složkou.
+Úplnost zálohy ověř na účtu nebo počítači bez původních balíčků.
+
+Při zkoušce na původním stroji přidej k restore `--packages ../zkusebni-balicky --no-http-cache` s novou prázdnou složkou.
 
 ## Chci zálohovat všechny již stažené balíčky
 
@@ -68,7 +78,9 @@ dotnet nuget locals global-packages --list
 
 Zkopíruj celý vypsaný adresář jako `balicky` a obnovuj stejným postupem výše.
 
-Před kopírováním dokonči restore všech projektů, které chceš později obnovovat; společná cache obsahuje pouze to, co se do ní skutečně stáhlo.
+Před kopírováním dokonči restore všech projektů, které chceš později obnovovat.
+
+Společná cache obsahuje pouze to, co se do ní skutečně stáhlo.
 
 Pro více řešení můžeš také opakovat přípravu se stejnou cestou `--packages`, ale zdroje a lockfily každého projektu uchovej zvlášť.
 

@@ -4,7 +4,9 @@ description: "Pojmenované hodnoty, číselná reprezentace a kombinace přízna
 
 # C# – výčtové typy enum
 
-Výčtový typ dává číselným hodnotám jména; sám neomezuje vstup pouze na pojmenované členy.
+Výčtový typ dává číselným hodnotám jména.
+
+Sám neomezuje vstup pouze na pojmenované členy.
 
 ## Deklarace a použití
 
@@ -35,7 +37,9 @@ Vstup z čísla nebo řetězce validuj podle povolených hodnot domény. [Výčt
 
 ## Typy enum podle velikosti
 
-Výchozí podkladový typ je `int`; `byte` zvol například tehdy, když jej vyžaduje komunikační formát.
+Výchozí podkladový typ je `int`.
+
+`byte` zvol například tehdy, když jej vyžaduje komunikační formát.
 
 Menší podkladový typ nenahrazuje validaci ani automaticky neurčuje celkovou velikost objektu v paměti.
 
@@ -45,4 +49,6 @@ Pro bitové kombinace použij `[Flags]` a členy s hodnotami mocnin dvou, např�
 
 Pojmenuj také nulovou hodnotu, obvykle `None = 0`.
 
-`Enum.IsDefined` neuzná každou platnou kombinaci příznaků, pokud kombinace sama není pojmenovaným členem; validuj povolené bity. [FlagsAttribute](https://learn.microsoft.com/en-us/dotnet/fundamentals/runtime-libraries/system-flagsattribute), [Enum.IsDefined](https://learn.microsoft.com/en-us/dotnet/api/system.enum.isdefined?view=net-10.0)
+`Enum.IsDefined` neuzná každou platnou kombinaci příznaků, pokud kombinace sama není pojmenovaným členem.
+
+Validuj povolené bity. [FlagsAttribute](https://learn.microsoft.com/en-us/dotnet/fundamentals/runtime-libraries/system-flagsattribute), [Enum.IsDefined](https://learn.microsoft.com/en-us/dotnet/api/system.enum.isdefined?view=net-10.0)

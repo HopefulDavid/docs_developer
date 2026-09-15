@@ -18,7 +18,9 @@ Push je užitečná další kopie commitů, ale nepřenese automaticky vše z pr
 
 Pro preferovanou složkovou zálohu zavři IDE a procesy měnící projekt a zkopíruj celý adresář včetně skrytých položek na jiné úložiště.
 
-Pokud `.git` není adresář, ale odkazový soubor, jde například o worktree či submodul; samotná kopie této složky nemusí obsahovat vlastní historii.
+Pokud `.git` není adresář, ale odkazový soubor, jde například o worktree či submodul.
+
+Samotná kopie této složky nemusí obsahovat vlastní historii.
 
 ## Offline soubor s historií
 
@@ -31,11 +33,15 @@ git bundle verify ../projekt.bundle
 git bundle list-heads ../projekt.bundle
 ```
 
-`--all` zahrne místní reference včetně větví a tagů; neobstará commity, které místní repozitář nikdy nestáhl.
+`--all` zahrne místní reference včetně větví a tagů.
+
+Neobstará commity, které místní repozitář nikdy nestáhl.
 
 Pokud má být záloha aktuální vůči serveru, před tvorbou proveď `git fetch --all --tags` a vyhodnoť případné chyby jednotlivých remotes.
 
-`verify` kontroluje strukturu a případné potřebné předchozí objekty; test obnovy navíc ověří skutečné použití.
+`verify` kontroluje strukturu a případné potřebné předchozí objekty.
+
+Test obnovy navíc ověří skutečné použití.
 
 ### Obnova na jiném počítači
 
@@ -48,7 +54,9 @@ git -C projekt-obnoveny branch -a
 git -C projekt-obnoveny fsck --full
 ```
 
-Vznikne nová pracovní kopie bez internetu; další větve z klonu případně vyber přes `git switch --track origin/<větev>`.
+Vznikne nová pracovní kopie bez internetu.
+
+Další větve z klonu případně vyber přes `git switch --track origin/<větev>`.
 
 Remote `origin` zatím ukazuje na soubor zálohy, takže před dalším běžným pushem nastav skutečnou serverovou URL podle [připojení remote](server.md).
 
@@ -69,13 +77,17 @@ git lfs fsck
 
 `fetch --all` stáhne LFS objekty dosažitelné z místních referencí, takže před ním načti potřebné větve a tagy.
 
-U běžného repozitáře je lokální LFS úložiště zpravidla uvnitř `.git/lfs`; přesné `LocalMediaDir` zjistíš ve výpisu `git lfs env`, protože umístění lze změnit konfigurací.
+U běžného repozitáře je lokální LFS úložiště zpravidla uvnitř `.git/lfs`.
+
+Přesné `LocalMediaDir` zjistíš ve výpisu `git lfs env`, protože umístění lze změnit konfigurací.
 
 Pro složkovou obnovu přenes i tento skutečný adresář a po přepnutí na požadovanou verzi použij `git lfs checkout` k doplnění pracovních souborů z místních objektů.
 
 Samotný bundle LFS objekty neobsahuje.
 
-Každý [submodul](submodules.md) je další repozitář, který musí mít dostupný připnutý commit i vlastní zálohu; URL v `.gitmodules` se na offline počítači samy nezmění na místní cestu.
+Každý [submodul](submodules.md) je další repozitář, který musí mít dostupný připnutý commit i vlastní zálohu.
+
+URL v `.gitmodules` se na offline počítači samy nezmění na místní cestu.
 
 ## Migrace serveru pomocí mirroru
 
@@ -91,7 +103,9 @@ git ls-remote destination
 git push --mirror --dry-run destination
 ```
 
-Prohlédni cíl a navržené změny; zdrojový `origin` zůstává zachovaný a `destination` označuje pouze nový server.
+Prohlédni cíl a navržené změny.
+
+Zdrojový `origin` zůstává zachovaný a `destination` označuje pouze nový server.
 
 Po potvrzení správného prázdného cíle a u projektů s již staženými LFS objekty nejprve proveď `git lfs push --all destination`.
 
@@ -104,6 +118,8 @@ git ls-remote --heads --tags destination
 
 Naklonuj nový server do další čisté složky, ověř větve, tagy, obsah LFS a spuštění projektu.
 
-Mirror nepřenáší issues, účty, nastavení CI, release přílohy ani tajemství hostingu; ty exportuj nástroji konkrétní platformy.
+Mirror nepřenáší issues, účty, nastavení CI, release přílohy ani tajemství hostingu.
+
+Ty exportuj nástroji konkrétní platformy.
 
 Zdroje: [git bundle](https://git-scm.com/docs/git-bundle), [git clone](https://git-scm.com/docs/git-clone), [Git LFS fetch](https://github.com/git-lfs/git-lfs/blob/main/docs/man/git-lfs-fetch.adoc), [Git LFS checkout](https://github.com/git-lfs/git-lfs/blob/main/docs/man/git-lfs-checkout.adoc).

@@ -4,11 +4,15 @@ description: "První program, moduly, spuštění, testy a sestavení aplikace."
 
 # Go – první program a příkazy
 
-Go překládá zdrojové soubory do programu; modul v `go.mod` určuje jeho identitu a závislosti.
+Go překládá zdrojové soubory do programu.
+
+Modul v `go.mod` určuje jeho identitu a závislosti.
 
 ## Před použitím
 
-Nainstaluj Go a ověř `go version`; příkazy níže fungují v PowerShellu i Bashi.
+Nainstaluj Go a ověř `go version`.
+
+Příkazy níže fungují v PowerShellu i Bashi.
 
 ## Praktický příklad
 
@@ -20,7 +24,9 @@ cd pozdrav
 go mod init example.com/pozdrav
 ```
 
-`example.com/pozdrav` je učební identifikátor modulu; pro publikovaný modul použij odpovídající skutečnou cestu repozitáře.
+`example.com/pozdrav` je učební identifikátor modulu.
+
+Pro publikovaný modul použij odpovídající skutečnou cestu repozitáře.
 
 Vytvoř `main.go`:
 
@@ -35,14 +41,18 @@ func main() {
 }
 ```
 
-Balíček `main` a funkce `main` tvoří vstupní bod spustitelného programu; `fmt` je součást standardní knihovny.
+Balíček `main` a funkce `main` tvoří vstupní bod spustitelného programu.
+
+`fmt` je součást standardní knihovny.
 
 ```bash
 go run .
 go build .
 ```
 
-První příkaz program **přeloží a spustí**, druhý uloží binární výstup do aktuální složky; očekávaný text je `Ahoj z Go`. [První program v Go](https://go.dev/doc/tutorial/getting-started)
+První příkaz program **přeloží a spustí**, druhý uloží binární výstup do aktuální složky.
+
+Očekávaný text je `Ahoj z Go`. [První program v Go](https://go.dev/doc/tutorial/getting-started)
 
 ## Přehled příkazů
 
@@ -51,7 +61,7 @@ První příkaz program **přeloží a spustí**, druhý uloží binární výst
 | `go fmt ./...` | Naformátuje balíčky v aktuálním modulu |
 | `go test ./...` | Spustí jejich testy |
 | `go test -v ./...` | Přidá podrobný testovací výpis |
-| `go mod tidy` | Sjednotí závislosti s použitými importy; může změnit `go.mod` a `go.sum` |
+| `go mod tidy` | Sjednotí závislosti s použitými importy. Může změnit `go.mod` a `go.sum` |
 | `go mod vendor` | Připraví kopie závislostí ve složce `vendor` |
 | `go env GOBIN GOPATH` | Ukáže cesty používané pro instalované nástroje |
 | `go doc <balíček>.<symbol>` | Zobrazí dokumentaci vybraného symbolu |
@@ -67,4 +77,6 @@ Tečka znamená aktuální balíček, `./...` zahrne i podbalíčky. [Reference 
 
 Změň text ve `fmt.Println`, znovu spusť program a ověř výstup.
 
-Nové knihovny přidávej přes `go get` s cestou a vybranou verzí; samostatný nástroj instaluj přes `go install cesta@verze` a zkontroluj kompatibilitu s projektem.
+Nové knihovny přidávej přes `go get` s cestou a vybranou verzí.
+
+Samostatný nástroj instaluj přes `go install cesta@verze` a zkontroluj kompatibilitu s projektem.

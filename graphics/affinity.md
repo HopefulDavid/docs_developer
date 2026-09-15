@@ -24,19 +24,27 @@ x = (gridWidth - imageWidth) / 2 + offsetX
 y = (gridHeight - imageHeight) / 2
 ```
 
-Odečtení rozměru obrázku rozdělí volné místo na obě strany a `offsetX` přidá posun doprava; pro posun doleva použij zápornou hodnotu.
+Odečtení rozměru obrázku rozdělí volné místo na obě strany a `offsetX` přidá posun doprava.
+
+Pro posun doleva použij zápornou hodnotu.
 
 Při oblasti `256 × 256 px`, obrázku `146,2 × 244,6 px` a posunu `256 px` vychází `x = 310,9 px` a `y = 5,7 px`.
 
-V panelu Transform zvol referenční bod vlevo nahoře a stejnou souřadnicovou soustavu; při jiném bodu ukotvení mají X a Y jiný význam.
+V panelu Transform zvol referenční bod vlevo nahoře a stejnou souřadnicovou soustavu.
+
+Při jiném bodu ukotvení mají X a Y jiný význam.
 
 ## Řešení problémů
 
 ### Modrý čtverec uvnitř stránky
 
-Modrá obrysová čára může označovat okraje dokumentu; přepnutím **View → Show Margins** ověř, zda jde právě o tuto pomůcku.
+Modrá obrysová čára může označovat okraje dokumentu.
 
-Velikost okrajů upravíš v nastavení dokumentu; nejde o skutečný grafický objekt. [Okraje dokumentu](https://affinity.help/designer2/en-US.lproj/pages/DesignAids/margins.html)
+Přepnutím **View → Show Margins** ověř, zda jde právě o tuto pomůcku.
+
+Velikost okrajů upravíš v nastavení dokumentu.
+
+Nejde o skutečný grafický objekt. [Okraje dokumentu](https://affinity.help/designer2/en-US.lproj/pages/DesignAids/margins.html)
 
 **Při vytváření nového dokumentu:**
 

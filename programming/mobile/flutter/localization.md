@@ -4,7 +4,9 @@ description: "Překlady pomocí ARB souborů a generování lokalizačních tř�
 
 # Flutter – lokalizace
 
-Vestavěný generátor `gen-l10n` vytváří typované překlady ze souborů ARB; tento postup nepotřebuje balíček `intl_utils`.
+Vestavěný generátor `gen-l10n` vytváří typované překlady ze souborů ARB.
+
+Tento postup nepotřebuje balíček `intl_utils`.
 
 ## 1. Závislosti a generování
 
@@ -15,7 +17,9 @@ flutter pub add flutter_localizations --sdk=flutter
 flutter pub add intl:any
 ```
 
-Do existující sekce `flutter:` v `pubspec.yaml` doplň `generate: true`; nevytvářej druhou sekci stejného názvu.
+Do existující sekce `flutter:` v `pubspec.yaml` doplň `generate: true`.
+
+Nevytvářej druhou sekci stejného názvu.
 
 Vytvoř `l10n.yaml`:
 
@@ -45,7 +49,9 @@ Soubor `lib/l10n/app_cs.arb`:
 }
 ```
 
-Spusť `flutter gen-l10n`; vygenerované soubory ručně neupravuj.
+Spusť `flutter gen-l10n`.
+
+Vygenerované soubory ručně neupravuj.
 
 ## 3. Napojení aplikace
 

@@ -12,7 +12,9 @@ Když instance zanikne, řídicí mechanismus se pokusí vytvořit náhradu, tak
 
 Hodí se pro více služeb, řízené aktualizace a provoz přes více uzlů.
 
-Pro jednoduchou místní sestavu může stačit Docker Compose; nejprve porozuměj [image, kontejneru a portům](docker/index.md).
+Pro jednoduchou místní sestavu může stačit Docker Compose.
+
+Nejprve porozuměj [image, kontejneru a portům](docker/index.md).
 
 ## Jak součásti spolupracují
 
@@ -57,7 +59,9 @@ kubectl config current-context
 kubectl get nodes
 ```
 
-`docs-demo` je vlastní profil clusteru; očekávej jeho context a uzel ve stavu `Ready`.
+`docs-demo` je vlastní profil clusteru.
+
+Očekávej jeho context a uzel ve stavu `Ready`.
 
 Existující lokální cluster lze použít místo Minikube, ale vždy ověř context, aby příkazy nezasáhly jiné prostředí.
 
@@ -122,7 +126,9 @@ spec:
       targetPort: 80
 ```
 
-`---` odděluje dva YAML dokumenty; Deployment vytvoří Pody a Service je vybere podle stejné značky `app: docs-web`.
+`---` odděluje dva YAML dokumenty.
+
+Deployment vytvoří Pody a Service je vybere podle stejné značky `app: docs-web`.
 
 | Hodnota | Úloha |
 |---|---|
@@ -137,7 +143,9 @@ spec:
 
 Zdroje jsou výukové nastavení nginxu, nikoli univerzální hodnoty pro jinou aplikaci.
 
-Tag `stable-alpine` je pohyblivý; pro reprodukovatelné nasazení použij ověřený digest image.
+Tag `stable-alpine` je pohyblivý.
+
+Pro reprodukovatelné nasazení použij ověřený digest image.
 
 ## 4. Ověř a aplikuj
 
@@ -152,7 +160,9 @@ kubectl get pods,services -n docs-demo
 
 První příkaz provede serverovou kontrolu bez uložení, druhý prostředky skutečně vytvoří nebo aktualizuje.
 
-Kontrola rollout počká nejvýše 120 sekund; při timeoutu pokračuj diagnostikou, ne automatickým smazáním clusteru.
+Kontrola rollout počká nejvýše 120 sekund.
+
+Při timeoutu pokračuj diagnostikou, ne automatickým smazáním clusteru.
 
 Očekávej dva Pody `Running` s `READY 1/1` a Service `web`.
 
@@ -162,7 +172,9 @@ Očekávej dva Pody `Running` s `READY 1/1` a Service `web`.
 kubectl port-forward -n docs-demo service/web 8080:80
 ```
 
-Dočasný tunel propojí místní port `8080` s portem `80` služby; otevři `http://localhost:8080` a očekávej stránku nginx.
+Dočasný tunel propojí místní port `8080` s portem `80` služby.
+
+Otevři `http://localhost:8080` a očekávej stránku nginx.
 
 `Ctrl+C` ukončí pouze tunel, nikoli aplikaci.
 
@@ -178,7 +190,9 @@ Při změně image vzniká nová revize a Deployment postupně nahrazuje Pody po
 
 `kubectl rollout history deployment/web -n docs-demo` vypíše dostupné revize a `kubectl rollout undo deployment/web -n docs-demo` může vrátit předchozí šablonu Podů.
 
-Undo nevrací databázové změny, externí data ani všechnu konfiguraci; po návratu oprav také zdrojový manifest, jinak další apply znovu požádá o vadný stav.
+Undo nevrací databázové změny, externí data ani všechnu konfiguraci.
+
+Po návratu oprav také zdrojový manifest, jinak další apply znovu požádá o vadný stav.
 
 ## Když aplikace neběží
 

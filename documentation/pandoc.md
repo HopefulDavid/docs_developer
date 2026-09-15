@@ -4,7 +4,9 @@ description: "Převody Markdownu, HTML, Wordu a PDF s volbou šablony."
 
 # Pandoc – převody dokumentů
 
-Pandoc převádí strukturu dokumentu mezi formáty; po převodu ověř také tabulky, obrázky a stránkování.
+Pandoc převádí strukturu dokumentu mezi formáty.
+
+Po převodu ověř také tabulky, obrázky a stránkování.
 
 ## Základní použití
 
@@ -12,7 +14,9 @@ Nainstaluj Pandoc podle [oficiálního postupu](https://pandoc.org/installing.ht
 
 Příkazy spouštěj ve složce vstupního souboru:
 
-`<vstup>` a `<výstup>` nahraď cestami k souborům v uvedených formátech; příponu výstupu Pandoc používá při výběru formátu.
+`<vstup>` a `<výstup>` nahraď cestami k souborům v uvedených formátech.
+
+Příponu výstupu Pandoc používá při výběru formátu.
 
 | Převod | Syntaxe |
 |---|---|
@@ -22,7 +26,9 @@ Příkazy spouštěj ve složce vstupního souboru:
 | HTML → Markdown | `pandoc <vstup.html> -t gfm -o <výstup.md>` |
 | Markdown → EPUB | `pandoc <vstup.md> -o <výstup.epub>` |
 
-Například `pandoc navod.md -o navod.docx` převede existující Markdown ve tvé pracovní složce do dokumentu Word; jména souborů změň podle potřeby a zvol výstup, který můžeš vytvořit nebo přepsat.
+Například `pandoc navod.md -o navod.docx` převede existující Markdown ve tvé pracovní složce do dokumentu Word.
+
+Jména souborů změň podle potřeby a zvol výstup, který můžeš vytvořit nebo přepsat.
 
 `-o` určuje výstupní soubor, `-t gfm` zvolí GitHub Flavored Markdown a `--extract-media=media` uloží obrázky do složky `media`.
 
@@ -36,7 +42,9 @@ Seznam dostupných formátů zobrazí `pandoc --list-input-formats` a `pandoc --
 pandoc dokument.md --standalone --embed-resources -o dokument.html
 ```
 
-`--standalone` přidává strukturu dokumentu; teprve `--embed-resources` vkládá podporované prostředky do HTML.
+`--standalone` přidává strukturu dokumentu.
+
+Teprve `--embed-resources` vkládá podporované prostředky do HTML.
 
 Starší `--self-contained` je zastaralý ekvivalent této kombinace.
 
@@ -46,7 +54,9 @@ Starší `--self-contained` je zastaralý ekvivalent této kombinace.
 pandoc dokument.md --reference-doc=styly.docx -o dokument.docx
 ```
 
-Soubor `styly.docx` poskytuje referenční styly a vlastnosti dokumentu; parametr `--template` není náhradou tohoto postupu.
+Soubor `styly.docx` poskytuje referenční styly a vlastnosti dokumentu.
+
+Parametr `--template` není náhradou tohoto postupu.
 
 ## PDF
 

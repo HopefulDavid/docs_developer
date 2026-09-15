@@ -16,7 +16,9 @@ Offline instalace používá předem stažený layout obsahující instalátor a
 vs_community.exe --layout C:\visualstudio_offline --lang cs-CZ en-US
 ```
 
-Bez omezení `--add` se stahují všechny workloady a komponenty; úplný layout vyžaduje desítky GB a může trvat dlouho.
+Bez omezení `--add` se stahují všechny workloady a komponenty.
+
+Úplný layout vyžaduje desítky GB a může trvat dlouho.
 
 Pro menší layout vyber jen potřebné workloady podle [oficiálního postupu](https://learn.microsoft.com/en-us/visualstudio/install/create-an-offline-installation-of-visual-studio).
 
@@ -32,6 +34,8 @@ C:\visualstudio_offline\vs_community.exe --noWeb
 
 Vyber pouze komponenty obsažené v layoutu.
 
-Pokud instalátor hlásí chybějící certifikáty nebo balíčky, vyřeš příčinu podle jeho hlášení a instalační dokumentace; `--noWeb` chybějící soubory nedoplní. [Offline instalace a certifikáty](https://learn.microsoft.com/en-us/visualstudio/install/create-an-offline-installation-of-visual-studio)
+Pokud instalátor hlásí chybějící certifikáty nebo balíčky, vyřeš příčinu podle jeho hlášení a instalační dokumentace.
+
+`--noWeb` chybějící soubory nedoplní. [Offline instalace a certifikáty](https://learn.microsoft.com/en-us/visualstudio/install/create-an-offline-installation-of-visual-studio)
 
 Po dokončení spusť Visual Studio a sestav projekt vyžadující zvolený workload.

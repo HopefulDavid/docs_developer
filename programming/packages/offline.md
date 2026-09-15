@@ -4,7 +4,9 @@ description: "Co zkopírovat pro offline zálohu balíčků a jak ověřit obnov
 
 # Balíčky – záloha a obnova
 
-Pro obnovu bez internetu potřebuješ **projekt i samotné balíčky**; seznam verzí nebo lockfile jejich instalační data neobsahuje.
+Pro obnovu bez internetu potřebuješ **projekt i samotné balíčky**.
+
+Seznam verzí nebo lockfile jejich instalační data neobsahuje.
 
 U každého správce níže najdeš tři kroky: **připravit s internetem → přenést zálohu → obnovit bez internetu**.
 
@@ -13,13 +15,15 @@ U každého správce níže najdeš tři kroky: **připravit s internetem → p�
 | Správce | Co uložit vedle zdrojů projektu | Návod |
 |---|---|---|
 | NuGet | Složku balíčků včetně `.nupkg` | [Knihovny .NET](nuget.md) |
-| .NET tools | U globálních celou `tools` včetně `.store`; u lokálních manifest a balíčky | [.NET tools](dotnet-tools.md) |
+| .NET tools | U globálních celou `tools` včetně `.store`, u lokálních manifest a balíčky | [.NET tools](dotnet-tools.md) |
 | npm | Celou naplněnou `npm-cache` | [Npm](npm.md) |
 | pnpm | `store` i `metadata` a nastavení jejich cest | [Pnpm](pnpm.md) |
 | Python / pip | Seznam verzí a `wheelhouse` s balíčky `.whl` | [Python](python.md) |
 | Dart / Flutter | `pubspec.lock` a celou `pub-cache` | [Dart a Flutter pub](dart.md) |
 
-Cache je pracovní složka stažených balíčků; pro zálohu pořizuj její úplnou kopii po skončení instalací.
+Cache je pracovní složka stažených balíčků.
+
+Pro zálohu pořizuj její úplnou kopii po skončení instalací.
 
 ## Nejjednodušší postup
 
@@ -37,7 +41,9 @@ Pro více projektů můžeš sdílet složku balíčků jednoho správce, ale uc
 - **Stejné prostředí:** kompatibilní OS a architekturu, případně nativní knihovny a překladače.
 - **Další data aplikace:** například databázi, modely, pluginy nebo prohlížeč stažený instalačním skriptem.
 
-Pro vývoj, build a testy zahrň také vývojové závislosti; soukromé tokeny uchovávej odděleně od veřejných zdrojů.
+Pro vývoj, build a testy zahrň také vývojové závislosti.
+
+Soukromé tokeny uchovávej odděleně od veřejných zdrojů.
 
 ## Jak poznáš, že je záloha úplná
 
@@ -49,7 +55,9 @@ Pokud něco chybí, doplň zálohu na počítači s internetem a znovu vyzkouše
 
 Před zálohováním nepoužívej `cache clean`, `store prune` ani jiné čištění stažených dat.
 
-Pokud při obnově internet máš, většinou stačí projekt s manifestem a lockfilem; jednotlivé návody uvádějí i tuto kratší variantu.
+Pokud při obnově internet máš, většinou stačí projekt s manifestem a lockfilem.
+
+Jednotlivé návody uvádějí i tuto kratší variantu.
 
 ## Související zálohy
 

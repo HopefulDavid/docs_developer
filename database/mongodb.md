@@ -4,7 +4,9 @@ description: "Výběr databáze a čtení či změny dokumentů v mongosh."
 
 # MongoDB – příkazy v mongosh
 
-MongoDB ukládá dokumenty BSON do kolekcí; následující příklady jsou pro interaktivní shell `mongosh`.
+MongoDB ukládá dokumenty BSON do kolekcí.
+
+Následující příklady jsou pro interaktivní shell `mongosh`.
 
 ## Databáze a kolekce
 
@@ -17,7 +19,9 @@ db
 show collections
 ```
 
-`use` změní aktuální databázi reprezentovanou proměnnou `db`; databáze vznikne až při prvním zápisu, pokud dosud neexistuje. [Příkazy mongosh](https://www.mongodb.com/docs/mongodb-shell/run-commands/)
+`use` změní aktuální databázi reprezentovanou proměnnou `db`.
+
+Databáze vznikne až při prvním zápisu, pokud dosud neexistuje. [Příkazy mongosh](https://www.mongodb.com/docs/mongodb-shell/run-commands/)
 
 ## Vložení a čtení
 
@@ -32,7 +36,9 @@ db.users.findOne({ name: "Jana" })
 db.users.countDocuments({ age: { $gte: 18 } })
 ```
 
-Opakované vložení vytvoří další dokumenty; jméno není automaticky unikátní. [CRUD operace](https://www.mongodb.com/docs/manual/crud/)
+Opakované vložení vytvoří další dokumenty.
+
+Jméno není automaticky unikátní. [CRUD operace](https://www.mongodb.com/docs/manual/crud/)
 
 Pro výběr sloupců, řazení a omezení výsledků:
 
@@ -44,7 +50,9 @@ db.users.find().sort({ age: -1, _id: 1 }).skip(10).limit(10)
 
 `_id` se standardně vrací i při projekci vybraných polí, pokud jej výslovně nevypneš.
 
-Jedinečné `_id` doplňuje jednoznačné pořadí při shodném věku; změny dat mezi dotazy přesto mohou posunout stránkování. [Find a projekce](https://www.mongodb.com/docs/manual/reference/method/db.collection.find/)
+Jedinečné `_id` doplňuje jednoznačné pořadí při shodném věku.
+
+Změny dat mezi dotazy přesto mohou posunout stránkování. [Find a projekce](https://www.mongodb.com/docs/manual/reference/method/db.collection.find/)
 
 ## Změny a odstranění
 

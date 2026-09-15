@@ -37,14 +37,18 @@ Alternativa pro aplikaci vyžadující hex:
 openssl rand -hex 32
 ```
 
-Opět jde o 32 náhodných bajtů, tentokrát zapsaných jako 64 hexadecimálních znaků; každý příkaz vytváří jinou novou hodnotu.
+Opět jde o 32 náhodných bajtů, tentokrát zapsaných jako 64 hexadecimálních znaků.
+
+Každý příkaz vytváří jinou novou hodnotu.
 
 | Syntaxe | Význam |
 |---|---|
 | `openssl rand -base64 <počet-bajtů>` | Base64 reprezentace požadované náhodnosti |
 | `openssl rand -hex <počet-bajtů>` | Hex reprezentace, dva znaky na bajt |
 
-Standardní Base64 může obsahovat `+`, `/` a `=`; pokud aplikace požaduje Base64url, použij její dokumentovaný postup místo ručního odstraňování znaků.
+Standardní Base64 může obsahovat `+`, `/` a `=`.
+
+Pokud aplikace požaduje Base64url, použij její dokumentovaný postup místo ručního odstraňování znaků.
 
 ## Alternativa bez OpenSSL v PowerShellu 7
 

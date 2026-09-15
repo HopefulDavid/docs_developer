@@ -30,7 +30,7 @@ RID jako `win-x64`, `linux-x64` nebo `osx-arm64` identifikuje cílovou platformu
 | Nasazení | Co potřebuje cílový počítač |
 |---|---|
 | Framework-dependent | Kompatibilní nainstalovaný .NET runtime a systémové závislosti |
-| Self-contained | Systémové závislosti; .NET runtime je součástí výstupu |
+| Self-contained | Systémové závislosti. .NET runtime je součástí výstupu |
 
 V adresáři projektu publikujte každý cíl zvlášť:
 
@@ -47,7 +47,9 @@ Seznam `RuntimeIdentifiers` v projektu sám nevytvoří všechny výstupy jední
 
 Garbage collector spravuje paměť řízených objektů, ale nezavolá automaticky `Dispose` v okamžiku, kdy skončí práce se souborem nebo připojením.
 
-Pro objekty implementující `IDisposable` použij `using`; pro `IAsyncDisposable` podle API `await using`.
+Pro objekty implementující `IDisposable` použij `using`.
+
+Pro `IAsyncDisposable` použij podle API `await using`.
 
 ```csharp
 using var reader = new StreamReader("input.txt");
@@ -56,7 +58,9 @@ Console.WriteLine(reader.ReadLine());
 
 Čtečka se uvolní při opuštění rozsahu i při výjimce.
 
-Finalizér `~ClassName()` nemá deterministické načasování; vlastní finalizér není běžnou náhradou za `Dispose`. [Microsoft: uvolňování neřízených prostředků](https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/unmanaged).
+Finalizér `~ClassName()` nemá deterministické načasování.
+
+Vlastní finalizér není běžnou náhradou za `Dispose`. [Microsoft: uvolňování neřízených prostředků](https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/unmanaged).
 
 ## Volání funkcí z externích DLL (PInvoke)
 
@@ -82,4 +86,6 @@ Deklarace musí odpovídat nativnímu podpisu, volací konvenci a kódování ř
 
 Název DLL a její architektura musí odpovídat cílovému prostředí. [Microsoft: P/Invoke](https://learn.microsoft.com/en-us/dotnet/standard/native-interop/pinvoke), [MessageBoxW](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-messageboxw).
 
-Unity má vlastní pravidla pro nativní pluginy; `__Internal` se například používá u staticky připojeného iOS pluginu a není univerzální název knihovny pro běžné .NET aplikace. [Unity: iOS pluginy](https://docs.unity3d.com/Manual/PluginsForIOS.html).
+Unity má vlastní pravidla pro nativní pluginy.
+
+`__Internal` se například používá u staticky připojeného iOS pluginu a není univerzální název knihovny pro běžné .NET aplikace. [Unity: iOS pluginy](https://docs.unity3d.com/Manual/PluginsForIOS.html).

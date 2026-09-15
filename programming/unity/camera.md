@@ -4,7 +4,9 @@ description: "Výpočet velikosti záběru a přizpůsobení kamery poměru stra
 
 # Unity: kamera a velikost záběru
 
-Kamera převádí scénu na obraz; projekce, rozlišení a vrstvy určují, co hráč skutečně uvidí.
+Kamera převádí scénu na obraz.
+
+Projekce, rozlišení a vrstvy určují, co hráč skutečně uvidí.
 
 Pro 2D hru často vyhovuje ortografická projekce, ale výběr závisí na zamýšleném obrazu, nikoli jen na typu projektu.
 
@@ -26,7 +28,9 @@ Nastav **Projection → Orthographic**, **Size → 5** a ověř, že Culling Mas
 
 `Size = 5` znamená polovinu výšky záběru, tedy deset světových jednotek na výšku.
 
-Při poměru 16:9 je šířka přibližně `10 × 16 / 9 = 17,78` jednotky; při změně poměru stran se proto mění viditelná šířka.
+Při poměru 16:9 je šířka přibližně `10 × 16 / 9 = 17,78` jednotky.
+
+Při změně poměru stran se proto mění viditelná šířka.
 
 Význam parametru definuje [Camera.orthographicSize](https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Camera-orthographicSize.html).
 

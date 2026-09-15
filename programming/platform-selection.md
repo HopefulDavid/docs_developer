@@ -23,7 +23,9 @@ Před přijetím ověř podporované verze, licence, dostupnost potřebných kni
 
 ## Webové aplikace
 
-Frontend řeší rozhraní v prohlížeči, backend zpracování požadavků a přístup k datům; nejde vždy o vzájemně zaměnitelné nástroje.
+Frontend řeší rozhraní v prohlížeči, backend zpracování požadavků a přístup k datům.
+
+Nejde vždy o vzájemně zaměnitelné nástroje.
 
 | Potřeba | Kandidáti k posouzení | Co vyzkoušet |
 |---|---|---|
@@ -32,7 +34,9 @@ Frontend řeší rozhraní v prohlížeči, backend zpracování požadavků a p
 | Server s konvencemi a aplikačními moduly | Django, Laravel, Ruby on Rails, Spring Boot | Práci s doménou, databází a rozšíření mimo výchozí konvence |
 | Menší HTTP server v JavaScriptu | Express | Validaci, chybové odpovědi a způsob skládání middleware |
 
-React je knihovna rozhraní a pro celou aplikaci potřebuješ také rozhodnout o směrování, získávání dat a sestavení; možnosti vysvětluje [Creating a React App](https://react.dev/learn/creating-a-react-app).
+React je knihovna rozhraní a pro celou aplikaci potřebuješ také rozhodnout o směrování, získávání dat a sestavení.
+
+Možnosti vysvětluje [Creating a React App](https://react.dev/learn/creating-a-react-app).
 
 Velikost firmy sama neurčuje, zda je Vue vhodné, a použití virtuálního DOM samo nedokazuje vyšší výkon.
 
@@ -49,7 +53,9 @@ Velikost firmy sama neurčuje, zda je Vue vhodné, a použití virtuálního DOM
 
 Pro existující Xamarin projekt řeš [migraci na podporované .NET varianty](https://learn.microsoft.com/en-us/dotnet/maui/migration/), místo abys jej vybíral jako nový výchozí stack.
 
-[.NET MAUI](https://learn.microsoft.com/en-us/dotnet/maui/what-is-maui) zahrnuje Android, iOS, macOS přes Mac Catalyst a Windows; nepředpokládej automaticky podporu všech desktopových systémů.
+[.NET MAUI](https://learn.microsoft.com/en-us/dotnet/maui/what-is-maui) zahrnuje Android, iOS, macOS přes Mac Catalyst a Windows.
+
+Nepředpokládej automaticky podporu všech desktopových systémů.
 
 ## Počítačové aplikace
 
@@ -75,7 +81,9 @@ Praktické základy pro .NET obsahují [WPF](csharp/wpf.md) a [přehled .NET](cs
 
 Databáze nejsou zaměnitelné jen podle dostupnosti na operačním systému.
 
-SQLite není obecně „nevhodné pro velké aplikace“; rozhodují konkrétní způsoby použití a souběhu popsané v [oficiálním přehledu SQLite](https://www.sqlite.org/whentouse.html).
+SQLite není obecně „nevhodné pro velké aplikace“.
+
+Rozhodují konkrétní způsoby použití a souběhu popsané v [oficiálním přehledu SQLite](https://www.sqlite.org/whentouse.html).
 
 Pro praktické návody pokračuj na [databáze](../database/index.md).
 
@@ -87,7 +95,9 @@ Pro úžeji zaměřenou hru může dávat smysl také GameMaker, RPG Maker, Cons
 
 V každém kandidátovi vytvoř stejnou malou scénu s reálným vstupem, sestav ji pro cílové zařízení a změř dobu snímku i velikost distribuce.
 
-Licenční podmínky engine a assetů ověř pro vlastní způsob distribuce; neodvozuj je z obecného označení „zdarma“.
+Licenční podmínky engine a assetů ověř pro vlastní způsob distribuce.
+
+Neodvozuj je z obecného označení „zdarma“.
 
 ## CI a CD
 

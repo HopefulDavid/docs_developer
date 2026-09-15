@@ -6,7 +6,9 @@ description: "Propojení UXML, stylů USS a reakcí na události v C#."
 
 UI Toolkit vytváří rozhraní jako strom prvků, který popisuje UXML, styluje USS a ovládá C#.
 
-Používá se pro editorové nástroje i runtime rozhraní; tento návod ukazuje runtime tlačítko v Unity 6.
+Používá se pro editorové nástroje i runtime rozhraní.
+
+Tento návod ukazuje runtime tlačítko v Unity 6.
 
 ## Jak spolu části souvisejí
 
@@ -24,7 +26,9 @@ USS se podobá CSS, ale nepodporuje automaticky všechny webové vlastnosti.
 
 Vytvoř složku `Assets/UI` a ulož do ní oba následující soubory se stejnými názvy.
 
-Ukázka používá pouze runtime namespace `UnityEngine.UIElements`; prvky z `UnityEditor` do výsledné hry nepatří.
+Ukázka používá pouze runtime namespace `UnityEngine.UIElements`.
+
+Prvky z `UnityEditor` do výsledné hry nepatří.
 
 ## UXML a USS
 
@@ -109,11 +113,13 @@ public class MenuController : MonoBehaviour
 1. Vytvoř **Panel Settings** přes **Assets → Create → UI Toolkit**.
 2. Přidej do scény GameObject s **UIDocument** a přiřaď `Menu.uxml` do **Source Asset** i vytvořený Panel Settings.
 3. Na stejný objekt přidej `MenuController`.
-4. Spusť Play a klikni na tlačítko; popisek se musí změnit na „Tlačítko funguje“.
+4. Spusť Play a klikni na tlačítko. Popisek se musí změnit na „Tlačítko funguje“.
 
 ## Co lze upravit a ověřit
 
-Obsluhu `HandleStart` nahraď akcí aplikace; při přejmenování prvků uprav UXML i řetězce v `Q`.
+Obsluhu `HandleStart` nahraď akcí aplikace.
+
+Při přejmenování prvků uprav UXML i řetězce v `Q`.
 
 V Panel Settings zvol škálování podle cílového rozlišení a ověř Game view v úzkém i širokém poměru stran.
 

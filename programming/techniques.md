@@ -4,7 +4,9 @@ description: "Organizace vývoje, pojmenování a rozhodování o struktuře kó
 
 # Vývojové metodiky a konvence
 
-Metodika pomáhá týmu organizovat práci; konvence sjednocuje podobu kódu a prototyp ověřuje nápad před větší investicí.
+Metodika pomáhá týmu organizovat práci.
+
+Konvence sjednocuje podobu kódu a prototyp ověřuje nápad před větší investicí.
 
 Tyto postupy řeší různé problémy a mohou se používat společně.
 
@@ -26,7 +28,9 @@ Sprint Review kontroluje výsledek se zainteresovanými lidmi, retrospektiva zle
 
 Přesné odpovědnosti a události definuje [Scrum Guide](https://scrumguides.org/scrum-guide.html).
 
-Pevný termín sám o sobě nevylučuje Scrum ani Kanban; rozhodující je způsob plánování rozsahu a práce s nejistotou.
+Pevný termín sám o sobě nevylučuje Scrum ani Kanban.
+
+Rozhodující je způsob plánování rozsahu a práce s nejistotou.
 
 ## Praktické použití: malá týmová změna
 
@@ -38,7 +42,9 @@ Pevný termín sám o sobě nevylučuje Scrum ani Kanban; rozhodující je způs
 
 Limit dvě je výchozí experiment pro uvedený tým, nikoli univerzální doporučení.
 
-Hotovo musí zahrnovat potřebné testy, kontrolu a dokumentaci; samotné napsání kódu nemusí být dodanou funkcí.
+Hotovo musí zahrnovat potřebné testy, kontrolu a dokumentaci.
+
+Samotné napsání kódu nemusí být dodanou funkcí.
 
 ## Rychlé prototypování
 
@@ -48,7 +54,9 @@ Stanov otázku, časový limit a měřitelný výsledek, vytvoř nejmenší ově
 
 U prototypu hry lze použít jednoduché tvary místo finální grafiky, pokud právě grafika není předmětem ověření.
 
-Před převzetím do produktu prověř chybové stavy, bezpečnost a údržbu; rychlý experiment automaticky nesplňuje podmínky produkčního kódu.
+Před převzetím do produktu prověř chybové stavy, bezpečnost a údržbu.
+
+Rychlý experiment automaticky nesplňuje podmínky produkčního kódu.
 
 ## BEM: pojmenování CSS tříd
 

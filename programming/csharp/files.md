@@ -10,7 +10,9 @@ Při čtení dat určete kódování, oddělovač a očekávané sloupce podle s
 
 Počítání čárek a středníků nerozliší oddělovač od interpunkce uvnitř hodnoty.
 
-Pro import s neznámým formátem nechte uživatele potvrdit náhled a oddělovač; samotný odhad není validace.
+Pro import s neznámým formátem nechte uživatele potvrdit náhled a oddělovač.
+
+Samotný odhad není validace.
 
 `TextFieldParser` z `Microsoft.VisualBasic.FileIO` lze použít také v C# a v běžném projektu .NET nevyžaduje další NuGet balíček.
 
@@ -49,11 +51,15 @@ while (!parser.EndOfData)
 
 Výstup je `Eva: Praha; centrum`.
 
-Parser hlásí neplatně zapsaný záznam výjimkou `MalformedLineException`; chybný import má zobrazit místo a důvod chyby, nikoli záznam tiše zahodit. [Microsoft: čtení oddělených polí](https://learn.microsoft.com/en-us/dotnet/visual-basic/developing-apps/programming/drives-directories-files/how-to-read-from-comma-delimited-text-files).
+Parser hlásí neplatně zapsaný záznam výjimkou `MalformedLineException`.
+
+Chybný import má zobrazit místo a důvod chyby, nikoli záznam tiše zahodit. [Microsoft: čtení oddělených polí](https://learn.microsoft.com/en-us/dotnet/visual-basic/developing-apps/programming/drives-directories-files/how-to-read-from-comma-delimited-text-files).
 
 ## Kódování a BOM
 
-Pro skutečný soubor můžeš místo `StringReader` použít následující vstup; soubor bez BOM bude interpretován jako UTF-8:
+Pro skutečný soubor můžeš místo `StringReader` použít následující vstup.
+
+Soubor bez BOM bude interpretován jako UTF-8:
 
 ```csharp
 using var input = new StreamReader(
@@ -74,6 +80,8 @@ Není to pokyn odstranit všechny znaky `\uFEFF` z již načteného obsahu. [Str
 | `\uFEFF` | Znak používaný v úvodní signatuře Unicode |
 | `\0` | Nulový znak uvnitř řetězce |
 
-Nulový znak neukončuje řetězec `System.String`; například `"A\0B".Length` je `3`.
+Nulový znak neukončuje řetězec `System.String`.
+
+Například `"A\0B".Length` je `3`.
 
 Rozdílná pravidla mohou platit při předání řetězce nativnímu API. [Microsoft: řetězce v C#](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/).

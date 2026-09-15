@@ -30,10 +30,12 @@ Doména sama neurčuje číslo portu a úspěšné DNS ještě neznamená dostup
 | `localhost` | Jméno místního počítače pro loopback |
 | `0.0.0.0` při naslouchání | Všechna místní IPv4 rozhraní, nikoli cílová adresa jiného počítače |
 | `192.168.1.20` | Příklad soukromé IPv4 adresy v místní síti |
-| `192.168.1.0/24` | Síť s 24 pevnými počátečními bity; nejde o jeden konkrétní počítač |
+| `192.168.1.0/24` | Síť s 24 pevnými počátečními bity. Nejde o jeden konkrétní počítač |
 | Výchozí brána | Router pro cíle mimo přímo připojené sítě |
 
-Soukromé IPv4 rozsahy jsou `10.0.0.0/8`, `172.16.0.0/12` a `192.168.0.0/16`; přístup do nich z jiné sítě vyžaduje odpovídající propojení, například VPN.
+Soukromé IPv4 rozsahy jsou `10.0.0.0/8`, `172.16.0.0/12` a `192.168.0.0/16`.
+
+Přístup do nich z jiné sítě vyžaduje odpovídající propojení, například VPN.
 
 NAT převádí adresy při průchodu routerem, ale sám službu na tvém počítači nezpřístupní lidem na internetu.
 
@@ -48,7 +50,9 @@ Resolve-DnsName -Name "git.example.com"
 Test-NetConnection -ComputerName "git.example.com" -Port 443
 ```
 
-První příkaz ověřuje překlad názvu a druhý navázání TCP spojení; `TcpTestSucceeded: True` ještě neověřuje heslo, certifikát ani obsah webu.
+První příkaz ověřuje překlad názvu a druhý navázání TCP spojení.
+
+`TcpTestSucceeded: True` ještě neověřuje heslo, certifikát ani obsah webu.
 
 ### Rozhodnutí podle výsledku
 
@@ -61,7 +65,9 @@ První příkaz ověřuje překlad názvu a druhý navázání TCP spojení; `Tc
 | Web vrací 401 nebo 403 | Přihlášení a oprávnění aplikace |
 | Web vrací 500 | Logy serverové aplikace |
 
-Ve Windows lze HTTP hlavičky orientačně načíst přes `curl.exe -I https://git.example.com`; `.exe` odlišuje skutečný curl od historického PowerShell aliasu.
+Ve Windows lze HTTP hlavičky orientačně načíst přes `curl.exe -I https://git.example.com`.
+
+`.exe` odlišuje skutečný curl od historického PowerShell aliasu.
 
 `-I` posílá metodu HEAD, kterou některé aplikace nepodporují, proto výsledné 405 samo neznamená nefunkční GET v prohlížeči.
 
@@ -74,11 +80,17 @@ Get-NetTCPConnection -LocalPort 8080 -State Listen |
     Select-Object LocalAddress, LocalPort, OwningProcess
 ```
 
-Výpis ukáže adresu naslouchání a ID procesu; prázdný výsledek znamená, že tento TCP port v okamžiku kontroly nenaslouchá.
+Výpis ukáže adresu naslouchání a ID procesu.
 
-Služba na `127.0.0.1` je dostupná jen místně; změna na všechna rozhraní vyžaduje i promyšlené síťové oprávnění a nastavení firewallu.
+Prázdný výsledek znamená, že tento TCP port v okamžiku kontroly nenaslouchá.
 
-`ping` ověřuje ICMP, nikoli HTTP či SSH port; blokovaný ping nevylučuje funkční aplikaci.
+Služba na `127.0.0.1` je dostupná jen místně.
+
+Změna na všechna rozhraní vyžaduje i promyšlené síťové oprávnění a nastavení firewallu.
+
+`ping` ověřuje ICMP, nikoli HTTP či SSH port.
+
+Blokovaný ping nevylučuje funkční aplikaci.
 
 ## Konfigurace a trasa
 
@@ -86,7 +98,7 @@ Služba na `127.0.0.1` je dostupná jen místně; změna na všechna rozhraní v
 |---|---|
 | `ipconfig /all` | Adresy rozhraní, brány a DNS |
 | `route print` | Směrovací tabulku IPv4 a IPv6 |
-| `tracert <server>` | Dostupné odpovědi po trase; některé uzly nemusejí odpovídat |
+| `tracert <server>` | Dostupné odpovědi po trase. Některé uzly nemusejí odpovídat |
 
 Diagnostiku prováděj vůči konkrétní službě, ke které máš přístup, a veřejně nesdílej celý interní síťový výpis.
 

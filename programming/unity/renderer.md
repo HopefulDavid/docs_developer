@@ -6,11 +6,15 @@ description: "Příprava URP, materiály a rozdíl mezi světly a postprocessing
 
 Universal Render Pipeline neboli URP určuje, jak Unity připraví a vykreslí snímek.
 
-Umožňuje volit renderery, kvalitu a efekty podle projektu i cílového zařízení; výkon je potřeba ověřovat měřením konkrétní scény.
+Umožňuje volit renderery, kvalitu a efekty podle projektu i cílového zařízení.
+
+Výkon je potřeba ověřovat měřením konkrétní scény.
 
 ## Jak spolu konfigurace souvisejí
 
-Následující rozdělení odpovídá Unity 6 a URP 17; umístění položek se může v jiných verzích lišit.
+Následující rozdělení odpovídá Unity 6 a URP 17.
+
+Umístění položek se může v jiných verzích lišit.
 
 | Část | Co vlastní | Kde ji hledat |
 |---|---|---|
@@ -47,6 +51,8 @@ Postup vychází z [oficiálního nastavení post-processingu URP](https://docs.
 
 Kvalitu stínů, render scale a efekty měň podle měření na cílovém zařízení a porovnávej stejnou scénu před změnou i po ní.
 
-Sdílený Profile ovlivní všechna místa, která jej používají; pro nezávislé scény vytvoř samostatný asset.
+Sdílený Profile ovlivní všechna místa, která jej používají.
+
+Pro nezávislé scény vytvoř samostatný asset.
 
 Pokročilé Renderer Features přidávej až pro konkrétní efekt, který základní konfigurace neposkytuje.

@@ -6,7 +6,9 @@ description: "Zpřístupnění místní aplikace a kontrola portů Apache."
 
 XAMPP spojuje Apache, PHP a další nástroje pro místní vývoj.
 
-Apache přijme HTTP požadavek a pro `.php` soubor spustí PHP; prohlížeč dostane výsledek, nikoli zdrojový kód.
+Apache přijme HTTP požadavek a pro `.php` soubor spustí PHP.
+
+Prohlížeč dostane výsledek, nikoli zdrojový kód.
 
 ## Před použitím
 

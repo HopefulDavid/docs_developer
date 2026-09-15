@@ -16,7 +16,9 @@ I jako jediný vývojář ho můžeš využít jako poslední kontrolní místo 
 
 Pro lokální projekt bez těchto potřeb stačí [místní merge](../merging.md).
 
-PR není příkaz Gitu; GitLab stejný záměr označuje jako merge request.
+PR není příkaz Gitu.
+
+GitLab stejný záměr označuje jako merge request.
 
 ## Příprava a kontrola
 
@@ -26,7 +28,9 @@ PR není příkaz Gitu; GitLab stejný záměr označuje jako merge request.
 4. Projdi celý diff, nejen seznam commitů, a ověř skutečné výsledky CI.
 5. Napiš, co bylo chybně nebo chybělo, jak se chování mění a čím jsi změnu ověřil.
 
-Názvy větví jsou příklad; **base/target** je cíl a **compare/source** je tvoje práce.
+Názvy větví jsou příklad.
+
+**Base/target** je cíl a **compare/source** je tvoje práce.
 
 Při výběru opačného směru bys navrhoval jinou změnu.
 
@@ -34,7 +38,9 @@ Při výběru opačného směru bys navrhoval jinou změnu.
 
 Draft PR můžeš otevřít dříve jako pracovní přehled, pokud ho hosting podporuje.
 
-Další commity do stejné zdrojové větve PR aktualizují; nový PR kvůli každé opravě nezakládej.
+Další commity do stejné zdrojové větve PR aktualizují.
+
+Nový PR kvůli každé opravě nezakládej.
 
 CI běží jen tehdy, když je v repozitáři nastavené, a zelená kontrola dokládá pouze testy, které skutečně provedla.
 
@@ -50,7 +56,9 @@ Vyber metodu podle [vlastního workflow](../workflows.md) a možností serveru.
 
 ## Po sloučení
 
-Ověř stav **Merged**, správnou cílovou větev a případný build či deployment; samotné sloučení ještě nedokazuje úspěšné nasazení.
+Ověř stav **Merged**, správnou cílovou větev a případný build či deployment.
+
+Samotné sloučení ještě nedokazuje úspěšné nasazení.
 
 V čisté místní kopii:
 
@@ -65,6 +73,8 @@ Tyto příkazy načtou serverový výsledek i při squash, kdy původní pracovn
 
 Pokud fast-forward selže, nejdříve [prohlédni rozchod historie](../synchronization.md).
 
-Dokončenou krátkou větev pak [odstraň](delete-remote-branch.md); dlouhodobou `develop` ponech podle svého modelu.
+Dokončenou krátkou větev pak [odstraň](delete-remote-branch.md).
+
+Dlouhodobou `develop` ponech podle svého modelu.
 
 Zdroje: [GitHub: PR](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests), [metody sloučení](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/about-pull-request-merges).

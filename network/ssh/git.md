@@ -21,7 +21,9 @@ ssh -T git@github.com
 
 Při prvním připojení porovnej otisk s [oficiálními otisky GitHubu](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints).
 
-Úspěšná odpověď obsahuje tvůj účet a informaci, že ověření prošlo, ale GitHub neposkytuje shell; tento test vrací kód `1` i při úspěšném přihlášení.
+Úspěšná odpověď obsahuje tvůj účet a informaci, že ověření prošlo, ale GitHub neposkytuje shell.
+
+Tento test vrací kód `1` i při úspěšném přihlášení.
 
 Připojovací účet je `git` a konkrétní GitHub identitu určí přijatý klíč.
 
@@ -41,11 +43,15 @@ git remote set-url origin <SSH-URL>
 git ls-remote origin HEAD
 ```
 
-Nahraď `<SSH-URL>` skutečnou adresou; například tvar `git@github.com:<vlastník>/<repozitář>.git` obsahuje dvě hodnoty z tvého projektu.
+Nahraď `<SSH-URL>` skutečnou adresou.
+
+Například tvar `git@github.com:<vlastník>/<repozitář>.git` obsahuje dvě hodnoty z tvého projektu.
 
 Příkaz `ls-remote` ověřuje čtení daného repozitáře, zatímco samotný `ssh -T` prokazuje pouze přihlášení k účtu.
 
-Adresa začínající `https://` nepoužívá SSH; pokud má remote samostatnou push URL, zkontroluj také `git remote get-url --push --all origin` a podle záměru ji změň pomocí `git remote set-url --push origin <SSH-URL>`.
+Adresa začínající `https://` nepoužívá SSH.
+
+Pokud má remote samostatnou push URL, zkontroluj také `git remote get-url --push --all origin` a podle záměru ji změň pomocí `git remote set-url --push origin <SSH-URL>`.
 
 ## Dva účty na jednom počítači
 
@@ -97,7 +103,9 @@ Prázdná konfigurace s návratovým kódem `1` může jen znamenat, že klíč 
 | 3 | Proměnná `GIT_SSH` |
 | 4 | Příkaz `ssh` nalezený v prostředí procesu Gitu |
 
-Místní konfigurace může přebít globální a dočasné `git -c` může přebít obě; `ssh.variant` a `GIT_SSH_VARIANT` určují podobu argumentů klienta, nikoli jeho cestu.
+Místní konfigurace může přebít globální a dočasné `git -c` může přebít obě.
+
+`ssh.variant` a `GIT_SSH_VARIANT` určují podobu argumentů klienta, nikoli jeho cestu.
 
 Společný Windows nebo Git klient nastav podle [návodu pro Windows](windows.md#jeden-klient-pro-windows-a-git).
 
@@ -119,7 +127,9 @@ Výpis ukáže spouštěný příkaz a `finally` obnoví původní nastavení tr
 
 Pokud výpis obsahuje pouze `ssh` bez celé cesty, její dohledání stále závisí na prostředí Gitu.
 
-Nechtěné přepsání oprav pouze v nalezeném rozsahu; například `git config --local --unset-all core.sshCommand` odstraní místní volbu a nechá se uplatnit nižší nastavení.
+Nechtěné přepsání oprav pouze v nalezeném rozsahu.
+
+Například `git config --local --unset-all core.sshCommand` odstraní místní volbu a nechá se uplatnit nižší nastavení.
 
 ## Diagnostika
 

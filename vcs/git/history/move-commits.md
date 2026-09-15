@@ -6,13 +6,17 @@ description: "Přesun posledních commitů do nové i existující větve včetn
 
 Přesun má dvě části: nejprve zachováš práci v cílové větvi, potom ji odebereš ze zdrojové.
 
-Vytvoření větve nebo merge zachová původní commity; `cherry-pick` přenáší vybrané změny a na jiném základu vytváří nové commity.
+Vytvoření větve nebo merge zachová původní commity.
+
+`cherry-pick` přenáší vybrané změny a na jiném základu vytváří nové commity.
 
 ## Před použitím
 
 Příklady fungují v PowerShellu i Bashi a přesouvají **poslední tři neodeslané lineární commity** z místní větve `main`.
 
-Názvy `main` a `feature/presunuta-prace` nahraď podle projektu; záložní větev `backup/pred-presunem` musí být nová.
+Názvy `main` a `feature/presunuta-prace` nahraď podle projektu.
+
+Záložní větev `backup/pred-presunem` musí být nová.
 
 Nejdříve ověř čistý pracovní strom:
 
@@ -26,7 +30,9 @@ git log --reverse --oneline backup/pred-presunem~3..backup/pred-presunem
 
 Pokud první příkaz vypíše změny, nejprve je commitni nebo [odlož přes stash](../stash-worktree.md), pak začni znovu.
 
-Poslední výpis musí obsahovat právě commity, které chceš přesunout; `backup/pred-presunem~3` je jejich předchozí základ.
+Poslední výpis musí obsahovat právě commity, které chceš přesunout.
+
+`backup/pred-presunem~3` je jejich předchozí základ.
 
 Pro jiný počet uprav `~3` ve všech krocích, případně použij ověřené ID základního commitu.
 
@@ -49,7 +55,9 @@ git log --graph --oneline --decorate --all -10
 
 Nová větev ukazuje na původní poslední commit ještě před resetem, takže práce i její ID zůstanou zachované.
 
-`--keep` vrátí zdrojovou větev a dotčené soubory; při kolizi s necommitovanou úpravou skončí chybou místo jejího přepsání. [Git reset](https://git-scm.com/docs/git-reset)
+`--keep` vrátí zdrojovou větev a dotčené soubory.
+
+Při kolizi s necommitovanou úpravou skončí chybou místo jejího přepsání. [Git reset](https://git-scm.com/docs/git-reset)
 
 `--no-track` zabrání nechtěnému nastavení původní místní větve jako upstreamu, který by později ovlivňoval pull nebo rebase. [Git branch](https://git-scm.com/docs/git-branch)
 
@@ -70,9 +78,13 @@ git diff --stat backup/pred-presunem~3 backup/pred-presunem
 
 Přeneseš změny posledních tří commitů v pořadí od nejstaršího a zachováš vlastní práci cílové větve.
 
-Poslední příkaz připomene rozsah přenášených změn; správnost jejich začlenění ověř v cílových souborech a testech.
+Poslední příkaz připomene rozsah přenášených změn.
 
-Jednotlivé nesousedící commity můžeš vybrat syntaxí `git cherry-pick <nejstarší-ID> <další-ID> <nejnovější-ID>`; jejich závislosti musí být v cíli dostupné. [Git cherry-pick](https://git-scm.com/docs/git-cherry-pick)
+Správnost jejich začlenění ověř v cílových souborech a testech.
+
+Jednotlivé nesousedící commity můžeš vybrat syntaxí `git cherry-pick <nejstarší-ID> <další-ID> <nejnovější-ID>`.
+
+Jejich závislosti musí být v cíli dostupné. [Git cherry-pick](https://git-scm.com/docs/git-cherry-pick)
 
 ### Celá zdrojová větev pomocí merge
 
@@ -84,7 +96,9 @@ git merge backup/pred-presunem
 git log --graph --oneline --decorate -10
 ```
 
-Merge zachová ID původních commitů; podle vztahu větví provede fast-forward nebo vytvoří merge commit.
+Merge zachová ID původních commitů.
+
+Podle vztahu větví provede fast-forward nebo vytvoří merge commit.
 
 Nepřenáší automaticky jen poslední tři commity, proto se pro přesný výběr z odlišné historie hodí předchozí cherry-pick. [Git merge](https://git-scm.com/docs/git-merge)
 
@@ -101,7 +115,9 @@ git log --graph --oneline --decorate --all -12
 
 Zdrojová `main` nyní končí před přesouvanými commity a cílová obsahuje jejich práci.
 
-Záložní větev do ověření výsledku ponech; reset zde nemaže jedinou existující kopii commitů.
+Záložní větev do ověření výsledku ponech.
+
+Reset zde nemaže jedinou existující kopii commitů.
 
 ## Konflikt při přenosu
 
@@ -116,7 +132,9 @@ Po abortu zůstane zdrojová historie i záložní větev zachovaná.
 
 ## Pokud už byly commity odeslané
 
-Nejprve práci přenes a ověř v cíli; ve sdílené zdrojové větvi potom použij [revert](delete-commits.md), aby navazující historie zůstala platná.
+Nejprve práci přenes a ověř v cíli.
+
+Ve sdílené zdrojové větvi potom použij [revert](delete-commits.md), aby navazující historie zůstala platná.
 
 Pro tři uvedené lineární commity provedeš ze zdrojové větve opačné změny od nejnovějšího:
 
@@ -127,14 +145,20 @@ git revert --no-edit backup/pred-presunem backup/pred-presunem~1 backup/pred-pre
 
 Vzniknou tři nové vratné commity, které můžeš odeslat běžným pushem.
 
-Pokud později chceš stejnou práci vrátit přes merge, zohledni i tyto reverty; Git si pamatuje, že původní commity už ve zdroji byly.
+Pokud později chceš stejnou práci vrátit přes merge, zohledni i tyto reverty.
 
-Novou cílovou větev zveřejníš přes `git push -u origin feature/presunuta-prace`; místní přesun neodeslaných commitů nevyžaduje force push zdroje.
+Git si pamatuje, že původní commity už ve zdroji byly.
+
+Novou cílovou větev zveřejníš přes `git push -u origin feature/presunuta-prace`.
+
+Místní přesun neodeslaných commitů nevyžaduje force push zdroje.
 
 ## Zatím jen rozpracované soubory
 
 Pokud ještě nemáš commit a současný základ je správný, stačí `git switch --no-track -c feature/presunuta-prace`.
 
-Necommitované úpravy zůstanou v pracovním stromu nové větve; pro jiný základ použij [stash nebo worktree](../stash-worktree.md).
+Necommitované úpravy zůstanou v pracovním stromu nové větve.
+
+Pro jiný základ použij [stash nebo worktree](../stash-worktree.md).
 
 Další rozbor variant: [Stack Overflow – přesun posledních commitů](https://stackoverflow.com/questions/1628563/move-the-most-recent-commits-to-a-new-branch-with-git).

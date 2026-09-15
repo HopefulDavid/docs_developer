@@ -6,7 +6,9 @@ description: "Přihlášení na server, přenos souborů, konfigurace spojení a
 
 SSH je šifrované spojení, přes které se přihlásíš na vzdálený počítač, spustíš příkaz nebo přeneseš soubor.
 
-Na tvém počítači běží **klient** a na cíli musí běžet dostupný **SSH server**; instalace klienta sama nepovolí příchozí přístup k tvému zařízení.
+Na tvém počítači běží **klient** a na cíli musí běžet dostupný **SSH server**.
+
+Instalace klienta sama nepovolí příchozí přístup k tvému zařízení.
 
 ## Co potřebuješ před připojením
 
@@ -40,7 +42,9 @@ Při prvním připojení porovnej zobrazený otisk s nezávisle získaným otisk
 
 Otisk se uloží do `known_hosts`, aby klient při příštím spojení poznal stejný server.
 
-Po přihlášení příkazy spouštíš **na cílovém počítači** a používáš jeho shell; příkaz `exit` vzdálené přihlášení ukončí.
+Po přihlášení příkazy spouštíš **na cílovém počítači** a používáš jeho shell.
+
+Příkaz `exit` vzdálené přihlášení ukončí.
 
 Heslo účtu nebo fráze klíče se při zadávání běžně nezobrazuje.
 
@@ -64,7 +68,7 @@ Soubor nemá příponu `.txt` a uvedené údaje musí odpovídat tvému serveru.
 | `Host` | Vlastní krátký název spojení |
 | `HostName` | Skutečnou adresu serveru |
 | `User` | Cílový účet |
-| `Port` | Skutečný naslouchající port; `2222` je pouze příklad |
+| `Port` | Skutečný naslouchající port. `2222` je pouze příklad |
 | `IdentityFile` | Cestu k vlastnímu soukromému klíči |
 | `IdentitiesOnly yes` | Omezí nabídku na nakonfigurované identity místo libovolných dalších klíčů agenta |
 
@@ -97,9 +101,13 @@ Před kopírováním ověř cílový název, protože existující soubor lze p�
 | `scp -r <místní-adresář> <alias>:<cílová-cesta>` | Rekurzivní kopie adresáře |
 | `sftp [-P <port>] <uživatel>@<server>` | Interaktivní přenos s příkazy `ls`, `get`, `put` a `exit` |
 
-SSH používá pro port `-p`, ale SCP a SFTP `-P`; při použití aliasu si port převezmou z jeho konfigurace.
+SSH používá pro port `-p`, ale SCP a SFTP `-P`.
 
-Novější OpenSSH používá pro SCP standardně protokol SFTP; kompatibilitu se starým serverem ověř, než budeš měnit transport.
+Při použití aliasu si port převezmou z jeho konfigurace.
+
+Novější OpenSSH používá pro SCP standardně protokol SFTP.
+
+Kompatibilitu se starým serverem ověř, než budeš měnit transport.
 
 ## Lokální tunel k neveřejné službě
 
@@ -116,23 +124,29 @@ ssh -N -L 127.0.0.1:8080:127.0.0.1:80 vyvoj
 | Druhé `127.0.0.1:80` | Cíl z pohledu SSH serveru, tedy jeho vlastní port 80 |
 | `vyvoj` | Server, který vytvoří vzdálenou část spojení |
 
-Po dobu běhu otevři `http://127.0.0.1:8080`; `Ctrl+C` tunel ukončí.
+Po dobu běhu otevři `http://127.0.0.1:8080`.
+
+`Ctrl+C` tunel ukončí.
 
 Místní port můžeš změnit na volný, ale cílovou adresu a port musíš znát a server musí tunelování povolovat.
 
-`-L` zpřístupňuje cíl lokálně, `-R` vytváří naslouchání na vzdálené straně a `-D` místní SOCKS proxy; vzdálené či veřejné naslouchání nastavuj jen pro konkrétní zamýšlený přístup.
+`-L` zpřístupňuje cíl lokálně, `-R` vytváří naslouchání na vzdálené straně a `-D` místní SOCKS proxy.
+
+Vzdálené či veřejné naslouchání nastavuj jen pro konkrétní zamýšlený přístup.
 
 ## Diagnostika podle chyby
 
 | Projev | Co znamená a co ověřit |
 |---|---|
-| `Could not resolve hostname` | Chybný název nebo DNS; zkontroluj také potřebnou VPN |
+| `Could not resolve hostname` | Chybný název nebo DNS. Zkontroluj také potřebnou VPN |
 | `Connection timed out` | Cesta k serveru, firewall, VPN nebo nesprávná adresa |
-| `Connection refused` | Cíl spojení odmítl; ověř běžící server a správný port |
-| `Permission denied` | Spojení došlo k ověření identity; kontroluj účet a nabízený klíč |
-| Změna hostitelského klíče | Může jít o reinstalaci i cizí server; ověř nový otisk jiným kanálem |
+| `Connection refused` | Cíl spojení odmítl. Ověř běžící server a správný port |
+| `Permission denied` | Spojení došlo k ověření identity. Kontroluj účet a nabízený klíč |
+| Změna hostitelského klíče | Může jít o reinstalaci i cizí server. Ověř nový otisk jiným kanálem |
 
-`ssh -vvv <alias>` vypíše podrobnosti přihlášení; před sdílením logu odstraň soukromá jména, adresy a místní cesty.
+`ssh -vvv <alias>` vypíše podrobnosti přihlášení.
+
+Před sdílením logu odstraň soukromá jména, adresy a místní cesty.
 
 Po nezávislém ověření legitimní změny můžeš odstranit starý záznam pomocí `ssh-keygen -R <server>`, u jiného portu `ssh-keygen -R "[<server>]:<port>"`, a při dalším spojení ověřit nový otisk.
 

@@ -44,7 +44,9 @@ Nejprve změř výchozí stav a měň jen jednu volbu, aby šlo poznat příčin
 
 ## Příklad explicitního resetu
 
-Soubor `SessionState.cs` ukazuje stav jedné herní relace; není potřeba jej přidávat jako komponentu.
+Soubor `SessionState.cs` ukazuje stav jedné herní relace.
+
+Není potřeba jej přidávat jako komponentu.
 
 ```csharp
 using UnityEngine;
@@ -64,7 +66,9 @@ public static class SessionState
 }
 ```
 
-Reset vlastního čítače neopraví jiné statické kolekce nebo odběry událostí; každý musí mít vlastní pravidlo životnosti.
+Reset vlastního čítače neopraví jiné statické kolekce nebo odběry událostí.
+
+Každý musí mít vlastní pravidlo životnosti.
 
 Spusť a zastav Play alespoň dvakrát a porovnej chování s čistým spuštěním buildu.
 

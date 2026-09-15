@@ -34,7 +34,7 @@ Přechodové stavy jsou soustředěné v části [Známá rizika, dluh a přecho
 | Omezení | Původ | Dopad | Stav |
 |---|---|---|---|
 | Výstup je statický web bez backendu | `REQ-001`, `REQ-002` a současný DocFX projekt | Veškerý obsah, navigace a vyhledávací index musí vzniknout při buildu | Záměr |
-| Veřejný obsah je primárně v češtině a neobsahuje editační odkazy | Produktové omezení | Generátor, názvy workflow, tokeny šablony, HTML jazyk a uživatelský text používají češtinu; příspěvkový blok DocFX se nevykresluje | Záměr |
+| Veřejný obsah je primárně v češtině a neobsahuje editační odkazy | Produktové omezení | Generátor, názvy workflow, tokeny šablony, HTML jazyk a uživatelský text používají češtinu. Příspěvkový blok DocFX se nevykresluje | Záměr |
 | Hosting a VCS jsou GitHub a GitHub Pages | Git remote a workflow | CI používá GitHub Actions a deployment do větve `gh-pages` | Skutečnost |
 | Projekt nemá serverovou databázi ani runtime tajemství | Inventura repozitáře a běhového výstupu | Obnova vychází z Git zdrojů a opakovatelného buildu | Skutečnost |
 | Historické veřejné URL mohou obsahovat mixed-case názvy | Lokální snapshot `origin/gh-pages` | Lowercase sjednocení může přerušit přímé historické odkazy | Skutečnost a přechod `ARCH-RISK-001` |
@@ -59,16 +59,16 @@ Diagram ukazuje autorství, sestavení a veřejné čtení bez serverové aplika
 | Aktér nebo systém | Směr komunikace | Účel | Rozhraní | Vlastník | Selhání a náhrada |
 |---|---|---|---|---|---|
 | Správce obsahu | Do systému | Udržuje zdrojové články, registr navigace a projektovou konfiguraci | Git, Markdown a lokální CLI | Vlastník repozitáře | Neúspěšná kontrola změnu zastaví a uvede konkrétní důkaz |
-| GitHub | Obousměrně | Uchovává vzdálený Git a spouští workflow | Git přes SSH, GitHub Actions | GitHub a vlastník repozitáře | Lokální práce pokračuje; publikování čeká na obnovení platformy |
+| GitHub | Obousměrně | Uchovává vzdálený Git a spouští workflow | Git přes SSH, GitHub Actions | GitHub a vlastník repozitáře | Lokální práce pokračuje. Publikování čeká na obnovení platformy |
 | GitHub Pages | Ze systému k čtenáři | Hostuje odvozený statický web | HTTPS a větev `gh-pages` | GitHub a vlastník repozitáře | Poslední úspěšný deployment zůstává dostupný, pokud platforma zachová službu |
-| npm registry | Do sestavení | Obnovuje přesně uzamčený `git-cliff` | HTTPS balíčkový registr a npm cache | npm | Již publikovaný web zůstane dostupný; čistý build bez cache čeká na obnovu registru |
+| npm registry | Do sestavení | Obnovuje přesně uzamčený `git-cliff` | HTTPS balíčkový registr a npm cache | npm | Již publikovaný web zůstane dostupný. Čistý build bez cache čeká na obnovu registru |
 | Prohlížeč čtenáře | Obousměrně se statickým webem | Zobrazuje stránky, vyhledává a ukládá neškodnou volbu tématu | HTTPS, HTML, CSS, JavaScript, `localStorage` | Čtenář | Nedostupné úložiště tématu se bezpečně nahradí režimem `auto` |
 
 ## 4. Strategie řešení
 
 - Veřejný obsah je explicitní allowlist tematických oblastí a zdrojových příloh, nikoli každý Markdown nalezený v repozitáři.
-- [`ADR-0002`](decisions/ADR-0002-verejny-docfx-build.md) sjednocuje veřejnou hranici, deklarovaný toolchain a kontrolu sestaveného artefaktu do jednoho build kontraktu; jeho přesné připnutí SDK nahrazuje [`ADR-0004`](decisions/ADR-0004-vyber-dotnet-sdk.md).
-- [`scripts/generate-docs.js`](../../scripts/generate-docs.js) vlastní názvy, pořadí a cesty veřejné navigace; generované indexy a TOC nejsou ručně upravované zdroje pravdy.
+- [`ADR-0002`](decisions/ADR-0002-verejny-docfx-build.md) sjednocuje veřejnou hranici, deklarovaný toolchain a kontrolu sestaveného artefaktu do jednoho build kontraktu. Jeho přesné připnutí SDK nahrazuje [`ADR-0004`](decisions/ADR-0004-vyber-dotnet-sdk.md).
+- [`scripts/generate-docs.js`](../../scripts/generate-docs.js) vlastní názvy, pořadí a cesty veřejné navigace. Generované indexy a TOC nejsou ručně upravované zdroje pravdy.
 - [`cliff.toml`](../../cliff.toml) deklarativně převádí úplnou Git historii na ignorovaný veřejný changelog podle [`ADR-0003`](decisions/ADR-0003-generovani-changelogu-pomoci-git-cliff.md).
 - `package.json` poskytuje stejné lidské vstupní příkazy lokálnímu vývoji i GitHub Actions.
 - Interní kanonické dokumenty řídí projekt, ale nemají běhovou závislost na veřejném webu a DocFX je nesmí zpracovat.
@@ -79,10 +79,10 @@ Diagram ukazuje autorství, sestavení a veřejné čtení bez serverové aplika
 |---|---|---|---|---|
 | Zdrojový veřejný obsah | Tematické Markdown stránky a přílohy v `images/` a `pdf/` | Relativní veřejné cesty uvedené v registru navigace | Jiné veřejné stránky a přílohy | Správce obsahu |
 | Generátor navigace | Normalizuje veřejný Markdown, migruje legacy cesty, generuje přehledy a ověřuje navigaci i lokální odkazy | npm profily `docs:generate` a `docs:check` | Node.js standardní knihovna a zdrojový veřejný obsah | Engineering |
-| Generátor changelogu | Dělí dosažitelnou Git historii do ročních období, uvnitř zachovává kategorie, označuje breaking changes a uvádí krátké neklikací hashe commitů | npm profil `changelog:generate` a `cliff.toml` | Git historie a `git-cliff` uzamčený npm lockfilem; výstup je ignorovaný build vstup | Delivery |
+| Generátor changelogu | Dělí dosažitelnou Git historii do ročních období, uvnitř zachovává kategorie, označuje breaking changes a uvádí krátké neklikací hashe commitů | npm profil `changelog:generate` a `cliff.toml` | Git historie a `git-cliff` uzamčený npm lockfilem. Výstup je ignorovaný build vstup | Delivery |
 | Kanonická projektová dokumentace | Definuje záměr, architekturu, workflow a dlouhé úkoly | Interní odkazy z `AGENTS.md` a `docs/index.md` | Strojové konfigurace jako důkaz, nikoli veřejný obsah | Maintainers |
 | DocFX build | Převádí povolené zdroje a aktivní šablonu na statický web | npm profil `docs:build` a adresář `_site/` | Generovaný i zdrojový veřejný obsah, resources a `templates/material` | Engineering |
-| Vlastní šablona | Přizpůsobuje vzhled, české popisky, volbu tématu, přeskočení navigace a klávesnicově dostupné posuvné tabulky; příspěvkový blok DocFX zůstává vypnutý | `templates/material/` a `docfx.json` | Podporované veřejné assety, tokeny a globální metadata DocFX | Design a engineering |
+| Vlastní šablona | Přizpůsobuje vzhled, české popisky, volbu tématu, přeskočení navigace a klávesnicově dostupné posuvné tabulky. Příspěvkový blok DocFX zůstává vypnutý | `templates/material/` a `docfx.json` | Podporované veřejné assety, tokeny a globální metadata DocFX | Design a engineering |
 | Kontrola artefaktu | Ověřuje manifest, veřejné stránky, nepřítomnost interních cest a lokální odkazy v HTML včetně kotev a casingu | npm profil `docs:artifact-check` | Čistý DocFX výstup | Quality |
 | GitHub workflow | Obnovuje deklarované nástroje, volá `npm run verify` a publikuje výstup | Workflow pro `develop`, pull request a `main` | GitHub Actions, build kontrakt a `GITHUB_TOKEN` pouze při publikování | Delivery |
 
@@ -109,27 +109,41 @@ Interní dokumentace je pouze řídicí kontext a obě zpracovatelské hranice j
 
 K 2026-09-11 rozcestník odvozuje přehled oblastí z téhož registru jako TOC a přidává krátké vstupy podle praktického cíle.
 
-Od 2026-09-12 vlastní stručný popis řádku rozcestníku jednořádkové metadata `description` cílového článku; generátor odmítá prázdnou či neplatnou hodnotu a neodvozuje ji z úvodu.
+Od 2026-09-12 vlastní stručný popis řádku rozcestníku jednořádkové metadata `description` cílového článku.
 
-Formát je řetězec v dvojitých uvozovkách s JSON escapováním, kompatibilní s YAML; pole nesmí obsahovat další řádek, Markdown odkaz nebo svislou čáru rozdělující tabulku.
+Generátor odmítá prázdnou či neplatnou hodnotu a neodvozuje ji z úvodu.
+
+Formát je řetězec v dvojitých uvozovkách s JSON escapováním, kompatibilní s YAML.
+
+Pole nesmí obsahovat další řádek, Markdown odkaz nebo svislou čáru rozdělující tabulku.
 
 Normalizace zachovává HTML obrázky s kladným atributem `width`, takže autor může posoudit rozměr každého snímku bez ztráty při regeneraci.
 
-CSS omezuje obrázek dostupnou šířkou a zachovává poměr stran; odkaz pod snímkem zpřístupňuje původní rozlišení.
+CSS omezuje obrázek dostupnou šířkou a zachovává poměr stran.
+
+Odkaz pod snímkem zpřístupňuje původní rozlišení.
 
 Aktivní `main.js` doplňuje přístupnost generovaného DocFX HTML bez změny textu ukázek: klávesnicové ovládání motivu, přeskočení navigace, lokalizaci přístupných názvů a obal pro posuv tabulek.
 
 Doplňující tab stop vzniká pouze u skutečně přetékající tabulky nebo kódu a přepočítává se při změně rozměru i rozbalení obsahu.
 
-Kopírování zajišťuje DocFX; šablona zpřístupňuje jeho odkazy klávesnici a přidává čitelný název.
+Kopírování zajišťuje DocFX.
 
-Na mobilu a tabletu se hlavní nabídka rozbaluje a při hledání uvolňuje místo výsledkům; nová hledaná fráze se zobrazí od prvního výsledku.
+Šablona zpřístupňuje jeho odkazy klávesnici a přidává čitelný název.
 
-Interní výsledky vyhledávání se otevírají ve stejné kartě jako běžné odkazy na články; browserový doplněk odstraňuje výchozí `target="_blank"` pouze u výsledků stejného originu.
+Na mobilu a tabletu se hlavní nabídka rozbaluje a při hledání uvolňuje místo výsledkům.
+
+Nová hledaná fráze se zobrazí od prvního výsledku.
+
+Interní výsledky vyhledávání se otevírají ve stejné kartě jako běžné odkazy na články.
+
+Browserový doplněk odstraňuje výchozí `target="_blank"` pouze u výsledků stejného originu.
 
 Víceřádkový název výsledku má souvislou klikací plochu a dlouhé URL i úryvky se zalamují uvnitř dostupné šířky.
 
-Ověření odkazů zpracovává citované atributy a ID kontrolovaného výstupu DocFX; nejde o obecný HTML parser ani o kontrolu dostupnosti externích serverů.
+Ověření odkazů zpracovává citované atributy a ID kontrolovaného výstupu DocFX.
+
+Nejde o obecný HTML parser ani o kontrolu dostupnosti externích serverů.
 
 Tyto doplňky používají stávající JavaScript a standardní Node API bez nových balíčků nebo změny hostingu.
 
@@ -137,19 +151,19 @@ Tyto doplňky používají stávající JavaScript a standardní Node API bez no
 
 | Scénář | Navázaný požadavek | Konzistenční hranice | Selhání a zotavení |
 |---|---|---|---|
-| Aktualizace navigace | `REQ-003`, `REQ-E001` | Jedno spuštění nejdříve migruje cesty a normalizuje zdroje, poté generuje všechny přehledy a až nakonec validuje úplnost | Chyba skončí nenulovým kódem; správce opraví uvedený zdroj a spustí kontrolu znovu |
+| Aktualizace navigace | `REQ-003`, `REQ-E001` | Jedno spuštění nejdříve migruje cesty a normalizuje zdroje, poté generuje všechny přehledy a až nakonec validuje úplnost | Chyba skončí nenulovým kódem. Správce opraví uvedený zdroj a spustí kontrolu znovu |
 | Ověřené lokální sestavení | `REQ-E002`, `REQ-E003`, `QLT-002`, `QLT-003` | `docs:build` vytvoří changelog, odstraní pouze `_site`, provede strict DocFX build a ověří celý nový artefakt | Chybějící historie, warning, chybějící veřejná stránka nebo interní cesta zastaví profil bez publikování |
-| Publikování `main` | `REQ-004` | Jediný job sestaví ověřený commit a až po úspěchu předá `_site` publikační akci | Selhání zachová předchozí `gh-pages`; oprava se provede ve zdroji a workflow se zopakuje |
+| Publikování `main` | `REQ-004` | Jediný job sestaví ověřený commit a až po úspěchu předá `_site` publikační akci | Selhání zachová předchozí `gh-pages`. Oprava se provede ve zdroji a workflow se zopakuje |
 
 ## 7. Data a jejich životní cyklus
 
 | Datová oblast | Autoritativní zdroj | Vlastník | Konzistence | Retence a mazání | Migrace |
 |---|---|---|---|---|---|
-| Zdrojové články a veřejné přílohy | Git soubory mimo generované indexy a interní exclusions | Správce obsahu | Git historie a lokální link/navigation check | Podle historie repozitáře; odstranění je běžná verzovaná změna | Přejmenování řídí `legacyRenames` a kontrola přesného casingu |
-| Registr navigace | `sectionInfo`, `sectionOrder`, `navigation` a `rootPages` v generátoru | Engineering | Generované výstupy musí po `docs:generate` projít `docs:check` | Historii drží Git; překonaný přechod se odstraní po migraci | Generátor převádí známé legacy cesty před vytvořením výstupů |
-| Generované indexy a TOC | Výstup generátoru se zdrojovým markerem | Engineering | Nesmějí se ručně upravovat; drift je chyba | Přepisují se atomicky při generování a zůstávají verzované | Vždy se znovu odvozují z registru |
-| Changelog | Git historie a `cliff.toml` | Delivery | Regenerace při každém sestavení z úplné dosažitelné historie | Ignorovaný lokální výstup a kopie ve statickém artefaktu | Nejnovější rok změn zůstává otevřený, roky bez změn se nezobrazují a starší zobrazené roky jsou sbalené; změna formátu nesmí skrýt dosažitelný commit a samostatný ruční archiv se neudržuje |
-| Statický web | Čistý build `_site/` a publikovaná větev `gh-pages` | Delivery | Artefakt check porovnává manifest a výstup s veřejnou hranicí | Lokální `_site/` je odstranitelný; `gh-pages` uchovává pouze poslední kořenový deployment commit | Neobsahuje datové migrace a lze jej znovu sestavit ze zdroje |
+| Zdrojové články a veřejné přílohy | Git soubory mimo generované indexy a interní exclusions | Správce obsahu | Git historie a lokální link/navigation check | Podle historie repozitáře. Odstranění je běžná verzovaná změna | Přejmenování řídí `legacyRenames` a kontrola přesného casingu |
+| Registr navigace | `sectionInfo`, `sectionOrder`, `navigation` a `rootPages` v generátoru | Engineering | Generované výstupy musí po `docs:generate` projít `docs:check` | Historii drží Git. Překonaný přechod se odstraní po migraci | Generátor převádí známé legacy cesty před vytvořením výstupů |
+| Generované indexy a TOC | Výstup generátoru se zdrojovým markerem | Engineering | Nesmějí se ručně upravovat. Drift je chyba | Přepisují se atomicky při generování a zůstávají verzované | Vždy se znovu odvozují z registru |
+| Changelog | Git historie a `cliff.toml` | Delivery | Regenerace při každém sestavení z úplné dosažitelné historie | Ignorovaný lokální výstup a kopie ve statickém artefaktu | Nejnovější rok změn zůstává otevřený, roky bez změn se nezobrazují a starší zobrazené roky jsou sbalené. Změna formátu nesmí skrýt dosažitelný commit a samostatný ruční archiv se neudržuje |
+| Statický web | Čistý build `_site/` a publikovaná větev `gh-pages` | Delivery | Artefakt check porovnává manifest a výstup s veřejnou hranicí | Lokální `_site/` je odstranitelný. `gh-pages` uchovává pouze poslední kořenový deployment commit | Neobsahuje datové migrace a lze jej znovu sestavit ze zdroje |
 | Volba tématu | `localStorage` klíč `theme` v prohlížeči | Čtenář | Hodnota se omezuje na `light`, `dark` nebo `auto` | Odstranění dat prohlížeče vrátí `auto` | Není potřeba serverová migrace |
 
 ## 8. Nasazení a provozní topologie
@@ -165,12 +179,12 @@ Tyto doplňky používají stávající JavaScript a standardní Node API bez no
 
 | Koncept | Kanonický princip | Vynucení | Výjimky |
 |---|---|---|---|
-| Veřejná hranice | Publikuje se pouze explicitně povolený obsah | Sdílená klasifikace cest, DocFX exclusions, testy a artifact check | Žádné; změna vyžaduje aktualizaci `ADR-0002` nebo jeho nahrazení |
+| Veřejná hranice | Publikuje se pouze explicitně povolený obsah | Sdílená klasifikace cest, DocFX exclusions, testy a artifact check | Žádné. Změna vyžaduje aktualizaci `ADR-0002` nebo jeho nahrazení |
 | Cesty a casing | Registr i fyzický soubor používají shodný lowercase název, pokud je tak cesta kanonizovaná | Generátor a filesystem test | Historické URL jsou přechod `ARCH-RISK-001` |
 | Generovaný obsah | Upravuje se zdrojový registr nebo článek, nikdy odvozený markerový soubor | `docs:check` a Git review | Žádné |
 | Chyby | Kontrola selže nahlas s konkrétní cestou a nenulovým kódem | Node CLI, testy a DocFX `--warningsAsErrors` | Žádné tiché retry |
-| Konfigurace nástrojů | Verze nástrojů mají strojovou autoritu; CI vlastní instalační kanál SDK | `package.json`, `.config/dotnet-tools.json` a `.github/workflows/` | Lokální SDK se nepřipíná podle `ADR-0004` |
-| Tajemství | Build je bez tajemství; publikační token se předává pouze deploy akci | Workflow permissions a explicitní `github_token` | Přechodně má celý publish job `contents: write`, viz `ARCH-RISK-002` |
+| Konfigurace nástrojů | Verze nástrojů mají strojovou autoritu. CI vlastní instalační kanál SDK | `package.json`, `.config/dotnet-tools.json` a `.github/workflows/` | Lokální SDK se nepřipíná podle `ADR-0004` |
+| Tajemství | Build je bez tajemství. Publikační token se předává pouze deploy akci | Workflow permissions a explicitní `github_token` | Přechodně má celý publish job `contents: write`, viz `ARCH-RISK-002` |
 
 ## 10. Bezpečnost a ochrana dat
 
@@ -187,9 +201,9 @@ Tyto doplňky používají stávající JavaScript a standardní Node API bez no
 | ID | Skutečnost nebo přechod | Dopad | Cílový záměr | Vlastník | Podmínka uzavření |
 |---|---|---|---|---|---|
 | `ARCH-RISK-001` | Přechod: pět historických mixed-case URL bylo sjednoceno na lowercase bez redirectů | Přímý odkaz na starou cestu může na case-sensitive hostingu vrátit 404 | Jediná stabilní lowercase cesta nebo explicitně přijaté redirecty | Product a Delivery | Ověřený inventář živých URL a rozhodnutí, zda jsou redirecty potřebné |
-| `ARCH-RISK-002` | Přechod: publish používá third-party branch-push akci, celý job má `contents: write` a `gh-pages` kvůli force pushi nemá platformní ochranu; Pages source byl 2026-08-28 ověřen jako kořen `gh-pages` | Kompromitovaná build závislost nebo oprávněný ruční push může změnit veřejný web mimo chráněný zdrojový tok | Oddělený ověřený build artefakt a privilegovaný deploy krok bez zápisového oprávnění v build krocích | Delivery | Přijatý a vzdáleně ověřený bezpečnější deployment model nebo explicitní přijetí současného zbytkového rizika |
-| `ARCH-RISK-003` | Skutečnost: build kontroluje lokální odkazy včetně kotev; odborné review a dostupnost externích URL vyžadují oddělené ověření, které může omezit vzdálený server | Starší návod nebo externí odkaz může zůstat nefunkční | Rizikově řízená periodická revize obsahu | Správce obsahu | Zavedený review interval nebo samostatný ověřovací mechanismus s přijatelným šumem |
-| `ARCH-RISK-004` | Skutečnost: 2026-08-28 byly vzdáleně ověřené aktivní rulesety `main` a `develop`, Pages source `gh-pages`, úspěšné quality i publish workflow, jediný deploymentový commit a veřejný web; tato nastavení zůstávají mimo Git strom | Pozdější ruční změna platformy může obejít dokumentovaný workflow nebo přerušit publikování bez odpovídajícího Git diffu | Po každé změně vzdálených pravidel nebo delivery toku zopakovat důkaz definovaný v CI/CD dokumentaci | Delivery | Automatizovaná detekce a náprava driftu rulesetů a Pages settings; do té doby zůstává povinná ruční vzdálená kontrola |
+| `ARCH-RISK-002` | Přechod: publish používá third-party branch-push akci, celý job má `contents: write` a `gh-pages` kvůli force pushi nemá platformní ochranu. Pages source byl 2026-08-28 ověřen jako kořen `gh-pages` | Kompromitovaná build závislost nebo oprávněný ruční push může změnit veřejný web mimo chráněný zdrojový tok | Oddělený ověřený build artefakt a privilegovaný deploy krok bez zápisového oprávnění v build krocích | Delivery | Přijatý a vzdáleně ověřený bezpečnější deployment model nebo explicitní přijetí současného zbytkového rizika |
+| `ARCH-RISK-003` | Skutečnost: build kontroluje lokální odkazy včetně kotev. Odborné review a dostupnost externích URL vyžadují oddělené ověření, které může omezit vzdálený server | Starší návod nebo externí odkaz může zůstat nefunkční | Rizikově řízená periodická revize obsahu | Správce obsahu | Zavedený review interval nebo samostatný ověřovací mechanismus s přijatelným šumem |
+| `ARCH-RISK-004` | Skutečnost: 2026-08-28 byly vzdáleně ověřené aktivní rulesety `main` a `develop`, Pages source `gh-pages`, úspěšné quality i publish workflow, jediný deploymentový commit a veřejný web. Tato nastavení zůstávají mimo Git strom | Pozdější ruční změna platformy může obejít dokumentovaný workflow nebo přerušit publikování bez odpovídajícího Git diffu | Po každé změně vzdálených pravidel nebo delivery toku zopakovat důkaz definovaný v CI/CD dokumentaci | Delivery | Automatizovaná detekce a náprava driftu rulesetů a Pages settings. Do té doby zůstává povinná ruční vzdálená kontrola |
 | `ARCH-RISK-005` | Skutečnost: lokální smoke 2026-09-12 nenašel nový článek dotazem `nahrazení celé historie`, zatímco `historie` jej našlo a navigace fungovala | Čtenář se nemusí k článku dostat víceslovným českým dotazem | Samostatně ověřit tokenizaci dotazů v DocFX vyhledávání a zajistit shodu s názvem článku | Engineering | Reprodukční test českého víceslovného dotazu projde nad sestaveným webem |
 
 ## 12. Architektonický slovník

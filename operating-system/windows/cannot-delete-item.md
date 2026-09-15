@@ -4,7 +4,9 @@ description: "Rozlišení zamčeného souboru, oprávnění a chybné cesty pře
 
 # Windows – soubor nebo složka nejde odstranit
 
-Chybové hlášení nejprve použij k určení příčiny; větší síla mazacího příkazu neřeší všechny případy.
+Chybové hlášení nejprve použij k určení příčiny.
+
+Větší síla mazacího příkazu neřeší všechny případy.
 
 ## Rozhodni podle projevu
 
@@ -30,7 +32,9 @@ Get-Item -LiteralPath $itemPath -Force |
     Select-Object FullName, PSIsContainer, Attributes
 ```
 
-`PSIsContainer: True` označuje adresář; při chybě výpisu nepokračuj s odhadnutým názvem.
+`PSIsContainer: True` označuje adresář.
+
+Při chybě výpisu nepokračuj s odhadnutým názvem.
 
 Pro adresář ověř také obsah a náhled:
 
@@ -47,7 +51,9 @@ Po potvrzení správné úplné cesty použij:
 Remove-Item -LiteralPath $itemPath -Recurse -Confirm
 ```
 
-Pro jediný soubor nastav jeho přesnou cestu a vynech `-Recurse`; při potřebě odstranit skrytou položku nebo soubor jen pro čtení lze přidat `-Force`, který však neobchází ACL oprávnění.
+Pro jediný soubor nastav jeho přesnou cestu a vynech `-Recurse`.
+
+Při potřebě odstranit skrytou položku nebo soubor jen pro čtení lze přidat `-Force`, který však neobchází ACL oprávnění.
 
 ## CMD: rozlišení souboru a složky
 
@@ -58,7 +64,9 @@ cd /d "C:\Data\Ukazka"
 dir /a /x
 ```
 
-`/a` zahrne skryté položky a `/x` ukáže existující krátké názvy 8.3; `<DIR>` ve výpisu znamená adresář.
+`/a` zahrne skryté položky a `/x` ukáže existující krátké názvy 8.3.
+
+`<DIR>` ve výpisu znamená adresář.
 
 | Syntaxe CMD | Účinek |
 |---|---|
@@ -69,7 +77,9 @@ dir /a /x
 
 Před `rd /s` prohlédni obsah přes `dir /a "<složka>"` a přejdi v terminálu mimo odstraňovanou složku.
 
-Nepřebírej název typu `PROBLE~1` z ukázky; použij pouze skutečný krátký název z výpisu, pokud vůbec existuje.
+Nepřebírej název typu `PROBLE~1` z ukázky.
+
+Použij pouze skutečný krátký název z výpisu, pokud vůbec existuje.
 
 ## CMD: problematický název nebo dlouhá cesta
 
@@ -80,7 +90,9 @@ dir /a "\\?\C:\Data\Ukazka"
 dir /a "\\?\C:\Data\Ukazka\ProblemovaSlozka."
 ```
 
-Příklad končí tečkou, která je součástí skutečného názvu; ověř přesný výpis, nic automaticky neopravuj ani nezkracuj.
+Příklad končí tečkou, která je součástí skutečného názvu.
+
+Ověř přesný výpis, nic automaticky neopravuj ani nezkracuj.
 
 Jen pro takto ověřenou celou složku:
 
@@ -96,6 +108,8 @@ Pro samostatný soubor použij `del /p` s jeho přesnou rozšířenou cestou.
 
 Znovu vypiš nadřazenou složku stejným nástrojem a obnov Průzkumník přes F5.
 
-Úspěch znamená, že cílová položka zmizela a ostatní data zůstala; při další chybě postupuj podle jejího přesného znění.
+Úspěch znamená, že cílová položka zmizela a ostatní data zůstala.
+
+Při další chybě postupuj podle jejího přesného znění.
 
 Zdroje: [Remove-Item](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/remove-item), [rd](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/rd), [Windows cesty](https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file).

@@ -21,16 +21,24 @@ Projektové příkazy spouštěj ve složce s `pubspec.yaml`.
 | Generování překladů | `flutter gen-l10n` |
 | Nápověda konkrétního příkazu | `flutter help <příkaz>` |
 
-`<id-zařízení>` vezmi z výpisu `flutter devices`; například `flutter run -d chrome` spustí webovou aplikaci v prohlížeči, pokud je cíl Chrome dostupný.
+`<id-zařízení>` vezmi z výpisu `flutter devices`.
 
-`flutter help build` je příklad nápovědy pro sestavení; volitelný zápis v hranatých závorkách se při zadávání příkazu neopisuje.
+Například `flutter run -d chrome` spustí webovou aplikaci v prohlížeči, pokud je cíl Chrome dostupný.
+
+`flutter help build` je příklad nápovědy pro sestavení.
+
+Volitelný zápis v hranatých závorkách se při zadávání příkazu neopisuje.
 
 Sestavení vyžaduje nástroje cílové platformy. [Reference CLI](https://docs.flutter.dev/reference/flutter-cli)
 
 ## Aktualizace a čištění
 
-`flutter pub upgrade` znovu vyřeší závislosti v povolených rozsazích a může změnit lockfile; změny zkontroluj a otestuj. [Pub upgrade](https://dart.dev/tools/pub/cmd/pub-upgrade)
+`flutter pub upgrade` znovu vyřeší závislosti v povolených rozsazích a může změnit lockfile.
+
+Změny zkontroluj a otestuj. [Pub upgrade](https://dart.dev/tools/pub/cmd/pub-upgrade)
 
 `flutter upgrade` aktualizuje SDK v aktuálním kanálu, proto jej nepřidávej do běžné obnovy projektu.
 
-`flutter clean` odstraní generované složky `build/` a `.dart_tool/`; používej jej při diagnostice problémů s těmito výstupy, následně spusť `flutter pub get`. [Reference CLI](https://docs.flutter.dev/reference/flutter-cli)
+`flutter clean` odstraní generované složky `build/` a `.dart_tool/`.
+
+Používej jej při diagnostice problémů s těmito výstupy, následně spusť `flutter pub get`. [Reference CLI](https://docs.flutter.dev/reference/flutter-cli)

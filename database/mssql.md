@@ -4,7 +4,9 @@ description: "SQL dotazy, vazby tabulek a diagnostika databáze."
 
 # SQL Server – dotazy a diagnostika
 
-Dotazy spouštěj v kontextu zamýšlené databáze; přístup k metadatům a diagnostickým pohledům závisí na oprávnění účtu.
+Dotazy spouštěj v kontextu zamýšlené databáze.
+
+Přístup k metadatům a diagnostickým pohledům závisí na oprávnění účtu.
 
 ## Získání informací o serveru a databázi
 
@@ -49,9 +51,13 @@ GROUP BY t.schema_id, t.name
 ORDER BY ReservedMB DESC;
 ```
 
-Počet řádků je odhad z metadat; paměťově optimalizované tabulky vyžadují vlastní statistiky.
+Počet řádků je odhad z metadat.
 
-V SQL Serveru 2022 a novějším tento DMV vyžaduje `VIEW DATABASE PERFORMANCE STATE` a `VIEW SECURITY DEFINITION`; starší verze mají odlišné požadavky. [Statistiky oddílů](https://learn.microsoft.com/en-us/sql/relational-databases/system-dynamic-management-views/sys-dm-db-partition-stats-transact-sql?view=sql-server-ver17)
+Paměťově optimalizované tabulky vyžadují vlastní statistiky.
+
+V SQL Serveru 2022 a novějším tento DMV vyžaduje `VIEW DATABASE PERFORMANCE STATE` a `VIEW SECURITY DEFINITION`.
+
+Starší verze mají odlišné požadavky. [Statistiky oddílů](https://learn.microsoft.com/en-us/sql/relational-databases/system-dynamic-management-views/sys-dm-db-partition-stats-transact-sql?view=sql-server-ver17)
 
 Pro jednu tabulku použij také `EXEC sys.sp_spaceused N'dbo.Users';`. [Sp_spaceused](https://learn.microsoft.com/sql/relational-databases/system-stored-procedures/sp-spaceused-transact-sql?view=sql-server-ver17)
 
@@ -72,7 +78,9 @@ WHERE s.database_id = DB_ID()
 ORDER BY [Reads] DESC, [Updates] ASC;
 ```
 
-Statistiky se resetují například při restartu enginu; chybějící řádek není důkazem, že index nikdy není potřeba.
+Statistiky se resetují například při restartu enginu.
+
+Chybějící řádek není důkazem, že index nikdy není potřeba.
 
 V SQL Serveru 2022 a novějším je potřeba `VIEW SERVER PERFORMANCE STATE`. [Význam čítačů a oprávnění](https://learn.microsoft.com/en-us/sql/relational-databases/system-dynamic-management-views/sys-dm-db-index-usage-stats-transact-sql?view=sql-server-ver17)
 
@@ -93,7 +101,9 @@ ORDER BY SchemaName, TableName, ColumnName;
 
 Pro běžnou práci použij konkrétní tabulku, sloupec a parametr.
 
-Následující diagnostika prohledává běžné textové a číselné typy jako text a vrací nejvýše 20 nálezů na sloupec; na velké databázi může být nákladná, proto ji nejprve použij na vývojové kopii.
+Následující diagnostika prohledává běžné textové a číselné typy jako text a vrací nejvýše 20 nálezů na sloupec.
+
+Na velké databázi může být nákladná, proto ji nejprve použij na vývojové kopii.
 
 <details>
 <summary>Úplný skript pro vývojovou databázi</summary>
@@ -179,7 +189,9 @@ Výsledky čti spolu se skutečným plánem dotazu a reprezentativními daty. [S
 
 Pro klientské TCP připojení ve Windows zkontroluj **SQL Server Configuration Manager → SQL Server Network Configuration → Protocols for danou instanci → TCP/IP**.
 
-Změna protokolu vyžaduje restart služby; firewall musí povolit skutečně nastavený port pouze požadovaným klientům. [Síťové protokoly serveru](https://learn.microsoft.com/en-us/sql/database-engine/configure-windows/enable-or-disable-a-server-network-protocol?view=sql-server-ver17)
+Změna protokolu vyžaduje restart služby.
+
+Firewall musí povolit skutečně nastavený port pouze požadovaným klientům. [Síťové protokoly serveru](https://learn.microsoft.com/en-us/sql/database-engine/configure-windows/enable-or-disable-a-server-network-protocol?view=sql-server-ver17)
 
 Volba `sp_configure 'remote access'` řídí historické vzdálené spouštění uložených procedur mezi servery a nepotvrzuje dostupnost klientského TCP spojení. [Význam remote access](https://learn.microsoft.com/en-us/sql/database-engine/configure-windows/configure-the-remote-access-server-configuration-option)
 
@@ -188,10 +200,10 @@ Volba `sp_configure 'remote access'` řídí historické vzdálené spouštění
 | Operace | Výsledek |
 |---|---|
 | `INNER JOIN` | Kombinace řádků splňující podmínku spojení |
-| `LEFT JOIN` | Navíc všechny řádky levé strany; chybějící pravé hodnoty jsou NULL |
-| `RIGHT JOIN` | Navíc všechny řádky pravé strany; chybějící levé hodnoty jsou NULL |
+| `LEFT JOIN` | Navíc všechny řádky levé strany. Chybějící pravé hodnoty jsou NULL |
+| `RIGHT JOIN` | Navíc všechny řádky pravé strany. Chybějící levé hodnoty jsou NULL |
 | `FULL OUTER JOIN` | Všechny odpovídající i nespárované řádky obou stran |
-| `CROSS APPLY` | Pravý tabulkový výraz vyhodnocený pro řádky vlevo; prázdný výsledek levý řádek vyřadí |
+| `CROSS APPLY` | Pravý tabulkový výraz vyhodnocený pro řádky vlevo. Prázdný výsledek levý řádek vyřadí |
 
 [Microsoft: JOIN a APPLY](https://learn.microsoft.com/en-us/sql/t-sql/queries/from-transact-sql?view=sql-server-ver17).
 
@@ -207,4 +219,6 @@ FROM dbo.Orders
 GROUP BY Status;
 ```
 
-Převod na `nvarchar(max)` před agregací omezuje riziko překročení délky výsledku; `NULL` hodnoty se vynechávají. [STRING_AGG](https://learn.microsoft.com/en-us/sql/t-sql/functions/string-agg-transact-sql)
+Převod na `nvarchar(max)` před agregací omezuje riziko překročení délky výsledku.
+
+`NULL` hodnoty se vynechávají. [STRING_AGG](https://learn.microsoft.com/en-us/sql/t-sql/functions/string-agg-transact-sql)

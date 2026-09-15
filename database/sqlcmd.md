@@ -42,10 +42,16 @@ exit /b 0
 
 `-S` určuje server, `-d` databázi, `-E` použije identitu Windows, `-i` načte soubor a `-b` způsobí chybový návratový kód při odpovídající SQL chybě.
 
-`%%G` patří do dávkového souboru; při ručním zápisu smyčky přímo do CMD se používá `%G`.
+`%%G` patří do dávkového souboru.
 
-Chyba zastaví další skripty, ale nevrátí dříve potvrzené změny; transakce a opakovatelnost musí řešit samotné SQL nebo migrační nástroj.
+Při ručním zápisu smyčky přímo do CMD se používá `%G`.
+
+Chyba zastaví další skripty, ale nevrátí dříve potvrzené změny.
+
+Transakce a opakovatelnost musí řešit samotné SQL nebo migrační nástroj.
 
 Po spuštění ověř očekávané tabulky a data, ne pouze návratový kód.
 
-Při SQL autentizaci neukládej heslo do dávky ani nepoužívej `-P` s heslem v historii; způsob přihlášení a TLS nastav podle [dokumentace své varianty sqlcmd](https://learn.microsoft.com/en-us/sql/tools/sqlcmd/sqlcmd-utility).
+Při SQL autentizaci neukládej heslo do dávky ani nepoužívej `-P` s heslem v historii.
+
+Způsob přihlášení a TLS nastav podle [dokumentace své varianty sqlcmd](https://learn.microsoft.com/en-us/sql/tools/sqlcmd/sqlcmd-utility).

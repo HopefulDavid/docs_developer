@@ -12,12 +12,14 @@ Ukazuje **co napsat doslova**, **co nahradit vlastní hodnotou** a **co můžeš
 
 | Syntaxe | Konkrétní příklad | Co se dosazuje |
 |---|---|---|
-| `ollama pull <model>` | `ollama pull llama3.2` | `<model>` je jméno modelu; zde `llama3.2` |
-| `git switch <větev>` | `git switch main` | `<větev>` je existující místní větev; zde `main` |
+| `ollama pull <model>` | `ollama pull llama3.2` | `<model>` je jméno modelu, zde `llama3.2` |
+| `git switch <větev>` | `git switch main` | `<větev>` je existující místní větev, zde `main` |
 
 Do terminálu patří až příkaz s dosazenými hodnotami, bez úhlových závorek.
 
-První příklad stáhne soubory zvoleného modelu; druhý přepne pracovní soubory Gitu na zvolenou větev.
+První příklad stáhne soubory zvoleného modelu.
+
+Druhý přepne pracovní soubory Gitu na zvolenou větev.
 
 ## Význam jednotlivých značek
 
@@ -33,7 +35,9 @@ Používáme [konvenci Microsoftu pro zápis syntaxe](https://learn.microsoft.co
 | `<soubor>...` | Opakovaná hodnota | Doplň jeden nebo více souborů |
 | `[<soubor>...]` | Volitelné opakování | Nemusíš zadat žádný soubor |
 
-V nápovědě jiného nástroje může být proměnná označená také kurzívou nebo velkými písmeny; rozhoduje legenda daného návodu.
+V nápovědě jiného nástroje může být proměnná označená také kurzívou nebo velkými písmeny.
+
+Rozhoduje legenda daného návodu.
 
 ## Jak doplnit volitelnou část
 
@@ -52,7 +56,9 @@ Pevné části jsou `ssh`, přepínač `-p` a znak `@` mezi účtem a serverem.
 
 `jana`, `server.example.com` a `2222` jsou ilustrační hodnoty: nahraď je účtem, adresou a portem svého serveru.
 
-Pokud vybereš volbu `-p`, musíš dodat i její hodnotu; samotné `-p` není úplný parametr. [OpenSSH: ssh](https://man.openbsd.org/ssh)
+Pokud vybereš volbu `-p`, musíš dodat i její hodnotu.
+
+Samotné `-p` není úplný parametr. [OpenSSH: ssh](https://man.openbsd.org/ssh)
 
 ## Mezery, uvozovky a prostředí
 
@@ -66,7 +72,9 @@ Uvozovky spojí název s mezerami do jedné hodnoty, zatímco `README.md` je dru
 
 `--` je skutečný oddělovač voleb od cest a do tohoto příkazu patří.
 
-Oba soubory se připraví do příštího commitu; příkaz je nevytváří ani neodesílá na server. [Git add](https://git-scm.com/docs/git-add)
+Oba soubory se připraví do příštího commitu.
+
+Příkaz je nevytváří ani neodesílá na server. [Git add](https://git-scm.com/docs/git-add)
 
 Vždy ověř prostředí označené u ukázky: přepínače a uvozovky [CMD](windows/cmd.md) nemusí fungovat stejně v [PowerShellu](windows/powershell.md).
 
@@ -76,6 +84,10 @@ Svislítko `|` znamená v referenční syntaxi výběr alternativ, ale v hotové
 
 Podobně `>` může přesměrovat výstup do souboru a `[0-9]` je skutečné pravidlo regulárního výrazu.
 
-Proto rozlišuj označení **Syntaxe**, **Příklad**, **Konfigurace** a **Výstup**; značky parametrů odstraňuješ při sestavení příkazu ze syntaxe, nikoli mechanicky z každé ukázky.
+Proto rozlišuj označení **Syntaxe**, **Příklad**, **Konfigurace** a **Výstup**.
 
-Před spuštěním ještě ověř cílovou složku, dosazené hodnoty a očekávaný účinek; nápovědu konkrétní verze získáš například přes `ollama pull --help`.
+Značky parametrů odstraňuješ při sestavení příkazu ze syntaxe, nikoli mechanicky z každé ukázky.
+
+Před spuštěním ještě ověř cílovou složku, dosazené hodnoty a očekávaný účinek.
+
+Nápovědu konkrétní verze získáš například přes `ollama pull --help`.

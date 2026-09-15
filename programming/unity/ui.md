@@ -30,7 +30,9 @@ Hodnota `0` ponechá obdélníkový zásah a například `0.5` vyžaduje alespo�
 
 V importu textury zapni **Read/Write**, přiřaď sprite s průhlednými okraji a pro tuto ukázku jej vynech ze Sprite Atlasu.
 
-Čtení pixelů může zvýšit paměťové nároky; alfa barvy komponenty `Image.color` se při tomto testu nepoužívá.
+Čtení pixelů může zvýšit paměťové nároky.
+
+Alfa barvy komponenty `Image.color` se při tomto testu nepoužívá.
 
 Ulož komponentu jako `AlphaHitButton.cs` a přidej ji přímo na objekt s Image tlačítka.
 
@@ -64,6 +66,8 @@ Pokud roh dál reaguje, vypni **Raycast Target** na dekorativním textu nebo jin
 
 `threshold` měň v Inspectoru podle okrajů spritu, ale zachovej dostatečně velkou ovládací plochu pro dotyk.
 
-Práh neovlivňuje aktivaci tlačítka klávesnicí nebo gamepadem; ověř i tuto cestu.
+Práh neovlivňuje aktivaci tlačítka klávesnicí nebo gamepadem.
+
+Ověř i tuto cestu.
 
 Podmínky čitelnosti textury popisuje [API Image](https://docs.unity3d.com/Packages/com.unity.ugui@2.0/api/UnityEngine.UI.Image.html#UnityEngine_UI_Image_alphaHitTestMinimumThreshold).

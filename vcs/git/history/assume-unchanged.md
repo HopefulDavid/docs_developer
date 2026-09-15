@@ -4,7 +4,9 @@ description: "Oddělení lokální konfigurace a limity příznaků sledovaných
 
 # Git – lokální konfigurace a assume-unchanged
 
-Příznak `assume-unchanged` je optimalizace kontroly sledovaného souboru; není spolehlivý způsob ukládání vlastní konfigurace mimo historii.
+Příznak `assume-unchanged` je optimalizace kontroly sledovaného souboru.
+
+Není spolehlivý způsob ukládání vlastní konfigurace mimo historii.
 
 ## Proč tím neskrývat vlastní úpravy
 
@@ -14,7 +16,9 @@ Git může změnu přesto rozpoznat nebo při merge vyžadovat odstranění př�
 
 ## Před použitím
 
-Rozliš, zda je soubor sledovaný; ověř jej příkazem `git ls-files -- config.local.json`.
+Rozliš, zda je soubor sledovaný.
+
+Ověř jej příkazem `git ls-files -- config.local.json`.
 
 Pokud příkaz nic nevypíše, soubor není v indexu a lze jej ignorovat běžným pravidlem.
 
@@ -44,12 +48,16 @@ git update-index --no-assume-unchanged -- config.json
 git diff -- config.json
 ```
 
-Malé počáteční písmeno ve výpisu `ls-files -v` označuje `assume-unchanged`; poslední příkaz ukáže místní změny. [Reference git ls-files](https://git-scm.com/docs/git-ls-files)
+Malé počáteční písmeno ve výpisu `ls-files -v` označuje `assume-unchanged`.
+
+Poslední příkaz ukáže místní změny. [Reference git ls-files](https://git-scm.com/docs/git-ls-files)
 
 Samotné nastavení by mělo podobu `git update-index --assume-unchanged -- <sledovaný-soubor>`, ale pro lokální úpravy použij oddělenou konfiguraci výše.
 
 ## Důležité poznámky
 
-Ani `skip-worktree` není obecná ochrana vlastních změn; jeho hlavní použití souvisí se sparse checkoutem. [Poznámky k indexu](https://git-scm.com/docs/git-update-index#_notes)
+Ani `skip-worktree` není obecná ochrana vlastních změn.
+
+Jeho hlavní použití souvisí se sparse checkoutem. [Poznámky k indexu](https://git-scm.com/docs/git-update-index#_notes)
 
 Pokud se tajemství dostalo do commitu, ignorovací příznak je neodstraní z historie ani nezneplatní.

@@ -4,7 +4,9 @@ description: "Parametrizované SQL a mapování výsledků na .NET objekty."
 
 # Dapper – parametrizované SQL v .NET
 
-Dapper mapuje výsledky SQL na objekty .NET; dotazy i databázové schéma spravuje aplikace.
+Dapper mapuje výsledky SQL na objekty .NET.
+
+Dotazy i databázové schéma spravuje aplikace.
 
 ## Instalace
 
@@ -58,7 +60,9 @@ public sealed class User
 }
 ```
 
-Hodnotu `MinAge` předává objekt parametrů; nevkládej uživatelské hodnoty do SQL interpolací řetězce. [Parametry v Dapperu](https://github.com/DapperLib/Dapper)
+Hodnotu `MinAge` předává objekt parametrů.
+
+Nevkládej uživatelské hodnoty do SQL interpolací řetězce. [Parametry v Dapperu](https://github.com/DapperLib/Dapper)
 
 ## Zápis dat
 
@@ -71,8 +75,12 @@ var changed = await connection.ExecuteAsync(
 Console.WriteLine($"Změněné řádky: {changed}");
 ```
 
-Tento příkaz mění data; předpokládá oprávnění k zápisu a správný identifikátor.
+Tento příkaz mění data.
+
+Předpokládá oprávnění k zápisu a správný identifikátor.
 
 Pro více souvisejících změn použij transakci a předej ji každému příkazu.
 
-Dapper nevybírej pouze podle obecného příslibu výkonu; rozhodují konkrétní dotazy, indexy, přenos dat a naměřený výsledek.
+Dapper nevybírej pouze podle obecného příslibu výkonu.
+
+Rozhodují konkrétní dotazy, indexy, přenos dat a naměřený výsledek.

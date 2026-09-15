@@ -140,7 +140,9 @@ Invoke-RestMethod -Uri $api
 
 Druhé čtení vrátí text `Upraveno` a závěrečný seznam je prázdný.
 
-Opakované čtení smazaného ID vrací HTTP 404; POST s `{"text":""}` vrací HTTP 400.
+Opakované čtení smazaného ID vrací HTTP 404.
+
+POST s `{"text":""}` vrací HTTP 400.
 
 Server ukončíte pomocí `Ctrl+C`.
 
@@ -148,8 +150,12 @@ Server ukončíte pomocí `Ctrl+C`.
 
 Pro trvalé ukládání navazujte na [EF Core](../../database/entity-framework.md).
 
-Před nasazením doplňte autentizaci a oprávnění podle účelu API, HTTPS, práci s chybami a odpovídající úložiště; lokální zámek nesdílí data mezi více procesy.
+Před nasazením doplňte autentizaci a oprávnění podle účelu API, HTTPS, práci s chybami a odpovídající úložiště.
+
+Lokální zámek nesdílí data mezi více procesy.
 
 Tajné hodnoty neukládejte do veřejného `appsettings.json` ani nevypisujte do logů. [Správa tajných údajů](../../network/secrets.md).
 
-Tato ukázka nepřidává OpenAPI ani Swagger UI; jejich konfiguraci řeší [oficiální dokumentace ASP.NET Core OpenAPI](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/openapi/overview?view=aspnetcore-10.0).
+Tato ukázka nepřidává OpenAPI ani Swagger UI.
+
+Jejich konfiguraci řeší [oficiální dokumentace ASP.NET Core OpenAPI](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/openapi/overview?view=aspnetcore-10.0).

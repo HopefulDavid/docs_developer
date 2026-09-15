@@ -28,7 +28,9 @@ VPN přístup do sítě sám neuděluje účet ani databázové oprávnění.
 | Brána poskytuje protokol podporovaný Windows | Vestavěné VPN připojení se správným typem ověření |
 | Jen jedna neveřejná TCP služba za SSH | Může stačit [SSH tunel](ssh.md#lokální-tunel-k-neveřejné-službě) |
 
-Nainstalování libovolného VPN klienta nevytvoří kompatibilní server; profil musí odpovídat protokolu a nastavení protistrany.
+Nainstalování libovolného VPN klienta nevytvoří kompatibilní server.
+
+Profil musí odpovídat protokolu a nastavení protistrany.
 
 ## Split tunnel a celý provoz
 
@@ -39,7 +41,9 @@ Nainstalování libovolného VPN klienta nevytvoří kompatibilní server; profi
 
 IPv4, IPv6 a DNS se mohou směrovat samostatně, takže změna veřejné IP sama neprokazuje úplný průchod všech aplikací tunelem.
 
-U WireGuardu `AllowedIPs` ovlivňuje výběr provozu pro peer a povolené zdrojové adresy; nejde o seznam uživatelů a nemá se bez důvodu změnit na všechny sítě.
+U WireGuardu `AllowedIPs` ovlivňuje výběr provozu pro peer a povolené zdrojové adresy.
+
+Nejde o seznam uživatelů a nemá se bez důvodu změnit na všechny sítě.
 
 ## Praktické připojení
 
@@ -49,13 +53,17 @@ U WireGuardu `AllowedIPs` ovlivňuje výběr provozu pro peer a povolené zdrojo
 4. Otevři konkrétní interní službu a přihlas se i do ní.
 5. Po práci se odpoj, pokud VPN nepotřebuješ trvale.
 
-Ve Windows se vestavěné připojení spravuje v **Nastavení → Síť a internet → VPN**; WireGuard nebo OpenVPN obvykle používají vlastní klientské rozhraní.
+Ve Windows se vestavěné připojení spravuje v **Nastavení → Síť a internet → VPN**.
+
+WireGuard nebo OpenVPN obvykle používají vlastní klientské rozhraní.
 
 Profil může obsahovat soukromý klíč, a proto jej uchovávej jako přístupový údaj.
 
 ## Diagnostika ve Windows
 
-Příkazy v PowerShellu nic nepřesměrovávají; ukázkový název nahraď interní službou od správce.
+Příkazy v PowerShellu nic nepřesměrovávají.
+
+Ukázkový název nahraď interní službou od správce.
 
 ```powershell
 Resolve-DnsName -Name "git.firma.example"
@@ -74,7 +82,9 @@ První příkaz ověří DNS, druhý TCP port a třetí zobrazí síťová rozhr
 | Nefunguje jen určitá síť | Překryv domácí a vzdálené podsítě nebo split tunnel |
 | Po připojení přestane fungovat internet | Výchozí trasu, DNS, kapacitu brány a požadovanou politiku přístupu |
 
-Při překryvu například dvou sítí `192.168.1.0/24` může počítač hledat vzdálený server v domácí síti; neopravuj to náhodným mazáním tras a nejprve vyřeš adresní plán se správcem.
+Při překryvu například dvou sítí `192.168.1.0/24` může počítač hledat vzdálený server v domácí síti.
+
+Neopravuj to náhodným mazáním tras a nejprve vyřeš adresní plán se správcem.
 
 ## Co VPN nezajišťuje sama
 

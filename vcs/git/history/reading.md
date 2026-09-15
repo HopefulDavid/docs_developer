@@ -19,7 +19,9 @@ Než začneš historii opravovat, nejprve prohlédni konkrétní rozdíl.
 | `git blame -L <od-řádku>,<do-řádku> -- <soubor>` | Poslední zaznamenanou změnu jednotlivých řádků |
 | `git log -S "<text>" -- <cesta>` | Commity, které změnily počet výskytů daného textu |
 
-Blame pomáhá dohledat kontext; autor poslední úpravy řádku nemusí být původcem chyby.
+Blame pomáhá dohledat kontext.
+
+Autor poslední úpravy řádku nemusí být původcem chyby.
 
 ## Jak označit verzi
 
@@ -32,7 +34,9 @@ Blame pomáhá dohledat kontext; autor poslední úpravy řádku nemusí být p�
 | `v1.0.0` | Tag s tímto názvem, pokud existuje |
 | `main..feature/hledani` v logu | Commity dosažitelné z pracovní větve a nedosažitelné z main |
 
-U merge existuje více rodičů; `HEAD^2` označuje druhého rodiče, zatímco `HEAD~2` postupuje dvakrát po prvním.
+U merge existuje více rodičů.
+
+`HEAD^2` označuje druhého rodiče, zatímco `HEAD~2` postupuje dvakrát po prvním.
 
 Příklad v PowerShellu i Bashi:
 
@@ -41,7 +45,9 @@ git log --oneline -- README.md
 git diff HEAD~1 HEAD -- README.md
 ```
 
-Výpis historie pomůže vybrat skutečný commit; druhý příkaz vyžaduje alespoň dva commity a porovná poslední změnu souboru vůči předchozímu stavu celé větve.
+Výpis historie pomůže vybrat skutečný commit.
+
+Druhý příkaz vyžaduje alespoň dva commity a porovná poslední změnu souboru vůči předchozímu stavu celé větve.
 
 ## Bisect: najdi první vadný commit
 
@@ -57,7 +63,9 @@ git bisect bad
 git bisect good v1.0.0
 ```
 
-`v1.0.0` musí být existující ověřená funkční verze; nahraď ji konkrétním dobrým commitem nebo tagem svého projektu.
+`v1.0.0` musí být existující ověřená funkční verze.
+
+Nahraď ji konkrétním dobrým commitem nebo tagem svého projektu.
 
 Git vybere prostřední commit a změní pracovní soubory, proto během hledání nevyvíjej novou funkci.
 
@@ -73,8 +81,12 @@ Po zapsání výsledku se vrať na původní stav:
 git bisect reset
 ```
 
-Ani nalezení commitu samo neopraví chybu; zobraz jeho diff, pochop příčinu a vytvoř běžný opravný commit.
+Ani nalezení commitu samo neopraví chybu.
 
-Pro automatizaci lze použít `git bisect run <testovací-příkaz> [<argument>...]`; test musí vracet `0` pro dobrý stav, `1–127` kromě `125` pro vadný a `125` pro nevyzkoušitelný stav.
+Zobraz jeho diff, pochop příčinu a vytvoř běžný opravný commit.
+
+Pro automatizaci lze použít `git bisect run <testovací-příkaz> [<argument>...]`.
+
+Test musí vracet `0` pro dobrý stav, `1–127` kromě `125` pro vadný a `125` pro nevyzkoušitelný stav.
 
 Zdroje: [git log](https://git-scm.com/docs/git-log), [gitrevisions](https://git-scm.com/docs/gitrevisions), [git bisect](https://git-scm.com/docs/git-bisect).

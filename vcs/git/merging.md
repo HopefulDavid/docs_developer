@@ -4,7 +4,9 @@ description: "Fast-forward, merge, squash a rebase včetně vyřešení nebo zru
 
 # Git – slučování větví a konflikty
 
-Sloučením přeneseš hotovou práci do cílové větve; metoda určuje, jak se výsledek zapíše do historie.
+Sloučením přeneseš hotovou práci do cílové větve.
+
+Metoda určuje, jak se výsledek zapíše do historie.
 
 Nejdříve si ujasni **zdroj** změn a **cíl**, do kterého mají přijít.
 
@@ -12,7 +14,9 @@ Nejdříve si ujasni **zdroj** změn a **cíl**, do kterého mají přijít.
 
 Příklady používají hotovou `feature/hledani` a cílovou `main` v jednom repozitáři.
 
-Před začátkem musí být pracovní strom čistý, obě větve aktuální a práce otestovaná; příkazy fungují v PowerShellu i Bashi.
+Před začátkem musí být pracovní strom čistý, obě větve aktuální a práce otestovaná.
+
+Příkazy fungují v PowerShellu i Bashi.
 
 ```bash
 git status
@@ -21,7 +25,9 @@ git diff main...feature/hledani
 git log --oneline main..feature/hledani
 ```
 
-`diff` se třemi tečkami ukazuje změnu pracovní větve od společného předka; `log` se dvěma tečkami vypíše její commity, které cílová větev nemá.
+`diff` se třemi tečkami ukazuje změnu pracovní větve od společného předka.
+
+`log` se dvěma tečkami vypíše její commity, které cílová větev nemá.
 
 ## Zvol jednu metodu
 
@@ -33,7 +39,9 @@ git merge --ff-only feature/hledani
 
 Povolí jen posunutí `main` na již existující commit pracovní větve.
 
-Pokud na `main` mezitím přibyly jiné commity, skončí chybou bez zahájení konfliktu; pro takovou situaci vyber merge nebo nejprve aktualizuj pracovní větev.
+Pokud na `main` mezitím přibyly jiné commity, skončí chybou bez zahájení konfliktu.
+
+Pro takovou situaci vyber merge nebo nejprve aktualizuj pracovní větev.
 
 ### Merge commit: zachování obou linií
 
@@ -41,7 +49,9 @@ Pokud na `main` mezitím přibyly jiné commity, skončí chybou bez zahájení 
 git merge --no-ff feature/hledani
 ```
 
-Vytvoří spojovací commit i v případě, kdy by šel pouhý posun; editor zprávy ulož a zavři.
+Vytvoří spojovací commit i v případě, kdy by šel pouhý posun.
+
+Editor zprávy ulož a zavři.
 
 Historie zachová jednotlivé pracovní commity i informaci, která větev se začlenila.
 
@@ -55,7 +65,9 @@ git commit -m "feat: přidává hledání"
 
 První příkaz připraví výslednou změnu do indexu, ale commit ještě nevytvoří.
 
-Po kontrole a testech ji uložíš jako jeden commit; původní pracovní větev se nepřepisuje, ale její commity nejsou předky nového commitu.
+Po kontrole a testech ji uložíš jako jeden commit.
+
+Původní pracovní větev se nepřepisuje, ale její commity nejsou předky nového commitu.
 
 Proto po squash může `git branch -d` odmítnout smazání pracovní větve, přestože výsledný kód už je začleněný.
 
@@ -69,7 +81,9 @@ git branch backup/pred-rebase
 git rebase main
 ```
 
-Git přehraje vlastní commity nad místní `main` a vytvoří jim nová ID; nejprve proto aktualizuj `main` ze serveru, pokud má být základem jeho aktuální stav.
+Git přehraje vlastní commity nad místní `main` a vytvoří jim nová ID.
+
+Nejprve proto aktualizuj `main` ze serveru, pokud má být základem jeho aktuální stav.
 
 Záložní větev uchovává původní commity, nikoli necommitované soubory.
 
@@ -118,11 +132,15 @@ Přidej všechny vyřešené soubory, spusť testy a pokračuj podle skutečně 
 | Cherry-pick | `git cherry-pick --continue` | `git cherry-pick --abort` |
 | Revert | `git revert --continue` | `git revert --abort` |
 
-Rebase může zastavit na dalším commitu s dalším konfliktem; `--skip` použij jen při vědomém vynechání právě přehrávané změny.
+Rebase může zastavit na dalším commitu s dalším konfliktem.
+
+`--skip` použij jen při vědomém vynechání právě přehrávané změny.
 
 Squash nezakládá běžný stav merge: po vyřešení jeho konfliktů použij `git commit`.
 
-Chceš-li squash zahodit a začínal jsi skutečně s čistým stromem, `git restore --source=HEAD --staged --worktree -- .` vrátí sledované soubory k cílovému commitu a zahodí i případné další místní úpravy; před tím si případnou novou práci odlož mimo repozitář.
+Chceš-li squash zahodit a začínal jsi skutečně s čistým stromem, `git restore --source=HEAD --staged --worktree -- .` vrátí sledované soubory k cílovému commitu a zahodí i případné další místní úpravy.
+
+Před tím si případnou novou práci odlož mimo repozitář.
 
 ## Ověření výsledku
 
@@ -131,7 +149,9 @@ git status
 git log --graph --oneline --all -12
 ```
 
-Ověř čistý stav, zamýšlenou návaznost historie a testy celého výsledku; Git umí vytvořit bezkonfliktní merge, který přesto obsahuje logickou chybu aplikace.
+Ověř čistý stav, zamýšlenou návaznost historie a testy celého výsledku.
+
+Git umí vytvořit bezkonfliktní merge, který přesto obsahuje logickou chybu aplikace.
 
 Pak následuje [push](synchronization.md) a případný [úklid pracovní větve](branches/delete-remote-branch.md).
 

@@ -4,13 +4,17 @@ description: "Instalace Linuxu ve Windows, správa distribucí a jejich přenos.
 
 # WSL – Linux ve Windows
 
-WSL umožňuje používat linuxové nástroje z Windows; WSL 2 spouští skutečné linuxové jádro v řízeném lehkém virtuálním stroji.
+WSL umožňuje používat linuxové nástroje z Windows.
+
+WSL 2 spouští skutečné linuxové jádro v řízeném lehkém virtuálním stroji.
 
 ## Před použitím
 
 Následující instalace je pro podporované Windows 10 od verze 2004, sestavení 19041, nebo Windows 11.
 
-Pro WSL 2 potřebuješ povolenou virtualizaci procesoru v UEFI; ve virtualizovaném hostiteli také podporovanou vnořenou virtualizaci.
+Pro WSL 2 potřebuješ povolenou virtualizaci procesoru v UEFI.
+
+Ve virtualizovaném hostiteli potřebuješ také podporovanou vnořenou virtualizaci.
 
 Intel VT-d ani obecné IOMMU není potřeba doporučovat jako samostatný univerzální předpoklad tohoto postupu.
 
@@ -22,7 +26,9 @@ V PowerShellu **jako správce** spusť:
 wsl --install
 ```
 
-Příkaz připraví WSL a výchozí distribuci Ubuntu; pokud vyžádá restart, proveď jej a dokonči vytvoření linuxového uživatele.
+Příkaz připraví WSL a výchozí distribuci Ubuntu.
+
+Pokud vyžádá restart, proveď jej a dokonči vytvoření linuxového uživatele.
 
 Jde o linuxový účet oddělený od účtu Windows. [Instalace WSL](https://learn.microsoft.com/en-us/windows/wsl/install)
 
@@ -36,7 +42,9 @@ wsl --list --verbose
 wsl
 ```
 
-Výpis ukáže distribuce a sloupec `VERSION`; poslední příkaz otevře výchozí distribuci.
+Výpis ukáže distribuce a sloupec `VERSION`.
+
+Poslední příkaz otevře výchozí distribuci.
 
 Uvnitř Linuxu ověř prostředí:
 
@@ -46,14 +54,16 @@ pwd
 uname -r
 ```
 
-Příkazy vypíšou uživatele, pracovní adresář a jádro; `exit` se vrátí do Windows.
+Příkazy vypíšou uživatele, pracovní adresář a jádro.
+
+`exit` se vrátí do Windows.
 
 ## Co lze upravit
 
 | Syntaxe ve Windows | Význam |
 |---|---|
 | `wsl --list --online` | Dostupné distribuce pro instalaci |
-| `wsl --install -d <distribuce>` | Instaluje distribuci; název vyber z online výpisu |
+| `wsl --install -d <distribuce>` | Instaluje distribuci. Název vyber z online výpisu |
 | `wsl --set-default <distribuce>` | Zvolí výchozí již nainstalovanou distribuci |
 | <code>wsl --set-default-version {1&#124;2}</code> | Nastaví verzi pro další instalace, nemigruje existující distribuce |
 | `wsl --update` | Aktualizuje WSL |
@@ -64,11 +74,15 @@ Příkazy vypíšou uživatele, pracovní adresář a jádro; `exit` se vrátí 
 
 Například `wsl --install -d Debian` instaluje Debian, zatímco `wsl --terminate Debian` tuto existující distribuci zastaví.
 
-Před zastavením ulož práci; názvy `Ubuntu` a `Debian` nahraď skutečným názvem své distribuce. [Reference WSL](https://learn.microsoft.com/en-us/windows/wsl/basic-commands)
+Před zastavením ulož práci.
+
+Názvy `Ubuntu` a `Debian` nahraď skutečným názvem své distribuce. [Reference WSL](https://learn.microsoft.com/en-us/windows/wsl/basic-commands)
 
 ## Import vlastní distribuce
 
-Archiv RootFS získaný od vydavatele odpovídající architektuře lze importovat pomocí `wsl --import`; stejný příkaz slouží k obnově exportu v následujícím postupu.
+Archiv RootFS získaný od vydavatele odpovídající architektuře lze importovat pomocí `wsl --import`.
+
+Stejný příkaz slouží k obnově exportu v následujícím postupu.
 
 Import sám nemusí vytvořit běžného uživatele ani nastavit jeho výchozí přihlášení.
 
@@ -84,9 +98,13 @@ Data Docker Desktopu mají [vlastní postup přenosu](docker/index.md#přenos-da
 
 Následující příkazy zadávej ve **Windows PowerShellu** pod účtem Windows, který danou distribuci používá.
 
-Příklady počítají s WSL 2 a se stejnou architekturou obou počítačů, například x64; názvy distribucí a cesty nahraď svými skutečnými hodnotami.
+Příklady počítají s WSL 2 a se stejnou architekturou obou počítačů, například x64.
 
-Na export, přenášený archiv i obnovenou distribuci potřebuješ dostatek místa; pro soubory větší než 4 GB nepoužívej přenosový disk s FAT32.
+Názvy distribucí a cesty nahraď svými skutečnými hodnotami.
+
+Na export, přenášený archiv i obnovenou distribuci potřebuješ dostatek místa.
+
+Pro soubory větší než 4 GB nepoužívej přenosový disk s FAT32.
 
 <details>
 <summary>Zdrojový počítač: export Ubuntu</summary>
@@ -98,7 +116,9 @@ wsl --list --verbose
 wsl --distribution Ubuntu-22.04 --exec whoami
 ```
 
-V dalších příkazech je zdrojovou distribucí `Ubuntu-22.04`; poznamenej si také vypsané linuxové uživatelské jméno pro přihlášení po importu.
+V dalších příkazech je zdrojovou distribucí `Ubuntu-22.04`.
+
+Poznamenej si také vypsané linuxové uživatelské jméno pro přihlášení po importu.
 
 ### 2. Ulož práci a zastav distribuci
 
@@ -108,7 +128,9 @@ Nejprve řádně ukonči aplikace a databáze uvnitř Ubuntu, aby se jejich data
 wsl --terminate Ubuntu-22.04
 ```
 
-Tento příkaz zastaví pouze uvedenou distribuci; po dobu exportu ji znovu nespouštěj.
+Tento příkaz zastaví pouze uvedenou distribuci.
+
+Po dobu exportu ji znovu nespouštěj.
 
 ### 3. Vytvoř export a zaznamenej kontrolní součet
 
@@ -123,11 +145,15 @@ Get-FileHash -LiteralPath 'E:\Prenos\WSL\Ubuntu-22.04.tar' -Algorithm SHA256
 
 Počkej na úspěšné dokončení exportu a ulož si hodnotu `Hash`, abys ji mohl porovnat na cílovém počítači.
 
-Výsledkem je archiv TAR; původní Ubuntu zůstává nainstalované a po exportu ho můžeš znovu používat.
+Výsledkem je archiv TAR.
+
+Původní Ubuntu zůstává nainstalované a po exportu ho můžeš znovu používat.
 
 Záloha zachycuje stav v okamžiku exportu, takže pozdější změny se do ní již nedoplní.
 
-Archiv může obsahovat hesla, SSH klíče i další soukromé soubory; přenášej a uchovávej jej jako citlivá data.
+Archiv může obsahovat hesla, SSH klíče i další soukromé soubory.
+
+Přenášej a uchovávej jej jako citlivá data.
 
 [Dokumentace exportu WSL](https://learn.microsoft.com/en-us/windows/wsl/basic-commands#export-a-distribution)
 
@@ -138,7 +164,9 @@ Archiv může obsahovat hesla, SSH klíče i další soukromé soubory; přená�
 
 ### 1. Připrav WSL a ověř přenesený archiv
 
-Na cílovém počítači musí fungovat WSL 2; před importem není potřeba instalovat novou distribuci Ubuntu z Microsoft Storu.
+Na cílovém počítači musí fungovat WSL 2.
+
+Před importem není potřeba instalovat novou distribuci Ubuntu z Microsoft Storu.
 
 Přenes archiv na cílový počítač nebo připoj přenosový disk a zkontroluj jej:
 
@@ -148,7 +176,9 @@ wsl --list --verbose
 Get-FileHash -LiteralPath 'E:\Prenos\WSL\Ubuntu-22.04.tar' -Algorithm SHA256
 ```
 
-Hodnota `Hash` musí přesně odpovídat hodnotě zaznamenané po exportu; při neshodě archiv znovu přenes a nepokračuj v importu.
+Hodnota `Hash` musí přesně odpovídat hodnotě zaznamenané po exportu.
+
+Při neshodě archiv znovu přenes a nepokračuj v importu.
 
 ### 2. Importuj pod volným názvem do nové složky
 
@@ -163,7 +193,9 @@ if ($LASTEXITCODE -ne 0) { throw 'Import Ubuntu se nezdařil.' }
 wsl --list --verbose
 ```
 
-V seznamu očekávej novou distribuci s `VERSION 2`; její pracovní disk vznikne v cílové složce, archiv TAR zůstane samostatnou zálohou.
+V seznamu očekávej novou distribuci s `VERSION 2`.
+
+Její pracovní disk vznikne v cílové složce, archiv TAR zůstane samostatnou zálohou.
 
 [Dokumentace importu WSL](https://learn.microsoft.com/en-us/windows/wsl/basic-commands#import-a-distribution)
 
@@ -183,15 +215,21 @@ cd ~
 ls -la
 ```
 
-Otevři své projekty a ověř potřebné aplikace i jejich uložená data; shodný kontrolní součet potvrzuje neporušený přenos archivu, nikoli funkčnost celého prostředí.
+Otevři své projekty a ověř potřebné aplikace i jejich uložená data.
 
-Pokud se distribuce bez přepínače `--user` spouští jako `root`, nastav v jejím `/etc/wsl.conf` výchozího uživatele; uvnitř Ubuntu můžeš soubor otevřít například editorem Nano:
+Shodný kontrolní součet potvrzuje neporušený přenos archivu, nikoli funkčnost celého prostředí.
+
+Pokud se distribuce bez přepínače `--user` spouští jako `root`, nastav v jejím `/etc/wsl.conf` výchozího uživatele.
+
+Uvnitř Ubuntu můžeš soubor otevřít například editorem Nano:
 
 ```text
 sudo nano /etc/wsl.conf
 ```
 
-Zachovej ostatní sekce a existující sekci `[user]` uprav místo jejího opětovného přidání; také zde nahraď `vyvojar` svým linuxovým uživatelským jménem:
+Zachovej ostatní sekce a existující sekci `[user]` uprav místo jejího opětovného přidání.
+
+Také zde nahraď `vyvojar` svým linuxovým uživatelským jménem:
 
 ```ini
 [user]

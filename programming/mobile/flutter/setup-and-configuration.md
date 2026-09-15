@@ -4,7 +4,9 @@ description: "Příprava SDK a ověření nástrojů pro cílové platformy."
 
 # Flutter – instalace a nastavení
 
-Flutter používá Dart pro vývoj aplikací pro mobilní zařízení, web a desktop; potřebné nástroje se liší podle cílové platformy.
+Flutter používá Dart pro vývoj aplikací pro mobilní zařízení, web a desktop.
+
+Potřebné nástroje se liší podle cílové platformy.
 
 ## Instalace ve Windows
 
@@ -19,7 +21,9 @@ flutter --version
 flutter doctor -v
 ```
 
-`doctor` vypíše chybějící nástroje; řeš především platformu, pro kterou budeš aplikaci sestavovat.
+`doctor` vypíše chybějící nástroje.
+
+Řeš především platformu, pro kterou budeš aplikaci sestavovat.
 
 ## Android toolchain
 
@@ -35,7 +39,9 @@ Ze složky projektu spusť:
 flutter run -d chrome
 ```
 
-Ve Windows lze zvolit také `-d edge`; pro ruční otevření jiného prohlížeče použij `flutter run -d web-server` a adresu vypsanou terminálem. [Spuštění webové aplikace](https://docs.flutter.dev/platform-integration/web/building)
+Ve Windows lze zvolit také `-d edge`.
+
+Pro ruční otevření jiného prohlížeče použij `flutter run -d web-server` a adresu vypsanou terminálem. [Spuštění webové aplikace](https://docs.flutter.dev/platform-integration/web/building)
 
 ## Telemetrie
 

@@ -6,7 +6,9 @@ description: "Připojení remote, volba HTTPS nebo SSH a změna cílové adresy.
 
 Remote je pojmenovaná adresa jiného repozitáře, ze kterého načítáš commity nebo do něj posíláš svoji práci.
 
-GitHub, GitLab, Forgejo i vlastní bare repozitář mohou plnit tuto úlohu; samotný Git nevyžaduje konkrétní hosting.
+GitHub, GitLab, Forgejo i vlastní bare repozitář mohou plnit tuto úlohu.
+
+Samotný Git nevyžaduje konkrétní hosting.
 
 ## Vyber přihlášení
 
@@ -18,7 +20,9 @@ GitHub, GitLab, Forgejo i vlastní bare repozitář mohou plnit tuto úlohu; sam
 
 Ukázkové domény představují syntaxi adres, nejsou servery určené k připojení.
 
-U SSH nemusí být `git` tvé uživatelské jméno na hostingu; často jde o společný technický účet a identita se určí podle klíče.
+U SSH nemusí být `git` tvé uživatelské jméno na hostingu.
+
+Často jde o společný technický účet a identita se určí podle klíče.
 
 ## Připojení nového projektu
 
@@ -31,7 +35,9 @@ git remote add origin <clone-URL>
 git push -u origin <místní-větev>
 ```
 
-`origin` je zvolený název spojení; `<místní-větev>` zjistíš přes `git branch --show-current`.
+`origin` je zvolený název spojení.
+
+`<místní-větev>` zjistíš přes `git branch --show-current`.
 
 Před odesláním ověř cílovou adresu:
 
@@ -40,7 +46,9 @@ git remote -v
 git status --short --branch
 ```
 
-Pokud server už má vlastní první commit, zvaž naklonování serverové verze a přenos svých souborů do ní; odmítnutí push není důvod k automatickému přepsání serveru.
+Pokud server už má vlastní první commit, zvaž naklonování serverové verze a přenos svých souborů do ní.
+
+Odmítnutí push není důvod k automatickému přepsání serveru.
 
 ## Existující remote nebo změna adresy
 
@@ -52,7 +60,9 @@ Pokud server už má vlastní první commit, zvaž naklonování serverové verz
 | `git remote remove <název>` | Odstraní místní konfiguraci spojení, ne repozitář na serveru |
 | `git ls-remote <název>` | Ověří přístup ke čtení referencí na serveru |
 
-Například po přejmenování vlastního projektu nahradíš URL přes `set-url`; žádná z těchto konfiguračních změn sama nepřenáší historii.
+Například po přejmenování vlastního projektu nahradíš URL přes `set-url`.
+
+Žádná z těchto konfiguračních změn sama nepřenáší historii.
 
 Token ani heslo nevkládej do URL, kde by zůstaly v konfiguraci a historii terminálu.
 
@@ -67,7 +77,9 @@ git clone centralni.git pracovni-kopie
 
 `centralni.git` bude místní serverová kopie bez pracovních souborů a `pracovni-kopie` místo pro editaci a commity.
 
-Varování o prázdném klonu je očekávané; vytvoř v pracovní kopii první soubor a commit podle [založení repozitáře](repository.md), potom použij `git push -u origin main`.
+Varování o prázdném klonu je očekávané.
+
+Vytvoř v pracovní kopii první soubor a commit podle [založení repozitáře](repository.md), potom použij `git push -u origin main`.
 
 Bare složku neupravuj jako běžný projekt a své soubory do ní ručně nekopíruj.
 

@@ -45,14 +45,22 @@ public sealed class ComplexTests
 }
 ```
 
-Znovu spusť `dotnet test`; očekáván je jeden úspěšný test.
+Znovu spusť `dotnet test`.
 
-Ukázka demonstruje syntaxi na standardním typu; v aplikaci tímto způsobem ověřujte výsledky vlastního kódu.
+Očekáván je jeden úspěšný test.
+
+Ukázka demonstruje syntaxi na standardním typu.
+
+V aplikaci tímto způsobem ověřujte výsledky vlastního kódu.
 
 NUnit shromáždí selhání asertů v bloku, ale neošetřená výjimka může zbývající vykonávání ukončit.
 
-Od NUnit 4.2 existuje také `using (Assert.EnterMultipleScope())`; `Assert.Multiple` je použitelné i pro starší verze. [NUnit: Multiple Asserts](https://docs.nunit.org/articles/nunit/writing-tests/assertions/multiple-asserts.html).
+Od NUnit 4.2 existuje také `using (Assert.EnterMultipleScope())`.
+
+`Assert.Multiple` je použitelné i pro starší verze. [NUnit: Multiple Asserts](https://docs.nunit.org/articles/nunit/writing-tests/assertions/multiple-asserts.html).
 
 ## Video prezentace
 
-[Trendy v unit testování a mockování, WUG Days 2018](https://download.wug.cz/videos/wug/WUGBrno_WUG-Days-2018_Trendy-v-unit-testovani-a-mockovani/WUGBrno_WUG-Days-2018_Trendy-v-unit-testovani-a-mockovani_1080p.mp4) nabízí historický kontext; podobu současného API ověřujte v dokumentaci NUnit.
+[Trendy v unit testování a mockování, WUG Days 2018](https://download.wug.cz/videos/wug/WUGBrno_WUG-Days-2018_Trendy-v-unit-testovani-a-mockovani/WUGBrno_WUG-Days-2018_Trendy-v-unit-testovani-a-mockovani_1080p.mp4) nabízí historický kontext.
+
+Podobu současného API ověřujte v dokumentaci NUnit.

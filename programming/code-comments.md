@@ -60,4 +60,6 @@ Jazyk komentářů a podporované značky sjednoť podle projektu.
 
 Pro veřejné API používej dokumentační formát daného jazyka, například [XML komentáře C#](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/), aby IDE zobrazovalo parametry a návratovou hodnotu.
 
-Při změně chování aktualizuj i komentář; zastaralé vysvětlení je zavádějící i tehdy, když se program zkompiluje.
+Při změně chování aktualizuj i komentář.
+
+Zastaralé vysvětlení je zavádějící i tehdy, když se program zkompiluje.
