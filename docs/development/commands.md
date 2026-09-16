@@ -120,6 +120,20 @@ Existující cesty nepřejmenovávej jen kvůli změně titulku a nový postup n
 
 Obsahový standard vlastní [správa dokumentace](../governance/documentation.md#čitelnost-veřejných-návodů).
 
+Pro přepínání samostatných variant lze použít nativní [záložky DocFX](https://dotnet.github.io/docfx/docs/markdown.html#tabs) se zápisem `## [Windows](#tab/jedinecne-id)`.
+
+Skupinu ukonči samostatným řádkem `***`, aby společný postup za záložkami zůstal viditelný pro každou variantu.
+
+Nepoužívej zde `---`, protože jej projektový normalizátor mimo metadata odstraňuje.
+
+Přesný ampersand v názvu položky rozhraní mimo vložený kód zapisuj jako `&amp;`, aby jej normalizátor nepřevedl na české „a“.
+
+Záložky a jejich obsah ověř v sestaveném webu včetně klávesnice a mobilní šířky.
+
+Popisky dílčích variant uvnitř záložek zapisuj jako zvýrazněné odstavce, pokud nemají být v globálním obsahu stránky.
+
+Odkaz obsahu na nadpis uvnitř skryté záložky totiž sám odpovídající záložku neotevře.
+
 ## Changelog
 
 Každé sestavení odvozuje ignorovaný `changelog.md` z úplné dosažitelné Git historie pomocí přesně uzamčeného `git-cliff`.
