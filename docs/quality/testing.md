@@ -542,3 +542,47 @@ Tyto projevy nejsou opravené touto obsahovou změnou.
 Ověření vyžadovalo stejně jako baseline běh mimo sandbox kvůli nástroji git-cliff.
 
 Příkazy článků se nespouštěly proti uživatelským datům a revize není novým technickým ověřením všech popisovaných nástrojů.
+
+## Ověření návodu Smart App Control 2026-09-16
+
+[Návod k blokované aplikaci](../../operating-system/windows/smart-app-control.md) vychází z posledního postupu ve sdíleném chatu, jehož účinek potvrdil vlastník.
+
+Kroky, plošný dopad vypnutí, absence jednotlivé výjimky, kontrola souboru a alternativa podpisu byly porovnány s odkazovanou primární dokumentací Microsoftu.
+
+Aktuální FAQ umožňuje opětovné zapnutí po nedávných aktualizacích na podporovaných zařízeních, zatímco některé starší přehledy stále uvádějí čistou instalaci.
+
+Článek proto podmiňuje návrat dostupností volby a upozorněním konkrétního systému.
+
+Bezpečnostní nastavení počítače se během tvorby návodu neměnila a aplikace KeyPilot se nespouštěla.
+
+Tvrzení z chatu o kontrole konkrétního EXE nebyla převzata jako nezávisle ověřená záruka bezpečnosti.
+
+Přiložený dialog byl upraven vestavěným imagegen se zadáním oříznout okolí a neprůhledně zakrýt adresářovou část před názvem EXE při zachování textu a ovládacích prvků.
+
+Vizuální kontrola potvrdila české znění, čitelný název souboru a zakrytí osobní cesty.
+
+PNG má 1451 × 1084 px a v článku deklarovanou šířku 537 px.
+
+Kontrola struktury PNG nenašla textové chunky s osobní cestou ani vložený původní PNG, do verzované změny patří pouze upravená příloha.
+
+SHA-256 přílohy ve zdrojích a sestaveném webu se shoduje.
+
+Nový článek, oba rozcestníky OS a Windows a regrese homepage, Programování, Dockeru a Unity 2D prošly 56 kombinacemi šířek 320, 390, 768 a 1440 px ve světlém i tmavém motivu.
+
+Kontrola nenašla vodorovné přetékání celé stránky, rozbité načtené obrázky ani nepřístupné posuvné bloky.
+
+Snímky potvrdily čitelnost dialogu na desktopu, mobilní zmenšení obrázku a čitelné varování i číslované kroky při 320 px.
+
+Navigace otevřela návod z přehledů OS i Windows a vyhledávání nabídlo právě článek pro výraz `KeyPilot`.
+
+Samostatně prošlo otevření výsledku, prázdné hledání, obsah stránky, klávesnicový přesun na obsah, zachování tmavého motivu po obnovení a automatický motiv podle systému.
+
+Regrese Unity 2D potvrdila klávesnicové rozbalení doplňujícího postupu a shodu kopírovaného kódu po vložení do jednořádkového filtru, který odstraňuje konce řádků.
+
+Integrovaný prohlížeč při navigaci zaznamenal pět již dříve pozorovaných hlášení `AbortError: Transition was skipped`, následné otevření cílových stránek i ovládání fungovalo.
+
+Šablona ani její navigační JavaScript se touto obsahovou změnou nemění.
+
+`npm run verify` prošel 20 testy, strict buildem s 0 chybami a 0 varováními a kontrolou 257 zdrojů a 498 výstupních souborů včetně odkazů a kotev.
+
+Stejně jako baseline vyžadoval přístup git-cliff běh mimo sandbox.

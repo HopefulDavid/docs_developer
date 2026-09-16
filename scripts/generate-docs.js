@@ -371,6 +371,7 @@ const navigation = {
         { name: 'Flameshot místo Výstřižků', href: 'windows/flameshot.md' },
         { name: 'Instalátor nevidí SSD', href: 'windows/installation-missing-ssd.md' },
         { name: 'Nelze odstranit položku', href: 'windows/cannot-delete-item.md' },
+        { name: 'Smart App Control – zablokovaná aplikace', href: 'windows/smart-app-control.md' },
         { name: 'Příkazový řádek (CMD)', href: 'windows/cmd.md' },
         { name: 'PowerShell', href: 'windows/powershell.md' },
         { name: 'Prostředí PowerShellu', href: 'windows/terminal.md' },

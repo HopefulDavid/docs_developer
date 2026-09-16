@@ -17,6 +17,7 @@ Pro práci v terminálu vždy rozliš CMD a PowerShell.
 | Nastavit profil a prompt | [Prostředí PowerShellu](terminal.md) |
 | Pořizovat snímky klávesou Print Screen | [Flameshot místo Výstřižků](flameshot.md) |
 | Odstranit problematickou položku | [Diagnostika souboru a cesty](cannot-delete-item.md) |
+| Spustit důvěryhodnou aplikaci blokovanou Smart App Control | [Inteligentní řízení aplikací](smart-app-control.md) |
 | Zpřístupnit SSD instalátoru | [Ovladač řadiče a výběr disku](installation-missing-ssd.md) |
 
 ## Místní účet místo Microsoft účtu
