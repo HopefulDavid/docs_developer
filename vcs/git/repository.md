@@ -18,7 +18,13 @@ Příklady fungují v PowerShellu i Bashi a používají nové složky.
 
 Do cizího existujícího repozitáře nevkládej další vnořený `.git`.
 
-## Nový projekt
+## Vyber výchozí stav projektu
+
+<a id="nový-projekt"></a>
+<a id="už-mám-soubory-bez-gitu"></a>
+<a id="existující-projekt-na-serveru"></a>
+
+## [Nový místní repozitář](#tab/repository-new)
 
 V rodičovské složce projektů spusť:
 
@@ -47,7 +53,7 @@ Pokud `.gitignore` nepotřebuješ a nevytvořil jsi ho, vynech jeho název.
 
 Zkontrolovaný obsah indexu se uloží jako první místní commit a poslední příkaz zobrazí jeho ID.
 
-### Už mám soubory bez Gitu
+**Už mám soubory bez Gitu**
 
 V kořeni této složky použij `git init -b main` bez názvu dalšího adresáře.
 
@@ -55,7 +61,7 @@ Pak nejprve projdi `git status --short` a přidávej jen požadované soubory.
 
 Konfigurace s hesly, velké exporty a výstup buildů obvykle do historie nepatří.
 
-## Existující projekt na serveru
+## [Existující projekt ze serveru](#tab/repository-clone)
 
 Obecná syntaxe:
 
@@ -85,6 +91,8 @@ Výchozí větev přebírá ze serveru, proto nepředpokládej automaticky `main
 Tento ukázkový repozitář používá `master`.
 
 Stažený ZIP obsahuje soubory, ale nezachovává repozitářovou historii jako `clone`.
+
+***
 
 ## Ověření a další krok
 

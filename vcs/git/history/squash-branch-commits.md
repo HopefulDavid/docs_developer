@@ -10,15 +10,24 @@ Nejdříve zvol, zda chceš přepsat vlastní pracovní větev, nebo vytvořit s
 
 Pokud má celá vzdálená větev začít jediným kořenovým commitem bez původních předků, použij [nahrazení celé historie](replace-history.md).
 
-## Nejmenší zásah: squash při sloučení
+## Vyber rozsah spojení
 
-Použij [`git merge --squash`](../merging.md#squash-jedna-ucelená-změna-v-cíli) nebo možnost **Squash and merge** na hostingu.
+<a id="nejmenší-zásah-squash-při-sloučení"></a>
+<a id="úprava-vlastních-posledních-commitů"></a>
+<a id="celá-vlastní-větev-od-společného-předka"></a>
+<a id="ověření-a-návrat-po-interaktivním-rebase"></a>
+
+## [Při sloučení](#tab/squash-merge)
+
+**Nejmenší zásah: squash při sloučení**
+
+Použij [`git merge --squash`](../merging.md?tabs=git-merge-squash#squash-jedna-ucelená-změna-v-cíli) nebo možnost **Squash and merge** na hostingu.
 
 Zdrojová větev si ponechá původní commity a cílová dostane jeden souhrnný.
 
 Není potřeba přepisovat vzdálenou pracovní větev.
 
-## Úprava vlastních posledních commitů
+## [Poslední vlastní commity](#tab/squash-rebase)
 
 Příklad je pro PowerShell i Bash, čistý strom a **tři poslední vlastní lineární commity**, které ještě nesdílíš.
 
@@ -48,7 +57,24 @@ Po uložení zadej jednu výslednou zprávu.
 
 Pro rozsah zahrnující úplně první commit repozitáře se používá `git rebase -i --root`.
 
-## Celá vlastní větev od společného předka
+**Ověření a návrat po interaktivním rebase**
+
+```bash
+git diff backup/pred-squash HEAD
+git log --oneline -5
+```
+
+Rozdíl konečného obsahu má být prázdný a log má ukazovat zamýšlený počet nových commitů.
+
+Pokud rebase teprve probíhá, `git rebase --abort` jej zruší.
+
+Po dokončení uchovává původní historii záložní větev.
+
+Konflikt řeš podle [návodu pro rebase](../merging.md), výsledek otestuj a případnou již zveřejněnou vlastní větev aktualizuj jen podle [postupu s lease](fix-commits.md#publikování-přepsané-vlastní-větve).
+
+## [Celá vlastní větev](#tab/squash-branch)
+
+**Spojení od společného předka**
 
 Pokud chceš spojit všechny vlastní změny větve do jednoho commitu bez ručního počítání, lze použít původní postup se soft resetem.
 
@@ -80,19 +106,6 @@ Pokud větev obsahuje složité merge nebo má více společných základů, pou
 
 Již publikovaná vlastní větev vyžaduje zachytit vzdálený stav **před resetem** a následně použít [publikování s lease](fix-commits.md#publikování-přepsané-vlastní-větve).
 
-## Ověření a návrat po interaktivním rebase
-
-```bash
-git diff backup/pred-squash HEAD
-git log --oneline -5
-```
-
-Rozdíl konečného obsahu má být prázdný a log má ukazovat zamýšlený počet nových commitů.
-
-Pokud rebase teprve probíhá, `git rebase --abort` jej zruší.
-
-Po dokončení uchovává původní historii záložní větev.
-
-Konflikt řeš podle [návodu pro rebase](../merging.md), výsledek otestuj a případnou již zveřejněnou vlastní větev aktualizuj jen podle [postupu s lease](fix-commits.md#publikování-přepsané-vlastní-větve).
+***
 
 Zdroje: [interaktivní rebase](https://git-scm.com/docs/git-rebase#_interactive_mode), [git merge](https://git-scm.com/docs/git-merge), [git reset](https://git-scm.com/docs/git-reset), [git merge-base](https://git-scm.com/docs/git-merge-base).

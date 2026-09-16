@@ -79,7 +79,7 @@ Po ověření cíle zopakuj poslední řádek bez `-WhatIf`.
 
 Již existující stejnojmenný soubor může být přepsán.
 
-Pro mazání použij samostatný [postup s ověřením cíle](cannot-delete-item.md#powershell-kontrola-a-odstranění).
+Pro mazání použij samostatný [postup s ověřením cíle](cannot-delete-item.md?tabs=remove-powershell#powershell-kontrola-a-odstranění).
 
 ## Skript a chyba
 

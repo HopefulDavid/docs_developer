@@ -57,7 +57,12 @@ Alternativně vyhledej ve Windows **Volitelné funkce → OpenSSH Client**.
 
 ## Jeden klient pro Windows a Git
 
-### Varianta A: Windows OpenSSH
+Vyber jednu variantu klienta pro Git.
+
+<a id="varianta-a-windows-openssh"></a>
+<a id="varianta-b-openssh-z-git-for-windows"></a>
+
+## [Windows OpenSSH](#tab/ssh-client-windows)
 
 Nejprve si poznamenej současné nastavení:
 
@@ -83,7 +88,7 @@ Potom úplně restartuj terminál i IDE.
 
 Prioritu místních výjimek a proměnných vysvětluje [Git přes SSH](git.md#které-ssh-používá-git).
 
-### Varianta B: OpenSSH z Git for Windows
+## [Git for Windows](#tab/ssh-client-git)
 
 Pokud používáš převážně Git Bash, lze ponechat klienta této instalace a načítat klíče do jeho agenta.
 
@@ -95,11 +100,15 @@ git config --global core.sshCommand '"C:/Program Files/Git/usr/bin/ssh.exe"'
 
 Cestu ověř podle své instalace a postup pro agenta vyber v [SSH klíčích](keys.md#agent-v-git-bash-linuxu-a-macos).
 
+***
+
 Obě varianty jsou alternativy.
 
 Není potřeba je střídavě nastavovat.
 
 ## Agent Windows OpenSSH
+
+Tuto část použij pouze při výběru Windows OpenSSH.
 
 Agent zpřístupní odemčený klíč klientovi bez opakovaného zadávání heslové fráze.
 

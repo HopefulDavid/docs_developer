@@ -502,3 +502,43 @@ Při rychlém střídání navigace zaznamenal integrovaný prohlížeč jeden `
 `npm run verify` prošel 20 testy, strict buildem s 0 chybami a 0 varováními a kontrolou 255 zdrojů a 496 výstupních souborů.
 
 Stejně jako baseline vyžadoval přístup nástroje git-cliff běh mimo sandbox.
+
+## Ověření záložek v návodech 2026-09-16
+
+Revize struktury 148 verzovaných Markdown souborů vybrala 17 veřejných článků pro rozdělení alternativ do 38 nativních záložek DocFX.
+
+Změna pokrývá varianty Gitu, shellů, .NET nástrojů, certifikátů, PostgreSQL, Outlooku a Pandocu.
+
+Navazující kroky a srovnávací přehledy zůstaly souvislé, interní projektové dokumenty se do DocFX nepřeváděly.
+
+Jednorázové porovnání s výchozím stavem potvrdilo zachování všech 86 bloků kódu a obrázků v upravených článcích.
+
+Všech 59 původních kotev z převedených nadpisů zůstává u výběru variant, takže starý odkaz dovede čtenáře k záložkám.
+
+Tři známé příchozí odkazy navíc používají parametr `?tabs=` a prohlížeč ověřil automatické otevření odpovídající varianty CMD, PowerShellu a squash merge.
+
+Všech 38 záložek prošlo klávesnicovým přepnutím při 320, 390, 768 a 1440 px ve světlém i tmavém motivu, celkem 304 kombinací.
+
+Každá kombinace zobrazila právě jeden panel odpovídající vybrané záložce, bez přetékání celé stránky a rozbitých načtených obrázků.
+
+Panely neobsahují nadpisy vedoucí z globálního obsahu do skryté varianty.
+
+Vizuální kontrola potvrdila zalamování dlouhých názvů záložek, mobilní kód a tabulky i obrázky klasického Outlooku.
+
+Regrese homepage, Programování, Dockeru a Unity 2D zahrnula dalších 32 kombinací rozměru a motivu bez přetékání stránky a rozbitých načtených obrázků.
+
+Samostatné kontroly ověřily přesun klávesnicí na obsah, rozbalení doplňujícího postupu, hledání Dockeru, otevření výsledku, prázdný výsledek, zachování tmavého motivu po obnovení a shodu automatického motivu se systémem.
+
+Kopírování z aktivní záložky PDF v Pandocu odpovídalo zobrazenému jednořádkovému příkazu po vložení do vyhledávacího pole.
+
+Při rychlé navigaci prohlížeč zaznamenal jeden `AbortError: Transition was skipped`, otevření článku i záložky následně fungovalo.
+
+Vložení celého příkazu s přepínači do vyhledávání také vyvolalo `QueryParseError` v nezměněném vyhledávači DocFX, běžný dotaz `Docker` poté znovu vrátil výsledky.
+
+Tyto projevy nejsou opravené touto obsahovou změnou.
+
+`npm run verify` prošel 20 testy, strict buildem s 0 chybami a 0 varováními a kontrolou 255 zdrojů a 496 výstupních souborů.
+
+Ověření vyžadovalo stejně jako baseline běh mimo sandbox kvůli nástroji git-cliff.
+
+Příkazy článků se nespouštěly proti uživatelským datům a revize není novým technickým ověřením všech popisovaných nástrojů.

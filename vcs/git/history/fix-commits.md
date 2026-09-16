@@ -19,7 +19,12 @@ Pro již sdílenou historii je často přehlednější nový opravný commit, kt
 | Opravit starší vlastní commit | Fixup a interaktivní autosquash |
 | Opravit již sdílenou změnu | Běžný nový commit, pro opačnou změnu [revert](delete-commits.md) |
 
-## Poslední místní commit
+## Vyber opravovaný commit
+
+<a id="poslední-místní-commit"></a>
+<a id="starší-commit-fixup-a-autosquash"></a>
+
+## [Poslední commit](#tab/fix-amend)
 
 V PowerShellu nebo Bashi nejprve prohlédni index a uchovej původní historii:
 
@@ -48,7 +53,7 @@ git commit --amend --no-edit
 
 Ověř, že index neobsahuje jinou rozpracovanou změnu.
 
-## Starší commit: fixup a autosquash
+## [Starší commit](#tab/fix-autosquash)
 
 Tato ukázka je pro **PowerShell**, vlastní lineární větev s několika commity a čistý stav před opravou.
 
@@ -86,6 +91,8 @@ V Bashi použij stejné Git operace s ručně zadaným skutečným ID místo Pow
 Při konfliktu postupuj podle [rebase konfliktu](../merging.md#konflikt-git-potřebuje-rozhodnutí-o-obsahu).
 
 `git rebase --abort` vrátí stav před zahájením rebase, tedy včetně samostatného fixup commitu.
+
+***
 
 ## Ověření
 

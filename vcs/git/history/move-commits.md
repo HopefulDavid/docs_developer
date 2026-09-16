@@ -40,7 +40,17 @@ Rozsah `základ..konec` **nezahrnuje základ**, proto do něj nepatří ID prvn�
 
 Při merge commitech nebo změnách promíchaných s cizí prací nepoužívej tento reset posledních tří commitů bez úpravy rozsahu.
 
-## Přesun commitů do nové větve
+## Vyber cílovou větev
+
+Po společné přípravě pokračuj jen postupem odpovídajícím cíli.
+
+<a id="přesun-commitů-do-nové-větve"></a>
+<a id="přesun-commitů-do-existující-větve"></a>
+<a id="vybrané-commity-pomocí-cherry-pick"></a>
+<a id="celá-zdrojová-větev-pomocí-merge"></a>
+<a id="odebrání-ze-zdrojové-větve"></a>
+
+## [Nová větev](#tab/move-new)
 
 Z výchozího stavu `A–B–C–D–E (main)` vznikne `A–B (main)`, zatímco nová větev zachová `A–B–C–D–E`.
 
@@ -63,9 +73,9 @@ Při kolizi s necommitovanou úpravou skončí chybou místo jejího přepsání
 
 Potom ověř obsah a testy na nové větvi.
 
-## Přesun commitů do existující větve
+## [Existující větev](#tab/move-existing)
 
-### Vybrané commity pomocí cherry-pick
+**Vybrané commity pomocí cherry-pick**
 
 Po společné přípravě přepni na **již existující místní** cílovou větev:
 
@@ -86,7 +96,7 @@ Jednotlivé nesousedící commity můžeš vybrat syntaxí `git cherry-pick <nej
 
 Jejich závislosti musí být v cíli dostupné. [Git cherry-pick](https://git-scm.com/docs/git-cherry-pick)
 
-### Celá zdrojová větev pomocí merge
+**Celá zdrojová větev pomocí merge**
 
 Jestli do cíle patří **veškerá historie zdroje, která v něm chybí**, použij místo cherry-pick původní postup se sloučením:
 
@@ -102,7 +112,7 @@ Podle vztahu větví provede fast-forward nebo vytvoří merge commit.
 
 Nepřenáší automaticky jen poslední tři commity, proto se pro přesný výběr z odlišné historie hodí předchozí cherry-pick. [Git merge](https://git-scm.com/docs/git-merge)
 
-### Odebrání ze zdrojové větve
+**Odebrání ze zdrojové větve**
 
 **Až po úspěšném přenosu a otestování cíle** dokonči jednu z předchozích variant:
 
@@ -118,6 +128,8 @@ Zdrojová `main` nyní končí před přesouvanými commity a cílová obsahuje 
 Záložní větev do ověření výsledku ponech.
 
 Reset zde nemaže jedinou existující kopii commitů.
+
+***
 
 ## Konflikt při přenosu
 

@@ -16,7 +16,15 @@ Pokud potřebuješ opravit jinou věc uprostřed rozpracované změny, můžeš 
 
 Stash je místní úložiště, běžný push jej neposílá na server.
 
-## Stash: odložit a vrátit
+## Vyber způsob přerušení práce
+
+<a id="stash-odložit-a-vrátit"></a>
+<a id="konflikt-při-vracení-stashe"></a>
+<a id="worktree-dvě-složky-jedna-historie"></a>
+
+## [Stash](#tab/pause-stash)
+
+**Odložení a vrácení ve stejné složce**
 
 V kořeni repozitáře v PowerShellu nebo Bashi:
 
@@ -56,7 +64,7 @@ git stash drop 'stash@{0}'
 
 Po vytvoření dalších stashů se jejich čísla posunou, proto před mazáním vždy znovu zkontroluj `git stash list`.
 
-### Konflikt při vracení stashe
+**Konflikt při vracení stashe**
 
 Záznam zůstává zachovaný, pokud jsi použil `apply`.
 
@@ -68,7 +76,9 @@ Pokud chceš obnovovat na původním základu a máš čistý pracovní strom, `
 
 Při úspěchu daný stash odstraní.
 
-## Worktree: dvě složky, jedna historie
+## [Worktree](#tab/pause-worktree)
+
+**Dvě složky se společnou historií**
 
 V původním projektu vytvoř novou větev ze stabilní místní `main`:
 
@@ -99,5 +109,7 @@ git worktree list
 Při necommitované práci odmítne běžné odstranění.
 
 Větev sluč samostatně podle [zvoleného workflow](workflows.md).
+
+***
 
 Zdroje: [git stash](https://git-scm.com/docs/git-stash), [git worktree](https://git-scm.com/docs/git-worktree).

@@ -31,7 +31,15 @@ git log --oneline main..feature/hledani
 
 ## Zvol jednu metodu
 
-### Fast-forward: jednoduchý posun
+Vyber způsob začlenění práce a spusť jen zvolenou metodu.
+
+<a id="fast-forward-jednoduchý-posun"></a>
+<a id="merge-commit-zachování-obou-linií"></a>
+<a id="squash-jedna-ucelená-změna-v-cíli"></a>
+
+## [Fast-forward](#tab/git-merge-ff)
+
+**Jednoduchý posun cílové větve**
 
 ```bash
 git merge --ff-only feature/hledani
@@ -43,7 +51,9 @@ Pokud na `main` mezitím přibyly jiné commity, skončí chybou bez zahájení 
 
 Pro takovou situaci vyber merge nebo nejprve aktualizuj pracovní větev.
 
-### Merge commit: zachování obou linií
+## [Merge commit](#tab/git-merge-commit)
+
+**Zachování obou linií**
 
 ```bash
 git merge --no-ff feature/hledani
@@ -55,7 +65,9 @@ Editor zprávy ulož a zavři.
 
 Historie zachová jednotlivé pracovní commity i informaci, která větev se začlenila.
 
-### Squash: jedna ucelená změna v cíli
+## [Squash](#tab/git-merge-squash)
+
+**Jedna ucelená změna v cíli**
 
 ```bash
 git merge --squash feature/hledani
@@ -70,6 +82,8 @@ Po kontrole a testech ji uložíš jako jeden commit.
 Původní pracovní větev se nepřepisuje, ale její commity nejsou předky nového commitu.
 
 Proto po squash může `git branch -d` odmítnout smazání pracovní větve, přestože výsledný kód už je začleněný.
+
+***
 
 ## Aktualizace pracovní větve pomocí rebase
 

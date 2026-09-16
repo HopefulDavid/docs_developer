@@ -25,7 +25,12 @@ Jeho přítomnost závisí na distribuci a volbě komponent.
 
 [Zobrazit obrázek v původní velikosti](../images/wqiRRNNKOT.png)
 
-## Připojení z příkazového řádku
+## Vyber klienta pro připojení
+
+<a id="připojení-z-příkazového-řádku"></a>
+<a id="připojení-v-pgadminu"></a>
+
+## [Příkazový řádek psql](#tab/postgres-psql)
 
 Otevři **SQL Shell (psql)**, nebo v terminálu s dostupným `psql` spusť:
 
@@ -35,12 +40,7 @@ psql -h localhost -p 5432 -U postgres -d postgres
 
 Heslo zadej do výzvy, nikoli jako součást příkazu.
 
-Po přihlášení ověř:
-
-```sql
-SELECT version();
-SELECT current_database(), current_user;
-```
+Po přihlášení proveď [společné ověření](#ověření-připojení).
 
 V konzoli lze použít také:
 
@@ -57,11 +57,22 @@ Zadává se do konzole psql, nikoli přímo do PowerShellu.
 
 [Reference psql](https://www.postgresql.org/docs/current/app-psql.html)
 
-## Připojení v pgAdminu
+## [Grafický pgAdmin](#tab/postgres-pgadmin)
 
 Zaregistruj server a vyplň hostitele, port, databázi pro první připojení, uživatele a heslo odpovídající instalaci.
 
-V **Query Tool** spusť stejný ověřovací dotaz jako v psql. [Dialog serveru](https://www.pgadmin.org/docs/pgadmin4/latest/server_dialog.html)
+Po připojení otevři **Query Tool** a proveď [společné ověření](#ověření-připojení). [Dialog serveru](https://www.pgadmin.org/docs/pgadmin4/latest/server_dialog.html)
+
+***
+
+## Ověření připojení
+
+V připojené konzoli psql nebo v Query Tool pgAdminu spusť:
+
+```sql
+SELECT version();
+SELECT current_database(), current_user;
+```
 
 Pro aplikace vytvoř samostatný účet s potřebnými oprávněními.
 

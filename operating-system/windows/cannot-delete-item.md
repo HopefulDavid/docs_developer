@@ -22,7 +22,15 @@ Následující příkazy mažou přímo, bez přesunu do Koše.
 
 Celou složku maž pouze tehdy, když je jejím zamýšleným odstraněním i veškerý obsah.
 
-## PowerShell: kontrola a odstranění
+## Vyber nástroj pro odstranění
+
+Pokračuj pouze ve zvoleném shellu a ověř cíl přímo v něm.
+
+<a id="powershell-kontrola-a-odstranění"></a>
+<a id="cmd-rozlišení-souboru-a-složky"></a>
+<a id="cmd-problematický-název-nebo-dlouhá-cesta"></a>
+
+## [PowerShell](#tab/remove-powershell)
 
 Nahraď cestu skutečnou položkou a nejprve ji pouze prohlédni:
 
@@ -55,7 +63,9 @@ Pro jediný soubor nastav jeho přesnou cestu a vynech `-Recurse`.
 
 Při potřebě odstranit skrytou položku nebo soubor jen pro čtení lze přidat `-Force`, který však neobchází ACL oprávnění.
 
-## CMD: rozlišení souboru a složky
+## [CMD](#tab/remove-cmd)
+
+**Rozlišení souboru a složky**
 
 Tuto alternativu spouštěj v **CMD**, protože `del` a `rd` jsou v PowerShellu aliasy jiného příkazu.
 
@@ -81,7 +91,7 @@ Nepřebírej název typu `PROBLE~1` z ukázky.
 
 Použij pouze skutečný krátký název z výpisu, pokud vůbec existuje.
 
-## CMD: problematický název nebo dlouhá cesta
+**Problematický název nebo dlouhá cesta**
 
 Úplná cesta s předponou `\\?\` může pomoci u nástrojem podporované rozšířené cesty, například názvu končícího tečkou.
 
@@ -103,6 +113,8 @@ rd /s "\\?\C:\Data\Ukazka\ProblemovaSlozka."
 Předpona nezvyšuje oprávnění a vyžaduje úplnou cestu bez relativních `.` a `..`.
 
 Pro samostatný soubor použij `del /p` s jeho přesnou rozšířenou cestou.
+
+***
 
 ## Ověření výsledku
 

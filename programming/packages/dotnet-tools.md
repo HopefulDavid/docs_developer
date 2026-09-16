@@ -18,9 +18,21 @@ Příklady jsou pro PowerShell ve Windows.
 
 Na druhém počítači připrav stejný OS, architekturu a odpovídající .NET SDK či runtime.
 
-## Globální nástroje: zkopíruj celou složku
+## Vyber typ instalace
 
-### 1. Záloha na původním počítači
+<a id="globální-nástroje-zkopíruj-celou-složku"></a>
+<a id="1-záloha-na-původním-počítači"></a>
+<a id="2-obnova-bez-internetu"></a>
+<a id="3-ověření"></a>
+<a id="lokální-nástroje-přenes-projekt-a-balíčky"></a>
+<a id="1-záloha-s-internetem"></a>
+<a id="2-obnova-bez-internetu-1"></a>
+
+## [Globální nebo vlastní složka](#tab/tools-global)
+
+**Zkopíruj celou složku nástrojů.**
+
+**1. Záloha na původním počítači**
 
 Ulož si výpis `dotnet tool list --global` a verzi prostředí z `dotnet --info`.
 
@@ -40,7 +52,7 @@ Na Linuxu a macOS je běžná globální cesta `~/.dotnet/tools`.
 
 Pokud používáš vlastní `DOTNET_CLI_HOME`, vycházej ze skutečného umístění instalace.
 
-### 2. Obnova bez internetu
+**2. Obnova bez internetu**
 
 Na cílovém počítači nainstaluj připravené .NET SDK či runtime a vrať uloženou složku `tools` do jeho `%USERPROFILE%\.dotnet`.
 
@@ -50,7 +62,7 @@ Dvě instalace neslévej naslepo.
 
 Nástroje se z této kopie spouštějí přímo, bez nového stahování balíčků.
 
-### 3. Ověření
+**3. Ověření**
 
 Pro ukázkový DocFX spusť:
 
@@ -65,13 +77,15 @@ Pro spouštění samotným `docfx` musí být složka `tools` v `PATH`.
 
 Příkaz s úplnou cestou výše to nevyžaduje.
 
-## Lokální nástroje: přenes projekt a balíčky
+## [Lokální v projektu](#tab/tools-local)
+
+**Přenes projekt a balíčky.**
 
 Lokální nástroje obnovuje soubor `.config/dotnet-tools.json`.
 
 Nepřenášej je kopií globální složky `tools`.
 
-### 1. Záloha s internetem
+**1. Záloha s internetem**
 
 V projektu nejprve obnov nástroje a zjisti složku stažených balíčků:
 
@@ -90,7 +104,7 @@ zaloha-tools/
 
 Pro více projektů obnov každý z nich a potom pořizuj společnou kopii balíčků.
 
-### 2. Obnova bez internetu
+**2. Obnova bez internetu**
 
 Na cíli pracuj s rozbalenou kopií zálohy a v `projekt` vytvoř soubor `NuGet.Offline.Config`:
 
@@ -118,6 +132,8 @@ V posledním řádku nahraď DocFX vlastním nástrojem z manifestu a ověř jeh
 Úplnost zálohy zkoušej na novém účtu nebo počítači bez původní instalace.
 
 Obnovení na stejném účtu může využít jeho staré balíčky.
+
+***
 
 ## Když máš při obnově internet
 

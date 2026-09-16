@@ -39,7 +39,7 @@ Další příkazy jinak zůstanou v předchozí složce.
 
 Mazání souboru a celé složky se liší.
 
-Použij [cílený postup](cannot-delete-item.md#cmd-rozlišení-souboru-a-složky).
+Použij [cílený postup](cannot-delete-item.md?tabs=remove-cmd#cmd-rozlišení-souboru-a-složky).
 
 ## Proměnné a přesměrování
 

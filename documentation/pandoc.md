@@ -36,7 +36,17 @@ Jména vstupu, výstupu a složky obrázků můžeš změnit, ale existující c
 
 Seznam dostupných formátů zobrazí `pandoc --list-input-formats` a `pandoc --list-output-formats`.
 
-## HTML v jednom souboru
+## Uprav výstupní formát
+
+Vyber požadovaný výstup a použij odpovídající příklad.
+
+<a id="html-v-jednom-souboru"></a>
+<a id="styly-docx"></a>
+<a id="pdf"></a>
+
+## [HTML](#tab/pandoc-html)
+
+**HTML v jednom souboru**
 
 ```text
 pandoc dokument.md --standalone --embed-resources -o dokument.html
@@ -48,7 +58,9 @@ Teprve `--embed-resources` vkládá podporované prostředky do HTML.
 
 Starší `--self-contained` je zastaralý ekvivalent této kombinace.
 
-## Styly DOCX
+## [Word DOCX](#tab/pandoc-docx)
+
+**Referenční styly dokumentu**
 
 ```text
 pandoc dokument.md --reference-doc=styly.docx -o dokument.docx
@@ -58,7 +70,7 @@ Soubor `styly.docx` poskytuje referenční styly a vlastnosti dokumentu.
 
 Parametr `--template` není náhradou tohoto postupu.
 
-## PDF
+## [PDF](#tab/pandoc-pdf)
 
 ```text
 pandoc dokument.md --pdf-engine=xelatex -o dokument.pdf
@@ -67,3 +79,5 @@ pandoc dokument.md --pdf-engine=xelatex -o dokument.pdf
 Příklad vyžaduje nainstalovaný XeLaTeX a používané fonty.
 
 PDF je výstupní formát, nikoli obecně podporovaný vstup pro převod PDF zpět na DOCX. [Manuál Pandocu](https://pandoc.org/MANUAL.html)
+
+***

@@ -18,7 +18,17 @@ Nastavení se vztahuje na telemetrii SDK při příkazech jako `dotnet build`, `
 
 Telemetrie Visual Studia, VS Code nebo aplikace spuštěné přes `dotnet run` má vlastní nastavení.
 
-### Windows: trvalé vypnutí pro aktuální účet
+Vyber systém, ve kterém spouštíš .NET SDK.
+
+<a id="windows-trvalé-vypnutí-pro-aktuální-účet"></a>
+<a id="windows-ověření-uložené-a-aktuální-hodnoty"></a>
+<a id="windows-trvalé-nastavení-pro-všechny-uživatele"></a>
+<a id="kam-windows-nastavení-ukládá"></a>
+<a id="linux-a-macos-bash-a-zsh"></a>
+
+## [Windows](#tab/telemetry-windows)
+
+**Trvalé vypnutí pro aktuální účet**
 
 V běžném PowerShellu nebo CMD spusť:
 
@@ -34,7 +44,7 @@ Nastavení zůstane uložené i po restartu počítače, dokud jej nezměníš n
 
 Po uložení proto proveď obě kontroly níže.
 
-### Windows: ověření uložené a aktuální hodnoty
+**Ověření uložené a aktuální hodnoty**
 
 **1. Ověř trvalé uložení v PowerShellu:**
 
@@ -101,7 +111,7 @@ Pro okamžité vypnutí také v již otevřeném okně nastav **navíc** jeho ak
 
 Tyto dva příkazy samy o sobě trvalé nastavení neukládají.
 
-### Windows: trvalé nastavení pro všechny uživatele
+**Trvalé nastavení pro všechny uživatele**
 
 Pokud má být hodnota uložená na úrovni počítače, otevři PowerShell nebo CMD **jako správce** a spusť:
 
@@ -123,7 +133,7 @@ Systémová hodnota nepřepisuje prostředí již běžících procesů a není 
 
 Při rozporu ověř také rozsah `User` a nastavení shellu či IDE, protože pro `dotnet` rozhoduje hodnota v prostředí jeho procesu.
 
-### Kam Windows nastavení ukládá
+**Kam Windows nastavení ukládá**
 
 `setx` uloží hodnotu pojmenovanou `DOTNET_CLI_TELEMETRY_OPTOUT` do registru podle zvoleného rozsahu:
 
@@ -132,7 +142,9 @@ Při rozporu ověř také rozsah `User` a nastavení shellu či IDE, protože pr
 
 Tyto cesty odpovídají rozsahům `User` a `Machine` v rozhraní [EnvironmentVariableTarget](https://learn.microsoft.com/en-us/dotnet/api/system.environmentvariabletarget).
 
-### Linux a macOS: Bash a Zsh
+## [Linux a macOS](#tab/telemetry-unix)
+
+Postup je pro Bash a Zsh.
 
 Pro aktuální shell nastav proměnnou před prvním příkazem `dotnet`:
 
@@ -155,6 +167,8 @@ printenv DOTNET_CLI_TELEMETRY_OPTOUT
 Očekávaný výstup je `1`.
 
 Profil terminálu nepokrývá automaticky služby, CI, kontejnery ani aplikace spouštěné z grafického prostředí, proto nastav a ověř proměnnou také přímo v prostředí, kde tyto procesy spouštějí `dotnet`.
+
+***
 
 ### Co ověření potvrzuje
 

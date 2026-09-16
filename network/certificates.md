@@ -31,7 +31,16 @@ Vývojová autorita mkcert ani vývojový certifikát .NET nepatří jako univer
 
 Přejmenování přípony samo formát nepřevede.
 
-## Varianta A: ASP.NET Core
+## Připrav certifikát podle aplikace
+
+Vyber jednu cestu podle nástroje, kterým spouštíš vývojový server.
+
+<a id="varianta-a-aspnet-core"></a>
+<a id="varianta-b-mkcert-pro-vlastní-server"></a>
+<a id="spustitelný-příklad-nodejs"></a>
+<a id="aplikace-vyžaduje-pfx"></a>
+
+## [ASP.NET Core](#tab/cert-dotnet)
 
 S nainstalovaným .NET SDK v PowerShellu nebo Bashi:
 
@@ -52,7 +61,7 @@ Postupuj podle instrukcí konkrétního SDK a výsledku kontroly.
 
 `dotnet dev-certs https --clean` odstraní vývojové HTTPS certifikáty, a proto ho nepoužívej jako první univerzální opravu.
 
-## Varianta B: mkcert pro vlastní server
+## [Vlastní server s mkcert](#tab/cert-mkcert)
 
 Nainstaluj [mkcert z oficiálních vydání](https://github.com/FiloSottile/mkcert/releases), ověř jeho původ a dostupnost `mkcert -version`.
 
@@ -75,7 +84,7 @@ Pro vlastní jméno přidej například `app.test` do seznamu a zajisti jeho př
 
 mkcert nastaví certifikáty, ale sám nespustí ani nenakonfiguruje HTTPS aplikaci.
 
-### Spustitelný příklad Node.js
+**Spustitelný příklad Node.js**
 
 Vedle obou PEM souborů ulož `server.cjs`:
 
@@ -106,7 +115,7 @@ S nainstalovaným Node.js spusť `node server.cjs` a otevři uvedenou adresu.
 
 Port můžeš změnit, ale nové jméno serveru musí být zároveň uvedené v certifikátu.
 
-## Aplikace vyžaduje PFX
+**Aplikace vyžaduje PFX**
 
 S dostupným OpenSSL ve složce certifikátů:
 
@@ -119,6 +128,8 @@ Program se zeptá na exportní heslo.
 `server.pfx` pak obsahuje klíč i certifikát a heslo použij podle nastavení konkrétního serveru.
 
 Heslo nepiš přímo jako veřejný argument do skriptu.
+
+***
 
 ## Ověření a časté chyby
 

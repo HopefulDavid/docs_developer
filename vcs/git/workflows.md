@@ -25,7 +25,13 @@ Pokud tě jejich správa zdržuje u drobných změn, jedna větev je plnohodnotn
 
 Pravidla existujícího repozitáře mají přednost před zde uvedeným výběrem.
 
-## Varianta A: jedna větev
+## Postup podle workflow
+
+<a id="varianta-a-jedna-větev"></a>
+<a id="varianta-b-krátká-větev-pro-jednu-změnu"></a>
+<a id="varianta-c-stabilní-a-vývojová-větev"></a>
+
+## [Jedna větev](#tab/workflow-single)
 
 Na `main` načteš vzdálený stav, upravíš soubory, otestuješ je, vytvoříš commit a odešleš jej.
 
@@ -39,7 +45,7 @@ Rozpracované změny mezi nimi nejsou v historii.
 
 Postup je v [běžném pracovním dni](in-practice.md), kde jednoduše vynecháš vytvoření pracovní větve.
 
-## Varianta B: krátká větev pro jednu změnu
+## [Krátké pracovní větve](#tab/workflow-feature)
 
 ```text
 main:           A ───────── M
@@ -63,7 +69,7 @@ Lokální merge je vhodný, když nepotřebuješ serverovou kontrolu.
 
 Nemusí ho schvalovat druhá osoba, pokud to pravidla hostingu nevyžadují.
 
-## Varianta C: stabilní a vývojová větev
+## [Stabilní a vývojová větev](#tab/workflow-develop)
 
 `main` obsahuje vydaný stav a `develop` změny pro příští vydání.
 
@@ -74,6 +80,8 @@ Tato varianta přidává smysluplnou hranici například při vydávání deskto
 Sama o sobě ale nevyžaduje všechny větve Git Flow.
 
 Pokud skutečně potřebuješ i stabilizační období a urgentní opravy, pokračuj na [Git Flow](git-flow.md).
+
+***
 
 ## Jak změny slučovat
 

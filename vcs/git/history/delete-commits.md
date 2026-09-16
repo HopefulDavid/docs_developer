@@ -12,7 +12,14 @@ Pro běžnou opravu zveřejněné historie použij revert, aby navazující prá
 
 Pro nový začátek s jediným commitem použij samostatný postup [nahrazení celé vzdálené historie](replace-history.md).
 
-## Revert zveřejněné změny
+## Vyber podle stavu historie
+
+<a id="revert-zveřejněné-změny"></a>
+<a id="reset-vlastního-neodeslaného-commitu"></a>
+<a id="vrácení-merge-commitu"></a>
+<a id="obnova-po-chybném-resetu"></a>
+
+## [Zveřejněná změna: revert](#tab/undo-revert)
 
 Příklad funguje v PowerShellu i Bashi a předpokládá čistý strom a poslední commit, který není merge:
 
@@ -34,7 +41,24 @@ Zrušení zajistí `git revert --abort`.
 
 Otestuj funkčnost a nový commit odešli běžným pushem.
 
-## Reset vlastního neodeslaného commitu
+**Vrácení merge commitu**
+
+Merge má více rodičů a Git potřebuje vědět, kterou linii považuješ za hlavní.
+
+```text
+git show --no-patch --pretty=raw <merge-commit>
+git revert -m <číslo-rodiče> <merge-commit>
+```
+
+První příkaz ukáže pořadí rodičů.
+
+`-m 1` je správně jen tehdy, když první rodič odpovídá linii, kterou chceš zachovat.
+
+Vrácení merge ovlivní i pozdější pokusy znovu sloučit stejné předky.
+
+Opětovné zavedení práce může vyžadovat vrácení revertu nebo nové opravné commity.
+
+## [Místní commit: reset](#tab/undo-reset)
 
 Nejprve zachovej původní poslední commit:
 
@@ -69,28 +93,13 @@ Pro úplné zahazování souborů preferuj úzce zacílený [restore](../recover
 
 `--hard` není univerzální oprava Gitu.
 
-## Vrácení merge commitu
-
-Merge má více rodičů a Git potřebuje vědět, kterou linii považuješ za hlavní.
-
-```text
-git show --no-patch --pretty=raw <merge-commit>
-git revert -m <číslo-rodiče> <merge-commit>
-```
-
-První příkaz ukáže pořadí rodičů.
-
-`-m 1` je správně jen tehdy, když první rodič odpovídá linii, kterou chceš zachovat.
-
-Vrácení merge ovlivní i pozdější pokusy znovu sloučit stejné předky.
-
-Opětovné zavedení práce může vyžadovat vrácení revertu nebo nové opravné commity.
-
-## Obnova po chybném resetu
+**Obnova po chybném resetu**
 
 Původní stav prohlédni přes `git show backup/pred-reset` a zachraň jej jako větev.
 
 Bez zálohy zkus [reflog](../recovery.md#záchrana-přes-reflog).
+
+***
 
 Ani reset, ani revert nevymažou tajemství ze všech starých kopií historie.
 
