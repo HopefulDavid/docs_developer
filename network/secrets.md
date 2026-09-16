@@ -19,7 +19,16 @@ Generuj ho kryptografickým generátorem a podle požadavků aplikace, ne sklád
 
 Kódování není šifrování: Base64 i hex lze převést zpět na původní bajty bez hesla.
 
-## Generování pomocí OpenSSL
+## Vyber nástroj pro generování
+
+Standardní Base64 může obsahovat `+`, `/` a `=`.
+
+Pokud aplikace požaduje Base64url, použij její dokumentovaný postup místo ručního odstraňování znaků.
+
+<a id="generování-pomocí-openssl"></a>
+<a id="alternativa-bez-openssl-v-powershellu-7"></a>
+
+## [OpenSSL](#tab/secret-openssl)
 
 S nainstalovaným OpenSSL v PowerShellu nebo Bashi:
 
@@ -37,16 +46,18 @@ Alternativa pro aplikaci vyžadující hex:
 openssl rand -hex 32
 ```
 
-Opět jde o 32 náhodných bajtů, tentokrát zapsaných jako 64 hexadecimálních znaků; každý příkaz vytváří jinou novou hodnotu.
+Opět jde o 32 náhodných bajtů, tentokrát zapsaných jako 64 hexadecimálních znaků.
+
+Každý příkaz vytváří jinou novou hodnotu.
 
 | Syntaxe | Význam |
 |---|---|
 | `openssl rand -base64 <počet-bajtů>` | Base64 reprezentace požadované náhodnosti |
 | `openssl rand -hex <počet-bajtů>` | Hex reprezentace, dva znaky na bajt |
 
-Standardní Base64 může obsahovat `+`, `/` a `=`; pokud aplikace požaduje Base64url, použij její dokumentovaný postup místo ručního odstraňování znaků.
+## [PowerShell 7](#tab/secret-powershell)
 
-## Alternativa bez OpenSSL v PowerShellu 7
+Tato varianta vytvoří Base64 bez instalace OpenSSL.
 
 ```powershell
 $secretBytes = [byte[]]::new(32)
@@ -57,6 +68,8 @@ $secretBytes = [byte[]]::new(32)
 Pole obsahuje 32 bajtů, systémový generátor ho naplní a poslední řádek vypíše Base64.
 
 Obyčejný `Get-Random` pro tento účel nenahrazuje požadavek na kryptograficky bezpečný generátor.
+
+***
 
 ## Uložení a změna klíče
 

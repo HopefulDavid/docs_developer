@@ -6,7 +6,9 @@ description: "Pracovní soubory, index, commity, větve a vztah lokálního Gitu
 
 Git ukládá historii souborů projektu, takže můžeš porovnat změny, vrátit se k funkční verzi nebo vyvíjet více variant vedle sebe.
 
-Funguje i bez internetu; GitHub, GitLab nebo vlastní server přidávají vzdálenou kopii a služby jako pull requesty.
+Funguje i bez internetu.
+
+GitHub, GitLab nebo vlastní server přidávají vzdálenou kopii a služby jako pull requesty.
 
 ## Co si Git pamatuje
 
@@ -18,7 +20,7 @@ Funguje i bez internetu; GitHub, GitLab nebo vlastní server přidávají vzdál
 | Commit | Uložený stav sledovaných souborů s autorem, zprávou a odkazem na předchozí historii |
 | ID / hash commitu | Jedinečný identifikátor, například z `git log --oneline` |
 | Větev | Pojmenovaný ukazatel na poslední commit určité linie vývoje |
-| `HEAD` | Obvykle odkaz na právě vybranou větev; určuje výchozí commit práce |
+| `HEAD` | Obvykle odkaz na právě vybranou větev. Určuje výchozí commit práce |
 | Remote | Pojmenované spojení na jiný repozitář, obvykle `origin` |
 | `origin/main` | Místní záznam naposledy načteného stavu větve `main` na serveru |
 
@@ -30,13 +32,17 @@ editor → pracovní strom → git add → index → git commit → místní his
                                                   vzdálený repozitář
 ```
 
-`git add` připraví obsah souboru v daném okamžiku; další úprava v editoru se do připraveného commitu nepřidá sama.
+`git add` připraví obsah souboru v daném okamžiku.
+
+Další úprava v editoru se do připraveného commitu nepřidá sama.
 
 `git commit` uloží právě index a `git push` odešle hotové commity, takže necommitované soubory nejsou zálohované na serveru.
 
 ## Jak poznáš stav projektu
 
-Příkazy spouštěj v kořeni svého repozitáře; fungují v PowerShellu i Bashi.
+Příkazy spouštěj v kořeni svého repozitáře.
+
+Fungují v PowerShellu i Bashi.
 
 ```bash
 git status
@@ -76,7 +82,9 @@ MM src/config.cs
 
 Přepnutí větve obvykle změní soubory v téže pracovní složce podle jejího posledního commitu.
 
-Názvy `main`, `master` a `develop` nemají zvláštní technické schopnosti; jejich význam určuje zvolený způsob práce.
+Názvy `main`, `master` a `develop` nemají zvláštní technické schopnosti.
+
+Jejich význam určuje zvolený způsob práce.
 
 Pokud chceš současně otevřít dvě větve ve dvou složkách, použij [worktree](stash-worktree.md).
 
@@ -87,6 +95,8 @@ Pokud chceš současně otevřít dvě větve ve dvou složkách, použij [workt
 3. Projdi [běžný pracovní den](in-practice.md) a pak [synchronizaci](synchronization.md).
 4. Při chybě začni [rozcestníkem obnovy](recovery.md), který rozlišuje neuložené, místní i zveřejněné změny.
 
-V referencích označuje `<soubor>` hodnotu k nahrazení; podrobný [klíč syntaxe](../../operating-system/command-line-syntax.md) vysvětluje i hranaté závorky a alternativy.
+V referencích označuje `<soubor>` hodnotu k nahrazení.
+
+Podrobný [klíč syntaxe](../../operating-system/command-line-syntax.md) vysvětluje i hranaté závorky a alternativy.
 
 Principy vycházejí z [Git Book: základy](https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F) a [zaznamenávání změn](https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository).

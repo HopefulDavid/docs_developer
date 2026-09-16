@@ -118,6 +118,12 @@ Běžný souvislý text piš tak, aby každá věta tvořila samostatný Markdow
 
 Mezi dvěma větami proto vždy ponech právě jeden prázdný řádek.
 
+V běžném textu se vyhýbej středníkům a související myšlenky rozděl do krátkých vět a samostatných odstavců.
+
+V seznamech a tabulkách zachovej jejich strukturu a místo středníku použij vhodné věty, spojku nebo stručnější formulaci.
+
+Středníky ponech tam, kde jsou nutnou součástí kódu, příkazu, datového formátu, HTML entity nebo přesně citované syntaxe.
+
 Samotné zalomení řádku je v Markdownu pouze soft line break a běžný renderer jej uvnitř odstavce zobrazí jako mezeru, nikoli jako viditelné oddělení.
 
 Stejné pravidlo platí pro závěrečné shrnutí (`summary`) a jiné souvislé textové výstupy agenta.
@@ -156,9 +162,13 @@ Prázdné nebo opakující se sekce nevytvářej.
 
 Před ukázkou uveď prostředí, potřebnou verzi či kompatibilitu, pracovní složku, oprávnění a existující vstupy v rozsahu nutném pro její použití.
 
-Každý blok má identifikátor jazyka; pro výpis, cestu nebo strukturu souborů použij `text`.
+Každý blok má identifikátor jazyka.
 
-U kompletního programu napiš název souboru a způsob spuštění; u fragmentu přesné místo vložení a vztah k předchozí ukázce.
+Pro výpis, cestu nebo strukturu souborů použij `text`.
+
+U kompletního programu napiš název souboru a způsob spuštění.
+
+U fragmentu uveď přesné místo vložení a vztah k předchozí ukázce.
 
 Komentář nebo bezprostřední vysvětlení objasní účel příkazu, význam netriviálních parametrů, očekávaný výsledek a hodnoty, které lze bezpečně změnit.
 
@@ -166,13 +176,21 @@ Ukázkové názvy a cesty jsou konkrétní a výslovně vysvětlené, nikoli nev
 
 Referenční tabulky používají obecnou syntaxi: pevné části se píší doslova, `<hodnota>` označuje nahrazovaný argument, `[volba]` nepovinnou část, `{a|b}` povinnou alternativu a `...` opakování.
 
-Konkrétní spustitelný příklad je označený jako příklad a bezprostředně vysvětluje vybrané názvy a hodnoty; tabulka rozebírající právě tento příklad smí jeho hodnoty opakovat.
+Konkrétní spustitelný příklad je označený jako příklad a bezprostředně vysvětluje vybrané názvy a hodnoty.
 
-Výukový význam značek vlastní veřejný [klíč syntaxe příkazů](../../operating-system/command-line-syntax.md); skutečné operátory shellu a syntaxe programovacího jazyka se nezaměňují s touto dokumentační notací.
+Tabulka rozebírající právě tento příklad smí jeho hodnoty opakovat.
 
-Svislou čáru uvnitř buňky této verze DocFX zapisuj jako HTML entitu v elementu code, například `<code>{a&#124;b}</code>`; escapování zpětným lomítkem v Markdown kódu může lomítko chybně zobrazit čtenáři.
+Výukový význam značek vlastní veřejný [klíč syntaxe příkazů](../../operating-system/command-line-syntax.md).
 
-Příkaz měnící data má před sebou podmínky použití a kontrolu cíle; jeho návratový kód nenahrazuje ověření skutečného výsledku nebo obnovy.
+Skutečné operátory shellu a syntaxe programovacího jazyka se nezaměňují s touto dokumentační notací.
+
+Svislou čáru uvnitř buňky této verze DocFX zapisuj jako HTML entitu v elementu code, například `<code>{a&#124;b}</code>`.
+
+Escapování zpětným lomítkem v Markdown kódu může lomítko chybně zobrazit čtenáři.
+
+Příkaz měnící data má před sebou podmínky použití a kontrolu cíle.
+
+Jeho návratový kód nenahrazuje ověření skutečného výsledku nebo obnovy.
 
 Významnou technickou změnu dolož relevantní primární dokumentací a dostupným spustitelným ověřením, přičemž rozlišuj ověření zdroje, syntaxe a skutečného běhu služby.
 
@@ -180,15 +198,23 @@ Významnou technickou změnu dolož relevantní primární dokumentací a dostup
 
 Používej jeden H1 a logickou hierarchii H2/H3 bez přeskakování úrovní.
 
-Základní vysvětlení a potřebné kroky nech viditelné; `<details>` používej pro samostatné alternativy, rozšiřující diagnostiku nebo rozsáhlé přílohy.
+Základní vysvětlení a potřebné kroky nech viditelné.
+
+`<details>` používej pro samostatné alternativy, rozšiřující diagnostiku nebo rozsáhlé přílohy.
 
 Tabulka porovnává souběžné možnosti, seznam zachycuje kroky nebo stručný výčet a upozornění označuje konkrétní důsledek u příslušného kroku.
 
-Snímek obrazovky ani video nesmějí být jediným nositelem zásadního postupu; obrázek má popisný alternativní text a video smysluplný titulek.
+Snímek obrazovky ani video nesmějí být jediným nositelem zásadního postupu.
 
-U posouzeného snímku použij HTML `img` s kladnou šířkou `width` v pixelech; normalizátor ji zachová a CSS omezí šířku dostupným místem při zachování poměru stran.
+Obrázek má popisný alternativní text a video smysluplný titulek.
 
-Malé dialogy nezvětšuj nad potřebnou čitelnost; u rozsáhlých snímků ponech odkaz na původní rozlišení a informaci popiš také textem.
+U posouzeného snímku použij HTML `img` s kladnou šířkou `width` v pixelech.
+
+Normalizátor ji zachová a CSS omezí šířku dostupným místem při zachování poměru stran.
+
+Malé dialogy nezvětšuj nad potřebnou čitelnost.
+
+U rozsáhlých snímků ponech odkaz na původní rozlišení a informaci popiš také textem.
 
 Dekorativní úvodní obrázky, emoji v každé buňce a nepodložená označení jako „kompletní“ nebo „nejlepší“ nepřidávají orientační hodnotu.
 
@@ -202,7 +228,9 @@ Popis stručně a přímo říká, co čtenář u cíle najde, bez opisování d
 
 Generátor popis neodvozuje z prvního odstavce a chybějící či neplatná metadata odmítá, takže úvod a rozcestník lze udržovat podle jejich odlišného účelu.
 
-Změna nadpisu musí zahrnout kontrolu příchozích odkazů na kotvu; veřejné cesty a jejich casing zachovávej.
+Změna nadpisu musí zahrnout kontrolu příchozích odkazů na kotvu.
+
+Veřejné cesty a jejich casing zachovávej.
 
 ### Vizuální kontrola
 

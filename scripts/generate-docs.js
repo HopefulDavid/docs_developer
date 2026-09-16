@@ -10,7 +10,8 @@ const generatedNotice =
 const generatedYamlNotice =
   '# Tento soubor generuje npm run docs:generate. Neupravujte navigaci ani přehledy ručně.';
 
-// Veřejný obsah má explicitní hranici; projektová metadata generátor nečte ani neupravuje.
+// Veřejný obsah má explicitní hranici.
+// Projektová metadata generátor nečte ani neupravuje.
 const ignoredRootDirectories = new Set([
   '.agents',
   '.ai',
@@ -359,6 +360,9 @@ const navigation = {
   'operating-system': [
     { name: 'Příkazová řádka', items: [
       { name: 'Jak číst zápis příkazů', href: 'command-line-syntax.md' },
+    ] },
+    { name: 'Notebooky', items: [
+      { name: 'Nabíjení baterie na 80 %', href: 'laptop-battery.md' },
     ] },
     {
       name: 'Windows',
@@ -886,7 +890,10 @@ function firstHeading(content) {
   return match ? cleanInline(match[1]) : '';
 }
 
-/** Čte samostatný popis rozcestníku; neplatná nebo chybějící metadata vrací jako prázdný text. */
+/**
+ * Čte samostatný popis rozcestníku.
+ * Neplatná nebo chybějící metadata vrací jako prázdný text.
+ */
 function descriptionFromMarkdown(content) {
   // Jednořádkový JSON řetězec je současně platný YAML a nepřenáší odkazy z těla.
   const { frontMatter } = splitFrontMatter(content);
@@ -946,7 +953,9 @@ function renderRootIndex() {
 
   const body = `České návody pro každodenní vývoj: od principu přes použitelný příklad až po ověření výsledku.
 
-Vyber oblast nebo vyhledej nástroj v horní liště; na mobilu ji otevřeš tlačítkem navigace.
+Vyber oblast nebo vyhledej nástroj v horní liště.
+
+Na mobilu ji otevřeš tlačítkem navigace.
 
 ## Začni podle cíle
 
@@ -967,7 +976,9 @@ ${areas}
 
 Nejprve ověř uvedený systém, verzi nástroje a pracovní složku, potom postupuj podle příkladu a porovnej očekávaný výsledek.
 
-Ukázkové názvy, cesty a porty přizpůsob podle vysvětlení u kódu; rozšiřující varianty a diagnostiku najdeš za hlavním postupem.
+Ukázkové názvy, cesty a porty přizpůsob podle vysvětlení u kódu.
+
+Rozšiřující varianty a diagnostiku najdeš za hlavním postupem.
 
 Historii úprav najdeš na stránce ${link(file, 'Změny', 'changelog.md')}.`;
 

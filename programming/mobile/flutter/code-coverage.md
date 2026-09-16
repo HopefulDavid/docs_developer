@@ -4,7 +4,9 @@ description: "Spuštění testů s pokrytím a čtení výsledného reportu."
 
 # Flutter – pokrytí kódu testy
 
-Pokrytí ukazuje, které části kódu se při testech vykonaly; vysoké procento samo neprokazuje správná očekávání testů.
+Pokrytí ukazuje, které části kódu se při testech vykonaly.
+
+Vysoké procento samo neprokazuje správná očekávání testů.
 
 ## Vytvoření reportu
 
@@ -16,7 +18,9 @@ V jeho kořeni spusť:
 flutter test --coverage
 ```
 
-Po úspěšném dokončení hledej soubor `coverage/lcov.info`; jinou cestu lze určit pomocí `--coverage-path`. [Implementace příkazu Flutter test](https://github.com/flutter/flutter/blob/stable/packages/flutter_tools/lib/src/commands/test.dart)
+Po úspěšném dokončení hledej soubor `coverage/lcov.info`.
+
+Jinou cestu lze určit pomocí `--coverage-path`. [Implementace příkazu Flutter test](https://github.com/flutter/flutter/blob/stable/packages/flutter_tools/lib/src/commands/test.dart)
 
 Report otevři nástrojem podporujícím LCOV, například prohlížečem pokrytí ve svém IDE.
 

@@ -16,7 +16,9 @@ V kořeni projektu vytvoř konfigurační soubor:
 doxygen -g Doxyfile
 ```
 
-V něm uprav existující hodnoty například takto; `src` musí odpovídat skutečnému adresáři zdrojů:
+V něm uprav existující hodnoty podle následující ukázky.
+
+`src` musí odpovídat skutečnému adresáři zdrojů:
 
 ```ini
 PROJECT_NAME = "Moje aplikace"
@@ -32,7 +34,9 @@ HAVE_DOT = NO
 
 `PROJECT_NAME` mění titulek, `OUTPUT_DIRECTORY` cíl generování a `INPUT` složku zdrojů.
 
-`RECURSIVE` zahrne podsložky; volby `EXTRACT_*` určují rozsah API a `GENERATE_*` požadované formáty výstupu.
+`RECURSIVE` zahrne podsložky.
+
+Volby `EXTRACT_*` určují rozsah API a `GENERATE_*` požadované formáty výstupu.
 
 `HAVE_DOT = NO` umožní první sestavení bez Graphviz.
 
@@ -50,7 +54,9 @@ Otevři `docs-api/html/index.html`, zkontroluj očekávané typy a oprav varová
 
 Pro běžné API komentáře ponech `EXTRACT_ALL = NO`, aby ses mohl řídit varováními o nedokumentovaných členech.
 
-Případné výjimky vybírej přes `EXCLUDE`, `EXCLUDE_PATTERNS` nebo `EXCLUDE_SYMBOLS`; nepřepisuj význam klíčových slov jazyka makrem. [Konfigurace](https://www.doxygen.nl/manual/config.html)
+Případné výjimky vybírej přes `EXCLUDE`, `EXCLUDE_PATTERNS` nebo `EXCLUDE_SYMBOLS`.
+
+Nepřepisuj význam klíčových slov jazyka makrem. [Konfigurace](https://www.doxygen.nl/manual/config.html)
 
 ## Grafy a PDF
 
@@ -58,4 +64,6 @@ Pro grafy nainstaluj Graphviz a nastav `HAVE_DOT = YES`.
 
 Pro PDF nastav `GENERATE_LATEX = YES` a připrav LaTeX distribuci.
 
-Doxygen nejprve vytvoří LaTeX zdroje; výsledné PDF vznikne až jejich překladem, například `make` v adresáři `docs-api/latex` v prostředí s dostupným Make a LaTeXem. [Výstupy Doxygenu](https://www.doxygen.nl/manual/output.html)
+Doxygen nejprve vytvoří LaTeX zdroje.
+
+Výsledné PDF vznikne až jejich překladem, například `make` v adresáři `docs-api/latex` v prostředí s dostupným Make a LaTeXem. [Výstupy Doxygenu](https://www.doxygen.nl/manual/output.html)

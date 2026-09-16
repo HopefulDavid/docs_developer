@@ -19,7 +19,9 @@ dotnet new tool-manifest
 dotnet tool install dotnet-ef --version 10.0.12
 ```
 
-Příklad připíná ověřenou verzi 10.0.12; při aktualizaci změň společně provider, Design i nástroj a znovu ověř migrace.
+Příklad připíná ověřenou verzi 10.0.12.
+
+Při aktualizaci změň společně provider, Design i nástroj a znovu ověř migrace.
 
 Provider musí podporovat zvolenou hlavní verzi EF Core. [První aplikace](https://learn.microsoft.com/en-us/ef/core/get-started/overview/first-app), [Providery](https://learn.microsoft.com/en-us/ef/core/providers/)
 
@@ -68,7 +70,9 @@ dotnet ef database update
 dotnet run
 ```
 
-Očekávej soubor `notes.db` a vypsanou poznámku; každé další spuštění přidá další řádek.
+Očekávej soubor `notes.db` a vypsanou poznámku.
+
+Každé další spuštění přidá další řádek.
 
 Před aplikací migrace přečti její operace `Up` a `Down`, zvlášť pokud mění existující data. [Správa migrací](https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/managing)
 
@@ -84,11 +88,17 @@ Před aplikací migrace přečti její operace `Up` a `Down`, zvlášť pokud m�
 | Nastavení databáze na konkrétní migraci | `dotnet ef database update <migrace>` |
 | Obnova lokálního nástroje z manifestu | `dotnet tool restore` |
 
-Například `dotnet ef migrations add AddNotes` připraví migraci pojmenovanou `AddNotes`; teprve `dotnet ef database update AddNotes` ji aplikuje na nakonfigurovanou databázi.
+Například `dotnet ef migrations add AddNotes` připraví migraci pojmenovanou `AddNotes`.
 
-Před aktualizací ověř connection string a vytvoř zálohu dat; výběr starší migrace může provést její kroky Down a odstranit data.
+Teprve `dotnet ef database update AddNotes` ji aplikuje na nakonfigurovanou databázi.
 
-Cílová migrace může znamenat i návrat zpět a ztrátu dat; aplikovanou sdílenou migraci neopravuj smazáním její historie. [CLI EF Core](https://learn.microsoft.com/en-us/ef/core/cli/dotnet)
+Před aktualizací ověř connection string a vytvoř zálohu dat.
+
+Výběr starší migrace může provést její kroky Down a odstranit data.
+
+Cílová migrace může znamenat i návrat zpět a ztrátu dat.
+
+Aplikovanou sdílenou migraci neopravuj smazáním její historie. [CLI EF Core](https://learn.microsoft.com/en-us/ef/core/cli/dotnet)
 
 ## Použití v aplikaci
 

@@ -17,7 +17,7 @@ Zde se vysvětluje její účel, pořadí, prostředí, oprávnění a způsob l
 
 | Vlastnost | Ověřená hodnota | Důkaz |
 |---|---|---|
-| Hostingová platforma | GitHub | Remote `https://github.com/HopefulDavid/docs_developer.git` a shoda místního obsahu s `origin/develop` ověřené 2026-09-10; `.github/workflows/` |
+| Hostingová platforma | GitHub | Remote `https://github.com/HopefulDavid/docs_developer.git` a shoda místního obsahu s `origin/develop` ověřené 2026-09-10, `.github/workflows/` |
 | VCS | Git | `.git/`, remote a projektová historie |
 | Výchozí větev hostingu | `main` | Lokální symbolický ref `origin/HEAD -> origin/main` |
 | Vývojová větev | `develop` | [`../development/workflow.md`](../development/workflow.md) |
@@ -54,7 +54,9 @@ Větev `gh-pages` je generovaný deploymentový artefakt, nikoli archiv zdrojov�
 
 Každé úspěšné publikování ji pomocí `force_orphan: true` nahradí jediným kořenovým commitem obsahujícím nejnovější ověřený výstup `_site/`.
 
-Audit zdrojové změny uchovávají `main`, zpráva deploymentového commitu a GitHub Actions; předchozí deployment se obnovuje opětovným publikováním zvoleného zdrojového stavu, nikoli návratem v historii `gh-pages`.
+Audit zdrojové změny uchovávají `main`, zpráva deploymentového commitu a GitHub Actions.
+
+Předchozí deployment se obnovuje opětovným publikováním zvoleného zdrojového stavu, nikoli návratem v historii `gh-pages`.
 
 ## Názvy workflow a kroků
 
@@ -119,9 +121,13 @@ Hodnotu tajemství nikdy nezapisuj do tohoto dokumentu.
 
 CI používá stejné lockfily, deklarace nástrojů a podporované registry jako lokální prostředí.
 
-Připnutá `setup-dotnet` instaluje kanál deklarovaný přímo v obou workflow podle [`ADR-0004`](../architecture/decisions/ADR-0004-vyber-dotnet-sdk.md); `dotnet-quality: ga` omezuje instalaci na stabilní vydání a `dotnet --version` zaznamenává skutečně vybrané SDK.
+Připnutá `setup-dotnet` instaluje kanál deklarovaný přímo v obou workflow podle [`ADR-0004`](../architecture/decisions/ADR-0004-vyber-dotnet-sdk.md).
 
-`DOTNET_INSTALL_DIR` směřuje do `runner.temp`, aby bez projektového `global.json` výběr SDK neovlivnily novější předinstalované verze runneru; akce přidá tuto instalaci do PATH a nastaví DOTNET_ROOT.
+`dotnet-quality: ga` omezuje instalaci na stabilní vydání a `dotnet --version` zaznamenává skutečně vybrané SDK.
+
+`DOTNET_INSTALL_DIR` směřuje do `runner.temp`, aby bez projektového `global.json` výběr SDK neovlivnily novější předinstalované verze runneru.
+
+Akce přidá tuto instalaci do PATH a nastaví DOTNET_ROOT.
 
 Lokální instalace a pozdější CI běh mohou použít různé verze SDK, takže opakování starého buildu se stejným SDK vyžaduje verzi z jeho logu a její explicitní výběr v izolovaném prostředí.
 
@@ -145,7 +151,7 @@ Reprodukovatelnost se zvyšuje úměrně riziku a distribučnímu modelu projekt
 |---|---|---|---|---|
 | Push do `develop` | `Ověření dokumentace` | `npm run verify` | `contents: read` | Nevytváří ani nepublikuje vzdálený artefakt |
 | Pull request | `Ověření dokumentace` | `npm run verify` | `contents: read` | Nepoužívá `pull_request_target` ani privilegované tajemství |
-| Push do `main` | `Publikování dokumentace` | `npm run verify` před deploymentem | `contents: write` | Publikuje pouze po úspěšném ověření; source checkout neuchovává credentials; `gh-pages` přepisuje jediným kořenovým commitem |
+| Push do `main` | `Publikování dokumentace` | `npm run verify` před deploymentem | `contents: write` | Publikuje pouze po úspěšném ověření. Source checkout neuchovává credentials. `gh-pages` přepisuje jediným kořenovým commitem |
 | Tag nebo release | Žádné workflow | Žádné | Žádné | Projekt nevydává verzované binární release |
 | Ruční quality | `Ověření dokumentace` | `npm run verify` | `contents: read` | Diagnostický běh bez publikování |
 | Ruční nasazení | `Publikování dokumentace` | `npm run verify` a deployment | `contents: write` | Spouští se pouze z důvěryhodného refu vybraného vlastníkem |
@@ -164,9 +170,9 @@ Klasické branch protection rules nejsou nakonfigurované, protože zdrojové v�
 
 | Cíl | Ověřený ruleset a rozsah | Vynucované vlastnosti | Vztah k workflow |
 |---|---|---|---|
-| `develop` | Aktivní `Ochrana develop`, přesný cíl `develop`, prázdný bypass list | Zákaz smazání a force push; pull request ani status check nejsou podmínkou aktualizace | Umožňuje běžné fast-forward push aktualizace a po každém pushi spouští quality workflow |
-| Výchozí větev `main` | Aktivní `Ochrana main`, cíl `Default` odpovídající `main`, prázdný bypass list | Zákaz smazání a force push, povinný pull request, aktuálnost vůči `main`, vyřešené konverzace a povinná kontrola `Lokálně reprodukovatelné kontroly` ze zdroje GitHub Actions; `0` povinných schválení a jediná povolená metoda `merge` | Vynucuje propagaci `develop` do `main` podle [`../development/workflow.md`](../development/workflow.md#publikování-změny) |
-| `gh-pages` | Bez klasické ochrany a bez rulesetu | Platforma neblokuje ruční update, smazání ani force push | Větev je obnovitelný deploymentový artefakt a publikační workflow ji musí kvůli `force_orphan: true` nahradit; ruční změny zakazuje projektový workflow, nikoli GitHub |
+| `develop` | Aktivní `Ochrana develop`, přesný cíl `develop`, prázdný bypass list | Zákaz smazání a force push. Pull request ani status check nejsou podmínkou aktualizace | Umožňuje běžné fast-forward push aktualizace a po každém pushi spouští quality workflow |
+| Výchozí větev `main` | Aktivní `Ochrana main`, cíl `Default` odpovídající `main`, prázdný bypass list | Zákaz smazání a force push, povinný pull request, aktuálnost vůči `main`, vyřešené konverzace a povinná kontrola `Lokálně reprodukovatelné kontroly` ze zdroje GitHub Actions, `0` povinných schválení a jediná povolená metoda `merge` | Vynucuje propagaci `develop` do `main` podle [`../development/workflow.md`](../development/workflow.md#publikování-změny) |
+| `gh-pages` | Bez klasické ochrany a bez rulesetu | Platforma neblokuje ruční update, smazání ani force push | Větev je obnovitelný deploymentový artefakt a publikační workflow ji musí kvůli `force_orphan: true` nahradit. Ruční změny zakazuje projektový workflow, nikoli GitHub |
 
 ### Důkaz vzdáleného ověření
 
@@ -205,7 +211,7 @@ Historii změn doplňuje při každém buildu generovaný a ignorovaný `changel
 
 | Krok | Spouštěč | Kanonický nástroj nebo soubor | Ověření |
 |---|---|---|---|
-| Vytvoření historie změn | Každý lokální a CI build s úplnou historií | [`cliff.toml`](../../cliff.toml), uzamčený `git-cliff` a `npm run changelog:generate` | Integrační fixture přes tag a výsledná stránka v `_site/`; zdrojová větev se nemění |
+| Vytvoření historie změn | Každý lokální a CI build s úplnou historií | [`cliff.toml`](../../cliff.toml), uzamčený `git-cliff` a `npm run changelog:generate` | Integrační fixture přes tag a výsledná stránka v `_site/`. Zdrojová větev se nemění |
 | Vytvoření artefaktu | Push do `main` nebo ruční publish | `npm run verify` a [`docfx.json`](../../docfx.json) | 0 warningů, 0 chyb a úspěšný artifact check |
 | Publikování | Úspěšný build v publikačním workflow | [`.github/workflows/main.yml`](../../.github/workflows/main.yml) | Jediný kořenový deployment commit v `gh-pages` a dostupný web |
 

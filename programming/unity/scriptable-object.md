@@ -73,7 +73,9 @@ V editoru se assety ukládají na disk a změny assetu během Play mohou přetrv
 
 Ve vydané aplikaci nelze používat editorové ukládání assetů jako systém pro uložení postupu hráče.
 
-Pro save data navrhni samostatný formát a úložiště, například soubor v `Application.persistentDataPath`; citlivé údaje nepatří do nechráněného PlayerPrefs.
+Pro save data navrhni samostatný formát a úložiště, například soubor v `Application.persistentDataPath`.
+
+Citlivé údaje nepatří do nechráněného PlayerPrefs.
 
 Rozdíl editoru a buildu popisuje [Unity: ScriptableObject](https://docs.unity3d.com/6000.0/Documentation/Manual/class-ScriptableObject.html).
 

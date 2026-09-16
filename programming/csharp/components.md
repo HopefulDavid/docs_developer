@@ -16,6 +16,8 @@ Návrh a provoz závisí na použité verzi .NET Framework a hostiteli workflow.
 
 WF není součástí moderního .NET, tedy ani .NET 10.
 
-Při migraci inventarizujte vlastní aktivity, persistence store, návrhář a hostování; běžná změna cílového frameworku jejich kompatibilitu nezaručuje.
+Při migraci inventarizujte vlastní aktivity, persistence store, návrhář a hostování.
+
+Běžná změna cílového frameworku jejich kompatibilitu nezaručuje.
 
 Microsoft uvádí CoreWF jako alternativu, jejíž kompatibilitu je nutné posoudit vůči konkrétní aplikaci. [Microsoft: technologie nepřenesené do .NET](https://learn.microsoft.com/en-us/dotnet/core/porting/framework-overview#unavailable-technologies).

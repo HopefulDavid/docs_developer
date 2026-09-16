@@ -6,7 +6,9 @@ description: "Vytvoření a podepisování aktualizačního feedu aplikace pro S
 
 Appcast je RSS feed s rozšířeními, podle kterého updater Sparkle pro macOS vyhledá vhodnou aktualizaci a její archiv.
 
-XML popisuje nabídku verzí; samotnou aktualizaci provádí Sparkle integrované v aplikaci.
+XML popisuje nabídku verzí.
+
+Samotnou aktualizaci provádí Sparkle integrované v aplikaci.
 
 ## Jak spolu části souvisejí
 
@@ -32,7 +34,9 @@ Soukromý klíč nepatří do Git repozitáře ani na veřejný server s aktuali
 
 V terminálu macOS spusť příkazy ze složky distribuce Sparkle, která obsahuje adresář `bin`.
 
-Ukázka předpokládá hotovou aplikaci `MyApp.app` v aktuální složce; název a umístění nahraď vlastním sestavením.
+Ukázka předpokládá hotovou aplikaci `MyApp.app` v aktuální složce.
+
+Název a umístění nahraď vlastním sestavením.
 
 ```bash
 # Složka uchovává vydané archivy pro generování feedu a případných delt.
@@ -53,7 +57,9 @@ Generování a podpisy popisuje [Publishing an update](https://sparkle-project.o
 
 ## Struktura feedu
 
-Následující tabulka slouží ke čtení skutečně vygenerovaného XML; velikost a podpis se nesmějí nahradit odhadnutými hodnotami z univerzální ukázky.
+Následující tabulka slouží ke čtení skutečně vygenerovaného XML.
+
+Velikost a podpis se nesmějí nahradit odhadnutými hodnotami z univerzální ukázky.
 
 | Element nebo atribut | Význam | Co lze upravit |
 |---|---|---|

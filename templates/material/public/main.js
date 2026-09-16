@@ -61,7 +61,8 @@ function syncThemeControl(theme = readStoredTheme()) {
   const icon = toggle?.querySelector("i");
 
   if (toggle) {
-    // DocFX renders an anchor without href; supply button semantics and keyboard access.
+    // DocFX renders an anchor without href.
+    // Supply button semantics and keyboard access.
     toggle.setAttribute("role", "button");
     toggle.setAttribute("tabindex", "0");
     toggle.setAttribute("aria-label", "Změnit motiv");

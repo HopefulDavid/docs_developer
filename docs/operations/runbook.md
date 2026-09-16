@@ -18,11 +18,11 @@ Odkazuje na ně a popisuje konkrétní provozní rozhodovací kroky.
 | Vlastnost | Hodnota |
 |---|---|
 | Provozní vlastník | Maintainers a vlastník GitHub repozitáře |
-| Eskalační kontakt nebo kanál | Vlastník repozitáře; samostatný veřejný provozní kanál není v projektu deklarovaný |
-| Kritičnost služby | Nízká až střední; výpadek omezuje přístup ke znalostní bázi, ale neblokuje transakční ani bezpečnostní službu |
+| Eskalační kontakt nebo kanál | Vlastník repozitáře. Samostatný veřejný provozní kanál není v projektu deklarovaný |
+| Kritičnost služby | Nízká až střední. Výpadek omezuje přístup ke znalostní bázi, ale neblokuje transakční ani bezpečnostní službu |
 | Podporovaná prostředí | Odkaz na [`../delivery/ci-cd.md`](../delivery/ci-cd.md) |
 | Hlavní uživatelské scénáře | `REQ-001` a `REQ-002` v [`../product/requirements.md`](../product/requirements.md) |
-| Cíle dostupnosti a obnovy | Číselné SLO, RPO ani RTO nejsou přijaté; reprodukovatelnost a integritu chrání `QLT-002` a `QLT-003` |
+| Cíle dostupnosti a obnovy | Číselné SLO, RPO ani RTO nejsou přijaté. Reprodukovatelnost a integritu chrání `QLT-002` a `QLT-003` |
 
 ## Ověření zdraví
 
@@ -41,10 +41,10 @@ Kontrola zároveň nesmí zbytečně způsobovat drahé nebo destruktivní opera
 
 | Signál | Kanonický zdroj | Co znamená | Retence | Citlivost |
 |---|---|---|---|---|
-| Logy | Konzolový výstup lokálních příkazů a GitHub Actions log | Obnova nástrojů, testy, build a deployment | Podle GitHub nastavení; lokální log se standardně nearchivuje | Nesmí obsahovat hodnotu `GITHUB_TOKEN` ani soukromý obsah |
+| Logy | Konzolový výstup lokálních příkazů a GitHub Actions log | Obnova nástrojů, testy, build a deployment | Podle GitHub nastavení. Lokální log se standardně nearchivuje | Nesmí obsahovat hodnotu `GITHUB_TOKEN` ani soukromý obsah |
 | Metriky | Nejsou nakonfigurované | Projekt nemá přijaté provozní SLO ani vlastní runtime | Není relevantní | Znovu posoudit při přijetí dostupnostního cíle nebo analytiky |
 | Trasování | Není použitelné | Statický web nemá serverový požadavek ani distribuovanou transakci | Není relevantní | Znovu posoudit při zavedení backendu |
-| Audit | Git historie zdroje, workflow běhy a aktuální deployment commit `gh-pages` | Který commit změnil zdroj, prošel kontrolou a je právě publikovaný | Zdroj podle Git historie; běhy podle GitHub nastavení; `gh-pages` uchovává pouze poslední deployment | Commit metadata jsou veřejná podle viditelnosti repozitáře |
+| Audit | Git historie zdroje, workflow běhy a aktuální deployment commit `gh-pages` | Který commit změnil zdroj, prošel kontrolou a je právě publikovaný | Zdroj podle Git historie. Běhy podle GitHub nastavení. `gh-pages` uchovává pouze poslední deployment | Commit metadata jsou veřejná podle viditelnosti repozitáře |
 
 Uveď stabilní identifikátory, podle kterých lze propojit požadavek, uživatele v bezpečném rozsahu, job nebo transakci.
 
@@ -63,24 +63,30 @@ Příkaz odkazuj na [`../development/commands.md`](../development/commands.md) n
 1. Ověř veřejnou URL a zaznamenej konkrétní HTTP nebo vizuální symptom bez změny vzdáleného stavu.
 2. Zkontroluj poslední běh workflow `Publikování dokumentace`, jeho zdrojový commit a poslední deployment commit v `gh-pages`.
 3. Na odpovídajícím zdrojovém commitu spusť `npm ci --ignore-scripts --no-audit --no-fund`, `dotnet tool restore` a `npm run verify`.
-4. Pokud lokální build projde, zkontroluj stav GitHub Pages a obecný incident GitHubu; pokud selže, pokračuj od prvního lokálního důkazu.
+4. Pokud lokální build projde, zkontroluj stav GitHub Pages a obecný incident GitHubu. Pokud selže, pokračuj od prvního lokálního důkazu.
 
 **Potvrzení příčiny:** příčina je potvrzená až shodou symptomu s neúspěšným krokem, rozdílným zdrojovým commitem nebo doloženým incidentem platformy.
 
-**Bezpečná náprava:** oprav nebo revertuj vadný zdroj na standardní větvi, nech projít quality a znovu spusť podporované publikování; neupravuj sestavené HTML ručně jako nový zdroj pravdy.
+**Bezpečná náprava:** oprav nebo revertuj vadný zdroj na standardní větvi, nech projít quality a znovu spusť podporované publikování.
 
-**Eskalace:** vlastník repozitáře řeší oprávnění, Pages settings a ruční workflow; doložený incident platformy se eskaluje na GitHub podle jeho podpory.
+Neupravuj sestavené HTML ručně jako nový zdroj pravdy.
+
+**Eskalace:** vlastník repozitáře řeší oprávnění, Pages settings a ruční workflow.
+
+Doložený incident platformy se eskaluje na GitHub podle jeho podpory.
 
 ### Symptom: Changelog chybí, je neúplný nebo má chybnou kategorii
 
 1. Spusť `node --test --test-isolation=none tests/changelog.test.mjs` a potvrď víceletou fixture s tagem, počty období, breaking i legacy commitem.
-2. Ověř úplnou Git historii; v CI musí checkout používat `fetch-depth: 0`.
+2. Ověř úplnou Git historii. V CI musí checkout používat `fetch-depth: 0`.
 3. Spusť `npm run changelog:generate`, porovnej hlavičku s `git rev-parse HEAD` a konkrétní záznam s `git log` a parsery v `cliff.toml`.
 4. Spusť `npm run docs:build` a potvrď, že `_site/changelog.html` zachovává otevřené nejnovější období, sdělení o vynechávání prázdných roků, sbalené starší roky, počty, kategorie a stabilní kotvy.
 
 **Potvrzení příčiny:** konkrétní commit chybí, má jinou kategorii nebo identifikátor v reprodukovaném výstupu nad stejnou historií.
 
-**Bezpečná náprava:** oprav zdrojovou commit zprávu pouze novým commitem nebo kompatibilně uprav `cliff.toml` a test; ignorovaný výstup ručně neupravuj.
+**Bezpečná náprava:** oprav zdrojovou commit zprávu pouze novým commitem nebo kompatibilně uprav `cliff.toml` a test.
+
+Ignorovaný výstup ručně neupravuj.
 
 **Eskalace:** přepis publikované Git historie nebo změna průběžného nevydávaného modelu vyžaduje samostatné rozhodnutí maintainera.
 
@@ -89,7 +95,7 @@ Příkaz odkazuj na [`../development/commands.md`](../development/commands.md) n
 | Datová oblast | Způsob zálohy | Frekvence | Retence | Šifrování | Poslední ověřená obnova |
 |---|---|---|---|---|---|
 | Zdrojové články, konfigurace a projektová dokumentace | Distribuovaná Git historie a vzdálený GitHub repozitář | Při každém commitu a pushi | Podle Git historie projektu | Přenos přes SSH/HTTPS a ochrana GitHub účtu | 2026-08-28: lokální checkout vytvořil čistý ověřený web z deklarovaných zdrojů |
-| Publikovaný statický web | Nezálohuje se jako autoritativní data; znovu se sestavuje ze zdrojového commitu | Při každém publish běhu | Pouze poslední kořenový commit `gh-pages`; starší stav se znovu publikuje ze zdroje | GitHub platforma | 2026-08-28: lokální reprodukce vytvořila 99 HTML stránek bez warningu |
+| Publikovaný statický web | Nezálohuje se jako autoritativní data. Znovu se sestavuje ze zdrojového commitu | Při každém publish běhu | Pouze poslední kořenový commit `gh-pages`. Starší stav se znovu publikuje ze zdroje | GitHub platforma | 2026-08-28: lokální reprodukce vytvořila 99 HTML stránek bez warningu |
 
 Projekt neukládá uživatelská ani serverová data, takže obnova neobsahuje databázovou konzistenci nebo datovou migraci.
 
@@ -107,7 +113,7 @@ Zde je provozní rozhodnutí a ověření výsledku.
 |---|---|---|---|---|
 | Vadný článek, navigace nebo šablona po publikování | Revertovat nebo opravit zdrojový commit a znovu publikovat | Žádné stavové datové schéma | `npm run verify` a produkční smoke `REQ-001` | Vlastník repozitáře při blokovaném merge nebo workflow |
 | Neúspěšný publish po úspěšném buildu | Zachovat poslední funkční `gh-pages`, odstranit příčinu a použít roll-forward | Nepřepisovat ručně zdrojovou větev ani token | GitHub Actions log a dostupnost předchozího webu | Vlastník GitHub Pages settings |
-| Kompromitovaný nebo podezřelý workflow běh | Zastavit další publish, zrušit běh a posoudit token i použité action SHA | Rotaci automatického tokenu řídí GitHub; zkontrolovat oprávnění repozitáře | Audit workflow, commitů a GitHub security logu | Vlastník repozitáře a GitHub podpora podle dopadu |
+| Kompromitovaný nebo podezřelý workflow běh | Zastavit další publish, zrušit běh a posoudit token i použité action SHA | Rotaci automatického tokenu řídí GitHub. Zkontrolovat oprávnění repozitáře | Audit workflow, commitů a GitHub security logu | Vlastník repozitáře a GitHub podpora podle dopadu |
 
 ## Incident
 

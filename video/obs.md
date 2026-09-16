@@ -8,7 +8,9 @@ Parametry OBS umožňují vybrat profil, scénu a případně automaticky zaháj
 
 ## Argumenty příkazové řádky
 
-`<název>` nahraď přesným existujícím názvem v OBS; uvozovky umožňují mezery.
+`<název>` nahraď přesným existujícím názvem v OBS.
+
+Uvozovky umožňují mezery.
 
 | Syntaxe argumentu | Význam |
 |---|---|
@@ -39,6 +41,8 @@ Následující příkaz pro **CMD ve Windows** ihned zahájí nahrávání:
 start "" /d "C:\Program Files\obs-studio\bin\64bit" obs64.exe --startrecording
 ```
 
-Prázdný první argument je název okna pro příkaz `start`; `/d` nastavuje pracovní složku OBS.
+Prázdný první argument je název okna pro příkaz `start`.
+
+`/d` nastavuje pracovní složku OBS.
 
 Cestu uprav podle instalace a po spuštění ověř indikátor záznamu i výsledný soubor. [Spuštění OBS](https://obsproject.com/kb/launch-parameters), [Příkaz start](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/start)

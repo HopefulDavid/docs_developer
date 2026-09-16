@@ -6,7 +6,9 @@ description: "Přenos Dart nebo Flutter projektu s celou pub cache a obnova uzam
 
 K offline obnově potřebuješ **projekt s `pubspec.lock` a celou pub cache**, tedy složku stažených balíčků.
 
-Postup je pro PowerShell a Dart 3; na cíli použij stejnou verzi SDK, OS a architekturu.
+Postup je pro PowerShell a Dart 3.
+
+Na cíli použij stejnou verzi SDK, OS a architekturu.
 
 U Flutter projektu nahraď v příkazech `dart pub` za `flutter pub`, aby se použil Dart dodaný s Flutter SDK.
 
@@ -23,7 +25,9 @@ $env:PUB_CACHE = Join-Path $PWD "../pub-cache"
 dart pub get --enforce-lockfile
 ```
 
-První řádek zvolí sousední složku pro balíčky; druhý ji naplní verzemi z lockfilu. [PUB_CACHE](https://dart.dev/tools/pub/environment-variables), [pub get](https://dart.dev/tools/pub/cmd/pub-get)
+První řádek zvolí sousední složku pro balíčky.
+
+Druhý ji naplní verzemi z lockfilu. [PUB_CACHE](https://dart.dev/tools/pub/environment-variables), [pub get](https://dart.dev/tools/pub/cmd/pub-get)
 
 Pokud projekt lockfile dosud nemá, proveď nejprve běžné `dart pub get` a vzniklý `pubspec.lock` uchovej.
 
@@ -35,7 +39,9 @@ zaloha-pub/
   pub-cache/     celá naplněná cache
 ```
 
-Kopíruj až po dokončení stahování a zachovej metadata, hashe i případné Git závislosti; samotná podsložka `hosted` nemusí stačit.
+Kopíruj až po dokončení stahování a zachovej metadata, hashe i případné Git závislosti.
+
+Samotná podsložka `hosted` nemusí stačit.
 
 Přípravnou `.dart_tool` nepřenášej, protože mapování cest vytvoří pub na cíli znovu. [Generované soubory](https://dart.dev/tools/pub/private-files)
 
@@ -53,9 +59,13 @@ dart pub deps
 
 `--offline` použije místní cache a `--enforce-lockfile` zachová uzamčené verze i kontrolní hashe.
 
-Potom spusť `dart analyze`, běžnou aplikaci a její testy; pro Flutter použij `flutter analyze` a `flutter test`.
+Potom spusť `dart analyze`, běžnou aplikaci a její testy.
 
-Nastavení `PUB_CACHE` platí pro aktuální terminál a procesy z něj spuštěné; při další práci použij stejnou cestu také v novém terminálu či IDE.
+Pro Flutter použij `flutter analyze` a `flutter test`.
+
+Nastavení `PUB_CACHE` platí pro aktuální terminál a procesy z něj spuštěné.
+
+Při další práci použij stejnou cestu také v novém terminálu či IDE.
 
 ## Chci zálohovat už používanou cache
 
@@ -66,9 +76,13 @@ Místo nového stahování můžeš převzít celou stávající cache:
 | Windows | `%LOCALAPPDATA%/Pub/Cache` |
 | Linux a macOS | `~/.pub-cache` |
 
-Pokud máš nastavenou proměnnou `PUB_CACHE`, kopíruj adresář z ní; v PowerShellu ji zobrazíš přes `$env:PUB_CACHE`.
+Pokud máš nastavenou proměnnou `PUB_CACHE`, kopíruj adresář z ní.
 
-Ulož jej jako `pub-cache` a obnovuj podle kroku 3; pro více projektů nejprve obnov jejich balíčky a uchovej zdroje i lockfile každého z nich.
+V PowerShellu ji zobrazíš přes `$env:PUB_CACHE`.
+
+Ulož jej jako `pub-cache` a obnovuj podle kroku 3.
+
+Pro více projektů nejprve obnov jejich balíčky a uchovej zdroje i lockfile každého z nich.
 
 ## CLI nástroje
 
@@ -87,7 +101,9 @@ Tento projekt zazálohuj výše uvedenými kroky a po offline obnově spouštěj
 
 `dhttpd` a `4.1.0` nahraď svým nástrojem a verzí, pokud podporuje tento způsob spuštění.
 
-`dart pub global activate` nemá přepínač `--offline`; s internetem lze použít například `dart pub global activate dhttpd 4.1.0`. [Pub global](https://dart.dev/tools/pub/cmd/pub-global), [implementace aktivace](https://github.com/dart-lang/pub/blob/master/lib/src/command/global_activate.dart)
+`dart pub global activate` nemá přepínač `--offline`.
+
+S internetem lze použít například `dart pub global activate dhttpd 4.1.0`. [Pub global](https://dart.dev/tools/pub/cmd/pub-global), [implementace aktivace](https://github.com/dart-lang/pub/blob/master/lib/src/command/global_activate.dart)
 
 ## Co potřebuje navíc Flutter
 
@@ -97,6 +113,8 @@ Před odpojením spusť `flutter precache` pro potřebné platformy, proveď jej
 
 Podrobnosti vlastní [záloha a obnova Flutteru](../mobile/flutter/backup-and-restore.md).
 
-U Git závislostí uchovej připnutý commit v cache a nainstalovaný Git; úplnost zálohy vždy ověř obnovením a spuštěním bez připojení.
+U Git závislostí uchovej připnutý commit v cache a nainstalovaný Git.
+
+Úplnost zálohy vždy ověř obnovením a spuštěním bez připojení.
 
 S internetem stačí projekt a `dart pub get --enforce-lockfile`, případně stejný příkaz přes `flutter pub`.

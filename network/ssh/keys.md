@@ -15,7 +15,9 @@ Server ověří, že ovládáš odpovídající soukromou část, aniž bys mu j
 | Hostitelský klíč serveru | Že ses připojil ke známému správnému serveru |
 | Tvůj uživatelský klíč | Že smíš vystupovat jako daný účet |
 
-Heslová fráze chrání soukromý klíč na disku; není to heslo vzdáleného účtu.
+Heslová fráze chrání soukromý klíč na disku.
+
+Není to heslo vzdáleného účtu.
 
 ## Vytvoření klíče
 
@@ -36,7 +38,9 @@ ssh-keygen -t ed25519 -C "Osobni notebook"
 | `id_ed25519` | Soukromý klíč, nepatří do hostingu, chatu ani repozitáře |
 | `id_ed25519.pub` | Veřejná část, kterou můžeš registrovat u serveru |
 
-Pro starší systém, který Ed25519 nepodporuje, lze po ověření jeho požadavků použít `ssh-keygen -t rsa -b 4096 -C "Osobni notebook"`; počet `4096` určuje velikost RSA klíče, nikoli délku hesla.
+Pro starší systém, který Ed25519 nepodporuje, lze po ověření jeho požadavků použít `ssh-keygen -t rsa -b 4096 -C "Osobni notebook"`.
+
+Počet `4096` určuje velikost RSA klíče, nikoli délku hesla.
 
 ## Registrace veřejného klíče
 
@@ -48,13 +52,15 @@ Get-Content "$env:USERPROFILE\.ssh\id_ed25519.pub"
 
 V Bashi použij `cat ~/.ssh/id_ed25519.pub` a zkopíruj celý řádek začínající `ssh-ed25519`.
 
-- U Git hostingu vlož řádek do nastavení SSH klíčů svého účtu; [GitHub postup](git.md#připojení-ke-githubu) popisuje konkrétní obrazovku.
+- U Git hostingu vlož řádek do nastavení SSH klíčů svého účtu. [GitHub postup](git.md#připojení-ke-githubu) popisuje konkrétní obrazovku.
 - U linuxového serveru patří veřejný řádek do `~/.ssh/authorized_keys` cílového účtu.
-- U Windows serveru závisí umístění i oprávnění na typu účtu; použij [postup Microsoftu](https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_keymanagement).
+- U Windows serveru závisí umístění i oprávnění na typu účtu. Použij [postup Microsoftu](https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_keymanagement).
 
 Na Linuxu s existujícím heslovým přístupem a nástrojem `ssh-copy-id` má automatické přidání syntaxi `ssh-copy-id -i <veřejný-klíč.pub> <uživatel>@<server>`.
 
-Při ručním nastavení na Linuxu bývá potřeba `chmod 700 ~/.ssh` a `chmod 600 ~/.ssh/authorized_keys` provedené na serveru pod správným účtem; vlastník souboru musí odpovídat tomuto účtu.
+Při ručním nastavení na Linuxu bývá potřeba `chmod 700 ~/.ssh` a `chmod 600 ~/.ssh/authorized_keys` provedené na serveru pod správným účtem.
+
+Vlastník souboru musí odpovídat tomuto účtu.
 
 ## Ověření konkrétní identity
 
@@ -79,7 +85,9 @@ Nejprve:
 ssh-add -l
 ```
 
-Výpis identit znamená dostupného agenta; hlášení `The agent has no identities` znamená běžícího agenta bez načteného klíče.
+Výpis identit znamená dostupného agenta.
+
+Hlášení `The agent has no identities` znamená běžícího agenta bez načteného klíče.
 
 Pouze pokud se k agentovi nelze připojit, spusť pro tuto relaci:
 
@@ -96,7 +104,9 @@ ssh-add ~/.ssh/id_ed25519
 ssh-add -l
 ```
 
-Procesy musí zdědit odpovídající `SSH_AUTH_SOCK`; samostatně spuštěné IDE nemusí vidět stejného agenta.
+Procesy musí zdědit odpovídající `SSH_AUTH_SOCK`.
+
+Samostatně spuštěné IDE nemusí vidět stejného agenta.
 
 | Syntaxe | Účinek |
 |---|---|
@@ -109,11 +119,15 @@ Odebrání identity nemaže soubor klíče, jen jeho dostupnost pro další při
 
 ## Změna fráze, záloha a ztráta
 
-`ssh-keygen -p -f <soukromý-klíč>` změní ochrannou frázi po zadání původní; veřejná identita zůstane stejná.
+`ssh-keygen -p -f <soukromý-klíč>` změní ochrannou frázi po zadání původní.
+
+Veřejná identita zůstane stejná.
 
 Pro zálohu použij chráněné šifrované úložiště a uchovej frázi odděleně od nechráněné kopie souboru.
 
-Při podezření na únik soukromého klíče odeber jeho veřejnou část ze všech účtů, vytvoř nový pár a nahraď registrace; pouhá změna fráze neodvolá již zkopírovanou identitu.
+Při podezření na únik soukromého klíče odeber jeho veřejnou část ze všech účtů, vytvoř nový pár a nahraď registrace.
+
+Pouhá změna fráze neodvolá již zkopírovanou identitu.
 
 Agent forwarding `ssh -A` nezapínej plošně: vzdálený systém může po dobu spojení využívat dostupného agenta.
 

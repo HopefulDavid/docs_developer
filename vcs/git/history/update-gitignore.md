@@ -49,9 +49,13 @@ git check-ignore -v .env
 git status --short --ignored
 ```
 
-První příkaz ukáže soubor, řádek a pravidlo, které odpovídá cestě; druhý označí ignorované položky `!!`.
+První příkaz ukáže soubor, řádek a pravidlo, které odpovídá cestě.
 
-Pokud je položka už sledovaná, ověř ji přes `git ls-files -- <cesta>`; pro samotné posouzení pravidla i u sledované cesty lze použít `git check-ignore --no-index -v <cesta>`.
+Druhý označí ignorované položky `!!`.
+
+Pokud je položka už sledovaná, ověř ji přes `git ls-files -- <cesta>`.
+
+Pro samotné posouzení pravidla i u sledované cesty lze použít `git check-ignore --no-index -v <cesta>`.
 
 ## Soubor už je v historii
 
@@ -71,11 +75,15 @@ git diff --cached
 git commit -m "chore: odděluje místní konfiguraci"
 ```
 
-Commit odstraní soubor z budoucích verzí projektu; po načtení změny se odstranění projeví také v jiných pracovních kopiích.
+Commit odstraní soubor z budoucích verzí projektu.
+
+Po načtení změny se odstranění projeví také v jiných pracovních kopiích.
 
 Potřebnou soukromou konfiguraci proto před synchronizací jinde uchovej a verzuj bezpečný vzor s vysvětlenými hodnotami.
 
-Pro adresář má syntaxe podobu `git rm -r --cached -- <adresář>`; kvůli jedné cestě není potřeba znovu vytvářet celý index.
+Pro adresář má syntaxe podobu `git rm -r --cached -- <adresář>`.
+
+Kvůli jedné cestě není potřeba znovu vytvářet celý index.
 
 ## Důležité poznámky
 

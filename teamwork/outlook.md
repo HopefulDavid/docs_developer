@@ -6,7 +6,16 @@ description: "Zobrazení a překrytí více kalendářů."
 
 Kalendáře lze zobrazit vedle sebe nebo překrýt pro snadnější porovnání termínů.
 
-## Klasický Outlook pro Windows
+## Vyber svou verzi Outlooku
+
+<a id="klasický-outlook-pro-windows"></a>
+<a id="oddělené-zobrazení"></a>
+<a id="překryté-zobrazení"></a>
+<a id="nový-outlook-a-web"></a>
+
+## [Klasický Outlook](#tab/outlook-classic)
+
+Postup je pro klasický Outlook ve Windows.
 
 1. V kalendáři zaškrtni další kalendář v levém panelu.
 2. Na jeho záložce vyber šipku **View in Overlay Mode**.
@@ -14,20 +23,22 @@ Kalendáře lze zobrazit vedle sebe nebo překrýt pro snadnější porovnání 
 
 Jde o změnu zobrazení, nikoli sloučení událostí do jednoho kalendáře. [Porovnání kalendářů](https://support.microsoft.com/en-US/Outlook/calendar/view-multiple-calendars-at-the-same-time-in-outlook)
 
-### Oddělené zobrazení
+**Oddělené zobrazení**
 
 <img src="../images/outlook_calendarBeforeOverlay.png" alt="Kalendáře vedle sebe v klasickém Outlooku" width="760">
 
 [Zobrazit obrázek v původní velikosti](../images/outlook_calendarBeforeOverlay.png)
 
-### Překryté zobrazení
+**Překryté zobrazení**
 
 <img src="../images/outlook_calendarAfterOverlay.png" alt="Překryté kalendáře v klasickém Outlooku" width="760">
 
 [Zobrazit obrázek v původní velikosti](../images/outlook_calendarAfterOverlay.png)
 
-## Nový Outlook a web
+## [Nový Outlook a web](#tab/outlook-new)
 
 Vyber požadované kalendáře a v nabídce uspořádání zapni **Split view** pro zobrazení vedle sebe.
 
 Vypnutím této volby je překryješ. [Postup pro nový Outlook a web](https://support.microsoft.com/en-US/Outlook/calendar/view-multiple-calendars-at-the-same-time-in-outlook)
+
+***

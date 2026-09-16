@@ -4,7 +4,9 @@ description: "Metadata typů a členů a jejich čtení pomocí reflexe."
 
 # .NET – Atributy, validace a FileHelpers
 
-Atributy připojují metadata k typům a členům; jejich účinek závisí na kompilátoru, runtime nebo knihovně, která je zpracovává.
+Atributy připojují metadata k typům a členům.
+
+Jejich účinek závisí na kompilátoru, runtime nebo knihovně, která je zpracovává.
 
 Samotné přidání validačního atributu neověří každé přiřazení hodnoty. [Microsoft: atributy](https://learn.microsoft.com/en-us/dotnet/csharp/advanced-topics/reflection-and-attributes/).
 
@@ -18,7 +20,7 @@ Samotné přidání validačního atributu neověří každé přiřazení hodno
 | `MinLength`, `MaxLength` | Mezní délky podporovaných hodnot |
 | `RegularExpression` | Kontrola formátu regulárním výrazem |
 | `EmailAddress`, `Phone` | Kontrola formátu, nikoli existence schránky nebo čísla |
-| `DataType` | Nápověda pro prezentaci dat; sama nezajišťuje validaci |
+| `DataType` | Nápověda pro prezentaci dat. Sama nezajišťuje validaci |
 | `Display` | Zobrazovaný název a další metadata |
 
 Úplný `Program.cs` pro .NET 10 spustí validaci explicitně:
@@ -54,7 +56,9 @@ Výstup obsahuje `False` a zprávu `Jméno je povinné.`.
 
 `TryValidateObject` s `validateAllProperties: true` vyhodnotí validační atributy vlastností, ale neprochází rekurzivně celý graf vnořených objektů. [Microsoft: TryValidateObject](https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validator.tryvalidateobject?view=net-10.0).
 
-Pro vlastní pravidlo lze odvodit `ValidationAttribute` a implementovat `IsValid`; běžnou povinnou hodnotu již řeší `Required`. [Microsoft: DataAnnotations](https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations).
+Pro vlastní pravidlo lze odvodit `ValidationAttribute` a implementovat `IsValid`.
+
+Běžnou povinnou hodnotu již řeší `Required`. [Microsoft: DataAnnotations](https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations).
 
 ## FileHelpers – Zpracování souborů
 
@@ -99,4 +103,6 @@ Pro soubory použij `engine.ReadFile("Input.txt")` a `engine.WriteFile("Output.t
 | `FieldConverter` | Konverze, například data s konkrétním formátem |
 | `FieldOrder` | Explicitní pořadí polí |
 
-Formát a pravidla konverze zvol podle vstupu; možnosti knihovny nejsou omezené jen na jeden neměnný typ záznamu. [FileHelpers: dokumentace a příklady](https://www.filehelpers.net/).
+Formát a pravidla konverze zvol podle vstupu.
+
+Možnosti knihovny nejsou omezené jen na jeden neměnný typ záznamu. [FileHelpers: dokumentace a příklady](https://www.filehelpers.net/).

@@ -25,17 +25,19 @@ Její zdánlivě malý počáteční rozsah nezahrnuje budoucí bezpečnost, kom
 
 Projekt nemá aplikační npm balíčky ani runtime backend závislosti.
 
-Vlastní generátor, kontrola artefaktu a testy používají pouze standardní knihovnu podporovaného Node.js; jediná npm devDependency poskytuje nástroj pro sestavení changelogu.
+Vlastní generátor, kontrola artefaktu a testy používají pouze standardní knihovnu podporovaného Node.js.
+
+Jediná npm devDependency poskytuje nástroj pro sestavení changelogu.
 
 | Závislost nebo vlastní prvek | Účel | Strojová autorita | Omezení a ověření |
 |---|---|---|---|
 | Node.js | Generování, kontroly a testy | [`package.json`](../../package.json) | Přesná verze se ověřuje v lokálním i CI profilu |
-| `git-cliff` | Odvození kategorizovaného veřejného changelogu z Git historie | [`package.json`](../../package.json) a [`package-lock.json`](../../package-lock.json) | Přesně uzamčená vývojová závislost; běží offline a nevstupuje do publikovaného webu jako runtime kód |
-| .NET SDK | Hostitel lokálního DocFX toolu | Instalační kanál v [quality](../../.github/workflows/quality.yml) a [publish](../../.github/workflows/main.yml) workflow | Lokální SDK se nepřipíná; důvody vlastní [`ADR-0004`](../architecture/decisions/ADR-0004-vyber-dotnet-sdk.md) |
+| `git-cliff` | Odvození kategorizovaného veřejného changelogu z Git historie | [`package.json`](../../package.json) a [`package-lock.json`](../../package-lock.json) | Přesně uzamčená vývojová závislost. Běží offline a nevstupuje do publikovaného webu jako runtime kód |
+| .NET SDK | Hostitel lokálního DocFX toolu | Instalační kanál v [quality](../../.github/workflows/quality.yml) a [publish](../../.github/workflows/main.yml) workflow | Lokální SDK se nepřipíná. Důvody vlastní [`ADR-0004`](../architecture/decisions/ADR-0004-vyber-dotnet-sdk.md) |
 | DocFX | Převod povoleného Markdown obsahu na statický web | [`.config/dotnet-tools.json`](../../.config/dotnet-tools.json) | Obnovuje se přes `dotnet tool restore` a build používá warningy jako chyby |
 | `scripts/generate-docs.js` | Projektový registr navigace, normalizace, migrace cest a kontrola artefaktu | Vlastní zdrojový soubor a [`ADR-0002`](../architecture/decisions/ADR-0002-verejny-docfx-build.md) | Vlastní implementace je krytá cílenými testy a nesmí přerůst v obecný dokumentační framework |
 | `templates/material` | Aktivní vzhled a volba tématu nad standardními DocFX šablonami | [`docfx.json`](../../docfx.json) a zdroje šablony | Browserový JavaScript nevolá externí službu a ukládá pouze volbu tématu |
-| GitHub Actions | Obnova prostředí, quality a publikování | [`.github/workflows`](../../.github/workflows) | Každá action je připnutá na full SHA; third-party publish zůstává přechodem `ARCH-RISK-002` |
+| GitHub Actions | Obnova prostředí, quality a publikování | [`.github/workflows`](../../.github/workflows) | Každá action je připnutá na full SHA. Third-party publish zůstává přechodem `ARCH-RISK-002` |
 
 Volbu changelog nástroje a její migrační hranice přijímá [`ADR-0003`](../architecture/decisions/ADR-0003-generovani-changelogu-pomoci-git-cliff.md).
 
@@ -43,11 +45,15 @@ Volbu changelog nástroje a její migrační hranice přijímá [`ADR-0003`](../
 
 Projekt neobsahuje `global.json` a běžné aktualizace lokálního SDK nevyžadují změnu repozitáře.
 
-Bez nadřazeného `global.json` CLI použije nejnovější nainstalované SDK, případně i preview; pro běžnou práci používej stabilní instalaci kompatibilní s připnutým DocFX.
+Bez nadřazeného `global.json` CLI použije nejnovější nainstalované SDK, případně i preview.
+
+Pro běžnou práci používej stabilní instalaci kompatibilní s připnutým DocFX.
 
 CI instaluje stabilní SDK z deklarovaného kanálu do samostatného adresáře podle [CI dokumentace](../delivery/ci-cd.md#reprodukovatelnost-a-dostupnost), zatímco přesné připnutí ostatních nástrojů se nemění.
 
-Změnu instalačního kanálu CI a kompatibilitu nového lokálního SDK ověřuje celý build profil; konkrétní ověřená prostředí vlastní [testovací důkazy](../quality/testing.md#ověření-výběru-sdk-2026-09-13) a postup kontroly instalací [projektové příkazy](commands.md#inicializace-prostředí).
+Změnu instalačního kanálu CI a kompatibilitu nového lokálního SDK ověřuje celý build profil.
+
+Konkrétní ověřená prostředí vlastní [testovací důkazy](../quality/testing.md#ověření-výběru-sdk-2026-09-13) a postup kontroly instalací [projektové příkazy](commands.md#inicializace-prostředí).
 
 ## Hodnocení knihovny
 

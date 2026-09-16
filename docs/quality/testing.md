@@ -31,12 +31,14 @@ Nejvyšší rizika tohoto statického webu jsou rozbitá navigace, rozdílný ca
 | `REQ-001`, `REQ-002` | Krokovatelný lokální smoke v prohlížeči | Zobrazení, navigace, vyhledávání a volba tématu jsou pozorovatelné až v reálném browserovém výstupu |
 | `REQ-005` | Obsahové review a provedení dostupných ukázek v izolovaném prostředí | Rozlišuje vysvětlení principu, syntaxi a skutečný běh místo předstírání podpory cizí služby |
 | `QLT-005` | Reálný prohlížeč, čtyři šířky a oba motivy podle příkazového dokumentu | Zachytí přetékání, nečitelné tabulky, klávesnicové problémy a změny rozložení po otevření menu |
-| `QLT-006` | Artifact check nad všemi HTML a cílené negativní testy | Ověří konkrétní cíle i kotvy bez závislosti na Windows toleranci casingu; externí URL nejsou součástí deterministického buildu |
+| `QLT-006` | Artifact check nad všemi HTML a cílené negativní testy | Ověří konkrétní cíle i kotvy bez závislosti na Windows toleranci casingu. Externí URL nejsou součástí deterministického buildu |
 | Metadata a interní dokumentační odkazy | `tests/canonical-docs.test.js` | Mechanická pravidla mají rychlý deterministický důkaz bez zahrnutí interních dokumentů do veřejného buildu |
 
 Přesné příkazy, pořadí a technický smoke scénář vlastní [`../development/commands.md`](../development/commands.md).
 
-Changelogový test vytváří izolovaný víceletý Git repozitář v dočasném adresáři a spouští stejný uzamčený binární příkaz jako projektový build bez změny pracovního stromu; následně kontroluje i vazbu hlavičky na jeho skutečný `HEAD` a zařazení hraničního commitu na přelomu roku podle `Europe/Prague`.
+Changelogový test vytváří izolovaný víceletý Git repozitář v dočasném adresáři a spouští stejný uzamčený binární příkaz jako projektový build bez změny pracovního stromu.
+
+Následně kontroluje i vazbu hlavičky na jeho skutečný `HEAD` a zařazení hraničního commitu na přelomu roku podle `Europe/Prague`.
 
 Projekt nemá schválenou pixelovou baseline ani automatizovaný end-to-end browser harness.
 
@@ -46,7 +48,9 @@ Jednorázové testovací repozitáře, instalace balíčků a jejich cache vytv�
 
 Ani ignorovaná složka uvnitř projektu není vhodná pro vnořené Git repozitáře: vývojové prostředí je může zobrazovat jako další projekty a větve.
 
-Do kanonické dokumentace přenes důkaz a jeho omezení; po ověření ukliď jednorázové prostředí a případné logy ponech mimo projekt.
+Do kanonické dokumentace přenes důkaz a jeho omezení.
+
+Po ověření ukliď jednorázové prostředí a případné logy ponech mimo projekt.
 
 ## Volba typu testu
 
@@ -222,11 +226,15 @@ Samostatné interakce ověřily vyhledávání a prázdný výsledek, přepnutí
 
 Spustitelné obsahové kontroly zahrnovaly 12 konzolových ukázek C#, ukázkové REST API se scénáři vytvoření, čtení, změny, smazání a chybných vstupů, tři příklady JavaScriptu a Git scénáře v izolovaných lokálních repozitářích.
 
-Parser PowerShellu přijal všech 77 kontrolovaných bloků bez syntaktické chyby; neznamená to provedení jejich systémových změn.
+Parser PowerShellu přijal všech 77 kontrolovaných bloků bez syntaktické chyby.
+
+Neznamená to provedení jejich systémových změn.
 
 Ukázky vyžadující Unity, Docker, Kubernetes, další nenainstalované nástroje nebo externí služby byly posouzeny podle primární dokumentace, nikoli vydávány za místně spuštěné integrační testy.
 
-Dostupnost všech externích odkazů nelze z tohoto prostředí potvrdit, protože některé servery odmítají automatické požadavky nebo je omezují; zjištěné neplatné adresy byly opraveny a tato kontrola není zaměňována za deterministickou kontrolu lokálních odkazů.
+Dostupnost všech externích odkazů nelze z tohoto prostředí potvrdit, protože některé servery odmítají automatické požadavky nebo je omezují.
+
+Zjištěné neplatné adresy byly opraveny a tato kontrola není zaměňována za deterministickou kontrolu lokálních odkazů.
 
 ## Ověření praktických návodů 2026-09-12
 
@@ -238,7 +246,9 @@ Výběr zahrnoval homepage, rozcestníky Verzování a Programování, syntaxi, 
 
 V dalších osmi kombinacích se otevřely všechny čtyři rozbalovací postupy Unity 2D a ověřila viditelnost všech jejich snímků.
 
-Celkem 16 obrázků má individuálně posouzenou šířku a odkaz na originál; zkouška otevřela také původní rozlišení snímku z článku o animaci.
+Celkem 16 obrázků má individuálně posouzenou šířku a odkaz na originál.
+
+Zkouška otevřela také původní rozlišení snímku z článku o animaci.
 
 Interakce zahrnovaly mobilní obsah oblasti, hledání offline návodů a nenalezeného výrazu, vymazání hledání, přechod na výsledek, kopírování kódu, přeskočení navigace a změnu motivu klávesnicí.
 
@@ -246,23 +256,29 @@ Samostatný závěrečný scénář hledání prošel všemi osmi kombinacemi š
 
 Víceřádkový odkaz nyní zahrnuje i plochu mezi řádky, kde původní inline odkaz při kliknutí nereagoval.
 
-Kontrola vykreslené syntaxe odhalila viditelné zpětné lomítko před alternativami v tabulkách; HTML entity nyní zobrazují správně samotné svislítko.
+Kontrola vykreslené syntaxe odhalila viditelné zpětné lomítko před alternativami v tabulkách.
+
+HTML entity nyní zobrazují správně samotné svislítko.
 
 | Obsahová oblast | Provedený důkaz | Hranice ověření |
 |---|---|---|
 | Git | 19 kontrol indexu, restore, merge a abort, stash, reset, revert, reflog, worktree, bundle, squash a odmítnutého pushe s následným fetch/rebase | Izolované repozitáře a místní bare remote, bez zápisu na hosting |
 | Java regex | 10 příkladů přes Java Pattern v JBR JetBrains | Převod velikosti písmen v poli Replace ověřen v dokumentaci IDE, nikoli zaměněn za vlastnost Java Matcher |
-| npm a pnpm | U každého offline instalace tranzitivní závislosti do nového projektu, nezměněný lockfile a očekávané selhání prázdné cache | npm 11 a pnpm 12 ve Windows; nevynucuje síťová pravidla cizích instalačních skriptů |
+| npm a pnpm | U každého offline instalace tranzitivní závislosti do nového projektu, nezměněný lockfile a očekávané selhání prázdné cache | npm 11 a pnpm 12 ve Windows. Nevynucuje síťová pravidla cizích instalačních skriptů |
 | Python | Instalace requests a závislostí z wheelhouse do nového venv, `pip check` a použití knihovny | `--no-index` bez dotazu do registru |
-| NuGet | Obnova uzamčeného projektu z místního feedu do prázdné cache a build; obnova z kopie globální složky bez zdrojů; očekávané selhání prázdné cache | .NET SDK 10, PackageReference a jeden balíček s reálným sestavením |
-| .NET tools | Instalace do nové tool-path složky i oddělená obnova lokálního manifestu z vlastního feedu s prázdnou evidencí CLI; spuštění DocFX | Praktický test odhalil, že změna samotného `NUGET_PACKAGES` nemusí naplnit zálohu; návod proto odděluje také `DOTNET_CLI_HOME` |
+| NuGet | Obnova uzamčeného projektu z místního feedu do prázdné cache a build. Obnova z kopie globální složky bez zdrojů. Očekávané selhání prázdné cache | .NET SDK 10, PackageReference a jeden balíček s reálným sestavením |
+| .NET tools | Instalace do nové tool-path složky i oddělená obnova lokálního manifestu z vlastního feedu s prázdnou evidencí CLI. Spuštění DocFX | Praktický test odhalil, že změna samotného `NUGET_PACKAGES` nemusí naplnit zálohu. Návod proto odděluje také `DOTNET_CLI_HOME` |
 | PowerShell | Parser přijal všech 76 veřejných bloků | Kontrola syntaxe, nikoli provedení systémových změn |
 | Místní HTTPS | Publikovaný Node server odpověděl přes TLS s ověřeným dočasným certifikátem | Důvěra předaná jen testovacímu klientovi, bez instalace CA do systému |
 | Kubernetes | YAML parser a shoda selectorů, Pod labelů, portu Service a readiness kontroly | Cluster nebyl místně spuštěn |
 
-Jednorázové testy a jejich výstupy vznikly v ignorované `private/docs-review`; nejsou novým veřejným build profilem ani závislostí projektu.
+Jednorázové testy a jejich výstupy vznikly v ignorované `private/docs-review`.
 
-Dart/Flutter, Docker, skutečný cluster Kubernetes a OpenTofu nebyly v této revizi místně provozované; jejich změněné postupy byly ověřeny podle odkazovaných primárních zdrojů.
+Nejsou novým veřejným build profilem ani závislostí projektu.
+
+Dart/Flutter, Docker, skutečný cluster Kubernetes a OpenTofu nebyly v této revizi místně provozované.
+
+Jejich změněné postupy byly ověřeny podle odkazovaných primárních zdrojů.
 
 Úspěšný statický build se nevydává za provozní zkoušku těchto prostředí ani za ověření každého externího odkazu.
 
@@ -285,13 +301,21 @@ Celkem prošlo 46 obsahových kontrol:
 
 Prostředí bylo Windows, Node.js 24.13.0, npm 11.6.2, pnpm 12.4.0, .NET SDK 10.0.301, DocFX 2.78.5, Python 3.12.14 a Dart 3.12.2.
 
-Postupy obnovy používaly nové pracovní instalace a explicitní offline režim nebo místní zdroj; síťové chování vlastních build skriptů není těmito přepínači obecně řízené.
+Postupy obnovy používaly nové pracovní instalace a explicitní offline režim nebo místní zdroj.
 
-Zkouška pnpm bez metadat skutečně skončila `ERR_PNPM_NO_OFFLINE_META`; návod proto zálohuje `cacheDir` i `storeDir` a používá ověřené nastavení YAML.
+Síťové chování vlastních build skriptů není těmito přepínači obecně řízené.
 
-První kopírování npm fixture přes Python `shutil` selhalo na délce cesty ve Windows; úspěšné opakování použilo kratší pracovní kořen a návod tuto praktickou hranici uvádí.
+Zkouška pnpm bez metadat skutečně skončila `ERR_PNPM_NO_OFFLINE_META`.
 
-Logy a výsledky jednorázových experimentů původně vznikly v ignorovaných `private/docs-review/followup/*-revision-20260912`, `private/docs-review/revision-20260912/*-proof` a `private/npm-r12`; při následném úklidu byly všechny tyto složky přesunuty mimo projekt do systémového TEMP.
+Návod proto zálohuje `cacheDir` i `storeDir` a používá ověřené nastavení YAML.
+
+První kopírování npm fixture přes Python `shutil` selhalo na délce cesty ve Windows.
+
+Úspěšné opakování použilo kratší pracovní kořen a návod tuto praktickou hranici uvádí.
+
+Logy a výsledky jednorázových experimentů původně vznikly v ignorovaných `private/docs-review/followup/*-revision-20260912`, `private/docs-review/revision-20260912/*-proof` a `private/npm-r12`.
+
+Při následném úklidu byly všechny tyto složky přesunuty mimo projekt do systémového TEMP.
 
 Parser PowerShellu přijal všech 27 bloků ve složkách balíčků a historie Gitu bez syntaktické chyby.
 
@@ -303,11 +327,17 @@ Mobilní navigace otevřela přesun commitů, hledání `historie` našlo nový 
 
 Ověřeno bylo také přesné kopírování prvního PowerShell bloku nového návodu, přeskočení navigace klávesnicí, rozbalení obrázkového postupu Unity, zachování tmavého motivu po reloadu a volba automatického motivu.
 
-Víceslovný dotaz `nahrazení celé historie` výsledek nevrátil, ačkoli jednoslovné `historie` článek našlo; omezení vyhledávání eviduje `ARCH-RISK-005` v [architektuře](../architecture/overview.md#11-známá-rizika-dluh-a-přechodové-stavy).
+Víceslovný dotaz `nahrazení celé historie` výsledek nevrátil, ačkoli jednoslovné `historie` článek našlo.
 
-Affinity má v desktopovém článku šířky 760 a 482 px a shodné automatické levé i pravé okraje; rozdílné odsazení odpovídá pouze různé šířce snímků a bylo podle zadání zachováno.
+Omezení vyhledávání eviduje `ARCH-RISK-005` v [architektuře](../architecture/overview.md#11-známá-rizika-dluh-a-přechodové-stavy).
 
-Git testy neměnily skutečný hosting; plný platformní build Flutteru a legacy `packages.config` nebyly součástí provedených integračních zkoušek.
+Affinity má v desktopovém článku šířky 760 a 482 px a shodné automatické levé i pravé okraje.
+
+Rozdílné odsazení odpovídá pouze různé šířce snímků a bylo podle zadání zachováno.
+
+Git testy neměnily skutečný hosting.
+
+Plný platformní build Flutteru a legacy `packages.config` nebyly součástí provedených integračních zkoušek.
 
 ## Ověření zjednodušených offline záloh 2026-09-12
 
@@ -317,41 +347,55 @@ Nová dočasná prostředí mimo checkout prošla 18 cílenými kontrolami ve st
 
 | Oblast | Kontrol | Provedený důkaz |
 |---|---|---|
-| NuGet a .NET tools | 6 | Obnova knihovny přímo přes `--source ../balicky`, nezměněný lockfile, build a spuštění aplikace; lokální nástroj z kopie NuGet složky; globální `.store`, seznam a spuštění po přesunu k jinému testovacímu účtu s nedostupnou původní instalací |
+| NuGet a .NET tools | 6 | Obnova knihovny přímo přes `--source ../balicky`, nezměněný lockfile, build a spuštění aplikace. Lokální nástroj z kopie NuGet složky. Globální `.store`, seznam a spuštění po přesunu k jinému testovacímu účtu s nedostupnou původní instalací |
 | npm | 4 | Přenesená cache obnovila běžné i vývojové závislosti při `NODE_ENV=production`, lockfile se nezměnil, prázdná cache selhala a globální TypeScript se obnovil do nové prefix složky |
-| pnpm | 4 | Jediný přípravný `install --frozen-lockfile` bez `fetch` naplnil store i metadata; offline obnova zachovala lockfile a fungující běžné i vývojové závislosti; chybějící archiv a metadata samostatně selhaly |
+| pnpm | 4 | Jediný přípravný `install --frozen-lockfile` bez `fetch` naplnil store i metadata. Offline obnova zachovala lockfile a fungující běžné i vývojové závislosti. Chybějící archiv a metadata samostatně selhaly |
 | Python | 1 | Nové venv se obnovilo z kopie wheelhouse bez indexu i pip cache, prošlo `pip check` a import připnuté verze requests |
 | Dart | 3 | Přesunutá pub cache obnovila nezměněný lockfile, prošla analýza a spuštění aplikace i samostatného CLI nástroje |
 
 Obnovy používaly nové pracovní instalace, explicitní offline režim nebo místní zdroj a nedostupnou HTTP/HTTPS proxy.
 
-Tato izolace ověřuje dostupné ukázky; nenahrazuje zkoušku libovolných vlastních skriptů při fyzicky odpojené síti ani platformní build Flutteru.
+Tato izolace ověřuje dostupné ukázky.
+
+Nenahrazuje zkoušku libovolných vlastních skriptů při fyzicky odpojené síti ani platformní build Flutteru.
 
 Přenesený globální DocFX navíc skutečně sestavil malou dokumentaci s 0 chybami a 0 varováními.
 
 Parser PowerShellu přijal všech 11 aktuálních bloků balíčků bez syntaktické chyby.
 
-Projektové `npm run verify` prošlo 20 testy a strict buildem s 0 chybami a 0 varováními; kontrola artefaktu ověřila 253 zdrojů a 494 výstupních souborů.
+Projektové `npm run verify` prošlo 20 testy a strict buildem s 0 chybami a 0 varováními.
 
-Při následné vizuální kontrole byly dlouhé příkazy Pythonu rozděleny do více řádků; přesný blok obnovy převzatý z Markdownu úspěšně vytvořil nové venv, obnovil balíčky a prošel `pip check` i importem requests.
+Kontrola artefaktu ověřila 253 zdrojů a 494 výstupních souborů.
+
+Při následné vizuální kontrole byly dlouhé příkazy Pythonu rozděleny do více řádků.
+
+Přesný blok obnovy převzatý z Markdownu úspěšně vytvořil nové venv, obnovil balíčky a prošel `pip check` i importem requests.
 
 Přímá zkouška PowerShellu odhalila, že `[IO.Path]::GetFullPath` s relativní cestou vychází z pracovního adresáře procesu, který se může lišit od aktuální složky PowerShellu.
 
-Návod Dartu proto používá `Join-Path $PWD "../pub-cache"`; po `Push-Location` do testovacího projektu byla ověřena správná cesta, offline obnova s lockfilem i spuštění aplikace.
+Návod Dartu proto používá `Join-Path $PWD "../pub-cache"`.
+
+Po `Push-Location` do testovacího projektu byla ověřena správná cesta, offline obnova s lockfilem i spuštění aplikace.
 
 V prohlížeči prošlo 18 stránek při 320, 390, 768 a 1440 px ve světlém i tmavém motivu, celkem 144 kombinací bez vodorovného přetékání celé stránky, rozbitých obrázků nebo posuvného bloku nepřístupného klávesnicí.
 
 Rozsah zahrnoval všech sedm článků balíčků, .NET CLI, Programování, homepage, Verzování, Docker, Unity 2D, Affinity, OpenTofu a tři návody úprav historie Gitu.
 
-Po posledních úpravách Pythonu a Dartu znovu prošlo všech 16 jejich kombinací rozměru a motivu; zkontrolovány byly také snímky celých článků a mobilní zobrazení.
+Po posledních úpravách Pythonu a Dartu znovu prošlo všech 16 jejich kombinací rozměru a motivu.
+
+Zkontrolovány byly také snímky celých článků a mobilní zobrazení.
 
 Ověřeny byly nové popisy a krátký název .NET tools v rozcestníku i navigaci, odkaz z .NET CLI, přechod mezi balíčky v mobilní navigaci, vyhledání Dockeru a prázdný výsledek pro neexistující výraz.
 
-Kopírování .NET restore i víceřádkového Python bloku přesně zachovalo text; klávesnice přesunula fokus na obsah a rozbalila obrázkový postup Unity, tmavý motiv zůstal po reloadu a prohlížeč nezaznamenal JavaScript chybu.
+Kopírování .NET restore i víceřádkového Python bloku přesně zachovalo text.
+
+Klávesnice přesunula fokus na obsah a rozbalila obrázkový postup Unity, tmavý motiv zůstal po reloadu a prohlížeč nezaznamenal JavaScript chybu.
 
 Affinity nadále používá snímky šířky 760 a 482 px se shodným pravidlem centrování, takže odlišné odsazení odpovídá pouze jejich šířce.
 
-Úklid VCS přesunul vnořené testovací repozitáře i staré instalační experimenty mimo checkout; závěrečná kontrola našla jen skutečnou projektovou `.git`, jeden worktree a místní `main` a `develop`, se zachovanou vzdálenou `gh-pages`.
+Úklid VCS přesunul vnořené testovací repozitáře i staré instalační experimenty mimo checkout.
+
+Závěrečná kontrola našla jen skutečnou projektovou `.git`, jeden worktree a místní `main` a `develop`, se zachovanou vzdálenou `gh-pages`.
 
 ## Ověření návodu Flameshot 2026-09-13
 
@@ -359,21 +403,31 @@ Návod [Flameshot místo Výstřižků](../../operating-system/windows/flameshot
 
 Vypnutá systémová volba Print Screen, zaškrtnuté automatické spouštění a otevření výběru Flameshotu po stisku Print Screen byly vizuálně potvrzené.
 
-Automatizace neuměla cílit překryvné okno pro tažení výběru, takže kopírování snímku ani běh po novém přihlášení nebyly místně ověřené; článek obsahuje kroky pro jejich ověření čtenářem.
+Automatizace neuměla cílit překryvné okno pro tažení výběru, takže kopírování snímku ani běh po novém přihlášení nebyly místně ověřené.
+
+Článek obsahuje kroky pro jejich ověření čtenářem.
 
 Na následnou žádost vlastníka je výsledný návod textový a obrázky doplní vlastník samostatně.
 
-`npm run verify` prošlo všemi 20 testy a strict buildem bez varování; po odstranění obrázků znovu prošlo `npm run docs:build` s 0 chybami a 0 varováními a kontrolou 254 zdrojů a 495 výstupních souborů.
+`npm run verify` prošlo všemi 20 testy a strict buildem bez varování.
 
-Kontroly vyžadovaly existující připnuté uživatelské SDK a běh mimo sandbox, který odepíral přístup SDK a nástroji git-cliff; toto omezení prostředí se neřešilo změnou projektových verzí.
+Po odstranění obrázků znovu prošlo `npm run docs:build` s 0 chybami a 0 varováními a kontrolou 254 zdrojů a 495 výstupních souborů.
 
-Finální článek prošel kontrolou rozměrů při 320, 390, 768 a 1440 px ve světlém i tmavém motivu bez vodorovného přetékání stránky; celý text byl vizuálně zkontrolován na desktopu a mobilní zobrazení na šířce 320 px.
+Kontroly vyžadovaly existující připnuté uživatelské SDK a běh mimo sandbox, který odepíral přístup SDK a nástroji git-cliff.
+
+Toto omezení prostředí se neřešilo změnou projektových verzí.
+
+Finální článek prošel kontrolou rozměrů při 320, 390, 768 a 1440 px ve světlém i tmavém motivu bez vodorovného přetékání stránky.
+
+Celý text byl vizuálně zkontrolován na desktopu a mobilní zobrazení na šířce 320 px.
 
 Rozměrová regrese homepage, Programování, Dockeru, Unity 2D a obou rozcestníků OS a Windows zahrnula dalších 48 kombinací rozměru a motivu bez přetékání stránky, chyb načítání obrázků nebo nepřístupných posuvných bloků.
 
 Samostatné interakce ověřily odkaz z Windows, mobilní obsah oblasti, vyhledání Flameshotu a prázdný výsledek, ovládání motivu klávesnicí, zachování tmavého motivu po načtení a shodu automatického motivu se systémem.
 
-Regresní kontrola Unity 2D potvrdila rozbalení obrázkového postupu klávesnicí a přesné zkopírování ukázky kódu; kontrolovaný prohlížeč nezaznamenal JavaScript chybu.
+Regresní kontrola Unity 2D potvrdila rozbalení obrázkového postupu klávesnicí a přesné zkopírování ukázky kódu.
+
+Kontrolovaný prohlížeč nezaznamenal JavaScript chybu.
 
 ## Ověření výběru SDK 2026-09-13
 
@@ -387,6 +441,104 @@ Po odstranění projektového `global.json` vybral `dotnet --version` SDK 10.0.4
 
 `npm run verify` prošlo 20 testy, strict buildem s 0 chybami a 0 varováními a kontrolou 254 zdrojů a 495 výstupních souborů včetně lokálních odkazů a kotev.
 
-Článek Flameshot po odstranění věty prošel rozměrovou kontrolou při 320, 390, 768 a 1440 px v obou motivech bez přetékání stránky; desktopový a mobilní snímek potvrdily čitelnost a prohlížeč nezaznamenal JavaScript chybu.
+Článek Flameshot po odstranění věty prošel rozměrovou kontrolou při 320, 390, 768 a 1440 px v obou motivech bez přetékání stránky.
 
-Kontroly vyžadovaly běh mimo sandbox kvůli přístupu git-cliff a NuGet konfigurace; vzdálený běh upravených workflow ani budoucí verze SDK se při této lokální změně neověřovaly.
+Desktopový a mobilní snímek potvrdily čitelnost a prohlížeč nezaznamenal JavaScript chybu.
+
+Kontroly vyžadovaly běh mimo sandbox kvůli přístupu git-cliff a NuGet konfigurace.
+
+Vzdálený běh upravených workflow ani budoucí verze SDK se při této lokální změně neověřovaly.
+
+## Ověření úpravy středníků 2026-09-15
+
+Redakční kontrola nahradila 816 středníků na 806 řádcích ve 119 ručně spravovaných Markdown souborech vhodnými větami, odstavci nebo formulacemi v tabulkách a seznamech.
+
+Text homepage byl upravený v generátoru a výstup obnovený přes `npm run docs:generate`.
+
+Jednorázové porovnání s výchozím commitem potvrdilo nezměněné bloky kódu, inline kód, cíle odkazů a nadpisy ve všech 120 upravených Markdown souborech včetně homepage před doplněním tohoto záznamu.
+
+Následná inventura nenašla žádný středník v próze mimo chráněnou technickou syntaxi.
+
+`npm run verify` prošel 20 testy, strict buildem s 0 varováními a 0 chybami a kontrolou 254 zdrojů a 495 výstupních souborů.
+
+Rozměrová kontrola homepage, Programování, Dockeru a Unity 2D zahrnula 32 kombinací šířek 320, 390, 768 a 1440 px se světlým a tmavým motivem bez přetékání celé stránky.
+
+Vizuální kontrola potvrdila čitelné odstavce a tabulku Dockeru na mobilu i text a kód Unity 2D na desktopu.
+
+Prohlížeč nezaznamenal JavaScript chybu.
+
+Úprava zachovává technický význam textů včetně historických ADR a není novým ověřením všech popisovaných nástrojů.
+
+## Ověření návodu k baterii 2026-09-16
+
+[Návod k omezení nabíjení](../../operating-system/laptop-battery.md) byl ověřen proti odkazované dokumentaci výrobců, systémů a původním implementacím přímých rozhraní.
+
+Windows PowerShell 5.1 ověřil syntaxi všech 10 bloků a 15 izolovaných scénářů pěti nastavovacích postupů s nahrazenými hardwarovými rozhraními.
+
+Scénáře zahrnuly úspěch, chybějící podporu, kalibraci, zamítnutí změny, stav pouze pro čtení a nesoulad zpětného čtení podle daného rozhraní.
+
+Kontrola ověřila cílové hodnoty a pořadí zápisů bez volání skutečných metod notebooku.
+
+Tato zkouška nenahrazuje fyzické ověření nabíjení ani zachování limitu po vypnutí na všech výrobcích.
+
+Dřívější místní ověření Aceru doložilo zapnutí a opakované přečtení ochranného režimu bez Care Center, nikoli zastavení nabíjení při dosažení hranice.
+
+Všechny čtyři systémové záložky prošly 32 kombinacemi šířek 320, 390, 768 a 1440 px se světlým a tmavým motivem bez vodorovného přetékání stránky a vždy s jediným viditelným panelem.
+
+Regrese homepage, Programování, Dockeru a Unity 2D ověřila dalších 32 kombinací bez přetékání stránky a rozbitých načtených obrázků.
+
+Snímky potvrdily čitelnost desktopového úvodu a mobilního rozbaleného postupu včetně viditelného fokusu a samostatně posuvného kódu.
+
+Klávesnice ověřila odkaz z rozcestníku OS, přesun na obsah, systémové záložky a rozbalení Aceru.
+
+Vyhledávání našlo článek pro výraz `baterie` a zobrazilo srozumitelný stav pro neexistující výraz.
+
+Zkopírovaný text Aceru odpovídal ukázce po vložení do jednořádkového pole, které odstraňuje konce řádků, takže jejich zachování tato kontrola neověřuje.
+
+Tmavý motiv zůstal po obnovení stránky a automatický motiv odpovídal nastavení systému.
+
+Při rychlém střídání navigace zaznamenal integrovaný prohlížeč jeden `AbortError: Transition was skipped`, následné klávesnicové otevření článku a jeho ovládání fungovalo.
+
+`npm run verify` prošel 20 testy, strict buildem s 0 chybami a 0 varováními a kontrolou 255 zdrojů a 496 výstupních souborů.
+
+Stejně jako baseline vyžadoval přístup nástroje git-cliff běh mimo sandbox.
+
+## Ověření záložek v návodech 2026-09-16
+
+Revize struktury 148 verzovaných Markdown souborů vybrala 17 veřejných článků pro rozdělení alternativ do 38 nativních záložek DocFX.
+
+Změna pokrývá varianty Gitu, shellů, .NET nástrojů, certifikátů, PostgreSQL, Outlooku a Pandocu.
+
+Navazující kroky a srovnávací přehledy zůstaly souvislé, interní projektové dokumenty se do DocFX nepřeváděly.
+
+Jednorázové porovnání s výchozím stavem potvrdilo zachování všech 86 bloků kódu a obrázků v upravených článcích.
+
+Všech 59 původních kotev z převedených nadpisů zůstává u výběru variant, takže starý odkaz dovede čtenáře k záložkám.
+
+Tři známé příchozí odkazy navíc používají parametr `?tabs=` a prohlížeč ověřil automatické otevření odpovídající varianty CMD, PowerShellu a squash merge.
+
+Všech 38 záložek prošlo klávesnicovým přepnutím při 320, 390, 768 a 1440 px ve světlém i tmavém motivu, celkem 304 kombinací.
+
+Každá kombinace zobrazila právě jeden panel odpovídající vybrané záložce, bez přetékání celé stránky a rozbitých načtených obrázků.
+
+Panely neobsahují nadpisy vedoucí z globálního obsahu do skryté varianty.
+
+Vizuální kontrola potvrdila zalamování dlouhých názvů záložek, mobilní kód a tabulky i obrázky klasického Outlooku.
+
+Regrese homepage, Programování, Dockeru a Unity 2D zahrnula dalších 32 kombinací rozměru a motivu bez přetékání stránky a rozbitých načtených obrázků.
+
+Samostatné kontroly ověřily přesun klávesnicí na obsah, rozbalení doplňujícího postupu, hledání Dockeru, otevření výsledku, prázdný výsledek, zachování tmavého motivu po obnovení a shodu automatického motivu se systémem.
+
+Kopírování z aktivní záložky PDF v Pandocu odpovídalo zobrazenému jednořádkovému příkazu po vložení do vyhledávacího pole.
+
+Při rychlé navigaci prohlížeč zaznamenal jeden `AbortError: Transition was skipped`, otevření článku i záložky následně fungovalo.
+
+Vložení celého příkazu s přepínači do vyhledávání také vyvolalo `QueryParseError` v nezměněném vyhledávači DocFX, běžný dotaz `Docker` poté znovu vrátil výsledky.
+
+Tyto projevy nejsou opravené touto obsahovou změnou.
+
+`npm run verify` prošel 20 testy, strict buildem s 0 chybami a 0 varováními a kontrolou 255 zdrojů a 496 výstupních souborů.
+
+Ověření vyžadovalo stejně jako baseline běh mimo sandbox kvůli nástroji git-cliff.
+
+Příkazy článků se nespouštěly proti uživatelským datům a revize není novým technickým ověřením všech popisovaných nástrojů.

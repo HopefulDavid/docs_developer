@@ -12,6 +12,12 @@ Praktické poznámky k operačním systémům a jejich příkazovým nástrojům
 | --- | --- |
 | [Jak číst zápis příkazů](command-line-syntax.md) | Parametry, nepovinné části a sestavení příkazu pro vlastní data. |
 
+### Notebooky
+
+| Stránka | Popis |
+| --- | --- |
+| [Nabíjení baterie na 80 %](laptop-battery.md) | Omezení nabíjení na 80 % přednostně bez aplikací, s postupy podle systému a výrobce a kontrolou výsledku. |
+
 ### Windows
 
 | Stránka | Popis |

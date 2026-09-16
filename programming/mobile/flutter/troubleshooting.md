@@ -4,7 +4,9 @@ description: "Diagnostika chyb SDK, balíčků, zařízení a sestavení."
 
 # Řešení problémů ve Flutteru
 
-Nejprve rozliš problém prostředí, rozložení a statické analýzy; každá oblast má jiné ověření.
+Nejprve rozliš problém prostředí, rozložení a statické analýzy.
+
+Každá oblast má jiné ověření.
 
 ## Automatické zmenšení textu bez doplňků
 
@@ -24,7 +26,9 @@ const Row(
 )
 ```
 
-`Expanded` zde patří přímo do `Row`; mimo `Row`, `Column` nebo `Flex` jej nelze libovolně vložit. [Expanded](https://api.flutter.dev/flutter/widgets/Expanded-class.html)
+`Expanded` zde patří přímo do `Row`.
+
+Mimo `Row`, `Column` nebo `Flex` jej nelze libovolně vložit. [Expanded](https://api.flutter.dev/flutter/widgets/Expanded-class.html)
 
 Pro běžný delší text zvaž zalamování místo zmenšování, aby zůstal čitelný i při zvětšeném systémovém písmu.
 
@@ -32,7 +36,9 @@ Pro běžný delší text zvaž zalamování místo zmenšování, aby zůstal �
 
 `createState` má vrátit novou instanci stavu bez další logiky.
 
-Hodnoty widgetu čti ve stavu přes `widget`; jednorázovou inicializaci umísti podle její závislosti do příslušné metody životního cyklu, například `initState`.
+Hodnoty widgetu čti ve stavu přes `widget`.
+
+Jednorázovou inicializaci umísti podle její závislosti do příslušné metody životního cyklu, například `initState`.
 
 Pravidlo proto neřeš plošným vypnutím linteru. [Význam pravidla](https://dart.dev/tools/linter-rules/no_logic_in_create_state)
 
@@ -46,4 +52,6 @@ Potom opakuj sestavení. [Režim pro vývojáře ve Windows](https://learn.micro
 
 Spusť `flutter doctor -v`, `flutter devices` a podle konkrétní chyby oprav [instalaci](setup-and-configuration.md).
 
-Při chybě obnovy balíčků zkontroluj výstup `flutter pub get`; mazání celého projektu není diagnostický krok.
+Při chybě obnovy balíčků zkontroluj výstup `flutter pub get`.
+
+Mazání celého projektu není diagnostický krok.

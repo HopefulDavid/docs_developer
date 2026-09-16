@@ -13,9 +13,11 @@ Chybějící SSD v instalátoru může znamenat chybějící ovladač řadiče, 
 | SSD je ve firmware / RST, ale ne v instalátoru | Ověř a načti ovladač řadiče |
 | SSD není ani v informacích o úložišti UEFI | Ověř hardware a diagnostiku výrobce |
 | Disk je vidět, ale instalace hlásí GPT/MBR | Řeš režim bootování a rozdělení disku, ne jiný ovladač |
-| Vidíš pouze USB | Interní SSD zatím není prokázané; pokračuj kontrolou řadiče |
+| Vidíš pouze USB | Interní SSD zatím není prokázané. Pokračuj kontrolou řadiče |
 
-Seznam bootovacích položek není seznam fyzických disků; prázdné SSD nemusí mít Windows Boot Manager.
+Seznam bootovacích položek není seznam fyzických disků.
+
+Prázdné SSD nemusí mít Windows Boot Manager.
 
 > [!WARNING]
 > Pokud na disku očekáváš data a instalátor ho ukazuje jako celý nepřidělený, nepokračuj instalací ani vytvářením oddílů.
@@ -40,7 +42,9 @@ Pouze u podporovaného balíčku Intel lze v PowerShellu ve složce staženého 
 .\SetupRST.exe -extractdrivers .\RST-extracted
 ```
 
-Příkaz rozbalí ovladače do `RST-extracted`; tuto složku pak přenes na USB včetně podsložek.
+Příkaz rozbalí ovladače do `RST-extracted`.
+
+Tuto složku pak přenes na USB včetně podsložek.
 
 U jiného instalačního balíčku se řiď postupem výrobce, protože přepínače nemusí být stejné.
 
@@ -52,7 +56,9 @@ U jiného instalačního balíčku se řiď postupem výrobce, protože přepín
 4. Vyber řadič odpovídající hardwaru a potvrď načtení.
 5. Očekávej nově zobrazený interní disk.
 
-Číslo či PCI kód v názvu řadiče není pořadím vhodnosti ovladačů; rozhoduje podporovaný hardware.
+Číslo či PCI kód v názvu řadiče není pořadím vhodnosti ovladačů.
+
+Rozhoduje podporovaný hardware.
 
 Pokud filtr nenabízí kompatibilní řadič, vrať se k přesnému modelu a balíčku místo vynucování jiné položky.
 
@@ -69,7 +75,9 @@ diskpart
 list disk
 ```
 
-Podle skutečného seznamu vyber číslo disku; následující blok je syntaxe, ve které `<číslo>` nahradíš:
+Podle skutečného seznamu vyber číslo disku.
+
+Následující blok je syntaxe, ve které `<číslo>` nahradíš:
 
 ```text
 select disk <číslo>
@@ -78,7 +86,9 @@ list partition
 exit
 ```
 
-Tyto operace pouze vybírají a vypisují disk; `clean`, `format` ani `delete partition` nejsou součástí diagnostiky.
+Tyto operace pouze vybírají a vypisují disk.
+
+`clean`, `format` ani `delete partition` nejsou součástí diagnostiky.
 
 ## 5. Pokračuj podle obsahu disku
 
@@ -96,7 +106,7 @@ Edice Home/Pro musí odpovídat licenci, ale sama neřeší viditelnost SSD.
 - Ověř detekci ve správné nabídce UEFI, nikoli jen seznam bootování.
 - Zkontroluj režim řadiče a balíček pro přesnou architekturu a model.
 - Intel Optane správcovská aplikace nenahrazuje potřebný instalační ovladač VMD.
-- VMD nebo RAID/AHCI nepřepínej bez postupu výrobce; existující Windows mohou přestat bootovat.
+- VMD nebo RAID/AHCI nepřepínej bez postupu výrobce. Existující Windows mohou přestat bootovat.
 
 Pro další instalaci uchovej rozbalený funkční ovladač, verzi balíčku, model zařízení a původní režim řadiče.
 

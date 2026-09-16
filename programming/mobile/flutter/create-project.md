@@ -4,7 +4,9 @@ description: "Založení aplikace, spuštění na zařízení a vytvoření sest
 
 # Flutter – vytvoření projektu
 
-Nový projekt vytvoř ve složce pro své zdrojové kódy; předem ověř [instalaci SDK](setup-and-configuration.md).
+Nový projekt vytvoř ve složce pro své zdrojové kódy.
+
+Předem ověř [instalaci SDK](setup-and-configuration.md).
 
 ## Vytvoření a kontrola
 
@@ -28,10 +30,12 @@ Po spuštění ověř, že se výchozí aplikace zobrazí a její tlačítko zm�
 | Cesta | Účel |
 |---|---|
 | `lib/main.dart` | Vstupní bod a výchozí uživatelské rozhraní |
-| `test/widget_test.dart` | Test výchozího rozhraní; při jeho změně uprav i očekávání testu |
+| `test/widget_test.dart` | Test výchozího rozhraní. Při jeho změně uprav i očekávání testu |
 | `pubspec.yaml` | Závislosti a deklarace prostředků |
 | `android/`, `ios/`, `web/` a desktopové složky | Konfigurace a nativní část jednotlivých platforem |
 
 Změnu textu ulož a v běžícím `flutter run` stiskni `r` pro hot reload.
 
-Klávesa `R` provede hot restart a ztratí aktuální stav aplikace; `q` běh ukončí. [Hot reload](https://docs.flutter.dev/tools/hot-reload)
+Klávesa `R` provede hot restart a ztratí aktuální stav aplikace.
+
+`q` běh ukončí. [Hot reload](https://docs.flutter.dev/tools/hot-reload)

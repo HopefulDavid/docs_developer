@@ -19,7 +19,9 @@ git diff --cached
 
 Příkazy pouze čtou stav a fungují v PowerShellu i Bashi.
 
-Pokud si nejsi jistý, uchovej před opravou kopii rozpracovaných souborů mimo repozitář; samotná záložní větev chrání jen commity.
+Pokud si nejsi jistý, uchovej před opravou kopii rozpracovaných souborů mimo repozitář.
+
+Samotná záložní větev chrání jen commity.
 
 ## Najdi správný případ
 
@@ -44,7 +46,9 @@ git restore --staged -- README.md
 git diff -- README.md
 ```
 
-`README.md` se vrátí z připravených do nepřipravených změn; jeho upravený obsah na disku zůstane.
+`README.md` se vrátí z připravených do nepřipravených změn.
+
+Jeho upravený obsah na disku zůstane.
 
 U nového souboru **před prvním commitem repozitáře** ještě neexistuje HEAD, proto pro vyřazení použij `git rm --cached -- README.md`.
 
@@ -57,7 +61,9 @@ git diff -- README.md
 git restore -- README.md
 ```
 
-Druhý příkaz **přepíše pracovní soubor obsahem indexu**; pokud nic není připravené, jde obvykle o poslední commit.
+Druhý příkaz **přepíše pracovní soubor obsahem indexu**.
+
+Pokud nic není připravené, jde obvykle o poslední commit.
 
 Pro výslovný návrat k poslednímu commitu v indexu i souboru:
 
@@ -67,7 +73,9 @@ git restore --source=HEAD --staged --worktree -- README.md
 
 Tato varianta zahodí připravené i nepřipravené změny daného souboru.
 
-Necommitovaný obsah nemusí být možné z Gitu obnovit; pomoci může historie editoru nebo záloha.
+Necommitovaný obsah nemusí být možné z Gitu obnovit.
+
+Pomoci může historie editoru nebo záloha.
 
 ## Obnovení smazaného souboru ze starší verze
 
@@ -79,11 +87,15 @@ git restore --source=<commit-nebo-tag> -- <soubor>
 
 Například `git restore --source=v1.0.0 -- README.md` obnoví soubor z existujícího tagu `v1.0.0` do pracovní složky.
 
-Pak zkontroluj `git diff` a obnovení běžně commitni; nepřesouváš tím celou větev do minulosti.
+Pak zkontroluj `git diff` a obnovení běžně commitni.
+
+Nepřesouváš tím celou větev do minulosti.
 
 ## Záchrana přes reflog
 
-Reflog je místní záznam dřívějších poloh HEAD a větví; může najít commit, na který už žádná běžná větev neukazuje.
+Reflog je místní záznam dřívějších poloh HEAD a větví.
+
+Může najít commit, na který už žádná běžná větev neukazuje.
 
 ```bash
 git reflog --date=local -20
@@ -113,14 +125,20 @@ Jestli chceš vzniklou práci zachovat, ještě před odchodem vytvoř větev:
 git switch -c zachrana-experimentu
 ```
 
-Existující commity tím dostanou trvalé pojmenování; pokud jsi nic neměnil, stačí běžné `git switch main`.
+Existující commity tím dostanou trvalé pojmenování.
+
+Pokud jsi nic neměnil, stačí běžné `git switch main`.
 
 ## Nesledované soubory a tajemství
 
 `git clean -nd` pouze vypíše nesledované soubory a složky navržené k odstranění.
 
-Ke skutečnému odstranění použij po záloze raději přesně vybrané položky v editoru či správci souborů; `clean` nemá vlastní koš ani obnovu a `-x` by zahrnulo i ignorované soubory.
+Ke skutečnému odstranění použij po záloze raději přesně vybrané položky v editoru či správci souborů.
 
-Pokud se do historie dostal token či heslo, nejprve jej zneplatni a nahraď; odstranění aktuálního souboru ani reset neodstraní všechny kopie zveřejněného údaje.
+`clean` nemá vlastní koš ani obnovu a `-x` by zahrnulo i ignorované soubory.
+
+Pokud se do historie dostal token či heslo, nejprve jej zneplatni a nahraď.
+
+Odstranění aktuálního souboru ani reset neodstraní všechny kopie zveřejněného údaje.
 
 Zdroje: [restore](https://git-scm.com/docs/git-restore), [reflog](https://git-scm.com/docs/git-reflog), [clean](https://git-scm.com/docs/git-clean).

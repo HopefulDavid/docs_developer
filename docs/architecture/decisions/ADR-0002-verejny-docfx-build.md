@@ -130,6 +130,8 @@ Datová migrace ani rollback schématu nejsou potřebné, protože web je plně 
 
 Rozhodnutí je přijaté.
 
-Přesné připnutí .NET SDK nahrazuje [`ADR-0004`](ADR-0004-vyber-dotnet-sdk.md); ostatní části tohoto rozhodnutí zůstávají platné.
+Přesné připnutí .NET SDK nahrazuje [`ADR-0004`](ADR-0004-vyber-dotnet-sdk.md).
+
+Ostatní části tohoto rozhodnutí zůstávají platné.
 
 Případnou změnu veřejné hranice, build toolchainu nebo distribučního modelu zaznamená nový ADR, který tento záznam výslovně nahradí podle [`README.md`](README.md).

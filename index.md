@@ -4,7 +4,9 @@
 
 České návody pro každodenní vývoj: od principu přes použitelný příklad až po ověření výsledku.
 
-Vyber oblast nebo vyhledej nástroj v horní liště; na mobilu ji otevřeš tlačítkem navigace.
+Vyber oblast nebo vyhledej nástroj v horní liště.
+
+Na mobilu ji otevřeš tlačítkem navigace.
 
 ## Začni podle cíle
 
@@ -37,6 +39,8 @@ Vyber oblast nebo vyhledej nástroj v horní liště; na mobilu ji otevřeš tla
 
 Nejprve ověř uvedený systém, verzi nástroje a pracovní složku, potom postupuj podle příkladu a porovnej očekávaný výsledek.
 
-Ukázkové názvy, cesty a porty přizpůsob podle vysvětlení u kódu; rozšiřující varianty a diagnostiku najdeš za hlavním postupem.
+Ukázkové názvy, cesty a porty přizpůsob podle vysvětlení u kódu.
+
+Rozšiřující varianty a diagnostiku najdeš za hlavním postupem.
 
 Historii úprav najdeš na stránce [Změny](changelog.md).

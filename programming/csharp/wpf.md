@@ -4,7 +4,9 @@ description: "Rozložení oken, datové vazby, styly a opakované použití vzhl
 
 # WPF – Rozložení, datové vazby a styly
 
-WPF je UI framework pro desktopové aplikace Windows; vzhled popisuje XAML a chování obvykle C#.
+WPF je UI framework pro desktopové aplikace Windows.
+
+Vzhled popisuje XAML a chování obvykle C#.
 
 ## Založení projektu
 
@@ -116,7 +118,9 @@ Vymazání jména aktivuje výchozí chybový rámeček WPF.
 
 U `Grid` znamená `Auto` velikost podle obsahu a `*` podíl zbývajícího prostoru.
 
-Například sloupce `2*` a `*` si dostupný prostor rozdělí v poměru 2: 1; zápis procent není podporovaný.
+Například sloupce `2*` a `*` si dostupný prostor rozdělí v poměru 2: 1.
+
+Zápis procent není podporovaný.
 
 `Viewbox` škáluje celý obsah a nenahrazuje přeskupení formuláře při zúžení okna. [Microsoft: panely](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/panels-overview), [Viewbox](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/viewbox).
 
@@ -124,7 +128,9 @@ Například sloupce `2*` a `*` si dostupný prostor rozdělí v poměru 2: 1; z�
 
 `Style` sdílí hodnoty vlastností a `ControlTemplate` definuje vizuální strom prvku.
 
-`Button` nemá vlastnost `CornerRadius`; zaoblení patří například prvku `Border` uvnitř jeho šablony. [Microsoft: styly a šablony](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/styles-templates-overview).
+`Button` nemá vlastnost `CornerRadius`.
+
+Zaoblení patří například prvku `Border` uvnitř jeho šablony. [Microsoft: styly a šablony](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/styles-templates-overview).
 
 Následující samostatný fragment patří do `Window.Resources` před hlavní `Grid`:
 
@@ -172,7 +178,9 @@ Styl použij například na tlačítku v jiném řádku formuláře:
 <Button Style="{StaticResource RoundedButton}" Content="_Uložit"/>
 ```
 
-Akci připoj přes `Command` nebo obsluhu `Click`; samotný styl data neukládá.
+Akci připoj přes `Command` nebo obsluhu `Click`.
+
+Samotný styl data neukládá.
 
 Při vlastní šabloně ověř stavy myši, stisku, klávesnicového fokusu a zakázání.
 
@@ -180,7 +188,9 @@ Při vlastní šabloně ověř stavy myši, stisku, klávesnicového fokusu a za
 
 Prefix platí až po deklaraci příslušného `xmlns`.
 
-`x` obvykle označuje jazykové prvky jako `x:Class`; `local` je běžně volené jméno pro vlastní CLR namespace, nikoli automaticky dostupné klíčové slovo. [Microsoft: jmenné prostory XAML](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/advanced/xaml-namespaces-and-namespace-mapping-for-wpf-xaml).
+`x` obvykle označuje jazykové prvky jako `x:Class`.
+
+`local` je běžně volené jméno pro vlastní CLR namespace, nikoli automaticky dostupné klíčové slovo. [Microsoft: jmenné prostory XAML](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/advanced/xaml-namespaces-and-namespace-mapping-for-wpf-xaml).
 
 ## Animace
 
@@ -188,4 +198,6 @@ Pro změny v čase použij `Storyboard` a animaci vhodnou pro daný typ vlastnos
 
 Například `ColorAnimation` na `(Background).(SolidColorBrush.Color)` vyžaduje pozadí typu `SolidColorBrush`.
 
-U vlastní šablony animuj skutečně zobrazovaný prvek; výchozí šablona může barvu tlačítka řídit svými stavy. [Microsoft: přehled animací](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/animation-overview).
+U vlastní šablony animuj skutečně zobrazovaný prvek.
+
+Výchozí šablona může barvu tlačítka řídit svými stavy. [Microsoft: přehled animací](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/animation-overview).

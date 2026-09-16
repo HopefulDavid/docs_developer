@@ -20,7 +20,9 @@ rem /d prejde i na jinou jednotku; cestu nahrad vlastnim projektem.
 cd /d "C:\projekty\moje-aplikace"
 ```
 
-Při neexistující cestě oprav název; další příkazy jinak zůstanou v předchozí složce.
+Při neexistující cestě oprav název.
+
+Další příkazy jinak zůstanou v předchozí složce.
 
 ## Nejčastější operace
 
@@ -30,12 +32,14 @@ Při neexistující cestě oprav název; další příkazy jinak zůstanou v př
 | `dir /a /x [<cesta>]` | Zahrne skryté položky a existující krátké názvy |
 | `cd /d "<cesta>"` | Změní složku i jednotku |
 | `mkdir "<složka>"` | Vytvoří složku |
-| `copy "<zdroj>" "<cíl>"` | Zkopíruje soubor; zkontroluj případné přepsání cíle |
+| `copy "<zdroj>" "<cíl>"` | Zkopíruje soubor. Zkontroluj případné přepsání cíle |
 | `type "<soubor>"` | Vypíše textový obsah |
 | `where.exe <program>` | Vyhledá program v cestách |
 | `<příkaz> /?` | U většiny vestavěných příkazů zobrazí nápovědu |
 
-Mazání souboru a celé složky se liší; použij [cílený postup](cannot-delete-item.md#cmd-rozlišení-souboru-a-složky).
+Mazání souboru a celé složky se liší.
+
+Použij [cílený postup](cannot-delete-item.md?tabs=remove-cmd#cmd-rozlišení-souboru-a-složky).
 
 ## Proměnné a přesměrování
 
@@ -65,11 +69,15 @@ popd
 exit /b 0
 ```
 
-Spusť `seznam.cmd` v CMD; skript vypíše obsah své složky, vrátí původní pracovní adresář a oznámí úspěch kódem `0`.
+Spusť `seznam.cmd` v CMD.
+
+Skript vypíše obsah své složky, vrátí původní pracovní adresář a oznámí úspěch kódem `0`.
 
 `@echo off` skryje vypisování samotných příkazů, `setlocal` omezí změny prostředí a `%~dp0` označuje disk a cestu dávky.
 
-Nenulový návrat signalizuje chybu podle použitého programu; v dávce `if errorlevel 1` kontroluje hodnotu alespoň jedna.
+Nenulový návrat signalizuje chybu podle použitého programu.
+
+V dávce `if errorlevel 1` kontroluje hodnotu alespoň jedna.
 
 Ve smyčce dávkového souboru se používá například `%%G`, zatímco stejná ručně zadaná smyčka v CMD používá `%G`.
 
@@ -85,7 +93,9 @@ Pokud potřebuješ ruční analýzu, v CMD jako správce:
 defrag C: /A /V
 ```
 
-`/A` jen analyzuje a `/V` vypíše podrobnosti; `C:` nahraď skutečně kontrolovanou jednotkou.
+`/A` jen analyzuje a `/V` vypíše podrobnosti.
+
+`C:` nahraď skutečně kontrolovanou jednotkou.
 
 Pro vědomě požadovanou optimalizaci `defrag C: /O /U` nechá Windows zvolit postup podle typu média a zobrazí průběh.
 

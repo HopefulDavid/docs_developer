@@ -12,13 +12,15 @@ Kolekci vybírej podle přístupu k prvkům, pořadí, jedinečnosti a požadavk
 |---|---|
 | `T[]` | Indexovaný počet prvků, který se po vytvoření pole nemění |
 | `List<T>` | Běžný měnitelný seznam |
-| `LinkedList<T>` | Vkládání a mazání přes známý uzel; nalezení uzlu stále může vyžadovat průchod |
+| `LinkedList<T>` | Vkládání a mazání přes známý uzel. Nalezení uzlu stále může vyžadovat průchod |
 | `Dictionary<TKey,TValue>` | Vyhledání hodnoty podle jedinečného klíče |
 | `SortedDictionary<TKey,TValue>` | Slovník s pořadím podle klíče |
 | `HashSet<T>` | Jedinečné hodnoty podle použitého porovnávače |
 | `SortedSet<T>` | Jedinečné hodnoty v seřazeném pořadí |
 
-Starší `Hashtable` je negenerický slovník, nikoli množina; pro nový typovaný kód zpravidla použij `Dictionary<TKey,TValue>`. [Výběr kolekce](https://learn.microsoft.com/en-us/dotnet/standard/collections/selecting-a-collection-class)
+Starší `Hashtable` je negenerický slovník, nikoli množina.
+
+Pro nový typovaný kód zpravidla použij `Dictionary<TKey,TValue>`. [Výběr kolekce](https://learn.microsoft.com/en-us/dotnet/standard/collections/selecting-a-collection-class)
 
 ## FIFO/LIFO kolekce
 
@@ -49,7 +51,9 @@ Při shodné prioritě pořadí vložení není zaručené. [PriorityQueue](http
 
 ## Kolekce pouze pro čtení a neměnné kolekce
 
-`ReadOnlyCollection<T>` a `ReadOnlyDictionary<TKey,TValue>` omezují změny přes obal; původní kolekce se stále může měnit.
+`ReadOnlyCollection<T>` a `ReadOnlyDictionary<TKey,TValue>` omezují změny přes obal.
+
+Původní kolekce se stále může měnit.
 
 ```csharp
 var source = new List<int> { 1, 2 };
@@ -87,13 +91,15 @@ Změny vlastností jednotlivé položky musí hlásit samotná položka, napří
 | `ConcurrentQueue<T>`, `ConcurrentStack<T>` | Fronta nebo zásobník pro souběžné operace |
 | `ConcurrentDictionary<TKey,TValue>` | Souběžná práce se slovníkem |
 | `ConcurrentBag<T>` | Neuspořádané ukládání položek |
-| `BlockingCollection<T>` | Producent/konzument s blokujícím čekáním; plnost blokuje jen při nastavené kapacitě |
+| `BlockingCollection<T>` | Producent/konzument s blokujícím čekáním. Plnost blokuje jen při nastavené kapacitě |
 
 Bezpečnost jednotlivých operací nezaručuje atomicitu složeného postupu „ověř a potom změň“. [Kolekce pro souběh](https://learn.microsoft.com/en-us/dotnet/standard/collections/thread-safe/)
 
 ## Tuple, paměť a slabé reference
 
-`Tuple` a hodnotové n-tice seskupují pevně dané položky různých typů; nejde o obecné rozšiřitelné kolekce.
+`Tuple` a hodnotové n-tice seskupují pevně dané položky různých typů.
+
+Nejde o obecné rozšiřitelné kolekce.
 
 `Span<T>` a `Memory<T>` představují pohled na souvislou oblast paměti. [Memory a Span](https://learn.microsoft.com/en-us/dotnet/standard/memory-and-spans/)
 

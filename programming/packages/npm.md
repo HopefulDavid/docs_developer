@@ -6,15 +6,21 @@ description: "Příprava jedné npm cache, její přenos a obnova projektu či g
 
 Záloha pro npm má dvě části: **zdrojový projekt s lockfilem a naplněnou npm cache**.
 
-Cache je složka se staženými instalačními daty; `node_modules` na cíli vytvoří npm znovu.
+Cache je složka se staženými instalačními daty.
 
-Postup je pro npm 11 a funguje v PowerShellu i Bashi; na cíli použij stejnou verzi Node.js, npm, OS a architekturu.
+`node_modules` na cíli vytvoří npm znovu.
+
+Postup je pro npm 11 a funguje v PowerShellu i Bashi.
+
+Na cíli použij stejnou verzi Node.js, npm, OS a architekturu.
 
 ## 1. Připrav zálohu s internetem
 
 Vytvoř `zaloha-npm/projekt` jako kopii projektu bez `node_modules`.
 
-Zachovej `package.json`, `package-lock.json`, celý workspace, místní závislosti a instalační nastavení `.npmrc`; přihlašovací tokeny uchovávej zvlášť.
+Zachovej `package.json`, `package-lock.json`, celý workspace, místní závislosti a instalační nastavení `.npmrc`.
+
+Přihlašovací tokeny uchovávej zvlášť.
 
 V této kopii projektu spusť:
 
@@ -34,7 +40,9 @@ zaloha-npm/
   npm-cache/     celá připravená cache
 ```
 
-Přípravné `node_modules` nepřenášej; cache kopíruj až po skončení instalace a nečisti ji.
+Přípravné `node_modules` nepřenášej.
+
+Cache kopíruj až po skončení instalace a nečisti ji.
 
 Přilož verze z `node --version` a `npm --version` i instalátor Node.js pro cílový počítač.
 
@@ -49,9 +57,13 @@ npm ci --offline --include=dev --cache ../npm-cache --no-audit --no-fund
 npm ls --all
 ```
 
-`--offline` použije pouze přenesenou cache; chybějící balíček skončí chybou `ENOTCACHED`. [Offline režim](https://docs.npmjs.com/cli/v11/using-npm/config/#offline)
+`--offline` použije pouze přenesenou cache.
 
-Nakonec spusť build, testy a běžnou aplikaci bez připojení; lockfile se nemá změnit.
+Chybějící balíček skončí chybou `ENOTCACHED`. [Offline režim](https://docs.npmjs.com/cli/v11/using-npm/config/#offline)
+
+Nakonec spusť build, testy a běžnou aplikaci bez připojení.
+
+Lockfile se nemá změnit.
 
 `npm ci` nahrazuje stávající `node_modules`, proto zkoušej obnovu v pracovní kopii.
 
@@ -88,16 +100,22 @@ npm install --global typescript@5.9.3 --offline --cache ../npm-cache --no-audit 
 tsc --version
 ```
 
-Název a verzi nahraď podle uloženého seznamu; při zkoušce na původním počítači použij novou vlastní `--prefix` složku. [Npm install](https://docs.npmjs.com/cli/v11/commands/npm-install/)
+Název a verzi nahraď podle uloženého seznamu.
 
-Globální instalace neuzamyká všechny nepřímé závislosti lockfilem; pro přesně opakovatelnou dlouhodobou zálohu nástroje jej můžeš spravovat v samostatném projektu s lockfilem.
+Při zkoušce na původním počítači použij novou vlastní `--prefix` složku. [Npm install](https://docs.npmjs.com/cli/v11/commands/npm-install/)
+
+Globální instalace neuzamyká všechny nepřímé závislosti lockfilem.
+
+Pro přesně opakovatelnou dlouhodobou zálohu nástroje jej můžeš spravovat v samostatném projektu s lockfilem.
 
 ## Co ještě zachovat
 
 - Lokální a Git závislosti, patche a nastavení, se kterými vznikl lockfile, například `legacy-peer-deps`.
 - Nativní nástroje a data stahovaná instalačními skripty, například prohlížeče nebo binární knihovny.
-- Původní uloženou zálohu odděleně od pracovní cache; cache npm nemá záruku trvalého archivu.
+- Původní uloženou zálohu odděleně od pracovní cache. Cache npm nemá záruku trvalého archivu.
 
 `--prefer-offline` může použít internet a `npm pack` běžně nezabalí celý strom závislostí, proto tyto příkazy nenahrazují uvedenou obnovu.
 
-S internetem stačí v přeneseném projektu `npm ci --include=dev`; audit zranitelností proveď při online přípravě a po návratu k registru.
+S internetem stačí v přeneseném projektu `npm ci --include=dev`.
+
+Audit zranitelností proveď při online přípravě a po návratu k registru.

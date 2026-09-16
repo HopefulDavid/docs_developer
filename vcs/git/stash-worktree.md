@@ -11,12 +11,20 @@ Pokud potřebuješ opravit jinou věc uprostřed rozpracované změny, můžeš 
 | Možnost | Kdy se hodí | Co zachová |
 |---|---|---|
 | Pracovní commit | Chceš dohledatelnou a odeslatelnou rozpracovanou verzi | Vše, co jsi připravil do indexu |
-| Stash | Krátce uvolníš stejnou pracovní složku | Sledované změny; nové soubory jen s `-u` |
+| Stash | Krátce uvolníš stejnou pracovní složku | Sledované změny, nové soubory jen s `-u` |
 | Worktree | Chceš obě větve otevřené současně | Původní složku beze změny a další pracovní strom sdílející historii |
 
 Stash je místní úložiště, běžný push jej neposílá na server.
 
-## Stash: odložit a vrátit
+## Vyber způsob přerušení práce
+
+<a id="stash-odložit-a-vrátit"></a>
+<a id="konflikt-při-vracení-stashe"></a>
+<a id="worktree-dvě-složky-jedna-historie"></a>
+
+## [Stash](#tab/pause-stash)
+
+**Odložení a vrácení ve stejné složce**
 
 V kořeni repozitáře v PowerShellu nebo Bashi:
 
@@ -27,7 +35,9 @@ git stash list
 git status
 ```
 
-`-u` přidá nesledované soubory, ale ne ignorované; `-a` by zahrnulo i ignorované soubory, což může být nevhodné pro velké buildy nebo tajemství.
+`-u` přidá nesledované soubory, ale ne ignorované.
+
+`-a` by zahrnulo i ignorované soubory, což může být nevhodné pro velké buildy nebo tajemství.
 
 Po dokončení jiné práce se vrať na původní větev a prohlédni správný záznam:
 
@@ -38,9 +48,13 @@ git stash apply 'stash@{0}'
 git status
 ```
 
-`stash@{0}` znamená poslední stash; uvozovky chrání zápis i v PowerShellu.
+`stash@{0}` znamená poslední stash.
 
-`apply` ponechá zálohu ve stash listu; volba `--index` navíc požádá o obnovení původního rozdělení mezi index a pracovní strom.
+Uvozovky chrání zápis i v PowerShellu.
+
+`apply` ponechá zálohu ve stash listu.
+
+Volba `--index` navíc požádá o obnovení původního rozdělení mezi index a pracovní strom.
 
 Až ověříš vrácené soubory a případně je commitneš, odstraň právě použitý záznam:
 
@@ -50,15 +64,21 @@ git stash drop 'stash@{0}'
 
 Po vytvoření dalších stashů se jejich čísla posunou, proto před mazáním vždy znovu zkontroluj `git stash list`.
 
-### Konflikt při vracení stashe
+**Konflikt při vracení stashe**
 
-Záznam zůstává zachovaný, pokud jsi použil `apply`; soubory oprav jako běžný konflikt a výsledek zkontroluj přes `git status`.
+Záznam zůstává zachovaný, pokud jsi použil `apply`.
+
+Soubory oprav jako běžný konflikt a výsledek zkontroluj přes `git status`.
 
 Pro stash neexistuje `--continue` ani `--abort`.
 
-Pokud chceš obnovovat na původním základu a máš čistý pracovní strom, `git stash branch obnova-hledani 'stash@{0}'` vytvoří větev z původního commitu a záznam na ni aplikuje; při úspěchu daný stash odstraní.
+Pokud chceš obnovovat na původním základu a máš čistý pracovní strom, `git stash branch obnova-hledani 'stash@{0}'` vytvoří větev z původního commitu a záznam na ni aplikuje.
 
-## Worktree: dvě složky, jedna historie
+Při úspěchu daný stash odstraní.
+
+## [Worktree](#tab/pause-worktree)
+
+**Dvě složky se společnou historií**
 
 V původním projektu vytvoř novou větev ze stabilní místní `main`:
 
@@ -67,11 +87,15 @@ git worktree add -b hotfix/prihlaseni ../aplikace-oprava main
 git worktree list
 ```
 
-`../aplikace-oprava` je nová sousední složka a `hotfix/prihlaseni` nová větev; původní rozpracované soubory zůstávají tam, kde byly.
+`../aplikace-oprava` je nová sousední složka a `hotfix/prihlaseni` nová větev.
+
+Původní rozpracované soubory zůstávají tam, kde byly.
 
 Otevři novou složku v IDE, obnov její závislosti a pracuj obvyklým způsobem.
 
-Commity a větve jsou společné, pracovní soubory a index každého worktree jsou samostatné; stejná větev se běžně nedá současně vybrat ve dvou worktrees.
+Commity a větve jsou společné, pracovní soubory a index každého worktree jsou samostatné.
+
+Stejná větev se běžně nedá současně vybrat ve dvou worktrees.
 
 Po commitu a ověření opravy se vrať do původní složky:
 
@@ -80,8 +104,12 @@ git worktree remove ../aplikace-oprava
 git worktree list
 ```
 
-`remove` odstraní pracovní složku, nikoli větev; při necommitované práci odmítne běžné odstranění.
+`remove` odstraní pracovní složku, nikoli větev.
+
+Při necommitované práci odmítne běžné odstranění.
 
 Větev sluč samostatně podle [zvoleného workflow](workflows.md).
+
+***
 
 Zdroje: [git stash](https://git-scm.com/docs/git-stash), [git worktree](https://git-scm.com/docs/git-worktree).

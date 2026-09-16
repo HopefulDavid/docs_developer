@@ -8,7 +8,9 @@ Pro offline obnovu ulož **seznam verzí a wheelhouse**, tedy složku s instala�
 
 Postup níže je pro PowerShell ve Windows a fungující projekt s prostředím `.venv`.
 
-Na cíli použij stejnou verzi a implementaci Pythonu, OS a architekturu; na Linuxu a macOS místo `.venv/Scripts/python.exe` používej `.venv/bin/python`.
+Na cíli použij stejnou verzi a implementaci Pythonu, OS a architekturu.
+
+Na Linuxu a macOS místo `.venv/Scripts/python.exe` používej `.venv/bin/python`.
 
 ## 1. Připrav balíčky s internetem
 
@@ -20,7 +22,9 @@ V původním fungujícím projektu spusť:
   --dest ../zaloha-python/wheelhouse -r requirements-backup.txt
 ```
 
-První příkaz uloží nainstalované verze včetně nepřímých závislostí; druhý k nim stáhne instalační soubory. [Pip freeze](https://pip.pypa.io/en/stable/cli/pip_freeze/), [pip download](https://pip.pypa.io/en/stable/cli/pip_download/)
+První příkaz uloží nainstalované verze včetně nepřímých závislostí.
+
+Druhý k nim stáhne instalační soubory. [Pip freeze](https://pip.pypa.io/en/stable/cli/pip_freeze/), [pip download](https://pip.pypa.io/en/stable/cli/pip_download/)
 
 `--only-binary=:all:` vyžaduje hotové wheely, aby se na offline počítači nemusela připravovat jejich sestavovací prostředí.
 
@@ -65,11 +69,15 @@ python -m venv .venv
 
 Aktivace prostředí není nutná, protože příkazy používají přímo jeho Python.
 
-Nakonec spusť testy a běžnou aplikaci bez připojení; `pip check` ověřuje pouze deklarované závislosti.
+Nakonec spusť testy a běžnou aplikaci bez připojení.
+
+`pip check` ověřuje pouze deklarované závislosti.
 
 ## Více projektů nebo obnova s internetem
 
-Každý projekt potřebuje vlastní seznam verzí; kompatibilní wheely mohou sdílet jednu složku.
+Každý projekt potřebuje vlastní seznam verzí.
+
+Kompatibilní wheely mohou sdílet jednu složku.
 
 Pro jiný Python nebo platformu připrav a ověř samostatný wheelhouse.
 
@@ -79,7 +87,9 @@ S internetem stačí v novém prostředí `./.venv/Scripts/python.exe -m pip ins
 
 `--no-index` neblokuje URL přímo uvedenou v seznamu, proto musí mít offline seznam názvy a verze místo původních cest.
 
-Ve fungujícím prostředí sestav každý vlastní balíček a potom ulož přenositelný seznam; příklad pro sousední `moje-knihovna`:
+Ve fungujícím prostředí sestav každý vlastní balíček a potom ulož přenositelný seznam.
+
+Příklad pro sousední `moje-knihovna`:
 
 ```powershell
 ./.venv/Scripts/python.exe -m pip wheel --no-deps `
@@ -91,7 +101,9 @@ Ve fungujícím prostředí sestav každý vlastní balíček a potom ulož pře
   --dest ../zaloha-python/wheelhouse -r requirements-offline.txt
 ```
 
-První příkaz zopakuj pro všechny vlastní balíčky; jejich verze musí odpovídat tomu, co máš nainstalované. [Pip wheel](https://pip.pypa.io/en/stable/cli/pip_wheel/), [pip list](https://pip.pypa.io/en/stable/cli/pip_list/)
+První příkaz zopakuj pro všechny vlastní balíčky.
+
+Jejich verze musí odpovídat tomu, co máš nainstalované. [Pip wheel](https://pip.pypa.io/en/stable/cli/pip_wheel/), [pip list](https://pip.pypa.io/en/stable/cli/pip_list/)
 
 Do zálohy přidej `requirements-offline.txt` a v kroku 3 jej použij místo `requirements-backup.txt`.
 

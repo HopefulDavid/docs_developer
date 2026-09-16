@@ -4,7 +4,9 @@ description: "Příprava NavMesh a pohyb postavy k cíli."
 
 # Unity: navigace pomocí NavMesh
 
-NavMesh popisuje schůdné plochy a propojení mezi nimi; NavMeshAgent podle něj plánuje a provádí pohyb.
+NavMesh popisuje schůdné plochy a propojení mezi nimi.
+
+NavMeshAgent podle něj plánuje a provádí pohyb.
 
 Je užitečný pro postavu směřující k cíli, ale nenahrazuje herní rozhodování ani fyzikální simulaci.
 
@@ -24,7 +26,9 @@ Verzi balíčku a dostupné funkce ověř v [dokumentaci AI Navigation](https://
 4. Umísti postavu na tuto plochu a přidej **NavMesh Agent** stejného typu.
 5. Vytvoř prázdný objekt cíle na dosažitelné části plochy.
 
-Poloměr, výška a schod agenta při bake určují, kudy lze projít; musí odpovídat zamýšlené postavě.
+Poloměr, výška a schod agenta při bake určují, kudy lze projít.
+
+Musí odpovídat zamýšlené postavě.
 
 ## Pohyb postavy
 
@@ -77,7 +81,9 @@ Agent hledá cestu podle průchodnosti a nákladů oblastí, proto nemusí jít 
 
 V Inspectoru nastav `speed`, `acceleration`, `angularSpeed` a `stoppingDistance` podle pohybu postavy.
 
-Pro pohyblivý cíl obnovuj požadavek při významné změně polohy nebo v rozumném intervalu; není nutné bezpodmínečně plánovat každým snímkem.
+Pro pohyblivý cíl obnovuj požadavek při významné změně polohy nebo v rozumném intervalu.
+
+Není nutné bezpodmínečně plánovat každým snímkem.
 
 Spusť Play, ověř dosažení cíle a potom vyzkoušej nedosažitelný cíl i úzký průchod.
 
@@ -87,4 +93,6 @@ Pokud pozici ovládá také Rigidbody nebo root motion animace, sjednoť vlastn�
 
 NavMeshObstacle může přidat lokální vyhýbání nebo při vhodném nastavení **Carving** vyřezávat překážku do navigační plochy.
 
-Přidání komponenty samo neznamená průběžné přepočítávání celé mapy; zvol chování podle četnosti pohybu překážky a ověř jej ve hře.
+Přidání komponenty samo neznamená průběžné přepočítávání celé mapy.
+
+Zvol chování podle četnosti pohybu překážky a ověř jej ve hře.

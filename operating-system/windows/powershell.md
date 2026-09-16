@@ -6,7 +6,9 @@ description: "Objekty v rouře, soubory, proměnné, skripty a čitelné zacház
 
 PowerShell předává mezi příkazy objekty s vlastnostmi, takže můžeš filtrovat soubory či procesy podle skutečných údajů.
 
-Windows PowerShell 5.1 a PowerShell 7 jsou různá prostředí; následující příklady míří na PowerShell 7 ve Windows.
+Windows PowerShell 5.1 a PowerShell 7 jsou různá prostředí.
+
+Následující příklady míří na PowerShell 7 ve Windows.
 
 ## Orientace a nápověda
 
@@ -26,7 +28,9 @@ Zjistíš verzi shellu, aktuální složku a příklady konkrétního příkazu.
 | `Copy-Item -LiteralPath <zdroj> -Destination <cíl> [-WhatIf]` | Zkopíruje nebo pouze předvede operaci |
 | `Get-Command <název>` | Zjistí dostupný příkaz a jeho původ |
 
-`-LiteralPath` zachová doslovný název včetně hranatých závorek; `-Path` u mnoha příkazů naopak podporuje zástupné vzory.
+`-LiteralPath` zachová doslovný název včetně hranatých závorek.
+
+`-Path` u mnoha příkazů naopak podporuje zástupné vzory.
 
 ## Roura: vyber soubory větší než 1 MB
 
@@ -38,7 +42,9 @@ Get-ChildItem -LiteralPath . -File |
 
 Tečka znamená aktuální složku, první příkaz vrací soubory, filtr porovnává jejich vlastnost `Length` a poslední příkaz vybírá sloupce.
 
-`1MB` můžeš změnit podle potřeb; tato ukázka nic neupravuje.
+`1MB` můžeš změnit podle potřeb.
+
+Tato ukázka nic neupravuje.
 
 ## Proměnné a spuštění programu
 
@@ -48,7 +54,9 @@ Set-Location -LiteralPath $projectPath
 & "C:\Program Files\nodejs\node.exe" --version
 ```
 
-Obě cesty přizpůsob své instalaci; `&` spustí program, jehož cesta je v uvozovkách.
+Obě cesty přizpůsob své instalaci.
+
+`&` spustí program, jehož cesta je v uvozovkách.
 
 Vnější programy jako Git nebo Node předávají návratový kód v `$LASTEXITCODE`, zatímco PowerShell cmdlety používají také vlastní chybové záznamy.
 
@@ -67,9 +75,11 @@ Copy-Item -LiteralPath $sourceFile -Destination $exportDirectory -WhatIf
 
 `Join-Path` bezpečně sestaví cestu a `-WhatIf` zobrazí plán bez kopírování.
 
-Po ověření cíle zopakuj poslední řádek bez `-WhatIf`; již existující stejnojmenný soubor může být přepsán.
+Po ověření cíle zopakuj poslední řádek bez `-WhatIf`.
 
-Pro mazání použij samostatný [postup s ověřením cíle](cannot-delete-item.md#powershell-kontrola-a-odstranění).
+Již existující stejnojmenný soubor může být přepsán.
+
+Pro mazání použij samostatný [postup s ověřením cíle](cannot-delete-item.md?tabs=remove-powershell#powershell-kontrola-a-odstranění).
 
 ## Skript a chyba
 
@@ -91,7 +101,9 @@ try {
 }
 ```
 
-Spusť `.\kontrola-souboru.ps1 -FilePath .\module.xml`; parametr vybírá soubor a při chybě skript končí nenulovým kódem.
+Spusť `.\kontrola-souboru.ps1 -FilePath .\module.xml`.
+
+Parametr vybírá soubor a při chybě skript končí nenulovým kódem.
 
 Pokud spouštění blokuje politika, ověř [Execution Policy](terminal.md#execution-policy), nikoli náhodné vypínání kontrol.
 
@@ -102,6 +114,8 @@ Pokud spouštění blokuje politika, ověř [Execution Policy](terminal.md#execu
 - [SSH klient ve Windows](../../network/ssh/windows.md).
 - [Telemetrie a nástroje .NET](../../programming/packages/dotnet-cli.md).
 
-`(Get-PSReadLineOption).HistorySavePath` ukáže soubor dlouhodobé historie příkazů; může obsahovat citlivé argumenty a `Clear-History` tuto uloženou historii sám nevymaže.
+`(Get-PSReadLineOption).HistorySavePath` ukáže soubor dlouhodobé historie příkazů.
+
+Může obsahovat citlivé argumenty a `Clear-History` tuto uloženou historii sám nevymaže.
 
 Zdroje: [PowerShell pipeline](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_pipelines), [Copy-Item](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/copy-item), [chyby](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_try_catch_finally).

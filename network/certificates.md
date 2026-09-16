@@ -26,12 +26,21 @@ Vývojová autorita mkcert ani vývojový certifikát .NET nepatří jako univer
 | Soukromý klíč serveru | Důkaz identity serveru, musí zůstat chráněný |
 | Kořenový certifikát CA | Veřejný základ důvěry v certifikáty vydané touto autoritou |
 | Soukromý klíč CA | Umožňuje vydávat další důvěryhodné certifikáty |
-| PEM | Textový formát; může obsahovat certifikát i klíč podle obsahu |
+| PEM | Textový formát. Může obsahovat certifikát i klíč podle obsahu |
 | PFX / PKCS#12 | Kontejner pro certifikát a klíč, obvykle chráněný heslem |
 
 Přejmenování přípony samo formát nepřevede.
 
-## Varianta A: ASP.NET Core
+## Připrav certifikát podle aplikace
+
+Vyber jednu cestu podle nástroje, kterým spouštíš vývojový server.
+
+<a id="varianta-a-aspnet-core"></a>
+<a id="varianta-b-mkcert-pro-vlastní-server"></a>
+<a id="spustitelný-příklad-nodejs"></a>
+<a id="aplikace-vyžaduje-pfx"></a>
+
+## [ASP.NET Core](#tab/cert-dotnet)
 
 S nainstalovaným .NET SDK v PowerShellu nebo Bashi:
 
@@ -40,15 +49,19 @@ dotnet dev-certs https --trust
 dotnet dev-certs https --check --trust
 ```
 
-První příkaz vytvoří nebo najde vývojový certifikát a požádá o jeho důvěryhodnost; druhý jen ověří platnost a důvěru.
+První příkaz vytvoří nebo najde vývojový certifikát a požádá o jeho důvěryhodnost.
+
+Druhý jen ověří platnost a důvěru.
 
 Spusť aplikaci s HTTPS profilem uvedeným v `Properties/launchSettings.json` a použij přesnou adresu z výpisu serveru.
 
-Na Linuxu a v některých prohlížečích se správa důvěry liší; postupuj podle instrukcí konkrétního SDK a výsledku kontroly.
+Na Linuxu a v některých prohlížečích se správa důvěry liší.
+
+Postupuj podle instrukcí konkrétního SDK a výsledku kontroly.
 
 `dotnet dev-certs https --clean` odstraní vývojové HTTPS certifikáty, a proto ho nepoužívej jako první univerzální opravu.
 
-## Varianta B: mkcert pro vlastní server
+## [Vlastní server s mkcert](#tab/cert-mkcert)
 
 Nainstaluj [mkcert z oficiálních vydání](https://github.com/FiloSottile/mkcert/releases), ověř jeho původ a dostupnost `mkcert -version`.
 
@@ -63,13 +76,15 @@ mkcert -cert-file localhost.pem -key-file localhost-key.pem localhost 127.0.0.1 
 
 `-install` vytvoří a nainstaluje místní kořen důvěry, což může vyžadovat potvrzení systému.
 
-Druhý příkaz vydá certifikát pro uvedená jména a adresy; výstupy nepřepisuj v adresáři s již používanými klíči.
+Druhý příkaz vydá certifikát pro uvedená jména a adresy.
+
+Výstupy nepřepisuj v adresáři s již používanými klíči.
 
 Pro vlastní jméno přidej například `app.test` do seznamu a zajisti jeho překlad na cílovou IP, například v místním souboru hosts.
 
 mkcert nastaví certifikáty, ale sám nespustí ani nenakonfiguruje HTTPS aplikaci.
 
-### Spustitelný příklad Node.js
+**Spustitelný příklad Node.js**
 
 Vedle obou PEM souborů ulož `server.cjs`:
 
@@ -92,13 +107,15 @@ https.createServer(options, (_request, response) => {
 });
 ```
 
-S nainstalovaným Node.js spusť `node server.cjs` a otevři uvedenou adresu; `Ctrl+C` server ukončí.
+S nainstalovaným Node.js spusť `node server.cjs` a otevři uvedenou adresu.
+
+`Ctrl+C` server ukončí.
 
 `cert` je veřejný certifikát, `key` soukromý klíč, `8443` zvolený volný port a `127.0.0.1` omezuje naslouchání na tento počítač.
 
 Port můžeš změnit, ale nové jméno serveru musí být zároveň uvedené v certifikátu.
 
-## Aplikace vyžaduje PFX
+**Aplikace vyžaduje PFX**
 
 S dostupným OpenSSL ve složce certifikátů:
 
@@ -106,21 +123,27 @@ S dostupným OpenSSL ve složce certifikátů:
 openssl pkcs12 -export -out server.pfx -inkey localhost-key.pem -in localhost.pem
 ```
 
-Program se zeptá na exportní heslo; `server.pfx` pak obsahuje klíč i certifikát a heslo použij podle nastavení konkrétního serveru.
+Program se zeptá na exportní heslo.
+
+`server.pfx` pak obsahuje klíč i certifikát a heslo použij podle nastavení konkrétního serveru.
 
 Heslo nepiš přímo jako veřejný argument do skriptu.
+
+***
 
 ## Ověření a časté chyby
 
 | Projev | Co zkontrolovat |
 |---|---|
 | Neznámý vydavatel | Důvěru v CA na tomto počítači a v konkrétním klientovi |
-| Nesouhlas názvu | URL proti SAN certifikátu; certifikát pro localhost neplatí automaticky pro IP v LAN |
-| Vypršený certifikát | Platnost a systémový čas; vydat a nasadit nový certifikát |
+| Nesouhlas názvu | URL proti SAN certifikátu. Certifikát pro localhost neplatí automaticky pro IP v LAN |
+| Vypršený certifikát | Platnost a systémový čas. Vydat a nasadit nový certifikát |
 | Prohlížeč funguje, nástroj ne | Nástroj může používat vlastní úložiště CA |
 | Jiný počítač nedůvěřuje | Jeho vlastní důvěryhodné autority, nikoli jen certifikát uložený na serveru |
 
-`mkcert -CAROOT` ukáže složku místní autority; pro důvěru na dalším vlastním testovacím zařízení přenášej pouze veřejný `rootCA.pem`.
+`mkcert -CAROOT` ukáže složku místní autority.
+
+Pro důvěru na dalším vlastním testovacím zařízení přenášej pouze veřejný `rootCA.pem`.
 
 `rootCA-key.pem` nesdílej a necommituj, protože umožňuje vydávat důvěryhodné certifikáty pro libovolná jména na zařízeních důvěřujících této CA.
 

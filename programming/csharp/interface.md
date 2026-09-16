@@ -4,7 +4,9 @@ description: "Smlouvy rozhraní a rozdíl mezi mělkou a hlubokou kopií objektu
 
 # C# – rozhraní a kopírování objektů
 
-Rozhraní popisuje kontrakt implementace; význam jednotlivých metod musí být jednoznačný pro volajícího.
+Rozhraní popisuje kontrakt implementace.
+
+Význam jednotlivých metod musí být jednoznačný pro volajícího.
 
 ## Mělká a hluboká kopie
 
@@ -12,7 +14,9 @@ Přiřazení proměnné referenčního typu kopíruje referenci na stejný objek
 
 Mělká kopie vytvoří nový vnější objekt, ale jeho referenční pole stále odkazují na původní vnořené objekty.
 
-Metoda `MemberwiseClone` dělá mělkou kopii; rozhraní `ICloneable` neurčuje, zda má `Clone` kopírovat mělce, nebo hluboce. [MemberwiseClone](https://learn.microsoft.com/en-us/dotnet/api/system.object.memberwiseclone), [ICloneable](https://learn.microsoft.com/en-us/dotnet/api/system.icloneable)
+Metoda `MemberwiseClone` dělá mělkou kopii.
+
+Rozhraní `ICloneable` neurčuje, zda má `Clone` kopírovat mělce, nebo hluboce. [MemberwiseClone](https://learn.microsoft.com/en-us/dotnet/api/system.object.memberwiseclone), [ICloneable](https://learn.microsoft.com/en-us/dotnet/api/system.icloneable)
 
 ## Jednoznačný kontrakt kopie
 
@@ -51,6 +55,8 @@ Pokud později přidáš měnitelné objekty do seznamu, musíš rozhodnout a ot
 
 ## Serializace není univerzální klonování
 
-Pro kopírování nepoužívej `BinaryFormatter`; v .NET 9 a novějším jeho vestavěná implementace vyhazuje výjimku a formát má bezpečnostní problémy.
+Pro kopírování nepoužívej `BinaryFormatter`.
+
+V .NET 9 a novějším jeho vestavěná implementace vyhazuje výjimku a formát má bezpečnostní problémy.
 
 Zvol explicitní kopii nebo serializaci s jasným datovým kontraktem, pokud skutečně potřebuješ přenos či uložení dat. [Migrace z BinaryFormatter](https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-migration-guide/)

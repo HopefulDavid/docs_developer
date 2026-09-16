@@ -77,11 +77,15 @@ Oba dokumentační projekty používají shodnou šablonu, parsery, pořadí sku
 
 `tag_pattern = "^$"` vyjadřuje průběžný nevydávaný model a spojuje celou dosažitelnou historii do jednoho kategorizovaného přehledu.
 
-Generování běží v offline režimu a nepotřebuje konfiguraci vzdáleného repozitáře; zdroj i položky zobrazují krátký hash jako neklikací kód.
+Generování běží v offline režimu a nepotřebuje konfiguraci vzdáleného repozitáře.
+
+Zdroj i položky zobrazují krátký hash jako neklikací kód.
 
 Výstup uvádí zdrojový commit a celkový počet zahrnutých commitů a změny rozděluje podle kalendářního roku v `Europe/Prague`.
 
-Rok nejnovějšího zahrnutého commitu zůstává jako nejnovější období otevřený; roky bez zahrnutých změn se nevykreslují a každý starší zobrazený rok je samostatný blok `<details>` s počtem změn a uvnitř zachovává stejné kategorie i sbalené technické typy.
+Rok nejnovějšího zahrnutého commitu zůstává jako nejnovější období otevřený.
+
+Roky bez zahrnutých změn se nevykreslují a každý starší zobrazený rok je samostatný blok `<details>` s počtem změn a uvnitř zachovává stejné kategorie i sbalené technické typy.
 
 Dosavadní stabilní kotva každé kategorie směřuje na její nejnovější výskyt a každé období má navíc kotvy rozlišené rokem.
 
@@ -94,7 +98,7 @@ Aktivní `changelog.md` je ignorovaný build vstup a při každém sestavení se
 - Oba projekty mají jeden reprodukovatelný a testovaný způsob generování.
 - Deklarativní konfigurace nahrazuje vlastní transformační JavaScript a pomocné čistící skripty.
 - Každý záznam ukazuje kategorii, scope, projektové datum, breaking stav a krátký neklikací hash commitu.
-- Čtenář ihned pozná zdrojový stav a rozsah období, nejnovější rok vidí přímo a z doprovodného textu pochopí, že prázdné roky se vynechávají; starší roky může otevírat jednotlivě bez ztráty kategorií.
+- Čtenář ihned pozná zdrojový stav a rozsah období, nejnovější rok vidí přímo a z doprovodného textu pochopí, že prázdné roky se vynechávají. Starší roky může otevírat jednotlivě bez ztráty kategorií.
 - Tag ani nekonvenční historická zpráva tiše neodříznou starší změny.
 
 ### Negativní
@@ -122,7 +126,9 @@ Poté build začne generovat ignorovaný `changelog.md` před DocFX, CI obnoví 
 
 Existující Git historie zůstává jediným autoritativním vstupem a změna formátu neodstraňuje žádný dosažitelný commit.
 
-Návrat vyžaduje obnovení předchozí konfigurace, závislosti a testu v jednom commitu; žádná data ani vzdálený stav se nemigrují.
+Návrat vyžaduje obnovení předchozí konfigurace, závislosti a testu v jednom commitu.
+
+Žádná data ani vzdálený stav se nemigrují.
 
 ## Ověření rozhodnutí
 

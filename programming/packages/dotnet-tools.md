@@ -14,11 +14,25 @@ description: "Jednoduchá záloha a obnova .NET nástrojů podle toho, zda jsou 
 | Lokální, pro jeden projekt | Projekt má `.config/dotnet-tools.json` | Projekt a balíčky NuGet |
 | Vlastní složka `--tool-path` | Při instalaci jsi zadal vlastní cestu | Celou tuto složku |
 
-Příklady jsou pro PowerShell ve Windows; na druhém počítači připrav stejný OS, architekturu a odpovídající .NET SDK či runtime.
+Příklady jsou pro PowerShell ve Windows.
 
-## Globální nástroje: zkopíruj celou složku
+Na druhém počítači připrav stejný OS, architekturu a odpovídající .NET SDK či runtime.
 
-### 1. Záloha na původním počítači
+## Vyber typ instalace
+
+<a id="globální-nástroje-zkopíruj-celou-složku"></a>
+<a id="1-záloha-na-původním-počítači"></a>
+<a id="2-obnova-bez-internetu"></a>
+<a id="3-ověření"></a>
+<a id="lokální-nástroje-přenes-projekt-a-balíčky"></a>
+<a id="1-záloha-s-internetem"></a>
+<a id="2-obnova-bez-internetu-1"></a>
+
+## [Globální nebo vlastní složka](#tab/tools-global)
+
+**Zkopíruj celou složku nástrojů.**
+
+**1. Záloha na původním počítači**
 
 Ulož si výpis `dotnet tool list --global` a verzi prostředí z `dotnet --info`.
 
@@ -28,21 +42,27 @@ Zavři běžící nástroje a v Průzkumníku zkopíruj tuto **celou složku vč
 %USERPROFILE%\.dotnet\tools
 ```
 
-V `.store` jsou vlastní soubory nástrojů; samotné spouštěče `.exe` nestačí. [Umístění instalace](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-install#installation-locations)
+V `.store` jsou vlastní soubory nástrojů.
 
-Pro vlastní `--tool-path` kopíruj celý zadaný adresář; na Linuxu a macOS je běžná globální cesta `~/.dotnet/tools`.
+Samotné spouštěče `.exe` nestačí. [Umístění instalace](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-install#installation-locations)
+
+Pro vlastní `--tool-path` kopíruj celý zadaný adresář.
+
+Na Linuxu a macOS je běžná globální cesta `~/.dotnet/tools`.
 
 Pokud používáš vlastní `DOTNET_CLI_HOME`, vycházej ze skutečného umístění instalace.
 
-### 2. Obnova bez internetu
+**2. Obnova bez internetu**
 
 Na cílovém počítači nainstaluj připravené .NET SDK či runtime a vrať uloženou složku `tools` do jeho `%USERPROFILE%\.dotnet`.
 
-Pokud tam už jiné nástroje máš, původní složku nejprve odlož stranou; dvě instalace neslévej naslepo.
+Pokud tam už jiné nástroje máš, původní složku nejprve odlož stranou.
+
+Dvě instalace neslévej naslepo.
 
 Nástroje se z této kopie spouštějí přímo, bez nového stahování balíčků.
 
-### 3. Ověření
+**3. Ověření**
 
 Pro ukázkový DocFX spusť:
 
@@ -53,13 +73,19 @@ dotnet tool list --global
 
 Porovnej seznam a verze se zálohou a vyzkoušej běžnou práci nástroje bez připojení.
 
-Pro spouštění samotným `docfx` musí být složka `tools` v `PATH`; příkaz s úplnou cestou výše to nevyžaduje.
+Pro spouštění samotným `docfx` musí být složka `tools` v `PATH`.
 
-## Lokální nástroje: přenes projekt a balíčky
+Příkaz s úplnou cestou výše to nevyžaduje.
 
-Lokální nástroje obnovuje soubor `.config/dotnet-tools.json`; nepřenášej je kopií globální složky `tools`.
+## [Lokální v projektu](#tab/tools-local)
 
-### 1. Záloha s internetem
+**Přenes projekt a balíčky.**
+
+Lokální nástroje obnovuje soubor `.config/dotnet-tools.json`.
+
+Nepřenášej je kopií globální složky `tools`.
+
+**1. Záloha s internetem**
 
 V projektu nejprve obnov nástroje a zjisti složku stažených balíčků:
 
@@ -78,7 +104,7 @@ zaloha-tools/
 
 Pro více projektů obnov každý z nich a potom pořizuj společnou kopii balíčků.
 
-### 2. Obnova bez internetu
+**2. Obnova bez internetu**
 
 Na cíli pracuj s rozbalenou kopií zálohy a v `projekt` vytvoř soubor `NuGet.Offline.Config`:
 
@@ -103,7 +129,11 @@ dotnet tool run docfx -- --version
 
 V posledním řádku nahraď DocFX vlastním nástrojem z manifestu a ověř jeho běžnou práci. [Obnova lokálních nástrojů](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-restore)
 
-Úplnost zálohy zkoušej na novém účtu nebo počítači bez původní instalace; obnovení na stejném účtu může využít jeho staré balíčky.
+Úplnost zálohy zkoušej na novém účtu nebo počítači bez původní instalace.
+
+Obnovení na stejném účtu může využít jeho staré balíčky.
+
+***
 
 ## Když máš při obnově internet
 
@@ -115,6 +145,10 @@ Globální nástroje nainstaluj podle uloženého seznamu, například:
 dotnet tool install --global docfx --version 2.78.5
 ```
 
-`docfx` a `2.78.5` jsou ukázkové hodnoty; dosaď názvy a verze ze své zálohy.
+`docfx` a `2.78.5` jsou ukázkové hodnoty.
 
-Složka nástrojů neobsahuje .NET runtime ani všechna vlastní data, pluginy či šablony nástroje; ty zálohuj také, pokud je používáš.
+Dosaď názvy a verze ze své zálohy.
+
+Složka nástrojů neobsahuje .NET runtime ani všechna vlastní data, pluginy či šablony nástroje.
+
+Ty zálohuj také, pokud je používáš.

@@ -13,7 +13,9 @@ Vlastní konverzní operátor určuje, jak se hodnota uživatelského typu přev
 | `implicit` | Bez přetypování | Převod bez očekávané ztráty informace nebo výjimky |
 | `explicit` | S přetypováním `(Typ)hodnota` | Převod, jehož provedení má být v kódu výslovné |
 
-Samotné slovo `explicit` nezaručuje bezpečnost převodu; chování určuje implementace. [Konverzní operátory](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/user-defined-conversion-operators)
+Samotné slovo `explicit` nezaručuje bezpečnost převodu.
+
+Chování určuje implementace. [Konverzní operátory](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/user-defined-conversion-operators)
 
 ## Příklad: hodnota s jednotkou
 

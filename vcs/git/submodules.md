@@ -8,13 +8,17 @@ Submodul připojuje samostatný repozitář do podadresáře projektu a hlavní 
 
 ## Jak to funguje
 
-Soubor `.gitmodules` obsahuje cesty a URL; samotný gitlink v historii určuje verzi závislosti.
+Soubor `.gitmodules` obsahuje cesty a URL.
+
+Samotný gitlink v historii určuje verzi závislosti.
 
 Submodul má vlastní historii a jeho `.git` bývá soubor odkazující do úložiště hlavního projektu. [Model submodulů](https://git-scm.com/docs/gitsubmodules)
 
 ## Před použitím
 
-Potřebuješ přístup do obou repozitářů; nepoužívej submodul jen jako náhradu správce balíčků, pokud potřebuješ běžnou publikovanou knihovnu.
+Potřebuješ přístup do obou repozitářů.
+
+Nepoužívej submodul jen jako náhradu správce balíčků, pokud potřebuješ běžnou publikovanou knihovnu.
 
 Příkazy spouštěj z kořene hlavního projektu, `libs/knihovna` je ukázková cesta.
 
@@ -48,29 +52,41 @@ git add libs/knihovna
 git commit -m "build: připíná knihovnu na verzi 2.0.0"
 ```
 
-Nahraď `v2.0.0` existujícím ověřeným tagem; `-C` spouští Git v daném adresáři bez změny tvého terminálu.
+Nahraď `v2.0.0` existujícím ověřeným tagem.
+
+`-C` spouští Git v daném adresáři bez změny tvého terminálu.
 
 Před commitem hlavního projektu otestuj aplikaci s novou verzí závislosti.
 
 ## Úpravy uvnitř submodulu
 
-Přes `git -C libs/knihovna switch -c oprava` vytvoř pracovní větev; úpravy commituj a publikuj v repozitáři knihovny.
+Přes `git -C libs/knihovna switch -c oprava` vytvoř pracovní větev.
+
+Úpravy commituj a publikuj v repozitáři knihovny.
 
 Až poté aktualizuj gitlink v hlavním projektu, aby jej ostatní dokázali stáhnout.
 
-Stav **detached HEAD** je při obnově připnuté verze očekávaný; sám o sobě není závada.
+Stav **detached HEAD** je při obnově připnuté verze očekávaný.
+
+Sám o sobě není závada.
 
 ## Změna adresy nebo odstranění
 
-`git submodule set-url <cesta-submodulu> <nová-URL>` změní adresu a synchronizuje místní konfiguraci; obě hodnoty nahraď podle své knihovny a commituj `.gitmodules`.
+`git submodule set-url <cesta-submodulu> <nová-URL>` změní adresu a synchronizuje místní konfiguraci.
+
+Obě hodnoty nahraď podle své knihovny a commituj `.gitmodules`.
 
 Po uchování vlastní práce lze submodul odstranit přes `git rm libs/knihovna`, zkontrolovat `git diff --cached` a vytvořit commit.
 
-Neodstraňuj ručně `.git/modules` jako běžný úklid; může obsahovat jediné kopie místních commitů. [Odstranění a obnova submodulů](https://git-scm.com/docs/gitsubmodules)
+Neodstraňuj ručně `.git/modules` jako běžný úklid.
+
+Může obsahovat jediné kopie místních commitů. [Odstranění a obnova submodulů](https://git-scm.com/docs/gitsubmodules)
 
 ## Když je složka prázdná nebo ukazuje jinou verzi
 
-Po běžném pull hlavního projektu spusť `git submodule update --init --recursive`; tím obnovíš verze zapsané hlavním projektem, aniž bys vybíral nejnovější vzdálenou větev.
+Po běžném pull hlavního projektu spusť `git submodule update --init --recursive`.
+
+Tím obnovíš verze zapsané hlavním projektem, aniž bys vybíral nejnovější vzdálenou větev.
 
 Znak `+` před ID ve výpisu `git submodule status` znamená jiný vybraný commit než ten zapsaný v hlavním indexu, `-` neinicializovaný submodul a `U` konflikt.
 

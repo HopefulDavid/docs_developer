@@ -6,7 +6,9 @@ description: "Řešení opakovaných návrhových problémů na malých příkla
 
 Návrhový vzor je pojmenované řešení opakujícího se problému se vztahy mezi objekty nebo částmi programu.
 
-Pomáhá popsat návrh a jeho kompromisy; není to hotová knihovna ani požadavek přidávat do každého programu více tříd.
+Pomáhá popsat návrh a jeho kompromisy.
+
+Není to hotová knihovna ani požadavek přidávat do každého programu více tříd.
 
 ## K čemu slouží
 
@@ -26,7 +28,9 @@ Pokud vystačíš s přehlednou funkcí, není nutné zavádět složitější v
 
 Singleton zavádí jedinou instanci, ale skrytý globální stav může komplikovat testování a souběh.
 
-Pouhé `if` vybírající typ objektu bývá jednoduchá továrna; Factory Method v klasickém významu dovoluje podtřídám změnit vytvářený typ.
+Pouhé `if` vybírající typ objektu bývá jednoduchá továrna.
+
+Factory Method v klasickém významu dovoluje podtřídám změnit vytvářený typ.
 
 ## Před použitím ukázek
 
@@ -88,7 +92,9 @@ console.log(catalog.findProduct(2)); // null
 
 Při výměně katalogu upravíš adaptér, zatímco klient může dál používat `findProduct`.
 
-Adaptér sám neřeší síťové chyby ani rozdílný význam dat; tyto rozdíly musí mít výslovné pravidlo.
+Adaptér sám neřeší síťové chyby ani rozdílný význam dat.
+
+Tyto rozdíly musí mít výslovné pravidlo.
 
 ## Observer: oznámení změny
 
@@ -127,7 +133,9 @@ Názvy tříd, datové typy a konkrétní strategie přizpůsob doméně projekt
 
 Zkontroluj, zda umíš přidat další variantu bez změny všech klientů a zda test pokrývá i chybový nebo prázdný vstup.
 
-Vzor má snížit počet míst, kterým musíš při změně rozumět; pokud jen přidává vrstvy bez přínosu, zjednoduš návrh.
+Vzor má snížit počet míst, kterým musíš při změně rozumět.
+
+Pokud jen přidává vrstvy bez přínosu, zjednoduš návrh.
 
 ## Související témata
 

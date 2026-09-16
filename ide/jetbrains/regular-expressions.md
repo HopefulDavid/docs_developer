@@ -17,7 +17,9 @@ Například `TASK-\d+` najde `TASK-7` i `TASK-208`, aniž bys předem znal konkr
 | Přejmenovat třídu, metodu nebo proměnnou i s odkazy | Refactor → Rename |
 | Změnit strukturu programu nebo vnořeného dokumentu | Refaktoring, parser nebo strukturální hledání podporované konkrétním IDE |
 
-Hledání v editoru JetBrains používá Java regex; regex v kódu aplikace se dál řídí jazykem aplikace, například .NET v C#. [JetBrains: regex v Rideru](https://www.jetbrains.com/help/rider/Tutorial_Finding_and_Replacing_Text_Using_Regular_Expressions.html)
+Hledání v editoru JetBrains používá Java regex.
+
+Regex v kódu aplikace se dál řídí jazykem aplikace, například .NET v C#. [JetBrains: regex v Rideru](https://www.jetbrains.com/help/rider/Tutorial_Finding_and_Replacing_Text_Using_Regular_Expressions.html)
 
 ## Připrav hledání
 
@@ -28,7 +30,9 @@ Hledání v editoru JetBrains používá Java regex; regex v kódu aplikace se d
 5. Rozhodni, zda zapnout **Match Case** pro rozlišení malých a velkých písmen.
 6. Zkontroluj náhled a nejprve nahraď jednu shodu.
 
-Maska vybírá soubory, regex hledá jejich obsah; `*.cs` tedy patří do masky, ne do pole regexu.
+Maska vybírá soubory, regex hledá jejich obsah.
+
+`*.cs` tedy patří do masky, ne do pole regexu.
 
 Před hromadnou náhradou měj přehledný Git stav, abys mohl výsledek zkontrolovat a případně vrátit. [JetBrains: hledání v řešení](https://www.jetbrains.com/help/rider/Finding_and_Replacing_Text_in_Project.html)
 
@@ -75,7 +79,9 @@ Chceš převést zjednodušené datum `12.09.2026` na `2026-09-12`.
 
 Pojmenované skupiny zjednodušují náhradu, protože nemusíš počítat pořadí závorek.
 
-Tento příklad mění formát, **neověřuje platnost kalendářního data**; odpovídal by mu i text `99.99.2026`.
+Tento příklad mění formát, **neověřuje platnost kalendářního data**.
+
+Odpovídal by mu i text `99.99.2026`.
 
 ## Příklad 3: odstranit mezery na konci řádků
 
@@ -86,7 +92,9 @@ Tento příklad mění formát, **neověřuje platnost kalendářního data**; o
 
 `\h+` vybere mezery a tabulátory, `$` konec řádku a `(?m)` zapne zpracování začátků a konců jednotlivých řádků.
 
-Prázdná náhrada nalezený text smaže; samotné konce řádků zůstanou.
+Prázdná náhrada nalezený text smaže.
+
+Samotné konce řádků zůstanou.
 
 Pro tuto úlohu nepoužívej neurčité `\s+`, protože `\s` zahrnuje také konce řádků.
 
@@ -109,13 +117,15 @@ Pro tuto úlohu nepoužívej neurčité `\s+`, protože `\s` zahrnuje také konc
 | `(...)`, `(?<name>...)` | Číselná nebo pojmenovaná skupina | `ID=(?<id>\d+)` |
 | `(?:...)` | Skupina bez zachycení pro náhradu | <code>(?:cat&#124;dog)s?</code> |
 | `\b` | Hranice slova | `\bcat\b` nenajde část `category` |
-| `^`, `$` | Začátek a konec; s `(?m)` pro jednotlivé řádky | `(?m)^ERROR.*$` |
+| `^`, `$` | Začátek a konec, s `(?m)` pro jednotlivé řádky | `(?m)^ERROR.*$` |
 | `\A`, `\z` | Začátek a konec celého vstupu | `\A\d+\z` |
 | `\1`, `\k<id>` | Znovu stejný text skupiny uvnitř hledání | `(\w+)\h+\1` najde `test test` |
 
 V poli Find se píše přímo regex, bez uvozovek řetězcového literálu a bez jeho dodatečného escapování.
 
-Třídy `\w` a `\d` závisí také na Unicode režimu; pro přesné zadání použij `[0-9]` nebo Unicode kategorie. [Java Pattern](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/regex/Pattern.html)
+Třídy `\w` a `\d` závisí také na Unicode režimu.
+
+Pro přesné zadání použij `[0-9]` nebo Unicode kategorie. [Java Pattern](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/regex/Pattern.html)
 
 ## Přehled: co může být v poli Replace
 
@@ -129,20 +139,24 @@ Třídy `\w` a `\d` závisí také na Unicode režimu; pro přesné zadání pou
 | `\$` | Doslovný dolar | Náhrada měnové zkratky symbolem |
 | Prázdná hodnota | Smazání shody | Odstranění koncových mezer |
 
-`\E` ukončuje převod písmen, aby neovlivnil další text; značky pro převod v náhradě jsou schopnost IDE, nikoli univerzální syntaxe všech regex knihoven. [JetBrains: náhrady a převod písmen](https://www.jetbrains.com/help/idea/tutorial-finding-and-replacing-text-using-regular-expressions.html)
+`\E` ukončuje převod písmen, aby neovlivnil další text.
+
+Značky pro převod v náhradě jsou schopnost IDE, nikoli univerzální syntaxe všech regex knihoven. [JetBrains: náhrady a převod písmen](https://www.jetbrains.com/help/idea/tutorial-finding-and-replacing-text-using-regular-expressions.html)
 
 ## Více řádků, okolí a pokročilé možnosti
 
-- **`(?s)`** dovolí tečce zahrnout konce řádků; například `(?s)BEGIN.*?END` najde jednoduchý blok.
-- **`(?i)`** vypne rozlišování velikosti písmen; `(?i:todo)` omezí režim na skupinu.
-- **`(?x)`** dovolí mezery a komentáře pro čitelnost vzoru; doslovnou mezeru pak piš například `[ ]`.
-- **`(?=...)` / `(?!...)`** ověří následující text; `\d+(?= Kč)` označí číslo, ale ne měnu.
-- **`(?<=...)` / `(?<!...)`** ověří předchozí text; `(?<=ID: )\d+` označí jen číslo po `ID: `.
-- **`*?` / `+?`** hledají kratší shodu; `".*"` vezme od první po poslední uvozovku na řádku, `".*?"` jednotlivé jednoduché citované úseky.
+- **`(?s)`** dovolí tečce zahrnout konce řádků. Například `(?s)BEGIN.*?END` najde jednoduchý blok.
+- **`(?i)`** vypne rozlišování velikosti písmen. `(?i:todo)` omezí režim na skupinu.
+- **`(?x)`** dovolí mezery a komentáře pro čitelnost vzoru. Doslovnou mezeru pak piš například `[ ]`.
+- **`(?=...)` / `(?!...)`** ověří následující text. `\d+(?= Kč)` označí číslo, ale ne měnu.
+- **`(?<=...)` / `(?<!...)`** ověří předchozí text. `(?<=ID: )\d+` označí jen číslo po `ID: `.
+- **`*?` / `+?`** hledají kratší shodu. `".*"` vezme od první po poslední uvozovku na řádku, `".*?"` jednotlivé jednoduché citované úseky.
 - **`\Q...\E`** hledá doslovný text uvnitř, například `\Q[a+b]\E`.
-- Java podporuje i průnik znakových tříd, atomické skupiny a possessive opakování; používej je až podle přesné potřeby a testu z [úplné reference](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/regex/Pattern.html).
+- Java podporuje i průnik znakových tříd, atomické skupiny a possessive opakování. Používej je až podle přesné potřeby a testu z [úplné reference](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/regex/Pattern.html).
 
-Regex není obecný parser HTML ani vnořených bloků; náhrady nad strukturou dokumentu vždy omez na tvar, který umíš ověřit.
+Regex není obecný parser HTML ani vnořených bloků.
+
+Náhrady nad strukturou dokumentu vždy omez na tvar, který umíš ověřit.
 
 ## Když výsledek neodpovídá očekávání
 
@@ -155,4 +169,6 @@ Regex není obecný parser HTML ani vnořených bloků; náhrady nad strukturou 
 | Vzor překračuje řádek | Ověř `\s` a režim `(?s)` |
 | Česká písmena chybí | Použij `\p{L}` a zkontroluj Match Case |
 
-Po nahrazení prohlédni Git diff a spusť odpovídající testy; správně nalezený text ještě neznamená správně změněný program.
+Po nahrazení prohlédni Git diff a spusť odpovídající testy.
+
+Správně nalezený text ještě neznamená správně změněný program.

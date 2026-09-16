@@ -52,7 +52,9 @@ Existenci vzdálené větve a pravidla jejího publikování ověř podle platfo
 
 ## Role větví a propagace
 
-V pracovním projektu udržuj pouze místní větve `main` a `develop`; vzdálenou publikační větev `gh-pages` zachovej.
+V pracovním projektu udržuj pouze místní větve `main` a `develop`.
+
+Vzdálenou publikační větev `gh-pages` zachovej.
 
 `develop` je integrační větev a jediné místo, na kterém se běžně zpracovávají úkoly.
 
@@ -62,7 +64,9 @@ Každý push do `develop` spouští vzdálené quality workflow, ale tato kontro
 
 `main` je výchozí a publikační větev.
 
-Aktualizuje se pouze pull requestem z `develop`; přímý push do `main` není podporovanou součástí workflow.
+Aktualizuje se pouze pull requestem z `develop`.
+
+Přímý push do `main` není podporovanou součástí workflow.
 
 Pull request musí obsahovat aktuální stav `main`, projít kontrolou `Lokálně reprodukovatelné kontroly` a mít vyřešené všechny review konverzace.
 

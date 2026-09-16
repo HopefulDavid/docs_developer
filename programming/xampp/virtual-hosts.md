@@ -14,7 +14,9 @@ Soubor `hosts` přeloží `moje-aplikace.test` na místní IP adresu a Apache po
 
 Samotný záznam v `hosts` nenastavuje server ani port.
 
-Doména `.test` je vyhrazená pro testování; `.local` může kolidovat s multicast DNS.
+Doména `.test` je vyhrazená pro testování.
+
+`.local` může kolidovat s multicast DNS.
 
 ## Před použitím
 
@@ -57,7 +59,9 @@ Pokud už hostitele máš, sluč změny s existující konfigurací a nevytvář
 
 Cesta v `Directory` musí odpovídat veřejné složce a `Require local` dovoluje přístup pouze z místního počítače.
 
-Pokud framework vyžaduje `.htaccess`, povol jen potřebné direktivy a modul podle jeho dokumentace; samotná ukázka ještě nenastavuje přepis URL.
+Pokud framework vyžaduje `.htaccess`, povol jen potřebné direktivy a modul podle jeho dokumentace.
+
+Samotná ukázka ještě nenastavuje přepis URL.
 
 ## Překlad názvu a ověření
 
@@ -87,6 +91,8 @@ Název měň současně v `hosts` a `ServerName`, cestu současně v `DocumentRo
 
 Při 403 prověř `Require` a oprávnění souborového systému, při zobrazení jiného webu výpis `httpd -S` a první výchozí host.
 
-Pro HTTPS přidej důvěryhodný [lokální certifikát](../../network/certificates.md) a odpovídající TLS Virtual Host; změna URL na `https://` sama nestačí.
+Pro HTTPS přidej důvěryhodný [lokální certifikát](../../network/certificates.md) a odpovídající TLS Virtual Host.
+
+Změna URL na `https://` sama nestačí.
 
 Příklady konfigurace vlastní [Apache HTTP Server](https://httpd.apache.org/docs/2.4/vhosts/examples.html), rezervované názvy [IANA](https://www.iana.org/assignments/special-use-domain-names/special-use-domain-names.xhtml).

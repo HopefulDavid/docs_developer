@@ -19,7 +19,9 @@ git switch -c feature/hledani
 git branch --show-current
 ```
 
-`switch -c` větev vytvoří a zároveň vybere; poslední příkaz musí vypsat `feature/hledani`.
+`switch -c` větev vytvoří a zároveň vybere.
+
+Poslední příkaz musí vypsat `feature/hledani`.
 
 Používáš-li workflow s `develop`, začni z této větve místo `main`.
 
@@ -52,11 +54,15 @@ git branch -vv
 
 `-u` nastaví vazbu na `origin/feature/hledani`, kterou pak Git používá pro přehled stavu.
 
-Push nepřenese rozpracované soubory a nevloží funkci do `main`; k tomu slouží samostatný [merge](../merging.md) nebo [PR](pull-request.md).
+Push nepřenese rozpracované soubory a nevloží funkci do `main`.
+
+K tomu slouží samostatný [merge](../merging.md) nebo [PR](pull-request.md).
 
 ## Když přepnutí odmítne
 
-Hlášení o přepsání místních změn chrání necommitovanou práci; nejprve ji commitni nebo [odlož](../stash-worktree.md).
+Hlášení o přepsání místních změn chrání necommitovanou práci.
+
+Nejprve ji commitni nebo [odlož](../stash-worktree.md).
 
 Při `branch already exists` použij běžný `switch`, pokud chceš právě tuto větev, nebo zvol jiné jméno.
 

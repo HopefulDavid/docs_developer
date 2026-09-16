@@ -10,7 +10,9 @@ Git Flow odděluje přípravu příští verze od stabilní verze a oprav již v
 
 Model dává smysl například při plánovaných vydáních a souběžné podpoře více verzí.
 
-Není univerzálním pravidlem pro každý repozitář; i autor modelu doporučuje pro průběžně dodávané webové aplikace zvážit jednodušší tok. [Původní model a doplnění autora](https://nvie.com/posts/a-successful-git-branching-model/)
+Není univerzálním pravidlem pro každý repozitář.
+
+I autor modelu doporučuje pro průběžně dodávané webové aplikace zvážit jednodušší tok. [Původní model a doplnění autora](https://nvie.com/posts/a-successful-git-branching-model/)
 
 Pro jednodušší model nejprve porovnej [způsoby práce pro solo vývojáře](workflows.md).
 
@@ -26,9 +28,13 @@ Pro jednodušší model nejprve porovnej [způsoby práce pro solo vývojáře](
 
 ## Před použitím
 
-Pro vlastní projekt si zapiš názvy větví, způsob kontroly a vydávání; existující pravidla projektu mají přednost před tímto obecným příkladem.
+Pro vlastní projekt si zapiš názvy větví, způsob kontroly a vydávání.
 
-Příkazy předpokládají čistý pracovní strom, existující `main` a `develop` a oprávnění slučovat; chráněné větve slučuj prostřednictvím PR.
+Existující pravidla projektu mají přednost před tímto obecným příkladem.
+
+Příkazy předpokládají čistý pracovní strom, existující `main` a `develop` a oprávnění slučovat.
+
+Chráněné větve slučuj prostřednictvím PR.
 
 ## Praktické použití
 
@@ -41,7 +47,9 @@ git switch main
 git switch -c develop
 ```
 
-Tím začne vývojová větev ze stejného stavu jako stabilní; existující `develop` znovu nevytvářej.
+Tím začne vývojová větev ze stejného stavu jako stabilní.
+
+Existující `develop` znovu nevytvářej.
 
 ### Nová funkce
 
@@ -50,7 +58,9 @@ git switch develop
 git switch -c feature/nova-funkce
 ```
 
-Po implementaci vytvoř a otestuj commity; hotovou větev začleň:
+Po implementaci vytvoř a otestuj commity.
+
+Hotovou větev začleň:
 
 ```bash
 git switch develop
@@ -105,7 +115,9 @@ Oprava musí přijít i do dalšího vývoje, aby se chyba nevrátila v příšt
 
 `git log --graph --oneline --all -20` zobrazí návaznost větví a tagů.
 
-Lokální merge ani tag nejsou automaticky zveřejněné; publikování proveď podle pravidel týmu. [Git merge](https://git-scm.com/docs/git-merge), [git tag](https://git-scm.com/docs/git-tag)
+Lokální merge ani tag nejsou automaticky zveřejněné.
+
+Publikování proveď podle pravidel týmu. [Git merge](https://git-scm.com/docs/git-merge), [git tag](https://git-scm.com/docs/git-tag)
 
 ## Publikování a úklid
 

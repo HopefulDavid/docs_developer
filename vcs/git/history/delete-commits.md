@@ -4,13 +4,22 @@ description: "Vrácení zveřejněné chyby revertem a návrat místní větve p
 
 # Git – vrácení změny nebo místního commitu
 
-Revert vytvoří nový commit s opačnou změnou; reset přesune ukazatel aktuální větve a podle režimu změní index či soubory.
+Revert vytvoří nový commit s opačnou změnou.
+
+Reset přesune ukazatel aktuální větve a podle režimu změní index či soubory.
 
 Pro běžnou opravu zveřejněné historie použij revert, aby navazující práce zůstala dohledatelná.
 
 Pro nový začátek s jediným commitem použij samostatný postup [nahrazení celé vzdálené historie](replace-history.md).
 
-## Revert zveřejněné změny
+## Vyber podle stavu historie
+
+<a id="revert-zveřejněné-změny"></a>
+<a id="reset-vlastního-neodeslaného-commitu"></a>
+<a id="vrácení-merge-commitu"></a>
+<a id="obnova-po-chybném-resetu"></a>
+
+## [Zveřejněná změna: revert](#tab/undo-revert)
 
 Příklad funguje v PowerShellu i Bashi a předpokládá čistý strom a poslední commit, který není merge:
 
@@ -22,13 +31,34 @@ git show --stat HEAD
 
 Nejprve zkontroluješ vracenou změnu, potom potvrdíš zprávu nového commitu v editoru a prohlédneš výsledek.
 
-Místo `HEAD` lze zadat konkrétní starší commit; revert aplikuje jeho opačný rozdíl na současný kód, a proto může vyvolat konflikt.
+Místo `HEAD` lze zadat konkrétní starší commit.
 
-Po vyřešení použij `git add -- <soubor>` a `git revert --continue`; zrušení zajistí `git revert --abort`.
+Revert aplikuje jeho opačný rozdíl na současný kód, a proto může vyvolat konflikt.
+
+Po vyřešení použij `git add -- <soubor>` a `git revert --continue`.
+
+Zrušení zajistí `git revert --abort`.
 
 Otestuj funkčnost a nový commit odešli běžným pushem.
 
-## Reset vlastního neodeslaného commitu
+**Vrácení merge commitu**
+
+Merge má více rodičů a Git potřebuje vědět, kterou linii považuješ za hlavní.
+
+```text
+git show --no-patch --pretty=raw <merge-commit>
+git revert -m <číslo-rodiče> <merge-commit>
+```
+
+První příkaz ukáže pořadí rodičů.
+
+`-m 1` je správně jen tehdy, když první rodič odpovídá linii, kterou chceš zachovat.
+
+Vrácení merge ovlivní i pozdější pokusy znovu sloučit stejné předky.
+
+Opětovné zavedení práce může vyžadovat vrácení revertu nebo nové opravné commity.
+
+## [Místní commit: reset](#tab/undo-reset)
 
 Nejprve zachovej původní poslední commit:
 
@@ -59,24 +89,17 @@ git diff
 
 Původní obsah zůstane v pracovním stromu a můžeš ho znovu připravit po částech přes `git add -p`.
 
-Pro úplné zahazování souborů preferuj úzce zacílený [restore](../recovery.md); `--hard` není univerzální oprava Gitu.
+Pro úplné zahazování souborů preferuj úzce zacílený [restore](../recovery.md).
 
-## Vrácení merge commitu
+`--hard` není univerzální oprava Gitu.
 
-Merge má více rodičů a Git potřebuje vědět, kterou linii považuješ za hlavní.
+**Obnova po chybném resetu**
 
-```text
-git show --no-patch --pretty=raw <merge-commit>
-git revert -m <číslo-rodiče> <merge-commit>
-```
+Původní stav prohlédni přes `git show backup/pred-reset` a zachraň jej jako větev.
 
-První příkaz ukáže pořadí rodičů; `-m 1` je správně jen tehdy, když první rodič odpovídá linii, kterou chceš zachovat.
+Bez zálohy zkus [reflog](../recovery.md#záchrana-přes-reflog).
 
-Vrácení merge ovlivní i pozdější pokusy znovu sloučit stejné předky; opětovné zavedení práce může vyžadovat vrácení revertu nebo nové opravné commity.
-
-## Obnova po chybném resetu
-
-Původní stav prohlédni přes `git show backup/pred-reset` a zachraň jej jako větev; bez zálohy zkus [reflog](../recovery.md#záchrana-přes-reflog).
+***
 
 Ani reset, ani revert nevymažou tajemství ze všech starých kopií historie.
 
