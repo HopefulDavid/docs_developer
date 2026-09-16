@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Pandoc – převody dokumentů | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Pandoc – převody dokumentů | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Převody Markdownu, HTML, Wordu a PDF s volbou šablony.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/documentation/pandoc.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="pandoc--převody-dokumentů">Pandoc – převody dokumentů</h1>
+
+<p>Pandoc převádí strukturu dokumentu mezi formáty.</p>
+<p>Po převodu ověř také tabulky, obrázky a stránkování.</p>
+<h2 id="základní-použití">Základní použití</h2>
+<p>Nainstaluj Pandoc podle <a href="https://pandoc.org/installing.html">oficiálního postupu</a> a ověř <code>pandoc --version</code>.</p>
+<p>Příkazy spouštěj ve složce vstupního souboru:</p>
+<p><code>&lt;vstup&gt;</code> a <code>&lt;výstup&gt;</code> nahraď cestami k souborům v uvedených formátech.</p>
+<p>Příponu výstupu Pandoc používá při výběru formátu.</p>
+<table>
+<thead>
+<tr>
+<th>Převod</th>
+<th>Syntaxe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Markdown → DOCX</td>
+<td><code>pandoc &lt;vstup.md&gt; -o &lt;výstup.docx&gt;</code></td>
+</tr>
+<tr>
+<td>DOCX → Markdown a obrázky</td>
+<td><code>pandoc &lt;vstup.docx&gt; -t gfm --extract-media=&lt;složka-obrázků&gt; -o &lt;výstup.md&gt;</code></td>
+</tr>
+<tr>
+<td>Markdown → HTML</td>
+<td><code>pandoc &lt;vstup.md&gt; --standalone -o &lt;výstup.html&gt;</code></td>
+</tr>
+<tr>
+<td>HTML → Markdown</td>
+<td><code>pandoc &lt;vstup.html&gt; -t gfm -o &lt;výstup.md&gt;</code></td>
+</tr>
+<tr>
+<td>Markdown → EPUB</td>
+<td><code>pandoc &lt;vstup.md&gt; -o &lt;výstup.epub&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<p>Například <code>pandoc navod.md -o navod.docx</code> převede existující Markdown ve tvé pracovní složce do dokumentu Word.</p>
+<p>Jména souborů změň podle potřeby a zvol výstup, který můžeš vytvořit nebo přepsat.</p>
+<p><code>-o</code> určuje výstupní soubor, <code>-t gfm</code> zvolí GitHub Flavored Markdown a <code>--extract-media=media</code> uloží obrázky do složky <code>media</code>.</p>
+<p>Jména vstupu, výstupu a složky obrázků můžeš změnit, ale existující cílový soubor může být přepsán.</p>
+<p>Seznam dostupných formátů zobrazí <code>pandoc --list-input-formats</code> a <code>pandoc --list-output-formats</code>.</p>
+<h2 id="uprav-výstupní-formát">Uprav výstupní formát</h2>
+<p>Vyber požadovaný výstup a použij odpovídající příklad.</p>
+<p><a id="html-v-jednom-souboru"></a>
+<a id="styly-docx"></a>
+<a id="pdf"></a></p>
+<div class="tabGroup" id="tabgroup_1">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_1_pandoc-html" role="tab" aria-controls="tabpanel_1_pandoc-html" data-tab="pandoc-html" tabindex="0" aria-selected="true">HTML</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_1_pandoc-docx" role="tab" aria-controls="tabpanel_1_pandoc-docx" data-tab="pandoc-docx" tabindex="-1">Word DOCX</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_1_pandoc-pdf" role="tab" aria-controls="tabpanel_1_pandoc-pdf" data-tab="pandoc-pdf" tabindex="-1">PDF</a>
+</li>
+</ul>
+<section id="tabpanel_1_pandoc-html" role="tabpanel" data-tab="pandoc-html">
+
+<p><strong>HTML v jednom souboru</strong></p>
+<pre><code class="lang-text">pandoc dokument.md --standalone --embed-resources -o dokument.html
+</code></pre>
+<p><code>--standalone</code> přidává strukturu dokumentu.</p>
+<p>Teprve <code>--embed-resources</code> vkládá podporované prostředky do HTML.</p>
+<p>Starší <code>--self-contained</code> je zastaralý ekvivalent této kombinace.</p>
+</section>
+<section id="tabpanel_1_pandoc-docx" role="tabpanel" data-tab="pandoc-docx" aria-hidden="true" hidden="hidden">
+
+<p><strong>Referenční styly dokumentu</strong></p>
+<pre><code class="lang-text">pandoc dokument.md --reference-doc=styly.docx -o dokument.docx
+</code></pre>
+<p>Soubor <code>styly.docx</code> poskytuje referenční styly a vlastnosti dokumentu.</p>
+<p>Parametr <code>--template</code> není náhradou tohoto postupu.</p>
+</section>
+<section id="tabpanel_1_pandoc-pdf" role="tabpanel" data-tab="pandoc-pdf" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-text">pandoc dokument.md --pdf-engine=xelatex -o dokument.pdf
+</code></pre>
+<p>Příklad vyžaduje nainstalovaný XeLaTeX a používané fonty.</p>
+<p>PDF je výstupní formát, nikoli obecně podporovaný vstup pro převod PDF zpět na DOCX. <a href="https://pandoc.org/MANUAL.html">Manuál Pandocu</a></p>
+</section>
+</div>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

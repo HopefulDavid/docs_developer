@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Dart a Flutter – z&#225;loha a obnova bal&#237;čků pub | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Dart a Flutter – z&#225;loha a obnova bal&#237;čků pub | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Přenos Dart nebo Flutter projektu s celou pub cache a obnova uzamčen&#253;ch bal&#237;čků bez internetu.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/packages/dart.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="dart-a-flutter--záloha-a-obnova-balíčků-pub">Dart a Flutter – záloha a obnova balíčků pub</h1>
+
+<p>K offline obnově potřebuješ <strong>projekt s <code>pubspec.lock</code> a celou pub cache</strong>, tedy složku stažených balíčků.</p>
+<p>Postup je pro PowerShell a Dart 3.</p>
+<p>Na cíli použij stejnou verzi SDK, OS a architekturu.</p>
+<p>U Flutter projektu nahraď v příkazech <code>dart pub</code> za <code>flutter pub</code>, aby se použil Dart dodaný s Flutter SDK.</p>
+<h2 id="1-připrav-zálohu-s-internetem">1. Připrav zálohu s internetem</h2>
+<p>Vytvoř <code>zaloha-pub/projekt</code> jako kopii zdrojového projektu bez generovaných <code>.dart_tool</code> a <code>build</code>.</p>
+<p>Zachovej <code>pubspec.yaml</code>, <code>pubspec.lock</code>, celý workspace, případné overrides a místní <code>path:</code> závislosti v odpovídajících cestách.</p>
+<p>V této kopii projektu spusť:</p>
+<pre><code class="lang-powershell">$env:PUB_CACHE = Join-Path $PWD &quot;../pub-cache&quot;
+dart pub get --enforce-lockfile
+</code></pre>
+<p>První řádek zvolí sousední složku pro balíčky.</p>
+<p>Druhý ji naplní verzemi z lockfilu. <a href="https://dart.dev/tools/pub/environment-variables">PUB_CACHE</a>, <a href="https://dart.dev/tools/pub/cmd/pub-get">pub get</a></p>
+<p>Pokud projekt lockfile dosud nemá, proveď nejprve běžné <code>dart pub get</code> a vzniklý <code>pubspec.lock</code> uchovej.</p>
+<h2 id="2-přenes-celou-složku">2. Přenes celou složku</h2>
+<pre><code class="lang-text">zaloha-pub/
+  projekt/       zdroje, konfigurace a pubspec.lock
+  pub-cache/     celá naplněná cache
+</code></pre>
+<p>Kopíruj až po dokončení stahování a zachovej metadata, hashe i případné Git závislosti.</p>
+<p>Samotná podsložka <code>hosted</code> nemusí stačit.</p>
+<p>Přípravnou <code>.dart_tool</code> nepřenášej, protože mapování cest vytvoří pub na cíli znovu. <a href="https://dart.dev/tools/pub/private-files">Generované soubory</a></p>
+<p>Přilož výstup <code>dart --version</code> nebo <code>flutter --version</code> a archiv odpovídajícího SDK.</p>
+<h2 id="3-obnov-bez-internetu">3. Obnov bez internetu</h2>
+<p>Na cíli rozbal pracovní kopii zálohy a v jejím <code>projekt</code> spusť:</p>
+<pre><code class="lang-powershell">$env:PUB_CACHE = Join-Path $PWD &quot;../pub-cache&quot;
+dart pub get --offline --enforce-lockfile
+dart pub deps
+</code></pre>
+<p><code>--offline</code> použije místní cache a <code>--enforce-lockfile</code> zachová uzamčené verze i kontrolní hashe.</p>
+<p>Potom spusť <code>dart analyze</code>, běžnou aplikaci a její testy.</p>
+<p>Pro Flutter použij <code>flutter analyze</code> a <code>flutter test</code>.</p>
+<p>Nastavení <code>PUB_CACHE</code> platí pro aktuální terminál a procesy z něj spuštěné.</p>
+<p>Při další práci použij stejnou cestu také v novém terminálu či IDE.</p>
+<h2 id="chci-zálohovat-už-používanou-cache">Chci zálohovat už používanou cache</h2>
+<p>Místo nového stahování můžeš převzít celou stávající cache:</p>
+<table>
+<thead>
+<tr>
+<th>Prostředí</th>
+<th>Výchozí umístění</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows</td>
+<td><code>%LOCALAPPDATA%/Pub/Cache</code></td>
+</tr>
+<tr>
+<td>Linux a macOS</td>
+<td><code>~/.pub-cache</code></td>
+</tr>
+</tbody>
+</table>
+<p>Pokud máš nastavenou proměnnou <code>PUB_CACHE</code>, kopíruj adresář z ní.</p>
+<p>V PowerShellu ji zobrazíš přes <code>$env:PUB_CACHE</code>.</p>
+<p>Ulož jej jako <code>pub-cache</code> a obnovuj podle kroku 3.</p>
+<p>Pro více projektů nejprve obnov jejich balíčky a uchovej zdroje i lockfile každého z nich.</p>
+<h2 id="cli-nástroje">CLI nástroje</h2>
+<p>Seznam globálních nástrojů získáš přes <code>dart pub global list</code>.</p>
+<p>Pro snadnou offline obnovu použij samostatný projekt nástrojů, například s internetem:</p>
+<pre><code class="lang-bash">dart create -t console nastroje
+cd nastroje
+dart pub add --dev dhttpd:4.1.0
+dart run dhttpd --help
+</code></pre>
+<p>Tento projekt zazálohuj výše uvedenými kroky a po offline obnově spouštěj nástroj ze složky projektu přes <code>dart run</code>.</p>
+<p><code>dhttpd</code> a <code>4.1.0</code> nahraď svým nástrojem a verzí, pokud podporuje tento způsob spuštění.</p>
+<p><code>dart pub global activate</code> nemá přepínač <code>--offline</code>.</p>
+<p>S internetem lze použít například <code>dart pub global activate dhttpd 4.1.0</code>. <a href="https://dart.dev/tools/pub/cmd/pub-global">Pub global</a>, <a href="https://github.com/dart-lang/pub/blob/master/lib/src/command/global_activate.dart">implementace aktivace</a></p>
+<h2 id="co-potřebuje-navíc-flutter">Co potřebuje navíc Flutter</h2>
+<p>Pub cache obsahuje Dart balíčky, ale ne celý Flutter engine, Android SDK, Gradle/Maven cache, Xcode nebo CocoaPods.</p>
+<p>Před odpojením spusť <code>flutter precache</code> pro potřebné platformy, proveď jejich skutečný build a uchovej použitá SDK i platformní cache. <a href="https://docs.flutter.dev/reference/flutter-cli">Flutter CLI</a></p>
+<p>Podrobnosti vlastní <a href="../mobile/flutter/backup-and-restore.html">záloha a obnova Flutteru</a>.</p>
+<p>U Git závislostí uchovej připnutý commit v cache a nainstalovaný Git.</p>
+<p>Úplnost zálohy vždy ověř obnovením a spuštěním bez připojení.</p>
+<p>S internetem stačí projekt a <code>dart pub get --enforce-lockfile</code>, případně stejný příkaz přes <code>flutter pub</code>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

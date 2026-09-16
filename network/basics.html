@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>S&#237;ť – jak naj&#237;t př&#237;činu nefunkčn&#237;ho spojen&#237; | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="S&#237;ť – jak naj&#237;t př&#237;činu nefunkčn&#237;ho spojen&#237; | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="IP adresa, DNS, port, localhost a postupn&#233; ověřen&#237; nedostupn&#233; služby.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/network/basics.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="síť--jak-najít-příčinu-nefunkčního-spojení">Síť – jak najít příčinu nefunkčního spojení</h1>
+
+<p>Přístup k aplikaci vyžaduje správnou adresu, cestu sítí, dostupný port a funkční službu.</p>
+<p>Když tyto vrstvy ověřuješ postupně, poznáš, zda opravovat DNS, firewall, server nebo přihlášení.</p>
+<h2 id="co-znamená-adresa-služby">Co znamená adresa služby</h2>
+<pre><code class="lang-text">https://git.example.com:8443/projekty
+│       │               │    └─ cesta zpracovaná aplikací
+│       │               └────── TCP port serveru
+│       └────────────────────── název, který DNS přeloží na IP adresu
+└────────────────────────────── HTTPS: HTTP chráněné TLS
+</code></pre>
+<p>U běžného HTTPS bez uvedeného portu se používá <code>443</code> a u HTTP <code>80</code>.</p>
+<p>Doména sama neurčuje číslo portu a úspěšné DNS ještě neznamená dostupnou aplikaci.</p>
+<h2 id="adresy-se-kterými-se-vývojář-setká">Adresy, se kterými se vývojář setká</h2>
+<table>
+<thead>
+<tr>
+<th>Zápis</th>
+<th>Význam</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>127.0.0.1</code> a <code>::1</code></td>
+<td>Loopback: tento počítač, pro IPv4 a IPv6</td>
+</tr>
+<tr>
+<td><code>localhost</code></td>
+<td>Jméno místního počítače pro loopback</td>
+</tr>
+<tr>
+<td><code>0.0.0.0</code> při naslouchání</td>
+<td>Všechna místní IPv4 rozhraní, nikoli cílová adresa jiného počítače</td>
+</tr>
+<tr>
+<td><code>192.168.1.20</code></td>
+<td>Příklad soukromé IPv4 adresy v místní síti</td>
+</tr>
+<tr>
+<td><code>192.168.1.0/24</code></td>
+<td>Síť s 24 pevnými počátečními bity. Nejde o jeden konkrétní počítač</td>
+</tr>
+<tr>
+<td>Výchozí brána</td>
+<td>Router pro cíle mimo přímo připojené sítě</td>
+</tr>
+</tbody>
+</table>
+<p>Soukromé IPv4 rozsahy jsou <code>10.0.0.0/8</code>, <code>172.16.0.0/12</code> a <code>192.168.0.0/16</code>.</p>
+<p>Přístup do nich z jiné sítě vyžaduje odpovídající propojení, například VPN.</p>
+<p>NAT převádí adresy při průchodu routerem, ale sám službu na tvém počítači nezpřístupní lidem na internetu.</p>
+<p><code>localhost</code> uvnitř kontejneru označuje tento kontejner, nikoli automaticky hostitelský počítač.</p>
+<h2 id="postup-ve-windows">Postup ve Windows</h2>
+<p>V běžném PowerShellu nahraď název skutečnou službou a port jejím protokolem:</p>
+<pre><code class="lang-powershell">Resolve-DnsName -Name &quot;git.example.com&quot;
+Test-NetConnection -ComputerName &quot;git.example.com&quot; -Port 443
+</code></pre>
+<p>První příkaz ověřuje překlad názvu a druhý navázání TCP spojení.</p>
+<p><code>TcpTestSucceeded: True</code> ještě neověřuje heslo, certifikát ani obsah webu.</p>
+<h3 id="rozhodnutí-podle-výsledku">Rozhodnutí podle výsledku</h3>
+<table>
+<thead>
+<tr>
+<th>Výsledek</th>
+<th>Další kontrola</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DNS nevrátí adresu</td>
+<td>Přesný název, přidělené DNS a potřebná VPN</td>
+</tr>
+<tr>
+<td>DNS vrátí jinou než očekávanou adresu</td>
+<td>Správný resolver, hosts a síťové prostředí</td>
+</tr>
+<tr>
+<td>TCP port není dostupný</td>
+<td>Trasa, firewall, správný port a běh služby</td>
+</tr>
+<tr>
+<td>TCP funguje, HTTPS selže</td>
+<td>Certifikát, název serveru, čas počítače a TLS</td>
+</tr>
+<tr>
+<td>Web vrací 401 nebo 403</td>
+<td>Přihlášení a oprávnění aplikace</td>
+</tr>
+<tr>
+<td>Web vrací 500</td>
+<td>Logy serverové aplikace</td>
+</tr>
+</tbody>
+</table>
+<p>Ve Windows lze HTTP hlavičky orientačně načíst přes <code>curl.exe -I https://git.example.com</code>.</p>
+<p><code>.exe</code> odlišuje skutečný curl od historického PowerShell aliasu.</p>
+<p><code>-I</code> posílá metodu HEAD, kterou některé aplikace nepodporují, proto výsledné 405 samo neznamená nefunkční GET v prohlížeči.</p>
+<h2 id="je-místní-služba-skutečně-spuštěná">Je místní služba skutečně spuštěná?</h2>
+<p>Pro místní vývojový port <code>8080</code>:</p>
+<pre><code class="lang-powershell">Get-NetTCPConnection -LocalPort 8080 -State Listen |
+    Select-Object LocalAddress, LocalPort, OwningProcess
+</code></pre>
+<p>Výpis ukáže adresu naslouchání a ID procesu.</p>
+<p>Prázdný výsledek znamená, že tento TCP port v okamžiku kontroly nenaslouchá.</p>
+<p>Služba na <code>127.0.0.1</code> je dostupná jen místně.</p>
+<p>Změna na všechna rozhraní vyžaduje i promyšlené síťové oprávnění a nastavení firewallu.</p>
+<p><code>ping</code> ověřuje ICMP, nikoli HTTP či SSH port.</p>
+<p>Blokovaný ping nevylučuje funkční aplikaci.</p>
+<h2 id="konfigurace-a-trasa">Konfigurace a trasa</h2>
+<table>
+<thead>
+<tr>
+<th>Příkaz ve Windows</th>
+<th>Co zjistí</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ipconfig /all</code></td>
+<td>Adresy rozhraní, brány a DNS</td>
+</tr>
+<tr>
+<td><code>route print</code></td>
+<td>Směrovací tabulku IPv4 a IPv6</td>
+</tr>
+<tr>
+<td><code>tracert &lt;server&gt;</code></td>
+<td>Dostupné odpovědi po trase. Některé uzly nemusejí odpovídat</td>
+</tr>
+</tbody>
+</table>
+<p>Diagnostiku prováděj vůči konkrétní službě, ke které máš přístup, a veřejně nesdílej celý interní síťový výpis.</p>
+<p>Navazují <a href="vpn.html">VPN</a>, <a href="ssh.html">SSH</a> a <a href="certificates.html">certifikáty HTTPS</a>.</p>
+<p>Zdroje: <a href="https://learn.microsoft.com/en-us/powershell/module/nettcpip/test-netconnection">Test-NetConnection</a>, <a href="https://www.rfc-editor.org/rfc/rfc1918">soukromé adresy RFC 1918</a>, <a href="https://curl.se/docs/manpage.html">curl</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

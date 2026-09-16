@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Git – spojen&#237; commitů do jednoho | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git – spojen&#237; commitů do jednoho | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Spojen&#237; vlastn&#237;ch pracovn&#237;ch commitů nebo squash až při sloučen&#237; do c&#237;le.">
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/history/squash-branch-commits.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git--spojení-commitů-do-jednoho">Git – spojení commitů do jednoho</h1>
+
+<p>Squash se hodí, když několik pracovních commitů představuje jednu ucelenou změnu.</p>
+<p>Nejdříve zvol, zda chceš přepsat vlastní pracovní větev, nebo vytvořit souhrnný commit až při začlenění do cíle.</p>
+<p>Pokud má celá vzdálená větev začít jediným kořenovým commitem bez původních předků, použij <a href="replace-history.html">nahrazení celé historie</a>.</p>
+<h2 id="vyber-rozsah-spojení">Vyber rozsah spojení</h2>
+<p><a id="nejmenší-zásah-squash-při-sloučení"></a>
+<a id="úprava-vlastních-posledních-commitů"></a>
+<a id="celá-vlastní-větev-od-společného-předka"></a>
+<a id="ověření-a-návrat-po-interaktivním-rebase"></a></p>
+<div class="tabGroup" id="tabgroup_1">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_1_squash-merge" role="tab" aria-controls="tabpanel_1_squash-merge" data-tab="squash-merge" tabindex="0" aria-selected="true">Při sloučení</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_1_squash-rebase" role="tab" aria-controls="tabpanel_1_squash-rebase" data-tab="squash-rebase" tabindex="-1">Poslední vlastní commity</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_1_squash-branch" role="tab" aria-controls="tabpanel_1_squash-branch" data-tab="squash-branch" tabindex="-1">Celá vlastní větev</a>
+</li>
+</ul>
+<section id="tabpanel_1_squash-merge" role="tabpanel" data-tab="squash-merge">
+
+<p><strong>Nejmenší zásah: squash při sloučení</strong></p>
+<p>Použij <a href="../merging.html?tabs=git-merge-squash#squash-jedna-ucelen%C3%A1-zm%C4%9Bna-v-c%C3%ADli"><code>git merge --squash</code></a> nebo možnost <strong>Squash and merge</strong> na hostingu.</p>
+<p>Zdrojová větev si ponechá původní commity a cílová dostane jeden souhrnný.</p>
+<p>Není potřeba přepisovat vzdálenou pracovní větev.</p>
+</section>
+<section id="tabpanel_1_squash-rebase" role="tabpanel" data-tab="squash-rebase" aria-hidden="true" hidden="hidden">
+
+<p>Příklad je pro PowerShell i Bash, čistý strom a <strong>tři poslední vlastní lineární commity</strong>, které ještě nesdílíš.</p>
+<pre><code class="lang-bash">git log --oneline -5
+git branch backup/pred-squash
+git rebase -i HEAD~3
+</code></pre>
+<p><code>HEAD~3</code> označuje rodiče nejstaršího z těchto tří commitů.</p>
+<p>Ověř počet a rozsah předem.</p>
+<p>V otevřeném seznamu ponech první řádek jako <code>pick</code> a další dva změň na <code>squash</code>:</p>
+<pre><code class="lang-text">pick   &lt;id-první-změny&gt; Přidání základu hledání
+squash &lt;id-druhé-změny&gt; Doplnění filtrování
+squash &lt;id-třetí-změny&gt; Testy hledání
+</code></pre>
+<p>Zástupná ID nekopíruj: editor už obsahuje skutečné commity a měníš jen slovo na začátku řádku.</p>
+<p>Po uložení zadej jednu výslednou zprávu.</p>
+<p><code>fixup</code> místo <code>squash</code> by zahodil zprávu připojovaného commitu.</p>
+<p>Pro rozsah zahrnující úplně první commit repozitáře se používá <code>git rebase -i --root</code>.</p>
+<p><strong>Ověření a návrat po interaktivním rebase</strong></p>
+<pre><code class="lang-bash">git diff backup/pred-squash HEAD
+git log --oneline -5
+</code></pre>
+<p>Rozdíl konečného obsahu má být prázdný a log má ukazovat zamýšlený počet nových commitů.</p>
+<p>Pokud rebase teprve probíhá, <code>git rebase --abort</code> jej zruší.</p>
+<p>Po dokončení uchovává původní historii záložní větev.</p>
+<p>Konflikt řeš podle <a href="../merging.html">návodu pro rebase</a>, výsledek otestuj a případnou již zveřejněnou vlastní větev aktualizuj jen podle <a href="fix-commits.html#publikov%C3%A1n%C3%AD-p%C5%99epsan%C3%A9-vlastn%C3%AD-v%C4%9Btve">postupu s lease</a>.</p>
+</section>
+<section id="tabpanel_1_squash-branch" role="tabpanel" data-tab="squash-branch" aria-hidden="true" hidden="hidden">
+
+<p><strong>Spojení od společného předka</strong></p>
+<p>Pokud chceš spojit všechny vlastní změny větve do jednoho commitu bez ručního počítání, lze použít původní postup se soft resetem.</p>
+<p>Příklad je pro PowerShell, čistou vlastní větev <code>feature/hledani</code> a jediný společný základ s <code>origin/main</code>.</p>
+<p>Nemá sloužit k neřízenému přepisování sdílené integrační větve.</p>
+<pre><code class="lang-powershell">git switch feature/hledani
+git fetch origin
+git branch --no-track backup/pred-soft-squash
+$base = git merge-base HEAD origin/main
+git log --oneline &quot;$base..HEAD&quot;
+git reset --soft $base
+git diff --cached --stat
+git commit -m &quot;feat: přidává hledání&quot;
+git diff backup/pred-soft-squash HEAD
+</code></pre>
+<p>Nejdříve prohlédni vypsaný rozsah.</p>
+<p>Soft reset ponechá aktuální index a soubory, takže nový commit zachytí jejich výsledný rozdíl proti společnému předku.</p>
+<p>Poslední diff má být prázdný.</p>
+<p>Operace nepřebírá nové změny z <code>origin/main</code>, které vznikly po rozvětvení.</p>
+<p>Pokud větev obsahuje složité merge nebo má více společných základů, použij raději squash při začlenění do cíle.</p>
+<p>Již publikovaná vlastní větev vyžaduje zachytit vzdálený stav <strong>před resetem</strong> a následně použít <a href="fix-commits.html#publikov%C3%A1n%C3%AD-p%C5%99epsan%C3%A9-vlastn%C3%AD-v%C4%9Btve">publikování s lease</a>.</p>
+</section>
+</div>
+
+<p>Zdroje: <a href="https://git-scm.com/docs/git-rebase#_interactive_mode">interaktivní rebase</a>, <a href="https://git-scm.com/docs/git-merge">git merge</a>, <a href="https://git-scm.com/docs/git-reset">git reset</a>, <a href="https://git-scm.com/docs/git-merge-base">git merge-base</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

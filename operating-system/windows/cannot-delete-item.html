@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Windows – soubor nebo složka nejde odstranit | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Windows – soubor nebo složka nejde odstranit | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Rozlišen&#237; zamčen&#233;ho souboru, opr&#225;vněn&#237; a chybn&#233; cesty před přesn&#253;m odstraněn&#237;m.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/operating-system/windows/cannot-delete-item.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="windows--soubor-nebo-složka-nejde-odstranit">Windows – soubor nebo složka nejde odstranit</h1>
+
+<p>Chybové hlášení nejprve použij k určení příčiny.</p>
+<p>Větší síla mazacího příkazu neřeší všechny případy.</p>
+<h2 id="rozhodni-podle-projevu">Rozhodni podle projevu</h2>
+<table>
+<thead>
+<tr>
+<th>Projev</th>
+<th>První krok</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>„Položka nebyla nalezena“</td>
+<td>Obnov Průzkumník přes F5 a ověř skutečný název i nadřazenou cestu</td>
+</tr>
+<tr>
+<td>Soubor používá jiný proces</td>
+<td>Zavři danou aplikaci a terminály v mazané složce</td>
+</tr>
+<tr>
+<td>Přístup odepřen</td>
+<td>Ověř vlastníka a oprávnění k přesné položce</td>
+</tr>
+<tr>
+<td>Položka se vrací</td>
+<td>Zjisti, která aplikace nebo synchronizace ji vytváří</td>
+</tr>
+<tr>
+<td>Chyba disku</td>
+<td>Nejprve chraň data a řeš úložiště</td>
+</tr>
+</tbody>
+</table>
+<p>Následující příkazy mažou přímo, bez přesunu do Koše.</p>
+<p>Celou složku maž pouze tehdy, když je jejím zamýšleným odstraněním i veškerý obsah.</p>
+<h2 id="vyber-nástroj-pro-odstranění">Vyber nástroj pro odstranění</h2>
+<p>Pokračuj pouze ve zvoleném shellu a ověř cíl přímo v něm.</p>
+<p><a id="powershell-kontrola-a-odstranění"></a>
+<a id="cmd-rozlišení-souboru-a-složky"></a>
+<a id="cmd-problematický-název-nebo-dlouhá-cesta"></a></p>
+<div class="tabGroup" id="tabgroup_1">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_1_remove-powershell" role="tab" aria-controls="tabpanel_1_remove-powershell" data-tab="remove-powershell" tabindex="0" aria-selected="true">PowerShell</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_1_remove-cmd" role="tab" aria-controls="tabpanel_1_remove-cmd" data-tab="remove-cmd" tabindex="-1">CMD</a>
+</li>
+</ul>
+<section id="tabpanel_1_remove-powershell" role="tabpanel" data-tab="remove-powershell">
+
+<p>Nahraď cestu skutečnou položkou a nejprve ji pouze prohlédni:</p>
+<pre><code class="lang-powershell">$itemPath = 'C:\Data\Ukazka\ProblemovaSlozka'
+Get-Item -LiteralPath $itemPath -Force |
+    Select-Object FullName, PSIsContainer, Attributes
+</code></pre>
+<p><code>PSIsContainer: True</code> označuje adresář.</p>
+<p>Při chybě výpisu nepokračuj s odhadnutým názvem.</p>
+<p>Pro adresář ověř také obsah a náhled:</p>
+<pre><code class="lang-powershell">Get-ChildItem -LiteralPath $itemPath -Force
+Remove-Item -LiteralPath $itemPath -Recurse -WhatIf
+</code></pre>
+<p><code>-WhatIf</code> nic neodstraní a <code>-LiteralPath</code> chápe název doslova včetně hranatých závorek.</p>
+<p>Po potvrzení správné úplné cesty použij:</p>
+<pre><code class="lang-powershell">Remove-Item -LiteralPath $itemPath -Recurse -Confirm
+</code></pre>
+<p>Pro jediný soubor nastav jeho přesnou cestu a vynech <code>-Recurse</code>.</p>
+<p>Při potřebě odstranit skrytou položku nebo soubor jen pro čtení lze přidat <code>-Force</code>, který však neobchází ACL oprávnění.</p>
+</section>
+<section id="tabpanel_1_remove-cmd" role="tabpanel" data-tab="remove-cmd" aria-hidden="true" hidden="hidden">
+
+<p><strong>Rozlišení souboru a složky</strong></p>
+<p>Tuto alternativu spouštěj v <strong>CMD</strong>, protože <code>del</code> a <code>rd</code> jsou v PowerShellu aliasy jiného příkazu.</p>
+<pre><code class="lang-cmd">cd /d &quot;C:\Data\Ukazka&quot;
+dir /a /x
+</code></pre>
+<p><code>/a</code> zahrne skryté položky a <code>/x</code> ukáže existující krátké názvy 8.3.</p>
+<p><code>&lt;DIR&gt;</code> ve výpisu znamená adresář.</p>
+<table>
+<thead>
+<tr>
+<th>Syntaxe CMD</th>
+<th>Účinek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>del /p &quot;&lt;soubor&gt;&quot;</code></td>
+<td>Odstraní přesný soubor s potvrzením</td>
+</tr>
+<tr>
+<td><code>del /f /p &quot;&lt;soubor&gt;&quot;</code></td>
+<td>Zahrne i soubor jen pro čtení</td>
+</tr>
+<tr>
+<td><code>rd &quot;&lt;prázdná-složka&gt;&quot;</code></td>
+<td>Odstraní prázdnou složku</td>
+</tr>
+<tr>
+<td><code>rd /s &quot;&lt;složka&gt;&quot;</code></td>
+<td>Po potvrzení odstraní celou složku i obsah</td>
+</tr>
+</tbody>
+</table>
+<p>Před <code>rd /s</code> prohlédni obsah přes <code>dir /a &quot;&lt;složka&gt;&quot;</code> a přejdi v terminálu mimo odstraňovanou složku.</p>
+<p>Nepřebírej název typu <code>PROBLE~1</code> z ukázky.</p>
+<p>Použij pouze skutečný krátký název z výpisu, pokud vůbec existuje.</p>
+<p><strong>Problematický název nebo dlouhá cesta</strong></p>
+<p>Úplná cesta s předponou <code>\\?\</code> může pomoci u nástrojem podporované rozšířené cesty, například názvu končícího tečkou.</p>
+<pre><code class="lang-cmd">dir /a &quot;\\?\C:\Data\Ukazka&quot;
+dir /a &quot;\\?\C:\Data\Ukazka\ProblemovaSlozka.&quot;
+</code></pre>
+<p>Příklad končí tečkou, která je součástí skutečného názvu.</p>
+<p>Ověř přesný výpis, nic automaticky neopravuj ani nezkracuj.</p>
+<p>Jen pro takto ověřenou celou složku:</p>
+<pre><code class="lang-cmd">rd /s &quot;\\?\C:\Data\Ukazka\ProblemovaSlozka.&quot;
+</code></pre>
+<p>Předpona nezvyšuje oprávnění a vyžaduje úplnou cestu bez relativních <code>.</code> a <code>..</code>.</p>
+<p>Pro samostatný soubor použij <code>del /p</code> s jeho přesnou rozšířenou cestou.</p>
+</section>
+</div>
+<h2 id="ověření-výsledku">Ověření výsledku</h2>
+<p>Znovu vypiš nadřazenou složku stejným nástrojem a obnov Průzkumník přes F5.</p>
+<p>Úspěch znamená, že cílová položka zmizela a ostatní data zůstala.</p>
+<p>Při další chybě postupuj podle jejího přesného znění.</p>
+<p>Zdroje: <a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/remove-item">Remove-Item</a>, <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/rd">rd</a>, <a href="https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file">Windows cesty</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

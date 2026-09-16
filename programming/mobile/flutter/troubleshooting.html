@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Řešen&#237; probl&#233;mů ve Flutteru | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Řešen&#237; probl&#233;mů ve Flutteru | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Diagnostika chyb SDK, bal&#237;čků, zař&#237;zen&#237; a sestaven&#237;.">
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/mobile/flutter/troubleshooting.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="řešení-problémů-ve-flutteru">Řešení problémů ve Flutteru</h1>
+
+<p>Nejprve rozliš problém prostředí, rozložení a statické analýzy.</p>
+<p>Každá oblast má jiné ověření.</p>
+<h2 id="automatické-zmenšení-textu-bez-doplňků">Automatické zmenšení textu bez doplňků</h2>
+<p>Tento fragment patří do rozhraní s omezenou šířkou, například do těla <code>Scaffold</code>:</p>
+<pre><code class="lang-dart">const Row(
+  children: [
+    Expanded(
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        alignment: Alignment.centerLeft,
+        child: Text('Celková cena objednávky: 1 250 Kč'),
+      ),
+    ),
+  ],
+)
+</code></pre>
+<p><code>Expanded</code> zde patří přímo do <code>Row</code>.</p>
+<p>Mimo <code>Row</code>, <code>Column</code> nebo <code>Flex</code> jej nelze libovolně vložit. <a href="https://api.flutter.dev/flutter/widgets/Expanded-class.html">Expanded</a></p>
+<p>Pro běžný delší text zvaž zalamování místo zmenšování, aby zůstal čitelný i při zvětšeném systémovém písmu.</p>
+<h2 id="pravidlo-no_logic_in_create_state">Pravidlo no_logic_in_create_state</h2>
+<p><code>createState</code> má vrátit novou instanci stavu bez další logiky.</p>
+<p>Hodnoty widgetu čti ve stavu přes <code>widget</code>.</p>
+<p>Jednorázovou inicializaci umísti podle její závislosti do příslušné metody životního cyklu, například <code>initState</code>.</p>
+<p>Pravidlo proto neřeš plošným vypnutím linteru. <a href="https://dart.dev/tools/linter-rules/no_logic_in_create_state">Význam pravidla</a></p>
+<h2 id="building-with-plugins-requires-symlink-support">Building with plugins requires symlink support</h2>
+<p>Ve Windows otevři nastavení vývojářů přes <code>Win+R</code> → <code>ms-settings:developers</code> a povol <strong>Developer Mode</strong>, pokud to dovolují zásady počítače.</p>
+<p>Potom opakuj sestavení. <a href="https://learn.microsoft.com/en-us/windows/apps/get-started/enable-your-device-for-development">Režim pro vývojáře ve Windows</a></p>
+<h2 id="závislosti-nebo-zařízení-nejsou-dostupné">Závislosti nebo zařízení nejsou dostupné</h2>
+<p>Spusť <code>flutter doctor -v</code>, <code>flutter devices</code> a podle konkrétní chyby oprav <a href="setup-and-configuration.html">instalaci</a>.</p>
+<p>Při chybě obnovy balíčků zkontroluj výstup <code>flutter pub get</code>.</p>
+<p>Mazání celého projektu není diagnostický krok.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

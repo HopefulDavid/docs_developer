@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Entity Framework Core – prvn&#237; datab&#225;ze a migrace | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Entity Framework Core – prvn&#237; datab&#225;ze a migrace | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Mapov&#225;n&#237; .NET objektů na datab&#225;zi a ř&#237;zen&#237; změn pomoc&#237; migrac&#237;.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/database/entity-framework.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="entity-framework-core--první-databáze-a-migrace">Entity Framework Core – první databáze a migrace</h1>
+
+<p>EF Core mapuje model .NET na databázi, překládá podporované LINQ dotazy a sleduje změny entit.</p>
+<h2 id="funkční-minimum-se-sqlite">Funkční minimum se SQLite</h2>
+<p>Příklad používá .NET 10, EF Core 10 a místní soubor SQLite, takže nepotřebuje databázový server.</p>
+<pre><code class="lang-powershell">dotnet new console -n EfDemo -f net10.0
+cd EfDemo
+dotnet add package Microsoft.EntityFrameworkCore.Sqlite --version 10.0.12
+dotnet add package Microsoft.EntityFrameworkCore.Design --version 10.0.12
+dotnet new tool-manifest
+dotnet tool install dotnet-ef --version 10.0.12
+</code></pre>
+<p>Příklad připíná ověřenou verzi 10.0.12.</p>
+<p>Při aktualizaci změň společně provider, Design i nástroj a znovu ověř migrace.</p>
+<p>Provider musí podporovat zvolenou hlavní verzi EF Core. <a href="https://learn.microsoft.com/en-us/ef/core/get-started/overview/first-app">První aplikace</a>, <a href="https://learn.microsoft.com/en-us/ef/core/providers/">Providery</a></p>
+<p>Nahraď <code>Program.cs</code>:</p>
+<pre><code class="lang-csharp">using Microsoft.EntityFrameworkCore;
+
+await using var db = new AppDbContext();
+db.Notes.Add(new Note { Text = &quot;První poznámka&quot; });
+await db.SaveChangesAsync();
+
+foreach (var note in await db.Notes.AsNoTracking().OrderBy(n =&gt; n.Id).ToListAsync())
+{
+    Console.WriteLine($&quot;{note.Id}: {note.Text}&quot;);
+}
+
+/// &lt;summary&gt;Databázový kontext ukázky s lokálním úložištěm SQLite.&lt;/summary&gt;
+public sealed class AppDbContext : DbContext
+{
+    /// &lt;summary&gt;Poznámky uložené v databázi.&lt;/summary&gt;
+    public DbSet&lt;Note&gt; Notes =&gt; Set&lt;Note&gt;();
+
+    /// &lt;inheritdoc/&gt;
+    protected override void OnConfiguring(DbContextOptionsBuilder options)
+        =&gt; options.UseSqlite(&quot;Data Source=notes.db&quot;);
+}
+
+/// &lt;summary&gt;Jedna uložená poznámka.&lt;/summary&gt;
+public sealed class Note
+{
+    /// &lt;summary&gt;Databázový identifikátor.&lt;/summary&gt;
+    public int Id { get; set; }
+
+    /// &lt;summary&gt;Text poznámky.&lt;/summary&gt;
+    public string Text { get; set; } = &quot;&quot;;
+}
+</code></pre>
+<h2 id="vytvoření-schématu">Vytvoření schématu</h2>
+<pre><code class="lang-powershell">dotnet build
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+dotnet run
+</code></pre>
+<p>Očekávej soubor <code>notes.db</code> a vypsanou poznámku.</p>
+<p>Každé další spuštění přidá další řádek.</p>
+<p>Před aplikací migrace přečti její operace <code>Up</code> a <code>Down</code>, zvlášť pokud mění existující data. <a href="https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/managing">Správa migrací</a></p>
+<h2 id="běžná-správa">Běžná správa</h2>
+<p><code>&lt;migrace&gt;</code> je název nové migrace, nebo existující migrace z výpisu podle konkrétního řádku.</p>
+<table>
+<thead>
+<tr>
+<th>Záměr</th>
+<th>Syntaxe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Seznam migrací</td>
+<td><code>dotnet ef migrations list</code></td>
+</tr>
+<tr>
+<td>Nová změna modelu</td>
+<td><code>dotnet ef migrations add &lt;migrace&gt;</code></td>
+</tr>
+<tr>
+<td>Zrušení poslední dosud neaplikované migrace</td>
+<td><code>dotnet ef migrations remove</code></td>
+</tr>
+<tr>
+<td>Nastavení databáze na konkrétní migraci</td>
+<td><code>dotnet ef database update &lt;migrace&gt;</code></td>
+</tr>
+<tr>
+<td>Obnova lokálního nástroje z manifestu</td>
+<td><code>dotnet tool restore</code></td>
+</tr>
+</tbody>
+</table>
+<p>Například <code>dotnet ef migrations add AddNotes</code> připraví migraci pojmenovanou <code>AddNotes</code>.</p>
+<p>Teprve <code>dotnet ef database update AddNotes</code> ji aplikuje na nakonfigurovanou databázi.</p>
+<p>Před aktualizací ověř connection string a vytvoř zálohu dat.</p>
+<p>Výběr starší migrace může provést její kroky Down a odstranit data.</p>
+<p>Cílová migrace může znamenat i návrat zpět a ztrátu dat.</p>
+<p>Aplikovanou sdílenou migraci neopravuj smazáním její historie. <a href="https://learn.microsoft.com/en-us/ef/core/cli/dotnet">CLI EF Core</a></p>
+<h2 id="použití-v-aplikaci">Použití v aplikaci</h2>
+<p>Pro SQL Server změň provider a konfiguraci připojení podle cílového prostředí.</p>
+<p>Jednu instanci <code>DbContext</code> nesdílej mezi souběžnými operacemi.</p>
+<p>Výkon posuzuj podle generovaných SQL dotazů, projekce sloupců a objemu načtených dat. <a href="https://learn.microsoft.com/en-us/ef/core/dbcontext-configuration/">Životnost DbContext</a></p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

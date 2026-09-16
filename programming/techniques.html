@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>V&#253;vojov&#233; metodiky a konvence | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="V&#253;vojov&#233; metodiky a konvence | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Organizace v&#253;voje, pojmenov&#225;n&#237; a rozhodov&#225;n&#237; o struktuře k&#243;du.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/techniques.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="vývojové-metodiky-a-konvence">Vývojové metodiky a konvence</h1>
+
+<p>Metodika pomáhá týmu organizovat práci.</p>
+<p>Konvence sjednocuje podobu kódu a prototyp ověřuje nápad před větší investicí.</p>
+<p>Tyto postupy řeší různé problémy a mohou se používat společně.</p>
+<h2 id="vývojové-metodiky">Vývojové metodiky</h2>
+<p>Nejprve si ujasni, jak často se mění požadavky, kdo rozhoduje o prioritách a podle čeho poznáte hotový výsledek.</p>
+<table>
+<thead>
+<tr>
+<th>Přístup</th>
+<th>Jak funguje</th>
+<th>Co vyžaduje v praxi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scrum</td>
+<td>Tým pracuje za společným cílem ve sprintech dlouhých nejvýše jeden měsíc</td>
+<td>Product Ownera, Scrum Mastera, vývojáře, průběžnou kontrolu výsledku a společnou Definition of Done</td>
+</tr>
+<tr>
+<td>Kanban</td>
+<td>Práce prochází viditelným tokem a tým omezuje počet současně rozpracovaných položek</td>
+<td>Jasné podmínky přechodu mezi sloupci, WIP limity a sledování doby průchodu</td>
+</tr>
+<tr>
+<td>Sekvenční plánování</td>
+<td>Analýza, návrh, implementace a ověření mají navazující výstupy</td>
+<td>Řízení změn a zpětnou vazbu i před závěrečným testováním</td>
+</tr>
+</tbody>
+</table>
+<p>Scrum je jedním z agilních rámců, nikoli synonymem agility.</p>
+<p>Daily Scrum slouží vývojářům k úpravě plánu směrem k cíli sprintu, není to povinný reporting vedoucímu.</p>
+<p>Sprint Review kontroluje výsledek se zainteresovanými lidmi, retrospektiva zlepšuje způsob spolupráce.</p>
+<p>Přesné odpovědnosti a události definuje <a href="https://scrumguides.org/scrum-guide.html">Scrum Guide</a>.</p>
+<p>Pevný termín sám o sobě nevylučuje Scrum ani Kanban.</p>
+<p>Rozhodující je způsob plánování rozsahu a práce s nejistotou.</p>
+<h2 id="praktické-použití-malá-týmová-změna">Praktické použití: malá týmová změna</h2>
+<ol>
+<li>Popiš výsledek z pohledu uživatele, například „objednávku lze vyhledat podle čísla“.</li>
+<li>Dohodni kritéria: oprávněný uživatel najde existující objednávku a pro neexistující číslo dostane srozumitelnou zprávu.</li>
+<li>Rozděl práci na ověřitelné části a zviditelni ji na tabuli <strong>Připraveno → Rozpracováno → Kontrola → Hotovo</strong>.</li>
+<li>Pro tříčlenný tým lze zkusit limit dvou rozpracovaných položek, aby někdo mohl pomáhat dokončovat kontrolu.</li>
+<li>Po dodání ověř skutečné použití a uprav pravidla podle zjištěných překážek.</li>
+</ol>
+<p>Limit dvě je výchozí experiment pro uvedený tým, nikoli univerzální doporučení.</p>
+<p>Hotovo musí zahrnovat potřebné testy, kontrolu a dokumentaci.</p>
+<p>Samotné napsání kódu nemusí být dodanou funkcí.</p>
+<h2 id="rychlé-prototypování">Rychlé prototypování</h2>
+<p>Prototyp odpovídá na konkrétní otázku, například zda hráč pochopí ovládání nebo zda zvolená knihovna zvládne požadovaný formát.</p>
+<p>Stanov otázku, časový limit a měřitelný výsledek, vytvoř nejmenší ověřitelnou variantu a vyzkoušej ji s reálným vstupem.</p>
+<p>U prototypu hry lze použít jednoduché tvary místo finální grafiky, pokud právě grafika není předmětem ověření.</p>
+<p>Před převzetím do produktu prověř chybové stavy, bezpečnost a údržbu.</p>
+<p>Rychlý experiment automaticky nesplňuje podmínky produkčního kódu.</p>
+<h2 id="bem-pojmenování-css-tříd">BEM: pojmenování CSS tříd</h2>
+<p>BEM rozlišuje samostatný <strong>blok</strong>, jeho <strong>prvek</strong> a <strong>modifikátor</strong> vzhledu nebo stavu.</p>
+<p>Následující tlačítko má základní třídu i modifikátor, který pouze mění barvu.</p>
+<pre><code class="lang-html">&lt;button class=&quot;button button--primary&quot; type=&quot;button&quot;&gt;
+  &lt;span class=&quot;button__label&quot;&gt;Uložit změny&lt;/span&gt;
+&lt;/button&gt;
+</code></pre>
+<pre><code class="lang-css">/* Blok vlastní společný vzhled všech tlačítek. */
+.button { padding: 0.6rem 1rem; border: 1px solid currentColor; }
+/* Prvek patří k bloku button. */
+.button__label { font-weight: 600; }
+/* Modifikátor se používá společně se základní třídou. */
+.button--primary { color: white; background: #175ba5; }
+</code></pre>
+<p>Názvy a barvy můžeš změnit, zachovej však vztahy <code>blok__prvek</code> a <code>blok--modifikátor</code> v HTML i CSS.</p>
+<p>BEM nepřidává chování tlačítka ani nenahrazuje sémantické HTML.</p>
+<p>Konvenci popisuje <a href="https://github.com/getbem/getbem.github.io/blob/master/src/pages/naming.mdx">archivovaná dokumentace GetBEM</a>.</p>
+<h2 id="konvence-pojmenování-v-kódu">Konvence pojmenování v kódu</h2>
+<table>
+<thead>
+<tr>
+<th>Záměr</th>
+<th>Příklad</th>
+<th>Proč pomáhá</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Popsat účel</td>
+<td><code>userRepository</code> místo <code>ur</code></td>
+<td>Čtenář nemusí odhadovat zkratku</td>
+</tr>
+<tr>
+<td>Rozpoznat pravdivostní hodnotu</td>
+<td><code>isAvailable</code>, <code>hasAccess</code></td>
+<td>Název lze číst jako otázku</td>
+</tr>
+<tr>
+<td>Vyjádřit činnost</td>
+<td><code>calculateTotalPrice()</code></td>
+<td>Je zřejmé, co funkce provádí</td>
+</tr>
+<tr>
+<td>Rozlišit kolekci</td>
+<td><code>orders</code></td>
+<td>Název naznačuje více položek</td>
+</tr>
+<tr>
+<td>Pojmenovat rozhodnutí</td>
+<td><code>maxRetries</code></td>
+<td>Limit má význam a lze jej vysvětlit</td>
+</tr>
+</tbody>
+</table>
+<p>Styl jako <code>camelCase</code>, <code>PascalCase</code> nebo <code>snake_case</code> přebírej z jazyka a projektu, nemíchej je nahodile.</p>
+<p>Důvod netriviálního omezení patří do <a href="code-comments.html">komentáře</a>, samotný název konstanty jej nevysvětlí.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

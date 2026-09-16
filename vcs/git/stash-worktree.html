@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Git – přerušen&#237; pr&#225;ce, stash a worktree | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git – přerušen&#237; pr&#225;ce, stash a worktree | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Dočasn&#233; odložen&#237; souborů nebo pr&#225;ce na druh&#233; větvi v samostatn&#233; složce.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/stash-worktree.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git--přerušení-práce-stash-a-worktree">Git – přerušení práce, stash a worktree</h1>
+
+<p>Pokud potřebuješ opravit jinou věc uprostřed rozpracované změny, můžeš ji uložit commitem, odložit do stashe nebo otevřít druhou pracovní složku.</p>
+<h2 id="vyber-podle-potřeby">Vyber podle potřeby</h2>
+<table>
+<thead>
+<tr>
+<th>Možnost</th>
+<th>Kdy se hodí</th>
+<th>Co zachová</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pracovní commit</td>
+<td>Chceš dohledatelnou a odeslatelnou rozpracovanou verzi</td>
+<td>Vše, co jsi připravil do indexu</td>
+</tr>
+<tr>
+<td>Stash</td>
+<td>Krátce uvolníš stejnou pracovní složku</td>
+<td>Sledované změny, nové soubory jen s <code>-u</code></td>
+</tr>
+<tr>
+<td>Worktree</td>
+<td>Chceš obě větve otevřené současně</td>
+<td>Původní složku beze změny a další pracovní strom sdílející historii</td>
+</tr>
+</tbody>
+</table>
+<p>Stash je místní úložiště, běžný push jej neposílá na server.</p>
+<h2 id="vyber-způsob-přerušení-práce">Vyber způsob přerušení práce</h2>
+<p><a id="stash-odložit-a-vrátit"></a>
+<a id="konflikt-při-vracení-stashe"></a>
+<a id="worktree-dvě-složky-jedna-historie"></a></p>
+<div class="tabGroup" id="tabgroup_1">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_1_pause-stash" role="tab" aria-controls="tabpanel_1_pause-stash" data-tab="pause-stash" tabindex="0" aria-selected="true">Stash</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_1_pause-worktree" role="tab" aria-controls="tabpanel_1_pause-worktree" data-tab="pause-worktree" tabindex="-1">Worktree</a>
+</li>
+</ul>
+<section id="tabpanel_1_pause-stash" role="tabpanel" data-tab="pause-stash">
+
+<p><strong>Odložení a vrácení ve stejné složce</strong></p>
+<p>V kořeni repozitáře v PowerShellu nebo Bashi:</p>
+<pre><code class="lang-bash">git status --short
+git stash push -u -m &quot;Rozpracované hledání&quot;
+git stash list
+git status
+</code></pre>
+<p><code>-u</code> přidá nesledované soubory, ale ne ignorované.</p>
+<p><code>-a</code> by zahrnulo i ignorované soubory, což může být nevhodné pro velké buildy nebo tajemství.</p>
+<p>Po dokončení jiné práce se vrať na původní větev a prohlédni správný záznam:</p>
+<pre><code class="lang-bash">git switch feature/hledani
+git stash show --stat --include-untracked 'stash@{0}'
+git stash apply 'stash@{0}'
+git status
+</code></pre>
+<p><code>stash@{0}</code> znamená poslední stash.</p>
+<p>Uvozovky chrání zápis i v PowerShellu.</p>
+<p><code>apply</code> ponechá zálohu ve stash listu.</p>
+<p>Volba <code>--index</code> navíc požádá o obnovení původního rozdělení mezi index a pracovní strom.</p>
+<p>Až ověříš vrácené soubory a případně je commitneš, odstraň právě použitý záznam:</p>
+<pre><code class="lang-bash">git stash drop 'stash@{0}'
+</code></pre>
+<p>Po vytvoření dalších stashů se jejich čísla posunou, proto před mazáním vždy znovu zkontroluj <code>git stash list</code>.</p>
+<p><strong>Konflikt při vracení stashe</strong></p>
+<p>Záznam zůstává zachovaný, pokud jsi použil <code>apply</code>.</p>
+<p>Soubory oprav jako běžný konflikt a výsledek zkontroluj přes <code>git status</code>.</p>
+<p>Pro stash neexistuje <code>--continue</code> ani <code>--abort</code>.</p>
+<p>Pokud chceš obnovovat na původním základu a máš čistý pracovní strom, <code>git stash branch obnova-hledani 'stash@{0}'</code> vytvoří větev z původního commitu a záznam na ni aplikuje.</p>
+<p>Při úspěchu daný stash odstraní.</p>
+</section>
+<section id="tabpanel_1_pause-worktree" role="tabpanel" data-tab="pause-worktree" aria-hidden="true" hidden="hidden">
+
+<p><strong>Dvě složky se společnou historií</strong></p>
+<p>V původním projektu vytvoř novou větev ze stabilní místní <code>main</code>:</p>
+<pre><code class="lang-bash">git worktree add -b hotfix/prihlaseni ../aplikace-oprava main
+git worktree list
+</code></pre>
+<p><code>../aplikace-oprava</code> je nová sousední složka a <code>hotfix/prihlaseni</code> nová větev.</p>
+<p>Původní rozpracované soubory zůstávají tam, kde byly.</p>
+<p>Otevři novou složku v IDE, obnov její závislosti a pracuj obvyklým způsobem.</p>
+<p>Commity a větve jsou společné, pracovní soubory a index každého worktree jsou samostatné.</p>
+<p>Stejná větev se běžně nedá současně vybrat ve dvou worktrees.</p>
+<p>Po commitu a ověření opravy se vrať do původní složky:</p>
+<pre><code class="lang-bash">git worktree remove ../aplikace-oprava
+git worktree list
+</code></pre>
+<p><code>remove</code> odstraní pracovní složku, nikoli větev.</p>
+<p>Při necommitované práci odmítne běžné odstranění.</p>
+<p>Větev sluč samostatně podle <a href="workflows.html">zvoleného workflow</a>.</p>
+</section>
+</div>
+
+<p>Zdroje: <a href="https://git-scm.com/docs/git-stash">git stash</a>, <a href="https://git-scm.com/docs/git-worktree">git worktree</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

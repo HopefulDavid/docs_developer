@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Go – prvn&#237; program a př&#237;kazy | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Go – prvn&#237; program a př&#237;kazy | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Prvn&#237; program, moduly, spuštěn&#237;, testy a sestaven&#237; aplikace.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/server/go.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="go--první-program-a-příkazy">Go – první program a příkazy</h1>
+
+<p>Go překládá zdrojové soubory do programu.</p>
+<p>Modul v <code>go.mod</code> určuje jeho identitu a závislosti.</p>
+<h2 id="před-použitím">Před použitím</h2>
+<p>Nainstaluj Go a ověř <code>go version</code>.</p>
+<p>Příkazy níže fungují v PowerShellu i Bashi.</p>
+<h2 id="praktický-příklad">Praktický příklad</h2>
+<p>V nové složce projektu spusť:</p>
+<pre><code class="lang-bash">mkdir pozdrav
+cd pozdrav
+go mod init example.com/pozdrav
+</code></pre>
+<p><code>example.com/pozdrav</code> je učební identifikátor modulu.</p>
+<p>Pro publikovaný modul použij odpovídající skutečnou cestu repozitáře.</p>
+<p>Vytvoř <code>main.go</code>:</p>
+<pre><code class="lang-go">package main
+
+import &quot;fmt&quot;
+
+func main() {
+    // fmt vypíše text na standardní výstup a přidá nový řádek.
+    fmt.Println(&quot;Ahoj z Go&quot;)
+}
+</code></pre>
+<p>Balíček <code>main</code> a funkce <code>main</code> tvoří vstupní bod spustitelného programu.</p>
+<p><code>fmt</code> je součást standardní knihovny.</p>
+<pre><code class="lang-bash">go run .
+go build .
+</code></pre>
+<p>První příkaz program <strong>přeloží a spustí</strong>, druhý uloží binární výstup do aktuální složky.</p>
+<p>Očekávaný text je <code>Ahoj z Go</code>. <a href="https://go.dev/doc/tutorial/getting-started">První program v Go</a></p>
+<h2 id="přehled-příkazů">Přehled příkazů</h2>
+<table>
+<thead>
+<tr>
+<th>Syntaxe</th>
+<th>Význam</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>go fmt ./...</code></td>
+<td>Naformátuje balíčky v aktuálním modulu</td>
+</tr>
+<tr>
+<td><code>go test ./...</code></td>
+<td>Spustí jejich testy</td>
+</tr>
+<tr>
+<td><code>go test -v ./...</code></td>
+<td>Přidá podrobný testovací výpis</td>
+</tr>
+<tr>
+<td><code>go mod tidy</code></td>
+<td>Sjednotí závislosti s použitými importy. Může změnit <code>go.mod</code> a <code>go.sum</code></td>
+</tr>
+<tr>
+<td><code>go mod vendor</code></td>
+<td>Připraví kopie závislostí ve složce <code>vendor</code></td>
+</tr>
+<tr>
+<td><code>go env GOBIN GOPATH</code></td>
+<td>Ukáže cesty používané pro instalované nástroje</td>
+</tr>
+<tr>
+<td><code>go doc &lt;balíček&gt;.&lt;symbol&gt;</code></td>
+<td>Zobrazí dokumentaci vybraného symbolu</td>
+</tr>
+<tr>
+<td><code>go help &lt;příkaz&gt;</code></td>
+<td>Zobrazí nápovědu konkrétního příkazu</td>
+</tr>
+</tbody>
+</table>
+<p>Například <code>go doc fmt.Println</code> vysvětlí funkci <code>Println</code> z balíčku <code>fmt</code> a <code>go help build</code> volby sestavení.</p>
+<p><code>./...</code> v příkazech výše je skutečný vzor Go pro aktuální adresář a jeho podadresáře, ne zástupná výpustka z dokumentační syntaxe.</p>
+<p>Tečka znamená aktuální balíček, <code>./...</code> zahrne i podbalíčky. <a href="https://pkg.go.dev/cmd/go">Reference příkazu go</a></p>
+<h2 id="co-lze-upravit">Co lze upravit</h2>
+<p>Změň text ve <code>fmt.Println</code>, znovu spusť program a ověř výstup.</p>
+<p>Nové knihovny přidávej přes <code>go get</code> s cestou a vybranou verzí.</p>
+<p>Samostatný nástroj instaluj přes <code>go install cesta@verze</code> a zkontroluj kompatibilitu s projektem.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

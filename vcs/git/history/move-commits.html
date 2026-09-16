@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Git – přesun commitů do jin&#233; větve | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git – přesun commitů do jin&#233; větve | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Přesun posledn&#237;ch commitů do nov&#233; i existuj&#237;c&#237; větve včetně &#250;klidu zdroje, merge a cherry-pick.">
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/history/move-commits.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git--přesun-commitů-do-jiné-větve">Git – přesun commitů do jiné větve</h1>
+
+<p>Přesun má dvě části: nejprve zachováš práci v cílové větvi, potom ji odebereš ze zdrojové.</p>
+<p>Vytvoření větve nebo merge zachová původní commity.</p>
+<p><code>cherry-pick</code> přenáší vybrané změny a na jiném základu vytváří nové commity.</p>
+<h2 id="před-použitím">Před použitím</h2>
+<p>Příklady fungují v PowerShellu i Bashi a přesouvají <strong>poslední tři neodeslané lineární commity</strong> z místní větve <code>main</code>.</p>
+<p>Názvy <code>main</code> a <code>feature/presunuta-prace</code> nahraď podle projektu.</p>
+<p>Záložní větev <code>backup/pred-presunem</code> musí být nová.</p>
+<p>Nejdříve ověř čistý pracovní strom:</p>
+<pre><code class="lang-bash">git status --short
+git switch main
+git log --graph --oneline --decorate -8
+git branch --no-track backup/pred-presunem
+git log --reverse --oneline backup/pred-presunem~3..backup/pred-presunem
+</code></pre>
+<p>Pokud první příkaz vypíše změny, nejprve je commitni nebo <a href="../stash-worktree.html">odlož přes stash</a>, pak začni znovu.</p>
+<p>Poslední výpis musí obsahovat právě commity, které chceš přesunout.</p>
+<p><code>backup/pred-presunem~3</code> je jejich předchozí základ.</p>
+<p>Pro jiný počet uprav <code>~3</code> ve všech krocích, případně použij ověřené ID základního commitu.</p>
+<p>Rozsah <code>základ..konec</code> <strong>nezahrnuje základ</strong>, proto do něj nepatří ID prvního přesouvaného commitu.</p>
+<p>Při merge commitech nebo změnách promíchaných s cizí prací nepoužívej tento reset posledních tří commitů bez úpravy rozsahu.</p>
+<h2 id="vyber-cílovou-větev">Vyber cílovou větev</h2>
+<p>Po společné přípravě pokračuj jen postupem odpovídajícím cíli.</p>
+<p><a id="přesun-commitů-do-nové-větve"></a>
+<a id="přesun-commitů-do-existující-větve"></a>
+<a id="vybrané-commity-pomocí-cherry-pick"></a>
+<a id="celá-zdrojová-větev-pomocí-merge"></a>
+<a id="odebrání-ze-zdrojové-větve"></a></p>
+<div class="tabGroup" id="tabgroup_1">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_1_move-new" role="tab" aria-controls="tabpanel_1_move-new" data-tab="move-new" tabindex="0" aria-selected="true">Nová větev</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_1_move-existing" role="tab" aria-controls="tabpanel_1_move-existing" data-tab="move-existing" tabindex="-1">Existující větev</a>
+</li>
+</ul>
+<section id="tabpanel_1_move-new" role="tabpanel" data-tab="move-new">
+
+<p>Z výchozího stavu <code>A–B–C–D–E (main)</code> vznikne <code>A–B (main)</code>, zatímco nová větev zachová <code>A–B–C–D–E</code>.</p>
+<p>Po společné přípravě, stále na <code>main</code>:</p>
+<pre><code class="lang-bash">git branch --no-track feature/presunuta-prace backup/pred-presunem
+git reset --keep backup/pred-presunem~3
+git switch feature/presunuta-prace
+git log --graph --oneline --decorate --all -10
+</code></pre>
+<p>Nová větev ukazuje na původní poslední commit ještě před resetem, takže práce i její ID zůstanou zachované.</p>
+<p><code>--keep</code> vrátí zdrojovou větev a dotčené soubory.</p>
+<p>Při kolizi s necommitovanou úpravou skončí chybou místo jejího přepsání. <a href="https://git-scm.com/docs/git-reset">Git reset</a></p>
+<p><code>--no-track</code> zabrání nechtěnému nastavení původní místní větve jako upstreamu, který by později ovlivňoval pull nebo rebase. <a href="https://git-scm.com/docs/git-branch">Git branch</a></p>
+<p>Potom ověř obsah a testy na nové větvi.</p>
+</section>
+<section id="tabpanel_1_move-existing" role="tabpanel" data-tab="move-existing" aria-hidden="true" hidden="hidden">
+
+<p><strong>Vybrané commity pomocí cherry-pick</strong></p>
+<p>Po společné přípravě přepni na <strong>již existující místní</strong> cílovou větev:</p>
+<pre><code class="lang-bash">git switch feature/presunuta-prace
+git cherry-pick backup/pred-presunem~3..backup/pred-presunem
+git log --oneline -5
+git diff --stat backup/pred-presunem~3 backup/pred-presunem
+</code></pre>
+<p>Přeneseš změny posledních tří commitů v pořadí od nejstaršího a zachováš vlastní práci cílové větve.</p>
+<p>Poslední příkaz připomene rozsah přenášených změn.</p>
+<p>Správnost jejich začlenění ověř v cílových souborech a testech.</p>
+<p>Jednotlivé nesousedící commity můžeš vybrat syntaxí <code>git cherry-pick &lt;nejstarší-ID&gt; &lt;další-ID&gt; &lt;nejnovější-ID&gt;</code>.</p>
+<p>Jejich závislosti musí být v cíli dostupné. <a href="https://git-scm.com/docs/git-cherry-pick">Git cherry-pick</a></p>
+<p><strong>Celá zdrojová větev pomocí merge</strong></p>
+<p>Jestli do cíle patří <strong>veškerá historie zdroje, která v něm chybí</strong>, použij místo cherry-pick původní postup se sloučením:</p>
+<pre><code class="lang-bash">git switch feature/presunuta-prace
+git merge backup/pred-presunem
+git log --graph --oneline --decorate -10
+</code></pre>
+<p>Merge zachová ID původních commitů.</p>
+<p>Podle vztahu větví provede fast-forward nebo vytvoří merge commit.</p>
+<p>Nepřenáší automaticky jen poslední tři commity, proto se pro přesný výběr z odlišné historie hodí předchozí cherry-pick. <a href="https://git-scm.com/docs/git-merge">Git merge</a></p>
+<p><strong>Odebrání ze zdrojové větve</strong></p>
+<p><strong>Až po úspěšném přenosu a otestování cíle</strong> dokonči jednu z předchozích variant:</p>
+<pre><code class="lang-bash">git switch main
+git reset --keep backup/pred-presunem~3
+git switch feature/presunuta-prace
+git log --graph --oneline --decorate --all -12
+</code></pre>
+<p>Zdrojová <code>main</code> nyní končí před přesouvanými commity a cílová obsahuje jejich práci.</p>
+<p>Záložní větev do ověření výsledku ponech.</p>
+<p>Reset zde nemaže jedinou existující kopii commitů.</p>
+</section>
+</div>
+<h2 id="konflikt-při-přenosu">Konflikt při přenosu</h2>
+<table>
+<thead>
+<tr>
+<th>Operace</th>
+<th>Po opravě konfliktů a <code>git add -- &lt;soubor&gt;</code></th>
+<th>Zrušení rozpracované operace</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cherry-pick</td>
+<td><code>git cherry-pick --continue</code></td>
+<td><code>git cherry-pick --abort</code></td>
+</tr>
+<tr>
+<td>Merge</td>
+<td><code>git merge --continue</code></td>
+<td><code>git merge --abort</code></td>
+</tr>
+</tbody>
+</table>
+<p>Při konfliktu se ke kroku odebrání ze zdroje ještě nepřechází.</p>
+<p>Po abortu zůstane zdrojová historie i záložní větev zachovaná.</p>
+<h2 id="pokud-už-byly-commity-odeslané">Pokud už byly commity odeslané</h2>
+<p>Nejprve práci přenes a ověř v cíli.</p>
+<p>Ve sdílené zdrojové větvi potom použij <a href="delete-commits.html">revert</a>, aby navazující historie zůstala platná.</p>
+<p>Pro tři uvedené lineární commity provedeš ze zdrojové větve opačné změny od nejnovějšího:</p>
+<pre><code class="lang-bash">git switch main
+git revert --no-edit backup/pred-presunem backup/pred-presunem~1 backup/pred-presunem~2
+</code></pre>
+<p>Vzniknou tři nové vratné commity, které můžeš odeslat běžným pushem.</p>
+<p>Pokud později chceš stejnou práci vrátit přes merge, zohledni i tyto reverty.</p>
+<p>Git si pamatuje, že původní commity už ve zdroji byly.</p>
+<p>Novou cílovou větev zveřejníš přes <code>git push -u origin feature/presunuta-prace</code>.</p>
+<p>Místní přesun neodeslaných commitů nevyžaduje force push zdroje.</p>
+<h2 id="zatím-jen-rozpracované-soubory">Zatím jen rozpracované soubory</h2>
+<p>Pokud ještě nemáš commit a současný základ je správný, stačí <code>git switch --no-track -c feature/presunuta-prace</code>.</p>
+<p>Necommitované úpravy zůstanou v pracovním stromu nové větve.</p>
+<p>Pro jiný základ použij <a href="../stash-worktree.html">stash nebo worktree</a>.</p>
+<p>Další rozbor variant: <a href="https://stackoverflow.com/questions/1628563/move-the-most-recent-commits-to-a-new-branch-with-git">Stack Overflow – přesun posledních commitů</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

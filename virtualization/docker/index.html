@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Docker – kontejnery, př&#237;kazy a data | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Docker – kontejnery, př&#237;kazy a data | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Spouštěn&#237; kontejnerů, Compose a z&#225;lohov&#225;n&#237; obrazů i aplikačn&#237;ch dat.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/virtualization/docker/index.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="docker--kontejnery-příkazy-a-data">Docker – kontejnery, příkazy a data</h1>
+
+<p>Docker spouští aplikace v izolovaných kontejnerech vytvořených z image.</p>
+<p>Kontejner sdílí jádro hostitelského systému, zatímco jeho soubory a procesy mají vlastní prostředí.</p>
+<h2 id="jak-docker-funguje">Jak Docker funguje</h2>
+<table>
+<thead>
+<tr>
+<th>Pojem</th>
+<th>Význam</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Image</td>
+<td>Vrstvená šablona aplikace a jejích závislostí</td>
+</tr>
+<tr>
+<td>Kontejner</td>
+<td>Konkrétní spuštěná nebo zastavená instance image</td>
+</tr>
+<tr>
+<td>Dockerfile</td>
+<td>Předpis pro sestavení image</td>
+</tr>
+<tr>
+<td>Engine</td>
+<td>Služba, která spravuje kontejnery. CLI se k ní připojuje</td>
+</tr>
+<tr>
+<td>Registry</td>
+<td>Úložiště image, například Docker Hub</td>
+</tr>
+<tr>
+<td>Compose</td>
+<td>Popis více služeb a jejich propojení v <code>compose.yaml</code></td>
+</tr>
+<tr>
+<td>Volume</td>
+<td>Datové úložiště spravované Dockerem mimo životnost kontejneru</td>
+</tr>
+<tr>
+<td>Bind mount</td>
+<td>Připojení konkrétní složky hostitele do kontejneru</td>
+</tr>
+</tbody>
+</table>
+<p>Docker Desktop spouští linuxový engine ve Windows prostřednictvím virtualizovaného prostředí.</p>
+<p>Podrobnosti najdeš v <a href="../wsl.html">návodu k WSL</a>.</p>
+<h2 id="před-použitím">Před použitím</h2>
+<p>Nainstaluj Docker Desktop, přepni jej na linuxové kontejnery a ověř běžící engine:</p>
+<pre><code class="lang-bash">docker version
+docker context ls
+</code></pre>
+<p><code>version</code> musí ukázat klienta i server.</p>
+<p>Aktivní kontext určuje, který engine příkazy ovládají, včetně případného vzdáleného serveru.</p>
+<p>Jednořádkové příkazy níže fungují v PowerShellu i Bashi.</p>
+<p>První stažení image vyžaduje síť.</p>
+<h2 id="praktické-použití">Praktické použití</h2>
+<pre><code class="lang-bash"># Spustí jednorázový test a po skončení odstraní jeho kontejner.
+docker run --rm hello-world
+</code></pre>
+<p>Očekávej text <code>Hello from Docker!</code>.</p>
+<p>Image zůstane na disku.</p>
+<p>Pro lokální webový server:</p>
+<pre><code class="lang-bash">docker run --detach --name docs-web --publish 127.0.0.1:8080:80 nginx:stable-alpine
+docker container ls
+docker logs docs-web
+</code></pre>
+<p>Otevři <code>http://127.0.0.1:8080</code>.</p>
+<p>Port <code>8080</code> patří tvému počítači a <code>80</code> serveru v kontejneru.</p>
+<p>Vazba na <code>127.0.0.1</code> omezuje přístup na místní počítač.</p>
+<p>Název a vnější port můžeš změnit.</p>
+<pre><code class="lang-bash"># Ukončení tohoto příkladu; nepřidávej sem mazání jiných kontejnerů.
+docker stop docs-web
+docker rm docs-web
+</code></pre>
+<p>Tag <code>stable-alpine</code> je pohyblivý.</p>
+<p>Pro reprodukovatelné nasazení zvol ověřenou konkrétní verzi nebo digest. <a href="https://docs.docker.com/reference/cli/docker/container/run/">Spuštění kontejneru</a></p>
+<h2 id="příkazy-a-restartování">Příkazy a restartování</h2>
+<table>
+<thead>
+<tr>
+<th>Úkol</th>
+<th>Syntaxe</th>
+<th>Význam</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Všechny kontejnery</td>
+<td><code>docker container ls --all</code></td>
+<td>Zahrne i zastavené</td>
+</tr>
+<tr>
+<td>Místní image</td>
+<td><code>docker image ls</code></td>
+<td>Šablony dostupné na enginu</td>
+</tr>
+<tr>
+<td>Restartovací pravidlo</td>
+<td><code>docker update --restart=unless-stopped &lt;kontejner&gt;</code></td>
+<td>Obnovuje běh s výjimkou ručně zastaveného kontejneru</td>
+</tr>
+<tr>
+<td>Vypnutí restartování</td>
+<td><code>docker update --restart=no &lt;kontejner&gt;</code></td>
+<td>Vyžaduje ruční spuštění</td>
+</tr>
+<tr>
+<td>Export image</td>
+<td><code>docker image save --output &lt;archiv.tar&gt; &lt;image&gt;...</code></td>
+<td>Uchová image, nikoli data volumes</td>
+</tr>
+<tr>
+<td>Import image</td>
+<td><code>docker image load --input &lt;archiv.tar&gt;</code></td>
+<td>Načte uloženou image</td>
+</tr>
+<tr>
+<td>Compose konfigurace</td>
+<td><code>docker compose config --quiet</code></td>
+<td>Ověří a sloučí konfigurační vstupy</td>
+</tr>
+<tr>
+<td>Spuštění služeb</td>
+<td><code>docker compose up --detach</code></td>
+<td>Vytvoří nebo aktualizuje služby definované Compose</td>
+</tr>
+<tr>
+<td>Ukončení projektu</td>
+<td><code>docker compose down</code></td>
+<td>Odstraní jeho kontejnery a běžné projektové sítě</td>
+</tr>
+</tbody>
+</table>
+<p>Hodnotu <code>&lt;kontejner&gt;</code> nahraď názvem z výpisu všech kontejnerů.</p>
+<p>Restartovací politika <code>yes</code> neexistuje. <a href="https://docs.docker.com/engine/containers/start-containers-automatically/">Restartovací pravidla</a></p>
+<h2 id="dockerfile-pro-konzolovou-aplikaci-net-10">Dockerfile pro konzolovou aplikaci .NET 10</h2>
+<p>Ve složce s jediným konzolovým projektem cíleným na <code>net10.0</code> vytvoř <code>Dockerfile</code>:</p>
+<pre><code class="lang-dockerfile"># SDK obsahuje překladač; první fáze připraví aplikaci.
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+COPY . .
+RUN dotnet publish -c Release -o /out --no-self-contained
+
+# Výsledný image obsahuje pouze runtime a publikovanou aplikaci.
+FROM mcr.microsoft.com/dotnet/runtime:10.0
+WORKDIR /app
+COPY --from=build /out .
+ENTRYPOINT [&quot;dotnet&quot;, &quot;MojeAplikace.dll&quot;]
+</code></pre>
+<p><code>MojeAplikace.dll</code> nahraď názvem assembly svého projektu.</p>
+<p>U ASP.NET Core použij odpovídající <code>aspnet</code> image a nastav naslouchání a porty aplikace.</p>
+<p>Do <code>.dockerignore</code> přidej:</p>
+<pre><code class="lang-text">bin/
+obj/
+.git/
+.env
+</code></pre>
+<p>Tím vynecháš místní výstupy a běžný soubor tajných hodnot z kontextu sestavení.</p>
+<p>Další soukromé soubory vyluč podle projektu.</p>
+<pre><code class="lang-bash">docker build --tag moje-aplikace:local .
+docker run --rm moje-aplikace:local
+</code></pre>
+<p>Samostatná tečka za mezerou určuje kontext sestavení.</p>
+<p>Výstup má odpovídat lokálnímu běhu aplikace. <a href="https://learn.microsoft.com/en-us/dotnet/core/docker/build-container">Microsoft: .NET v Dockeru</a></p>
+<p>Pokud už máš publikovaný výstup, stačí runtime fáze s <code>COPY ./publish .</code>.</p>
+<p>Lokální NuGet zdroj přidej do projektového <code>NuGet.Config</code> a zahrň potřebné balíčky do kontextu, ale ne jeho přihlašovací údaje.</p>
+<h2 id="volumes-a-zálohy">Volumes a zálohy</h2>
+<p>Záloha Dockeru zůstává v této oblasti, protože chrání image a provozní data aplikací.</p>
+<p><a href="../../programming/packages/offline.html">Záloha balíčků</a> slouží k obnovení vývojových závislostí.</p>
+<table>
+<thead>
+<tr>
+<th>Co chceš obnovit</th>
+<th>Co zálohovat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Image pro spuštění bez registru</td>
+<td>Archiv přes <code>docker image save</code></td>
+</tr>
+<tr>
+<td>Data aplikace v pojmenovaném volume</td>
+<td>Konzistentní obsah volume nebo aplikační export</td>
+</tr>
+<tr>
+<td>Data v bind mountu</td>
+<td>Skutečnou zdrojovou složku hostitele</td>
+</tr>
+<tr>
+<td>Sestavu služeb</td>
+<td>Compose soubory, konfiguraci, potřebná tajemství a data</td>
+</tr>
+<tr>
+<td>Celé místní prostředí Docker Desktop WSL 2</td>
+<td>Vypnutý datový disk podle <a href="#p%C5%99enos-dat-docker-desktopu-na-jin%C3%BD-po%C4%8D%C3%ADta%C4%8D">postupu níže</a></td>
+</tr>
+</tbody>
+</table>
+<p>Image neobsahuje obsah připojených volumes a <code>docker export</code> není náhradou zálohy image s jeho historií a konfigurací.</p>
+<p>Pojmenované volumes běžné <code>docker compose down</code> zachová.</p>
+<p><code>--volumes</code> je naopak odstraní.</p>
+<h3 id="záloha-a-načtení-image">Záloha a načtení image</h3>
+<p>Příklad pro existující image na aktuálním enginu:</p>
+<pre><code class="lang-bash">docker image inspect nginx:stable-alpine
+docker image save --output nginx-image.tar nginx:stable-alpine
+</code></pre>
+<p>První příkaz ověří přesný obraz a druhý uloží jeho místní podobu do nového archivu.</p>
+<p>Přenes archiv a na kompatibilním cílovém enginu:</p>
+<pre><code class="lang-bash">docker image load --input nginx-image.tar
+docker image inspect nginx:stable-alpine
+</code></pre>
+<p>Porovnej ID obrazu a skutečně ho spusť.</p>
+<p>Manifest pro jinou architekturu není automaticky součástí každé lokální image.</p>
+<h3 id="záloha-a-obnova-volume">Záloha a obnova volume</h3>
+<p>Příklad je pro <strong>PowerShell, místní linuxový engine</strong> a existující vlastní volume <code>moje-data</code>.</p>
+<p>Nejdříve zastav všechny zapisující aplikace.</p>
+<p>U databáze preferuj její dokumentovaný konzistentní export, protože kopie živých souborů může být neobnovitelná.</p>
+<pre><code class="lang-powershell">docker volume inspect moje-data
+New-Item -ItemType Directory -Path ./docker-zaloha -ErrorAction Stop
+$backupDirectory = (Resolve-Path ./docker-zaloha).Path
+docker run --rm --mount source=moje-data,target=/data,readonly --mount &quot;type=bind,source=$backupDirectory,target=/backup&quot; alpine:3.22 tar -czf /backup/data.tgz -C /data .
+</code></pre>
+<p><code>moje-data</code> nahraď ověřeným názvem svého volume a použij novou složku pro zálohu.</p>
+<p>Pomocný kontejner čte zdroj pouze pro čtení a zapisuje gzip archiv do hostitelské složky.</p>
+<p><code>-C /data .</code> zahrne i skryté položky.</p>
+<p>První použití potřebuje dostupnou pomocnou image, kterou můžeš pro offline obnovu rovněž uložit přes <code>docker image save</code>.</p>
+<p>Po úspěšném návratovém kódu ověř obsah archivu:</p>
+<pre><code class="lang-powershell">docker run --rm --mount &quot;type=bind,source=$backupDirectory,target=/backup,readonly&quot; alpine:3.22 tar -tzf /backup/data.tgz
+Get-FileHash -LiteralPath ./docker-zaloha/data.tgz -Algorithm SHA256
+</code></pre>
+<p>Hash uchovej pro kontrolu přenosu.</p>
+<p>Výpis ani shodný hash nenahrazují zkušební obnovu aplikace.</p>
+<p>Na cíli nejprve vypiš <code>docker volume ls</code> a zvol <strong>nové dosud nepoužité</strong> jméno <code>obnovena-data</code>:</p>
+<pre><code class="lang-powershell">docker volume create obnovena-data
+$backupDirectory = (Resolve-Path ./docker-zaloha).Path
+docker run --rm --mount source=obnovena-data,target=/data --mount &quot;type=bind,source=$backupDirectory,target=/backup,readonly&quot; alpine:3.22 tar -xzf /backup/data.tgz -C /data
+</code></pre>
+<p><code>volume create</code> by při již existujícím názvu pouze vrátil staré volume, proto jeho nepoužitost ověř předem.</p>
+<p>Připoj obnovené volume do oddělené testovací instance se stejnou verzí aplikace a ověř konkrétní data i oprávnění souborů.</p>
+<p>Pro první obnovu nespouštěj současně upgrade aplikace.</p>
+<p>Původní data ponech do ověření.</p>
+<p>Zdroje: <a href="https://docs.docker.com/engine/storage/volumes/#back-up-restore-or-migrate-data-volumes">Docker volumes a záloha</a>, <a href="https://docs.docker.com/reference/cli/docker/image/save/">image save</a>, <a href="https://docs.docker.com/reference/cli/docker/image/load/">image load</a>.</p>
+<h3 id="export-schématu-postgresql-z-kontejneru">Export schématu PostgreSQL z kontejneru</h3>
+<p>Následující příklad předpokládá běžící kontejner <code>supabase-db</code>, klienta <code>pg_dump</code>, databázi <code>postgres</code> a platné přihlašování uvnitř kontejneru:</p>
+<pre><code class="lang-bash">docker exec supabase-db pg_dump -U postgres -d postgres --schema-only --file=/tmp/schema.sql
+docker cp supabase-db:/tmp/schema.sql ./schema.sql
+</code></pre>
+<p>Příkazy spusť postupně a při chybě exportu nepokračuj.</p>
+<p><code>--schema-only</code> ukládá strukturu bez řádků dat.</p>
+<p>Výstup nevede přes terminál s pseudo-TTY ani přes překódování shellu.</p>
+<p>Při importu do nástroje jako sqlc ověř podporu formátu dumpu a verze PostgreSQL.</p>
+<p>Příkazy <code>psql</code> z exportu neodstraňuj bez posouzení kompatibility. <a href="https://www.postgresql.org/docs/current/app-pgdump.html">Pg_dump</a></p>
+<h2 id="řešení-problémů">Řešení problémů</h2>
+<table>
+<thead>
+<tr>
+<th>Projev</th>
+<th>Co zkontrolovat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chybí část Server</td>
+<td>Běh Docker Desktopu a aktivní kontext</td>
+</tr>
+<tr>
+<td>Port je obsazený</td>
+<td>Zvol volný vnější port a správnou URL</td>
+</tr>
+<tr>
+<td>Kontejner se ukončil</td>
+<td><code>docker container ls --all</code> a jeho log</td>
+</tr>
+<tr>
+<td>Po aktualizaci chybí data</td>
+<td>Jméno Compose projektu, připojené volumes a aplikační migrace</td>
+</tr>
+</tbody>
+</table>
+<p>Restart síťové služby Windows není první krok diagnostiky.</p>
+<p>Nejprve ověř mapování portu a naslouchání aplikace.</p>
+<h2 id="docker-desktop-a-wsl-2-ve-windows">Docker Desktop a WSL 2 ve Windows</h2>
+<p>Tento postup ověřuje používání linuxových kontejnerů Docker Desktopu z vlastní distribuce WSL, například Ubuntu.</p>
+<h3 id="proč-jsou-v-průzkumníku-ubuntu-i-docker-desktop">Proč jsou v Průzkumníku Ubuntu i docker-desktop</h3>
+<p>V části <strong>Linux</strong> v Průzkumníku Windows mohou být obě distribuce současně:</p>
+<table>
+<thead>
+<tr>
+<th>Distribuce</th>
+<th>Účel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ubuntu-22.04</code></td>
+<td>Tvoje vlastní Linux prostředí pro projekty, Bash, Git a správu balíčků. Může být nainstalované běžně nebo importované z RootFS.</td>
+</tr>
+<tr>
+<td><code>docker-desktop</code></td>
+<td>Interní distribuce vytvořená a spravovaná Docker Desktopem, ve které běží Docker Engine.</td>
+</tr>
+</tbody>
+</table>
+<p>Zapnutá <strong>WSL Integration</strong> umožní zadávat příkazy <code>docker</code> z Ubuntu a používat engine spravovaný Docker Desktopem.</p>
+<p>Ubuntu přitom není pro samotný běh Docker Desktopu povinné.</p>
+<p>Docker lze používat také přímo z terminálu Windows.</p>
+<p>Přítomnost obou distribucí není chyba ani důvod jednu smazat.</p>
+<p>Do <code>docker-desktop</code> běžně ručně nezasahuj. <a href="https://docs.docker.com/desktop/features/wsl/">Jak funguje integrace WSL</a></p>
+<h3 id="1-zkontroluj-distribuce-a-verzi-wsl">1. Zkontroluj distribuce a verzi WSL</h3>
+<p>Ve <strong>Windows PowerShellu nebo CMD</strong> spusť:</p>
+<pre><code class="lang-text">wsl --list --verbose
+</code></pre>
+<p>Příklad výstupu při spuštěném Docker Desktopu:</p>
+<pre><code class="lang-text">  NAME              STATE           VERSION
+* Ubuntu-22.04      Stopped         2
+  docker-desktop    Running         2
+</code></pre>
+<p>Pro tento postup musí používané distribuce běžet ve WSL 2, tedy mít ve sloupci <code>VERSION</code> hodnotu <code>2</code>.</p>
+<p><code>Stopped</code> znamená zastavenou distribuci, kterou můžeš spustit.</p>
+<p>Hvězdička označuje výchozí distribuci. <a href="https://learn.microsoft.com/en-us/windows/wsl/basic-commands#list-installed-linux-distributions">Výpis distribucí WSL</a></p>
+<p>Název <code>Ubuntu-22.04</code> je příklad z tohoto prostředí, proto jej v dalších příkazech nahraď přesným názvem ze svého výpisu.</p>
+<h3 id="2-zapni-integraci-pro-ubuntu">2. Zapni integraci pro Ubuntu</h3>
+<ol>
+<li>Spusť Docker Desktop a počkej na spuštění enginu.</li>
+<li>V <strong>Settings → General</strong> zapni <strong>Use WSL 2 based engine</strong>, pokud se tato volba zobrazuje.</li>
+<li>V <strong>Settings → Resources → WSL Integration</strong> zapni svou distribuci Ubuntu a potvrď <strong>Apply</strong>.</li>
+</ol>
+<p>Pokud nabídka WSL Integration chybí, ověř režim kontejnerů a případně v nabídce Docker Desktopu zvol <strong>Switch to Linux containers</strong>.</p>
+<p>Pro tuto variantu neinstaluj do Ubuntu další samostatný Docker Engine nebo Docker CLI, protože může s integrací Docker Desktopu kolidovat. <a href="https://docs.docker.com/desktop/features/wsl/#enable-docker-in-a-wsl-2-distribution">Nastavení integrace</a></p>
+<h3 id="3-ověř-spojení-s-enginem-a-spuštění-kontejneru">3. Ověř spojení s enginem a spuštění kontejneru</h3>
+<p>Ve <strong>Windows PowerShellu nebo CMD</strong> otevři Ubuntu:</p>
+<pre><code class="lang-text">wsl --distribution Ubuntu-22.04
+</code></pre>
+<p>Následující příkaz už spusť <strong>uvnitř Ubuntu</strong>:</p>
+<pre><code class="lang-text">docker version
+</code></pre>
+<p>Výpis má obsahovat části <strong>Client</strong> i <strong>Server</strong> bez chyby připojení.</p>
+<p>Samotné <code>docker --version</code> ukazuje pouze verzi klienta. <a href="https://docs.docker.com/reference/cli/docker/version/">Význam výstupu docker version</a></p>
+<p>Pak ve stejném terminálu Ubuntu spusť testovací kontejner:</p>
+<pre><code class="lang-text">docker run --rm hello-world
+</code></pre>
+<p>Očekávaná zpráva je:</p>
+<pre><code class="lang-text">Hello from Docker!
+</code></pre>
+<p>Pokud image ještě není uložená lokálně, Docker ji stáhne z Docker Hubu a potřebuje připojení k internetu.</p>
+<p>Volba <code>--rm</code> po dokončení odstraní testovací kontejner, stažená image zůstane. <a href="https://docs.docker.com/reference/cli/docker/container/run/#clean-up---rm">Spuštění a odstranění kontejneru</a></p>
+<table>
+<thead>
+<tr>
+<th>Výsledek</th>
+<th>Co ověřit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>docker: command not found</code></td>
+<td>Zapnutí integrace pro správnou distribuci a nové otevření terminálu Ubuntu.</td>
+</tr>
+<tr>
+<td>Chyba připojení v části <code>Server</code></td>
+<td>Běh Docker Desktopu a zvolené připojení klienta.</td>
+</tr>
+<tr>
+<td>Chyba při stahování image</td>
+<td>Přístup k Docker Hubu, proxy nebo limit stahování.</td>
+</tr>
+</tbody>
+</table>
+<p>Pokud používáš i vzdálený Docker, ověř připojení přes <code>docker context ls</code> a případné proměnné <code>DOCKER_HOST</code> nebo <code>DOCKER_CONTEXT</code>.</p>
+<p>Úspěšný test se vztahuje k připojenému enginu. <a href="https://docs.docker.com/engine/manage-resources/contexts/">Docker kontexty</a></p>
+<p>Z Ubuntu se do terminálu Windows vrátíš příkazem <code>exit</code>.</p>
+<h3 id="kam-patří-docker_datavhdx">Kam patří docker_data.vhdx</h3>
+<p><code>docker_data.vhdx</code> je samostatný datový disk Docker Desktopu.</p>
+<p>Obsahuje Docker images, kontejnery, pojmenované volumes a build cache.</p>
+<p>Ubuntu má vlastní souborový systém a vlastní virtuální disk, takže záloha <code>docker_data.vhdx</code> nepatří do Ubuntu a nenahrazuje její disk.</p>
+<p>Soubory připojené do kontejnerů pomocí bind mountů zůstávají ve zdrojových složkách Windows nebo Ubuntu a vyžadují vlastní zálohu. <a href="https://docs.docker.com/engine/storage/bind-mounts/">Ukládání pomocí bind mountů</a></p>
+<p>Vlastní Ubuntu přenes pomocí <a href="../wsl.html#p%C5%99esun-wsl-distribuce-na-jin%C3%A9-m%C3%ADsto">exportu a importu distribuce WSL</a>.</p>
+<p>Pro datový disk Dockeru použij následující postup.</p>
+<p>Úspěšné <code>hello-world</code> potvrzuje spuštění kontejneru, nikoli obnovu původních images, kontejnerů nebo dat aplikací.</p>
+<h3 id="přenos-dat-docker-desktopu-na-jiný-počítač">Přenos dat Docker Desktopu na jiný počítač</h3>
+<p>Tento postup je určený pro <strong>Docker Desktop s backendem WSL 2 ve Windows, který ukládá data do souboru <code>docker_data.vhdx</code></strong>.</p>
+<p>Záloha vzniká zkopírováním vypnutého datového disku a obnova jeho vložením do datového umístění cílové instalace podle <a href="https://docs.docker.com/desktop/settings-and-maintenance/backup-and-restore/#if-docker-desktop-fails-to-start-or-you-want-to-back-up-the-whole-docker-desktop-vm">oficiálního postupu Dockeru</a>.</p>
+<p>Počítá se se stejnou architekturou obou počítačů, například x64.</p>
+<p>Pro první obnovení doporučuji stejnou verzi Docker Desktopu jako na zdroji, aby se přenos nespojoval také s upgradem.</p>
+<p>Obnova <strong>nahradí současná Docker data na cíli</strong>.</p>
+<p>Nesloučí dvě existující prostředí.</p>
+<p>Příkazy pro práci s datovým diskem zadávej ve <strong>Windows PowerShellu</strong> pod účtem, který Docker Desktop používá.</p>
+<p>Uvedené cesty jsou příklady, které nahraď podle svých disků a složek.</p>
+<details>
+<summary>Zdrojový počítač: záloha Docker dat</summary>
+<h4 id="1-poznamenej-si-stav-a-skutečné-umístění-disku">1. Poznamenej si stav a skutečné umístění disku</h4>
+<p>V <strong>About Docker Desktop</strong> si poznamenej verzi aplikace a při spuštěném enginu zaznamenej, co chceš po obnově najít:</p>
+<pre><code class="lang-text">docker context ls
+docker image ls
+docker container ls --all
+docker volume ls
+</code></pre>
+<p>Ověř, že klient používá místní Linux engine Docker Desktopu, protože výpis vzdáleného enginu by nepopisoval zálohovaný disk.</p>
+<p>Datový soubor v běžném kořenovém adresáři Dockeru vyhledáš takto:</p>
+<pre><code class="lang-text">Get-ChildItem -LiteralPath &quot;$env:LOCALAPPDATA\Docker\wsl&quot; -Filter 'docker_data.vhdx' -File -Recurse |
+    Select-Object FullName, Length
+</code></pre>
+<p>Pokud jsi datové umístění změnil, hledej v nastavené složce.</p>
+<p>Jestli tvoje verze zobrazuje <strong>Settings → Resources → Advanced → Disk image location</strong>, ověř cestu také tam. <a href="https://docs.docker.com/desktop/features/wsl/">Umístění dat backendu WSL</a></p>
+<p>Pokud soubor nenajdeš nebo nevíš, která nalezená kopie je aktivní, nejprve ověř datové umístění své instalace.</p>
+<p>Nezaměňuj jej za disk Ubuntu ani za jiný soubor <code>ext4.vhdx</code>.</p>
+<h4 id="2-připrav-soubory-mimo-datový-disk-a-ukonči-docker">2. Připrav soubory mimo datový disk a ukonči Docker</h4>
+<p>Samostatně uchovej Compose soubory, potřebné <code>.env</code> a konfigurace i zdrojové složky bind mountů.</p>
+<p>Soubory uložené uvnitř vlastní distribuce Ubuntu přenese její export.</p>
+<p>Řádně zastav své aplikace a databáze, aby dokončily zápis.</p>
+<p>U projektu spravovaného přes Compose lze v jeho složce použít:</p>
+<pre><code class="lang-text">docker compose stop
+</code></pre>
+<p>Potom z nabídky ikony Dockeru u hodin zvol <strong>Quit Docker Desktop</strong> a počkej na úplné ukončení aplikace.</p>
+<p>Ulož také práci ve všech distribucích WSL a zavři jejich terminály, protože následující příkaz zastaví všechny distribuce i virtuální stroj WSL 2:</p>
+<pre><code class="lang-text">wsl --shutdown
+</code></pre>
+<p>Do dokončení kopírování a kontroly znovu nespouštěj Docker Desktop.</p>
+<h4 id="3-zkopíruj-disk-a-ověř-zálohu">3. Zkopíruj disk a ověř zálohu</h4>
+<p>V proměnné <code>$dockerDisk</code> nahraď ukázkovou cestu skutečnou cestou z prvního kroku a pro zálohu zvol novou složku na disku s dostatkem místa.</p>
+<p>Přenosový disk musí podporovat velikost souboru.</p>
+<p>FAT32 neumožňuje soubor větší než 4 GB.</p>
+<pre><code class="lang-text">$dockerDisk = 'D:\DockerData\docker_data.vhdx'
+New-Item -ItemType Directory -Path 'E:\Prenos\Docker' -ErrorAction Stop
+Copy-Item -LiteralPath $dockerDisk -Destination 'E:\Prenos\Docker\docker_data.vhdx' -ErrorAction Stop
+Get-FileHash -LiteralPath $dockerDisk -Algorithm SHA256
+Get-FileHash -LiteralPath 'E:\Prenos\Docker\docker_data.vhdx' -Algorithm SHA256
+</code></pre>
+<p>Obě hodnoty <code>Hash</code> musí být shodné.</p>
+<p>Zaznamenej si je pro kontrolu po přenosu a při neshodě zálohu nepoužívej.</p>
+<p>Po úspěšném dokončení můžeš zdrojový Docker Desktop znovu spustit, ale pozdější změny už v této záloze nebudou.</p>
+<p>Disk může obsahovat databáze a přístupové údaje aplikací, proto zálohu chraň stejně jako původní data.</p>
+</details>
+<details>
+<summary>Cílový počítač: obnova a ověření Docker dat</summary>
+<h4 id="1-připrav-cílovou-instalaci-a-ověř-přenos">1. Připrav cílovou instalaci a ověř přenos</h4>
+<p>Připoj přenosový disk se zálohou nebo zkopíruj záložní soubor na cílový počítač a podle jeho umístění uprav cestu v příkazech.</p>
+<p>Připrav WSL 2 a nainstaluj Docker Desktop pro linuxové kontejnery.</p>
+<p>Prvním spuštěním nech vytvořit jeho datové umístění.</p>
+<p>Zjisti skutečnou cestu cílového <code>docker_data.vhdx</code> stejným způsobem jako na zdroji.</p>
+<p>Pokud na cíli už máš vlastní prostředí, řádně zastav jeho aplikace a databáze.</p>
+<p>Potom Docker Desktop úplně ukonči přes <strong>Quit Docker Desktop</strong>.</p>
+<p>Po uložení práce ve všech distribucích WSL spusť:</p>
+<pre><code class="lang-text">wsl --shutdown
+Get-FileHash -LiteralPath 'E:\Prenos\Docker\docker_data.vhdx' -Algorithm SHA256
+</code></pre>
+<p>Hodnota <code>Hash</code> přenesené zálohy musí odpovídat hodnotě zaznamenané na zdroji.</p>
+<p>Při neshodě nepokračuj.</p>
+<h4 id="2-uchovej-cílový-disk-a-nahraď-ho-zálohou">2. Uchovej cílový disk a nahraď ho zálohou</h4>
+<p>V proměnné <code>$cilovyDisk</code> nastav skutečnou cestu cílové instalace a pro původní cílová data zvol novou záložní složku.</p>
+<p>Po celou dobu kopírování a kontroly musí Docker Desktop zůstat ukončený.</p>
+<p>Na disku musí být místo i pro zálohu dosavadních cílových dat.</p>
+<p>Nejprve zazálohuj současný cílový disk:</p>
+<pre><code class="lang-text">$cilovyDisk = 'D:\DockerData\docker_data.vhdx'
+New-Item -ItemType Directory -Path 'D:\Zalohy\Docker-pred-obnovou' -ErrorAction Stop
+Copy-Item -LiteralPath $cilovyDisk -Destination 'D:\Zalohy\Docker-pred-obnovou\docker_data.vhdx' -ErrorAction Stop
+Get-FileHash -LiteralPath $cilovyDisk -Algorithm SHA256
+Get-FileHash -LiteralPath 'D:\Zalohy\Docker-pred-obnovou\docker_data.vhdx' -Algorithm SHA256
+</code></pre>
+<p>Teprve když oba kontrolní součty souhlasí, přepiš cílový datový soubor přenesenou zálohou:</p>
+<pre><code class="lang-text">Copy-Item -LiteralPath 'E:\Prenos\Docker\docker_data.vhdx' -Destination $cilovyDisk -ErrorAction Stop
+Get-FileHash -LiteralPath $cilovyDisk -Algorithm SHA256
+</code></pre>
+<p>Výsledný <code>Hash</code> musí souhlasit se zálohou ze zdrojového počítače.</p>
+<p>Tuto kontrolu proveď ještě před spuštěním Docker Desktopu, který začne disk měnit.</p>
+<h4 id="3-obnov-okolní-soubory-a-zkontroluj-data-aplikací">3. Obnov okolní soubory a zkontroluj data aplikací</h4>
+<p>Před spuštěním enginu obnov také Compose soubory, konfigurace a zdrojové složky bind mountů do očekávaných cest, protože některé kontejnery se mohou automaticky spustit.</p>
+<p>Pokud bind mounty používaly soubory z Ubuntu, nejprve dokonči jeho import a ověř, že cesty odpovídají obnovenému prostředí.</p>
+<p>Spusť Docker Desktop a pro přístup z obnoveného Ubuntu zapni jeho <a href="#2-zapni-integraci-pro-ubuntu">WSL Integration</a>.</p>
+<p>Nastavení aplikace Docker Desktop a zapnutí integrace ověř samostatně.</p>
+<p>Kopie datového disku není zálohou nastavení Windows.</p>
+<pre><code class="lang-text">docker version
+docker image ls
+docker container ls --all
+docker volume ls
+</code></pre>
+<p>Ověř části <strong>Client</strong> a <strong>Server</strong>, porovnej seznamy se zdrojem a spusť své aplikace s obnovenou konfigurací.</p>
+<p>Pokud se změnily cesty bind mountů nebo název distribuce Ubuntu, oprav konfiguraci a znovu vytvoř dotčené kontejnery.</p>
+<p>U Compose spusť ze správné distribuce a složky projektu:</p>
+<pre><code class="lang-text">docker compose up --detach --force-recreate
+</code></pre>
+<p>Zachovej původní název projektu Compose a názvy volumes, aby aplikace použily obnovená data. <a href="https://docs.docker.com/reference/cli/docker/compose/up/">Opětovné vytvoření kontejnerů pomocí Compose</a></p>
+<p>Zkontroluj konkrétní uložená data, například záznamy v databázi nebo nahrané soubory.</p>
+<p>Samotná přítomnost volume ani úspěšné <code>hello-world</code> tuto kontrolu nenahrazují.</p>
+<p>Původní zálohy ponech do dokončení kontroly.</p>
+<p>Při návratu k předchozímu cílovému stavu Docker Desktop opět úplně ukonči a stejným postupem vrať jeho disk ze složky <code>Docker-pred-obnovou</code>.</p>
+</details>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

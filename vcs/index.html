@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Verzov&#225;n&#237; | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Verzov&#225;n&#237; | V&#253;voj&#225;ř ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/index.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="verzování">Verzování</h1>
+<!-- Tento soubor generuje npm run docs:generate. Neupravujte navigaci ani přehledy ručně. -->
+
+<p>Praktické postupy pro Git, větve, historii a běžnou správu repozitářů.</p>
+<h2 id="přehled-stránek">Přehled stránek</h2>
+<h3 id="začínáme-s-gitem">Začínáme s Gitem</h3>
+<table>
+<thead>
+<tr>
+<th>Stránka</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="git/basics.html">Principy a orientace</a></td>
+<td>Pracovní soubory, index, commity, větve a vztah lokálního Gitu k serveru.</td>
+</tr>
+<tr>
+<td><a href="git/workflows.html">Výběr způsobu práce</a></td>
+<td>Výběr mezi jednou větví, krátkými pracovními větvemi a odděleným vydáváním.</td>
+</tr>
+<tr>
+<td><a href="git/configuration.html">Nastavení</a></td>
+<td>Identita autora, editor, konce řádků a kontrola účinného nastavení.</td>
+</tr>
+<tr>
+<td><a href="git/repository.html">Založení a klonování</a></td>
+<td>Založení projektu, klonování existující historie a první ověřený commit.</td>
+</tr>
+<tr>
+<td><a href="git/server.html">Připojení serveru</a></td>
+<td>Připojení remote, volba HTTPS nebo SSH a změna cílové adresy.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="každodenní-práce">Každodenní práce</h3>
+<table>
+<thead>
+<tr>
+<th>Stránka</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="git/in-practice.html">Běžný pracovní den</a></td>
+<td>Kontrola změn, příprava části souboru, commit a dokončení běžného pracovního dne.</td>
+</tr>
+<tr>
+<td><a href="git/branches/create-remote-branch.html">Vytvoření a výběr větve</a></td>
+<td>Založení větve ze zvoleného základu, přepínání a první push.</td>
+</tr>
+<tr>
+<td><a href="git/synchronization.html">Synchronizace a push</a></td>
+<td>Načtení a odeslání commitů, rozcházející se větve a odmítnutý push.</td>
+</tr>
+<tr>
+<td><a href="git/merging.html">Slučování a konflikty</a></td>
+<td>Fast-forward, merge, squash a rebase včetně vyřešení nebo zrušení konfliktu.</td>
+</tr>
+<tr>
+<td><a href="git/branches/pull-request.html">Pull request</a></td>
+<td>Vlastní kontrola změny na hostingu, sloučení a následná aktualizace místní kopie.</td>
+</tr>
+<tr>
+<td><a href="git/stash-worktree.html">Stash a worktree</a></td>
+<td>Dočasné odložení souborů nebo práce na druhé větvi v samostatné složce.</td>
+</tr>
+<tr>
+<td><a href="git/branches/delete-remote-branch.html">Odstranění větve</a></td>
+<td>Úklid dokončené místní i vzdálené větve a možnost obnovení.</td>
+</tr>
+<tr>
+<td><a href="git/history/update-gitignore.html">.gitignore</a></td>
+<td>Pravidla pro generované a místní soubory a ukončení sledování existující položky.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="historie-a-řešení-problémů">Historie a řešení problémů</h3>
+<table>
+<thead>
+<tr>
+<th>Stránka</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="git/recovery.html">Obnova při chybě</a></td>
+<td>Volba opravy podle stavu změny, záchrana přes reflog a řešení běžných chyb.</td>
+</tr>
+<tr>
+<td><a href="git/history/reading.html">Čtení historie a bisect</a></td>
+<td>Porovnání verzí, historie souboru a nalezení commitu, který zavedl chybu.</td>
+</tr>
+<tr>
+<td><a href="git/history/fix-commits.html">Oprava commitů</a></td>
+<td>Oprava posledního i staršího commitu a pravidla publikování přepsané vlastní větve.</td>
+</tr>
+<tr>
+<td><a href="git/history/delete-commits.html">Vrácení změny</a></td>
+<td>Vrácení zveřejněné chyby revertem a návrat místní větve pomocí resetu.</td>
+</tr>
+<tr>
+<td><a href="git/history/move-commits.html">Přesun commitů</a></td>
+<td>Přesun posledních commitů do nové i existující větve včetně úklidu zdroje, merge a cherry-pick.</td>
+</tr>
+<tr>
+<td><a href="git/history/squash-branch-commits.html">Spojení commitů</a></td>
+<td>Spojení vlastních pracovních commitů nebo squash až při sloučení do cíle.</td>
+</tr>
+<tr>
+<td><a href="git/history/replace-history.html">Nahrazení celé historie</a></td>
+<td>Nahrazení historie vzdálené větve jediným kořenovým commitem z aktuálního místního obsahu.</td>
+</tr>
+<tr>
+<td><a href="git/history/assume-unchanged.html">Lokální konfigurace</a></td>
+<td>Oddělení lokální konfigurace a limity příznaků sledovaných souborů.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="vydávání-a-správa-projektu">Vydávání a správa projektu</h3>
+<table>
+<thead>
+<tr>
+<th>Stránka</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="git/releases.html">Tagy a vydání</a></td>
+<td>Označení ověřeného vydání tagem, publikování a návrat k vydané verzi.</td>
+</tr>
+<tr>
+<td><a href="git/backups.html">Záloha a migrace</a></td>
+<td>Přenos celého projektu, offline bundle, LFS a řízená migrace na jiný server.</td>
+</tr>
+<tr>
+<td><a href="git/submodules.html">Submoduly</a></td>
+<td>Připojení cizího repozitáře na konkrétní commit a jeho aktualizace.</td>
+</tr>
+<tr>
+<td><a href="git/git-flow.html">Git Flow</a></td>
+<td>Oddělený vývoj, příprava vydání a naléhavé opravy při použití Git Flow.</td>
+</tr>
+</tbody>
+</table>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Windows – nastaven&#237; a řešen&#237; probl&#233;mů | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Windows – nastaven&#237; a řešen&#237; probl&#233;mů | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="M&#237;stn&#237; &#250;čet, nastaven&#237; hodin a rychl&#233; vstupy k běžn&#253;m probl&#233;mům Windows.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/operating-system/windows/index.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="windows--nastavení-a-řešení-problémů">Windows – nastavení a řešení problémů</h1>
+
+<p>Vyber konkrétní úlohu.</p>
+<p>Pro práci v terminálu vždy rozliš CMD a PowerShell.</p>
+<h2 id="kam-pokračovat">Kam pokračovat</h2>
+<table>
+<thead>
+<tr>
+<th>Potřebuji</th>
+<th>Postup</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pochopit závorky a hodnoty v příkazu</td>
+<td><a href="../command-line-syntax.html">Klíč syntaxe</a></td>
+</tr>
+<tr>
+<td>Pracovat se soubory a skripty</td>
+<td><a href="powershell.html">PowerShell</a> nebo <a href="cmd.html">CMD</a></td>
+</tr>
+<tr>
+<td>Nastavit profil a prompt</td>
+<td><a href="terminal.html">Prostředí PowerShellu</a></td>
+</tr>
+<tr>
+<td>Pořizovat snímky klávesou Print Screen</td>
+<td><a href="flameshot.html">Flameshot místo Výstřižků</a></td>
+</tr>
+<tr>
+<td>Odstranit problematickou položku</td>
+<td><a href="cannot-delete-item.html">Diagnostika souboru a cesty</a></td>
+</tr>
+<tr>
+<td>Zpřístupnit SSD instalátoru</td>
+<td><a href="installation-missing-ssd.html">Ovladač řadiče a výběr disku</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="místní-účet-místo-microsoft-účtu">Místní účet místo Microsoft účtu</h2>
+<p>Ve funkčních osobních Windows:</p>
+<ol>
+<li>Otevři <strong>Nastavení → Účty → Vaše informace</strong>.</li>
+<li>Zvol <strong>Přihlásit se místo toho místním účtem</strong>.</li>
+<li>Dokonči ověření a nastav místní jméno a heslo.</li>
+<li>Odhlas se, přihlas místním účtem a ověř své soubory i aplikace.</li>
+</ol>
+<p>Přepnutí mění způsob přihlášení ke stávajícímu profilu.</p>
+<p>OneDrive a další aplikace mohou mít samostatné účty.</p>
+<p>Volby během první instalace závisejí na edici, sestavení a správě zařízení, proto používej přímo nabízenou podporovanou možnost a nestav postup na neudržovaných obchvatech OOBE.</p>
+<p>Oficiální kroky a návrat popisuje <a href="https://support.microsoft.com/en-us/accounts-billing/manage/change-from-a-local-account-to-a-microsoft-account-in-windows">Microsoft: změna typu účtu</a>.</p>
+<h2 id="sekundy-v-hodinách-windows-11">Sekundy v hodinách Windows 11</h2>
+<p>V nastavení <strong>Datum a čas</strong> vyhledej zobrazení času v oznamovací oblasti a zapni <strong>Zobrazovat sekundy</strong>.</p>
+<p>Ve starších sestaveních může být volba v <strong>Přizpůsobení → Hlavní panel → Chování hlavního panelu</strong>.</p>
+<p>Následující snímek ukazuje nastavení v části Datum a čas.</p>
+<img src="../../images/t9hZzZp1FO.png" alt="Volba sekund v nastavení data a času" width="720">
+<p><a href="../../images/t9hZzZp1FO.png">Zobrazit obrázek v původní velikosti</a></p>
+<p>Zobrazení sekund může mírně zvýšit spotřebu.</p>
+<p>Umístění volby popisuje <a href="https://support.microsoft.com/en-US/Windows/Experience/Personalization/customize-the-taskbar-in-windows">Microsoft: hlavní panel</a>.</p>
+<h2 id="užitečné-zkratky-průzkumníku">Užitečné zkratky Průzkumníku</h2>
+<table>
+<thead>
+<tr>
+<th>Zkratka</th>
+<th>Výsledek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Alt+D</code></td>
+<td>Vybere adresní řádek pro zadání nebo kopírování cesty</td>
+</tr>
+<tr>
+<td><code>Shift+F10</code></td>
+<td>Otevře kontextovou nabídku vybrané položky</td>
+</tr>
+<tr>
+<td><code>Win+D</code></td>
+<td>Zobrazí plochu nebo vrátí okna</td>
+</tr>
+</tbody>
+</table>
+<img src="../../images/windows_keyboard_explorerAddressBar.png" alt="Adresní řádek Průzkumníku vybraný pro zadání cesty" width="640">
+<p><a href="../../images/windows_keyboard_explorerAddressBar.png">Zobrazit obrázek v původní velikosti</a></p>
+<p>Do vybraného řádku lze napsat <code>cmd</code> a otevřít CMD v této složce.</p>
+<p>Neznamená to spuštění jako správce.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>npm – z&#225;loha a obnova bal&#237;čků | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="npm – z&#225;loha a obnova bal&#237;čků | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Př&#237;prava jedn&#233; npm cache, jej&#237; přenos a obnova projektu či glob&#225;ln&#237;ch n&#225;strojů bez internetu.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/packages/npm.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="npm--záloha-a-obnova-balíčků">npm – záloha a obnova balíčků</h1>
+
+<p>Záloha pro npm má dvě části: <strong>zdrojový projekt s lockfilem a naplněnou npm cache</strong>.</p>
+<p>Cache je složka se staženými instalačními daty.</p>
+<p><code>node_modules</code> na cíli vytvoří npm znovu.</p>
+<p>Postup je pro npm 11 a funguje v PowerShellu i Bashi.</p>
+<p>Na cíli použij stejnou verzi Node.js, npm, OS a architekturu.</p>
+<h2 id="1-připrav-zálohu-s-internetem">1. Připrav zálohu s internetem</h2>
+<p>Vytvoř <code>zaloha-npm/projekt</code> jako kopii projektu bez <code>node_modules</code>.</p>
+<p>Zachovej <code>package.json</code>, <code>package-lock.json</code>, celý workspace, místní závislosti a instalační nastavení <code>.npmrc</code>.</p>
+<p>Přihlašovací tokeny uchovávej zvlášť.</p>
+<p>V této kopii projektu spusť:</p>
+<pre><code class="lang-bash">npm ci --include=dev --cache ../npm-cache --no-audit --no-fund
+</code></pre>
+<p>Tím se připraví přesné verze z lockfilu a jejich instalační data v sousední <code>npm-cache</code>.</p>
+<p><code>--include=dev</code> zahrne také nástroje pro build a testy, i při nastaveném <code>NODE_ENV=production</code>. <a href="https://docs.npmjs.com/cli/v11/commands/npm-ci/">Npm ci</a></p>
+<h2 id="2-přenes-celou-složku">2. Přenes celou složku</h2>
+<pre><code class="lang-text">zaloha-npm/
+  projekt/       zdroje, manifest, lockfile a konfigurace
+  npm-cache/     celá připravená cache
+</code></pre>
+<p>Přípravné <code>node_modules</code> nepřenášej.</p>
+<p>Cache kopíruj až po skončení instalace a nečisti ji.</p>
+<p>Přilož verze z <code>node --version</code> a <code>npm --version</code> i instalátor Node.js pro cílový počítač.</p>
+<p>Ve Windows zvol krátkou cestu k záloze, protože cache obsahuje dlouhé názvy souborů.</p>
+<h2 id="3-obnov-bez-internetu">3. Obnov bez internetu</h2>
+<p>Na cíli rozbal pracovní kopii zálohy a v jejím <code>projekt</code> spusť:</p>
+<pre><code class="lang-bash">npm ci --offline --include=dev --cache ../npm-cache --no-audit --no-fund
+npm ls --all
+</code></pre>
+<p><code>--offline</code> použije pouze přenesenou cache.</p>
+<p>Chybějící balíček skončí chybou <code>ENOTCACHED</code>. <a href="https://docs.npmjs.com/cli/v11/using-npm/config/#offline">Offline režim</a></p>
+<p>Nakonec spusť build, testy a běžnou aplikaci bez připojení.</p>
+<p>Lockfile se nemá změnit.</p>
+<p><code>npm ci</code> nahrazuje stávající <code>node_modules</code>, proto zkoušej obnovu v pracovní kopii.</p>
+<h2 id="chci-zálohovat-celou-používanou-cache">Chci zálohovat celou používanou cache</h2>
+<p>Její cestu zjistíš příkazem:</p>
+<pre><code class="lang-bash">npm config get cache
+</code></pre>
+<p>Zkopíruj celý vypsaný adresář jako <code>npm-cache</code> a použij stejný příkaz obnovy výše.</p>
+<p>Pro více projektů předem proveď jejich instalaci a uchovej zdroje i lockfile každého z nich.</p>
+<p><code>npm cache verify</code> kontroluje integritu cache, ale její úplnost pro projekt prokáže až úspěšná obnova. <a href="https://docs.npmjs.com/cli/v11/commands/npm-cache/">Npm cache</a></p>
+<h2 id="globální-nástroje">Globální nástroje</h2>
+<p>Ulož si seznam <code>npm list --global --depth=0</code> a připrav přesné verze nástrojů.</p>
+<p>Například TypeScript stáhneš do stejné zálohy z její složky <code>projekt</code>:</p>
+<pre><code class="lang-bash">npm install --global --prefix ../priprava-tools typescript@5.9.3 --cache ../npm-cache --no-audit --no-fund
+</code></pre>
+<p>Pomocná <code>priprava-tools</code> slouží jen k naplnění cache a nepřenáší se.</p>
+<p>Na cíli ze stejné relativní složky:</p>
+<pre><code class="lang-bash">npm install --global typescript@5.9.3 --offline --cache ../npm-cache --no-audit --no-fund
+tsc --version
+</code></pre>
+<p>Název a verzi nahraď podle uloženého seznamu.</p>
+<p>Při zkoušce na původním počítači použij novou vlastní <code>--prefix</code> složku. <a href="https://docs.npmjs.com/cli/v11/commands/npm-install/">Npm install</a></p>
+<p>Globální instalace neuzamyká všechny nepřímé závislosti lockfilem.</p>
+<p>Pro přesně opakovatelnou dlouhodobou zálohu nástroje jej můžeš spravovat v samostatném projektu s lockfilem.</p>
+<h2 id="co-ještě-zachovat">Co ještě zachovat</h2>
+<ul>
+<li>Lokální a Git závislosti, patche a nastavení, se kterými vznikl lockfile, například <code>legacy-peer-deps</code>.</li>
+<li>Nativní nástroje a data stahovaná instalačními skripty, například prohlížeče nebo binární knihovny.</li>
+<li>Původní uloženou zálohu odděleně od pracovní cache. Cache npm nemá záruku trvalého archivu.</li>
+</ul>
+<p><code>--prefer-offline</code> může použít internet a <code>npm pack</code> běžně nezabalí celý strom závislostí, proto tyto příkazy nenahrazují uvedenou obnovu.</p>
+<p>S internetem stačí v přeneseném projektu <code>npm ci --include=dev</code>.</p>
+<p>Audit zranitelností proveď při online přípravě a po návratu k registru.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>.NET – kolekce a souvisej&#237;c&#237; typy | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=".NET – kolekce a souvisej&#237;c&#237; typy | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="V&#253;běr kolekc&#237; podle způsobu př&#237;stupu, vyhled&#225;v&#225;n&#237; a změn dat.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/csharp/data-types.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="net--kolekce-a-související-typy">.NET – kolekce a související typy</h1>
+
+<p>Kolekci vybírej podle přístupu k prvkům, pořadí, jedinečnosti a požadavků na souběh.</p>
+<h2 id="seznamy-slovníky-a-množiny">Seznamy, slovníky a množiny</h2>
+<table>
+<thead>
+<tr>
+<th>Typ</th>
+<th>Vhodné použití</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>T[]</code></td>
+<td>Indexovaný počet prvků, který se po vytvoření pole nemění</td>
+</tr>
+<tr>
+<td><code>List&lt;T&gt;</code></td>
+<td>Běžný měnitelný seznam</td>
+</tr>
+<tr>
+<td><code>LinkedList&lt;T&gt;</code></td>
+<td>Vkládání a mazání přes známý uzel. Nalezení uzlu stále může vyžadovat průchod</td>
+</tr>
+<tr>
+<td><code>Dictionary&lt;TKey,TValue&gt;</code></td>
+<td>Vyhledání hodnoty podle jedinečného klíče</td>
+</tr>
+<tr>
+<td><code>SortedDictionary&lt;TKey,TValue&gt;</code></td>
+<td>Slovník s pořadím podle klíče</td>
+</tr>
+<tr>
+<td><code>HashSet&lt;T&gt;</code></td>
+<td>Jedinečné hodnoty podle použitého porovnávače</td>
+</tr>
+<tr>
+<td><code>SortedSet&lt;T&gt;</code></td>
+<td>Jedinečné hodnoty v seřazeném pořadí</td>
+</tr>
+</tbody>
+</table>
+<p>Starší <code>Hashtable</code> je negenerický slovník, nikoli množina.</p>
+<p>Pro nový typovaný kód zpravidla použij <code>Dictionary&lt;TKey,TValue&gt;</code>. <a href="https://learn.microsoft.com/en-us/dotnet/standard/collections/selecting-a-collection-class">Výběr kolekce</a></p>
+<h2 id="fifolifo-kolekce">FIFO/LIFO kolekce</h2>
+<p><code>Queue&lt;T&gt;</code> vrací prvky v pořadí vložení, <code>Stack&lt;T&gt;</code> od posledního vloženého.</p>
+<pre><code class="lang-csharp">var queue = new Queue&lt;int&gt;();
+queue.Enqueue(1);
+queue.Enqueue(2);
+Console.WriteLine(queue.Dequeue()); // 1
+
+var stack = new Stack&lt;int&gt;();
+stack.Push(1);
+stack.Push(2);
+Console.WriteLine(stack.Pop()); // 2
+</code></pre>
+<p><code>PriorityQueue&lt;TElement,TPriority&gt;</code> má dva typové parametry a odebírá nejnižší hodnotu priority:</p>
+<pre><code class="lang-csharp">var jobs = new PriorityQueue&lt;string, int&gt;();
+jobs.Enqueue(&quot;Běžná úloha&quot;, 10);
+jobs.Enqueue(&quot;Naléhavá úloha&quot;, 1);
+Console.WriteLine(jobs.Dequeue()); // Naléhavá úloha
+</code></pre>
+<p>Při shodné prioritě pořadí vložení není zaručené. <a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.priorityqueue-2">PriorityQueue</a></p>
+<h2 id="kolekce-pouze-pro-čtení-a-neměnné-kolekce">Kolekce pouze pro čtení a neměnné kolekce</h2>
+<p><code>ReadOnlyCollection&lt;T&gt;</code> a <code>ReadOnlyDictionary&lt;TKey,TValue&gt;</code> omezují změny přes obal.</p>
+<p>Původní kolekce se stále může měnit.</p>
+<pre><code class="lang-csharp">var source = new List&lt;int&gt; { 1, 2 };
+var view = source.AsReadOnly();
+source.Add(3);
+Console.WriteLine(view.Count); // 3
+</code></pre>
+<p><a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.objectmodel.readonlycollection-1">ReadOnlyCollection</a></p>
+<p>Typy z <code>System.Collections.Immutable</code> při změně vracejí novou hodnotu kolekce:</p>
+<pre><code class="lang-csharp">using System.Collections.Immutable;
+
+var original = ImmutableList.Create(1, 2);
+var extended = original.Add(3);
+Console.WriteLine($&quot;{original.Count}, {extended.Count}&quot;); // 2, 3
+</code></pre>
+<p>K dispozici jsou také <code>ImmutableArray</code>, <code>ImmutableDictionary</code>, <code>ImmutableHashSet</code>, <code>ImmutableSortedSet</code>, <code>ImmutableQueue</code> a <code>ImmutableStack</code>.</p>
+<p>Neměnnost kolekce nezaručuje neměnnost objektů uložených uvnitř. <a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.immutable">Neměnné kolekce</a></p>
+<h2 id="pozorovatelné-kolekce">Pozorovatelné kolekce</h2>
+<p><code>ObservableCollection&lt;T&gt;</code> hlásí přidání, odebrání a další změny kolekce.</p>
+<p>Změny vlastností jednotlivé položky musí hlásit samotná položka, například přes <code>INotifyPropertyChanged</code>. <a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.objectmodel.observablecollection-1">ObservableCollection</a></p>
+<h2 id="kolekce-pro-více-vláken">Kolekce pro více vláken</h2>
+<table>
+<thead>
+<tr>
+<th>Typ</th>
+<th>Účel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ConcurrentQueue&lt;T&gt;</code>, <code>ConcurrentStack&lt;T&gt;</code></td>
+<td>Fronta nebo zásobník pro souběžné operace</td>
+</tr>
+<tr>
+<td><code>ConcurrentDictionary&lt;TKey,TValue&gt;</code></td>
+<td>Souběžná práce se slovníkem</td>
+</tr>
+<tr>
+<td><code>ConcurrentBag&lt;T&gt;</code></td>
+<td>Neuspořádané ukládání položek</td>
+</tr>
+<tr>
+<td><code>BlockingCollection&lt;T&gt;</code></td>
+<td>Producent/konzument s blokujícím čekáním. Plnost blokuje jen při nastavené kapacitě</td>
+</tr>
+</tbody>
+</table>
+<p>Bezpečnost jednotlivých operací nezaručuje atomicitu složeného postupu „ověř a potom změň“. <a href="https://learn.microsoft.com/en-us/dotnet/standard/collections/thread-safe/">Kolekce pro souběh</a></p>
+<h2 id="tuple-paměť-a-slabé-reference">Tuple, paměť a slabé reference</h2>
+<p><code>Tuple</code> a hodnotové n-tice seskupují pevně dané položky různých typů.</p>
+<p>Nejde o obecné rozšiřitelné kolekce.</p>
+<p><code>Span&lt;T&gt;</code> a <code>Memory&lt;T&gt;</code> představují pohled na souvislou oblast paměti. <a href="https://learn.microsoft.com/en-us/dotnet/standard/memory-and-spans/">Memory a Span</a></p>
+<p><code>WeakReference&lt;T&gt;</code> nepřidržuje cílový objekt proti GC a vyžaduje referenční typ, takže <code>WeakReference&lt;int&gt;</code> není platné.</p>
+<p>Před použitím cíle vždy ověř <code>TryGetTarget</code>. <a href="https://learn.microsoft.com/en-us/dotnet/api/system.weakreference-1">WeakReference</a></p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

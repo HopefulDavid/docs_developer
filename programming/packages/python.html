@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Python – z&#225;loha a obnova bal&#237;čků | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Python – z&#225;loha a obnova bal&#237;čků | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Uložen&#237; verz&#237; Python bal&#237;čků, př&#237;prava složky wheelhouse a obnova nov&#233;ho prostřed&#237; bez internetu.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/packages/python.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="python--záloha-a-obnova-balíčků">Python – záloha a obnova balíčků</h1>
+
+<p>Pro offline obnovu ulož <strong>seznam verzí a wheelhouse</strong>, tedy složku s instalačními balíčky <code>.whl</code>.</p>
+<p>Postup níže je pro PowerShell ve Windows a fungující projekt s prostředím <code>.venv</code>.</p>
+<p>Na cíli použij stejnou verzi a implementaci Pythonu, OS a architekturu.</p>
+<p>Na Linuxu a macOS místo <code>.venv/Scripts/python.exe</code> používej <code>.venv/bin/python</code>.</p>
+<h2 id="1-připrav-balíčky-s-internetem">1. Připrav balíčky s internetem</h2>
+<p>V původním fungujícím projektu spusť:</p>
+<pre><code class="lang-powershell">./.venv/Scripts/python.exe -m pip freeze | Set-Content -Encoding utf8 requirements-backup.txt
+./.venv/Scripts/python.exe -m pip download --only-binary=:all: `
+  --dest ../zaloha-python/wheelhouse -r requirements-backup.txt
+</code></pre>
+<p>První příkaz uloží nainstalované verze včetně nepřímých závislostí.</p>
+<p>Druhý k nim stáhne instalační soubory. <a href="https://pip.pypa.io/en/stable/cli/pip_freeze/">Pip freeze</a>, <a href="https://pip.pypa.io/en/stable/cli/pip_download/">pip download</a></p>
+<p><code>--only-binary=:all:</code> vyžaduje hotové wheely, aby se na offline počítači nemusela připravovat jejich sestavovací prostředí.</p>
+<p>Pokud některý balíček hotový wheel nemá, vytvoř jej online na kompatibilním počítači s potřebnými build nástroji:</p>
+<pre><code class="lang-powershell">./.venv/Scripts/python.exe -m pip wheel `
+  --wheel-dir ../zaloha-python/wheelhouse -r requirements-backup.txt
+</code></pre>
+<p>Obsahuje-li seznam <code>-e</code>, URL nebo místní cestu, použij níže variantu pro vlastní balíčky.</p>
+<h2 id="2-přenes-projekt-a-wheelhouse">2. Přenes projekt a wheelhouse</h2>
+<p>Zkopíruj zdroje projektu včetně nového <code>requirements-backup.txt</code> do <code>zaloha-python/projekt</code>:</p>
+<pre><code class="lang-text">zaloha-python/
+  projekt/       zdroje a requirements-backup.txt
+  wheelhouse/    všechny připravené .whl
+</code></pre>
+<p>Původní <code>requirements.txt</code>, <code>pyproject.toml</code> a další projektové soubory zachovej.</p>
+<p><code>.venv</code> nepřenášej: vytvoří se znovu a nebude obsahovat cesty ke starému počítači. <a href="https://docs.python.org/3/library/venv.html#how-venvs-work">Přenositelnost venv</a></p>
+<p>Přilož výstup <code>./.venv/Scripts/python.exe --version</code> a připrav instalátor odpovídajícího Pythonu.</p>
+<h2 id="3-obnov-bez-internetu">3. Obnov bez internetu</h2>
+<p>Na cíli rozbal pracovní kopii zálohy a v jejím <code>projekt</code>, kde ještě není <code>.venv</code>, spusť:</p>
+<pre><code class="lang-powershell">python -m venv .venv
+./.venv/Scripts/python.exe -m pip install --no-index `
+  --find-links=../wheelhouse --only-binary=:all: --no-cache-dir `
+  -r requirements-backup.txt
+./.venv/Scripts/python.exe -m pip check
+</code></pre>
+<p><code>--no-index</code> vypne registr, <code>--find-links</code> určí složku balíčků a <code>--no-cache-dir</code> zabrání využití staré pip cache. <a href="https://pip.pypa.io/en/stable/cli/pip_install/">Pip install</a></p>
+<p>Aktivace prostředí není nutná, protože příkazy používají přímo jeho Python.</p>
+<p>Nakonec spusť testy a běžnou aplikaci bez připojení.</p>
+<p><code>pip check</code> ověřuje pouze deklarované závislosti.</p>
+<h2 id="více-projektů-nebo-obnova-s-internetem">Více projektů nebo obnova s internetem</h2>
+<p>Každý projekt potřebuje vlastní seznam verzí.</p>
+<p>Kompatibilní wheely mohou sdílet jednu složku.</p>
+<p>Pro jiný Python nebo platformu připrav a ověř samostatný wheelhouse.</p>
+<p>S internetem stačí v novém prostředí <code>./.venv/Scripts/python.exe -m pip install -r requirements-backup.txt</code>.</p>
+<h2 id="vlastní-git-a-editovatelné-balíčky">Vlastní, Git a editovatelné balíčky</h2>
+<p><code>--no-index</code> neblokuje URL přímo uvedenou v seznamu, proto musí mít offline seznam názvy a verze místo původních cest.</p>
+<p>Ve fungujícím prostředí sestav každý vlastní balíček a potom ulož přenositelný seznam.</p>
+<p>Příklad pro sousední <code>moje-knihovna</code>:</p>
+<pre><code class="lang-powershell">./.venv/Scripts/python.exe -m pip wheel --no-deps `
+  --wheel-dir ../zaloha-python/wheelhouse ../moje-knihovna
+./.venv/Scripts/python.exe -m pip list --format=freeze --exclude pip |
+  Set-Content -Encoding utf8 requirements-offline.txt
+./.venv/Scripts/python.exe -m pip download --only-binary=:all: `
+  --find-links=../zaloha-python/wheelhouse `
+  --dest ../zaloha-python/wheelhouse -r requirements-offline.txt
+</code></pre>
+<p>První příkaz zopakuj pro všechny vlastní balíčky.</p>
+<p>Jejich verze musí odpovídat tomu, co máš nainstalované. <a href="https://pip.pypa.io/en/stable/cli/pip_wheel/">Pip wheel</a>, <a href="https://pip.pypa.io/en/stable/cli/pip_list/">pip list</a></p>
+<p>Do zálohy přidej <code>requirements-offline.txt</code> a v kroku 3 jej použij místo <code>requirements-backup.txt</code>.</p>
+<p>Zdrojové repozitáře uchovej také, protože wheel sám neobnoví editovatelnou vývojovou vazbu ani historii.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

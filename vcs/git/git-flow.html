@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Git Flow – větve pro pl&#225;novan&#225; vyd&#225;n&#237; | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git Flow – větve pro pl&#225;novan&#225; vyd&#225;n&#237; | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Oddělen&#253; v&#253;voj, př&#237;prava vyd&#225;n&#237; a nal&#233;hav&#233; opravy při použit&#237; Git Flow.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/git-flow.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git-flow--větve-pro-plánovaná-vydání">Git Flow – větve pro plánovaná vydání</h1>
+
+<p>Git Flow odděluje přípravu příští verze od stabilní verze a oprav již vydaného produktu.</p>
+<h2 id="kdy-se-hodí">Kdy se hodí</h2>
+<p>Model dává smysl například při plánovaných vydáních a souběžné podpoře více verzí.</p>
+<p>Není univerzálním pravidlem pro každý repozitář.</p>
+<p>I autor modelu doporučuje pro průběžně dodávané webové aplikace zvážit jednodušší tok. <a href="https://nvie.com/posts/a-successful-git-branching-model/">Původní model a doplnění autora</a></p>
+<p>Pro jednodušší model nejprve porovnej <a href="workflows.html">způsoby práce pro solo vývojáře</a>.</p>
+<h2 id="jak-fungují-větve">Jak fungují větve</h2>
+<table>
+<thead>
+<tr>
+<th>Větev</th>
+<th>Úloha</th>
+<th>Začíná z</th>
+<th>Změny se vracejí do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>main</code></td>
+<td>Vydané verze</td>
+<td>Výchozí historie</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>develop</code></td>
+<td>Příští vydání</td>
+<td><code>main</code></td>
+<td>Přes release do <code>main</code></td>
+</tr>
+<tr>
+<td><code>feature/*</code></td>
+<td>Jedna funkce</td>
+<td><code>develop</code></td>
+<td><code>develop</code></td>
+</tr>
+<tr>
+<td><code>release/*</code></td>
+<td>Stabilizace vydání</td>
+<td><code>develop</code></td>
+<td><code>main</code> i <code>develop</code></td>
+</tr>
+<tr>
+<td><code>hotfix/*</code></td>
+<td>Oprava vydané verze</td>
+<td><code>main</code></td>
+<td><code>main</code> i <code>develop</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="před-použitím">Před použitím</h2>
+<p>Pro vlastní projekt si zapiš názvy větví, způsob kontroly a vydávání.</p>
+<p>Existující pravidla projektu mají přednost před tímto obecným příkladem.</p>
+<p>Příkazy předpokládají čistý pracovní strom, existující <code>main</code> a <code>develop</code> a oprávnění slučovat.</p>
+<p>Chráněné větve slučuj prostřednictvím PR.</p>
+<h2 id="praktické-použití">Praktické použití</h2>
+<h3 id="příprava-vývojové-větve">Příprava vývojové větve</h3>
+<p>Pokud máš pouze čistou aktuální <code>main</code> s prvním commitem, jednorázově vytvoř <code>develop</code>:</p>
+<pre><code class="lang-bash">git switch main
+git switch -c develop
+</code></pre>
+<p>Tím začne vývojová větev ze stejného stavu jako stabilní.</p>
+<p>Existující <code>develop</code> znovu nevytvářej.</p>
+<h3 id="nová-funkce">Nová funkce</h3>
+<pre><code class="lang-bash">git switch develop
+git switch -c feature/nova-funkce
+</code></pre>
+<p>Po implementaci vytvoř a otestuj commity.</p>
+<p>Hotovou větev začleň:</p>
+<pre><code class="lang-bash">git switch develop
+git merge --no-ff feature/nova-funkce
+</code></pre>
+<p><code>--no-ff</code> zachová merge commit i tam, kde by šel provést prostý posun větve.</p>
+<h3 id="vydání">Vydání</h3>
+<pre><code class="lang-bash">git switch develop
+git switch -c release/1.0.0
+</code></pre>
+<p>Na release větvi dokonči opravy, verzi a testy, potom:</p>
+<pre><code class="lang-bash">git switch main
+git merge --no-ff release/1.0.0
+git tag -a v1.0.0 -m &quot;Verze 1.0.0&quot;
+git switch develop
+git merge --no-ff release/1.0.0
+</code></pre>
+<p>Tag vzniká na vydaném commitu v <code>main</code>, ještě před přepnutím do <code>develop</code>.</p>
+<h3 id="oprava-vydané-verze">Oprava vydané verze</h3>
+<p>V čistém stromu vyjdi ze skutečně vydaného stavu:</p>
+<pre><code class="lang-bash">git switch main
+git switch -c hotfix/oprava
+</code></pre>
+<p>Po opravě vytvoř běžný commit a otestuj výsledek, potom:</p>
+<pre><code class="lang-bash">git switch main
+git merge --no-ff hotfix/oprava
+git tag -a v1.0.1 -m &quot;Oprava verze 1.0.0&quot;
+git switch develop
+git merge --no-ff hotfix/oprava
+</code></pre>
+<p>Oprava musí přijít i do dalšího vývoje, aby se chyba nevrátila v příštím vydání.</p>
+<p>Číslo tagu přizpůsob skutečné verzi a při aktivní release větvi začleň opravu také do ní.</p>
+<h2 id="ověření">Ověření</h2>
+<p><code>git log --graph --oneline --all -20</code> zobrazí návaznost větví a tagů.</p>
+<p>Lokální merge ani tag nejsou automaticky zveřejněné.</p>
+<p>Publikování proveď podle pravidel týmu. <a href="https://git-scm.com/docs/git-merge">Git merge</a>, <a href="https://git-scm.com/docs/git-tag">git tag</a></p>
+<h2 id="publikování-a-úklid">Publikování a úklid</h2>
+<p>Při oprávněném lokálním slučování odešli ověřené větve přes <code>git push origin main develop</code> a konkrétní nový tag přes <code>git push origin &lt;tag&gt;</code>.</p>
+<p>Na hostingu s chráněnými větvemi nahraď místní slučování odpovídajícími PR a následně načti jejich výsledek, než označíš vydaný commit tagem.</p>
+<p>Dokončené feature, release a hotfix větve odstraň až po ověření všech cílových větví podle <a href="branches/delete-remote-branch.html">návodu pro úklid</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

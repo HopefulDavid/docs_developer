@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Dapper – parametrizovan&#233; SQL v .NET | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Dapper – parametrizovan&#233; SQL v .NET | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Parametrizovan&#233; SQL a mapov&#225;n&#237; v&#253;sledků na .NET objekty.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/database/dapper.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="dapper--parametrizované-sql-v-net">Dapper – parametrizované SQL v .NET</h1>
+
+<p>Dapper mapuje výsledky SQL na objekty .NET.</p>
+<p>Dotazy i databázové schéma spravuje aplikace.</p>
+<h2 id="instalace">Instalace</h2>
+<p>V existujícím konzolovém projektu .NET přidej Dapper a provider pro SQL Server:</p>
+<pre><code class="lang-powershell">dotnet add package Dapper
+dotnet add package Microsoft.Data.SqlClient
+</code></pre>
+<p>Pro jinou databázi zvol její ADO.NET provider. <a href="https://github.com/DapperLib/Dapper">Dapper</a></p>
+<h2 id="připojení-a-dotaz">Připojení a dotaz</h2>
+<p>Příklad předpokládá dostupný SQL Server, oprávnění ke čtení a tabulku <code>dbo.Users</code> se sloupci <code>Id int</code>, <code>Name nvarchar(100)</code> a <code>Age int</code>.</p>
+<p>Do proměnné prostředí <code>APP_DB_CONNECTION</code> nastav připojovací řetězec svého vývojového prostředí.</p>
+<p>V <code>Program.cs</code> použij:</p>
+<pre><code class="lang-csharp">using Dapper;
+using Microsoft.Data.SqlClient;
+
+var connectionString = Environment.GetEnvironmentVariable(&quot;APP_DB_CONNECTION&quot;)
+    ?? throw new InvalidOperationException(&quot;Chybí APP_DB_CONNECTION.&quot;);
+
+await using var connection = new SqlConnection(connectionString);
+await connection.OpenAsync();
+
+var users = await connection.QueryAsync&lt;User&gt;(
+    &quot;SELECT Id, Name, Age FROM dbo.Users WHERE Age &gt;= @MinAge ORDER BY Id;&quot;,
+    new { MinAge = 18 });
+
+foreach (var user in users)
+{
+    Console.WriteLine($&quot;{user.Id}: {user.Name} ({user.Age})&quot;);
+}
+
+/// &lt;summary&gt;Výsledek dotazu na uživatele.&lt;/summary&gt;
+public sealed class User
+{
+    /// &lt;summary&gt;Identifikátor uživatele.&lt;/summary&gt;
+    public int Id { get; set; }
+
+    /// &lt;summary&gt;Zobrazované jméno.&lt;/summary&gt;
+    public string Name { get; set; } = &quot;&quot;;
+
+    /// &lt;summary&gt;Věk v letech.&lt;/summary&gt;
+    public int Age { get; set; }
+}
+</code></pre>
+<p>Hodnotu <code>MinAge</code> předává objekt parametrů.</p>
+<p>Nevkládej uživatelské hodnoty do SQL interpolací řetězce. <a href="https://github.com/DapperLib/Dapper">Parametry v Dapperu</a></p>
+<h2 id="zápis-dat">Zápis dat</h2>
+<p>Ve stejném otevřeném připojení lze místo dotazu provést:</p>
+<pre><code class="lang-csharp">var changed = await connection.ExecuteAsync(
+    &quot;UPDATE dbo.Users SET Name = @Name WHERE Id = @Id;&quot;,
+    new { Id = 1, Name = &quot;Jana&quot; });
+Console.WriteLine($&quot;Změněné řádky: {changed}&quot;);
+</code></pre>
+<p>Tento příkaz mění data.</p>
+<p>Předpokládá oprávnění k zápisu a správný identifikátor.</p>
+<p>Pro více souvisejících změn použij transakci a předej ji každému příkazu.</p>
+<p>Dapper nevybírej pouze podle obecného příslibu výkonu.</p>
+<p>Rozhodují konkrétní dotazy, indexy, přenos dat a naměřený výsledek.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

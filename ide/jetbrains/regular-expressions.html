@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>JetBrains – hled&#225;n&#237; a nahrazov&#225;n&#237; pomoc&#237; regexu | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="JetBrains – hled&#225;n&#237; a nahrazov&#225;n&#237; pomoc&#237; regexu | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Hled&#225;n&#237; a nahrazov&#225;n&#237; podle vzoru, skupiny, v&#237;ce ř&#225;dků a převod p&#237;smen.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/ide/jetbrains/regular-expressions.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="jetbrains--hledání-a-nahrazování-pomocí-regexu">JetBrains – hledání a nahrazování pomocí regexu</h1>
+
+<p>Regulární výraz, zkráceně regex, popisuje tvar hledaného textu.</p>
+<p>Například <code>TASK-\d+</code> najde <code>TASK-7</code> i <code>TASK-208</code>, aniž bys předem znal konkrétní číslo.</p>
+<h2 id="kdy-použít-regex">Kdy použít regex</h2>
+<table>
+<thead>
+<tr>
+<th>Potřeba</th>
+<th>Vhodný nástroj</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Najít přesné slovo</td>
+<td>Běžné hledání, Regex vypnutý</td>
+</tr>
+<tr>
+<td>Přepsat opakující se formát textu</td>
+<td>Regex a náhled náhrad</td>
+</tr>
+<tr>
+<td>Přejmenovat třídu, metodu nebo proměnnou i s odkazy</td>
+<td>Refactor → Rename</td>
+</tr>
+<tr>
+<td>Změnit strukturu programu nebo vnořeného dokumentu</td>
+<td>Refaktoring, parser nebo strukturální hledání podporované konkrétním IDE</td>
+</tr>
+</tbody>
+</table>
+<p>Hledání v editoru JetBrains používá Java regex.</p>
+<p>Regex v kódu aplikace se dál řídí jazykem aplikace, například .NET v C#. <a href="https://www.jetbrains.com/help/rider/Tutorial_Finding_and_Replacing_Text_Using_Regular_Expressions.html">JetBrains: regex v Rideru</a></p>
+<h2 id="připrav-hledání">Připrav hledání</h2>
+<ol>
+<li>Otevři <strong>Edit → Find → Replace</strong> pro jeden soubor, nebo <strong>Replace in Files</strong> pro více souborů.</li>
+<li>Pro více souborů nastav <strong>Directory / Scope</strong>, aby se úprava týkala správné části projektu.</li>
+<li>Podle potřeby omez <strong>File mask</strong>, například <code>*.cs,*.md</code>.</li>
+<li>Zapni <strong>Regex</strong>, tlačítko <code>.*</code> u hledání.</li>
+<li>Rozhodni, zda zapnout <strong>Match Case</strong> pro rozlišení malých a velkých písmen.</li>
+<li>Zkontroluj náhled a nejprve nahraď jednu shodu.</li>
+</ol>
+<p>Maska vybírá soubory, regex hledá jejich obsah.</p>
+<p><code>*.cs</code> tedy patří do masky, ne do pole regexu.</p>
+<p>Před hromadnou náhradou měj přehledný Git stav, abys mohl výsledek zkontrolovat a případně vrátit. <a href="https://www.jetbrains.com/help/rider/Finding_and_Replacing_Text_in_Project.html">JetBrains: hledání v řešení</a></p>
+<h2 id="příklad-1-změnit-předponu-a-zachovat-číslo">Příklad 1: změnit předponu a zachovat číslo</h2>
+<p>Vstupní text:</p>
+<pre><code class="lang-text">TASK-7: formulář
+TASK-208: export
+TASK-X: poznámka
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Pole</th>
+<th>Hodnota</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Find</td>
+<td><code>TASK-(\d+)</code></td>
+</tr>
+<tr>
+<td>Replace</td>
+<td><code>ISSUE-$1</code></td>
+</tr>
+</tbody>
+</table>
+<p>Výsledek:</p>
+<pre><code class="lang-text">ISSUE-7: formulář
+ISSUE-208: export
+TASK-X: poznámka
+</code></pre>
+<ul>
+<li><code>TASK-</code> je doslovná část, kterou hledáš.</li>
+<li><code>\d</code> znamená číslici a <code>+</code> jednu nebo více číslic.</li>
+<li><code>(...)</code> zachytí text jako skupinu číslo 1.</li>
+<li><code>$1</code> vloží tuto skupinu do náhrady, takže původní číslo zůstane.</li>
+</ul>
+<p>Řádek s <code>X</code> nevyhovuje číselnému vzoru a nezmění se.</p>
+<h2 id="příklad-2-změnit-pořadí-částí">Příklad 2: změnit pořadí částí</h2>
+<p>Chceš převést zjednodušené datum <code>12.09.2026</code> na <code>2026-09-12</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Pole</th>
+<th>Hodnota</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Find</td>
+<td><code>(?&lt;day&gt;\d{2})\.(?&lt;month&gt;\d{2})\.(?&lt;year&gt;\d{4})</code></td>
+</tr>
+<tr>
+<td>Replace</td>
+<td><code>${year}-${month}-${day}</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>{2}</code> a <code>{4}</code> určují přesný počet číslic, <code>\.</code> hledá skutečnou tečku a <code>(?&lt;day&gt;...)</code> ukládá skupinu pod jménem.</p>
+<p>Pojmenované skupiny zjednodušují náhradu, protože nemusíš počítat pořadí závorek.</p>
+<p>Tento příklad mění formát, <strong>neověřuje platnost kalendářního data</strong>.</p>
+<p>Odpovídal by mu i text <code>99.99.2026</code>.</p>
+<h2 id="příklad-3-odstranit-mezery-na-konci-řádků">Příklad 3: odstranit mezery na konci řádků</h2>
+<table>
+<thead>
+<tr>
+<th>Pole</th>
+<th>Hodnota</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Find</td>
+<td><code>(?m)\h+$</code></td>
+</tr>
+<tr>
+<td>Replace</td>
+<td>Nech prázdné</td>
+</tr>
+</tbody>
+</table>
+<p><code>\h+</code> vybere mezery a tabulátory, <code>$</code> konec řádku a <code>(?m)</code> zapne zpracování začátků a konců jednotlivých řádků.</p>
+<p>Prázdná náhrada nalezený text smaže.</p>
+<p>Samotné konce řádků zůstanou.</p>
+<p>Pro tuto úlohu nepoužívej neurčité <code>\s+</code>, protože <code>\s</code> zahrnuje také konce řádků.</p>
+<h2 id="přehled-co-může-být-v-poli-find">Přehled: co může být v poli Find</h2>
+<table>
+<thead>
+<tr>
+<th>Zápis</th>
+<th>Význam</th>
+<th>Příklad</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.</code></td>
+<td>Jeden znak kromě konce řádku</td>
+<td><code>a.c</code> najde <code>abc</code> i <code>a-c</code></td>
+</tr>
+<tr>
+<td><code>\.</code>, <code>\+</code>, <code>\?</code>, <code>\\</code></td>
+<td>Doslovný speciální znak</td>
+<td><code>config\.json</code></td>
+</tr>
+<tr>
+<td><code>[abc]</code>, <code>[0-9]</code></td>
+<td>Jeden znak ze sady nebo rozsahu</td>
+<td><code>[ABC]-[0-9]</code></td>
+</tr>
+<tr>
+<td><code>[^&quot;]</code></td>
+<td>Jeden znak kromě uvozovky</td>
+<td><code>&quot;[^&quot;]*&quot;</code> pro jednoduchou citovanou hodnotu</td>
+</tr>
+<tr>
+<td><code>\d</code> / <code>\D</code></td>
+<td>Číslice / jiný znak</td>
+<td><code>\d+</code></td>
+</tr>
+<tr>
+<td><code>\s</code> / <code>\S</code></td>
+<td>Bílý / nebílý znak</td>
+<td><code>\S+</code> pro úsek bez mezer</td>
+</tr>
+<tr>
+<td><code>\w</code> / <code>\W</code></td>
+<td>Slovní / neslovní znak</td>
+<td>Pro česká písmena raději výslovné <code>\p{L}</code></td>
+</tr>
+<tr>
+<td><code>\p{L}</code>, <code>\p{N}</code></td>
+<td>Unicode písmeno nebo číslo</td>
+<td><code>\p{L}+</code> najde i <code>Žluťoučký</code></td>
+</tr>
+<tr>
+<td><code>\t</code>, <code>\n</code>, <code>\R</code></td>
+<td>Tabulátor, LF, libovolný konec řádku</td>
+<td><code>\R</code> zahrne i CRLF</td>
+</tr>
+<tr>
+<td><code>*</code>, <code>+</code>, <code>?</code></td>
+<td>Nula a více, jedna a více, nula nebo jedna</td>
+<td><code>colou?r</code> najde <code>color</code> i <code>colour</code></td>
+</tr>
+<tr>
+<td><code>{n}</code>, <code>{n,m}</code>, <code>{n,}</code></td>
+<td>Přesný počet, rozsah, nejméně n</td>
+<td><code>\d{2,4}</code></td>
+</tr>
+<tr>
+<td><code>a|b</code></td>
+<td>Jedna z alternativ</td>
+<td><code>cat|dog</code></td>
+</tr>
+<tr>
+<td><code>(...)</code>, <code>(?&lt;name&gt;...)</code></td>
+<td>Číselná nebo pojmenovaná skupina</td>
+<td><code>ID=(?&lt;id&gt;\d+)</code></td>
+</tr>
+<tr>
+<td><code>(?:...)</code></td>
+<td>Skupina bez zachycení pro náhradu</td>
+<td><code>(?:cat|dog)s?</code></td>
+</tr>
+<tr>
+<td><code>\b</code></td>
+<td>Hranice slova</td>
+<td><code>\bcat\b</code> nenajde část <code>category</code></td>
+</tr>
+<tr>
+<td><code>^</code>, <code>$</code></td>
+<td>Začátek a konec, s <code>(?m)</code> pro jednotlivé řádky</td>
+<td><code>(?m)^ERROR.*$</code></td>
+</tr>
+<tr>
+<td><code>\A</code>, <code>\z</code></td>
+<td>Začátek a konec celého vstupu</td>
+<td><code>\A\d+\z</code></td>
+</tr>
+<tr>
+<td><code>\1</code>, <code>\k&lt;id&gt;</code></td>
+<td>Znovu stejný text skupiny uvnitř hledání</td>
+<td><code>(\w+)\h+\1</code> najde <code>test test</code></td>
+</tr>
+</tbody>
+</table>
+<p>V poli Find se píše přímo regex, bez uvozovek řetězcového literálu a bez jeho dodatečného escapování.</p>
+<p>Třídy <code>\w</code> a <code>\d</code> závisí také na Unicode režimu.</p>
+<p>Pro přesné zadání použij <code>[0-9]</code> nebo Unicode kategorie. <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/regex/Pattern.html">Java Pattern</a></p>
+<h2 id="přehled-co-může-být-v-poli-replace">Přehled: co může být v poli Replace</h2>
+<table>
+<thead>
+<tr>
+<th>Zápis</th>
+<th>Význam</th>
+<th>Příklad výsledku</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>$0</code></td>
+<td>Celá nalezená shoda</td>
+<td><code>[$0]</code> obalí shodu hranatými závorkami</td>
+</tr>
+<tr>
+<td><code>$1</code>, <code>$2</code></td>
+<td>Zachycené skupiny podle pořadí</td>
+<td><code>$2-$1</code> prohodí dvě skupiny</td>
+</tr>
+<tr>
+<td><code>${id}</code></td>
+<td>Skupina s daným jménem</td>
+<td><code>ID: ${id}</code></td>
+</tr>
+<tr>
+<td><code>\u$1</code> / <code>\l$1</code></td>
+<td>Velké / malé první písmeno skupiny</td>
+<td><code>test → Test</code> / <code>Test → test</code></td>
+</tr>
+<tr>
+<td><code>\U$1\E</code> / <code>\L$1\E</code></td>
+<td>Všechna písmena velká / malá</td>
+<td><code>test → TEST</code> / <code>TEST → test</code></td>
+</tr>
+<tr>
+<td><code>\$</code></td>
+<td>Doslovný dolar</td>
+<td>Náhrada měnové zkratky symbolem</td>
+</tr>
+<tr>
+<td>Prázdná hodnota</td>
+<td>Smazání shody</td>
+<td>Odstranění koncových mezer</td>
+</tr>
+</tbody>
+</table>
+<p><code>\E</code> ukončuje převod písmen, aby neovlivnil další text.</p>
+<p>Značky pro převod v náhradě jsou schopnost IDE, nikoli univerzální syntaxe všech regex knihoven. <a href="https://www.jetbrains.com/help/idea/tutorial-finding-and-replacing-text-using-regular-expressions.html">JetBrains: náhrady a převod písmen</a></p>
+<h2 id="více-řádků-okolí-a-pokročilé-možnosti">Více řádků, okolí a pokročilé možnosti</h2>
+<ul>
+<li><strong><code>(?s)</code></strong> dovolí tečce zahrnout konce řádků. Například <code>(?s)BEGIN.*?END</code> najde jednoduchý blok.</li>
+<li><strong><code>(?i)</code></strong> vypne rozlišování velikosti písmen. <code>(?i:todo)</code> omezí režim na skupinu.</li>
+<li><strong><code>(?x)</code></strong> dovolí mezery a komentáře pro čitelnost vzoru. Doslovnou mezeru pak piš například <code>[ ]</code>.</li>
+<li><strong><code>(?=...)</code> / <code>(?!...)</code></strong> ověří následující text. <code>\d+(?= Kč)</code> označí číslo, ale ne měnu.</li>
+<li><strong><code>(?&lt;=...)</code> / <code>(?&lt;!...)</code></strong> ověří předchozí text. <code>(?&lt;=ID: )\d+</code> označí jen číslo po <code>ID: </code>.</li>
+<li><strong><code>*?</code> / <code>+?</code></strong> hledají kratší shodu. <code>&quot;.*&quot;</code> vezme od první po poslední uvozovku na řádku, <code>&quot;.*?&quot;</code> jednotlivé jednoduché citované úseky.</li>
+<li><strong><code>\Q...\E</code></strong> hledá doslovný text uvnitř, například <code>\Q[a+b]\E</code>.</li>
+<li>Java podporuje i průnik znakových tříd, atomické skupiny a possessive opakování. Používej je až podle přesné potřeby a testu z <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/regex/Pattern.html">úplné reference</a>.</li>
+</ul>
+<p>Regex není obecný parser HTML ani vnořených bloků.</p>
+<p>Náhrady nad strukturou dokumentu vždy omez na tvar, který umíš ověřit.</p>
+<h2 id="když-výsledek-neodpovídá-očekávání">Když výsledek neodpovídá očekávání</h2>
+<table>
+<thead>
+<tr>
+<th>Problém</th>
+<th>Kontrola</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hledá se doslova <code>\d+</code></td>
+<td>Je zapnutý Regex?</td>
+</tr>
+<tr>
+<td>Náhrada nevrací skupinu</td>
+<td>V Find použij <code>\1</code>, v Replace <code>$1</code></td>
+</tr>
+<tr>
+<td>Nálezy jsou v jiných souborech</td>
+<td>Ověř Scope, Directory a File mask</td>
+</tr>
+<tr>
+<td>Shoda pohltí příliš mnoho textu</td>
+<td>Zpřesni znakové třídy nebo rozsah místo obecného <code>.*</code></td>
+</tr>
+<tr>
+<td>Vzor překračuje řádek</td>
+<td>Ověř <code>\s</code> a režim <code>(?s)</code></td>
+</tr>
+<tr>
+<td>Česká písmena chybí</td>
+<td>Použij <code>\p{L}</code> a zkontroluj Match Case</td>
+</tr>
+</tbody>
+</table>
+<p>Po nahrazení prohlédni Git diff a spusť odpovídající testy.</p>
+<p>Správně nalezený text ještě neznamená správně změněný program.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

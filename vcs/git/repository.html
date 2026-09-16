@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Git – založen&#237; a klonov&#225;n&#237; repozit&#225;ře | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git – založen&#237; a klonov&#225;n&#237; repozit&#225;ře | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Založen&#237; projektu, klonov&#225;n&#237; existuj&#237;c&#237; historie a prvn&#237; ověřen&#253; commit.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/repository.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git--založení-a-klonování-repozitáře">Git – založení a klonování repozitáře</h1>
+
+<p>Nový repozitář vytvoříš pomocí <code>init</code>.</p>
+<p>Existující projekt s historií získáš přes <code>clone</code>.</p>
+<p>Tyto možnosti jsou alternativy: do naklonovaného projektu už znovu <code>init</code> nepotřebuješ.</p>
+<h2 id="před-použitím">Před použitím</h2>
+<p>Nainstaluj <a href="https://git-scm.com/downloads">Git</a>, ověř <code>git --version</code> a nastav <a href="configuration.html">jméno a e-mail autora</a>.</p>
+<p>Příklady fungují v PowerShellu i Bashi a používají nové složky.</p>
+<p>Do cizího existujícího repozitáře nevkládej další vnořený <code>.git</code>.</p>
+<h2 id="vyber-výchozí-stav-projektu">Vyber výchozí stav projektu</h2>
+<p><a id="nový-projekt"></a>
+<a id="už-mám-soubory-bez-gitu"></a>
+<a id="existující-projekt-na-serveru"></a></p>
+<div class="tabGroup" id="tabgroup_1">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_1_repository-new" role="tab" aria-controls="tabpanel_1_repository-new" data-tab="repository-new" tabindex="0" aria-selected="true">Nový místní repozitář</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_1_repository-clone" role="tab" aria-controls="tabpanel_1_repository-clone" data-tab="repository-clone" tabindex="-1">Existující projekt ze serveru</a>
+</li>
+</ul>
+<section id="tabpanel_1_repository-new" role="tabpanel" data-tab="repository-new">
+
+<p>V rodičovské složce projektů spusť:</p>
+<pre><code class="lang-bash">git init -b main moje-aplikace
+cd moje-aplikace
+git status
+</code></pre>
+<p><code>init</code> založí složku <code>moje-aplikace</code> a historii uvnitř <code>.git</code>.</p>
+<p><code>-b main</code> zvolí název počáteční větve.</p>
+<p>V editoru vytvoř <code>README.md</code> s názvem a účelem projektu a přidej vhodný <a href="history/update-gitignore.html"><code>.gitignore</code></a> ještě před prvním hromadným přidáváním souborů.</p>
+<pre><code class="lang-bash">git add -- README.md .gitignore
+git diff --cached
+git commit -m &quot;docs: zakládá projekt&quot;
+git log --oneline -1
+</code></pre>
+<p>První příkaz předpokládá oba vytvořené soubory.</p>
+<p>Pokud <code>.gitignore</code> nepotřebuješ a nevytvořil jsi ho, vynech jeho název.</p>
+<p>Zkontrolovaný obsah indexu se uloží jako první místní commit a poslední příkaz zobrazí jeho ID.</p>
+<p><strong>Už mám soubory bez Gitu</strong></p>
+<p>V kořeni této složky použij <code>git init -b main</code> bez názvu dalšího adresáře.</p>
+<p>Pak nejprve projdi <code>git status --short</code> a přidávej jen požadované soubory.</p>
+<p>Konfigurace s hesly, velké exporty a výstup buildů obvykle do historie nepatří.</p>
+</section>
+<section id="tabpanel_1_repository-clone" role="tabpanel" data-tab="repository-clone" aria-hidden="true" hidden="hidden">
+
+<p>Obecná syntaxe:</p>
+<pre><code class="lang-text">git clone &lt;URL-nebo-místní-cesta&gt; [&lt;cílová-složka&gt;]
+</code></pre>
+<p>Adresu zkopíruj z tlačítka Clone nebo Code na svém hostingu.</p>
+<p>Vyber HTTPS nebo SSH podle <a href="server.html">způsobu přihlášení</a>.</p>
+<p>Tento veřejný příklad lze vyzkoušet bez účtu:</p>
+<pre><code class="lang-bash">git clone https://github.com/octocat/Hello-World.git git-ukazka
+cd git-ukazka
+git status
+git remote -v
+</code></pre>
+<p><code>git-ukazka</code> je volitelný místní název složky.</p>
+<p><code>clone</code> stáhne historii a vytvoří remote <code>origin</code> podle zdrojové adresy.</p>
+<p>Výchozí větev přebírá ze serveru, proto nepředpokládej automaticky <code>main</code>.</p>
+<p>Tento ukázkový repozitář používá <code>master</code>.</p>
+<p>Stažený ZIP obsahuje soubory, ale nezachovává repozitářovou historii jako <code>clone</code>.</p>
+</section>
+</div>
+<h2 id="ověření-a-další-krok">Ověření a další krok</h2>
+<pre><code class="lang-bash">git rev-parse --show-toplevel
+git branch --show-current
+git status --short --branch
+</code></pre>
+<p>Uvidíš kořen správného projektu, aktuální větev a stav změn.</p>
+<p>Nový lokální projekt připoj k <a href="server.html">serveru</a>.</p>
+<p>Naklonovaný projekt je připravený pro <a href="in-practice.html">každodenní práci</a>.</p>
+<h3 id="časté-problémy">Časté problémy</h3>
+<table>
+<thead>
+<tr>
+<th>Hlášení</th>
+<th>Co ověřit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>not a git repository</code></td>
+<td>Terminál není uvnitř pracovní kopie. Přejdi do její složky</td>
+</tr>
+<tr>
+<td>Cílová složka není prázdná</td>
+<td>Pro clone zvol novou složku a existující obsah nejprve prohlédni</td>
+</tr>
+<tr>
+<td><code>Author identity unknown</code></td>
+<td>Nastav identitu před commitem</td>
+</tr>
+<tr>
+<td><code>repository not found</code></td>
+<td>Zkontroluj přesnou URL a přístup svého účtu k privátnímu projektu</td>
+</tr>
+</tbody>
+</table>
+<p>Podrobnosti: <a href="https://git-scm.com/docs/git-init">git init</a>, <a href="https://git-scm.com/docs/git-clone">git clone</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

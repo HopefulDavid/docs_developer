@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Flutter – z&#225;loha a obnova | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Flutter – z&#225;loha a obnova | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Přenos projektu, SDK a navazuj&#237;c&#237;ch z&#225;vislost&#237; na dalš&#237; poč&#237;tač.">
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/mobile/flutter/backup-and-restore.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="flutter--záloha-a-obnova">Flutter – záloha a obnova</h1>
+
+<p>Obnovitelný projekt potřebuje zdrojové soubory, konfiguraci, prostředky a záznam použité verze SDK.</p>
+<h2 id="co-uchovat">Co uchovat</h2>
+<ul>
+<li>Zdrojový kód včetně platformních složek, testů a prostředků.</li>
+<li><code>pubspec.yaml</code> a u aplikace také <code>pubspec.lock</code>.</li>
+<li><code>.metadata</code>, <code>.gitignore</code> a ostatní projektové konfigurace.</li>
+<li>Výstup <code>flutter --version</code> pro výběr stejného SDK při obnově.</li>
+<li>Podpisové klíče, hesla a neveřejné konfigurace v oddělené chráněné záloze.</li>
+</ul>
+<p>Složky <code>build/</code> a <code>.dart_tool/</code> lze znovu vytvořit.</p>
+<p>Nejsou náhradou zdrojů. <a href="https://dart.dev/tools/pub/private-files">Co verzovat podle Dart pub</a></p>
+<p>Git uchovává pouze přidané a commitnuté soubory, proto samostatně zkontroluj necommitnuté a ignorované soubory.</p>
+<h2 id="obnova-na-novém-počítači">Obnova na novém počítači</h2>
+<p>Pro cílový počítač bez internetu nejprve připrav <a href="../../packages/dart.html">offline zálohu pub cache</a> a platformní nástroje.</p>
+<p>Následující základní varianta předpokládá dostupný zdroj chybějících závislostí.</p>
+<ol>
+<li>Obnov zdroje z repozitáře nebo zálohy do nové složky.</li>
+<li>Nainstaluj odpovídající Flutter SDK a <a href="setup-and-configuration.html">nástroje cílové platformy</a>.</li>
+<li>Obnov potřebné neveřejné konfigurace a podpisové klíče.</li>
+<li>V kořeni projektu spusť:</li>
+</ol>
+<pre><code class="lang-powershell">flutter pub get
+flutter analyze
+flutter test
+flutter run
+</code></pre>
+<p><code>pub get</code> využívá lockfile, pokud jeho verze vyhovují projektu.</p>
+<p>Chybějící balíčky musí být dostupné v síti nebo místní cache. <a href="https://dart.dev/tools/pub/cmd/pub-get">Obnova závislostí</a></p>
+<p>Ověř také načtení prostředků a přístup k používaným službám.</p>
+<p>Úspěšné stažení balíčků samo nepotvrzuje úplnou obnovu.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

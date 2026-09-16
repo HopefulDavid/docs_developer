@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Git – ignorov&#225;n&#237; souborů | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git – ignorov&#225;n&#237; souborů | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Pravidla pro generovan&#233; a m&#237;stn&#237; soubory a ukončen&#237; sledov&#225;n&#237; existuj&#237;c&#237; položky.">
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/history/update-gitignore.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git--ignorování-souborů">Git – ignorování souborů</h1>
+
+<p><code>.gitignore</code> říká Gitu, které dosud nesledované soubory běžně nenabízet k přidání do historie.</p>
+<p>Hodí se pro výstupy sestavení, obnovené závislosti a soukromá místní nastavení.</p>
+<h2 id="kam-pravidlo-patří">Kam pravidlo patří</h2>
+<table>
+<thead>
+<tr>
+<th>Soubor</th>
+<th>Platnost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.gitignore</code> v projektu</td>
+<td>Sdílená pravidla verzovaná spolu s projektem</td>
+</tr>
+<tr>
+<td><code>.git/info/exclude</code></td>
+<td>Pravidla jen pro tuto místní pracovní kopii</td>
+</tr>
+<tr>
+<td>Soubor nastavený přes <code>core.excludesFile</code></td>
+<td>Osobní pravidla napříč projekty</td>
+</tr>
+</tbody>
+</table>
+<p>Ignorování neslouží k zabezpečení tajemství a již sledované soubory nepřestane sledovat samo.</p>
+<h2 id="příklad-pro-kořen-projektu">Příklad pro kořen projektu</h2>
+<p>Do <code>.gitignore</code> vlož jen pravidla odpovídající skutečnému projektu:</p>
+<pre><code class="lang-gitignore"># Obnovitelné závislosti Node.js.
+node_modules/
+# Výstupy sestavení .NET v libovolné hloubce.
+bin/
+obj/
+# Soukromé prostředí v kořeni; bezpečný vzor zůstává verzovaný.
+/.env
+/.env.*
+!/.env.example
+</code></pre>
+<p>Koncové <code>/</code> vybírá adresáře, počáteční <code>/</code> kotví cestu ke složce tohoto <code>.gitignore</code> a <code>!</code> pravidlo obrací.</p>
+<p>Výjimka uvnitř zcela ignorovaného rodičovského adresáře sama nestačí, protože Git takový adresář standardně neprochází.</p>
+<p>Manifesty a lockfile balíčků obvykle verzuj, aby šlo obnovit stejné závislosti.</p>
+<h2 id="ověř-konkrétní-pravidlo">Ověř konkrétní pravidlo</h2>
+<p>Příkazy v PowerShellu i Bashi spouštěj v kořeni projektu:</p>
+<pre><code class="lang-bash">git check-ignore -v .env
+git status --short --ignored
+</code></pre>
+<p>První příkaz ukáže soubor, řádek a pravidlo, které odpovídá cestě.</p>
+<p>Druhý označí ignorované položky <code>!!</code>.</p>
+<p>Pokud je položka už sledovaná, ověř ji přes <code>git ls-files -- &lt;cesta&gt;</code>.</p>
+<p>Pro samotné posouzení pravidla i u sledované cesty lze použít <code>git check-ignore --no-index -v &lt;cesta&gt;</code>.</p>
+<h2 id="soubor-už-je-v-historii">Soubor už je v historii</h2>
+<p>Příklad ukončí sledování vlastního <code>config.local.json</code>, ale ponechá jeho místní soubor na disku:</p>
+<pre><code class="lang-gitignore"># Přidej tento řádek do projektového .gitignore.
+config.local.json
+</code></pre>
+<p>Potom:</p>
+<pre><code class="lang-bash">git rm --cached -- config.local.json
+git add -- .gitignore
+git diff --cached
+git commit -m &quot;chore: odděluje místní konfiguraci&quot;
+</code></pre>
+<p>Commit odstraní soubor z budoucích verzí projektu.</p>
+<p>Po načtení změny se odstranění projeví také v jiných pracovních kopiích.</p>
+<p>Potřebnou soukromou konfiguraci proto před synchronizací jinde uchovej a verzuj bezpečný vzor s vysvětlenými hodnotami.</p>
+<p>Pro adresář má syntaxe podobu <code>git rm -r --cached -- &lt;adresář&gt;</code>.</p>
+<p>Kvůli jedné cestě není potřeba znovu vytvářet celý index.</p>
+<h2 id="důležité-poznámky">Důležité poznámky</h2>
+<p>Starší commity si původní soubor ponechávají, takže uniklý token nejprve zneplatni.</p>
+<p>Pouhé skrývání změn sledovaného souboru pomocí <a href="assume-unchanged.html">assume-unchanged</a> není náhradou oddělené konfigurace.</p>
+<p>Zdroje: <a href="https://git-scm.com/docs/gitignore">gitignore</a>, <a href="https://git-scm.com/docs/git-check-ignore">check-ignore</a>, <a href="https://git-scm.com/docs/git-rm">git rm</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

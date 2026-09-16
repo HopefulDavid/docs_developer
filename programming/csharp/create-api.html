@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>.NET – Vytvořen&#237; REST API v ASP.NET Core | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=".NET – Vytvořen&#237; REST API v ASP.NET Core | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Vytvořen&#237; HTTP API, validace vstupů a ověřen&#237; požadavků.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/csharp/create-api.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="net--vytvoření-rest-api-v-aspnet-core">.NET – Vytvoření REST API v ASP.NET Core</h1>
+
+<p>Tento postup pro SDK .NET 10 vytvoří lokální API poznámek s funkčním přidáním, čtením, úpravou a mazáním.</p>
+<p>Data zůstávají pouze v paměti jednoho procesu a po restartu zmizí.</p>
+<h2 id="vytvoření-projektu">Vytvoření projektu</h2>
+<p>V nové pracovní složce spusť:</p>
+<pre><code class="lang-powershell">dotnet new web -n NotesApi -f net10.0
+cd NotesApi
+</code></pre>
+<p>Prázdná webová šablona umožní přidat jen služby potřebné pro tento příklad. <a href="https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-new-sdk-templates">Microsoft: šablony dotnet new</a>.</p>
+<h2 id="vstupní-bod-aplikace">Vstupní bod aplikace</h2>
+<p>Nahraď celý <code>Program.cs</code>:</p>
+<pre><code class="lang-csharp">var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddControllers();
+
+var app = builder.Build();
+app.MapControllers();
+app.Run();
+</code></pre>
+<p><code>AddControllers</code> registruje MVC služby a <code>MapControllers</code> zpřístupní trasy označené atributy. <a href="https://learn.microsoft.com/en-us/aspnet/core/web-api/?view=aspnetcore-10.0">Microsoft: API s kontrolery</a>.</p>
+<h2 id="přidání-kontroleru">Přidání kontroleru</h2>
+<p>Vytvoř složku <code>Controllers</code> a soubor <code>Controllers/NotesController.cs</code>:</p>
+<pre><code class="lang-csharp">using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
+
+namespace NotesApi.Controllers;
+
+/// &lt;summary&gt;Lokální ukázkové API poznámek uchovávaných v paměti.&lt;/summary&gt;
+[ApiController]
+[Route(&quot;api/notes&quot;)]
+public sealed class NotesController : ControllerBase
+{
+    private static readonly object Gate = new();
+    private static readonly Dictionary&lt;Guid, Note&gt; Notes = new();
+
+    /// &lt;summary&gt;Vrátí aktuální seznam poznámek.&lt;/summary&gt;
+    [HttpGet]
+    public ActionResult&lt;Note[]&gt; GetAll()
+    {
+        lock (Gate)
+            return Notes.Values.OrderBy(note =&gt; note.Id).ToArray();
+    }
+
+    /// &lt;summary&gt;Vyhledá poznámku podle identifikátoru.&lt;/summary&gt;
+    [HttpGet(&quot;{id:guid}&quot;)]
+    public ActionResult&lt;Note&gt; GetById(Guid id)
+    {
+        lock (Gate)
+            return Notes.TryGetValue(id, out var note) ? Ok(note) : NotFound();
+    }
+
+    /// &lt;summary&gt;Vytvoří poznámku a vrátí její adresu v Location.&lt;/summary&gt;
+    [HttpPost]
+    public ActionResult&lt;Note&gt; Create(NoteInput input)
+    {
+        var note = new Note(Guid.NewGuid(), input.Text);
+        lock (Gate)
+            Notes.Add(note.Id, note);
+        return CreatedAtAction(nameof(GetById), new { id = note.Id }, note);
+    }
+
+    /// &lt;summary&gt;Nahradí text existující poznámky.&lt;/summary&gt;
+    [HttpPut(&quot;{id:guid}&quot;)]
+    public IActionResult Update(Guid id, NoteInput input)
+    {
+        lock (Gate)
+        {
+            if (!Notes.ContainsKey(id))
+                return NotFound();
+            Notes[id] = new Note(id, input.Text);
+            return NoContent();
+        }
+    }
+
+    /// &lt;summary&gt;Odstraní existující poznámku.&lt;/summary&gt;
+    [HttpDelete(&quot;{id:guid}&quot;)]
+    public IActionResult Delete(Guid id)
+    {
+        lock (Gate)
+            return Notes.Remove(id) ? NoContent() : NotFound();
+    }
+}
+
+/// &lt;summary&gt;Data přijatá při vytvoření nebo změně poznámky.&lt;/summary&gt;
+public sealed class NoteInput
+{
+    /// &lt;summary&gt;Povinný text o nejvýše 200 znacích.&lt;/summary&gt;
+    [Required, StringLength(200)]
+    public string Text { get; init; } = &quot;&quot;;
+}
+
+/// &lt;summary&gt;Uložená neměnná hodnota poznámky.&lt;/summary&gt;
+/// &lt;param name=&quot;Id&quot;&gt;Identifikátor přidělený serverem.&lt;/param&gt;
+/// &lt;param name=&quot;Text&quot;&gt;Obsah poznámky.&lt;/param&gt;
+public sealed record Note(Guid Id, string Text);
+</code></pre>
+<p>Atribut <code>ApiController</code> vrátí pro neplatný model automaticky HTTP 400.</p>
+<p><code>CreatedAtAction</code> vrací HTTP 201 s odkazem na existující akci pro čtení právě vytvořené položky. <a href="https://learn.microsoft.com/en-us/aspnet/core/web-api/?view=aspnetcore-10.0#automatic-http-400-responses">Microsoft: chování ApiController</a>, <a href="https://learn.microsoft.com/en-us/aspnet/core/web-api/action-return-types?view=aspnetcore-10.0">návratové typy akcí</a>.</p>
+<h2 id="spuštění-a-ověření">Spuštění a ověření</h2>
+<p>Spusť server s explicitním lokálním portem:</p>
+<pre><code class="lang-powershell">dotnet run --no-launch-profile --urls http://127.0.0.1:5057
+</code></pre>
+<p>V druhém PowerShellu proveďte celý cyklus:</p>
+<pre><code class="lang-powershell">$api = 'http://127.0.0.1:5057/api/notes'
+$note = Invoke-RestMethod -Method Post -Uri $api -ContentType 'application/json' -Body '{&quot;text&quot;:&quot;Prvni poznamka&quot;}'
+Invoke-RestMethod -Uri &quot;$api/$($note.id)&quot;
+Invoke-RestMethod -Method Put -Uri &quot;$api/$($note.id)&quot; -ContentType 'application/json' -Body '{&quot;text&quot;:&quot;Upraveno&quot;}'
+Invoke-RestMethod -Uri &quot;$api/$($note.id)&quot;
+Invoke-RestMethod -Method Delete -Uri &quot;$api/$($note.id)&quot;
+Invoke-RestMethod -Uri $api
+</code></pre>
+<p>Druhé čtení vrátí text <code>Upraveno</code> a závěrečný seznam je prázdný.</p>
+<p>Opakované čtení smazaného ID vrací HTTP 404.</p>
+<p>POST s <code>{&quot;text&quot;:&quot;&quot;}</code> vrací HTTP 400.</p>
+<p>Server ukončíte pomocí <code>Ctrl+C</code>.</p>
+<h2 id="další-rozšíření">Další rozšíření</h2>
+<p>Pro trvalé ukládání navazujte na <a href="../../database/entity-framework.html">EF Core</a>.</p>
+<p>Před nasazením doplňte autentizaci a oprávnění podle účelu API, HTTPS, práci s chybami a odpovídající úložiště.</p>
+<p>Lokální zámek nesdílí data mezi více procesy.</p>
+<p>Tajné hodnoty neukládejte do veřejného <code>appsettings.json</code> ani nevypisujte do logů. <a href="../../network/secrets.html">Správa tajných údajů</a>.</p>
+<p>Tato ukázka nepřidává OpenAPI ani Swagger UI.</p>
+<p>Jejich konfiguraci řeší <a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/openapi/overview?view=aspnetcore-10.0">oficiální dokumentace ASP.NET Core OpenAPI</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

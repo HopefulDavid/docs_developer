@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Git – principy a prvn&#237; orientace | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git – principy a prvn&#237; orientace | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Pracovn&#237; soubory, index, commity, větve a vztah lok&#225;ln&#237;ho Gitu k serveru.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/basics.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat podle n&#225;zvu">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git--principy-a-první-orientace">Git – principy a první orientace</h1>
+
+<p>Git ukládá historii souborů projektu, takže můžeš porovnat změny, vrátit se k funkční verzi nebo vyvíjet více variant vedle sebe.</p>
+<p>Funguje i bez internetu.</p>
+<p>GitHub, GitLab nebo vlastní server přidávají vzdálenou kopii a služby jako pull requesty.</p>
+<h2 id="co-si-git-pamatuje">Co si Git pamatuje</h2>
+<table>
+<thead>
+<tr>
+<th>Pojem</th>
+<th>Co znamená v běžné práci</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Repozitář</td>
+<td>Projekt s historií v adresáři <code>.git</code></td>
+</tr>
+<tr>
+<td>Pracovní strom</td>
+<td>Soubory, které právě vidíš a upravuješ v editoru</td>
+</tr>
+<tr>
+<td>Index / staging area</td>
+<td>Připravený obsah příštího commitu</td>
+</tr>
+<tr>
+<td>Commit</td>
+<td>Uložený stav sledovaných souborů s autorem, zprávou a odkazem na předchozí historii</td>
+</tr>
+<tr>
+<td>ID / hash commitu</td>
+<td>Jedinečný identifikátor, například z <code>git log --oneline</code></td>
+</tr>
+<tr>
+<td>Větev</td>
+<td>Pojmenovaný ukazatel na poslední commit určité linie vývoje</td>
+</tr>
+<tr>
+<td><code>HEAD</code></td>
+<td>Obvykle odkaz na právě vybranou větev. Určuje výchozí commit práce</td>
+</tr>
+<tr>
+<td>Remote</td>
+<td>Pojmenované spojení na jiný repozitář, obvykle <code>origin</code></td>
+</tr>
+<tr>
+<td><code>origin/main</code></td>
+<td>Místní záznam naposledy načteného stavu větve <code>main</code> na serveru</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cesta-jedné-změny">Cesta jedné změny</h3>
+<pre><code class="lang-text">editor → pracovní strom → git add → index → git commit → místní historie
+                                                        ↓ git push
+                                                  vzdálený repozitář
+</code></pre>
+<p><code>git add</code> připraví obsah souboru v daném okamžiku.</p>
+<p>Další úprava v editoru se do připraveného commitu nepřidá sama.</p>
+<p><code>git commit</code> uloží právě index a <code>git push</code> odešle hotové commity, takže necommitované soubory nejsou zálohované na serveru.</p>
+<h2 id="jak-poznáš-stav-projektu">Jak poznáš stav projektu</h2>
+<p>Příkazy spouštěj v kořeni svého repozitáře.</p>
+<p>Fungují v PowerShellu i Bashi.</p>
+<pre><code class="lang-bash">git status
+git diff
+git diff --cached
+git log --oneline -5
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Příkaz</th>
+<th>Na jakou otázku odpovídá</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>git status</code></td>
+<td>Na jaké větvi jsem a které soubory jsou změněné, připravené nebo nesledované?</td>
+</tr>
+<tr>
+<td><code>git diff</code></td>
+<td>Co jsem změnil oproti indexu a zatím nepřipravil?</td>
+</tr>
+<tr>
+<td><code>git diff --cached</code></td>
+<td>Co přesně by se teď uložilo příkazem commit?</td>
+</tr>
+<tr>
+<td><code>git log --oneline -5</code></td>
+<td>Jakých bylo posledních pět commitů této větve?</td>
+</tr>
+</tbody>
+</table>
+<p>Prázdný <code>git diff</code> neznamená, že nejsou žádné změny: mohou už být v indexu nebo může jít o nový nesledovaný soubor.</p>
+<p>Číslo <code>5</code> jen omezuje délku výpisu a lze ho bezpečně zvýšit.</p>
+<h3 id="jak-číst-krátký-stav">Jak číst krátký stav</h3>
+<p><code>git status --short</code> používá dva sloupce: první popisuje index vůči commitu a druhý pracovní soubor vůči indexu.</p>
+<pre><code class="lang-text"> M README.md
+M  src/app.cs
+MM src/config.cs
+?? poznamky.txt
+</code></pre>
+<ul>
+<li><code>README.md</code> je upravený, ale nepřipravený.</li>
+<li><code>src/app.cs</code> má změnu připravenou do commitu.</li>
+<li><code>src/config.cs</code> má připravenou verzi i další dosud nepřipravené úpravy.</li>
+<li><code>poznamky.txt</code> je nový soubor, který Git dosud nesleduje.</li>
+</ul>
+<h2 id="větev-není-další-složka-projektu">Větev není další složka projektu</h2>
+<p>Přepnutí větve obvykle změní soubory v téže pracovní složce podle jejího posledního commitu.</p>
+<p>Názvy <code>main</code>, <code>master</code> a <code>develop</code> nemají zvláštní technické schopnosti.</p>
+<p>Jejich význam určuje zvolený způsob práce.</p>
+<p>Pokud chceš současně otevřít dvě větve ve dvou složkách, použij <a href="stash-worktree.html">worktree</a>.</p>
+<h2 id="jak-navázat">Jak navázat</h2>
+<ol>
+<li><a href="workflows.html">Zvol způsob práce</a> podle velikosti změn a způsobu vydávání.</li>
+<li><a href="configuration.html">Nastav identitu</a> a <a href="repository.html">založ nebo naklonuj repozitář</a>.</li>
+<li>Projdi <a href="in-practice.html">běžný pracovní den</a> a pak <a href="synchronization.html">synchronizaci</a>.</li>
+<li>Při chybě začni <a href="recovery.html">rozcestníkem obnovy</a>, který rozlišuje neuložené, místní i zveřejněné změny.</li>
+</ol>
+<p>V referencích označuje <code>&lt;soubor&gt;</code> hodnotu k nahrazení.</p>
+<p>Podrobný <a href="../../operating-system/command-line-syntax.html">klíč syntaxe</a> vysvětluje i hranaté závorky a alternativy.</p>
+<p>Principy vycházejí z <a href="https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F">Git Book: základy</a> a <a href="https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository">zaznamenávání změn</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
