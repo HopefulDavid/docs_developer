@@ -361,6 +361,9 @@ const navigation = {
     { name: 'Příkazová řádka', items: [
       { name: 'Jak číst zápis příkazů', href: 'command-line-syntax.md' },
     ] },
+    { name: 'Notebooky', items: [
+      { name: 'Nabíjení baterie na 80 %', href: 'laptop-battery.md' },
+    ] },
     {
       name: 'Windows',
       href: 'windows/index.md',

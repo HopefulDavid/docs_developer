@@ -468,3 +468,37 @@ Vizuální kontrola potvrdila čitelné odstavce a tabulku Dockeru na mobilu i t
 Prohlížeč nezaznamenal JavaScript chybu.
 
 Úprava zachovává technický význam textů včetně historických ADR a není novým ověřením všech popisovaných nástrojů.
+
+## Ověření návodu k baterii 2026-09-16
+
+[Návod k omezení nabíjení](../../operating-system/laptop-battery.md) byl ověřen proti odkazované dokumentaci výrobců, systémů a původním implementacím přímých rozhraní.
+
+Windows PowerShell 5.1 ověřil syntaxi všech 10 bloků a 15 izolovaných scénářů pěti nastavovacích postupů s nahrazenými hardwarovými rozhraními.
+
+Scénáře zahrnuly úspěch, chybějící podporu, kalibraci, zamítnutí změny, stav pouze pro čtení a nesoulad zpětného čtení podle daného rozhraní.
+
+Kontrola ověřila cílové hodnoty a pořadí zápisů bez volání skutečných metod notebooku.
+
+Tato zkouška nenahrazuje fyzické ověření nabíjení ani zachování limitu po vypnutí na všech výrobcích.
+
+Dřívější místní ověření Aceru doložilo zapnutí a opakované přečtení ochranného režimu bez Care Center, nikoli zastavení nabíjení při dosažení hranice.
+
+Všechny čtyři systémové záložky prošly 32 kombinacemi šířek 320, 390, 768 a 1440 px se světlým a tmavým motivem bez vodorovného přetékání stránky a vždy s jediným viditelným panelem.
+
+Regrese homepage, Programování, Dockeru a Unity 2D ověřila dalších 32 kombinací bez přetékání stránky a rozbitých načtených obrázků.
+
+Snímky potvrdily čitelnost desktopového úvodu a mobilního rozbaleného postupu včetně viditelného fokusu a samostatně posuvného kódu.
+
+Klávesnice ověřila odkaz z rozcestníku OS, přesun na obsah, systémové záložky a rozbalení Aceru.
+
+Vyhledávání našlo článek pro výraz `baterie` a zobrazilo srozumitelný stav pro neexistující výraz.
+
+Zkopírovaný text Aceru odpovídal ukázce po vložení do jednořádkového pole, které odstraňuje konce řádků, takže jejich zachování tato kontrola neověřuje.
+
+Tmavý motiv zůstal po obnovení stránky a automatický motiv odpovídal nastavení systému.
+
+Při rychlém střídání navigace zaznamenal integrovaný prohlížeč jeden `AbortError: Transition was skipped`, následné klávesnicové otevření článku a jeho ovládání fungovalo.
+
+`npm run verify` prošel 20 testy, strict buildem s 0 chybami a 0 varováními a kontrolou 255 zdrojů a 496 výstupních souborů.
+
+Stejně jako baseline vyžadoval přístup nástroje git-cliff běh mimo sandbox.

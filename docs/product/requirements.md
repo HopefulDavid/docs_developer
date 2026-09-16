@@ -103,6 +103,8 @@ Síť začíná vztahy adres, názvů a portů.
 
 OS odděluje rychlé použití shellu od jeho nastavení a SQL dávku vlastní databázová oblast.
 
+Skupina Notebooky v OS vlastní [omezení nabíjení na 80 %](../../operating-system/laptop-battery.md) podle systému, výrobce a podporované modelové řady.
+
 ## Chybové a hraniční scénáře
 
 | ID | Podmínka | Očekávané chování | Dopad při selhání | Způsob ověření |
