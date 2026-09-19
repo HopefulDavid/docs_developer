@@ -649,3 +649,17 @@ Všech 26 snímků zachovává autorem posouzenou šířku a má jednotný odkaz
 Vyhledávání `NetSentinel` vrátilo všech šest článků, rozcestník a changelog; nový tovární reset byl první výsledek a otevřel správnou stránku.
 
 `npm run verify` prošel 20 testy, strict buildem s 0 chybami a 0 varováními a kontrolou 289 zdrojů a 530 výstupních souborů včetně místních odkazů a kotev.
+
+## Ověření společného vzhledu 2026-09-19
+
+Domovská stránka, přehled Programování, kódový návod Dockeru a obrazový článek NetSentinelu prošly v reálném prohlížeči šířkami 320, 390, 768 a 1440 px ve světlém i tmavém motivu, celkem 32 kombinacemi.
+
+Kontrola v každé kombinaci nenašla vodorovné přetékání celé stránky, rozbitý obrázek, vnořený obal posuvné tabulky ani skutečně přetékající tabulku nebo blok kódu bez klávesnicově dostupného posuvu.
+
+Snímky byly samostatně posouzené pro domovské rozcestníky, třísloupcové rozvržení, mobilní navigaci, tabulky, kódový článek, obraz NetSentinelu a odkazy na předchozí a další článek.
+
+Výsledný redakční vzhled nepoužívá rám kolem celého článku ani opakované karty pro běžné odkazy. Hierarchii tvoří velikost a rozestupy nadpisů, omezená délka řádku a jednoduché oddělovače; plný rám zůstává jen u tabulek, kódu, upozornění a dalších skutečných komponent.
+
+Vizuální kontrola odhalila původní dvojité obalení tabulek, které vytvářelo druhý rám a prázdný proužek nad hlavičkou. Upravený browserový doplněk ponechává jediný responzivní obal i po asynchronním zpracování DocFX; všech šest tabulek přehledu NetSentinelu mělo po načtení právě jeden obal.
+
+Přepínání motivu, mobilní rozbalení navigace a zachování obsahu oblasti zůstaly funkční. Prohlížeč po závěrečné regresi nezaznamenal JavaScriptovou chybu.

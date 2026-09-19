@@ -963,18 +963,26 @@ function renderRootIndex() {
     return `- **${link(file, info.title, `${section}/index.md`)}** ${info.intro}`;
   }).join('\n');
 
-  const body = `České návody pro každodenní vývoj: od principu přes použitelný příklad až po ověření výsledku.
+  const body = `<div class="docs-intro">
+
+České návody pro každodenní vývoj: od principu přes použitelný příklad až po ověření výsledku.
 
 Vyber oblast nebo vyhledej nástroj v horní liště.
 
 Na mobilu ji otevřeš tlačítkem navigace.
 
+</div>
+
 ## Začni podle cíle
 
-- ${link(file, 'Založit repozitář a rozumět změnám v Gitu', 'vcs/git/repository.md')}.
-- ${link(file, 'Spustit aplikaci v Dockeru', 'virtualization/docker/index.md')}.
-- ${link(file, 'Vybrat platformu podle požadavků', 'programming/platform-selection.md')}.
-- ${link(file, 'Zprovoznit SSH připojení', 'network/ssh.md')}.
+<div class="docs-quick-links">
+
+- ${link(file, 'Založit repozitář a rozumět změnám v Gitu', 'vcs/git/repository.md')}
+- ${link(file, 'Spustit aplikaci v Dockeru', 'virtualization/docker/index.md')}
+- ${link(file, 'Vybrat platformu podle požadavků', 'programming/platform-selection.md')}
+- ${link(file, 'Zprovoznit SSH připojení', 'network/ssh.md')}
+
+</div>
 
 ## Oblasti
 

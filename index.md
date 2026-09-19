@@ -2,18 +2,26 @@
 
 # Dokumentace pro vývojáře
 
+<div class="docs-intro">
+
 České návody pro každodenní vývoj: od principu přes použitelný příklad až po ověření výsledku.
 
 Vyber oblast nebo vyhledej nástroj v horní liště.
 
 Na mobilu ji otevřeš tlačítkem navigace.
 
+</div>
+
 ## Začni podle cíle
 
-- [Založit repozitář a rozumět změnám v Gitu](vcs/git/repository.md).
-- [Spustit aplikaci v Dockeru](virtualization/docker/index.md).
-- [Vybrat platformu podle požadavků](programming/platform-selection.md).
-- [Zprovoznit SSH připojení](network/ssh.md).
+<div class="docs-quick-links">
+
+- [Založit repozitář a rozumět změnám v Gitu](vcs/git/repository.md)
+- [Spustit aplikaci v Dockeru](virtualization/docker/index.md)
+- [Vybrat platformu podle požadavků](programming/platform-selection.md)
+- [Zprovoznit SSH připojení](network/ssh.md)
+
+</div>
 
 ## Oblasti
 

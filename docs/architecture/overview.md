@@ -1,7 +1,7 @@
 ---
 canonical_for: system-architecture
 status: accepted
-last_verified: 2026-09-12
+last_verified: 2026-09-19
 owner: architecture
 ---
 
@@ -123,7 +123,7 @@ CSS omezuje obrázek dostupnou šířkou a zachovává poměr stran.
 
 Odkaz pod snímkem zpřístupňuje původní rozlišení.
 
-Aktivní `main.js` doplňuje přístupnost generovaného DocFX HTML bez změny textu ukázek: klávesnicové ovládání motivu, přeskočení navigace, lokalizaci přístupných názvů a obal pro posuv tabulek.
+Aktivní `main.js` doplňuje přístupnost generovaného DocFX HTML bez změny textu ukázek: klávesnicové ovládání motivu, přeskočení navigace, lokalizaci přístupných názvů a právě jeden obal pro posuv tabulek i při pozdějším doplnění responzivního obalu DocFX.
 
 Doplňující tab stop vzniká pouze u skutečně přetékající tabulky nebo kódu a přepočítává se při změně rozměru i rozbalení obsahu.
 
