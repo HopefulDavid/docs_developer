@@ -11,6 +11,7 @@ Síťové technologie, přístupy, certifikáty a bezpečné propojení prostře
 | Stránka | Popis |
 | --- | --- |
 | [Základy a diagnostika sítě](basics.md) | IP adresa, DNS, port, localhost a postupné ověření nedostupné služby. |
+| [IP, MAC a zařízení v síti](ip-mac-devices.md) | Příkazy pro zjištění IP, MAC, brány, DNS, adresy WSL a dohledání telefonu nebo jiného zařízení v místní síti. |
 | [NetSentinel](netsentinel.md) | Rychlý start s NetSentinelem: instalace, první sken, orientace v okně, potřebná oprávnění, důležitá nastavení a umístění dat. |
 | [SSH – příkazy a připojení](ssh.md) | Přihlášení na server, přenos souborů, konfigurace spojení a lokální tunel. |
 | [TLS certifikáty](certificates.md) | Důvěryhodné místní HTTPS, výběr certifikátu a zapojení do vývojového serveru. |

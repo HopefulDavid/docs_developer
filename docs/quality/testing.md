@@ -663,3 +663,19 @@ Výsledný redakční vzhled nepoužívá rám kolem celého článku ani opakov
 Vizuální kontrola odhalila původní dvojité obalení tabulek, které vytvářelo druhý rám a prázdný proužek nad hlavičkou. Upravený browserový doplněk ponechává jediný responzivní obal i po asynchronním zpracování DocFX; všech šest tabulek přehledu NetSentinelu mělo po načtení právě jeden obal.
 
 Přepínání motivu, mobilní rozbalení navigace a zachování obsahu oblasti zůstaly funkční. Prohlížeč po závěrečné regresi nezaznamenal JavaScriptovou chybu.
+
+## Ověření síťového taháku 2026-09-19
+
+Příkazy `Get-NetIPConfiguration`, `Get-NetAdapter`, `Get-NetNeighbor`, `hostname -I`, `ip -brief address`, `ip route show default` a `ip neigh show` proběhly v místním Windows a WSL prostředí s návratovým kódem 0.
+
+Ověřovací výstup záměrně nezaznamenal skutečné IP ani MAC adresy.
+
+Význam příkazů a omezení sousední tabulky byly porovnané s dokumentací Microsoftu a Linux iproute2, chování soukromé Wi-Fi adresy iPhonu s dokumentací Applu a syntaxe dotazu na veřejnou IP s dokumentací ipify.
+
+Nový článek [IP, MAC a zařízení v místní síti](../../network/ip-mac-devices.md) prošel v reálném prohlížeči šířkami 320, 390, 768 a 1440 px ve světlém i tmavém motivu.
+
+Kontrola nenašla vodorovné přetékání celé stránky, vnořený obal tabulky, nepřístupný posuv kódu ani JavaScriptovou chybu.
+
+Vyhledávání `MAC adresa` zobrazilo nový článek jako první z pěti výsledků.
+
+Dotaz na veřejnou IP nebyl při ověření spuštěný, aby se skutečná adresa zbytečně neposílala externí službě.

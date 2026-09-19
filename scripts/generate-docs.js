@@ -342,6 +342,7 @@ const navigation = {
       name: 'Síťové nástroje',
       items: [
         { name: 'Základy a diagnostika sítě', href: 'basics.md' },
+        { name: 'IP, MAC a zařízení v síti', href: 'ip-mac-devices.md' },
         {
           name: 'NetSentinel',
           href: 'netsentinel.md',

@@ -102,6 +102,8 @@ Blokovaný ping nevylučuje funkční aplikaci.
 
 Diagnostiku prováděj vůči konkrétní službě, ke které máš přístup, a veřejně nesdílej celý interní síťový výpis.
 
+Rychlé příkazy pro vlastní IP, MAC, WSL a dohledání telefonu jsou v samostatném taháku [IP, MAC a zařízení v místní síti](ip-mac-devices.md).
+
 Navazují [VPN](vpn.md), [SSH](ssh.md) a [certifikáty HTTPS](certificates.md).
 
 Zdroje: [Test-NetConnection](https://learn.microsoft.com/en-us/powershell/module/nettcpip/test-netconnection), [soukromé adresy RFC 1918](https://www.rfc-editor.org/rfc/rfc1918), [curl](https://curl.se/docs/manpage.html).
