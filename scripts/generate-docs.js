@@ -343,6 +343,17 @@ const navigation = {
       items: [
         { name: 'Základy a diagnostika sítě', href: 'basics.md' },
         {
+          name: 'NetSentinel',
+          href: 'netsentinel.md',
+          items: [
+            { name: 'Základní kontrola sítě', href: 'netsentinel/basic-check.md' },
+            { name: 'Sledování a automatizace', href: 'netsentinel/monitoring.md' },
+            { name: 'Pokročilé kontroly', href: 'netsentinel/advanced-checks.md' },
+            { name: 'Tovární reset', href: 'netsentinel/factory-reset.md' },
+            { name: 'Přehled všech funkcí', href: 'netsentinel/reference.md' },
+          ],
+        },
+        {
           name: 'SSH – příkazy a připojení',
           href: 'ssh.md',
           items: [

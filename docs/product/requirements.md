@@ -1,7 +1,7 @@
 ---
 canonical_for: product-requirements
 status: accepted
-last_verified: 2026-09-12
+last_verified: 2026-09-19
 owner: product
 ---
 
@@ -100,6 +100,8 @@ Na výslovnou žádost vlastníka byly odstraněny Docker podstránky Bezpečný
 Regulární výrazy JetBrains mají samostatný návod a význam zápisu příkazů společný článek v OS.
 
 Síť začíná vztahy adres, názvů a portů.
+
+Skupina Síťové nástroje vlastní návod k aplikaci [NetSentinel](../../network/netsentinel.md) jako přehled s podstránkami pro základní kontrolu, sledování s automatizací, pokročilé kontroly, úplný návrat do továrního stavu a přehled všech funkcí.
 
 OS odděluje rychlé použití shellu od jeho nastavení a SQL dávku vlastní databázová oblast.
 

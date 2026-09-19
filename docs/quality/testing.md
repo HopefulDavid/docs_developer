@@ -1,7 +1,7 @@
 ---
 canonical_for: testing-strategy
 status: accepted
-last_verified: 2026-09-12
+last_verified: 2026-09-19
 owner: quality
 ---
 
@@ -586,3 +586,66 @@ Integrovaný prohlížeč při navigaci zaznamenal pět již dříve pozorovaný
 `npm run verify` prošel 20 testy, strict buildem s 0 chybami a 0 varováními a kontrolou 257 zdrojů a 498 výstupních souborů včetně odkazů a kotev.
 
 Stejně jako baseline vyžadoval přístup git-cliff běh mimo sandbox.
+
+## Ověření návodů NetSentinel 2026-09-19
+
+Pět článků [přehled](../../network/netsentinel.md), [základní kontrola](../../network/netsentinel/basic-check.md), [pokročilé kontroly](../../network/netsentinel/advanced-checks.md), [sledování a automatizace](../../network/netsentinel/monitoring.md) a [přehled funkcí](../../network/netsentinel/reference.md) vzniklo nad nainstalovaným NetSentinelem 2.3.0 ve Windows 11 bez oprávnění správce a s běžící službou Npcap.
+
+Seznam devíti sekcí a 74 stránek byl převzat z `ui/nav/builder.py` značky `v2.3.0` a porovnán s živým seznamem stránek v aplikaci, každá stránka byla otevřena a zachycena přes UI Automation.
+
+Postupy základní kontroly proběhly skutečně: úplný sken, seznam zařízení se čtyřmi záznamy, kontextová nabídka řádku, Security Overview, Network Grade s výsledkem A a pěti z osmi kontrol, Speed Test přes Ookla CLI, DNS Benchmark, diagnostika What's Wrong? s příznakem pomalého internetu, otevření nápovědy stránky, palety příkazů, okna Quick Check, dialogu About a nastavení.
+
+Z pokročilých kontrol proběhly Port Scanner routeru se třemi otevřenými porty, Exposed to Internet bez UPnP pravidel, Full Device Discovery v pasivním režimu, ARP Spoof Watch na 30 sekund se dvěma pakety, Device Risk Score, aktualizace Threat Intel se 680 indikátory, CVE Lookup bez verzí služeb, Hop-by-Hop Trace k `8.8.8.8`, Root Cause Correlator a Service Diagnostics.
+
+Ze sledování proběhly Network Logger s CSV v `Dokumenty\NetSentinel\logs`, App Traffic po dobu 45 sekund, Active Connections, Network Health Report uložený přes dialog z Network Grade a vstup do Notifications včetně panelu upozornění.
+
+| Zjištění | Důkaz | Dopad na návod |
+|---|---|---|
+| Volba **Only scan devices within my local subnet** bere nejširší lokální podsíť, zde adaptér WSL `172.20.224.0/20`, a sken skončil s nula zařízeními | První dva skeny v GUI `devices=0` v `netsentinel_scan_timing.log`, CLI sken našel tři zařízení, po vypnutí volby až druhý sken našel čtyři | Sekce Časté problémy v základní kontrole |
+| **WiFi Networks** vrací nula sítí bez zapnuté polohy ve Windows | `netsh wlan show networks` hlásí požadavek na Location services | Časté problémy, sken Wi-Fi nebyl ověřen a systémové nastavení soukromí se neměnilo |
+| **Config Snapshots** selže při prvním snímku | Text `Scan error: _SnapshotWorker.result_ready[list].emit(): argument 1 has unexpected type DiscoveryResult` | Uvedeno jako známá chyba verze 2.3.0 |
+| **Network Health Report → Generate Now** zůstane ve stavu Generating a čítač Errors roste | Dva pokusy bez nového souboru v `NetSentinel-Reports` | Návod doporučuje report z Network Grade, který vytvořil HTML o 8 KB |
+| **DHCP Rogue Monitor** bez správce nic nezachytí | Hláška `try running as Administrator with Npcap` | Požadavek správce uveden u postupu |
+| `Alt+1` nepřepne na Dashboard, `Alt+2` až `Alt+5` fungují | Zkouška zkratek přes UI Automation | Tabulka zkratek uvádí jen funkční kombinace |
+
+Stránky se štítkem admin, tedy SYN a UDP sken, OS Detection, Login Test, Bandwidth Usage, Broadcast Storm, Rogue Bridge, IoT Behaviour a 802.11 Monitor, nebyly spuštěny a jejich popis vychází z rozhraní a primární dokumentace.
+
+Hardwarové pluginy, MQTT, REST API, automatizační háky a upozornění e-mailem nebyly propojeny se skutečnou službou.
+
+Všech 26 snímků vzniklo v okně 1240 × 800 px, citlivé údaje jsou zakryté neprůhlednými šrafovanými bloky přímo v PNG a číslované popisky odpovídají tabulkám v článcích.
+
+Zakryté jsou MAC adresy, názvy zařízení a doména poskytovatele, veřejná adresa WAN, adresy tranzitních směrovačů, názvy a cesty procesů, soukromé adresy `192.168.0.x` zůstaly viditelné.
+
+Úprava proběhla jednorázovým skriptem nad System.Drawing mimo repozitář a do verzované změny patří pouze výsledné přílohy.
+
+`npm run verify` prošel 20 testy, strict buildem s 0 chybami a 0 varováními a kontrolou 288 zdrojů a 529 výstupních souborů včetně místních odkazů a kotev.
+
+V prohlížeči prošlo šest stránek, tedy pět článků a rozcestník Síť, na šířkách 320, 390, 768 a 1440 px ve světlém i tmavém motivu, celkem 48 kombinací, bez vodorovného přetékání stránky a bez rozbitého nebo přetékajícího obrázku.
+
+Regrese homepage, Programování, Dockeru a Unity 2D prošla 16 kombinacemi šířek 320 a 1440 px v obou motivech.
+
+Záložky **Bez oprávnění správce** a **Se správcem a Npcap** přepínaly klikem s parametrem `?tabs=` a vždy zobrazily právě jeden panel.
+
+Vyhledávání `NetSentinel` vrátilo všech pět článků a `Npcap` šest stránek.
+
+Po ověření byla volba omezení podsítě v aplikaci vrácena do zapnutého stavu, zastaveny spuštěné monitory a obnovena původní velikost okna.
+
+### Revize struktury a tovární reset
+
+Navazující revize z 2026-09-19 přidala šestý článek [Tovární reset](../../network/netsentinel/factory-reset.md), seřadila navigaci podle běžného pracovního toku a opravila umístění databáze instalované verze na `%LOCALAPPDATA%\NetSentinel\NetSentinel.db`.
+
+Umístění databáze, uživatelského adresáře, nastavení `QSettings` a pověření bylo ověřené proti značce `v2.3.0`, zejména souborům `modules/utils.py`, `modules/metric_store_queries.py` a `ui/pages/settings_cards.py` a použití knihovny `keyring`.
+
+Kontrola zdroje potvrdila, že vestavěný reset volá pouze vymazání nastavení a nemaže databázi ani pověření.
+
+Destruktivní reset nebyl spuštěný nad skutečným profilem uživatele. Veřejný postup proto nejdřív vypisuje přesné cíle, používá omezené cesty aktuálního profilu, odděluje pověření a přenosnou databázi a uvádí pozorovatelné podmínky čistého spuštění.
+
+Všech šest článků a rozcestník Síť prošly na šířkách 320, 390, 768 a 1440 px ve světlém i tmavém motivu, celkem 56 kombinací.
+
+Kontrola nenašla vodorovné přetékání celé stránky, rozbitý nebo přetékající obrázek, odchylku centrování obrázku nad 20 px ani přetékající varování nebo blok kódu.
+
+Všech 26 snímků zachovává autorem posouzenou šířku a má jednotný odkaz na plné rozlišení.
+
+Vyhledávání `NetSentinel` vrátilo všech šest článků, rozcestník a changelog; nový tovární reset byl první výsledek a otevřel správnou stránku.
+
+`npm run verify` prošel 20 testy, strict buildem s 0 chybami a 0 varováními a kontrolou 289 zdrojů a 530 výstupních souborů včetně místních odkazů a kotev.

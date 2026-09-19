@@ -576,17 +576,70 @@ article img {
   box-sizing: border-box;
 }
 
-/* Originál snímku zůstává dostupný i při menším zobrazení v textu. */
-article p:has(> a[href$=".png"]:only-child) {
-  margin-top: -0.5rem;
-  text-align: center;
-  font-size: 0.85rem;
-}
-
 article p:has(> img:only-child) {
   display: flex;
   justify-content: center;
   max-width: none;
+}
+
+/* Snímky v návodech jsou klikatelné náhledy s jednotným popiskem. */
+article .docs-screenshot {
+  width: fit-content;
+  max-width: 100%;
+  margin: 1rem auto 1.35rem;
+  text-align: center;
+}
+
+article .docs-screenshot > a {
+  display: block;
+  max-width: 100%;
+  border-radius: var(--docs-radius);
+  cursor: zoom-in;
+}
+
+article .docs-screenshot > a:focus-visible {
+  outline: 3px solid var(--docs-accent);
+  outline-offset: 3px;
+}
+
+article .docs-screenshot img {
+  width: auto;
+  max-width: min(100%, 640px);
+  margin: 0;
+}
+
+article .docs-screenshot figcaption {
+  max-width: 44rem;
+  margin: 0.5rem auto 0;
+  color: var(--docs-muted);
+  font-size: 0.84rem;
+  line-height: 1.4;
+}
+
+article .docs-screenshot--medium {
+  max-width: 34rem;
+}
+
+article .docs-screenshot-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: start;
+  margin: 1rem 0 1.45rem;
+}
+
+article .docs-screenshot-grid > .docs-screenshot {
+  width: 100%;
+  margin: 0;
+}
+
+article .docs-screenshot-grid .docs-screenshot img {
+  width: 100%;
+  max-width: none;
+}
+
+article .docs-screenshot-grid--wide-narrow {
+  grid-template-columns: minmax(0, 2fr) minmax(12rem, 1fr);
 }
 
 .alert {
@@ -789,6 +842,11 @@ footer {
   article img {
     max-height: none;
     padding: 0.3rem;
+  }
+
+  article .docs-screenshot-grid,
+  article .docs-screenshot-grid--wide-narrow {
+    grid-template-columns: 1fr;
   }
 
 }
