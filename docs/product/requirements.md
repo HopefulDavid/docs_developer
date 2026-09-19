@@ -95,7 +95,7 @@ Zálohy image a provozních dat patří k Dockeru ve Virtualizaci a zálohy zdro
 
 Přehled balíčků na ně odkazuje bez duplikace postupů.
 
-Na výslovnou žádost vlastníka byly odstraněny Docker podstránky Bezpečný upgrade stateful služby, Portainer, Duplicati a BusyBox a sekce klávesových zkratek JetBrains.
+Rozsah nezahrnuje Docker podstránky Bezpečný upgrade stateful služby, Portainer, Duplicati a BusyBox ani sekci klávesových zkratek JetBrains.
 
 Regulární výrazy JetBrains mají samostatný návod a význam zápisu příkazů společný článek v OS.
 

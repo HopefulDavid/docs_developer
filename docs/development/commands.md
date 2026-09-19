@@ -53,6 +53,8 @@ Pravidla aktualizace nástrojů vlastní [politika závislostí](dependencies.md
 
 Před kompilací odstraní pouze odvozený ignorovaný `_site/` a po kompilaci ověří manifest, fyzické výstupní cesty a odkazy v HTML včetně kotev a přesného casingu.
 
+Během sestavení může být místní `_site/` krátce neúplný, proto jej kontroluj až po úspěšném dokončení příkazu.
+
 ## Spuštění
 
 | Scénář | Pracovní adresář | Přesný příkaz | Adresa nebo rozhraní | Bezpečné zastavení |
@@ -156,6 +158,8 @@ Release tagy historii nerozdělují a commity se zobrazují pouze krátkým nekl
 | Vytvoření vstupu pro sestavení | `npm run changelog:generate` | Přepíše pouze ignorovaný `changelog.md` | Úplný přehled s identitou zdroje, otevřeným nejnovějším obdobím, sdělením o vynechávání roků bez změn, sbalenými staršími roky, počty změn a kategoriemi |
 
 `npm run docs:build` tento krok provádí automaticky před DocFX.
+
+Při chybě `git-cliff`, která ve Windows hlásí odepřený přístup k cestě repozitáře, použij [diagnostiku omezeného sandboxu](../operations/runbook.md#symptom-windows-sandbox-blokuje-přístup-git-cliff).
 
 ## Reprezentativní smoke scénář
 

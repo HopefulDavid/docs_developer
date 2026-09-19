@@ -17,7 +17,7 @@ Důvody významných voleb jsou zaznamenané v [`decisions/`](decisions/README.m
 
 Tvrzení v tomto dokumentu používají kanonické stavy definované v části [`Stav tvrzení`](../governance/documentation.md#stav-tvrzení).
 
-Pokud není uvedeno jinak, skutečnosti v tomto dokumentu byly ověřené proti repozitáři a lokálnímu běhu dne 2026-08-28.
+Pokud není uvedeno jinak, skutečnosti v tomto dokumentu odpovídají datu `last_verified` v metadatech.
 
 Přechodové stavy jsou soustředěné v části [Známá rizika, dluh a přechodové stavy](#11-známá-rizika-dluh-a-přechodové-stavy).
 
@@ -107,9 +107,9 @@ Interní dokumentace je pouze řídicí kontext a obě zpracovatelské hranice j
 
 ### Čtenářské rozhraní
 
-K 2026-09-11 rozcestník odvozuje přehled oblastí z téhož registru jako TOC a přidává krátké vstupy podle praktického cíle.
+Rozcestník odvozuje přehled oblastí z téhož registru jako TOC a přidává krátké vstupy podle praktického cíle.
 
-Od 2026-09-12 vlastní stručný popis řádku rozcestníku jednořádkové metadata `description` cílového článku.
+Stručný popis řádku rozcestníku vlastní jednořádkové metadata `description` cílového článku.
 
 Generátor odmítá prázdnou či neplatnou hodnotu a neodvozuje ji z úvodu.
 

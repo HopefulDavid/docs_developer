@@ -17,14 +17,14 @@ Zde se vysvětluje její účel, pořadí, prostředí, oprávnění a způsob l
 
 | Vlastnost | Ověřená hodnota | Důkaz |
 |---|---|---|
-| Hostingová platforma | GitHub | Remote `https://github.com/HopefulDavid/docs_developer.git` a shoda místního obsahu s `origin/develop` ověřené 2026-09-10, `.github/workflows/` |
+| Hostingová platforma | GitHub | Remote `https://github.com/HopefulDavid/docs_developer.git` a `.github/workflows/` |
 | VCS | Git | `.git/`, remote a projektová historie |
 | Výchozí větev hostingu | `main` | Lokální symbolický ref `origin/HEAD -> origin/main` |
 | Vývojová větev | `develop` | [`../development/workflow.md`](../development/workflow.md) |
-| Ochrana zdrojových větví | Aktivní GitHub rulesety pro `main` a `develop` | [Nastavení rulesetů](https://github.com/HopefulDavid/docs_developer/settings/rules), vzdáleně ověřeno 2026-08-28 |
+| Ochrana zdrojových větví | Aktivní GitHub rulesety pro `main` a `develop` | [Přehled vzdálených ochran](#vzdálené-ochrany-větví) a [nastavení rulesetů](https://github.com/HopefulDavid/docs_developer/settings/rules) |
 | Kanonická cesta quality | [`.github/workflows/quality.yml`](../../.github/workflows/quality.yml) | Read-only workflow pro `develop`, pull request a ruční běh |
 | Kanonická cesta publikování | [`.github/workflows/main.yml`](../../.github/workflows/main.yml) | Ověření a deployment po pushi do `main` nebo ručním spuštění |
-| Zdroj GitHub Pages | Kořen větve `gh-pages` | [Nastavení Pages](https://github.com/HopefulDavid/docs_developer/settings/pages), vzdáleně ověřeno 2026-08-28 |
+| Zdroj GitHub Pages | Kořen větve `gh-pages` | [Přehled vzdálených ochran](#vzdálené-ochrany-větví) a [nastavení Pages](https://github.com/HopefulDavid/docs_developer/settings/pages) |
 | Runner nebo executor | GitHub-hosted `ubuntu-latest` | Obě workflow definice |
 
 Publikované články mohou popisovat Forgejo, Gitea nebo jinou platformu, ale tyto tematické stránky nejsou důkazem hostingu tohoto projektu.
@@ -101,7 +101,7 @@ Workflow používá nejmenší možná oprávnění.
 
 Výchozí token nemá zapisovat, pokud job zápis nepotřebuje.
 
-Nastavení repozitáře bylo 2026-08-28 ověřeno na výchozí read-only oprávnění `GITHUB_TOKEN` a nepovoluje GitHub Actions vytvářet ani schvalovat pull requesty.
+Nastavení repozitáře ponechává výchozí oprávnění `GITHUB_TOKEN` pouze pro čtení a nepovoluje GitHub Actions vytvářet ani schvalovat pull requesty.
 
 Publikační workflow žádá pouze potřebné `contents: write`, zatímco quality workflow zůstává na `contents: read`.
 
@@ -164,7 +164,7 @@ Automatické publikování se nezavádí jako vedlejší důsledek běžného ov
 
 GitHub je strojovou autoritou pro živé rulesety a Pages settings.
 
-Tato část zaznamenává přijatý význam a stav vzdáleně ověřený dne 2026-08-28, aby bylo možné rozpoznat pozdější drift.
+Tato část zaznamenává přijatý význam a poslední vzdáleně ověřený stav z 2026-08-28, aby bylo možné rozpoznat pozdější drift.
 
 Klasické branch protection rules nejsou nakonfigurované, protože zdrojové větve chrání moderní rulesety.
 
@@ -177,6 +177,7 @@ Klasické branch protection rules nejsou nakonfigurované, protože zdrojové v�
 ### Důkaz vzdáleného ověření
 
 - Výchozí větev byla `main` a oba rulesety byly aktivní bez bypass aktérů.
+- Výchozí oprávnění `GITHUB_TOKEN` byla pouze pro čtení a GitHub Actions nemohly vytvářet ani schvalovat pull requesty.
 - [Quality běh `33182623326`](https://github.com/HopefulDavid/docs_developer/actions/runs/33182623326) úspěšně ověřil commit `ef77f7577e8cf9789949b6409712a25947e873c6` na `develop`.
 - [Publikační běh `33182623548`](https://github.com/HopefulDavid/docs_developer/actions/runs/33182623548) úspěšně sestavil a publikoval stejný zdrojový commit z `main`.
 - Pages používaly kořen větve `gh-pages`, vynucovaly HTTPS a poslední deployment dokončil navazující workflow `pages-build-deployment`.
