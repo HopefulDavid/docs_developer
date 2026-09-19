@@ -679,3 +679,23 @@ Kontrola nenašla vodorovné přetékání celé stránky, vnořený obal tabulk
 Vyhledávání `MAC adresa` zobrazilo nový článek jako první z pěti výsledků.
 
 Dotaz na veřejnou IP nebyl při ověření spuštěný, aby se skutečná adresa zbytečně neposílala externí službě.
+
+### Revize se záložkami
+
+Navazující revize z 2026-09-19 rozdělila příkazy podle prostředí do tří skupin záložek: adresy vlastního systému, veřejná IP a hledání jiného zařízení.
+
+Windows, WSL a Linux zůstávají oddělené jen tam, kde se liší příkaz nebo síťové chování.
+
+Společné vysvětlení k routeru, iPhonu, bezpečnému výkladu výsledků a diagnostice zůstává stále viditelné.
+
+Přepnutí všech variant proběhlo kliknutím a linuxová varianta také klávesou Enter.
+
+Vybrané varianty se promítly do parametru `?tabs=` a každá skupina zobrazila právě jeden panel.
+
+Vizuální kontrola při šířkách 320 a 1440 px nenašla vodorovné přetékání stránky.
+
+Delší příkazy Windows měly při 320 px vlastní vodorovný posuv s `overflow-x: auto` a všechny tři skupiny záložek zůstaly čitelné.
+
+Prohlížeč nezaznamenal JavaScriptovou chybu.
+
+`npm run verify` prošel 20 testy, strict buildem s 0 chybami a 0 varováními a kontrolou 290 zdrojů a 531 výstupních souborů včetně místních odkazů a kotev.

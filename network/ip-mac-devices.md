@@ -27,7 +27,17 @@ Počítač může mít současně více adres kvůli Wi-Fi, Ethernetu, VPN, WSL,
 
 Pro spojení v domácí síti obvykle hledáš IPv4 aktivního adaptéru s výchozí bránou.
 
-## Windows: vlastní IP, brána, DNS a MAC
+## Adresy vlastního systému
+
+Vyber prostředí, ve kterém příkaz spouštíš.
+
+<a id="windows-vlastní-ip-brána-dns-a-mac"></a>
+<a id="wsl-adresa-linuxu-a-windows-hostu"></a>
+<a id="linux-stejné-údaje-bez-wsl"></a>
+
+## [Windows](#tab/adresy-windows)
+
+**IP adresa, brána a DNS**
 
 V běžném PowerShellu spusť:
 
@@ -39,7 +49,9 @@ Výpis seskupí aktivní rozhraní a ukáže jejich IP adresy, výchozí bránu 
 
 Řádek `IPv4Address` u používané Wi-Fi nebo Ethernetu je obvykle adresa, kterou použije jiné zařízení ve stejné síti.
 
-Pro stručný seznam adaptérů a jejich MAC adres:
+**MAC adresa vlastního adaptéru**
+
+Pro stručný seznam adaptérů a jejich MAC adres spusť:
 
 ```powershell
 Get-NetAdapter |
@@ -50,7 +62,9 @@ Get-NetAdapter |
 
 MAC adresa zde patří tvému počítači, nikoli routeru nebo telefonu.
 
-Klasický příkaz dostupný v PowerShellu i CMD:
+**Klasický výpis pro PowerShell i CMD**
+
+Použít můžeš také:
 
 ```bat
 ipconfig /all
@@ -60,27 +74,9 @@ Hledej adaptér, který má **IPv4 Address**, **Default Gateway** a stav připoj
 
 Virtuální adaptéry WSL, Dockeru nebo VPN mohou mít vlastní adresu, ale obvykle nejsou adresou počítače v domácí Wi-Fi.
 
-## Veřejná IP
+## [WSL](#tab/adresy-wsl)
 
-Veřejná IP není totéž co místní adresa z `Get-NetIPConfiguration`.
-
-Ukáže ji až služba dostupná přes internet, například ipify:
-
-```powershell
-(Invoke-RestMethod -Uri "https://api.ipify.org?format=json").ip
-```
-
-V Bashi se stejným účelem:
-
-```bash
-curl --silent https://api.ipify.org
-```
-
-Požadavek odešle službě tvoji veřejnou zdrojovou adresu, protože bez ní ji nemůže vrátit.
-
-Výsledek může patřit routeru, VPN nebo sdílenému překladu adres poskytovatele a nemusí jednoznačně označovat jeden počítač.
-
-## WSL: adresa Linuxu a Windows hostu
+**Adresa distribuce z PowerShellu**
 
 Z PowerShellu zjistíš adresu výchozí distribuce WSL 2 takto:
 
@@ -100,6 +96,8 @@ Velké `I` je důležité.
 
 Malé `hostname -i` může vrátit pomocnou adresu jako `127.0.1.1`, která není adresou WSL dostupnou z Windows.
 
+**Adresy přímo uvnitř WSL**
+
 Přímo uvnitř WSL použij:
 
 ```bash
@@ -116,7 +114,7 @@ ip route show default
 
 V běžném režimu NAT bývá brána zároveň adresou Windows hostu viditelnou z WSL.
 
-Pokud potřebuješ jen tuto adresu:
+Pokud potřebuješ jen adresu Windows hostu:
 
 ```bash
 ip route show | awk '/default/ { print $3; exit }'
@@ -126,13 +124,67 @@ V zrcadleném síťovém režimu WSL lze pro spojení mezi Windows a Linuxem ča
 
 Adresa WSL se může změnit po `wsl.exe --shutdown` nebo restartu počítače, proto ji nevkládej natrvalo do konfigurace bez skutečné potřeby.
 
+## [Linux](#tab/adresy-linux)
+
+V běžné distribuci spusť:
+
+```bash
+hostname
+hostname -I
+ip -brief address
+ip route show default
+```
+
+`hostname` vrátí název počítače.
+
+`hostname -I` vypíše jeho nelokální adresy a `ip -brief address` je přiřadí ke konkrétním rozhraním.
+
+`ip route show default` ukáže výchozí bránu.
+
+***
+
+## Veřejná IP
+
+Veřejná IP není totéž co místní adresa vlastního zařízení.
+
+Ukáže ji až služba dostupná přes internet, například ipify.
+
+## [Windows](#tab/verejna-windows)
+
+V PowerShellu spusť:
+
+```powershell
+(Invoke-RestMethod -Uri "https://api.ipify.org?format=json").ip
+```
+
+## [WSL a Linux](#tab/verejna-linux)
+
+V Bashi spusť:
+
+```bash
+curl --silent https://api.ipify.org
+```
+
+***
+
+Požadavek odešle službě tvoji veřejnou zdrojovou adresu, protože bez ní ji nemůže vrátit.
+
+Výsledek může patřit routeru, VPN nebo sdílenému překladu adres poskytovatele a nemusí jednoznačně označovat jeden počítač.
+
 ## Telefon, tiskárna nebo jiné zařízení
 
 MAC jiného zařízení lze z počítače zjistit pouze tehdy, když je zařízení ve stejné místní síti a počítač o něm má záznam v sousední tabulce.
 
 Přes router, VPN nebo internet se původní MAC adresa nepřenáší.
 
-### Když znáš IP zařízení
+Vyber prostředí, ze kterého zařízení hledáš.
+
+<a id="když-znáš-ip-zařízení"></a>
+<a id="když-ip-zařízení-neznáš"></a>
+
+## [Windows](#tab/zarizeni-windows)
+
+**Když znáš IP zařízení**
 
 Následující příklad používá ilustrační adresu `192.168.1.42`.
 
@@ -150,7 +202,7 @@ Zařízení nemusí na ping odpovědět, ale Windows přesto může při pokusu 
 
 Prázdný výsledek znamená, že Windows odpovídající záznam nemá, zařízení je vypnuté, používá jinou síť nebo mezi zařízeními stojí router či izolace Wi-Fi klientů.
 
-### Když IP zařízení neznáš
+**Když IP zařízení neznáš**
 
 Zobraz aktuálně známé sousedy IPv4:
 
@@ -166,6 +218,37 @@ Jednodušší historická varianta pro PowerShell i CMD:
 ```bat
 arp -a
 ```
+
+## [WSL a Linux](#tab/zarizeni-linux)
+
+**Když znáš IP zařízení**
+
+Následující příklad používá ilustrační adresu `192.168.1.42`.
+
+Nahraď ji adresou svého zařízení:
+
+```bash
+ping -c 1 192.168.1.42
+ip neigh show to 192.168.1.42
+```
+
+První příkaz vyvolá pokus o místní komunikaci a druhý vyhledá odpovídající IP a MAC adresu.
+
+Prázdný výsledek znamená, že Linux odpovídající záznam nemá, zařízení je vypnuté, používá jinou síť nebo mezi zařízeními stojí router či izolace Wi-Fi klientů.
+
+**Když IP zařízení neznáš**
+
+Zobraz všechny aktuálně známé sousedy:
+
+```bash
+ip neigh show
+```
+
+Ve WSL 2 s výchozím režimem NAT tento výpis obvykle vidí hlavně virtuální síť WSL, nikoli úplný seznam zařízení ve fyzické Wi-Fi.
+
+Pro domácí síť proto použij raději variantu Windows nebo správu routeru.
+
+***
 
 Tyto výpisy nejsou úplný seznam sítě.
 
@@ -193,24 +276,6 @@ Router proto nemusí ukazovat hardwarovou MAC adresu uvedenou v obecných inform
 Soukromou adresu nevypínej jen kvůli rozpoznání zařízení.
 
 Pro identifikaci použij aktuální Wi-Fi adresu z detailu konkrétní sítě.
-
-## Linux: stejné údaje bez WSL
-
-Na běžné distribuci Linuxu fungují stejné nástroje jako ve WSL:
-
-```bash
-hostname
-hostname -I
-ip -brief address
-ip route show default
-ip neigh show
-```
-
-`hostname` vrátí název počítače.
-
-`ip neigh show` zobrazí IP a linkové adresy známých zařízení ve stejné síti.
-
-Stejně jako ve Windows jde o cache sousedů, nikoli o zaručený inventář všech zařízení.
 
 ## Názvy, DNS a dostupnost služby
 
