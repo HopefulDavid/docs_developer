@@ -397,38 +397,6 @@ Affinity nadále používá snímky šířky 760 a 482 px se shodným pravidlem 
 
 Závěrečná kontrola našla jen skutečnou projektovou `.git`, jeden worktree a místní `main` a `develop`, se zachovanou vzdálenou `gh-pages`.
 
-## Ověření návodu Flameshot 2026-09-13
-
-Návod [Flameshot místo Výstřižků](../../operating-system/windows/flameshot.md) byl obsahově ověřen proti primární dokumentaci a skutečným volbám Windows 11 25H2 a Flameshotu 14.0.0.
-
-Vypnutá systémová volba Print Screen, zaškrtnuté automatické spouštění a otevření výběru Flameshotu po stisku Print Screen byly vizuálně potvrzené.
-
-Automatizace neuměla cílit překryvné okno pro tažení výběru, takže kopírování snímku ani běh po novém přihlášení nebyly místně ověřené.
-
-Článek obsahuje kroky pro jejich ověření čtenářem.
-
-Na následnou žádost vlastníka je výsledný návod textový a obrázky doplní vlastník samostatně.
-
-`npm run verify` prošlo všemi 20 testy a strict buildem bez varování.
-
-Po odstranění obrázků znovu prošlo `npm run docs:build` s 0 chybami a 0 varováními a kontrolou 254 zdrojů a 495 výstupních souborů.
-
-Kontroly vyžadovaly existující připnuté uživatelské SDK a běh mimo sandbox, který odepíral přístup SDK a nástroji git-cliff.
-
-Toto omezení prostředí se neřešilo změnou projektových verzí.
-
-Finální článek prošel kontrolou rozměrů při 320, 390, 768 a 1440 px ve světlém i tmavém motivu bez vodorovného přetékání stránky.
-
-Celý text byl vizuálně zkontrolován na desktopu a mobilní zobrazení na šířce 320 px.
-
-Rozměrová regrese homepage, Programování, Dockeru, Unity 2D a obou rozcestníků OS a Windows zahrnula dalších 48 kombinací rozměru a motivu bez přetékání stránky, chyb načítání obrázků nebo nepřístupných posuvných bloků.
-
-Samostatné interakce ověřily odkaz z Windows, mobilní obsah oblasti, vyhledání Flameshotu a prázdný výsledek, ovládání motivu klávesnicí, zachování tmavého motivu po načtení a shodu automatického motivu se systémem.
-
-Regresní kontrola Unity 2D potvrdila rozbalení obrázkového postupu klávesnicí a přesné zkopírování ukázky kódu.
-
-Kontrolovaný prohlížeč nezaznamenal JavaScript chybu.
-
 ## Ověření výběru SDK 2026-09-13
 
 Izolovaný experiment ve Windows s minimem 10.0.301 a jediným systémovým SDK 10.0.401 potvrdil odmítnutí při `disable` a `latestPatch` a úspěšný výběr 10.0.401 při `latestFeature` i bez `global.json`.
@@ -440,8 +408,6 @@ Podporu přímé deklarace kanálu, stabilní kvality a odděleného instalačn�
 Po odstranění projektového `global.json` vybral `dotnet --version` SDK 10.0.401 a `dotnet tool restore` úspěšně obnovil DocFX.
 
 `npm run verify` prošlo 20 testy, strict buildem s 0 chybami a 0 varováními a kontrolou 254 zdrojů a 495 výstupních souborů včetně lokálních odkazů a kotev.
-
-Článek Flameshot po odstranění věty prošel rozměrovou kontrolou při 320, 390, 768 a 1440 px v obou motivech bez přetékání stránky.
 
 Desktopový a mobilní snímek potvrdily čitelnost a prohlížeč nezaznamenal JavaScript chybu.
 
@@ -697,5 +663,25 @@ Vizuální kontrola při šířkách 320 a 1440 px nenašla vodorovné přeték�
 Delší příkazy Windows měly při 320 px vlastní vodorovný posuv s `overflow-x: auto` a všechny tři skupiny záložek zůstaly čitelné.
 
 Prohlížeč nezaznamenal JavaScriptovou chybu.
+
+`npm run verify` prošel 20 testy, strict buildem s 0 chybami a 0 varováními a kontrolou 290 zdrojů a 531 výstupních souborů včetně místních odkazů a kotev.
+
+## Ověření návodu PixPin 2026-09-19
+
+Návod [PixPin na Print Screen ve Windows](../../operating-system/windows/pixpin.md) nahradil původní návod pro snímání obrazovky v obsahu oblasti, obou rozcestnících i generátoru navigace.
+
+Výsledný rozsah článku byl na žádost vlastníka omezený na přiřazení akce **Screenshot** ke klávese `Print Screen` a zapnutí nebo vypnutí historie pořízených snímků a vybraných oblastí.
+
+Globální zkratky PixPinu, význam hodnoty `0`, klávesy pro procházení obou historií a systémová volba Windows byly porovnané s aktuální primární dokumentací PixPinu a Microsoftu.
+
+Uživatelské zkratky ani historie PixPinu nebyly při dokumentační kontrole změněné.
+
+Nový článek prošel v reálném prohlížeči šířkami 320, 390, 768 a 1440 px ve světlém i tmavém motivu.
+
+Kontrola nenašla vodorovné přetékání celé stránky, rozbitý obrázek ani nepřístupně přetékající tabulku.
+
+Odkaz z přehledu Windows otevřel správný článek a filtr `PixPin` jej zobrazil jako jedinou odpovídající položku.
+
+Mobilní navigace a přepínání motivu zůstaly funkční a prohlížeč nezaznamenal JavaScriptovou chybu.
 
 `npm run verify` prošel 20 testy, strict buildem s 0 chybami a 0 varováními a kontrolou 290 zdrojů a 531 výstupních souborů včetně místních odkazů a kotev.

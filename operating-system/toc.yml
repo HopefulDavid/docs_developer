@@ -12,8 +12,8 @@
 - name: "Windows"
   href: "windows/index.md"
   items:
-    - name: "Flameshot místo Výstřižků"
-      href: "windows/flameshot.md"
+    - name: "PixPin na Print Screen"
+      href: "windows/pixpin.md"
     - name: "Instalátor nevidí SSD"
       href: "windows/installation-missing-ssd.md"
     - name: "Nelze odstranit položku"
