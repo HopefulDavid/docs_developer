@@ -29,4 +29,4 @@ Praktické poznámky k operačním systémům a jejich příkazovým nástrojům
 | [Smart App Control – zablokovaná aplikace](windows/smart-app-control.md) | Postup při blokování důvěryhodné aplikace funkcí Smart App Control, dopad vypnutí a opětovné zapnutí ochrany. |
 | [Příkazový řádek (CMD)](windows/cmd.md) | Základní orientace v CMD, soubory, proměnné a dávkové skripty. |
 | [PowerShell](windows/powershell.md) | Objekty v rouře, soubory, proměnné, skripty a čitelné zacházení s chybami. |
-| [Prostředí PowerShellu](windows/terminal.md) | Profily PowerShellu, moduly, Execution Policy a nastavení promptu Oh My Posh. |
+| [Prostředí PowerShellu](windows/terminal.md) | Profily PowerShellu, moduly a bezpečné nastavení Execution Policy. |
