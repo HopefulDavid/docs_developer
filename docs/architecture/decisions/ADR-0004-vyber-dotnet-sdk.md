@@ -92,8 +92,6 @@ Kompatibilitu lokálního SDK s DocFX prokazuje skutečná obnova a sestavení.
 
 `dotnet --version`, `dotnet tool restore` a `npm run verify` potvrzují výběr, obnovu a skutečný build podle [projektových příkazů](../../development/commands.md).
 
-Konkrétní provedené kontroly a jejich omezení vlastní [testovací důkazy](../../quality/testing.md#ověření-výběru-sdk-2026-09-13).
-
 ## Stav a nahrazení
 
 Rozhodnutí je přijaté.

@@ -53,7 +53,7 @@ CI instaluje stabilní SDK z deklarovaného kanálu do samostatného adresáře 
 
 Změnu instalačního kanálu CI a kompatibilitu nového lokálního SDK ověřuje celý build profil.
 
-Konkrétní ověřená prostředí vlastní [testovací důkazy](../quality/testing.md#ověření-výběru-sdk-2026-09-13) a postup kontroly instalací [projektové příkazy](commands.md#inicializace-prostředí).
+Postup kontroly instalací vlastní [projektové příkazy](commands.md#inicializace-prostředí).
 
 ## Hodnocení knihovny
 

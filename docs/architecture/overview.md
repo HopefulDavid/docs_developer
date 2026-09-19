@@ -1,7 +1,7 @@
 ---
 canonical_for: system-architecture
 status: accepted
-last_verified: 2026-09-12
+last_verified: 2026-09-19
 owner: architecture
 ---
 
@@ -17,7 +17,7 @@ Důvody významných voleb jsou zaznamenané v [`decisions/`](decisions/README.m
 
 Tvrzení v tomto dokumentu používají kanonické stavy definované v části [`Stav tvrzení`](../governance/documentation.md#stav-tvrzení).
 
-Pokud není uvedeno jinak, skutečnosti v tomto dokumentu byly ověřené proti repozitáři a lokálnímu běhu dne 2026-08-28.
+Pokud není uvedeno jinak, skutečnosti v tomto dokumentu odpovídají datu `last_verified` v metadatech.
 
 Přechodové stavy jsou soustředěné v části [Známá rizika, dluh a přechodové stavy](#11-známá-rizika-dluh-a-přechodové-stavy).
 
@@ -107,9 +107,9 @@ Interní dokumentace je pouze řídicí kontext a obě zpracovatelské hranice j
 
 ### Čtenářské rozhraní
 
-K 2026-09-11 rozcestník odvozuje přehled oblastí z téhož registru jako TOC a přidává krátké vstupy podle praktického cíle.
+Rozcestník odvozuje přehled oblastí z téhož registru jako TOC a přidává krátké vstupy podle praktického cíle.
 
-Od 2026-09-12 vlastní stručný popis řádku rozcestníku jednořádkové metadata `description` cílového článku.
+Stručný popis řádku rozcestníku vlastní jednořádkové metadata `description` cílového článku.
 
 Generátor odmítá prázdnou či neplatnou hodnotu a neodvozuje ji z úvodu.
 
@@ -123,7 +123,7 @@ CSS omezuje obrázek dostupnou šířkou a zachovává poměr stran.
 
 Odkaz pod snímkem zpřístupňuje původní rozlišení.
 
-Aktivní `main.js` doplňuje přístupnost generovaného DocFX HTML bez změny textu ukázek: klávesnicové ovládání motivu, přeskočení navigace, lokalizaci přístupných názvů a obal pro posuv tabulek.
+Aktivní `main.js` doplňuje přístupnost generovaného DocFX HTML bez změny textu ukázek: klávesnicové ovládání motivu, přeskočení navigace, lokalizaci přístupných názvů a právě jeden obal pro posuv tabulek i při pozdějším doplnění responzivního obalu DocFX.
 
 Doplňující tab stop vzniká pouze u skutečně přetékající tabulky nebo kódu a přepočítává se při změně rozměru i rozbalení obsahu.
 

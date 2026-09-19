@@ -107,6 +107,34 @@ function handleThemeClick(event) {
   setTheme(theme);
 }
 
+/** Keep one focusable scroll container when DocFX adds its responsive wrapper asynchronously. */
+function normalizeTableScrollers(article) {
+  article.querySelectorAll("table").forEach((table) => {
+    let wrapper = table.closest(".table-responsive") || table.closest(".docs-table-scroll");
+
+    if (!wrapper) {
+      wrapper = document.createElement("div");
+      table.before(wrapper);
+      wrapper.append(table);
+    }
+
+    wrapper.classList.add("docs-table-scroll");
+
+    const redundantWrappers = [];
+    for (let element = table.parentElement; element && element !== article; element = element.parentElement) {
+      if (element !== wrapper && element.classList.contains("docs-table-scroll")) {
+        redundantWrappers.push(element);
+      }
+    }
+
+    redundantWrappers.forEach((element) => {
+      if (element.isConnected) {
+        element.replaceWith(...element.childNodes);
+      }
+    });
+  });
+}
+
 /** Enhance generated DocFX markup without changing article content or code text. */
 function enhanceReading() {
   const article = document.querySelector("article");
@@ -120,13 +148,9 @@ function enhanceReading() {
     document.body.prepend(skip);
   }
 
-  document.querySelectorAll("article table").forEach((table) => {
-    if (table.parentElement.classList.contains("docs-table-scroll")) return;
-    const wrapper = document.createElement("div");
-    wrapper.className = "docs-table-scroll";
-    table.before(wrapper);
-    wrapper.append(table);
-  });
+  if (article) {
+    normalizeTableScrollers(article);
+  }
 
   const labels = {
     "Toggle navigation": "Otevřít navigaci",

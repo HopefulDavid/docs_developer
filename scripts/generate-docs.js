@@ -342,6 +342,18 @@ const navigation = {
       name: 'Síťové nástroje',
       items: [
         { name: 'Základy a diagnostika sítě', href: 'basics.md' },
+        { name: 'IP, MAC a zařízení v síti', href: 'ip-mac-devices.md' },
+        {
+          name: 'NetSentinel',
+          href: 'netsentinel.md',
+          items: [
+            { name: 'Základní kontrola sítě', href: 'netsentinel/basic-check.md' },
+            { name: 'Sledování a automatizace', href: 'netsentinel/monitoring.md' },
+            { name: 'Pokročilé kontroly', href: 'netsentinel/advanced-checks.md' },
+            { name: 'Tovární reset', href: 'netsentinel/factory-reset.md' },
+            { name: 'Přehled všech funkcí', href: 'netsentinel/reference.md' },
+          ],
+        },
         {
           name: 'SSH – příkazy a připojení',
           href: 'ssh.md',
@@ -368,9 +380,10 @@ const navigation = {
       name: 'Windows',
       href: 'windows/index.md',
       items: [
-        { name: 'Flameshot místo Výstřižků', href: 'windows/flameshot.md' },
+        { name: 'PixPin na Print Screen', href: 'windows/pixpin.md' },
         { name: 'Instalátor nevidí SSD', href: 'windows/installation-missing-ssd.md' },
         { name: 'Nelze odstranit položku', href: 'windows/cannot-delete-item.md' },
+        { name: 'Smart App Control – zablokovaná aplikace', href: 'windows/smart-app-control.md' },
         { name: 'Příkazový řádek (CMD)', href: 'windows/cmd.md' },
         { name: 'PowerShell', href: 'windows/powershell.md' },
         { name: 'Prostředí PowerShellu', href: 'windows/terminal.md' },
@@ -951,18 +964,26 @@ function renderRootIndex() {
     return `- **${link(file, info.title, `${section}/index.md`)}** ${info.intro}`;
   }).join('\n');
 
-  const body = `České návody pro každodenní vývoj: od principu přes použitelný příklad až po ověření výsledku.
+  const body = `<div class="docs-intro">
+
+České návody pro každodenní vývoj: od principu přes použitelný příklad až po ověření výsledku.
 
 Vyber oblast nebo vyhledej nástroj v horní liště.
 
 Na mobilu ji otevřeš tlačítkem navigace.
 
+</div>
+
 ## Začni podle cíle
 
-- ${link(file, 'Založit repozitář a rozumět změnám v Gitu', 'vcs/git/repository.md')}.
-- ${link(file, 'Spustit aplikaci v Dockeru', 'virtualization/docker/index.md')}.
-- ${link(file, 'Vybrat platformu podle požadavků', 'programming/platform-selection.md')}.
-- ${link(file, 'Zprovoznit SSH připojení', 'network/ssh.md')}.
+<div class="docs-quick-links">
+
+- ${link(file, 'Založit repozitář a rozumět změnám v Gitu', 'vcs/git/repository.md')}
+- ${link(file, 'Spustit aplikaci v Dockeru', 'virtualization/docker/index.md')}
+- ${link(file, 'Vybrat platformu podle požadavků', 'programming/platform-selection.md')}
+- ${link(file, 'Zprovoznit SSH připojení', 'network/ssh.md')}
+
+</div>
 
 ## Oblasti
 

@@ -90,6 +90,23 @@ Ignorovaný výstup ručně neupravuj.
 
 **Eskalace:** přepis publikované Git historie nebo změna průběžného nevydávaného modelu vyžaduje samostatné rozhodnutí maintainera.
 
+### Symptom: Windows sandbox blokuje přístup git-cliff
+
+Omezený Windows sandbox může při generování changelogu vrátit chybu `failed to resolve path` a `Přístup byl odepřen`, i když běžné příkazy Gitu repozitář přečtou.
+
+1. Potvrď, že chyba vzniká při spuštění uzamčené binárky `git-cliff` a uvádí cestu aktuálního repozitáře.
+2. Otestuj `git rev-parse --show-toplevel` a `git log -1 --oneline`, abys odlišil omezení procesu od chybějící nebo poškozené Git historie.
+3. Pokud pravidla prostředí dovolují schválený běh mimo sandbox, zopakuj beze změny kontrol `npm run verify` nad stejným pracovím stromem.
+4. Jestliže chyba zůstane i mimo sandbox, zkontroluj oprávnění k cestě, vlastnictví repozitáře, Git safe-directory pravidla a místní zásady spouštění aplikací.
+
+**Potvrzení příčiny:** stejný checkout a příkaz mimo omezený sandbox projdou, aniž se změní zdroj, konfigurace nebo sada kontrol.
+
+**Bezpečná náprava:** použij schválené prostředí s potřebným přístupem.
+
+Nenahrazuj `git-cliff` ručním changelogem a nepovažuj starý `changelog.md` za důkaz nového sestavení.
+
+**Eskalace:** změnu oprávnění, vlastnictví cesty nebo bezpečnostní politiky schvaluje správce prostředí.
+
 ## Zálohování a obnova
 
 | Datová oblast | Způsob zálohy | Frekvence | Retence | Šifrování | Poslední ověřená obnova |

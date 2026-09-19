@@ -96,6 +96,30 @@ Aktualizaci vyvolává zejména změna:
 
 Agent při dokončení zkontroluje nejen upravené dokumenty, ale také odkazy z mapy a sousední kanonické oblasti, které změna významově zasáhla.
 
+## Historie a udržování rozsahu
+
+Kanonický dokument udržuje platný stav, pravidla, důvody rozhodnutí a otevřená omezení své oblasti.
+
+Průběh jednotlivých úkolů, seznam provedených editací, opakované výsledky kontrol a místní cesty k dočasným logům patří do [pracovního záznamu](../work/README.md).
+
+Při dokončení přenes pouze trvalý závěr do existujícího tematického oddílu a nahraď překonanou informaci.
+
+Nepřipojuj nový datovaný audit nebo přepis pracovního deníku za každý úkol.
+
+Je-li datum posledního ověření nutné pro aktivní riziko, obnovu nebo provozní tvrzení, uveď je stručně přímo v kanonickém dokumentu dané oblasti spolu s rozsahem a hranicemi důkazu.
+
+Nevytvářej centrální přehled provedených testů podle oblastí.
+
+Nový výsledek nahrazuje příslušné aktuální tvrzení, starší úspěch nesmí zakrýt novější selhání ani neprovedenou kontrolu.
+
+Historické podrobnosti zůstávají dohledatelné v Git historii a dostupných CI artefaktech, nevytvářej pro ně další Markdown archiv.
+
+Při zkracování zachovej otevřená rizika, kompatibilní závazky, zdroje významných voleb a užitečné postupy obnovy.
+
+Ověř příchozí odkazy a ponech původní datum tvrzení, pokud neproběhlo nové věcné ověření.
+
+Přijatá architektonická rozhodnutí se řídí [neměnností ADR](../architecture/decisions/README.md#pravidla-adr), údržba dokumentace nepřepisuje Git historii ani ručně nezkracuje [generovaný changelog](../development/commands.md#changelog).
+
 ## Metadata kanonického dokumentu
 
 Projektové dokumenty používají stručný YAML front matter.
