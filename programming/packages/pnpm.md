@@ -1,8 +1,51 @@
 ---
-description: "Záloha pnpm projektu se store a metadaty, poté obnova jedním instalačním příkazem bez internetu."
+description: "Základní příkazy pnpm pro projektové a globální balíčky včetně zálohy store a obnovy bez internetu."
 ---
 
-# pnpm – záloha a obnova balíčků
+# pnpm
+
+pnpm spravuje balíčky Node.js pomocí sdíleného úložiště a projektových odkazů v `node_modules`.
+
+## Základní příkazy
+
+Příkazy projektové záložky spusť ve složce s `package.json`.
+
+Zápis `<balíček>` nahraď názvem balíčku a `[<balíček>]` můžeš vynechat pro práci se všemi přímými závislostmi.
+
+Další značky popisuje [klíč syntaxe příkazů](../../operating-system/command-line-syntax.md).
+
+### [Projekt](#tab/pnpm-project)
+
+| Účel | Příkaz | Výsledek |
+|---|---|---|
+| Přidat běhovou závislost | `pnpm add <balíček>[@<verze>]` | Zapíše balíček do `dependencies` a aktualizuje lockfile |
+| Přidat vývojovou závislost | `pnpm add --save-dev <balíček>[@<verze>]` | Zapíše balíček do `devDependencies` |
+| Odebrat přímou závislost | `pnpm remove <balíček>` | Odebere balíček z manifestu, lockfilu i instalace |
+| Vypsat přímé závislosti | `pnpm list --depth=0` | Zobrazí přímé nainstalované balíčky |
+| Najít dostupné aktualizace | `pnpm outdated` | Porovná používané verze s registrem |
+| Aktualizovat v povoleném rozsahu | `pnpm update [<balíček>]` | Aktualizuje jeden nebo všechny balíčky podle rozsahů |
+| Obnovit přesný lockfile | `pnpm install --frozen-lockfile` | Nainstaluje závislosti bez změny `pnpm-lock.yaml` |
+
+### [Globální nástroje](#tab/pnpm-global)
+
+| Účel | Příkaz | Výsledek |
+|---|---|---|
+| Nainstalovat nástroj | `pnpm add --global <balíček>[@<verze>]` | Přidá globální balíček a jeho příkazy |
+| Odinstalovat nástroj | `pnpm remove --global <balíček>` | Odebere globální instalaci |
+| Vypsat globální balíčky | `pnpm list --global --depth=0` | Zobrazí přímo nainstalované globální balíčky |
+| Najít dostupné aktualizace | `pnpm outdated --global` | Porovná globální instalace s registrem |
+| Aktualizovat nástroje | `pnpm update --global [<balíček>]` | Aktualizuje jeden nebo všechny globální balíčky |
+| Zjistit globální adresář | `pnpm root --global` | Vypíše kořen globální instalace |
+
+***
+
+V kořeni workspace použij `--filter <výběr>` pro cílený projekt nebo `--recursive` pro všechny projekty, pokud daný příkaz tyto volby podporuje.
+
+Před potvrzením aktualizace zkontroluj změny `package.json` a `pnpm-lock.yaml` a spusť testy.
+
+Podrobnosti uvádí oficiální reference příkazů [`pnpm add`](https://pnpm.io/cli/add), [`pnpm remove`](https://pnpm.io/cli/remove), [`pnpm list`](https://pnpm.io/cli/list), [`pnpm update`](https://pnpm.io/cli/update) a [`pnpm outdated`](https://pnpm.io/cli/outdated).
+
+## Záloha a obnova bez internetu
 
 Pro offline obnovu pnpm uchovej **projekt, store a cache metadat**.
 
@@ -12,7 +55,7 @@ Metadata jsou informace o nich, které pnpm může při obnově také potřebova
 
 Postup je pro pnpm 12 se stejnou verzí pnpm, Node.js, OS a architektury na obou počítačích.
 
-## 1. Připrav zálohu s internetem
+### 1. Připrav zálohu s internetem
 
 Vytvoř `zaloha-pnpm/projekt` jako kopii projektu bez `node_modules`.
 
@@ -43,7 +86,7 @@ Pro pozdější build a testy instaluj všechny závislosti včetně vývojovýc
 
 Přípravu neomezuj pomocí `--prod` nebo filtru projektů.
 
-## 2. Přenes celou složku
+### 2. Přenes celou složku
 
 ```text
 zaloha-pnpm/
@@ -58,7 +101,7 @@ Po skončení instalace zkopíruj celý kořen zálohy a předtím nepoužívej 
 
 Přilož verze z `node --version` a `pnpm --version` a připrav jejich instalátory či archivy pro cílový počítač.
 
-## 3. Obnov bez internetu
+### 3. Obnov bez internetu
 
 Na cíli rozbal pracovní kopii zálohy a v jejím `projekt` spusť:
 
@@ -75,7 +118,7 @@ Nakonec spusť build, testy a běžnou aplikaci bez připojení.
 
 Ve workspace můžeš pro výpis všech projektů použít `pnpm -r list --depth Infinity`.
 
-## Chci převzít existující store
+### Chci převzít existující store
 
 Nemusíš balíčky stahovat znovu: zjisti `pnpm store path` a skutečné nastavení `cacheDir`, poté zkopíruj oba adresáře do zálohy jako `store` a `metadata`.
 
@@ -87,7 +130,7 @@ Rozhoduje však nastavení `cacheDir` a případně `XDG_CACHE_HOME`. [Cache met
 
 V záložní kopii projektu nastav stejné relativní cesty jako v kroku 1 a ověř obnovu každého projektu, pro který zálohu pořizuješ.
 
-## Nástroje mimo projekt
+### Nástroje mimo projekt
 
 Pro snadnou offline obnovu nástroje s lockfilem použij samostatný projekt, například v nové prázdné složce:
 
@@ -103,7 +146,7 @@ Názvy a verze svých globálních nástrojů zjistíš přes `pnpm list --globa
 
 S internetem je lze znovu instalovat pomocí `pnpm add --global <balíček>@<verze>`.
 
-## Když něco chybí
+### Když něco chybí
 
 | Projev | Co doplnit |
 |---|---|

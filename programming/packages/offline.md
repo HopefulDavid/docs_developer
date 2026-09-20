@@ -2,7 +2,13 @@
 description: "Co zkopírovat pro offline zálohu balíčků a jak ověřit obnovu bez původní instalace."
 ---
 
-# Balíčky – záloha a obnova
+# Balíčky
+
+Tento přehled propojuje správce balíčků s postupy pro přenos projektů mezi kompatibilními počítači.
+
+Základní instalaci, odinstalaci, výpis a aktualizaci najdeš na stránce konkrétního správce.
+
+## Záloha a obnova bez internetu
 
 Pro obnovu bez internetu potřebuješ **projekt i samotné balíčky**.
 
@@ -10,7 +16,7 @@ Seznam verzí nebo lockfile jejich instalační data neobsahuje.
 
 U každého správce níže najdeš tři kroky: **připravit s internetem → přenést zálohu → obnovit bez internetu**.
 
-## Vyber správce
+### Vyber správce
 
 | Správce | Co uložit vedle zdrojů projektu | Návod |
 |---|---|---|
@@ -25,7 +31,7 @@ Cache je pracovní složka stažených balíčků.
 
 Pro zálohu pořizuj její úplnou kopii po skončení instalací.
 
-## Nejjednodušší postup
+### Nejjednodušší postup
 
 1. **Na původním počítači s internetem** připrav balíčky podle příslušného návodu a ověř, že projekt funguje.
 2. **Zkopíruj zálohu na jiné úložiště**, včetně zdrojů, manifestů, lockfilů, konfigurace a případných místních závislostí.
@@ -35,7 +41,7 @@ Původní uloženou zálohu ponech odděleně od pracovní kopie, kterou zkouš�
 
 Pro více projektů můžeš sdílet složku balíčků jednoho správce, ale uchovej zdroje a uzamčené verze každého projektu zvlášť.
 
-## Co připravit také
+### Co připravit také
 
 - **SDK a správce balíčků:** archiv či instalátor odpovídající verze .NET, Node.js, Pythonu, Dartu nebo Flutteru.
 - **Stejné prostředí:** kompatibilní OS a architekturu, případně nativní knihovny a překladače.
@@ -45,7 +51,7 @@ Pro vývoj, build a testy zahrň také vývojové závislosti.
 
 Soukromé tokeny uchovávej odděleně od veřejných zdrojů.
 
-## Jak poznáš, že je záloha úplná
+### Jak poznáš, že je záloha úplná
 
 Obnova musí fungovat bez původních pracovních instalací a cache, ideálně na novém účtu nebo druhém kompatibilním počítači.
 
@@ -59,6 +65,6 @@ Pokud při obnově internet máš, většinou stačí projekt s manifestem a loc
 
 Jednotlivé návody uvádějí i tuto kratší variantu.
 
-## Související zálohy
+### Související zálohy
 
 [Záloha Gitu](../../vcs/git/backups.md) uchovává historii zdrojů a [záloha Dockeru](../../virtualization/docker/index.md) image i provozní data kontejnerů.

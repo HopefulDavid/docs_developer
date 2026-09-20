@@ -1,8 +1,49 @@
 ---
-description: "Příprava jedné npm cache, její přenos a obnova projektu či globálních nástrojů bez internetu."
+description: "Základní příkazy npm pro projektové a globální balíčky včetně přípravy cache a obnovy bez internetu."
 ---
 
-# npm – záloha a obnova balíčků
+# npm
+
+npm spravuje závislosti projektů Node.js i příkazové nástroje instalované pro celý uživatelský účet.
+
+## Základní příkazy
+
+Příkazy projektové záložky spusť ve složce s `package.json`.
+
+Zápis `<balíček>` nahraď názvem balíčku a `[<balíček>]` můžeš vynechat pro práci se všemi přímými závislostmi.
+
+Další značky popisuje [klíč syntaxe příkazů](../../operating-system/command-line-syntax.md).
+
+### [Projekt](#tab/npm-project)
+
+| Účel | Příkaz | Výsledek |
+|---|---|---|
+| Přidat běhovou závislost | `npm install <balíček>[@<verze>]` | Zapíše balíček do `dependencies` a aktualizuje lockfile |
+| Přidat vývojovou závislost | `npm install --save-dev <balíček>[@<verze>]` | Zapíše balíček do `devDependencies` |
+| Odebrat přímou závislost | `npm uninstall <balíček>` | Odebere balíček z manifestu, lockfilu i instalace |
+| Vypsat přímé závislosti | `npm list --depth=0` | Zobrazí jednu úroveň nainstalovaného stromu |
+| Najít dostupné aktualizace | `npm outdated` | Porovná nainstalované, povolené a nejnovější verze |
+| Aktualizovat v povoleném rozsahu | `npm update [<balíček>]` | Aktualizuje instalaci podle omezení v `package.json` |
+| Čistě obnovit lockfile | `npm ci` | Nahradí `node_modules` přesným obsahem `package-lock.json` |
+
+### [Globální nástroje](#tab/npm-global)
+
+| Účel | Příkaz | Výsledek |
+|---|---|---|
+| Nainstalovat nástroj | `npm install --global <balíček>[@<verze>]` | Zpřístupní příkazy balíčku globálně pro aktuální instalaci npm |
+| Odinstalovat nástroj | `npm uninstall --global <balíček>` | Odebere globální instalaci |
+| Vypsat globální balíčky | `npm list --global --depth=0` | Zobrazí přímo nainstalované globální balíčky |
+| Najít dostupné aktualizace | `npm outdated --global` | Porovná globální instalace s registrem |
+| Aktualizovat nástroje | `npm update --global [<balíček>]` | Aktualizuje jeden nebo všechny zastaralé globální balíčky |
+| Zjistit kořen instalace | `npm root --global` | Vypíše adresář globálních balíčků |
+
+***
+
+Příkazy měnící projekt kontroluj spolu se změnami `package.json` a `package-lock.json` a po aktualizaci spusť testy.
+
+Podrobnosti uvádí oficiální reference příkazů [`npm install`](https://docs.npmjs.com/cli/v11/commands/npm-install/), [`npm uninstall`](https://docs.npmjs.com/cli/v11/commands/npm-uninstall/), [`npm update`](https://docs.npmjs.com/cli/v11/commands/npm-update/) a [`npm outdated`](https://docs.npmjs.com/cli/v11/commands/npm-outdated/).
+
+## Záloha a obnova bez internetu
 
 Záloha pro npm má dvě části: **zdrojový projekt s lockfilem a naplněnou npm cache**.
 
@@ -14,7 +55,7 @@ Postup je pro npm 11 a funguje v PowerShellu i Bashi.
 
 Na cíli použij stejnou verzi Node.js, npm, OS a architekturu.
 
-## 1. Připrav zálohu s internetem
+### 1. Připrav zálohu s internetem
 
 Vytvoř `zaloha-npm/projekt` jako kopii projektu bez `node_modules`.
 
@@ -32,7 +73,7 @@ Tím se připraví přesné verze z lockfilu a jejich instalační data v soused
 
 `--include=dev` zahrne také nástroje pro build a testy, i při nastaveném `NODE_ENV=production`. [Npm ci](https://docs.npmjs.com/cli/v11/commands/npm-ci/)
 
-## 2. Přenes celou složku
+### 2. Přenes celou složku
 
 ```text
 zaloha-npm/
@@ -48,7 +89,7 @@ Přilož verze z `node --version` a `npm --version` i instalátor Node.js pro c�
 
 Ve Windows zvol krátkou cestu k záloze, protože cache obsahuje dlouhé názvy souborů.
 
-## 3. Obnov bez internetu
+### 3. Obnov bez internetu
 
 Na cíli rozbal pracovní kopii zálohy a v jejím `projekt` spusť:
 
@@ -67,7 +108,7 @@ Lockfile se nemá změnit.
 
 `npm ci` nahrazuje stávající `node_modules`, proto zkoušej obnovu v pracovní kopii.
 
-## Chci zálohovat celou používanou cache
+### Chci zálohovat celou používanou cache
 
 Její cestu zjistíš příkazem:
 
@@ -81,7 +122,7 @@ Pro více projektů předem proveď jejich instalaci a uchovej zdroje i lockfile
 
 `npm cache verify` kontroluje integritu cache, ale její úplnost pro projekt prokáže až úspěšná obnova. [Npm cache](https://docs.npmjs.com/cli/v11/commands/npm-cache/)
 
-## Globální nástroje
+### Globální nástroje
 
 Ulož si seznam `npm list --global --depth=0` a připrav přesné verze nástrojů.
 
@@ -108,7 +149,7 @@ Globální instalace neuzamyká všechny nepřímé závislosti lockfilem.
 
 Pro přesně opakovatelnou dlouhodobou zálohu nástroje jej můžeš spravovat v samostatném projektu s lockfilem.
 
-## Co ještě zachovat
+### Co ještě zachovat
 
 - Lokální a Git závislosti, patche a nastavení, se kterými vznikl lockfile, například `legacy-peer-deps`.
 - Nativní nástroje a data stahovaná instalačními skripty, například prohlížeče nebo binární knihovny.

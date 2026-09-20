@@ -82,12 +82,12 @@ Vývojové platformy, jazyky, frameworky, balíčky a opakovaně použitelné po
 | Stránka | Popis |
 | --- | --- |
 | [Záloha a offline obnova](packages/offline.md) | Co zkopírovat pro offline zálohu balíčků a jak ověřit obnovu bez původní instalace. |
-| [NuGet](packages/nuget.md) | Záloha knihoven .NET do jedné složky a obnova projektu bez internetu. |
-| [.NET tools](packages/dotnet-tools.md) | Jednoduchá záloha a obnova .NET nástrojů podle toho, zda jsou globální, nebo patří k projektu. |
-| [npm](packages/npm.md) | Příprava jedné npm cache, její přenos a obnova projektu či globálních nástrojů bez internetu. |
-| [pnpm](packages/pnpm.md) | Záloha pnpm projektu se store a metadaty, poté obnova jedním instalačním příkazem bez internetu. |
-| [Python](packages/python.md) | Uložení verzí Python balíčků, příprava složky wheelhouse a obnova nového prostředí bez internetu. |
-| [Dart a Flutter pub](packages/dart.md) | Přenos Dart nebo Flutter projektu s celou pub cache a obnova uzamčených balíčků bez internetu. |
+| [NuGet](packages/nuget.md) | Základní příkazy NuGet pro správu knihoven .NET a postup jejich zálohy a obnovy bez internetu. |
+| [.NET tools](packages/dotnet-tools.md) | Základní příkazy .NET tools a jejich záloha a obnova podle globálního, lokálního nebo vlastního umístění. |
+| [npm](packages/npm.md) | Základní příkazy npm pro projektové a globální balíčky včetně přípravy cache a obnovy bez internetu. |
+| [pnpm](packages/pnpm.md) | Základní příkazy pnpm pro projektové a globální balíčky včetně zálohy store a obnovy bez internetu. |
+| [Python a pip](packages/python.md) | Základní příkazy pip v izolovaném Python prostředí a postup přípravy wheelhouse pro obnovu bez internetu. |
+| [Dart a Flutter pub](packages/dart.md) | Základní příkazy pub pro Dart a Flutter včetně CLI nástrojů, přenosu cache a obnovy bez internetu. |
 
 ### Vývojové nástroje
 

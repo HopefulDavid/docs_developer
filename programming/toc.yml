@@ -96,7 +96,7 @@
       href: "packages/npm.md"
     - name: "pnpm"
       href: "packages/pnpm.md"
-    - name: "Python"
+    - name: "Python a pip"
       href: "packages/python.md"
     - name: "Dart a Flutter pub"
       href: "packages/dart.md"

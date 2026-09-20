@@ -278,7 +278,7 @@ const navigation = {
         { name: '.NET tools', href: 'packages/dotnet-tools.md' },
         { name: 'npm', href: 'packages/npm.md' },
         { name: 'pnpm', href: 'packages/pnpm.md' },
-        { name: 'Python', href: 'packages/python.md' },
+        { name: 'Python a pip', href: 'packages/python.md' },
         { name: 'Dart a Flutter pub', href: 'packages/dart.md' },
       ],
     },

@@ -1,10 +1,59 @@
 ---
-description: "Jednoduchá záloha a obnova .NET nástrojů podle toho, zda jsou globální, nebo patří k projektu."
+description: "Základní příkazy .NET tools a jejich záloha a obnova podle globálního, lokálního nebo vlastního umístění."
 ---
 
-# .NET tools – záloha a obnova
+# .NET tools
 
 .NET tools jsou příkazové nástroje, například DocFX.
+
+## Základní příkazy
+
+Zápis `<balíček>` znamená ID balíčku nástroje a `<příkaz>` název, kterým se nástroj spouští.
+
+Tyto názvy nemusí být stejné.
+
+Další značky popisuje [klíč syntaxe příkazů](../../operating-system/command-line-syntax.md).
+
+### [Globální](#tab/tools-commands-global)
+
+| Účel | Příkaz | Výsledek |
+|---|---|---|
+| Vyhledat nástroj | `dotnet tool search <hledaný-text>` | Vyhledá nástroje v NuGet zdrojích |
+| Nainstalovat nástroj pro aktuální účet | `dotnet tool install --global <balíček> [--version <verze>]` | Zpřístupní jeho příkaz ze všech složek |
+| Vypsat nainstalované nástroje | `dotnet tool list --global` | Zobrazí ID balíčků, verze a příkazy |
+| Aktualizovat nástroj | `dotnet tool update --global <balíček> [--version <verze>]` | Nahradí nainstalovanou verzi |
+| Odinstalovat nástroj | `dotnet tool uninstall --global <balíček>` | Odebere globální instalaci aktuálního účtu |
+| Spustit nástroj | `<příkaz> [argumenty]` | Spustí příkaz zveřejněný balíčkem |
+
+### [Lokální v projektu](#tab/tools-commands-local)
+
+| Účel | Příkaz | Výsledek |
+|---|---|---|
+| Vytvořit manifest | `dotnet new tool-manifest` | Vytvoří `.config/dotnet-tools.json` pro projekt |
+| Přidat nástroj do manifestu | `dotnet tool install <balíček> [--version <verze>]` | Zapíše lokální nástroj a obnoví ho |
+| Obnovit všechny nástroje | `dotnet tool restore` | Nainstaluje nástroje uvedené v manifestu |
+| Vypsat lokální nástroje | `dotnet tool list --local` | Zobrazí nástroje dostupné z aktuální složky |
+| Aktualizovat nástroj | `dotnet tool update <balíček> [--version <verze>]` | Změní verzi v nalezeném manifestu |
+| Odebrat nástroj | `dotnet tool uninstall <balíček>` | Odebere záznam z nalezeného manifestu |
+| Spustit nástroj | `dotnet tool run <příkaz> -- [argumenty]` | Spustí lokální příkaz a předá mu argumenty za `--` |
+
+### [Vlastní složka](#tab/tools-commands-path)
+
+| Účel | Příkaz | Výsledek |
+|---|---|---|
+| Nainstalovat do zvolené složky | `dotnet tool install <balíček> --tool-path <složka> [--version <verze>]` | Umístí nástroj mimo výchozí globální cestu |
+| Vypsat nástroje ve složce | `dotnet tool list --tool-path <složka>` | Zobrazí instalace v přesně zadané cestě |
+| Aktualizovat nástroj | `dotnet tool update <balíček> --tool-path <složka> [--version <verze>]` | Nahradí verzi v této složce |
+| Odinstalovat nástroj | `dotnet tool uninstall <balíček> --tool-path <složka>` | Odebere nástroj z této složky |
+| Spustit nástroj | `<složka>/<příkaz> [argumenty]` | Spustí nástroj úplnou nebo relativní cestou |
+
+***
+
+.NET tools běží s oprávněními uživatele, proto před instalací ověř autora a původ balíčku.
+
+Podporované rozsahy a syntaxi shrnuje oficiální návod [Jak spravovat .NET tools](https://learn.microsoft.com/en-us/dotnet/core/tools/global-tools).
+
+## Záloha a obnova bez internetu
 
 **Nejdříve vyber, jak je máš nainstalované:**
 
@@ -18,8 +67,6 @@ Příklady jsou pro PowerShell ve Windows.
 
 Na druhém počítači připrav stejný OS, architekturu a odpovídající .NET SDK či runtime.
 
-## Vyber typ instalace
-
 <a id="globální-nástroje-zkopíruj-celou-složku"></a>
 <a id="1-záloha-na-původním-počítači"></a>
 <a id="2-obnova-bez-internetu"></a>
@@ -28,7 +75,7 @@ Na druhém počítači připrav stejný OS, architekturu a odpovídající .NET 
 <a id="1-záloha-s-internetem"></a>
 <a id="2-obnova-bez-internetu-1"></a>
 
-## [Globální nebo vlastní složka](#tab/tools-global)
+### [Globální nebo vlastní složka](#tab/tools-backup-global)
 
 **Zkopíruj celou složku nástrojů.**
 
@@ -77,7 +124,7 @@ Pro spouštění samotným `docfx` musí být složka `tools` v `PATH`.
 
 Příkaz s úplnou cestou výše to nevyžaduje.
 
-## [Lokální v projektu](#tab/tools-local)
+### [Lokální v projektu](#tab/tools-backup-local)
 
 **Přenes projekt a balíčky.**
 
@@ -135,7 +182,7 @@ Obnovení na stejném účtu může využít jeho staré balíčky.
 
 ***
 
-## Když máš při obnově internet
+### Když máš při obnově internet
 
 Lokálním nástrojům stačí projekt s manifestem a `dotnet tool restore`.
 
