@@ -273,7 +273,6 @@ const navigation = {
     {
       name: 'Balíčky',
       items: [
-        { name: 'Záloha a offline obnova', href: 'packages/offline.md' },
         { name: 'NuGet', href: 'packages/nuget.md' },
         { name: '.NET tools', href: 'packages/dotnet-tools.md' },
         { name: 'npm', href: 'packages/npm.md' },

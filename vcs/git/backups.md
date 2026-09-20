@@ -60,7 +60,7 @@ Další větve z klonu případně vyber přes `git switch --track origin/<věte
 
 Remote `origin` zatím ukazuje na soubor zálohy, takže před dalším běžným pushem nastav skutečnou serverovou URL podle [připojení remote](server.md).
 
-Na cíli obnov také [balíčky projektu](../../programming/packages/offline.md), SDK a soukromou konfiguraci.
+Na cíli obnov také balíčky projektu podle návodu pro použitý správce, SDK a soukromou konfiguraci.
 
 ## Git LFS a submoduly
 

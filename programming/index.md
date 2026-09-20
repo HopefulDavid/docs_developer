@@ -81,7 +81,6 @@ Vývojové platformy, jazyky, frameworky, balíčky a opakovaně použitelné po
 
 | Stránka | Popis |
 | --- | --- |
-| [Záloha a offline obnova](packages/offline.md) | Co zkopírovat pro offline zálohu balíčků a jak ověřit obnovu bez původní instalace. |
 | [NuGet](packages/nuget.md) | Základní příkazy NuGet pro správu knihoven .NET a postup jejich zálohy a obnovy bez internetu. |
 | [.NET tools](packages/dotnet-tools.md) | Základní příkazy .NET tools a jejich záloha a obnova podle globálního, lokálního nebo vlastního umístění. |
 | [npm](packages/npm.md) | Základní příkazy npm pro projektové a globální balíčky včetně přípravy cache a obnovy bez internetu. |

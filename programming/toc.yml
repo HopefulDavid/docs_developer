@@ -86,8 +86,6 @@
           href: "unity/renderer.md"
 - name: "Balíčky"
   items:
-    - name: "Záloha a offline obnova"
-      href: "packages/offline.md"
     - name: "NuGet"
       href: "packages/nuget.md"
     - name: ".NET tools"

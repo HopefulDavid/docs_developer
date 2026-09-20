@@ -343,6 +343,16 @@ input.form-control:focus,
   text-decoration: none;
 }
 
+.affix a.link-body-emphasis {
+  color: var(--docs-text);
+  font-weight: 650;
+}
+
+.affix a.link-secondary {
+  margin-left: 0.15rem;
+  padding-left: 0.85rem;
+}
+
 .affix .active > a {
   border-left-color: var(--docs-accent);
 }
