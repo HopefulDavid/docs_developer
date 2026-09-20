@@ -101,8 +101,6 @@ Regulární výrazy JetBrains mají samostatný návod a význam zápisu příka
 
 Síť začíná vztahy adres, názvů a portů.
 
-Skupina Síťové nástroje vlastní návod k aplikaci [NetSentinel](../../network/netsentinel.md) jako přehled s podstránkami pro základní kontrolu, sledování s automatizací, pokročilé kontroly, úplný návrat do továrního stavu a přehled všech funkcí.
-
 OS odděluje rychlé použití shellu od jeho nastavení a SQL dávku vlastní databázová oblast.
 
 Skupina Notebooky v OS vlastní [omezení nabíjení na 80 %](../../operating-system/laptop-battery.md) podle systému, výrobce a podporované modelové řady.
