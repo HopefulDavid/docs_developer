@@ -83,7 +83,7 @@ Vývojové platformy, jazyky, frameworky, balíčky a opakovaně použitelné po
 | --- | --- |
 | [NuGet](packages/nuget.md) | Základní příkazy NuGet pro správu knihoven .NET a postup jejich zálohy a obnovy bez internetu. |
 | [.NET tools](packages/dotnet-tools.md) | Základní příkazy .NET tools a jejich záloha a obnova podle globálního, lokálního nebo vlastního umístění. |
-| [npm](packages/npm.md) | Základní příkazy npm pro projektové a globální balíčky včetně přípravy cache a obnovy bez internetu. |
+| [npm](packages/npm.md) | Základní příkazy npm a jednoduchá záloha projektu i globálních nástrojů. |
 | [pnpm](packages/pnpm.md) | Základní příkazy pnpm pro projektové a globální balíčky včetně zálohy store a obnovy bez internetu. |
 | [Python a pip](packages/python.md) | Základní příkazy pip v izolovaném Python prostředí a postup přípravy wheelhouse pro obnovu bez internetu. |
 | [Dart a Flutter pub](packages/dart.md) | Základní příkazy pub pro Dart a Flutter včetně CLI nástrojů, přenosu cache a obnovy bez internetu. |
