@@ -1,5 +1,5 @@
 ---
-description: "Základní příkazy npm a jednoduchá záloha projektu i globálních nástrojů."
+description: "Základní příkazy npm a záloha nainstalovaných lokálních i globálních balíčků."
 ---
 
 # npm
@@ -43,78 +43,70 @@ Příkazy měnící projekt kontroluj spolu se změnami `package.json` a `packag
 
 Podrobnosti uvádí oficiální reference příkazů [`npm install`](https://docs.npmjs.com/cli/v11/commands/npm-install/), [`npm uninstall`](https://docs.npmjs.com/cli/v11/commands/npm-uninstall/), [`npm update`](https://docs.npmjs.com/cli/v11/commands/npm-update/) a [`npm outdated`](https://docs.npmjs.com/cli/v11/commands/npm-outdated/).
 
-## Záloha projektu a obnova
+## Záloha a obnova nainstalovaných balíčků
 
-**Záloha s internetem:** zkopíruj celou složku projektu na jiné místo, ale vynech `node_modules`.
+Ano, nainstalované lokální balíčky lze zálohovat zkopírováním složky `node_modules`.
 
-V kopii musí zůstat zdroje, `package.json`, `package-lock.json` a potřebné projektové nastavení.
+Pro obnovu celého projektu je jednodušší zkopírovat **celou složku projektu včetně `node_modules`**.
 
-Pokud používáš workspace, zkopíruj všechny jeho části.
+U globálních nástrojů se ve Windows kopíruje **celá složka globálního `prefix`**, protože vedle balíčků obsahuje i soubory, kterými se spouštějí jejich příkazy. [Složky npm](https://docs.npmjs.com/cli/v11/configuring-npm/folders/)
 
-Pokud `package-lock.json` chybí, vytvoř jej před zálohou v původním projektu pomocí `npm install` a přidej do kopie.
+Tento postup přenáší už nainstalovaný stav bez stahování z internetu.
 
-**Obnova:** nainstaluj kompatibilní Node.js, otevři složku obnoveného projektu v PowerShellu nebo Bashi a s internetem spusť:
+Na cílovém počítači nejdříve nainstaluj stejnou verzi Node.js a použij stejný operační systém a architekturu.
 
-```bash
-npm ci --include=dev
-```
+### Lokální balíčky v projektu
 
-`npm ci` vytvoří `node_modules` podle lockfilu a při nesouladu s `package.json` skončí chybou. [Npm ci](https://docs.npmjs.com/cli/v11/commands/npm-ci/) · [Package lock](https://docs.npmjs.com/cli/v11/configuring-npm/package-lock-json/)
+1. Zálohuj celou složku projektu včetně `node_modules`, zdrojových souborů, `package.json` a případného `package-lock.json`.
+2. Při obnově zkopíruj celou složku zpět. Žádný příkaz npm k tomu nepotřebuješ.
+3. V obnoveném projektu spusť obvyklý příkaz aplikace nebo její testy a ověř, že skutečně funguje.
 
-**Ověření:** vyzkoušej tento postup na kopii zálohy a spusť projektový build nebo testy.
+Pokud máš zdrojový projekt bezpečně uložený jinde, můžeš samostatně zálohovat jen jeho `node_modules` a vrátit ji ke stejné verzi projektu.
 
-### Když musí obnova fungovat bez internetu
+Kopíruj ji celou včetně skryté složky `node_modules/.bin`, kde jsou příkazy lokálních nástrojů. [Složky npm](https://docs.npmjs.com/cli/v11/configuring-npm/folders/)
 
-Vytvoř složku `zaloha-npm/projekt` jako kopii projektu bez `node_modules`.
+Při obnově z kopie **nespouštěj `npm ci`**: tento příkaz existující `node_modules` smaže a nainstaluje znovu. [Npm ci](https://docs.npmjs.com/cli/v11/commands/npm-ci/)
 
-V této kopii s internetem spusť:
+### Globální nástroje ve Windows
 
-```bash
-npm ci --include=dev --cache ../npm-cache --no-audit --no-fund
-```
-
-Zkopíruj celou složku `zaloha-npm` včetně vytvořené `npm-cache`, ale vynech `projekt/node_modules`.
-
-Na cíli otevři `zaloha-npm/projekt` a spusť:
-
-```bash
-npm ci --offline --include=dev --cache ../npm-cache --no-audit --no-fund
-```
-
-Před použitím bez připojení vyzkoušej obnovu a build z **nové kopie** zálohy se stejným operačním systémem a architekturou.
-
-Npm cache není spolehlivý dlouhodobý archiv. `--offline` zakáže npm síťové požadavky, ale instalační skripty mohou potřebovat další data mimo cache. [Npm cache](https://docs.npmjs.com/cli/v11/commands/npm-cache/) · [Konfigurace `offline`](https://docs.npmjs.com/cli/v11/using-npm/config/#offline)
-
-### Globální nástroje
-
-Globální nástroje nejsou součástí zálohy projektu.
-
-Ve **Windows PowerShellu** otevři složku, do které ukládáš zálohu, a vytvoř soubor s jejich názvy a verzemi:
+Na původním počítači zjisti adresář globální instalace:
 
 ```powershell
-$inventory = npm ls --global --depth=0 --json | Out-String
-if ($LASTEXITCODE -ne 0) { throw 'Výpis globálních balíčků selhal.' }
-$tools = ($inventory | ConvertFrom-Json).dependencies.PSObject.Properties |
-  Where-Object { $_.Name -notin @('npm', 'corepack') -and $_.Value.version } |
-  ForEach-Object { "$($_.Name)@$($_.Value.version)" }
-$tools | Set-Content -Encoding utf8 npm-global.txt
+npm prefix --global
 ```
 
-Soubor `npm-global.txt` ulož spolu se zálohou projektu.
+Ve výchozí instalaci Windows jde obvykle o `%AppData%\npm`.
 
-Po instalaci Node.js na cílovém počítači otevři složku s tímto souborem v PowerShellu a s internetem spusť:
+**Zálohuj celý vypsaný adresář**, nejen jeho podsložku `node_modules`.
+
+Obsahuje balíčky i spouštěcí soubory `.cmd` a `.ps1`. [Složky npm](https://docs.npmjs.com/cli/v11/configuring-npm/folders/)
+
+Na cíli nejprve nainstaluj stejnou verzi Node.js, znovu spusť `npm prefix --global` a obsah zálohy zkopíruj do vypsaného adresáře.
+
+Obnovuj do prázdného uživatelského adresáře `prefix`, aby kopie nepřepsala jiné globální nástroje.
+
+Pokud `npm prefix --global` ukazuje přímo do instalační složky Node.js nebo do sdílené systémové složky, nepřepisuj ji kopií a obnov nástroje instalací přes npm.
+
+Zkontroluj výpis balíčků a spusť alespoň jeden obnovený příkaz:
 
 ```powershell
-$tools = @(Get-Content npm-global.txt | Where-Object { $_.Trim() })
-if ($tools.Count) { npm install --global $tools }
+npm ls --global --depth=0
 ```
 
-Zkontroluj výsledek pomocí `npm ls --global --depth=0` a spusť obnovené příkazy.
+Máš-li například globálně TypeScript, ověř jej příkazem `tsc --version`.
 
-Postup vynechává `npm` a `corepack`, které se pořizují spolu s Node.js, a počítá s balíčky dostupnými v registru. [Npm ls](https://docs.npmjs.com/cli/v11/commands/npm-ls/) · [Npm install](https://docs.npmjs.com/cli/v11/commands/npm-install/)
+Pokud příkaz nástroje není nalezen, ověř, že je adresář z `npm prefix --global` v proměnné `PATH`. [Složky npm](https://docs.npmjs.com/cli/v11/configuring-npm/folders/)
 
-Uložené verze platí pro přímé globální balíčky; jejich nepřímé závislosti nemají společný lockfile.
+### Kdy samotná kopie nestačí
 
-U místních, Git a soukromých balíčků ulož také jejich zdroje nebo přístup k registru.
+Balíčky s nativním kódem nebo instalačními skripty nemusí po změně systému, architektury či verze Node.js fungovat.
 
-Konfigurační soubory s tokeny uchovávej odděleně. [Npmrc](https://docs.npmjs.com/cli/v11/configuring-npm/npmrc/)
+Také pracovní prostory a propojené místní balíčky mohou obsahovat odkazy na další složky, které musíš zkopírovat spolu s nimi. [Npm rebuild](https://docs.npmjs.com/cli/v11/commands/npm-rebuild/) · [Workspaces](https://docs.npmjs.com/cli/v11/using-npm/workspaces/)
+
+Při přesunu globálního `prefix` do jiné cesty mohou některé nástroje vyžadovat novou instalaci kvůli cestám uloženým při instalaci.
+
+Uživatelské nastavení npm a přihlašovací údaje k soukromým službám jsou samostatná data. [Npmrc](https://docs.npmjs.com/cli/v11/configuring-npm/npmrc/)
+
+Zálohu proto ověř spuštěním důležitých příkazů z obnovené kopie.
+
+Pokud potřebuješ přenos mezi různými systémy nebo verzemi Node.js, ponech v záloze zdroje a lockfile a v cílovém prostředí proveď novou instalaci pomocí `npm ci` s dostupným registrem. [Npm ci](https://docs.npmjs.com/cli/v11/commands/npm-ci/)
