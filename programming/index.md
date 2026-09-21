@@ -85,7 +85,7 @@ Vývojové platformy, jazyky, frameworky, balíčky a opakovaně použitelné po
 | [NuGet](packages/nuget.md) | Základní příkazy NuGet pro správu knihoven v projektech .NET. |
 | [.NET tools](packages/dotnet-tools.md) | Příkazy .NET tools a postup vypnutí telemetrie .NET SDK. |
 | [npm](packages/npm.md) | Základní příkazy npm pro správu projektových a globálních balíčků. |
-| [pnpm](packages/pnpm.md) | Instalace pnpm a základní příkazy pro projektové a globální balíčky. |
+| [pnpm](packages/pnpm.md) | Instalace pnpm, oprava PATH na Windows a příkazy pro balíčky. |
 | [Python a pip](packages/python.md) | Základní příkazy pip pro správu balíčků v izolovaném Python prostředí. |
 | [Dart a Flutter pub](packages/dart.md) | Základní příkazy pub pro balíčky projektů Dart a Flutter a CLI nástroje. |
 

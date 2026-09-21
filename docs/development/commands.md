@@ -18,7 +18,7 @@ Zde se uvádí jejich podporovaný způsob vyvolání, pracovní adresář, pož
 | Nástroj nebo služba | Podporovaná verze | Kanonický zdroj verze | Lokální nebo řízená dostupnost | Ověření |
 |---|---|---|---|---|
 | Node.js | Přesná verze v [`package.json`](../../package.json) | [`package.json`](../../package.json) | Lokální instalace. GitHub Actions ji obnovuje přes `setup-node` | `node --version` |
-| pnpm | Přesná verze v [`package.json`](../../package.json) | [`package.json`](../../package.json) a [`pnpm-lock.yaml`](../../pnpm-lock.yaml) | Lokální instalace. GitHub Actions jej obnovuje pomocí `pnpm/action-setup` | `pnpm --version` |
+| pnpm | Přesná verze v [`package.json`](../../package.json) | [`package.json`](../../package.json) a [`pnpm-lock.yaml`](../../pnpm-lock.yaml) | [Lokální instalace a oprava PATH](../../programming/packages/pnpm.md#instalace-a-umístění-pnpm). GitHub Actions jej obnovuje pomocí `pnpm/action-setup` | `pnpm --version` |
 | .NET SDK | Stabilní SDK kompatibilní s připnutým DocFX. Lokálně platí [pravidla výběru](dependencies.md#výběr-net-sdk) | Instalační kanál CI v [quality workflow](../../.github/workflows/quality.yml) a [publish workflow](../../.github/workflows/main.yml) | Lokální instalace. GitHub Actions ji obnovuje přes `setup-dotnet` | `dotnet --version` |
 | DocFX | Přesná verze v [`.config/dotnet-tools.json`](../../.config/dotnet-tools.json) | [`.config/dotnet-tools.json`](../../.config/dotnet-tools.json) | Lokální .NET tool obnovený do řízené cache | `dotnet tool run docfx -- --version` |
 | Git | Libovolná udržovaná verze podporující projektový workflow | Git instalace a [`workflow.md`](workflow.md) | Lokální | `git --version` |

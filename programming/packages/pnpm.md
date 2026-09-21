@@ -1,5 +1,5 @@
 ---
-description: "Instalace pnpm a základní příkazy pro projektové a globální balíčky."
+description: "Instalace pnpm, oprava PATH na Windows a příkazy pro balíčky."
 ---
 
 # pnpm
@@ -19,13 +19,55 @@ Po instalaci otevři nový PowerShell a ověř umístění i verzi:
 ```powershell
 $pnpmHome = [Environment]::GetEnvironmentVariable('PNPM_HOME', 'User')
 $pnpmHome
-Get-Command pnpm -All | Select-Object Source
+Get-Command pnpm -All -ErrorAction SilentlyContinue |
+    Select-Object Source
 & (Join-Path $pnpmHome 'bin/pnpm.cmd') --version
 ```
 
-První položka z `Get-Command` ukazuje, který příkaz se spustí při zadání `pnpm`.
+Pokud `Get-Command` vypíše výsledek, jeho první položka ukazuje příkaz spuštěný při zadání `pnpm`.
 
 Pokud ukazuje jinam než do `PNPM_HOME/bin`, máš v `PATH` také jinou instalaci pnpm.
+
+### Příkaz pnpm není v PATH na Windows
+
+Pokud přímé spuštění `pnpm.cmd` vypíše verzi, ale `Get-Command pnpm` nic nenajde, pnpm je nainstalovaný a v uživatelském `PATH` chybí složka `PNPM_HOME/bin`.
+
+Ponech hodnotu `PNPM_HOME` nastavenou instalátorem a přidej do `PATH` její podsložku `bin`, ve které leží `pnpm.cmd`.
+
+Tento postup nejprve zkontroluje soubor a potom přidá chybějící složku do uživatelského `PATH`:
+
+```powershell
+$pnpmHome = [Environment]::GetEnvironmentVariable('PNPM_HOME', 'User')
+if (-not $pnpmHome) { throw 'Chybí PNPM_HOME. Zkontroluj instalaci.' }
+
+$pnpmBin = Join-Path $pnpmHome 'bin'
+$pnpmCommand = Join-Path $pnpmBin 'pnpm.cmd'
+if (-not (Test-Path -LiteralPath $pnpmCommand -PathType Leaf)) {
+    throw "Chybí $pnpmCommand. Zkontroluj instalaci."
+}
+
+$userPath = [string][Environment]::GetEnvironmentVariable('Path', 'User')
+if (($userPath -split ';') -notcontains $pnpmBin) {
+    $prefix = $userPath.TrimEnd(';')
+    $newPath = if ($prefix) { "$prefix;$pnpmBin" } else { $pnpmBin }
+    [Environment]::SetEnvironmentVariable('Path', $newPath, 'User')
+}
+```
+
+Změna uživatelského `PATH` platí pro nově otevřené terminály.
+
+Pro tento PowerShell přidej cestu také do aktuální relace a ověř nalezený příkaz i verzi:
+
+```powershell
+if (($env:Path -split ';') -notcontains $pnpmBin) {
+    $env:Path += ";$pnpmBin"
+}
+
+Get-Command pnpm -All | Select-Object Source
+pnpm --version
+```
+
+Ve výpisu `Get-Command` ověř, že první položka odpovídá očekávané instalaci, a verzi projektu porovnej s polem `packageManager` v `package.json`.
 
 Pomocný balíček `get-pnpm` může zůstat v cache npm pro `npx`, zatímco nainstalovaný pnpm leží v `PNPM_HOME`.
 
