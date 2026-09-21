@@ -28,9 +28,9 @@ Odkazuje na ně a popisuje konkrétní provozní rozhodovací kroky.
 
 | Kontrola | Jak ji provést | Zdravý výsledek | Typické selhání | Další krok |
 |---|---|---|---|---|
-| Zdroj a build | V kořeni spusť `npm ci --ignore-scripts --no-audit --no-fund`, `dotnet tool restore` a `npm run verify` podle dokumentu příkazů | Vše skončí kódem 0, DocFX má 0 warningů a artifact check potvrdí veřejnou hranici | Drift navigace, test, warning DocFX nebo chybějící výstup | Oprav první konkrétní chybu v konzolovém výstupu a profil zopakuj |
-| Changelog | Otevři stránku `Změny` a podle potřeby spusť `npm run changelog:generate` | Zdrojový stav odpovídá `HEAD`, nejnovější rok je otevřený, roky bez změn nejsou zobrazené a každý starší zobrazený rok je sbalený s vlastním počtem a uvnitř zůstávají kategorie i technické záznamy | Mělký checkout, zastaralý výstup, chybný roční přechod, neobnovený `git-cliff` nebo vadný `cliff.toml` | Reprodukuj cílený test a generování podle diagnostického stromu |
-| Lokální čtenářský tok | Spusť `npm run docs:serve`, otevři homepage, tematický článek a vyhledávání | Stránky se zobrazí, ovládací texty jsou české, editační odkaz chybí, navigace funguje a vyhledávání vrátí očekávaný typ výsledku | Anglický token, editační odkaz, chyba šablony, stale `_site/` nebo klientský JavaScript | Znovu proveď čistý build a zkontroluj browser konzoli |
+| Zdroj a build | V kořeni spusť `pnpm install --frozen-lockfile --ignore-scripts`, `dotnet tool restore` a `pnpm run verify` podle dokumentu příkazů | Vše skončí kódem 0, DocFX má 0 warningů a artifact check potvrdí veřejnou hranici | Drift navigace, test, warning DocFX nebo chybějící výstup | Oprav první konkrétní chybu v konzolovém výstupu a profil zopakuj |
+| Changelog | Otevři stránku `Změny` a podle potřeby spusť `pnpm run changelog:generate` | Zdrojový stav odpovídá `HEAD`, nejnovější rok je otevřený, roky bez změn nejsou zobrazené a každý starší zobrazený rok je sbalený s vlastním počtem a uvnitř zůstávají kategorie i technické záznamy | Mělký checkout, zastaralý výstup, chybný roční přechod, neobnovený `git-cliff` nebo vadný `cliff.toml` | Reprodukuj cílený test a generování podle diagnostického stromu |
+| Lokální čtenářský tok | Spusť `pnpm run docs:serve`, otevři homepage, tematický článek a vyhledávání | Stránky se zobrazí, ovládací texty jsou české, editační odkaz chybí, navigace funguje a vyhledávání vrátí očekávaný typ výsledku | Anglický token, editační odkaz, chyba šablony, stale `_site/` nebo klientský JavaScript | Znovu proveď čistý build a zkontroluj browser konzoli |
 | Produkční dostupnost | Otevři veřejnou Pages URL z nastavení repozitáře a zopakuj `REQ-001` | Poslední ověřený web odpovídá očekávanému commitu `main` | Pages nebo publish workflow je nedostupné či zastaralé | Zkontroluj poslední běh `Publikování dokumentace` a větev `gh-pages` |
 
 Health check nesmí vracet úspěch pouze proto, že proces běží, pokud hlavní schopnost není použitelná.
@@ -62,7 +62,7 @@ Příkaz odkazuj na [`../development/commands.md`](../development/commands.md) n
 
 1. Ověř veřejnou URL a zaznamenej konkrétní HTTP nebo vizuální symptom bez změny vzdáleného stavu.
 2. Zkontroluj poslední běh workflow `Publikování dokumentace`, jeho zdrojový commit a poslední deployment commit v `gh-pages`.
-3. Na odpovídajícím zdrojovém commitu spusť `npm ci --ignore-scripts --no-audit --no-fund`, `dotnet tool restore` a `npm run verify`.
+3. Na odpovídajícím zdrojovém commitu spusť `pnpm install --frozen-lockfile --ignore-scripts`, `dotnet tool restore` a `pnpm run verify`.
 4. Pokud lokální build projde, zkontroluj stav GitHub Pages a obecný incident GitHubu. Pokud selže, pokračuj od prvního lokálního důkazu.
 
 **Potvrzení příčiny:** příčina je potvrzená až shodou symptomu s neúspěšným krokem, rozdílným zdrojovým commitem nebo doloženým incidentem platformy.
@@ -79,8 +79,8 @@ Doložený incident platformy se eskaluje na GitHub podle jeho podpory.
 
 1. Spusť `node --test --test-isolation=none tests/changelog.test.mjs` a potvrď víceletou fixture s tagem, počty období, breaking i legacy commitem.
 2. Ověř úplnou Git historii. V CI musí checkout používat `fetch-depth: 0`.
-3. Spusť `npm run changelog:generate`, porovnej hlavičku s `git rev-parse HEAD` a konkrétní záznam s `git log` a parsery v `cliff.toml`.
-4. Spusť `npm run docs:build` a potvrď, že `_site/changelog.html` zachovává otevřené nejnovější období, sdělení o vynechávání prázdných roků, sbalené starší roky, počty, kategorie a stabilní kotvy.
+3. Spusť `pnpm run changelog:generate`, porovnej hlavičku s `git rev-parse HEAD` a konkrétní záznam s `git log` a parsery v `cliff.toml`.
+4. Spusť `pnpm run docs:build` a potvrď, že `_site/changelog.html` zachovává otevřené nejnovější období, sdělení o vynechávání prázdných roků, sbalené starší roky, počty, kategorie a stabilní kotvy.
 
 **Potvrzení příčiny:** konkrétní commit chybí, má jinou kategorii nebo identifikátor v reprodukovaném výstupu nad stejnou historií.
 
@@ -96,7 +96,7 @@ Omezený Windows sandbox může při generování changelogu vrátit chybu `fail
 
 1. Potvrď, že chyba vzniká při spuštění uzamčené binárky `git-cliff` a uvádí cestu aktuálního repozitáře.
 2. Otestuj `git rev-parse --show-toplevel` a `git log -1 --oneline`, abys odlišil omezení procesu od chybějící nebo poškozené Git historie.
-3. Pokud pravidla prostředí dovolují schválený běh mimo sandbox, zopakuj beze změny kontrol `npm run verify` nad stejným pracovím stromem.
+3. Pokud pravidla prostředí dovolují schválený běh mimo sandbox, zopakuj beze změny kontrol `pnpm run verify` nad stejným pracovím stromem.
 4. Jestliže chyba zůstane i mimo sandbox, zkontroluj oprávnění k cestě, vlastnictví repozitáře, Git safe-directory pravidla a místní zásady spouštění aplikací.
 
 **Potvrzení příčiny:** stejný checkout a příkaz mimo omezený sandbox projdou, aniž se změní zdroj, konfigurace nebo sada kontrol.
@@ -128,7 +128,7 @@ Zde je provozní rozhodnutí a ověření výsledku.
 
 | Situace | Preferovaná akce | Datové omezení | Ověření | Eskalace |
 |---|---|---|---|---|
-| Vadný článek, navigace nebo šablona po publikování | Revertovat nebo opravit zdrojový commit a znovu publikovat | Žádné stavové datové schéma | `npm run verify` a produkční smoke `REQ-001` | Vlastník repozitáře při blokovaném merge nebo workflow |
+| Vadný článek, navigace nebo šablona po publikování | Revertovat nebo opravit zdrojový commit a znovu publikovat | Žádné stavové datové schéma | `pnpm run verify` a produkční smoke `REQ-001` | Vlastník repozitáře při blokovaném merge nebo workflow |
 | Neúspěšný publish po úspěšném buildu | Zachovat poslední funkční `gh-pages`, odstranit příčinu a použít roll-forward | Nepřepisovat ručně zdrojovou větev ani token | GitHub Actions log a dostupnost předchozího webu | Vlastník GitHub Pages settings |
 | Kompromitovaný nebo podezřelý workflow běh | Zastavit další publish, zrušit běh a posoudit token i použité action SHA | Rotaci automatického tokenu řídí GitHub. Zkontrolovat oprávnění repozitáře | Audit workflow, commitů a GitHub security logu | Vlastník repozitáře a GitHub podpora podle dopadu |
 

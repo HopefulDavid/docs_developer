@@ -22,8 +22,8 @@ test('používá uzamčený git-cliff v automatickém build toku', () => {
     packageConfig.scripts['changelog:generate'],
     'git-cliff --config cliff.toml --output changelog.md',
   );
-  assert.match(packageConfig.scripts['docs:build'], /npm run changelog:generate/);
-  assert.match(packageConfig.scripts['docs:check'], /^npm run changelog:generate && /);
+  assert.match(packageConfig.scripts['docs:build'], /pnpm run changelog:generate/);
+  assert.match(packageConfig.scripts['docs:check'], /^pnpm run changelog:generate && /);
   assert.match(gitignore, /^changelog\.md$/m);
 });
 

@@ -60,7 +60,7 @@ Pracovní záznamy, testy a změny odkazují na identifikátor místo kopírová
 |---|---|---|---|---|---|
 | `REQ-001` | Čtenář otevře kořenovou stránku bez předchozí relace | Vybere tematickou oblast a konkrétní článek | Zobrazí se přehled oblastí, navigace a obsah vybrané stránky bez přihlášení | Must | Vizuální smoke scénář nad lokálním DocFX webem |
 | `REQ-002` | Čtenář je na libovolné veřejné stránce | Zadá technický termín do vyhledávání | Web nabídne odpovídající stránky a umožní otevřít zvolený výsledek | Should | Vizuální smoke scénář nad vytvořeným vyhledávacím indexem |
-| `REQ-003` | Správce upravil zdrojový článek nebo registr navigace | Spustí podporované generování a kontrolu | Přehledy, TOC, cesty a lokální odkazy jsou deterministicky sjednocené a následná kontrola nehlásí drift | Must | `npm run docs:generate` a následné `npm run docs:check` |
+| `REQ-003` | Správce upravil zdrojový článek nebo registr navigace | Spustí podporované generování a kontrolu | Přehledy, TOC, cesty a lokální odkazy jsou deterministicky sjednocené a následná kontrola nehlásí drift | Must | `pnpm run docs:generate` a následné `pnpm run docs:check` |
 | `REQ-004` | Změna na větvi `main` splnila projektové kontroly | GitHub Actions spustí publikační workflow | Workflow sestaví jediný ověřený statický artefakt, veřejný changelog v něm zachová úplnou historii, nejnovější rok změn nechá otevřený, roky bez změn vynechá, starší zobrazené roky sbalí a web publikuje bez změny zdrojové větve | Must | Cílený changelogový test, konfigurace workflow a úspěšný vzdálený běh po publikování změny |
 | `REQ-005` | Junior otevře návod bez znalosti konkrétního nástroje | Přečte úvod, předpoklady a provede popsaný příklad | Rozumí účelu, vztahu částí, upravitelným hodnotám i očekávanému výsledku. Nezbytné informace nejsou ukryté v rozbalovacím bloku | Must | Obsahové review podle pravidel čitelnosti a dostupné ověření ukázky |
 | `REQ-006` | Čtenář vybírá článek nebo používá příkazovou referenci | Prohlédne rozcestník a tabulku příkazů | Popis rovnou označuje obsah cíle. Syntaxe odlišuje dosazované parametry od vysvětleného spustitelného příkladu | Must | Kontrola metadat, obsahové review a skutečně vykreslené tabulky |
@@ -111,9 +111,9 @@ Skupina Notebooky v OS vlastní [omezení nabíjení na 80 %](../../operating-sy
 
 | ID | Podmínka | Očekávané chování | Dopad při selhání | Způsob ověření |
 |---|---|---|---|---|
-| `REQ-E001` | Veřejný článek chybí v registru, lokální odkaz neexistuje nebo se generovaný soubor liší | Kontrola skončí nenulovým kódem a uvede konkrétní cestu. Změna se nesmí považovat za připravenou | Rozbitá navigace nebo nedostupný obsah | Negativní test generátoru a `npm run docs:check` |
-| `REQ-E002` | DocFX manifest nebo výstup obsahuje interní `docs/`, agentní instrukci, README nebo jinou vyloučenou cestu | Ověření artefaktu skončí nenulovým kódem a publikování se zastaví | Únik interních pracovních informací | Jednotkové testy hranice a `npm run docs:artifact-check` |
-| `REQ-E003` | DocFX při sestavení zjistí warning nebo chybu | Strict build skončí nenulovým kódem a nevznikne publikovatelný výsledek | Neúplný nebo nekonzistentní web | `npm run docs:compile` s `--warningsAsErrors` |
+| `REQ-E001` | Veřejný článek chybí v registru, lokální odkaz neexistuje nebo se generovaný soubor liší | Kontrola skončí nenulovým kódem a uvede konkrétní cestu. Změna se nesmí považovat za připravenou | Rozbitá navigace nebo nedostupný obsah | Negativní test generátoru a `pnpm run docs:check` |
+| `REQ-E002` | DocFX manifest nebo výstup obsahuje interní `docs/`, agentní instrukci, README nebo jinou vyloučenou cestu | Ověření artefaktu skončí nenulovým kódem a publikování se zastaví | Únik interních pracovních informací | Jednotkové testy hranice a `pnpm run docs:artifact-check` |
+| `REQ-E003` | DocFX při sestavení zjistí warning nebo chybu | Strict build skončí nenulovým kódem a nevznikne publikovatelný výsledek | Neúplný nebo nekonzistentní web | `pnpm run docs:compile` s `--warningsAsErrors` |
 | `REQ-E004` | Navigovaný článek nemá platný stručný popis | Generátor uvede konkrétní soubor a skončí chybou bez náhrady úvodním odstavcem | Nejasné, duplicitní nebo rozbité popisy rozcestníku | Negativní test metadat a `docs:check` |
 
 ## Kvalitativní očekávání
@@ -123,7 +123,7 @@ Kvalitativní požadavky se ověřují nad zdrojovým obsahem i sestaveným webe
 | ID | Oblast | Scénář | Měřítko nebo hranice | Priorita |
 |---|---|---|---|---|
 | `QLT-001` | Konzistence | Po vygenerování beze změny vstupů proběhne kontrola znovu | Návratový kód 0 a žádný hlášený soubor k aktualizaci | Must |
-| `QLT-002` | Reprodukovatelnost | Čisté podporované prostředí obnoví deklarované nástroje a sestaví web | `npm run verify` skončí kódem 0, DocFX má 0 warningů a 0 chyb | Must |
+| `QLT-002` | Reprodukovatelnost | Čisté podporované prostředí obnoví deklarované nástroje a sestaví web | `pnpm run verify` skončí kódem 0, DocFX má 0 warningů a 0 chyb | Must |
 | `QLT-003` | Ochrana interního obsahu | Každý kandidátní artefakt projde kontrolou veřejné hranice | 0 interních zdrojů a 0 interních výstupních cest | Must |
 | `QLT-004` | Přenositelnost cest | Stejný checkout se ověřuje na Windows i linuxovém CI runneru | Kanonické cesty používají přesný lowercase casing a hranicové testy projdou v obou prostředích | Must |
 | `QLT-005` | Čitelnost a přístupnost | Čtenář používá mobil, tablet nebo desktop a zvolí světlý či tmavý motiv | Bez vodorovného přetékání celé stránky při 320, 390, 768 a 1440 px. Dostupná navigace, fokus, čitelný text a kód v obou motivech | Must |

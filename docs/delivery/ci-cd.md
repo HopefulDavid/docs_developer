@@ -43,9 +43,9 @@ Workflow smí přidat platformní přípravu, cache, artifact upload a podmínky
 
 | Fáze CI | Projektový příkaz | Platformní obal | Výstupní důkaz |
 |---|---|---|---|
-| Obnova changelog nástroje | `npm ci --ignore-scripts --no-audit --no-fund` | `setup-node` podle `package.json` a npm cache podle lockfilu | Přesná integrita `git-cliff` z `package-lock.json` |
+| Obnova changelog nástroje | `pnpm install --frozen-lockfile --ignore-scripts` | `setup-node` podle `package.json`, připnutý `pnpm/action-setup` a cache pnpm podle lockfilu | Přesná integrita `git-cliff` z `pnpm-lock.yaml` |
 | Obnova DocFX | `dotnet --version` a `dotnet tool restore` | `setup-dotnet` podle kanálu ve workflow se stabilní kvalitou `ga` | Konzolový záznam o zvoleném SDK a obnoveném DocFX |
-| Kontrola, testy, changelog a build | `npm run verify` | Úplný checkout pomocí `fetch-depth: 0` | TAP výstup, vygenerovaný `changelog.md`, DocFX log, `_site/manifest.json` a ověřený `_site/` |
+| Kontrola, testy, changelog a build | `pnpm run verify` | Úplný checkout pomocí `fetch-depth: 0` | TAP výstup, vygenerovaný `changelog.md`, DocFX log, `_site/manifest.json` a ověřený `_site/` |
 | Publikování | Lokální build kontrakt končí hotovým `_site/` | Připnutá `peaceiris/actions-gh-pages` předá obsah do `gh-pages` s `force_orphan: true` | Jediný kořenový deployment commit a log GitHub Actions |
 
 ## Historie publikační větve
@@ -149,12 +149,12 @@ Reprodukovatelnost se zvyšuje úměrně riziku a distribučnímu modelu projekt
 
 | Událost | Workflow | Povinné kontroly | Oprávnění | Poznámka |
 |---|---|---|---|---|
-| Push do `develop` | `Ověření dokumentace` | `npm run verify` | `contents: read` | Nevytváří ani nepublikuje vzdálený artefakt |
-| Pull request | `Ověření dokumentace` | `npm run verify` | `contents: read` | Nepoužívá `pull_request_target` ani privilegované tajemství |
-| Push do `main` | `Publikování dokumentace` | `npm run verify` před deploymentem | `contents: write` | Publikuje pouze po úspěšném ověření. Source checkout neuchovává credentials. `gh-pages` přepisuje jediným kořenovým commitem |
+| Push do `develop` | `Ověření dokumentace` | `pnpm run verify` | `contents: read` | Nevytváří ani nepublikuje vzdálený artefakt |
+| Pull request | `Ověření dokumentace` | `pnpm run verify` | `contents: read` | Nepoužívá `pull_request_target` ani privilegované tajemství |
+| Push do `main` | `Publikování dokumentace` | `pnpm run verify` před deploymentem | `contents: write` | Publikuje pouze po úspěšném ověření. Source checkout neuchovává credentials. `gh-pages` přepisuje jediným kořenovým commitem |
 | Tag nebo release | Žádné workflow | Žádné | Žádné | Projekt nevydává verzované binární release |
-| Ruční quality | `Ověření dokumentace` | `npm run verify` | `contents: read` | Diagnostický běh bez publikování |
-| Ruční nasazení | `Publikování dokumentace` | `npm run verify` a deployment | `contents: write` | Spouští se pouze z důvěryhodného refu vybraného vlastníkem |
+| Ruční quality | `Ověření dokumentace` | `pnpm run verify` | `contents: read` | Diagnostický běh bez publikování |
+| Ruční nasazení | `Publikování dokumentace` | `pnpm run verify` a deployment | `contents: write` | Spouští se pouze z důvěryhodného refu vybraného vlastníkem |
 
 Nasazení do produkce vyžaduje explicitně přijatý proces projektu.
 
@@ -193,7 +193,7 @@ Kontrola musí potvrdit aktivní cíle a bypass listy, úspěšný quality i pub
 | Prostředí | Účel | Zdroj artefaktu | Schválení | Ověření po nasazení | Rollback |
 |---|---|---|---|---|---|
 | Lokální náhled | Vývoj a vizuální smoke | Lokální `_site/` | Nevyžaduje | Kroky `REQ-001` a `REQ-002` | Znovu sestavit nebo odstranit `_site/` |
-| GitHub Actions quality | Kontrola změny bez publikování | Aktuální checkout | Událost workflow | `npm run verify` | Opravit zdroj a spustit znovu |
+| GitHub Actions quality | Kontrola změny bez publikování | Aktuální checkout | Událost workflow | `pnpm run verify` | Opravit zdroj a spustit znovu |
 | GitHub Pages | Veřejný produkční statický web | `_site/` z ověřeného commitu `main` | Úspěšný publish job | HTTP a čtenářský smoke | Revertovat vadný zdrojový commit a znovu publikovat podle runbooku |
 
 Konfigurace prostředí se odděluje od zdrojového kódu způsobem přijatým projektem.
@@ -212,8 +212,8 @@ Historii změn doplňuje při každém buildu generovaný a ignorovaný `changel
 
 | Krok | Spouštěč | Kanonický nástroj nebo soubor | Ověření |
 |---|---|---|---|
-| Vytvoření historie změn | Každý lokální a CI build s úplnou historií | [`cliff.toml`](../../cliff.toml), uzamčený `git-cliff` a `npm run changelog:generate` | Integrační fixture přes tag a výsledná stránka v `_site/`. Zdrojová větev se nemění |
-| Vytvoření artefaktu | Push do `main` nebo ruční publish | `npm run verify` a [`docfx.json`](../../docfx.json) | 0 warningů, 0 chyb a úspěšný artifact check |
+| Vytvoření historie změn | Každý lokální a CI build s úplnou historií | [`cliff.toml`](../../cliff.toml), uzamčený `git-cliff` a `pnpm run changelog:generate` | Integrační fixture přes tag a výsledná stránka v `_site/`. Zdrojová větev se nemění |
+| Vytvoření artefaktu | Push do `main` nebo ruční publish | `pnpm run verify` a [`docfx.json`](../../docfx.json) | 0 warningů, 0 chyb a úspěšný artifact check |
 | Publikování | Úspěšný build v publikačním workflow | [`.github/workflows/main.yml`](../../.github/workflows/main.yml) | Jediný kořenový deployment commit v `gh-pages` a dostupný web |
 
 ## Selhání a diagnostika

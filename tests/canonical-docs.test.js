@@ -121,3 +121,22 @@ test('publikování udržuje gh-pages jako jediný kořenový commit', () => {
   assert.match(workflow, /publish_dir:\s*_site\n\s+force_orphan:\s*true/);
   assert.match(delivery, /force_orphan: true/);
 });
+
+test('obě workflow používají připnutý pnpm a frozen instalaci', () => {
+  const manifest = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
+  const version = manifest.packageManager.match(/^pnpm@(\d+\.\d+\.\d+)$/)?.[1];
+
+  assert.ok(version, 'packageManager musí určovat přesnou verzi pnpm');
+  assert.equal(fs.existsSync(path.join(root, 'pnpm-lock.yaml')), true);
+  assert.equal(fs.existsSync(path.join(root, 'package-lock.json')), false);
+
+  for (const name of ['quality.yml', 'main.yml']) {
+    const workflow = fs.readFileSync(path.join(root, '.github', 'workflows', name), 'utf8');
+
+    assert.match(workflow, /uses: pnpm\/action-setup@[a-f0-9]{40}/);
+    assert.ok(workflow.includes(`version: ${version}`), `${name} používá jinou verzi pnpm`);
+    assert.match(workflow, /cache_dependency_path: pnpm-lock\.yaml/);
+    assert.match(workflow, /run: pnpm install --frozen-lockfile --ignore-scripts/);
+    assert.match(workflow, /run: pnpm run verify/);
+  }
+});

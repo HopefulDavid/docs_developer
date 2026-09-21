@@ -60,7 +60,7 @@ Vzdálenou publikační větev `gh-pages` zachovej.
 
 Běžné fast-forward push aktualizace do `develop` jsou povolené, zatímco přepis historie a odstranění větve jsou zakázané vzdáleným rulesetem.
 
-Každý push do `develop` spouští vzdálené quality workflow, ale tato kontrola probíhá až po přijetí commitu, proto před pushem spusť lokální `npm run verify`.
+Každý push do `develop` spouští vzdálené quality workflow, ale tato kontrola probíhá až po přijetí commitu, proto před pushem spusť lokální `pnpm run verify`.
 
 `main` je výchozí a publikační větev.
 
@@ -84,7 +84,7 @@ Přesná platformní pravidla, jejich ověřený stav a zbytková rizika vlastn�
 
 ### Publikování změny
 
-1. Dokonči logickou změnu na `develop` a spusť `npm run verify`.
+1. Dokonči logickou změnu na `develop` a spusť `pnpm run verify`.
 2. Pushni `develop` a ověř úspěšný běh workflow `Ověření dokumentace`.
 3. Otevři pull request z `develop` do `main`, splň všechny vzdálené podmínky a sluč jej povoleným merge commitem.
 4. Ihned po sloučení fast-forward synchronizuj dlouhodobou větev `develop` na nový merge commit z `main`.

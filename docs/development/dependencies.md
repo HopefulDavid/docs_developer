@@ -23,16 +23,16 @@ Její zdánlivě malý počáteční rozsah nezahrnuje budoucí bezpečnost, kom
 
 ## Projektový profil závislostí
 
-Projekt nemá aplikační npm balíčky ani runtime backend závislosti.
+Projekt nemá aplikační balíčky ani runtime backend závislosti.
 
 Vlastní generátor, kontrola artefaktu a testy používají pouze standardní knihovnu podporovaného Node.js.
 
-Jediná npm devDependency poskytuje nástroj pro sestavení changelogu.
+Jediná vývojová závislost poskytuje nástroj pro sestavení changelogu.
 
 | Závislost nebo vlastní prvek | Účel | Strojová autorita | Omezení a ověření |
 |---|---|---|---|
 | Node.js | Generování, kontroly a testy | [`package.json`](../../package.json) | Přesná verze se ověřuje v lokálním i CI profilu |
-| `git-cliff` | Odvození kategorizovaného veřejného changelogu z Git historie | [`package.json`](../../package.json) a [`package-lock.json`](../../package-lock.json) | Přesně uzamčená vývojová závislost. Běží offline a nevstupuje do publikovaného webu jako runtime kód |
+| `git-cliff` | Odvození kategorizovaného veřejného changelogu z Git historie | [`package.json`](../../package.json) a [`pnpm-lock.yaml`](../../pnpm-lock.yaml) | Přesně uzamčená vývojová závislost. Běží offline a nevstupuje do publikovaného webu jako runtime kód |
 | .NET SDK | Hostitel lokálního DocFX toolu | Instalační kanál v [quality](../../.github/workflows/quality.yml) a [publish](../../.github/workflows/main.yml) workflow | Lokální SDK se nepřipíná. Důvody vlastní [`ADR-0004`](../architecture/decisions/ADR-0004-vyber-dotnet-sdk.md) |
 | DocFX | Převod povoleného Markdown obsahu na statický web | [`.config/dotnet-tools.json`](../../.config/dotnet-tools.json) | Obnovuje se přes `dotnet tool restore` a build používá warningy jako chyby |
 | `scripts/generate-docs.js` | Projektový registr navigace, normalizace, migrace cest a kontrola artefaktu | Vlastní zdrojový soubor a [`ADR-0002`](../architecture/decisions/ADR-0002-verejny-docfx-build.md) | Vlastní implementace je krytá cílenými testy a nesmí přerůst v obecný dokumentační framework |

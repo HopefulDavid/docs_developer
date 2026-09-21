@@ -7,7 +7,7 @@ owners:
   - engineering
   - delivery
 supersedes: null
-superseded_by: null
+superseded_by: ADR-0005-pnpm-pro-projektovy-build.md
 ---
 
 # ADR-0003: Generování changelogu pomocí git-cliff

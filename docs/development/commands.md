@@ -18,7 +18,7 @@ Zde se uvádí jejich podporovaný způsob vyvolání, pracovní adresář, pož
 | Nástroj nebo služba | Podporovaná verze | Kanonický zdroj verze | Lokální nebo řízená dostupnost | Ověření |
 |---|---|---|---|---|
 | Node.js | Přesná verze v [`package.json`](../../package.json) | [`package.json`](../../package.json) | Lokální instalace. GitHub Actions ji obnovuje přes `setup-node` | `node --version` |
-| npm | Verze dodaná podporovanou instalací Node.js | Distribuce Node.js a [`../../package-lock.json`](../../package-lock.json) | Lokální instalace a GitHub runner. Obnovuje uzamčený changelog nástroj | `npm --version` |
+| pnpm | Přesná verze v [`package.json`](../../package.json) | [`package.json`](../../package.json) a [`pnpm-lock.yaml`](../../pnpm-lock.yaml) | Lokální instalace. GitHub Actions jej obnovuje pomocí `pnpm/action-setup` | `pnpm --version` |
 | .NET SDK | Stabilní SDK kompatibilní s připnutým DocFX. Lokálně platí [pravidla výběru](dependencies.md#výběr-net-sdk) | Instalační kanál CI v [quality workflow](../../.github/workflows/quality.yml) a [publish workflow](../../.github/workflows/main.yml) | Lokální instalace. GitHub Actions ji obnovuje přes `setup-dotnet` | `dotnet --version` |
 | DocFX | Přesná verze v [`.config/dotnet-tools.json`](../../.config/dotnet-tools.json) | [`.config/dotnet-tools.json`](../../.config/dotnet-tools.json) | Lokální .NET tool obnovený do řízené cache | `dotnet tool run docfx -- --version` |
 | Git | Libovolná udržovaná verze podporující projektový workflow | Git instalace a [`workflow.md`](workflow.md) | Lokální | `git --version` |
@@ -31,10 +31,10 @@ V takovém případě uveď pouze odkaz na tento zdroj a příkaz pro ověření
 
 | Účel | Pracovní adresář | Přesný příkaz | Očekávaný výsledek | Síťové požadavky |
 |---|---|---|---|---|
-| Obnovení připnutých npm závislostí | Kořen repozitáře | `npm ci --ignore-scripts --no-audit --no-fund` | Přesné balíčky z lockfilu a dostupný lokální `git-cliff` | První obnova vyžaduje npm registry nebo odpovídající cache |
+| Obnovení připnutých balíčků | Kořen repozitáře | `pnpm install --frozen-lockfile --ignore-scripts` | Přesné balíčky z lockfilu a dostupný lokální `git-cliff` | První obnova vyžaduje npm registry nebo odpovídající cache |
 | Obnovení připnutého DocFX | Kořen repozitáře | `dotnet tool restore` | Příkaz obnoví přesnou verzi z tool manifestu a skončí kódem 0 | První obnova vyžaduje NuGet nebo odpovídající cache |
 
-`npm ci` znovu vytvoří ignorovaný `node_modules/` a nesmí změnit `package-lock.json`.
+`pnpm install --frozen-lockfile` obnoví ignorovaný `node_modules/` a nesmí změnit `pnpm-lock.yaml`.
 
 Při hlášení o chybějícím SDK spusť z kořene repozitáře `dotnet --list-sdks` pro seznam instalací a `dotnet --version` pro ověření skutečného výběru.
 
@@ -46,10 +46,10 @@ Pravidla aktualizace nástrojů vlastní [politika závislostí](dependencies.md
 
 | Varianta | Pracovní adresář | Přesný příkaz | Výstup | Úspěch znamená |
 |---|---|---|---|---|
-| Strict lokální sestavení | Kořen repozitáře | `npm run docs:build` | Ignorovaný `changelog.md` a čistý adresář `_site/` | Changelog se vytvoří z úplné historie, DocFX skončí s 0 warningy a 0 chybami a artifact check potvrdí veřejnou hranici i lokální odkazy včetně kotev |
-| Samotná kompilace pro diagnostiku | Kořen repozitáře | `npm run docs:compile` | Adresář podle [`docfx.json`](../../docfx.json) | DocFX skončí s 0 warningy a 0 chybami. Příkaz sám nečistí ani nekontroluje stale výstup |
+| Strict lokální sestavení | Kořen repozitáře | `pnpm run docs:build` | Ignorovaný `changelog.md` a čistý adresář `_site/` | Changelog se vytvoří z úplné historie, DocFX skončí s 0 warningy a 0 chybami a artifact check potvrdí veřejnou hranici i lokální odkazy včetně kotev |
+| Samotná kompilace pro diagnostiku | Kořen repozitáře | `pnpm run docs:compile` | Adresář podle [`docfx.json`](../../docfx.json) | DocFX skončí s 0 warningy a 0 chybami. Příkaz sám nečistí ani nekontroluje stale výstup |
 
-`npm run docs:build` je jediný podporovaný kandidát pro publikování.
+`pnpm run docs:build` je jediný podporovaný kandidát pro publikování.
 
 Před kompilací odstraní pouze odvozený ignorovaný `_site/` a po kompilaci ověří manifest, fyzické výstupní cesty a odkazy v HTML včetně kotev a přesného casingu.
 
@@ -59,22 +59,22 @@ Během sestavení může být místní `_site/` krátce neúplný, proto jej kon
 
 | Scénář | Pracovní adresář | Přesný příkaz | Adresa nebo rozhraní | Bezpečné zastavení |
 |---|---|---|---|---|
-| Hlavní lokální běh | Kořen repozitáře po úspěšném buildu | `npm run docs:serve` | `http://127.0.0.1:4173` | `Ctrl+C` v terminálu se serverem |
+| Hlavní lokální běh | Kořen repozitáře po úspěšném buildu | `pnpm run docs:serve` | `http://127.0.0.1:4173` | `Ctrl+C` v terminálu se serverem |
 
 Lokální server nevyžaduje tajemství ani externí službu.
 
 Pokud je port `4173` obsazený, příkaz skončí chybou a běžící cizí proces se automaticky neukončuje.
 
-Pro jednorázové použití jiného volného portu předej DocFX argumenty například jako `npm run docs:serve -- --port 49673` a otevři odpovídající adresu na `127.0.0.1`.
+Pro jednorázové použití jiného volného portu předej DocFX argumenty například jako `pnpm run docs:serve --port 49673` a otevři odpovídající adresu na `127.0.0.1`.
 
 ## Statické kontroly
 
 | Kontrola | Přesný příkaz | Rozsah | Oprava formátu | Očekávaný výsledek |
 |---|---|---|---|---|
-| Generovaný drift, veřejná navigace a lokální odkazy | `npm run docs:check` | Nejprve obnoví ignorovaný changelog, potom ověří veřejné Markdown stránky, cesty, indexy a TOC | `npm run docs:generate` | Kód 0 a výstup `Dokumentace je aktuální.` |
-| JavaScript syntax | `npm run lint` | Generátor, aktivní browserový modul a testy | Ruční oprava zdroje | Všechny `node --check` kroky skončí kódem 0 |
-| Kanonická projektová metadata a interní odkazy | `npm test` | Dokumentační metadata, veřejná hranice, casing, interní odkazy a agentní adaptér | Ruční oprava kanonického zdroje | Všechny Node testy projdou |
-| DocFX strict kompilace | `npm run docs:compile` | Povolené veřejné vstupy a aktivní šablona | — | 0 warningů a 0 chyb |
+| Generovaný drift, veřejná navigace a lokální odkazy | `pnpm run docs:check` | Nejprve obnoví ignorovaný changelog, potom ověří veřejné Markdown stránky, cesty, indexy a TOC | `pnpm run docs:generate` | Kód 0 a výstup `Dokumentace je aktuální.` |
+| JavaScript syntax | `pnpm run lint` | Generátor, aktivní browserový modul a testy | Ruční oprava zdroje | Všechny `node --check` kroky skončí kódem 0 |
+| Kanonická projektová metadata a interní odkazy | `pnpm test` | Dokumentační metadata, veřejná hranice, casing, interní odkazy a agentní adaptér | Ruční oprava kanonického zdroje | Všechny Node testy projdou |
+| DocFX strict kompilace | `pnpm run docs:compile` | Povolené veřejné vstupy a aktivní šablona | — | 0 warningů a 0 chyb |
 
 Projekt nemá samostatný typový systém ani obecný formátovací nástroj.
 
@@ -93,10 +93,10 @@ Zde jsou pouze přesné podporované příkazy.
 | Cílený test veřejné hranice a normalizace | `node --test --test-isolation=none tests/generate-docs.test.js` | Žádné | Konzolový TAP výstup | Hranice veřejného obsahu, normalizace kódu, české tokeny, casing a odkazy včetně kotev, běžně pod 1 sekundu |
 | Cílený test changelogu | `node --test --test-isolation=none tests/changelog.test.mjs` | Lokální Git a obnovený `git-cliff` | Konzolový TAP výstup | Víceletá úplná fixture historie, otevřené nejnovější období, sdělení o vynechávání prázdných roků, sbalená starší období, jejich počty a kategorie, stabilní kotvy, breaking change, neklikací hashe a dvě časová prostředí |
 | Cílený test přenosu balíčků | `node --test tests/transfer.test.js` | PowerShell 6+ a npm; bez PowerShellu se test viditelně přeskočí | Konzolový TAP výstup | Izolovaný lokální npm projekt: přesná cesta archivu, kontrola poškození, odmítnutí jiného projektu, offline a opakovaná obnova, interaktivní výchozí cesta, odmítnutí chybějícího a obsazeného archivu a úklid |
-| Automatizované testy | `npm test` | Lokální Git a obnovené npm závislosti | Konzolový TAP výstup | Všechny testovací soubory uvedené v `package.json`. Aktuální počet vypíše runner |
-| Vizuální scénáře | `npm run docs:serve` a kroky níže | Předem vytvořený `_site/` a lokální prohlížeč | Vizuální pozorování, případně screenshot | Ruční smoke po rizikové změně UI, vyhledávání nebo navigace |
-| Integrační build | `npm run docs:build` | Obnovené npm závislosti a lokální DocFX | `changelog.md`, `_site/manifest.json`, HTML a konzolový souhrn | Veřejný changelog a ostatní stránky vzniknou bez warningu. Běžně jednotky sekund na ověřeném stroji |
-| Úplná lokální kontrola | `npm run verify` | Obnovené npm závislosti a lokální DocFX | TAP, DocFX log, `changelog.md`, manifest a `_site/` | Kontrola driftu, syntax, testy, generování changelogu, strict build a artifact check |
+| Automatizované testy | `pnpm test` | Lokální Git a obnovené závislosti | Konzolový TAP výstup | Všechny testovací soubory uvedené v `package.json`. Aktuální počet vypíše runner |
+| Vizuální scénáře | `pnpm run docs:serve` a kroky níže | Předem vytvořený `_site/` a lokální prohlížeč | Vizuální pozorování, případně screenshot | Ruční smoke po rizikové změně UI, vyhledávání nebo navigace |
+| Integrační build | `pnpm run docs:build` | Obnovené závislosti a lokální DocFX | `changelog.md`, `_site/manifest.json`, HTML a konzolový souhrn | Veřejný changelog a ostatní stránky vzniknou bez warningu. Běžně jednotky sekund na ověřeném stroji |
+| Úplná lokální kontrola | `pnpm run verify` | Obnovené závislosti a lokální DocFX | TAP, DocFX log, `changelog.md`, manifest a `_site/` | Kontrola driftu, syntax, testy, generování changelogu, strict build a artifact check |
 
 ## Úprava nebo přidání článku
 
@@ -104,7 +104,7 @@ Zde jsou pouze přesné podporované příkazy.
 2. Uprav jeho Markdown, nebo přidej nový soubor s malými písmeny a pomlčkami v názvu.
    Každý navigovaný článek potřebuje metadata `description: "Stručný přímý popis obsahu."` před prvním nadpisem v YAML front matter.
 3. U nového článku přidej položku `name` a relativní `href` do odpovídající skupiny `navigation` v [`scripts/generate-docs.js`](../../scripts/generate-docs.js).
-4. Spusť `npm run docs:generate`, zkontroluj Git diff a následně `npm run verify`.
+4. Spusť `pnpm run docs:generate`, zkontroluj Git diff a následně `pnpm run verify`.
 5. Otevři sestavenou stránku a ověř navigaci, příklad i zobrazení podle smoke scénáře níže.
 
 `sectionInfo` vlastní názvy a úvody hlavních oblastí, `sectionOrder` jejich pořadí a `navigation` podskupiny i články.
@@ -155,10 +155,10 @@ Release tagy historii nerozdělují a commity se zobrazují pouze krátkým nekl
 
 | Účel | Přesný příkaz | Vedlejší účinek | Očekávaný výsledek |
 |---|---|---|---|
-| Náhled bez zápisu | `npm exec -- git-cliff --config cliff.toml` | Žádný soubor se nezmění | Úplný Markdown na standardním výstupu |
-| Vytvoření vstupu pro sestavení | `npm run changelog:generate` | Přepíše pouze ignorovaný `changelog.md` | Úplný přehled s identitou zdroje, otevřeným nejnovějším obdobím, sdělením o vynechávání roků bez změn, sbalenými staršími roky, počty změn a kategoriemi |
+| Náhled bez zápisu | `pnpm exec git-cliff --config cliff.toml` | Žádný soubor se nezmění | Úplný Markdown na standardním výstupu |
+| Vytvoření vstupu pro sestavení | `pnpm run changelog:generate` | Přepíše pouze ignorovaný `changelog.md` | Úplný přehled s identitou zdroje, otevřeným nejnovějším obdobím, sdělením o vynechávání roků bez změn, sbalenými staršími roky, počty změn a kategoriemi |
 
-`npm run docs:build` tento krok provádí automaticky před DocFX.
+`pnpm run docs:build` tento krok provádí automaticky před DocFX.
 
 Při chybě `git-cliff`, která ve Windows hlásí odepřený přístup k cestě repozitáře, použij [diagnostiku omezeného sandboxu](../operations/runbook.md#symptom-windows-sandbox-blokuje-přístup-git-cliff).
 
@@ -166,7 +166,7 @@ Při chybě `git-cliff`, která ve Windows hlásí odepřený přístup k cestě
 
 | Požadavek | Příprava | Kroky nebo příkaz | Očekávaný technický důkaz | Úklid |
 |---|---|---|---|---|
-| `REQ-001`, `REQ-002` | `npm ci --ignore-scripts --no-audit --no-fund`, `dotnet tool restore` a `npm run verify` | Spusť `npm run docs:serve`, otevři `http://127.0.0.1:4173`, přejdi z homepage do tematického článku a vyhledej výraz `Docker` | Homepage, navigace, cílový článek i výsledky vyhledávání jsou viditelné bez konzolové chyby blokující scénář | Ukonči server pomocí `Ctrl+C`. `_site/` lze bezpečně odstranit přes `npm run docs:clean` |
+| `REQ-001`, `REQ-002` | `pnpm install --frozen-lockfile --ignore-scripts`, `dotnet tool restore` a `pnpm run verify` | Spusť `pnpm run docs:serve`, otevři `http://127.0.0.1:4173`, přejdi z homepage do tematického článku a vyhledej výraz `Docker` | Homepage, navigace, cílový článek i výsledky vyhledávání jsou viditelné bez konzolové chyby blokující scénář | Ukonči server pomocí `Ctrl+C`. `_site/` lze bezpečně odstranit přes `pnpm run docs:clean` |
 | `REQ-E002` | Žádná | Spusť `node --test --test-isolation=none tests/generate-docs.test.js` | Negativní příklady interních zdrojů a výstupů jsou odmítnuté a test přesného casingu projde | Žádný |
 
 ### Vizuální kontrola po změně obsahu nebo šablony
@@ -196,7 +196,7 @@ Odmítnutí HTTP požadavku nebo rate limit není samo důkazem zániku cílové
 
 ## Shoda lokálního prostředí a CI
 
-CI obnovuje npm závislosti z lockfilu a musí používat stejné projektové vstupní příkazy jako lokální vývoj.
+CI obnovuje balíčky pomocí pnpm z lockfilu a musí používat stejné projektové vstupní příkazy jako lokální vývoj.
 
 Workflow nesmí obsahovat skrytou alternativní sestavovací logiku, kterou nelze lokálně zopakovat.
 

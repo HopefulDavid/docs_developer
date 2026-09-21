@@ -35,11 +35,17 @@ jobs:
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version-file: package.json
-          cache: npm
-          cache-dependency-path: package-lock.json
+          package-manager-cache: false
 
-      - name: Obnovení připnutých npm závislostí
-        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Instalace připnutého pnpm
+        uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+        with:
+          version: 12.4.0
+          cache: true
+          cache_dependency_path: pnpm-lock.yaml
+
+      - name: Obnovení připnutých závislostí
+        run: pnpm install --frozen-lockfile --ignore-scripts
 
       - name: Obnovení připnutého DocFX
         run: |
@@ -47,4 +53,4 @@ jobs:
           dotnet tool restore
 
       - name: Ověření a sestavení dokumentace
-        run: npm run verify
+        run: pnpm run verify

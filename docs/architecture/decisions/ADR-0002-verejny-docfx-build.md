@@ -7,7 +7,7 @@ owners:
   - engineering
   - delivery
 supersedes: null
-superseded_by: ADR-0004-vyber-dotnet-sdk.md
+superseded_by: ADR-0004-vyber-dotnet-sdk.md, ADR-0005-pnpm-pro-projektovy-build.md
 ---
 
 # ADR-0002: Bezpečný a reprodukovatelný veřejný DocFX build

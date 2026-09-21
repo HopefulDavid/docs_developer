@@ -61,7 +61,7 @@ Diagram ukazuje autorství, sestavení a veřejné čtení bez serverové aplika
 | Správce obsahu | Do systému | Udržuje zdrojové články, registr navigace a projektovou konfiguraci | Git, Markdown a lokální CLI | Vlastník repozitáře | Neúspěšná kontrola změnu zastaví a uvede konkrétní důkaz |
 | GitHub | Obousměrně | Uchovává vzdálený Git a spouští workflow | Git přes SSH, GitHub Actions | GitHub a vlastník repozitáře | Lokální práce pokračuje. Publikování čeká na obnovení platformy |
 | GitHub Pages | Ze systému k čtenáři | Hostuje odvozený statický web | HTTPS a větev `gh-pages` | GitHub a vlastník repozitáře | Poslední úspěšný deployment zůstává dostupný, pokud platforma zachová službu |
-| npm registry | Do sestavení | Obnovuje přesně uzamčený `git-cliff` | HTTPS balíčkový registr a npm cache | npm | Již publikovaný web zůstane dostupný. Čistý build bez cache čeká na obnovu registru |
+| npm registry | Do sestavení | Obnovuje přesně uzamčený `git-cliff` | HTTPS balíčkový registr a pnpm store | pnpm | Již publikovaný web zůstane dostupný. Čistý build bez cache čeká na obnovu registru |
 | Prohlížeč čtenáře | Obousměrně se statickým webem | Zobrazuje stránky, vyhledává a ukládá neškodnou volbu tématu | HTTPS, HTML, CSS, JavaScript, `localStorage` | Čtenář | Nedostupné úložiště tématu se bezpečně nahradí režimem `auto` |
 
 ## 4. Strategie řešení
@@ -79,13 +79,13 @@ Diagram ukazuje autorství, sestavení a veřejné čtení bez serverové aplika
 | Blok | Odpovědnost | Veřejná hranice | Povolené závislosti | Vlastník dat |
 |---|---|---|---|---|
 | Zdrojový veřejný obsah | Tematické Markdown stránky, přílohy v `images/` a `pdf/` a `programming/packages/offline/transfer.ps1` | Relativní veřejné cesty uvedené v registru navigace nebo explicitní DocFX resources | Jiné veřejné stránky a přílohy | Správce obsahu |
-| Generátor navigace | Normalizuje veřejný Markdown, migruje legacy cesty, generuje přehledy a ověřuje navigaci i lokální odkazy | npm profily `docs:generate` a `docs:check` | Node.js standardní knihovna a zdrojový veřejný obsah | Engineering |
-| Generátor changelogu | Dělí dosažitelnou Git historii do ročních období, uvnitř zachovává kategorie, označuje breaking changes a uvádí krátké neklikací hashe commitů | npm profil `changelog:generate` a `cliff.toml` | Git historie a `git-cliff` uzamčený npm lockfilem. Výstup je ignorovaný build vstup | Delivery |
+| Generátor navigace | Normalizuje veřejný Markdown, migruje legacy cesty, generuje přehledy a ověřuje navigaci i lokální odkazy | pnpm skripty `docs:generate` a `docs:check` | Node.js standardní knihovna a zdrojový veřejný obsah | Engineering |
+| Generátor changelogu | Dělí dosažitelnou Git historii do ročních období, uvnitř zachovává kategorie, označuje breaking changes a uvádí krátké neklikací hashe commitů | pnpm skript `changelog:generate` a `cliff.toml` | Git historie a `git-cliff` uzamčený pnpm lockfilem. Výstup je ignorovaný build vstup | Delivery |
 | Kanonická projektová dokumentace | Definuje záměr, architekturu, workflow a dlouhé úkoly | Interní odkazy z `AGENTS.md` a `docs/index.md` | Strojové konfigurace jako důkaz, nikoli veřejný obsah | Maintainers |
-| DocFX build | Převádí povolené zdroje a aktivní šablonu na statický web | npm profil `docs:build` a adresář `_site/` | Generovaný i zdrojový veřejný obsah, resources a `templates/material` | Engineering |
+| DocFX build | Převádí povolené zdroje a aktivní šablonu na statický web | pnpm skript `docs:build` a adresář `_site/` | Generovaný i zdrojový veřejný obsah, resources a `templates/material` | Engineering |
 | Vlastní šablona | Přizpůsobuje vzhled, české popisky, volbu tématu, přeskočení navigace a klávesnicově dostupné posuvné tabulky. Příspěvkový blok DocFX zůstává vypnutý | `templates/material/` a `docfx.json` | Podporované veřejné assety, tokeny a globální metadata DocFX | Design a engineering |
-| Kontrola artefaktu | Ověřuje manifest, veřejné stránky, nepřítomnost interních cest a lokální odkazy v HTML včetně kotev a casingu | npm profil `docs:artifact-check` | Čistý DocFX výstup | Quality |
-| GitHub workflow | Obnovuje deklarované nástroje, volá `npm run verify` a publikuje výstup | Workflow pro `develop`, pull request a `main` | GitHub Actions, build kontrakt a `GITHUB_TOKEN` pouze při publikování | Delivery |
+| Kontrola artefaktu | Ověřuje manifest, veřejné stránky, nepřítomnost interních cest a lokální odkazy v HTML včetně kotev a casingu | pnpm skript `docs:artifact-check` | Čistý DocFX výstup | Quality |
+| GitHub workflow | Obnovuje deklarované nástroje, volá `pnpm run verify` a publikuje výstup | Workflow pro `develop`, pull request a `main` | GitHub Actions, build kontrakt a `GITHUB_TOKEN` pouze při publikování | Delivery |
 
 ```mermaid
 flowchart LR
@@ -171,7 +171,7 @@ Tyto doplňky používají stávající JavaScript a standardní Node API bez no
 
 | Prostředí | Běhové jednotky | Stav | Síťová hranice | Škálování | Pozorovatelnost |
 |---|---|---|---|---|---|
-| Lokální vývoj | Node generátor, `git-cliff`, test runner, lokální DocFX tool a volitelný statický server | Git checkout, ignorovaný `changelog.md` a odvozený `_site/` | Síť je nutná pouze pro první npm nebo NuGet restore a případné otevření externích odkazů | Není relevantní | Návratové kódy a konzolový výstup |
+| Lokální vývoj | Node generátor, `git-cliff`, test runner, lokální DocFX tool a volitelný statický server | Git checkout, ignorovaný `changelog.md` a odvozený `_site/` | Síť je nutná pouze pro první pnpm nebo NuGet restore a případné otevření externích odkazů | Není relevantní | Návratové kódy a konzolový výstup |
 | GitHub Actions quality | Jeden read-only job na Ubuntu | Dočasný checkout a artefakt bez publikování | GitHub runner, NuGet a action distribution | Jeden běh na událost | GitHub Actions log |
 | GitHub Actions publish | Jeden job na Ubuntu s `contents: write` | Dočasný checkout, `_site/` a jediný kořenový deployment commit | GitHub runner, NuGet a GitHub API | Concurrency skupina nepovolí souběžné publikování | GitHub Actions log a commit `gh-pages` |
 | GitHub Pages | Statické soubory z `gh-pages` | Pouze publikovaný artefakt | Veřejné HTTPS | Řídí GitHub | HTTP dostupnost a uživatelský smoke scénář |

@@ -1,4 +1,4 @@
-# Tento soubor generuje npm run docs:generate. Neupravujte navigaci ani přehledy ručně.
+# Tento soubor generuje pnpm run docs:generate. Neupravujte navigaci ani přehledy ručně.
 - name: "Přehled"
   href: "index.md"
 - name: "Komunikace"

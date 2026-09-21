@@ -6,9 +6,9 @@ const checkOnly = process.argv.includes('--check');
 const collator = new Intl.Collator('cs', { sensitivity: 'base', numeric: true });
 
 const generatedNotice =
-  '<!-- Tento soubor generuje npm run docs:generate. Neupravujte navigaci ani přehledy ručně. -->';
+  '<!-- Tento soubor generuje pnpm run docs:generate. Neupravujte navigaci ani přehledy ručně. -->';
 const generatedYamlNotice =
-  '# Tento soubor generuje npm run docs:generate. Neupravujte navigaci ani přehledy ručně.';
+  '# Tento soubor generuje pnpm run docs:generate. Neupravujte navigaci ani přehledy ručně.';
 
 // Veřejný obsah má explicitní hranici.
 // Projektová metadata generátor nečte ani neupravuje.
