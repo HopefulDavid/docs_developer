@@ -149,7 +149,7 @@ Lokální NuGet zdroj přidej do projektového `NuGet.Config` a zahrň potřebn�
 
 Záloha Dockeru zůstává v této oblasti, protože chrání image a provozní data aplikací.
 
-[Záloha balíčků](../../programming/packages/offline.md) slouží k obnovení vývojových závislostí.
+Pro obnovení vývojových závislostí použij návod příslušného správce balíčků.
 
 | Co chceš obnovit | Co zálohovat |
 |---|---|

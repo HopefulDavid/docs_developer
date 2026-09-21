@@ -1,6 +1,10 @@
 const themeKey = "theme";
 const themeValues = new Set(["light", "dark", "auto"]);
 let previousSearchQuery = "";
+let observedAffixList = null;
+let affixObserver = null;
+let affixSyncScheduled = false;
+let initialHashRestored = false;
 
 function readStoredTheme() {
   try {
@@ -135,6 +139,192 @@ function normalizeTableScrollers(article) {
   });
 }
 
+/** Present the page title and its opening summary as one visual introduction. */
+function enhanceArticleLead(article) {
+  if (article.querySelector(":scope > .docs-article-lead")) {
+    return;
+  }
+
+  const title = article.querySelector(":scope > h1:first-child");
+  if (!title) {
+    return;
+  }
+
+  const lead = document.createElement("header");
+  lead.className = "docs-article-lead";
+  title.before(lead);
+  lead.append(title);
+
+  const summary = lead.nextElementSibling;
+  if (summary?.matches("p, .docs-intro")) {
+    lead.append(summary);
+  }
+}
+
+/** Add a quiet, useful language caption to fenced code examples. */
+function enhanceCodeBlocks(article) {
+  const languageNames = {
+    bash: "Shell",
+    shell: "Shell",
+    sh: "Shell",
+    powershell: "PowerShell",
+    ps1: "PowerShell",
+    dockerfile: "Dockerfile",
+    yaml: "YAML",
+    yml: "YAML",
+    json: "JSON",
+    javascript: "JavaScript",
+    js: "JavaScript",
+    typescript: "TypeScript",
+    ts: "TypeScript",
+    html: "HTML",
+    css: "CSS",
+    csharp: "C#",
+    cs: "C#",
+    sql: "SQL",
+    xml: "XML",
+    text: "Text",
+    plaintext: "Text",
+  };
+
+  article.querySelectorAll("pre > code").forEach((code) => {
+    const pre = code.parentElement;
+    const languageClass = [...code.classList].find((name) => /^(?:lang|language)-/.test(name));
+    const language = languageClass?.replace(/^(?:lang|language)-/, "").toLowerCase();
+
+    pre.classList.add("docs-code-block");
+    if (language) {
+      pre.dataset.language = languageNames[language] || language.toUpperCase();
+    }
+  });
+}
+
+/** Restore a deep link after the article lead has reached its final layout. */
+function restoreInitialHash() {
+  if (initialHashRestored || !window.location.hash) {
+    return;
+  }
+
+  let id;
+  try {
+    id = decodeURIComponent(window.location.hash.slice(1));
+  } catch {
+    return;
+  }
+
+  const target = document.getElementById(id);
+  if (!target) {
+    return;
+  }
+
+  initialHashRestored = true;
+  window.requestAnimationFrame(() => {
+    window.requestAnimationFrame(() => {
+      target.scrollIntoView({ block: "start" });
+      scheduleAffixSync();
+    });
+  });
+}
+
+/** Mark the active heading together with the H2 section that owns it. */
+function syncAffixHierarchy(list = observedAffixList) {
+  if (!list?.isConnected) {
+    return;
+  }
+
+  const items = [...list.children].filter((item) => item.matches("li"));
+  const headerHeight = Number.parseFloat(
+    getComputedStyle(document.documentElement).getPropertyValue("--docs-header-height"),
+  ) || 56;
+  const headingThreshold = headerHeight + 96;
+  const isAtPageEnd = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+  let section = null;
+  let firstSection = null;
+  let activeSection = null;
+  let activeItem = items[0] ?? null;
+
+  items.forEach((item) => {
+    const link = item.querySelector(":scope > a");
+
+    const href = link?.getAttribute("href") || "";
+    const heading = href.startsWith("#") ? document.getElementById(decodeURIComponent(href.slice(1))) : null;
+    const headingLevel = Number.parseInt(heading?.tagName.slice(1) || "0", 10);
+    const isSection = headingLevel === 2
+      || (headingLevel === 0 && (link?.classList.contains("link-body-emphasis") ?? false));
+
+    for (let level = 2; level <= 6; level += 1) {
+      item.classList.toggle(`docs-affix-level-${level}`, headingLevel === level);
+    }
+
+    item.classList.toggle("docs-affix-section", isSection);
+    item.classList.toggle("docs-affix-subsection", !isSection);
+
+    if (isSection) {
+      section = item;
+      firstSection ||= item;
+    }
+
+    if (heading && heading.getBoundingClientRect().top <= headingThreshold) {
+      activeItem = item;
+    }
+  });
+
+  if (isAtPageEnd && items.length) {
+    activeItem = items.at(-1);
+  }
+
+  section = null;
+  items.forEach((item) => {
+    if (item.classList.contains("docs-affix-section")) {
+      section = item;
+    }
+
+    item.classList.toggle("docs-current-item", item === activeItem);
+    if (item === activeItem) {
+      activeSection = section;
+    }
+  });
+
+  activeSection ||= firstSection;
+  items.forEach((item) => {
+    item.classList.toggle("docs-current-section", item === activeSection && item.classList.contains("docs-affix-section"));
+  });
+}
+
+/** Coalesce rapid scroll events into one navigation update per frame. */
+function scheduleAffixSync() {
+  if (affixSyncScheduled) {
+    return;
+  }
+
+  affixSyncScheduled = true;
+  window.requestAnimationFrame(() => {
+    affixSyncScheduled = false;
+    syncAffixHierarchy();
+  });
+}
+
+/** Follow DocFX when it creates or replaces the in-page navigation. */
+function observeAffixHierarchy() {
+  const list = document.querySelector("#affix > ul");
+
+  if (!list || list === observedAffixList) {
+    syncAffixHierarchy(list);
+    return;
+  }
+
+  affixObserver?.disconnect();
+  observedAffixList = list;
+  syncAffixHierarchy(list);
+  affixObserver = new MutationObserver(() => syncAffixHierarchy(list));
+  affixObserver.observe(list, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+}
+
 /** Enhance generated DocFX markup without changing article content or code text. */
 function enhanceReading() {
   const article = document.querySelector("article");
@@ -149,8 +339,12 @@ function enhanceReading() {
   }
 
   if (article) {
+    enhanceArticleLead(article);
+    enhanceCodeBlocks(article);
     normalizeTableScrollers(article);
   }
+
+  observeAffixHierarchy();
 
   const labels = {
     "Toggle navigation": "Otevřít navigaci",
@@ -202,8 +396,23 @@ function syncScrollableRegions() {
 function start() {
   setTheme(readStoredTheme(), false);
   enhanceReading();
+  restoreInitialHash();
   document.addEventListener("click", handleThemeClick, true);
   document.addEventListener("keydown", (event) => {
+    const currentTab = event.target.closest?.('[role="tab"]');
+    if (currentTab && ["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) {
+      const tabs = [...currentTab.closest('[role="tablist"]').querySelectorAll('[role="tab"]')]
+        .filter((tab) => !tab.closest('[hidden]'));
+      const index = tabs.indexOf(currentTab);
+      if (index >= 0 && tabs.length > 0) {
+        event.preventDefault();
+        const next = event.key === "Home" ? 0 : event.key === "End" ? tabs.length - 1
+          : (index + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
+        tabs[next].click();
+        tabs[next].focus();
+      }
+      return;
+    }
     if ((event.key === "Enter" || event.key === " ") &&
         event.target.matches('a[role="button"][data-bs-toggle="dropdown"]')) {
       event.preventDefault();
@@ -219,6 +428,7 @@ function start() {
     childList: true, subtree: true, attributes: true, attributeFilter: ["data-search"],
   });
   window.addEventListener("resize", syncScrollableRegions);
+  window.addEventListener("scroll", scheduleAffixSync, { passive: true });
   document.addEventListener("toggle", syncScrollableRegions, true);
 
   window.matchMedia?.("(prefers-color-scheme: dark)").addEventListener?.("change", () => {

@@ -112,7 +112,7 @@ Pokud spouštění blokuje politika, ověř [Execution Policy](terminal.md#execu
 - [Profil, moduly a Execution Policy](terminal.md).
 - [DNS, porty a síťová diagnostika](../../network/basics.md).
 - [SSH klient ve Windows](../../network/ssh/windows.md).
-- [Telemetrie a nástroje .NET](../../programming/packages/dotnet-cli.md).
+- [Telemetrie a nástroje .NET](../../programming/packages/dotnet-tools.md#vypnutí-telemetrie-net-sdk).
 
 `(Get-PSReadLineOption).HistorySavePath` ukáže soubor dlouhodobé historie příkazů.
 

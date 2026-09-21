@@ -92,6 +92,7 @@ Zde jsou pouze přesné podporované příkazy.
 |---|---|---|---|---|
 | Cílený test veřejné hranice a normalizace | `node --test --test-isolation=none tests/generate-docs.test.js` | Žádné | Konzolový TAP výstup | Hranice veřejného obsahu, normalizace kódu, české tokeny, casing a odkazy včetně kotev, běžně pod 1 sekundu |
 | Cílený test changelogu | `node --test --test-isolation=none tests/changelog.test.mjs` | Lokální Git a obnovený `git-cliff` | Konzolový TAP výstup | Víceletá úplná fixture historie, otevřené nejnovější období, sdělení o vynechávání prázdných roků, sbalená starší období, jejich počty a kategorie, stabilní kotvy, breaking change, neklikací hashe a dvě časová prostředí |
+| Cílený test přenosu balíčků | `node --test tests/transfer.test.js` | PowerShell 6+ a npm; bez PowerShellu se test viditelně přeskočí | Konzolový TAP výstup | Izolovaný lokální npm projekt: přesná cesta archivu, kontrola poškození, odmítnutí jiného projektu, offline a opakovaná obnova, interaktivní výchozí cesta, odmítnutí chybějícího a obsazeného archivu a úklid |
 | Automatizované testy | `npm test` | Lokální Git a obnovené npm závislosti | Konzolový TAP výstup | Všechny testovací soubory uvedené v `package.json`. Aktuální počet vypíše runner |
 | Vizuální scénáře | `npm run docs:serve` a kroky níže | Předem vytvořený `_site/` a lokální prohlížeč | Vizuální pozorování, případně screenshot | Ruční smoke po rizikové změně UI, vyhledávání nebo navigace |
 | Integrační build | `npm run docs:build` | Obnovené npm závislosti a lokální DocFX | `changelog.md`, `_site/manifest.json`, HTML a konzolový souhrn | Veřejný changelog a ostatní stránky vzniknou bez warningu. Běžně jednotky sekund na ověřeném stroji |
@@ -172,7 +173,7 @@ Při chybě `git-cliff`, která ve Windows hlásí odepřený přístup k cestě
 
 Na šířkách **320, 390, 768 a 1440 px** ověř světlý i tmavý motiv pro homepage, přehled Programování, Docker a reprezentativní článek s kódem, obrázky a rozbalovacím blokem.
 
-1. Otevři navigaci, přejdi do oblasti a článku a použij obsah stránky.
+1. Otevři navigaci, přejdi do oblasti a článku a použij obsah stránky. U odkazu na podnadpis obnov celou URL s kotvou a ověř, že stránka znovu skončí u stejného nadpisu pod pevnou horní lištou.
 2. Vyhledej `Docker`, otevři výsledek ve stejné kartě a potom ověř srozumitelný stav pro neexistující výraz.
 3. Klávesnicí použij odkaz **Přejít k obsahu**, ovladač motivu a rozbalení doplňujícího postupu.
 4. Ověř kopírování kódu, čitelnost syntaxe a vlastní vodorovný posuv pouze uvnitř široké ukázky nebo tabulky.

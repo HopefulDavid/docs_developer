@@ -81,19 +81,18 @@ Vývojové platformy, jazyky, frameworky, balíčky a opakovaně použitelné po
 
 | Stránka | Popis |
 | --- | --- |
-| [Záloha a offline obnova](packages/offline.md) | Co zkopírovat pro offline zálohu balíčků a jak ověřit obnovu bez původní instalace. |
-| [NuGet](packages/nuget.md) | Záloha knihoven .NET do jedné složky a obnova projektu bez internetu. |
-| [.NET tools](packages/dotnet-tools.md) | Jednoduchá záloha a obnova .NET nástrojů podle toho, zda jsou globální, nebo patří k projektu. |
-| [npm](packages/npm.md) | Příprava jedné npm cache, její přenos a obnova projektu či globálních nástrojů bez internetu. |
-| [pnpm](packages/pnpm.md) | Záloha pnpm projektu se store a metadaty, poté obnova jedním instalačním příkazem bez internetu. |
-| [Python](packages/python.md) | Uložení verzí Python balíčků, příprava složky wheelhouse a obnova nového prostředí bez internetu. |
-| [Dart a Flutter pub](packages/dart.md) | Přenos Dart nebo Flutter projektu s celou pub cache a obnova uzamčených balíčků bez internetu. |
+| [Záloha a obnova balíčků](packages/backup-and-restore.md) | Záloha a obnova balíčků npm, pnpm, pip, NuGet, .NET tools a Dart bez internetu. |
+| [NuGet](packages/nuget.md) | Základní příkazy NuGet pro správu knihoven v projektech .NET. |
+| [.NET tools](packages/dotnet-tools.md) | Příkazy .NET tools a postup vypnutí telemetrie .NET SDK. |
+| [npm](packages/npm.md) | Základní příkazy npm pro správu projektových a globálních balíčků. |
+| [pnpm](packages/pnpm.md) | Instalace pnpm a základní příkazy pro projektové a globální balíčky. |
+| [Python a pip](packages/python.md) | Základní příkazy pip pro správu balíčků v izolovaném Python prostředí. |
+| [Dart a Flutter pub](packages/dart.md) | Základní příkazy pub pro balíčky projektů Dart a Flutter a CLI nástroje. |
 
 ### Vývojové nástroje
 
 | Stránka | Popis |
 | --- | --- |
-| [.NET CLI](packages/dotnet-cli.md) | Práce se SDK, lokálními a globálními nástroji a telemetrií. |
 | [Appcast feed](appcast.md) | Vytvoření a podepisování aktualizačního feedu aplikace pro Sparkle. |
 
 ### Lokální vývoj

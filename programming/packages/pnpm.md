@@ -1,121 +1,71 @@
 ---
-description: "Záloha pnpm projektu se store a metadaty, poté obnova jedním instalačním příkazem bez internetu."
+description: "Instalace pnpm a základní příkazy pro projektové a globální balíčky."
 ---
 
-# pnpm – záloha a obnova balíčků
+# pnpm
 
-Pro offline obnovu pnpm uchovej **projekt, store a cache metadat**.
+pnpm spravuje balíčky Node.js pomocí sdíleného úložiště a projektových odkazů v `node_modules`.
 
-Store obsahuje samotné balíčky.
+Pro přenos balíčků použij [zálohu a obnovu bez internetu](backup-and-restore.md#pnpm).
 
-Metadata jsou informace o nich, které pnpm může při obnově také potřebovat.
+## Instalace a umístění pnpm
 
-Postup je pro pnpm 12 se stejnou verzí pnpm, Node.js, OS a architektury na obou počítačích.
+Příkaz `npx get-pnpm` spustí instalátor přes npm a nainstaluje samostatný pnpm. [Oficiální postup instalace](https://pnpm.io/installation#using-npm)
 
-## 1. Připrav zálohu s internetem
+Na Windows najdeš nainstalovaný příkaz ve složce určené uživatelskou proměnnou `PNPM_HOME`.
 
-Vytvoř `zaloha-pnpm/projekt` jako kopii projektu bez `node_modules`.
+Po instalaci otevři nový PowerShell a ověř umístění i verzi:
 
-Zachovej `package.json`, `pnpm-lock.yaml`, celý workspace, místní závislosti, patche a hooky `.pnpmfile.*`.
-
-V kopii projektu doplň nebo uprav v `pnpm-workspace.yaml` tyto dva klíče.
-
-Ostatní nastavení ponech:
-
-```yaml
-storeDir: ../store
-cacheDir: ../metadata
+```powershell
+$pnpmHome = [Environment]::GetEnvironmentVariable('PNPM_HOME', 'User')
+$pnpmHome
+Get-Command pnpm -All | Select-Object Source
+& (Join-Path $pnpmHome 'bin/pnpm.cmd') --version
 ```
 
-U samostatného projektu bez tohoto souboru jej vytvoř.
+První položka z `Get-Command` ukazuje, který příkaz se spustí při zadání `pnpm`.
 
-U monorepa uprav soubor v kořeni workspace. [Nastavení pnpm](https://pnpm.io/settings)
+Pokud ukazuje jinam než do `PNPM_HOME/bin`, máš v `PATH` také jinou instalaci pnpm.
 
-Ve stejném kořeni spusť:
+Pomocný balíček `get-pnpm` může zůstat v cache npm pro `npx`, zatímco nainstalovaný pnpm leží v `PNPM_HOME`.
 
-```bash
-pnpm install --frozen-lockfile
-```
+Příkaz `pnpm list --global` vypisuje balíčky nainstalované pomocí pnpm, nikoli umístění samotného pnpm.
 
-Instalace připraví balíčky i metadata ve zvolených složkách a zachová lockfile.
+## Základní příkazy
 
-Pro pozdější build a testy instaluj všechny závislosti včetně vývojových.
+Příkazy projektové záložky spusť ve složce s `package.json`.
 
-Přípravu neomezuj pomocí `--prod` nebo filtru projektů.
+Zápis `<balíček>` nahraď názvem balíčku a `[<balíček>]` můžeš vynechat pro práci se všemi přímými závislostmi.
 
-## 2. Přenes celou složku
+Další značky popisuje [klíč syntaxe příkazů](../../operating-system/command-line-syntax.md).
 
-```text
-zaloha-pnpm/
-  projekt/       zdroje, lockfile a úplná konfigurace
-  store/         balíčky včetně indexu a verzovaných podsložek
-  metadata/      cache metadat
-```
+### [Projekt](#tab/pnpm-project)
 
-Přípravné `node_modules` nepřenášej.
+| Účel | Příkaz | Výsledek |
+|---|---|---|
+| Přidat běhovou závislost | `pnpm add <balíček>[@<verze>]` | Zapíše balíček do `dependencies` a aktualizuje lockfile |
+| Přidat vývojovou závislost | `pnpm add --save-dev <balíček>[@<verze>]` | Zapíše balíček do `devDependencies` |
+| Odebrat přímou závislost | `pnpm remove <balíček>` | Odebere balíček z manifestu, lockfilu i instalace |
+| Vypsat přímé závislosti | `pnpm list --depth=0` | Zobrazí přímé nainstalované balíčky |
+| Najít dostupné aktualizace | `pnpm outdated` | Porovná používané verze s registrem |
+| Aktualizovat v povoleném rozsahu | `pnpm update [<balíček>]` | Aktualizuje jeden nebo všechny balíčky podle rozsahů |
+| Obnovit přesný lockfile | `pnpm install --frozen-lockfile` | Nainstaluje závislosti bez změny `pnpm-lock.yaml` |
 
-Po skončení instalace zkopíruj celý kořen zálohy a předtím nepoužívej `pnpm store prune`.
+### [Globální nástroje](#tab/pnpm-global)
 
-Přilož verze z `node --version` a `pnpm --version` a připrav jejich instalátory či archivy pro cílový počítač.
+| Účel | Příkaz | Výsledek |
+|---|---|---|
+| Nainstalovat nástroj | `pnpm add --global <balíček>[@<verze>]` | Přidá globální balíček a jeho příkazy |
+| Odinstalovat nástroj | `pnpm remove --global <balíček>` | Odebere globální instalaci |
+| Vypsat globální balíčky | `pnpm list --global --depth=0` | Zobrazí přímo nainstalované globální balíčky |
+| Najít dostupné aktualizace | `pnpm outdated --global` | Porovná globální instalace s registrem |
+| Aktualizovat nástroje | `pnpm update --global [<balíček>]` | Aktualizuje jeden nebo všechny globální balíčky |
+| Zjistit globální adresář | `pnpm root --global` | Vypíše kořen globální instalace |
 
-## 3. Obnov bez internetu
+***
 
-Na cíli rozbal pracovní kopii zálohy a v jejím `projekt` spusť:
+V kořeni workspace použij `--filter <výběr>` pro cílený projekt nebo `--recursive` pro všechny projekty, pokud daný příkaz tyto volby podporuje.
 
-```bash
-pnpm install --offline --frozen-lockfile
-pnpm list --depth Infinity
-```
+Před potvrzením aktualizace zkontroluj změny `package.json` a `pnpm-lock.yaml` a spusť testy.
 
-Relativní cesty v přeneseném `pnpm-workspace.yaml` najdou obě sousední složky i po přesunu zálohy jinam.
-
-`--offline` zakáže stahování a `--frozen-lockfile` zachová uzamčené verze. [Pnpm install](https://pnpm.io/cli/install)
-
-Nakonec spusť build, testy a běžnou aplikaci bez připojení.
-
-Ve workspace můžeš pro výpis všech projektů použít `pnpm -r list --depth Infinity`.
-
-## Chci převzít existující store
-
-Nemusíš balíčky stahovat znovu: zjisti `pnpm store path` a skutečné nastavení `cacheDir`, poté zkopíruj oba adresáře do zálohy jako `store` a `metadata`.
-
-Pokud první příkaz vypíše například `.../store/v11`, kopíruj **celý rodičovský `store`**, aby zůstala zachovaná jeho struktura.
-
-Výchozí metadata jsou ve Windows obvykle `%LOCALAPPDATA%/pnpm-cache`.
-
-Rozhoduje však nastavení `cacheDir` a případně `XDG_CACHE_HOME`. [Cache metadat](https://pnpm.io/settings/other#cachedir)
-
-V záložní kopii projektu nastav stejné relativní cesty jako v kroku 1 a ověř obnovu každého projektu, pro který zálohu pořizuješ.
-
-## Nástroje mimo projekt
-
-Pro snadnou offline obnovu nástroje s lockfilem použij samostatný projekt, například v nové prázdné složce:
-
-```bash
-pnpm init
-pnpm add --save-exact typescript@5.9.3
-pnpm exec tsc --version
-```
-
-Tuto složku zazálohuj výše uvedenými třemi kroky a nástroj na cíli spouštěj přes `pnpm exec` z obnoveného projektu.
-
-Názvy a verze svých globálních nástrojů zjistíš přes `pnpm list --global --depth=0`.
-
-S internetem je lze znovu instalovat pomocí `pnpm add --global <balíček>@<verze>`.
-
-## Když něco chybí
-
-| Projev | Co doplnit |
-|---|---|
-| `ERR_PNPM_NO_OFFLINE_META` | Složku metadat, samotný store nestačí |
-| `ERR_PNPM_NO_OFFLINE_TARBALL` | Chybějící balíček pro uložený lockfile a platformu |
-| Chybí `file:` nebo `link:` závislost | Příslušné místní zdroje |
-| Instalace projde, build selže | Povolené build skripty, nativní nástroje nebo jejich externí data |
-
-Používáš-li starší pnpm, zachovej jeho verzi a konfigurační formát.
-
-U pnpm 12 patří běžné nastavení do `pnpm-workspace.yaml` a `.npmrc` slouží registrům a autentizaci.
-
-S internetem stačí v přeneseném projektu `pnpm install --frozen-lockfile`.
-
-Metadata a schválení build skriptů zachovej i tehdy. [Pravidla výběru závislostí](https://pnpm.io/settings/dependency-resolution)
+Podrobnosti uvádí oficiální reference příkazů [`pnpm add`](https://pnpm.io/cli/add), [`pnpm remove`](https://pnpm.io/cli/remove), [`pnpm list`](https://pnpm.io/cli/list), [`pnpm update`](https://pnpm.io/cli/update) a [`pnpm outdated`](https://pnpm.io/cli/outdated).

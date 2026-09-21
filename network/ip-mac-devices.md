@@ -256,8 +256,6 @@ Obsahují jen nedávno známé sousedy a mohou zahrnovat router, multicastové a
 
 Nejspolehlivější přehled připojených zařízení poskytuje stránka **Connected devices**, **Clients**, **DHCP leases** nebo podobně pojmenovaná část správy vlastního routeru.
 
-Pro přehledné aktivní hledání zařízení můžeš použít také [základní kontrolu NetSentinelu](netsentinel/basic-check.md).
-
 Skenuj pouze vlastní síť nebo síť, k jejíž kontrole máš souhlas.
 
 ## Jak poznat iPhone

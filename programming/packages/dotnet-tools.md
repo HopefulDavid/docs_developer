@@ -1,154 +1,245 @@
 ---
-description: "Jednoduchá záloha a obnova .NET nástrojů podle toho, zda jsou globální, nebo patří k projektu."
+description: "Příkazy .NET tools a postup vypnutí telemetrie .NET SDK."
 ---
 
-# .NET tools – záloha a obnova
+# .NET tools
 
 .NET tools jsou příkazové nástroje, například DocFX.
 
-**Nejdříve vyber, jak je máš nainstalované:**
+Pro přenos nástrojů použij [zálohu a obnovu bez internetu](backup-and-restore.md#net-tools).
 
-| Typ instalace | Jak ji poznáš | Co zálohovat |
+**Doporučení:** Před prvním použitím .NET SDK [vypni jeho telemetrii](#vypnutí-telemetrie-net-sdk).
+
+## Základní příkazy
+
+Zápis `<balíček>` znamená ID balíčku nástroje a `<příkaz>` název, kterým se nástroj spouští.
+
+Tyto názvy nemusí být stejné.
+
+Další značky popisuje [klíč syntaxe příkazů](../../operating-system/command-line-syntax.md).
+
+### [Globální](#tab/tools-commands-global)
+
+| Účel | Příkaz | Výsledek |
 |---|---|---|
-| Globální, pro celý účet | Nástroj je ve výpisu `dotnet tool list --global` | Celou složku `tools` |
-| Lokální, pro jeden projekt | Projekt má `.config/dotnet-tools.json` | Projekt a balíčky NuGet |
-| Vlastní složka `--tool-path` | Při instalaci jsi zadal vlastní cestu | Celou tuto složku |
+| Vyhledat nástroj | `dotnet tool search <hledaný-text>` | Vyhledá nástroje v NuGet zdrojích |
+| Nainstalovat nástroj pro aktuální účet | `dotnet tool install --global <balíček> [--version <verze>]` | Zpřístupní jeho příkaz ze všech složek |
+| Vypsat nainstalované nástroje | `dotnet tool list --global` | Zobrazí ID balíčků, verze a příkazy |
+| Aktualizovat nástroj | `dotnet tool update --global <balíček> [--version <verze>]` | Nahradí nainstalovanou verzi |
+| Odinstalovat nástroj | `dotnet tool uninstall --global <balíček>` | Odebere globální instalaci aktuálního účtu |
+| Spustit nástroj | `<příkaz> [argumenty]` | Spustí příkaz zveřejněný balíčkem |
 
-Příklady jsou pro PowerShell ve Windows.
+### [Lokální v projektu](#tab/tools-commands-local)
 
-Na druhém počítači připrav stejný OS, architekturu a odpovídající .NET SDK či runtime.
+| Účel | Příkaz | Výsledek |
+|---|---|---|
+| Vytvořit manifest | `dotnet new tool-manifest` | Vytvoří `.config/dotnet-tools.json` pro projekt |
+| Přidat nástroj do manifestu | `dotnet tool install <balíček> [--version <verze>]` | Zapíše lokální nástroj a obnoví ho |
+| Obnovit všechny nástroje | `dotnet tool restore` | Nainstaluje nástroje uvedené v manifestu |
+| Vypsat lokální nástroje | `dotnet tool list --local` | Zobrazí nástroje dostupné z aktuální složky |
+| Aktualizovat nástroj | `dotnet tool update <balíček> [--version <verze>]` | Změní verzi v nalezeném manifestu |
+| Odebrat nástroj | `dotnet tool uninstall <balíček>` | Odebere záznam z nalezeného manifestu |
+| Spustit nástroj | `dotnet tool run <příkaz> -- [argumenty]` | Spustí lokální příkaz a předá mu argumenty za `--` |
 
-## Vyber typ instalace
+### [Vlastní složka](#tab/tools-commands-path)
 
-<a id="globální-nástroje-zkopíruj-celou-složku"></a>
-<a id="1-záloha-na-původním-počítači"></a>
-<a id="2-obnova-bez-internetu"></a>
-<a id="3-ověření"></a>
-<a id="lokální-nástroje-přenes-projekt-a-balíčky"></a>
-<a id="1-záloha-s-internetem"></a>
-<a id="2-obnova-bez-internetu-1"></a>
-
-## [Globální nebo vlastní složka](#tab/tools-global)
-
-**Zkopíruj celou složku nástrojů.**
-
-**1. Záloha na původním počítači**
-
-Ulož si výpis `dotnet tool list --global` a verzi prostředí z `dotnet --info`.
-
-Zavři běžící nástroje a v Průzkumníku zkopíruj tuto **celou složku včetně skryté `.store`** na záložní disk:
-
-```text
-%USERPROFILE%\.dotnet\tools
-```
-
-V `.store` jsou vlastní soubory nástrojů.
-
-Samotné spouštěče `.exe` nestačí. [Umístění instalace](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-install#installation-locations)
-
-Pro vlastní `--tool-path` kopíruj celý zadaný adresář.
-
-Na Linuxu a macOS je běžná globální cesta `~/.dotnet/tools`.
-
-Pokud používáš vlastní `DOTNET_CLI_HOME`, vycházej ze skutečného umístění instalace.
-
-**2. Obnova bez internetu**
-
-Na cílovém počítači nainstaluj připravené .NET SDK či runtime a vrať uloženou složku `tools` do jeho `%USERPROFILE%\.dotnet`.
-
-Pokud tam už jiné nástroje máš, původní složku nejprve odlož stranou.
-
-Dvě instalace neslévej naslepo.
-
-Nástroje se z této kopie spouštějí přímo, bez nového stahování balíčků.
-
-**3. Ověření**
-
-Pro ukázkový DocFX spusť:
-
-```powershell
-dotnet tool list --global
-& "$env:USERPROFILE/.dotnet/tools/docfx.exe" --version
-```
-
-Porovnej seznam a verze se zálohou a vyzkoušej běžnou práci nástroje bez připojení.
-
-Pro spouštění samotným `docfx` musí být složka `tools` v `PATH`.
-
-Příkaz s úplnou cestou výše to nevyžaduje.
-
-## [Lokální v projektu](#tab/tools-local)
-
-**Přenes projekt a balíčky.**
-
-Lokální nástroje obnovuje soubor `.config/dotnet-tools.json`.
-
-Nepřenášej je kopií globální složky `tools`.
-
-**1. Záloha s internetem**
-
-V projektu nejprve obnov nástroje a zjisti složku stažených balíčků:
-
-```powershell
-dotnet tool restore
-dotnet nuget locals global-packages --list
-```
-
-Zkopíruj **celý projekt včetně skryté `.config`** a celý vypsaný adresář balíčků do této zálohy:
-
-```text
-zaloha-tools/
-  projekt/       projekt včetně .config/dotnet-tools.json
-  balicky/       kopie složky NuGet včetně .nupkg a metadat
-```
-
-Pro více projektů obnov každý z nich a potom pořizuj společnou kopii balíčků.
-
-**2. Obnova bez internetu**
-
-Na cíli pracuj s rozbalenou kopií zálohy a v `projekt` vytvoř soubor `NuGet.Offline.Config`:
-
-```xml
-<configuration>
-  <packageSources>
-    <clear />
-    <add key="offline" value="../balicky" />
-  </packageSources>
-</configuration>
-```
-
-Tím určíš, že se mají balíčky hledat jen v přenesené složce.
-
-Ve stejném projektu spusť:
-
-```powershell
-dotnet tool restore --configfile NuGet.Offline.Config
-dotnet tool list
-dotnet tool run docfx -- --version
-```
-
-V posledním řádku nahraď DocFX vlastním nástrojem z manifestu a ověř jeho běžnou práci. [Obnova lokálních nástrojů](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-restore)
-
-Úplnost zálohy zkoušej na novém účtu nebo počítači bez původní instalace.
-
-Obnovení na stejném účtu může využít jeho staré balíčky.
+| Účel | Příkaz | Výsledek |
+|---|---|---|
+| Nainstalovat do zvolené složky | `dotnet tool install <balíček> --tool-path <složka> [--version <verze>]` | Umístí nástroj mimo výchozí globální cestu |
+| Vypsat nástroje ve složce | `dotnet tool list --tool-path <složka>` | Zobrazí instalace v přesně zadané cestě |
+| Aktualizovat nástroj | `dotnet tool update <balíček> --tool-path <složka> [--version <verze>]` | Nahradí verzi v této složce |
+| Odinstalovat nástroj | `dotnet tool uninstall <balíček> --tool-path <složka>` | Odebere nástroj z této složky |
+| Spustit nástroj | `<složka>/<příkaz> [argumenty]` | Spustí nástroj úplnou nebo relativní cestou |
 
 ***
 
-## Když máš při obnově internet
+.NET tools běží s oprávněními uživatele, proto před instalací ověř autora a původ balíčku.
 
-Lokálním nástrojům stačí projekt s manifestem a `dotnet tool restore`.
+Podporované rozsahy a syntaxi shrnuje oficiální návod [Jak spravovat .NET tools](https://learn.microsoft.com/en-us/dotnet/core/tools/global-tools).
 
-Globální nástroje nainstaluj podle uloženého seznamu, například:
+### První lokální nástroj
+
+V novém testovacím projektu s nainstalovaným .NET SDK spusť:
 
 ```powershell
-dotnet tool install --global docfx --version 2.78.5
+dotnet new tool-manifest
+dotnet tool install docfx
+dotnet tool list --local
+dotnet tool run docfx -- --version
 ```
 
-`docfx` a `2.78.5` jsou ukázkové hodnoty.
+Manifest vytvoř jen jednou.
 
-Dosaď názvy a verze ze své zálohy.
+Instalace do něj zapíše vybranou verzi a poslední příkaz ověří spustitelnost nástroje. [Lokální nástroje](https://learn.microsoft.com/en-us/dotnet/core/tools/local-tools-how-to-use)
 
-Složka nástrojů neobsahuje .NET runtime ani všechna vlastní data, pluginy či šablony nástroje.
+## Vypnutí telemetrie .NET SDK
 
-Ty zálohuj také, pokud je používáš.
+Telemetrii .NET SDK vypneš proměnnou prostředí `DOTNET_CLI_TELEMETRY_OPTOUT` s hodnotou `1` nebo `true` nastavenou před spuštěním příkazu `dotnet`. [Dokumentace Microsoftu](https://learn.microsoft.com/en-us/dotnet/core/tools/telemetry#how-to-opt-out)
+
+Následující postup používá jednotně hodnotu `1`.
+
+Nastavení se vztahuje na telemetrii SDK při příkazech jako `dotnet build`, `dotnet restore`, `dotnet run` nebo `dotnet test` a není nutné přidávat parametr ke každému spuštění.
+
+Telemetrie Visual Studia, VS Code nebo aplikace spuštěné přes `dotnet run` má vlastní nastavení.
+
+Vyber systém, ve kterém spouštíš .NET SDK.
+
+### [Windows](#tab/telemetry-windows)
+
+**Trvalé vypnutí pro aktuální účet**
+
+V běžném PowerShellu nebo CMD spusť:
+
+```text
+setx DOTNET_CLI_TELEMETRY_OPTOUT 1
+```
+
+Příkaz uloží hodnotu pro přihlášeného uživatele a nevyžaduje spuštění jako správce.
+
+Nastavení zůstane uložené i po restartu počítače, dokud jej nezměníš nebo neodstraníš.
+
+`setx` mění uložené prostředí, ale neaktualizuje již běžící terminál ani editor. [Popis příkazu setx](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/setx#remarks)
+
+Po uložení proto proveď obě kontroly níže.
+
+**Ověření uložené a aktuální hodnoty**
+
+**1. Ověř trvalé uložení v PowerShellu:**
+
+```text
+[Environment]::GetEnvironmentVariable(
+    "DOTNET_CLI_TELEMETRY_OPTOUT", "User"
+)
+```
+
+Očekávaný výstup po uvedeném příkazu `setx` je:
+
+```text
+1
+```
+
+Tuto kontrolu můžeš provést ihned ve stejném okně, protože čte uloženou uživatelskou hodnotu z registru. [Environment.GetEnvironmentVariable](https://learn.microsoft.com/en-us/dotnet/api/system.environment.getenvironmentvariable)
+
+Alternativou použitelnou v CMD i PowerShellu je:
+
+```text
+reg query HKCU\Environment /v DOTNET_CLI_TELEMETRY_OPTOUT
+```
+
+Ve výpisu najdi řádek s názvem `DOTNET_CLI_TELEMETRY_OPTOUT`, typem `REG_SZ` a hodnotou `1`.
+
+**2. Ověř prostředí, ze kterého budeš spouštět `dotnet`:**
+
+Úplně ukonči a znovu otevři terminál.
+
+Při práci v integrovaném terminálu restartuj také celý editor nebo IDE.
+
+Nový terminál spusť například z nabídky Start, protože proces spuštěný ze starého terminálu může zdědit jeho původní prostředí. [Dědění proměnných prostředí](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_environment_variables#long-description)
+
+V novém **PowerShellu** zadej:
+
+```text
+$env:DOTNET_CLI_TELEMETRY_OPTOUT
+```
+
+V novém **CMD** použij místo toho:
+
+```text
+echo %DOTNET_CLI_TELEMETRY_OPTOUT%
+```
+
+Očekávaný výstup je znovu `1` a z tohoto okna už můžeš běžně spouštět příkazy `dotnet`.
+
+Pokud CMD vypíše doslova `%DOTNET_CLI_TELEMETRY_OPTOUT%`, proměnná v jeho prostředí není definovaná.
+
+| Výsledek kontroly | Význam a další krok |
+|---|---|
+| Uložená i aktuální hodnota je `1` | Trvalé nastavení je uložené a aktuální terminál jej předá přímo spuštěnému procesu `dotnet`. |
+| Uložená hodnota je `1`, aktuální je prázdná nebo `0` | Běžící proces nastavení nepřevzal nebo jej něco přepsalo. Restartuj celou hostitelskou aplikaci a zkontroluj její konfiguraci i profil shellu. |
+| Uložená uživatelská hodnota je prázdná | Pro tento účet není uživatelská hodnota uložená. Zopakuj `setx` pod správným účtem, případně zkontroluj systémovou variantu níže. |
+
+Pokud nové okno stále přebírá staré prostředí, odhlášení a nové přihlášení do Windows obnoví uživatelskou relaci.
+
+Pro okamžité vypnutí také v již otevřeném okně nastav **navíc** jeho aktuální prostředí:
+
+| Shell | Příkaz pouze pro aktuální proces a jeho potomky |
+|---|---|
+| PowerShell | `$env:DOTNET_CLI_TELEMETRY_OPTOUT = "1"` |
+| CMD | `set "DOTNET_CLI_TELEMETRY_OPTOUT=1"` |
+
+Tyto dva příkazy samy o sobě trvalé nastavení neukládají.
+
+**Trvalé nastavení pro všechny uživatele**
+
+Pokud má být hodnota uložená na úrovni počítače, otevři PowerShell nebo CMD **jako správce** a spusť:
+
+```text
+setx DOTNET_CLI_TELEMETRY_OPTOUT 1 /M
+```
+
+Uložení ověř v PowerShellu pro rozsah `Machine`:
+
+```text
+[Environment]::GetEnvironmentVariable(
+    "DOTNET_CLI_TELEMETRY_OPTOUT", "Machine"
+)
+```
+
+Očekávej `1` a následně zopakuj také kontrolu aktuální hodnoty v nově spuštěném terminálu.
+
+Systémová hodnota nepřepisuje prostředí již běžících procesů a není vynucenou zásadou, která by zabránila uživateli nebo aplikaci nastavení změnit.
+
+Při rozporu ověř také rozsah `User` a nastavení shellu či IDE, protože pro `dotnet` rozhoduje hodnota v prostředí jeho procesu.
+
+**Kam Windows nastavení ukládá**
+
+`setx` uloží hodnotu pojmenovanou `DOTNET_CLI_TELEMETRY_OPTOUT` do registru podle zvoleného rozsahu:
+
+- **Aktuální účet** bez `/M`: `HKEY_CURRENT_USER\Environment`.
+- **Celý počítač** s `/M`: `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment`.
+
+Tyto cesty odpovídají rozsahům `User` a `Machine` v rozhraní [EnvironmentVariableTarget](https://learn.microsoft.com/en-us/dotnet/api/system.environmentvariabletarget).
+
+### [Linux a macOS](#tab/telemetry-unix)
+
+Postup je pro Bash a Zsh.
+
+Pro aktuální shell nastav proměnnou před prvním příkazem `dotnet`:
+
+```text
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+```
+
+Pro trvalé použití v dalších terminálech přidej stejný řádek do inicializačního souboru používaného shellem:
+
+- **Interaktivní Bash bez přihlašovacího režimu:** `~/.bashrc`.
+- **Bash v přihlašovacím režimu:** první existující čitelný soubor z `~/.bash_profile`, `~/.bash_login` a `~/.profile`. Samotný `~/.bashrc` se načte jen tehdy, pokud jej přihlašovací soubor výslovně načítá. [Pravidla Bash](https://www.gnu.org/s/bash/manual/html_node/Bash-Startup-Files.html)
+- **Interaktivní Zsh:** `~/.zshrc`, případně `$ZDOTDIR/.zshrc`, pokud používáš vlastní `ZDOTDIR`. [Pravidla Zsh](https://zsh.sourceforge.io/Doc/Release/Files.html)
+
+Po otevření nového terminálu ověř zděděnou exportovanou hodnotu:
+
+```text
+printenv DOTNET_CLI_TELEMETRY_OPTOUT
+```
+
+Očekávaný výstup je `1`.
+
+Profil terminálu nepokrývá automaticky služby, CI, kontejnery ani aplikace spouštěné z grafického prostředí, proto nastav a ověř proměnnou také přímo v prostředí, kde tyto procesy spouštějí `dotnet`.
+
+***
+
+### Co ověření potvrzuje
+
+Hodnota `1` v prostředí spouštěného procesu potvrzuje použití dokumentovaného vypínače telemetrie SDK.
+
+Také `true` je platné vypnutí.
+
+Prázdná hodnota ani `0` telemetrii nevypínají. [Význam proměnné](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-environment-variables#dotnet_cli_telemetry_optout)
+
+Jde o kontrolu konfigurace, nikoli měření síťového provozu všech nástrojů a aplikací, které příkaz může spustit.
+
+Zmizení úvodní zprávy o telemetrii není důkazem vypnutí, protože `DOTNET_NOLOGO` pouze skrývá úvodní text. [Rozdíl mezi zprávou a telemetrií](https://learn.microsoft.com/en-us/dotnet/core/tools/telemetry#disclosure)
+
+Chceš-li zabránit i telemetrickému záznamu instalátoru .NET SDK, nastav proměnnou ještě před jeho spuštěním.
+
+Pozdější změna nevrátí již odeslaný záznam. [Telemetrie instalátoru](https://learn.microsoft.com/en-us/dotnet/core/tools/telemetry#how-to-opt-out)
