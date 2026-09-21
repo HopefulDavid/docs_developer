@@ -65,7 +65,7 @@ Pracovní záznamy, testy a změny odkazují na identifikátor místo kopírová
 | `REQ-005` | Junior otevře návod bez znalosti konkrétního nástroje | Přečte úvod, předpoklady a provede popsaný příklad | Rozumí účelu, vztahu částí, upravitelným hodnotám i očekávanému výsledku. Nezbytné informace nejsou ukryté v rozbalovacím bloku | Must | Obsahové review podle pravidel čitelnosti a dostupné ověření ukázky |
 | `REQ-006` | Čtenář vybírá článek nebo používá příkazovou referenci | Prohlédne rozcestník a tabulku příkazů | Popis rovnou označuje obsah cíle. Syntaxe odlišuje dosazované parametry od vysvětleného spustitelného příkladu | Must | Kontrola metadat, obsahové review a skutečně vykreslené tabulky |
 | `REQ-007` | Solo vývojář zná jen základy Gitu | Vybere způsob práce a řeší běžnou operaci nebo chybu | Rozumí více workflow, změně pracovního stromu, indexu a historie i bezpečnému pokračování nebo návratu | Must | Praktické scénáře v izolovaných repozitářích a kontrola návaznosti návodů |
-| `REQ-008` | Čtenář připravuje přesun projektu bez internetu | Zálohuje balíčky a obnoví je na jiném kompatibilním počítači | Pro NuGet, .NET tools, npm, pnpm, Python a Dart rozliší přenositelnou složku, manifesty a vnější nástroje. Ověří skutečnou obnovu a chybějící závislosti | Must | Izolované obnovy dostupných správců a primární zdroje pro zbývající prostředí |
+| `REQ-008` | Čtenář připravuje přesun balíčků bez internetu | Vybere správce, dostupný rozsah a akci jediného interaktivního PowerShell skriptu | Záloha zahrne všechny přímo instalované balíčky zvoleného globálního nebo vlastního rozsahu a jejich závislosti, ověří offline použitelnost a odmítne nepodporované zdroje. Obnova nainstaluje celý uložený seznam bez registru a archiv zachová. Samostatná kontrolní akce ověří archiv bez instalace; volitelná úklidová akce jej odstraní až po kontrole a výslovném potvrzení | Must | Primární dokumentace správců, izolované zálohy a skutečné offline obnovy více balíčků, kontrola poškozeného a staršího archivu, zrušeného a potvrzeného úklidu a sestavených záložek |
 
 ### Uspořádání praktických témat
 
@@ -79,7 +79,9 @@ Programování odděluje Balíčky od Vývojových nástrojů.
 
 Přesun mezi skupinami sám nemění existující veřejnou cestu článku.
 
-Návody balíčků rozlišují obnovu s internetem, připravenou offline zálohu a nástroje používané mimo projekt.
+Návody balíčků rozlišují globální, projektové a vlastní umístění podle možností konkrétního správce.
+
+Přepínače v článku oddělují zálohu a obnovu a skripty nabízejí chybějící volby interaktivně.
 
 Zkouška obnovy nesmí spoléhat na původní pracovní instalaci nebo skrytou cache.
 
@@ -87,9 +89,9 @@ Hlavní offline postup má přímo uvést, co připravit, co přenést a co spus
 
 Diagnostická izolace testovacího prostředí není povinným krokem běžné obnovy na novém počítači.
 
-Globální .NET tools mají jednoduchý postup přenosu celé instalační složky pro kompatibilní prostředí.
+`-Archiv` vždy znamená přesnou složku archivu. Každá akce bez tohoto přepínače ukáže výchozí cestu a umožní ji potvrdit nebo změnit; zveřejněné příklady zálohy a obnovy používají stejné umístění.
 
-Lokální nástroje mají samostatnou obnovu manifestu z přenesených balíčků.
+Globální, lokální a vlastní .NET tools se obnovují z místního NuGet feedu do nového cíle.
 
 Zálohy image a provozních dat patří k Dockeru ve Virtualizaci a zálohy zdrojové historie k Gitu.
 

@@ -30,6 +30,7 @@ Nejvyšší rizika tohoto statického webu jsou rozbitá navigace, rozdílný ca
 | Neúplný, nečitelný nebo prostředím ovlivněný changelog | Skutečný `git-cliff` nad víceletou dočasnou historií s tagem, conventional, breaking i legacy commitem ve dvou časových prostředích | Chrání úplnost historie, otevřené nejnovější období, sdělení o vynechávání prázdných roků, sbalená starší období, počty a kategorie v každém roce, stabilní kotvy, technické záznamy, breaking marker a determinismus výstupu |
 | `REQ-001`, `REQ-002` | Krokovatelný lokální smoke v prohlížeči | Zobrazení, navigace, vyhledávání a volba tématu jsou pozorovatelné až v reálném browserovém výstupu |
 | `REQ-005` | Obsahové review a provedení dostupných ukázek v izolovaném prostředí | Rozlišuje vysvětlení principu, syntaxi a skutečný běh místo předstírání podpory cizí služby |
+| `REQ-008` | Skutečné zálohy a offline obnovy v izolovaných složkách, poškozený archiv, neshodný projekt a opakovaná obnova | Zachycuje skrytou závislost na původní instalaci, síti nebo změně archivu při obnově |
 | `QLT-005` | Reálný prohlížeč, čtyři šířky a oba motivy podle příkazového dokumentu | Zachytí přetékání, nečitelné tabulky, klávesnicové problémy a změny rozložení po otevření menu |
 | `QLT-006` | Artifact check nad všemi HTML a cílené negativní testy | Ověří konkrétní cíle i kotvy bez závislosti na Windows toleranci casingu. Externí URL nejsou součástí deterministického buildu |
 | Metadata a interní dokumentační odkazy | `tests/canonical-docs.test.js` | Mechanická pravidla mají rychlý deterministický důkaz bez zahrnutí interních dokumentů do veřejného buildu |
@@ -49,6 +50,36 @@ Jednorázové testovací repozitáře, instalace balíčků a jejich cache vytv�
 Ani ignorovaná složka uvnitř projektu není vhodná pro vnořené Git repozitáře: vývojové prostředí je může zobrazovat jako další projekty a větve.
 
 Do kanonické dokumentace přenes důkaz a jeho omezení.
+
+Při ověření 2026-09-21 na Windows 11 x64 prošly v izolovaných profilech záloha, `Overeni` a obnova všech podporovaných rozsahů npm, pnpm, pip a .NET tools, projektového NuGetu, lokálního Dart a Flutter a dvou globálních nástrojů `dart install`.
+
+Cílové profily používaly nové adresáře a nefunkční síťové proxy.
+
+Obnovené balíčky byly načteny nebo jejich příkazy skutečně spuštěny.
+
+Záloha npm vytvořená pomocí npm 10.9.4 se obnovila pomocí npm 11.6.2.
+
+Pnpm 12.4.0 potřebovalo pro offline kontrolu lockfilu kromě obsahového úložiště také archivovanou cache metadat.
+
+Opakovaná obnova npm ze stejného archivu prošla.
+
+Poškozený soubor a odlišný projekt byly odmítnuty.
+
+Zrušený úklid archiv zachoval a potvrzený úklid odstranil pouze zvolený archiv.
+
+Prázdné vlastní rozsahy npm, pnpm, pip a .NET tools, prázdný globální Dart a nepodporované rozsahy NuGetu a Dartu skončily bez použitelného `archiv.json`.
+
+Globální Dart archiv s odlišnou architekturou byl odmítnut před obnovou.
+
+Ověření všech správců zahrnovalo PowerShell 7.6.6, Python 3.12.14, .NET SDK 10.0.401, Dart 3.12.2 a Flutter 3.44.3.
+
+PowerShell 6.0.5 navíc prošel skutečnou zálohou, kontrolou a offline obnovou globálních balíčků npm.
+
+Běh na jiném operačním systému nebo ostatní správci pod PowerShellem 6 zatím nemají přímý testovací důkaz.
+
+Sestavené HTML obsahuje záložky rozsahu i akce a jediný skript je dostupný ve výstupu DocFX.
+
+V sestavené stránce prohlížeč potvrdil přepínání rozsahu i akce, ovládání záložek šipkami a klávesou End, čitelnost světlého i tmavého motivu a žádné vodorovné přetékání při šířkách 320, 390, 768 a 1440 px.
 
 Po ověření ukliď jednorázové prostředí a případné logy ponech mimo projekt.
 

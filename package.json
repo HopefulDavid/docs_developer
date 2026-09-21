@@ -13,8 +13,8 @@
     "docs:artifact-check": "node scripts/generate-docs.js --verify-artifact _site",
     "docs:build": "npm run changelog:generate && npm run docs:clean && npm run docs:compile && npm run docs:artifact-check",
     "docs:serve": "dotnet tool run docfx -- serve _site --hostname 127.0.0.1 --port 4173",
-    "lint": "node --check scripts/generate-docs.js && node --check templates/material/public/main.js && node --check tests/canonical-docs.test.js && node --check tests/changelog.test.mjs && node --check tests/generate-docs.test.js",
-    "test": "node --test --test-isolation=none tests/canonical-docs.test.js tests/changelog.test.mjs tests/generate-docs.test.js",
+    "lint": "node --check scripts/generate-docs.js && node --check templates/material/public/main.js && node --check tests/canonical-docs.test.js && node --check tests/changelog.test.mjs && node --check tests/generate-docs.test.js && node --check tests/transfer.test.js",
+    "test": "node --test --test-isolation=none tests/canonical-docs.test.js tests/changelog.test.mjs tests/generate-docs.test.js tests/transfer.test.js",
     "verify": "npm run docs:check && npm run lint && npm test && npm run docs:build"
   },
   "engines": {

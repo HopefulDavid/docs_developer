@@ -81,18 +81,18 @@ Vývojové platformy, jazyky, frameworky, balíčky a opakovaně použitelné po
 
 | Stránka | Popis |
 | --- | --- |
-| [NuGet](packages/nuget.md) | Základní příkazy NuGet pro správu knihoven .NET a postup jejich zálohy a obnovy bez internetu. |
-| [.NET tools](packages/dotnet-tools.md) | Základní příkazy .NET tools a jejich záloha a obnova podle globálního, lokálního nebo vlastního umístění. |
-| [npm](packages/npm.md) | Základní příkazy npm a záloha nainstalovaných lokálních i globálních balíčků. |
-| [pnpm](packages/pnpm.md) | Základní příkazy pnpm pro projektové a globální balíčky včetně zálohy store a obnovy bez internetu. |
-| [Python a pip](packages/python.md) | Základní příkazy pip v izolovaném Python prostředí a postup přípravy wheelhouse pro obnovu bez internetu. |
-| [Dart a Flutter pub](packages/dart.md) | Základní příkazy pub pro Dart a Flutter včetně CLI nástrojů, přenosu cache a obnovy bez internetu. |
+| [Záloha a obnova balíčků](packages/backup-and-restore.md) | Záloha a obnova balíčků npm, pnpm, pip, NuGet, .NET tools a Dart bez internetu. |
+| [NuGet](packages/nuget.md) | Základní příkazy NuGet pro správu knihoven v projektech .NET. |
+| [.NET tools](packages/dotnet-tools.md) | Příkazy .NET tools a postup vypnutí telemetrie .NET SDK. |
+| [npm](packages/npm.md) | Základní příkazy npm pro správu projektových a globálních balíčků. |
+| [pnpm](packages/pnpm.md) | Instalace pnpm a základní příkazy pro projektové a globální balíčky. |
+| [Python a pip](packages/python.md) | Základní příkazy pip pro správu balíčků v izolovaném Python prostředí. |
+| [Dart a Flutter pub](packages/dart.md) | Základní příkazy pub pro balíčky projektů Dart a Flutter a CLI nástroje. |
 
 ### Vývojové nástroje
 
 | Stránka | Popis |
 | --- | --- |
-| [.NET CLI](packages/dotnet-cli.md) | Práce se SDK, lokálními a globálními nástroji a telemetrií. |
 | [Appcast feed](appcast.md) | Vytvoření a podepisování aktualizačního feedu aplikace pro Sparkle. |
 
 ### Lokální vývoj

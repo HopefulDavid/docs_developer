@@ -86,6 +86,8 @@
           href: "unity/renderer.md"
 - name: "Balíčky"
   items:
+    - name: "Záloha a obnova balíčků"
+      href: "packages/backup-and-restore.md"
     - name: "NuGet"
       href: "packages/nuget.md"
     - name: ".NET tools"
@@ -100,8 +102,6 @@
       href: "packages/dart.md"
 - name: "Vývojové nástroje"
   items:
-    - name: ".NET CLI"
-      href: "packages/dotnet-cli.md"
     - name: "Appcast feed"
       href: "appcast.md"
 - name: "Lokální vývoj"

@@ -399,6 +399,20 @@ function start() {
   restoreInitialHash();
   document.addEventListener("click", handleThemeClick, true);
   document.addEventListener("keydown", (event) => {
+    const currentTab = event.target.closest?.('[role="tab"]');
+    if (currentTab && ["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) {
+      const tabs = [...currentTab.closest('[role="tablist"]').querySelectorAll('[role="tab"]')]
+        .filter((tab) => !tab.closest('[hidden]'));
+      const index = tabs.indexOf(currentTab);
+      if (index >= 0 && tabs.length > 0) {
+        event.preventDefault();
+        const next = event.key === "Home" ? 0 : event.key === "End" ? tabs.length - 1
+          : (index + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
+        tabs[next].click();
+        tabs[next].focus();
+      }
+      return;
+    }
     if ((event.key === "Enter" || event.key === " ") &&
         event.target.matches('a[role="button"][data-bs-toggle="dropdown"]')) {
       event.preventDefault();

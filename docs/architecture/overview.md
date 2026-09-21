@@ -67,6 +67,7 @@ Diagram ukazuje autorství, sestavení a veřejné čtení bez serverové aplika
 ## 4. Strategie řešení
 
 - Veřejný obsah je explicitní allowlist tematických oblastí a zdrojových příloh, nikoli každý Markdown nalezený v repozitáři.
+- Článek o záloze balíčků zveřejňuje jediný explicitně povolený PowerShell skript jako DocFX resource. Skript odděluje zálohu, offline obnovu, read-only kontrolu a výslovně potvrzený úklid; archiv připravuje instalační podklady, seznam přímo instalovaných balíčků s přesnými verzemi a manifest s SHA-256 otisky. Zdrojový projekt, runtime a SDK zůstávají samostatné vstupy.
 - [`ADR-0002`](decisions/ADR-0002-verejny-docfx-build.md) sjednocuje veřejnou hranici, deklarovaný toolchain a kontrolu sestaveného artefaktu do jednoho build kontraktu. Jeho přesné připnutí SDK nahrazuje [`ADR-0004`](decisions/ADR-0004-vyber-dotnet-sdk.md).
 - [`scripts/generate-docs.js`](../../scripts/generate-docs.js) vlastní názvy, pořadí a cesty veřejné navigace. Generované indexy a TOC nejsou ručně upravované zdroje pravdy.
 - [`cliff.toml`](../../cliff.toml) deklarativně převádí úplnou Git historii na ignorovaný veřejný changelog podle [`ADR-0003`](decisions/ADR-0003-generovani-changelogu-pomoci-git-cliff.md).
@@ -77,7 +78,7 @@ Diagram ukazuje autorství, sestavení a veřejné čtení bez serverové aplika
 
 | Blok | Odpovědnost | Veřejná hranice | Povolené závislosti | Vlastník dat |
 |---|---|---|---|---|
-| Zdrojový veřejný obsah | Tematické Markdown stránky a přílohy v `images/` a `pdf/` | Relativní veřejné cesty uvedené v registru navigace | Jiné veřejné stránky a přílohy | Správce obsahu |
+| Zdrojový veřejný obsah | Tematické Markdown stránky, přílohy v `images/` a `pdf/` a `programming/packages/offline/transfer.ps1` | Relativní veřejné cesty uvedené v registru navigace nebo explicitní DocFX resources | Jiné veřejné stránky a přílohy | Správce obsahu |
 | Generátor navigace | Normalizuje veřejný Markdown, migruje legacy cesty, generuje přehledy a ověřuje navigaci i lokální odkazy | npm profily `docs:generate` a `docs:check` | Node.js standardní knihovna a zdrojový veřejný obsah | Engineering |
 | Generátor changelogu | Dělí dosažitelnou Git historii do ročních období, uvnitř zachovává kategorie, označuje breaking changes a uvádí krátké neklikací hashe commitů | npm profil `changelog:generate` a `cliff.toml` | Git historie a `git-cliff` uzamčený npm lockfilem. Výstup je ignorovaný build vstup | Delivery |
 | Kanonická projektová dokumentace | Definuje záměr, architekturu, workflow a dlouhé úkoly | Interní odkazy z `AGENTS.md` a `docs/index.md` | Strojové konfigurace jako důkaz, nikoli veřejný obsah | Maintainers |

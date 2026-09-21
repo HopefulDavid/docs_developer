@@ -273,6 +273,7 @@ const navigation = {
     {
       name: 'Balíčky',
       items: [
+        { name: 'Záloha a obnova balíčků', href: 'packages/backup-and-restore.md' },
         { name: 'NuGet', href: 'packages/nuget.md' },
         { name: '.NET tools', href: 'packages/dotnet-tools.md' },
         { name: 'npm', href: 'packages/npm.md' },
@@ -284,7 +285,6 @@ const navigation = {
     {
       name: 'Vývojové nástroje',
       items: [
-        { name: '.NET CLI', href: 'packages/dotnet-cli.md' },
         { name: 'Appcast feed', href: 'appcast.md' },
       ],
     },
@@ -428,7 +428,7 @@ const legacyRenames = new Map([
     'programming/flutter/setupAndConfiguration.md',
     'programming/mobile/flutter/setup-and-configuration.md',
   ],
-  ['programming/packages/netCLI.md', 'programming/packages/dotnet-cli.md'],
+  ['programming/packages/netCLI.md', 'programming/packages/dotnet-tools.md'],
   ['programming/packages/nugetPackage.md', 'programming/packages/nuget.md'],
   ['programming/packages/pythonPackage.md', 'programming/packages/python.md'],
   ['programming/server/golang.md', 'programming/server/go.md'],
@@ -453,6 +453,7 @@ const legacyRenames = new Map([
 ]);
 
 const reverseRenames = new Map([...legacyRenames].map(([from, to]) => [to, from]));
+const redirectPages = new Set(['programming/packages/dotnet-cli.md']);
 const titleByPath = new Map();
 const pagePaths = new Set();
 const generatedFiles = new Set();
@@ -1067,6 +1068,12 @@ function validateNavigation() {
   const expected = new Set([...pagePaths, ...sectionOrder.map((section) => `${section}/index.md`)]);
   expected.add('index.md');
 
+  for (const relPath of redirectPages) {
+    if (!fs.existsSync(absolute(relPath))) {
+      errors.push(`${relPath}: přesměrování neexistuje`);
+    }
+  }
+
   for (const relPath of expected) {
     if (!fs.existsSync(absolute(relPath)) && !generatedFiles.has(relPath)) {
       errors.push(`${relPath}: očekávaný soubor neexistuje`);
@@ -1083,7 +1090,7 @@ function validateNavigation() {
     if (relPath.endsWith('/index.md') && sectionOrder.some((section) => relPath === `${section}/index.md`)) {
       continue;
     }
-    if (!expected.has(relPath)) {
+    if (!expected.has(relPath) && !redirectPages.has(relPath)) {
       errors.push(`${relPath}: soubor není uvedený v navigaci`);
     }
   }
@@ -1382,6 +1389,7 @@ function verifyArtifact(outputArgument) {
 
   const expectedSources = new Set([
     ...pagePaths,
+    ...redirectPages,
     'index.md',
     'toc.yml',
     ...sectionOrder.flatMap((section) => [`${section}/index.md`, `${section}/toc.yml`]),
