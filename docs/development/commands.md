@@ -172,7 +172,7 @@ Při chybě `git-cliff`, která ve Windows hlásí odepřený přístup k cestě
 
 Na šířkách **320, 390, 768 a 1440 px** ověř světlý i tmavý motiv pro homepage, přehled Programování, Docker a reprezentativní článek s kódem, obrázky a rozbalovacím blokem.
 
-1. Otevři navigaci, přejdi do oblasti a článku a použij obsah stránky.
+1. Otevři navigaci, přejdi do oblasti a článku a použij obsah stránky. U odkazu na podnadpis obnov celou URL s kotvou a ověř, že stránka znovu skončí u stejného nadpisu pod pevnou horní lištou.
 2. Vyhledej `Docker`, otevři výsledek ve stejné kartě a potom ověř srozumitelný stav pro neexistující výraz.
 3. Klávesnicí použij odkaz **Přejít k obsahu**, ovladač motivu a rozbalení doplňujícího postupu.
 4. Ověř kopírování kódu, čitelnost syntaxe a vlastní vodorovný posuv pouze uvnitř široké ukázky nebo tabulky.
