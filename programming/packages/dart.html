@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Dart a Flutter pub | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Dart a Flutter pub | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Z&#225;kladn&#237; př&#237;kazy pub pro bal&#237;čky projektů Dart a Flutter a CLI n&#225;stroje.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/packages/dart.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="dart-a-flutter-pub">Dart a Flutter pub</h1>
+
+<p>Pub spravuje balíčky projektů Dart a Flutter podle <code>pubspec.yaml</code> a <code>pubspec.lock</code>.</p>
+<p>Pro přenos balíčků použij <a href="backup-and-restore.html#dart-a-flutter">zálohu a obnovu bez internetu</a>.</p>
+<h2 id="základní-příkazy">Základní příkazy</h2>
+<p>Příkazy projektových záložek spusť ve složce s <code>pubspec.yaml</code>.</p>
+<p>Zápis <code>&lt;balíček&gt;</code> nahraď názvem z pub.dev a další značky vykládá <a href="../../operating-system/command-line-syntax.html">klíč syntaxe příkazů</a>.</p>
+<div class="tabGroup" id="tabgroup_1">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_1_pub-dart" role="tab" aria-controls="tabpanel_1_pub-dart" data-tab="pub-dart" tabindex="0" aria-selected="true">Dart projekt</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_1_pub-flutter" role="tab" aria-controls="tabpanel_1_pub-flutter" data-tab="pub-flutter" tabindex="-1">Flutter projekt</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_1_pub-tools" role="tab" aria-controls="tabpanel_1_pub-tools" data-tab="pub-tools" tabindex="-1">CLI nástroje od Dart 3.10</a>
+</li>
+</ul>
+<section id="tabpanel_1_pub-dart" role="tabpanel" data-tab="pub-dart">
+
+<table>
+<thead>
+<tr>
+<th>Účel</th>
+<th>Příkaz</th>
+<th>Výsledek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Přidat běhovou závislost</td>
+<td><code>dart pub add &lt;balíček&gt;[:&lt;omezení-verze&gt;]</code></td>
+<td>Upraví <code>pubspec.yaml</code>, stáhne balíčky a aktualizuje lockfile</td>
+</tr>
+<tr>
+<td>Přidat vývojovou závislost</td>
+<td><code>dart pub add dev:&lt;balíček&gt;[:&lt;omezení-verze&gt;]</code></td>
+<td>Zapíše balíček do <code>dev_dependencies</code></td>
+</tr>
+<tr>
+<td>Odebrat přímou závislost</td>
+<td><code>dart pub remove &lt;balíček&gt;</code></td>
+<td>Odebere balíček z pubspecu a přepočítá závislosti</td>
+</tr>
+<tr>
+<td>Obnovit deklarované balíčky</td>
+<td><code>dart pub get</code></td>
+<td>Stáhne závislosti a vytvoří potřebná metadata projektu</td>
+</tr>
+<tr>
+<td>Vypsat strom závislostí</td>
+<td><code>dart pub deps</code></td>
+<td>Zobrazí přímé i nepřímé balíčky</td>
+</tr>
+<tr>
+<td>Najít dostupné aktualizace</td>
+<td><code>dart pub outdated</code></td>
+<td>Porovná aktuální, povolené a nejnovější verze</td>
+</tr>
+<tr>
+<td>Aktualizovat balíčky</td>
+<td><code>dart pub upgrade [&lt;balíček&gt;]</code></td>
+<td>Aktualizuje lockfile v mezích <code>pubspec.yaml</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="tabpanel_1_pub-flutter" role="tabpanel" data-tab="pub-flutter" aria-hidden="true" hidden="hidden">
+
+<table>
+<thead>
+<tr>
+<th>Účel</th>
+<th>Příkaz</th>
+<th>Výsledek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Přidat běhovou závislost</td>
+<td><code>flutter pub add &lt;balíček&gt;[:&lt;omezení-verze&gt;]</code></td>
+<td>Upraví pubspec a použije Dart dodaný s Flutter SDK</td>
+</tr>
+<tr>
+<td>Přidat vývojovou závislost</td>
+<td><code>flutter pub add dev:&lt;balíček&gt;[:&lt;omezení-verze&gt;]</code></td>
+<td>Zapíše balíček do <code>dev_dependencies</code></td>
+</tr>
+<tr>
+<td>Odebrat přímou závislost</td>
+<td><code>flutter pub remove &lt;balíček&gt;</code></td>
+<td>Odebere balíček a přepočítá závislosti</td>
+</tr>
+<tr>
+<td>Obnovit deklarované balíčky</td>
+<td><code>flutter pub get</code></td>
+<td>Stáhne závislosti Flutter projektu</td>
+</tr>
+<tr>
+<td>Vypsat strom závislostí</td>
+<td><code>flutter pub deps</code></td>
+<td>Zobrazí přímé i nepřímé balíčky</td>
+</tr>
+<tr>
+<td>Najít dostupné aktualizace</td>
+<td><code>flutter pub outdated</code></td>
+<td>Porovná aktuální, povolené a nejnovější verze</td>
+</tr>
+<tr>
+<td>Aktualizovat balíčky</td>
+<td><code>flutter pub upgrade [&lt;balíček&gt;]</code></td>
+<td>Aktualizuje lockfile v mezích <code>pubspec.yaml</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="tabpanel_1_pub-tools" role="tabpanel" data-tab="pub-tools" aria-hidden="true" hidden="hidden">
+
+<table>
+<thead>
+<tr>
+<th>Účel</th>
+<th>Příkaz</th>
+<th>Výsledek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nainstalovat nástroj</td>
+<td><code>dart install &lt;balíček&gt;[@&lt;omezení-verze&gt;]</code></td>
+<td>Nainstaluje spustitelné soubory balíčku pro aktuální účet</td>
+</tr>
+<tr>
+<td>Vypsat nainstalované nástroje</td>
+<td><code>dart installed</code></td>
+<td>Zobrazí balíčky instalované přes <code>dart install</code></td>
+</tr>
+<tr>
+<td>Aktualizovat nástroj</td>
+<td><code>dart install &lt;balíček&gt;[@&lt;nové-omezení-verze&gt;]</code></td>
+<td>Znovu nainstaluje vybranou dostupnou verzi</td>
+</tr>
+<tr>
+<td>Odinstalovat nástroj</td>
+<td><code>dart uninstall &lt;balíček&gt;</code></td>
+<td>Odebere nástroj instalovaný přes <code>dart install</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+</div>
+
+<p>Po změně závislostí spusť <code>dart analyze</code> a testy, u Flutteru <code>flutter analyze</code> a <code>flutter test</code>.</p>
+<p>Oficiální dokumentace rozlišuje <a href="https://dart.dev/tools/pub/cmd">příkazy pub</a>, <a href="https://docs.flutter.dev/packages-and-plugins/using-packages">použití balíčků ve Flutteru</a> a moderní <a href="https://dart.dev/tools/dart-install"><code>dart install</code></a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

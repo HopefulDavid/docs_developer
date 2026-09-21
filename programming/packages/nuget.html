@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>NuGet | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="NuGet | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Z&#225;kladn&#237; př&#237;kazy NuGet pro spr&#225;vu knihoven v projektech .NET.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/packages/nuget.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="nuget">NuGet</h1>
+
+<p>NuGet spravuje knihovny a další balíčky používané projekty .NET.</p>
+<p>Pro přenos knihoven použij <a href="backup-and-restore.html#nuget">zálohu a obnovu bez internetu</a>.</p>
+<h2 id="základní-příkazy">Základní příkazy</h2>
+<p>Příkazy spusť ve složce projektu s <code>PackageReference</code>.</p>
+<p>Zápis <code>&lt;balíček&gt;</code> nahraď ID balíčku, například <code>Serilog</code>, a volitelnou <code>&lt;verze&gt;</code> konkrétním číslem.</p>
+<p>Význam hranatých a lomených závorek vysvětluje <a href="../../operating-system/command-line-syntax.html">klíč syntaxe příkazů</a>.</p>
+<div class="tabGroup" id="tabgroup_1">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_1_nuget-dotnet-10" role="tab" aria-controls="tabpanel_1_nuget-dotnet-10" data-tab="nuget-dotnet-10" tabindex="0" aria-selected="true">.NET 10 a novější</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_1_nuget-dotnet-9" role="tab" aria-controls="tabpanel_1_nuget-dotnet-9" data-tab="nuget-dotnet-9" tabindex="-1">.NET 9 a starší</a>
+</li>
+</ul>
+<section id="tabpanel_1_nuget-dotnet-10" role="tabpanel" data-tab="nuget-dotnet-10">
+
+<table>
+<thead>
+<tr>
+<th>Účel</th>
+<th>Příkaz</th>
+<th>Výsledek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Přidat balíček nebo změnit jeho verzi</td>
+<td><code>dotnet package add &lt;balíček&gt; [--version &lt;verze&gt;]</code></td>
+<td>Upraví projekt a provede obnovu závislostí</td>
+</tr>
+<tr>
+<td>Odebrat přímou závislost</td>
+<td><code>dotnet package remove &lt;balíček&gt;</code></td>
+<td>Odebere odkaz z projektu</td>
+</tr>
+<tr>
+<td>Vypsat přímé balíčky</td>
+<td><code>dotnet package list</code></td>
+<td>Zobrazí balíčky uvedené projektem a jejich verze</td>
+</tr>
+<tr>
+<td>Zahrnout i nepřímé závislosti</td>
+<td><code>dotnet package list --include-transitive</code></td>
+<td>Doplní balíčky přitažené jinými balíčky</td>
+</tr>
+<tr>
+<td>Najít dostupné aktualizace</td>
+<td><code>dotnet package list --outdated</code></td>
+<td>Porovná používané verze s nakonfigurovanými zdroji</td>
+</tr>
+<tr>
+<td>Obnovit deklarované balíčky</td>
+<td><code>dotnet restore [&lt;projekt-nebo-řešení&gt;]</code></td>
+<td>Stáhne závislosti projektu nebo řešení</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="tabpanel_1_nuget-dotnet-9" role="tabpanel" data-tab="nuget-dotnet-9" aria-hidden="true" hidden="hidden">
+
+<table>
+<thead>
+<tr>
+<th>Účel</th>
+<th>Příkaz</th>
+<th>Výsledek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Přidat balíček nebo změnit jeho verzi</td>
+<td><code>dotnet add package &lt;balíček&gt; [--version &lt;verze&gt;]</code></td>
+<td>Upraví projekt a provede obnovu závislostí</td>
+</tr>
+<tr>
+<td>Odebrat přímou závislost</td>
+<td><code>dotnet remove package &lt;balíček&gt;</code></td>
+<td>Odebere odkaz z projektu</td>
+</tr>
+<tr>
+<td>Vypsat přímé balíčky</td>
+<td><code>dotnet list package</code></td>
+<td>Zobrazí balíčky uvedené projektem a jejich verze</td>
+</tr>
+<tr>
+<td>Zahrnout i nepřímé závislosti</td>
+<td><code>dotnet list package --include-transitive</code></td>
+<td>Doplní balíčky přitažené jinými balíčky</td>
+</tr>
+<tr>
+<td>Najít dostupné aktualizace</td>
+<td><code>dotnet list package --outdated</code></td>
+<td>Porovná používané verze s nakonfigurovanými zdroji</td>
+</tr>
+<tr>
+<td>Obnovit deklarované balíčky</td>
+<td><code>dotnet restore [&lt;projekt-nebo-řešení&gt;]</code></td>
+<td>Stáhne závislosti projektu nebo řešení</td>
+</tr>
+</tbody>
+</table>
+</section>
+</div>
+
+<p>Přidání již uvedeného balíčku s novou verzí slouží také jako jeho cílená aktualizace.</p>
+<p>Po změně verze spusť build a testy, protože správce balíčků neověří kompatibilitu veřejného API knihovny.</p>
+<p>Syntaxi potvrzuje oficiální přehled <a href="https://learn.microsoft.com/en-us/dotnet/core/tools/dependencies">správy závislostí v .NET</a> a reference příkazu <a href="https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-package-list"><code>dotnet package list</code></a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

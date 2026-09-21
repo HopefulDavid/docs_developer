@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Git – tagy a vyd&#225;n&#237; verze | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git – tagy a vyd&#225;n&#237; verze | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Označen&#237; ověřen&#233;ho vyd&#225;n&#237; tagem, publikov&#225;n&#237; a n&#225;vrat k vydan&#233; verzi.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/releases.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git--tagy-a-vydání-verze">Git – tagy a vydání verze</h1>
+
+<p>Tag pojmenuje konkrétní commit, například <code>v1.0.0</code>, aby šlo později přesně najít vydaný stav.</p>
+<p>Na rozdíl od větve se při dalších commitech automaticky neposouvá.</p>
+<h2 id="před-vydáním">Před vydáním</h2>
+<p>Ověř správnou větev, čistý pracovní strom a testy.</p>
+<p>Číslo verze musí odpovídat tomu, co skutečně vydáváš.</p>
+<table>
+<thead>
+<tr>
+<th>Označení</th>
+<th>Co představuje</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Git tag</td>
+<td>Odkaz na konkrétní commit</td>
+</tr>
+<tr>
+<td>Hosting release</td>
+<td>Publikační záznam hostingu, často s poznámkami a binárními přílohami</td>
+</tr>
+<tr>
+<td>Balíček nebo instalátor</td>
+<td>Samostatný výstup sestavení, který tag sám nevytváří</td>
+</tr>
+</tbody>
+</table>
+<h2 id="vytvoření-a-odeslání">Vytvoření a odeslání</h2>
+<p>Příklad pro PowerShell i Bash označí právě vybraný commit:</p>
+<pre><code class="lang-bash">git status
+git log --oneline -1
+git tag -a v1.0.0 -m &quot;První stabilní vydání&quot;
+git show --no-patch v1.0.0
+git push origin v1.0.0
+</code></pre>
+<p><code>-a</code> vytvoří anotovaný tag se zprávou a údaji autora.</p>
+<p>Samostatný push odešle právě tento tag.</p>
+<p>Číslo i zprávu změň podle své verze a používej nové dosud volné jméno.</p>
+<p>Běžný push větve neposílá automaticky všechny tagy.</p>
+<h2 id="prohlédnutí-staršího-vydání">Prohlédnutí staršího vydání</h2>
+<p>V čistém stromu:</p>
+<pre><code class="lang-bash">git switch --detach v1.0.0
+git status
+</code></pre>
+<p>Pracovní soubory se přepnou na vydaný commit bez vybrané větve.</p>
+<p>Pro návrat použij <code>git switch main</code>.</p>
+<p>Pro opravu této vydané verze založ vlastní větev přes <code>git switch -c hotfix/verze-1</code> a změnu následně začleň i do dalšího vývoje.</p>
+<h2 id="chybný-tag">Chybný tag</h2>
+<p>Místní dosud neodeslaný tag lze odstranit příkazem <code>git tag -d &lt;tag&gt;</code> a vytvořit znovu na správném commitu.</p>
+<p>Již publikované vydání obvykle oprav novou verzí místo přesouvání stejného tagu, aby stejné označení neznamenalo pro různé lidi jiný obsah.</p>
+<p>Obecná syntaxe <code>git tag -a &lt;tag&gt; [&lt;commit&gt;] -m &quot;&lt;zpráva&gt;&quot;</code> dovoluje označit i starší vybraný commit.</p>
+<p>Vynechání commitu znamená HEAD.</p>
+<p>Zdroje: <a href="https://git-scm.com/docs/git-tag">git tag</a>, <a href="https://git-scm.com/book/en/v2/Git-Basics-Tagging">Git Book: tagování</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>IP, MAC a zař&#237;zen&#237; v m&#237;stn&#237; s&#237;ti | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="IP, MAC a zař&#237;zen&#237; v m&#237;stn&#237; s&#237;ti | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Př&#237;kazy pro zjištěn&#237; IP, MAC, br&#225;ny, DNS, adresy WSL a dohled&#225;n&#237; telefonu nebo jin&#233;ho zař&#237;zen&#237; v m&#237;stn&#237; s&#237;ti.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/network/ip-mac-devices.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="ip-mac-a-zařízení-v-místní-síti">IP, MAC a zařízení v místní síti</h1>
+
+<p>Tento tahák pomůže rychle zjistit adresy vlastního počítače, WSL i dalších zařízení ve stejné domácí nebo pracovní síti.</p>
+<p>Příkazy nemění nastavení sítě.</p>
+<p>Nepotřebují oprávnění správce.</p>
+<p>Ping a dotaz na veřejnou IP ale posílají běžný síťový požadavek.</p>
+<h2 id="nejdřív-vyber-správný-údaj">Nejdřív vyber správný údaj</h2>
+<table>
+<thead>
+<tr>
+<th>Co hledáš</th>
+<th>Co použít</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Místní IP počítače</td>
+<td><code>Get-NetIPConfiguration</code> pro adresu aktivního rozhraní v současné síti</td>
+</tr>
+<tr>
+<td>MAC vlastního adaptéru</td>
+<td><code>Get-NetAdapter</code> pro linkovou adresu rozhraní</td>
+</tr>
+<tr>
+<td>IP a MAC telefonu nebo tiskárny</td>
+<td>Správu routeru nebo <code>Get-NetNeighbor</code> pro zařízení ve stejné místní síti</td>
+</tr>
+<tr>
+<td>IP distribuce WSL 2</td>
+<td><code>wsl.exe hostname -I</code>, zejména v režimu NAT</td>
+</tr>
+<tr>
+<td>Windows host z WSL 2</td>
+<td><code>ip route show default</code> pro výchozí bránu v režimu NAT</td>
+</tr>
+<tr>
+<td>Veřejná IP</td>
+<td>Externí službu, nikoli výpis místního adaptéru</td>
+</tr>
+</tbody>
+</table>
+<p>Počítač může mít současně více adres kvůli Wi-Fi, Ethernetu, VPN, WSL, Dockeru a IPv6.</p>
+<p>Pro spojení v domácí síti obvykle hledáš IPv4 aktivního adaptéru s výchozí bránou.</p>
+<h2 id="adresy-vlastního-systému">Adresy vlastního systému</h2>
+<p>Vyber prostředí, ve kterém příkaz spouštíš.</p>
+<p><a id="windows-vlastní-ip-brána-dns-a-mac"></a>
+<a id="wsl-adresa-linuxu-a-windows-hostu"></a>
+<a id="linux-stejné-údaje-bez-wsl"></a></p>
+<div class="tabGroup" id="tabgroup_1">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_1_adresy-windows" role="tab" aria-controls="tabpanel_1_adresy-windows" data-tab="adresy-windows" tabindex="0" aria-selected="true">Windows</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_1_adresy-wsl" role="tab" aria-controls="tabpanel_1_adresy-wsl" data-tab="adresy-wsl" tabindex="-1">WSL</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_1_adresy-linux" role="tab" aria-controls="tabpanel_1_adresy-linux" data-tab="adresy-linux" tabindex="-1">Linux</a>
+</li>
+</ul>
+<section id="tabpanel_1_adresy-windows" role="tabpanel" data-tab="adresy-windows">
+
+<p><strong>IP adresa, brána a DNS</strong></p>
+<p>V běžném PowerShellu spusť:</p>
+<pre><code class="lang-powershell">Get-NetIPConfiguration
+</code></pre>
+<p>Výpis seskupí aktivní rozhraní a ukáže jejich IP adresy, výchozí bránu a DNS servery.</p>
+<p>Řádek <code>IPv4Address</code> u používané Wi-Fi nebo Ethernetu je obvykle adresa, kterou použije jiné zařízení ve stejné síti.</p>
+<p><strong>MAC adresa vlastního adaptéru</strong></p>
+<p>Pro stručný seznam adaptérů a jejich MAC adres spusť:</p>
+<pre><code class="lang-powershell">Get-NetAdapter |
+    Select-Object Name, Status, MacAddress, LinkSpeed
+</code></pre>
+<p><code>Status</code> má být u používaného adaptéru <code>Up</code>.</p>
+<p>MAC adresa zde patří tvému počítači, nikoli routeru nebo telefonu.</p>
+<p><strong>Klasický výpis pro PowerShell i CMD</strong></p>
+<p>Použít můžeš také:</p>
+<pre><code class="lang-bat">ipconfig /all
+</code></pre>
+<p>Hledej adaptér, který má <strong>IPv4 Address</strong>, <strong>Default Gateway</strong> a stav připojeného média.</p>
+<p>Virtuální adaptéry WSL, Dockeru nebo VPN mohou mít vlastní adresu, ale obvykle nejsou adresou počítače v domácí Wi-Fi.</p>
+</section>
+<section id="tabpanel_1_adresy-wsl" role="tabpanel" data-tab="adresy-wsl" aria-hidden="true" hidden="hidden">
+
+<p><strong>Adresa distribuce z PowerShellu</strong></p>
+<p>Z PowerShellu zjistíš adresu výchozí distribuce WSL 2 takto:</p>
+<pre><code class="lang-powershell">wsl.exe hostname -I
+</code></pre>
+<p>Z konkrétní distribuce:</p>
+<pre><code class="lang-powershell">wsl.exe --distribution Ubuntu hostname -I
+</code></pre>
+<p><code>Ubuntu</code> nahraď názvem z <code>wsl.exe --list --verbose</code>.</p>
+<p>Velké <code>I</code> je důležité.</p>
+<p>Malé <code>hostname -i</code> může vrátit pomocnou adresu jako <code>127.0.1.1</code>, která není adresou WSL dostupnou z Windows.</p>
+<p><strong>Adresy přímo uvnitř WSL</strong></p>
+<p>Přímo uvnitř WSL použij:</p>
+<pre><code class="lang-bash">hostname -I
+ip -brief address
+ip route show default
+</code></pre>
+<p><code>hostname -I</code> vypíše všechny nelokální adresy oddělené mezerou.</p>
+<p><code>ip -brief address</code> přiřadí adresy ke konkrétním rozhraním.</p>
+<p><code>ip route show default</code> ukáže výchozí bránu.</p>
+<p>V běžném režimu NAT bývá brána zároveň adresou Windows hostu viditelnou z WSL.</p>
+<p>Pokud potřebuješ jen adresu Windows hostu:</p>
+<pre><code class="lang-bash">ip route show | awk '/default/ { print $3; exit }'
+</code></pre>
+<p>V zrcadleném síťovém režimu WSL lze pro spojení mezi Windows a Linuxem často použít <code>localhost</code>.</p>
+<p>Adresa WSL se může změnit po <code>wsl.exe --shutdown</code> nebo restartu počítače, proto ji nevkládej natrvalo do konfigurace bez skutečné potřeby.</p>
+</section>
+<section id="tabpanel_1_adresy-linux" role="tabpanel" data-tab="adresy-linux" aria-hidden="true" hidden="hidden">
+
+<p>V běžné distribuci spusť:</p>
+<pre><code class="lang-bash">hostname
+hostname -I
+ip -brief address
+ip route show default
+</code></pre>
+<p><code>hostname</code> vrátí název počítače.</p>
+<p><code>hostname -I</code> vypíše jeho nelokální adresy a <code>ip -brief address</code> je přiřadí ke konkrétním rozhraním.</p>
+<p><code>ip route show default</code> ukáže výchozí bránu.</p>
+</section>
+</div>
+<h2 id="veřejná-ip">Veřejná IP</h2>
+<p>Veřejná IP není totéž co místní adresa vlastního zařízení.</p>
+<p>Ukáže ji až služba dostupná přes internet, například ipify.</p>
+<div class="tabGroup" id="tabgroup_2">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_2_verejna-windows" role="tab" aria-controls="tabpanel_2_verejna-windows" data-tab="verejna-windows" tabindex="0" aria-selected="true">Windows</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_2_verejna-linux" role="tab" aria-controls="tabpanel_2_verejna-linux" data-tab="verejna-linux" tabindex="-1">WSL a Linux</a>
+</li>
+</ul>
+<section id="tabpanel_2_verejna-windows" role="tabpanel" data-tab="verejna-windows">
+
+<p>V PowerShellu spusť:</p>
+<pre><code class="lang-powershell">(Invoke-RestMethod -Uri &quot;https://api.ipify.org?format=json&quot;).ip
+</code></pre>
+</section>
+<section id="tabpanel_2_verejna-linux" role="tabpanel" data-tab="verejna-linux" aria-hidden="true" hidden="hidden">
+
+<p>V Bashi spusť:</p>
+<pre><code class="lang-bash">curl --silent https://api.ipify.org
+</code></pre>
+</section>
+</div>
+
+<p>Požadavek odešle službě tvoji veřejnou zdrojovou adresu, protože bez ní ji nemůže vrátit.</p>
+<p>Výsledek může patřit routeru, VPN nebo sdílenému překladu adres poskytovatele a nemusí jednoznačně označovat jeden počítač.</p>
+<h2 id="telefon-tiskárna-nebo-jiné-zařízení">Telefon, tiskárna nebo jiné zařízení</h2>
+<p>MAC jiného zařízení lze z počítače zjistit pouze tehdy, když je zařízení ve stejné místní síti a počítač o něm má záznam v sousední tabulce.</p>
+<p>Přes router, VPN nebo internet se původní MAC adresa nepřenáší.</p>
+<p>Vyber prostředí, ze kterého zařízení hledáš.</p>
+<p><a id="když-znáš-ip-zařízení"></a>
+<a id="když-ip-zařízení-neznáš"></a></p>
+<div class="tabGroup" id="tabgroup_3">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_3_zarizeni-windows" role="tab" aria-controls="tabpanel_3_zarizeni-windows" data-tab="zarizeni-windows" tabindex="0" aria-selected="true">Windows</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_3_zarizeni-linux" role="tab" aria-controls="tabpanel_3_zarizeni-linux" data-tab="zarizeni-linux" tabindex="-1">WSL a Linux</a>
+</li>
+</ul>
+<section id="tabpanel_3_zarizeni-windows" role="tabpanel" data-tab="zarizeni-windows">
+
+<p><strong>Když znáš IP zařízení</strong></p>
+<p>Následující příklad používá ilustrační adresu <code>192.168.1.42</code>.</p>
+<p>Nahraď ji adresou svého zařízení:</p>
+<pre><code class="lang-powershell">ping.exe -n 1 192.168.1.42
+Get-NetNeighbor -IPAddress &quot;192.168.1.42&quot; |
+    Format-Table IPAddress, LinkLayerAddress, State, InterfaceAlias
+</code></pre>
+<p>První příkaz vyvolá pokus o místní komunikaci a druhý vyhledá odpovídající IP a MAC adresu.</p>
+<p>Zařízení nemusí na ping odpovědět, ale Windows přesto může při pokusu doplnit jeho linkovou adresu.</p>
+<p>Prázdný výsledek znamená, že Windows odpovídající záznam nemá, zařízení je vypnuté, používá jinou síť nebo mezi zařízeními stojí router či izolace Wi-Fi klientů.</p>
+<p><strong>Když IP zařízení neznáš</strong></p>
+<p>Zobraz aktuálně známé sousedy IPv4:</p>
+<pre><code class="lang-powershell">Get-NetNeighbor -AddressFamily IPv4 |
+    Where-Object { $_.State -notin &quot;Unreachable&quot;, &quot;Incomplete&quot; } |
+    Sort-Object InterfaceAlias, IPAddress |
+    Format-Table InterfaceAlias, IPAddress, LinkLayerAddress, State
+</code></pre>
+<p>Jednodušší historická varianta pro PowerShell i CMD:</p>
+<pre><code class="lang-bat">arp -a
+</code></pre>
+</section>
+<section id="tabpanel_3_zarizeni-linux" role="tabpanel" data-tab="zarizeni-linux" aria-hidden="true" hidden="hidden">
+
+<p><strong>Když znáš IP zařízení</strong></p>
+<p>Následující příklad používá ilustrační adresu <code>192.168.1.42</code>.</p>
+<p>Nahraď ji adresou svého zařízení:</p>
+<pre><code class="lang-bash">ping -c 1 192.168.1.42
+ip neigh show to 192.168.1.42
+</code></pre>
+<p>První příkaz vyvolá pokus o místní komunikaci a druhý vyhledá odpovídající IP a MAC adresu.</p>
+<p>Prázdný výsledek znamená, že Linux odpovídající záznam nemá, zařízení je vypnuté, používá jinou síť nebo mezi zařízeními stojí router či izolace Wi-Fi klientů.</p>
+<p><strong>Když IP zařízení neznáš</strong></p>
+<p>Zobraz všechny aktuálně známé sousedy:</p>
+<pre><code class="lang-bash">ip neigh show
+</code></pre>
+<p>Ve WSL 2 s výchozím režimem NAT tento výpis obvykle vidí hlavně virtuální síť WSL, nikoli úplný seznam zařízení ve fyzické Wi-Fi.</p>
+<p>Pro domácí síť proto použij raději variantu Windows nebo správu routeru.</p>
+</section>
+</div>
+
+<p>Tyto výpisy nejsou úplný seznam sítě.</p>
+<p>Obsahují jen nedávno známé sousedy a mohou zahrnovat router, multicastové adresy, virtuální adaptéry nebo staré záznamy.</p>
+<p>Nejspolehlivější přehled připojených zařízení poskytuje stránka <strong>Connected devices</strong>, <strong>Clients</strong>, <strong>DHCP leases</strong> nebo podobně pojmenovaná část správy vlastního routeru.</p>
+<p>Skenuj pouze vlastní síť nebo síť, k jejíž kontrole máš souhlas.</p>
+<h2 id="jak-poznat-iphone">Jak poznat iPhone</h2>
+<ol>
+<li>Připoj iPhone ke stejné Wi-Fi jako počítač.</li>
+<li>Na iPhonu otevři <strong>Nastavení → Wi-Fi</strong> a klepni na informační tlačítko u připojené sítě.</li>
+<li>Porovnej zobrazenou IP adresu a <strong>Wi-Fi adresu</strong> se správou routeru nebo sousední tabulkou ve Windows.</li>
+<li>Pokud se zařízení v routeru zobrazuje pod nejasným názvem, pojmenuj si ho podle této dvojice adres.</li>
+</ol>
+<p>iPhone používá pro jednotlivé Wi-Fi sítě soukromou MAC adresu.</p>
+<p>V novějších verzích iOS může být pevná pro danou síť nebo se pravidelně měnit.</p>
+<p>Router proto nemusí ukazovat hardwarovou MAC adresu uvedenou v obecných informacích o telefonu.</p>
+<p>Soukromou adresu nevypínej jen kvůli rozpoznání zařízení.</p>
+<p>Pro identifikaci použij aktuální Wi-Fi adresu z detailu konkrétní sítě.</p>
+<h2 id="názvy-dns-a-dostupnost-služby">Názvy, DNS a dostupnost služby</h2>
+<p>Název vlastního počítače ve Windows:</p>
+<pre><code class="lang-powershell">hostname.exe
+</code></pre>
+<p>Překlad známého názvu na IP adresu:</p>
+<pre><code class="lang-powershell">Resolve-DnsName -Name &quot;server.example.com&quot;
+</code></pre>
+<p>Ověření konkrétního TCP portu:</p>
+<pre><code class="lang-powershell">Test-NetConnection -ComputerName &quot;server.example.com&quot; -Port 443
+</code></pre>
+<p>Úspěšný ping sám nepotvrzuje, že funguje web, SSH nebo jiná služba.</p>
+<p>Při diagnostice pokračuj podle <a href="basics.html">postupu pro nefunkční spojení</a>.</p>
+<h2 id="co-z-výpisu-bezpečně-nevyvodíš">Co z výpisu bezpečně nevyvodíš</h2>
+<ul>
+<li>Stejná IP v jinou dobu nemusí patřit stejnému zařízení, protože DHCP adresy znovu přiděluje.</li>
+<li>Stejný telefon může v různých Wi-Fi sítích používat jinou soukromou MAC adresu.</li>
+<li>MAC adresa sama spolehlivě nepotvrzuje vlastníka ani bezpečnost zařízení.</li>
+<li>Veřejná IP obvykle patří routeru, VPN nebo poskytovateli, nikoli jednomu konkrétnímu počítači.</li>
+<li>Záznam <code>Stale</code> říká, že vazba je v cache, nikoli že je zařízení právě online.</li>
+</ul>
+<p>Celé výpisy nesdílej veřejně bez kontroly.</p>
+<p>Mohou obsahovat interní názvy, adresy, identifikátory adaptérů a údaje o firemní síti.</p>
+<p>Zdroje: <a href="https://learn.microsoft.com/en-us/powershell/module/nettcpip/get-netipconfiguration">Microsoft: Get-NetIPConfiguration</a>, <a href="https://learn.microsoft.com/en-us/powershell/module/netadapter/get-netadapter">Get-NetAdapter</a>, <a href="https://learn.microsoft.com/en-us/powershell/module/nettcpip/get-netneighbor">Get-NetNeighbor</a>, <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/arp">ARP</a>, <a href="https://learn.microsoft.com/en-us/windows/wsl/networking">síťování ve WSL</a>, <a href="https://support.apple.com/cs-cz/102509">Apple: soukromé Wi-Fi adresy</a>, <a href="https://man7.org/linux/man-pages/man8/ip-neighbour.8.html">Linux ip-neighbour</a>, <a href="https://www.ipify.org/">ipify API</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

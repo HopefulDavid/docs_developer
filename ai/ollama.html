@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Ollama – lok&#225;ln&#237; modely ve Windows | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Ollama – lok&#225;ln&#237; modely ve Windows | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Spouštěn&#237; m&#237;stn&#237;ch modelů, jejich stahov&#225;n&#237;, odstraněn&#237; a nastaven&#237; serveru.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/ai/ollama.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="ollama--lokální-modely-ve-windows">Ollama – lokální modely ve Windows</h1>
+
+<p>Ollama spouští jazykové modely a poskytuje lokální API pro další aplikace.</p>
+<h2 id="spuštění-a-ověření">Spuštění a ověření</h2>
+<p>Nainstaluj Ollama pro Windows a otevři nový terminál.</p>
+<p>Aplikace po instalaci běží na pozadí a API standardně používá <code>http://localhost:11434</code>.</p>
+<p>Samostatný CLI server lze spustit přes <code>ollama serve</code>.</p>
+<p>Nespouštěj druhý server na portu, který už používá aplikace. <a href="https://docs.ollama.com/windows">Ollama ve Windows</a></p>
+<pre><code class="lang-powershell">ollama --version
+ollama list
+ollama run llama3.2
+</code></pre>
+<p><code>--version</code> vypíše verzi programu, <code>list</code> uložené modely a <code>run llama3.2</code> otevře konverzaci s ukázkovým modelem.</p>
+<p>Při prvním <code>run</code> se chybějící model stáhne.</p>
+<p>Počítej s připojením k internetu a místem pro jeho soubory.</p>
+<h2 id="příkazy-pro-správu-modelů">Příkazy pro správu modelů</h2>
+<p><code>&lt;model&gt;</code> je název modelu, který doplníš bez závorek.</p>
+<p>Značení vysvětluje <a href="../operating-system/command-line-syntax.html">syntaxe příkazů</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Syntaxe</th>
+<th>Co příkaz provede</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ollama list</code></td>
+<td>Modely uložené na disku</td>
+</tr>
+<tr>
+<td><code>ollama ps</code></td>
+<td>Modely právě načtené v paměti</td>
+</tr>
+<tr>
+<td><code>ollama pull &lt;model&gt;</code></td>
+<td>Stáhne nebo aktualizuje soubory zvoleného modelu</td>
+</tr>
+<tr>
+<td><code>ollama run &lt;model&gt; [&lt;zadání&gt;]</code></td>
+<td>Spustí model, případně mu rovnou předá zadání</td>
+</tr>
+<tr>
+<td><code>ollama stop &lt;model&gt;</code></td>
+<td>Uvolní model z paměti, ale ponechá jej na disku</td>
+</tr>
+<tr>
+<td><code>ollama rm &lt;model&gt;</code></td>
+<td>Smaže místní model z disku</td>
+</tr>
+</tbody>
+</table>
+<h3 id="příklad-stažení-jednoho-modelu">Příklad: stažení jednoho modelu</h3>
+<pre><code class="lang-powershell">ollama pull llama3.2
+ollama list
+</code></pre>
+<p><code>llama3.2</code> je konkrétní název, který můžeš změnit podle dostupné paměti a účelu.</p>
+<p>Druhý příkaz ověří, že je model uložený.</p>
+<p>Jméno může obsahovat také tag, například <code>llama3.2:1b</code>.</p>
+<p>Pokud jej použiješ při stahování, používej stejný název i při spuštění nebo odstranění. <a href="https://docs.ollama.com/cli">Reference CLI</a></p>
+<h2 id="změna-naslouchací-adresy">Změna naslouchací adresy</h2>
+<ol>
+<li>Ukonči Ollama z ikony v oznamovací oblasti.</li>
+<li>V nastavení Windows vyhledej <strong>Upravit proměnné prostředí pro váš účet</strong>.</li>
+<li>Nastav <code>OLLAMA_HOST</code>, například <code>127.0.0.1:11435</code> pro jiný lokální port.</li>
+<li>Znovu spusť Ollama a nastav stejnou adresu i v klientské aplikaci.</li>
+</ol>
+<p>Hodnota <code>0.0.0.0</code> zpřístupňuje server na všech rozhraních.</p>
+<p>Použij ji jen při zamýšleném síťovém přístupu s odpovídajícím omezením přístupu. <a href="https://docs.ollama.com/faq">Konfigurace serveru</a></p>
+<p>Umístění modelů mění uživatelská proměnná <code>OLLAMA_MODELS</code>.</p>
+<p>I ta se projeví po restartu serveru. <a href="https://docs.ollama.com/windows">Umístění modelů</a></p>
+<h2 id="vypnutí-automatického-spuštění">Vypnutí automatického spuštění</h2>
+<p>Ve <strong>Správci úloh → Aplikace po spuštění</strong> vyhledej Ollama a zvol <strong>Zakázat</strong>. <a href="https://docs.ollama.com/faq">Automatické spuštění</a></p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

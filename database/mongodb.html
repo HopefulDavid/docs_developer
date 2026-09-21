@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>MongoDB – př&#237;kazy v mongosh | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="MongoDB – př&#237;kazy v mongosh | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="V&#253;běr datab&#225;ze a čten&#237; či změny dokumentů v mongosh.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/database/mongodb.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="mongodb--příkazy-v-mongosh">MongoDB – příkazy v mongosh</h1>
+
+<p>MongoDB ukládá dokumenty BSON do kolekcí.</p>
+<p>Následující příklady jsou pro interaktivní shell <code>mongosh</code>.</p>
+<h2 id="databáze-a-kolekce">Databáze a kolekce</h2>
+<p>Připoj se ke své vývojové instanci a vyber databázi:</p>
+<pre><code class="lang-javascript">show dbs
+use docs_demo
+db
+show collections
+</code></pre>
+<p><code>use</code> změní aktuální databázi reprezentovanou proměnnou <code>db</code>.</p>
+<p>Databáze vznikne až při prvním zápisu, pokud dosud neexistuje. <a href="https://www.mongodb.com/docs/mongodb-shell/run-commands/">Příkazy mongosh</a></p>
+<h2 id="vložení-a-čtení">Vložení a čtení</h2>
+<pre><code class="lang-javascript">db.users.insertOne({ name: &quot;Jana&quot;, age: 28 })
+db.users.insertMany([
+  { name: &quot;Petr&quot;, age: 17 },
+  { name: &quot;Eva&quot;, age: 35 }
+])
+db.users.find({ age: { $gte: 18 } })
+db.users.findOne({ name: &quot;Jana&quot; })
+db.users.countDocuments({ age: { $gte: 18 } })
+</code></pre>
+<p>Opakované vložení vytvoří další dokumenty.</p>
+<p>Jméno není automaticky unikátní. <a href="https://www.mongodb.com/docs/manual/crud/">CRUD operace</a></p>
+<p>Pro výběr sloupců, řazení a omezení výsledků:</p>
+<pre><code class="lang-javascript">db.users.find({}, { _id: 0, name: 1, age: 1 })
+db.users.find().sort({ age: -1, _id: 1 }).limit(10)
+db.users.find().sort({ age: -1, _id: 1 }).skip(10).limit(10)
+</code></pre>
+<p><code>_id</code> se standardně vrací i při projekci vybraných polí, pokud jej výslovně nevypneš.</p>
+<p>Jedinečné <code>_id</code> doplňuje jednoznačné pořadí při shodném věku.</p>
+<p>Změny dat mezi dotazy přesto mohou posunout stránkování. <a href="https://www.mongodb.com/docs/manual/reference/method/db.collection.find/">Find a projekce</a></p>
+<h2 id="změny-a-odstranění">Změny a odstranění</h2>
+<p>Před zápisem si stejným filtrem <code>find</code> prohlédni cílové dokumenty.</p>
+<pre><code class="lang-javascript">db.users.updateOne({ name: &quot;Jana&quot; }, { $set: { age: 29 } })
+db.users.updateMany({ age: { $lt: 18 } }, { $set: { minor: true } })
+db.users.deleteOne({ name: &quot;Petr&quot; })
+db.users.deleteMany({ minor: true })
+</code></pre>
+<p>Metody s <code>One</code> mění nejvýše jeden odpovídající dokument, <code>Many</code> všechny odpovídající dokumenty.</p>
+<p>Prázdný filtr u <code>deleteMany({})</code> odstraní celý obsah kolekce. <a href="https://www.mongodb.com/docs/manual/crud/">CRUD operace</a></p>
+<h2 id="indexy">Indexy</h2>
+<pre><code class="lang-javascript">db.users.createIndex({ name: 1 })
+db.users.createIndexes([{ age: -1 }, { name: 1, age: 1 }])
+db.users.getIndexes()
+</code></pre>
+<p>Každá položka pole v <code>createIndexes</code> je přímo specifikace klíčů jednoho indexu.</p>
+<p>Složený index <code>{name: 1, age: 1}</code> není totéž co dva samostatné indexy. <a href="https://www.mongodb.com/docs/manual/reference/method/db.collection.createIndexes/">CreateIndexes</a></p>
+<h2 id="odstranění-kolekce-nebo-databáze">Odstranění kolekce nebo databáze</h2>
+<p>Až po ověření <code>db.getName()</code> a uchování potřebných dat lze použít <code>db.users.drop()</code> pro kolekci nebo <code>db.dropDatabase()</code> pro aktuální databázi.</p>
+<p>Tyto operace nejsou běžným ukončením práce. <a href="https://www.mongodb.com/docs/manual/reference/method/db.dropDatabase/">Drop database</a></p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>.NET – XML a serializace | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=".NET – XML a serializace | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Čten&#237; XML a převod mezi dokumentem a objekty aplikace.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/csharp/xml.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="net--xml-a-serializace">.NET – XML a serializace</h1>
+
+<p>XML ukládá strukturovaná data do elementů a atributů.</p>
+<p><code>XmlSerializer</code> mapuje tuto strukturu na veřejné členy objektů.</p>
+<h2 id="náhrada-znaků-v-xml">Náhrada znaků v XML</h2>
+<p>XML předdefinuje pouze následujících pět pojmenovaných entit:</p>
+<table>
+<thead>
+<tr>
+<th>Znak</th>
+<th>Zápis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;</code></td>
+<td><code>&amp;lt;</code></td>
+</tr>
+<tr>
+<td><code>&gt;</code></td>
+<td><code>&amp;gt;</code></td>
+</tr>
+<tr>
+<td><code>&amp;</code></td>
+<td><code>&amp;amp;</code></td>
+</tr>
+<tr>
+<td><code>'</code></td>
+<td><code>&amp;apos;</code></td>
+</tr>
+<tr>
+<td><code>&quot;</code></td>
+<td><code>&amp;quot;</code></td>
+</tr>
+</tbody>
+</table>
+<p>Diakritiku zapisujte přímo v deklarovaném kódování, například UTF-8, nebo číselnou referencí jako <code>&amp;#x10D;</code> pro <code>č</code>.</p>
+<p>HTML entity jako <code>&amp;ccaron;</code> nejsou v běžném XML bez vlastní deklarace platné. <a href="https://www.w3.org/TR/xml/#sec-predefined-ent">W3C: entity XML</a>.</p>
+<h2 id="cdata-sekce">CDATA sekce</h2>
+<p>CDATA umožňuje zapsat text obsahující například <code>&lt;</code> a <code>&amp;</code> bez escapování:</p>
+<pre><code class="lang-xml">&lt;example&gt;&lt;![CDATA[Podmínka: a &lt; b &amp;&amp; b &gt; 0]]&gt;&lt;/example&gt;
+</code></pre>
+<p>Uvnitř jedné CDATA sekce nesmí být ukončovací posloupnost <code>]]&gt;</code> a stále platí omezení na povolené znaky XML. <a href="https://www.w3.org/TR/xml/#sec-cdata-sect">W3C: CDATA</a>.</p>
+<h2 id="serializace-a-deserializace-objektů">Serializace a deserializace objektů</h2>
+<p>Úplný <code>Program.cs</code> pro konzolový projekt .NET 10 provede převod na XML a zpět:</p>
+<pre><code class="lang-csharp">using System.Xml;
+using System.Xml.Serialization;
+
+var serializer = new XmlSerializer(typeof(Person));
+using var output = new StringWriter();
+serializer.Serialize(output, new Person { Name = &quot;Eva &amp; Adam&quot; });
+Console.WriteLine(output.ToString());
+
+using var input = new StringReader(output.ToString());
+using var reader = XmlReader.Create(input, new XmlReaderSettings
+{
+    DtdProcessing = DtdProcessing.Prohibit,
+    XmlResolver = null
+});
+var restored = (Person?)serializer.Deserialize(reader)
+    ?? throw new InvalidDataException(&quot;Dokument neobsahuje osobu.&quot;);
+Console.WriteLine(restored.Name);
+
+/// &lt;summary&gt;Osoba ukládaná do XML dokumentu.&lt;/summary&gt;
+[XmlRoot(&quot;person&quot;, Namespace = &quot;urn:example:people&quot;)]
+public class Person
+{
+    /// &lt;summary&gt;Zobrazované jméno osoby.&lt;/summary&gt;
+    [XmlElement(&quot;name&quot;)]
+    public string Name { get; set; } = &quot;&quot;;
+}
+</code></pre>
+<p>Serializátor sám escapuje ampersand a deserializovaný výstup je opět <code>Eva &amp; Adam</code>.</p>
+<p><code>StringWriter</code> vytváří text s deklarací UTF-16.</p>
+<p>Pro zápis přímo do UTF-8 souboru použij <code>XmlWriter</code> nad souborem s odpovídajícím nastavením kódování. <a href="https://learn.microsoft.com/en-us/dotnet/standard/serialization/examples-of-xml-serialization">Microsoft: příklady serializace XML</a>.</p>
+<p>Čtečka explicitně odmítá DTD a nenačítá externí zdroje. <a href="https://learn.microsoft.com/en-us/dotnet/api/system.xml.xmlreadersettings.dtdprocessing">DtdProcessing</a>, <a href="https://learn.microsoft.com/en-us/dotnet/api/system.xml.xmlreadersettings.xmlresolver">XmlResolver</a>.</p>
+<h2 id="namespace-v-xml">Namespace v XML</h2>
+<p>Identitu elementu určuje jeho lokální název a URI jmenného prostoru.</p>
+<p>Prefix je jen zkratka.</p>
+<p>URI nemusí být dostupná webová stránka.</p>
+<p>Následující dva elementy tedy označují stejné jméno:</p>
+<pre><code class="lang-xml">&lt;p:person xmlns:p=&quot;urn:example:people&quot; /&gt;
+&lt;person xmlns=&quot;urn:example:people&quot; /&gt;
+</code></pre>
+<p>Pouhé odstranění prefixů a namespace může sloučit původně rozdílné názvy a změnit význam dat.</p>
+<p>Namespace v atributech modelu musí odpovídat vstupnímu dokumentu. <a href="https://www.w3.org/TR/xml-names/">W3C: Namespaces in XML</a>.</p>
+<h2 id="konvence-serializace-xml">Konvence serializace XML</h2>
+<table>
+<thead>
+<tr>
+<th>Atribut</th>
+<th>Účel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>XmlRoot</code></td>
+<td>Název a namespace kořenového elementu</td>
+</tr>
+<tr>
+<td><code>XmlElement</code></td>
+<td>Mapování člena na element</td>
+</tr>
+<tr>
+<td><code>XmlAttribute</code></td>
+<td>Mapování člena na atribut</td>
+</tr>
+<tr>
+<td><code>XmlText</code></td>
+<td>Textový obsah elementu</td>
+</tr>
+<tr>
+<td><code>XmlIgnore</code></td>
+<td>Vynechání člena</td>
+</tr>
+<tr>
+<td><code>XmlArray</code>, <code>XmlArrayItem</code></td>
+<td>Obal kolekce a položky</td>
+</tr>
+<tr>
+<td><code>XmlEnum</code></td>
+<td>Textová reprezentace hodnoty enumu</td>
+</tr>
+<tr>
+<td><code>XmlType</code></td>
+<td>Název a namespace XML typu</td>
+</tr>
+<tr>
+<td><code>XmlInclude</code></td>
+<td>Zahrnutí známého odvozeného typu</td>
+</tr>
+<tr>
+<td><code>XmlAnyElement</code>, <code>XmlAnyAttribute</code></td>
+<td>Zachycení dalších elementů nebo atributů</td>
+</tr>
+</tbody>
+</table>
+<p>Přesné mapování a omezení typů shrnuje <a href="https://learn.microsoft.com/en-us/dotnet/standard/serialization/attributes-that-control-xml-serialization">Microsoft: atributy pro XML serializaci</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

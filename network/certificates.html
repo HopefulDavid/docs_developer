@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Certifik&#225;ty – HTTPS při m&#237;stn&#237;m v&#253;voji | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Certifik&#225;ty – HTTPS při m&#237;stn&#237;m v&#253;voji | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Důvěryhodn&#233; m&#237;stn&#237; HTTPS, v&#253;běr certifik&#225;tu a zapojen&#237; do v&#253;vojov&#233;ho serveru.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/network/certificates.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="certifikáty--https-při-místním-vývoji">Certifikáty – HTTPS při místním vývoji</h1>
+
+<p>TLS certifikát pomáhá klientovi ověřit jméno serveru a vytvořit šifrované spojení.</p>
+<p>Nestačí mít soubor s příponou <code>.crt</code>: klient musí důvěřovat jeho vydavateli a navštívené jméno musí odpovídat certifikátu.</p>
+<h2 id="vyber-nástroj-podle-cíle">Vyber nástroj podle cíle</h2>
+<table>
+<thead>
+<tr>
+<th>Potřeba</th>
+<th>Vhodná cesta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vývoj ASP.NET Core na localhost</td>
+<td>Vývojový certifikát <code>dotnet dev-certs</code></td>
+</tr>
+<tr>
+<td>Místní server s vlastními názvy nebo jiným frameworkem</td>
+<td><code>mkcert</code> a vlastní místní certifikační autorita</td>
+</tr>
+<tr>
+<td>Veřejná produkční doména</td>
+<td>Certifikát od veřejně důvěryhodné CA podle hostingu, obvykle s automatickou obnovou</td>
+</tr>
+</tbody>
+</table>
+<p>Vývojová autorita mkcert ani vývojový certifikát .NET nepatří jako univerzální řešení pro veřejné produkční servery.</p>
+<h2 id="co-obsahují-soubory">Co obsahují soubory</h2>
+<table>
+<thead>
+<tr>
+<th>Pojem</th>
+<th>Úloha</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Certifikát</td>
+<td>Veřejné údaje serveru, názvy SAN, platnost a podpis vydavatele</td>
+</tr>
+<tr>
+<td>Soukromý klíč serveru</td>
+<td>Důkaz identity serveru, musí zůstat chráněný</td>
+</tr>
+<tr>
+<td>Kořenový certifikát CA</td>
+<td>Veřejný základ důvěry v certifikáty vydané touto autoritou</td>
+</tr>
+<tr>
+<td>Soukromý klíč CA</td>
+<td>Umožňuje vydávat další důvěryhodné certifikáty</td>
+</tr>
+<tr>
+<td>PEM</td>
+<td>Textový formát. Může obsahovat certifikát i klíč podle obsahu</td>
+</tr>
+<tr>
+<td>PFX / PKCS#12</td>
+<td>Kontejner pro certifikát a klíč, obvykle chráněný heslem</td>
+</tr>
+</tbody>
+</table>
+<p>Přejmenování přípony samo formát nepřevede.</p>
+<h2 id="připrav-certifikát-podle-aplikace">Připrav certifikát podle aplikace</h2>
+<p>Vyber jednu cestu podle nástroje, kterým spouštíš vývojový server.</p>
+<p><a id="varianta-a-aspnet-core"></a>
+<a id="varianta-b-mkcert-pro-vlastní-server"></a>
+<a id="spustitelný-příklad-nodejs"></a>
+<a id="aplikace-vyžaduje-pfx"></a></p>
+<div class="tabGroup" id="tabgroup_1">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_1_cert-dotnet" role="tab" aria-controls="tabpanel_1_cert-dotnet" data-tab="cert-dotnet" tabindex="0" aria-selected="true">ASP.NET Core</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_1_cert-mkcert" role="tab" aria-controls="tabpanel_1_cert-mkcert" data-tab="cert-mkcert" tabindex="-1">Vlastní server s mkcert</a>
+</li>
+</ul>
+<section id="tabpanel_1_cert-dotnet" role="tabpanel" data-tab="cert-dotnet">
+
+<p>S nainstalovaným .NET SDK v PowerShellu nebo Bashi:</p>
+<pre><code class="lang-bash">dotnet dev-certs https --trust
+dotnet dev-certs https --check --trust
+</code></pre>
+<p>První příkaz vytvoří nebo najde vývojový certifikát a požádá o jeho důvěryhodnost.</p>
+<p>Druhý jen ověří platnost a důvěru.</p>
+<p>Spusť aplikaci s HTTPS profilem uvedeným v <code>Properties/launchSettings.json</code> a použij přesnou adresu z výpisu serveru.</p>
+<p>Na Linuxu a v některých prohlížečích se správa důvěry liší.</p>
+<p>Postupuj podle instrukcí konkrétního SDK a výsledku kontroly.</p>
+<p><code>dotnet dev-certs https --clean</code> odstraní vývojové HTTPS certifikáty, a proto ho nepoužívej jako první univerzální opravu.</p>
+</section>
+<section id="tabpanel_1_cert-mkcert" role="tabpanel" data-tab="cert-mkcert" aria-hidden="true" hidden="hidden">
+
+<p>Nainstaluj <a href="https://github.com/FiloSottile/mkcert/releases">mkcert z oficiálních vydání</a>, ověř jeho původ a dostupnost <code>mkcert -version</code>.</p>
+<p>Ve Windows lze odpovídající binární soubor pojmenovat <code>mkcert.exe</code> a jeho složku přidat do Path.</p>
+<p>V samostatné výukové složce:</p>
+<pre><code class="lang-bash">mkcert -install
+mkcert -cert-file localhost.pem -key-file localhost-key.pem localhost 127.0.0.1 ::1
+</code></pre>
+<p><code>-install</code> vytvoří a nainstaluje místní kořen důvěry, což může vyžadovat potvrzení systému.</p>
+<p>Druhý příkaz vydá certifikát pro uvedená jména a adresy.</p>
+<p>Výstupy nepřepisuj v adresáři s již používanými klíči.</p>
+<p>Pro vlastní jméno přidej například <code>app.test</code> do seznamu a zajisti jeho překlad na cílovou IP, například v místním souboru hosts.</p>
+<p>mkcert nastaví certifikáty, ale sám nespustí ani nenakonfiguruje HTTPS aplikaci.</p>
+<p><strong>Spustitelný příklad Node.js</strong></p>
+<p>Vedle obou PEM souborů ulož <code>server.cjs</code>:</p>
+<pre><code class="lang-javascript">const https = require('node:https');
+const fs = require('node:fs');
+const path = require('node:path');
+
+// Cesty vycházejí ze složky skriptu, nikoli z náhodné aktuální složky terminálu.
+const options = {
+  cert: fs.readFileSync(path.join(__dirname, 'localhost.pem')),
+  key: fs.readFileSync(path.join(__dirname, 'localhost-key.pem')),
+};
+
+https.createServer(options, (_request, response) =&gt; {
+  response.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+  response.end('Místní HTTPS funguje.\n');
+}).listen(8443, '127.0.0.1', () =&gt; {
+  console.log('Otevři https://localhost:8443');
+});
+</code></pre>
+<p>S nainstalovaným Node.js spusť <code>node server.cjs</code> a otevři uvedenou adresu.</p>
+<p><code>Ctrl+C</code> server ukončí.</p>
+<p><code>cert</code> je veřejný certifikát, <code>key</code> soukromý klíč, <code>8443</code> zvolený volný port a <code>127.0.0.1</code> omezuje naslouchání na tento počítač.</p>
+<p>Port můžeš změnit, ale nové jméno serveru musí být zároveň uvedené v certifikátu.</p>
+<p><strong>Aplikace vyžaduje PFX</strong></p>
+<p>S dostupným OpenSSL ve složce certifikátů:</p>
+<pre><code class="lang-bash">openssl pkcs12 -export -out server.pfx -inkey localhost-key.pem -in localhost.pem
+</code></pre>
+<p>Program se zeptá na exportní heslo.</p>
+<p><code>server.pfx</code> pak obsahuje klíč i certifikát a heslo použij podle nastavení konkrétního serveru.</p>
+<p>Heslo nepiš přímo jako veřejný argument do skriptu.</p>
+</section>
+</div>
+<h2 id="ověření-a-časté-chyby">Ověření a časté chyby</h2>
+<table>
+<thead>
+<tr>
+<th>Projev</th>
+<th>Co zkontrolovat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Neznámý vydavatel</td>
+<td>Důvěru v CA na tomto počítači a v konkrétním klientovi</td>
+</tr>
+<tr>
+<td>Nesouhlas názvu</td>
+<td>URL proti SAN certifikátu. Certifikát pro localhost neplatí automaticky pro IP v LAN</td>
+</tr>
+<tr>
+<td>Vypršený certifikát</td>
+<td>Platnost a systémový čas. Vydat a nasadit nový certifikát</td>
+</tr>
+<tr>
+<td>Prohlížeč funguje, nástroj ne</td>
+<td>Nástroj může používat vlastní úložiště CA</td>
+</tr>
+<tr>
+<td>Jiný počítač nedůvěřuje</td>
+<td>Jeho vlastní důvěryhodné autority, nikoli jen certifikát uložený na serveru</td>
+</tr>
+</tbody>
+</table>
+<p><code>mkcert -CAROOT</code> ukáže složku místní autority.</p>
+<p>Pro důvěru na dalším vlastním testovacím zařízení přenášej pouze veřejný <code>rootCA.pem</code>.</p>
+<p><code>rootCA-key.pem</code> nesdílej a necommituj, protože umožňuje vydávat důvěryhodné certifikáty pro libovolná jména na zařízeních důvěřujících této CA.</p>
+<p><code>mkcert -uninstall</code> odebere místní důvěru, ale nepředstavuje smazání všech vytvořených souborů.</p>
+<p>Zdroje: <a href="https://github.com/FiloSottile/mkcert">mkcert</a>, <a href="https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-dev-certs">dotnet dev-certs</a>, <a href="https://nodejs.org/api/https.html">Node.js HTTPS</a>, <a href="https://docs.openssl.org/master/man1/openssl-pkcs12/">OpenSSL PKCS#12</a>.</p>
+<p><a id="klíče-a-certifikáty"></a>
+<a id="tls-certifikáty--mkcert"></a>
+<a id="instalace"></a>
+<a id="instalace-lokální-ca"></a>
+<a id="použití-certifikátů"></a>
+<a id="ssh-klíč-s-heslovou-frází"></a>
+<a id="vytvoření-klíče"></a>
+<a id="soukromý-a-veřejný-soubor"></a>
+<a id="dodatečné-nastavení-nebo-změna-heslové-fráze"></a>
+<a id="volitelné-odemykání-přes-ssh-agent"></a>
+<a id="ssh--nastavení-pro-github"></a>
+<a id="přidání-klíče-do-účtu"></a>
+<a id="test-připojení"></a>
+<a id="použití-v-git-repozitáři"></a>
+<a id="generování-klíčů"></a>
+<a id="openssl"></a></p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Inteligentn&#237; ř&#237;zen&#237; aplikac&#237; – zablokovan&#225; aplikace | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Inteligentn&#237; ř&#237;zen&#237; aplikac&#237; – zablokovan&#225; aplikace | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Postup při blokov&#225;n&#237; důvěryhodn&#233; aplikace funkc&#237; Smart App Control, dopad vypnut&#237; a opětovn&#233; zapnut&#237; ochrany.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/operating-system/windows/smart-app-control.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="inteligentní-řízení-aplikací--zablokovaná-aplikace">Inteligentní řízení aplikací – zablokovaná aplikace</h1>
+
+<p><strong>Smart App Control</strong>, česky <strong>Inteligentní řízení aplikací</strong>, ve Windows 11 blokuje aplikace, které vyhodnotí jako nebezpečné nebo nedůvěryhodné.</p>
+<p>Pokud nedokáže určit jejich bezpečnost, kontroluje také důvěryhodný digitální podpis.</p>
+<p>Proto může zastavit i vlastní nepodepsanou aplikaci. (<a href="https://learn.microsoft.com/en-us/windows/apps/develop/smart-app-control/overview">Microsoft: jak ochrana funguje</a>)</p>
+<h2 id="jak-poznat-toto-blokování">Jak poznat toto blokování</h2>
+<p>Dialog uvádí <strong>„Inteligentní řízení aplikací zablokovalo aplikaci, která může být nebezpečná.“</strong> a název souboru, například <code>KeyPilot.exe</code>.</p>
+<img src="../../images/smart-app-control-blocked.png" alt="Dialog Inteligentního řízení aplikací blokující KeyPilot.exe, s neprůhledně zakrytou adresářovou částí cesty" width="537">
+<p><a href="../../images/smart-app-control-blocked.png">Zobrazit upravený obrázek v plném rozlišení</a></p>
+<p>Osobní adresáře jsou na obrázku zakryté.</p>
+<p>Samotné hlášení nedokazuje přítomnost malwaru, ale ani bezpečnost souboru.</p>
+<h2 id="před-použitím">Před použitím</h2>
+<p>Postup použij pro aplikaci, jejíž původ znáš a které důvěřuješ.</p>
+<p>Před změnou ověř, zda autor nenabízí aktuální podepsanou verzi.</p>
+<p>V Průzkumníku klikni pravým tlačítkem na soubor nebo složku aplikace a zvol <strong>Zobrazit další možnosti → Zkontrolovat pomocí Microsoft Defender</strong>.</p>
+<p>Počkej na výsledek kontroly. (<a href="https://support.microsoft.com/en-gb/windows/scan-an-item-with-windows-security-d1c8c01d-12ed-e768-cbb8-830ea8ccf8e6">Microsoft: kontrola souboru</a>)</p>
+<p>Pokud používáš jiný antivirus, proveď kontrolu jím.</p>
+<p>Výsledek bez nálezu není zárukou bezpečnosti neznámé aplikace.</p>
+<div class="WARNING">
+<h5>Varov&#225;n&#237;</h5>
+<p>Vypnutí Inteligentního řízení aplikací platí pro celý počítač, nejen pro vybraný program.</p>
+<p>Výjimka pro jednu aplikaci není dostupná.</p>
+<p>Antivirovou ochranu ponech zapnutou.</p>
+</div>
+<p>Rozsah vypnutí a chybějící výjimky potvrzuje <a href="https://support.microsoft.com/en-us/windows/security/threat-malware-protection/smart-app-control-frequently-asked-questions">FAQ Microsoftu</a>.</p>
+<h2 id="postup-krok-za-krokem">Postup krok za krokem</h2>
+<p>Ve Windows 11 s dostupným nastavením Smart App Control:</p>
+<ol>
+<li>Zavři blokovací dialog tlačítkem <strong>OK</strong>.</li>
+<li>Otevři <strong>Start</strong>, napiš <strong>Zabezpečení Windows</strong> a otevři nalezenou aplikaci.</li>
+<li>Vyber <strong>Řízení aplikací a prohlížečů</strong>.</li>
+<li>V části <strong>Inteligentní řízení aplikací</strong> otevři jeho <strong>nastavení</strong> (<em>Smart App Control settings</em>).</li>
+<li>Přečti upozornění Windows a zvol <strong>Vypnuto</strong> (<em>Off</em>).</li>
+<li>Potvrď případnou výzvu správce pouze tehdy, pokud tento počítač smíš spravovat.</li>
+<li>Vrať se do složky aplikace a znovu otevři její <code>.exe</code> soubor, v uvedeném příkladu <code>KeyPilot.exe</code>.</li>
+</ol>
+<p>Umístění voleb popisuje <a href="https://support.microsoft.com/en-us/windows/security/windows-security/app-browser-control-in-the-windows-security-app">Microsoft: řízení aplikací a prohlížečů</a>.</p>
+<p>Na pracovním nebo školním zařízení s uzamčenými volbami řeš změnu se správcem.</p>
+<h2 id="ověření-výsledku">Ověření výsledku</h2>
+<p>V nastavení musí být vybrané <strong>Vypnuto</strong> a při novém spuštění má zmizet právě hlášení Inteligentního řízení aplikací.</p>
+<p>Ověř také otevření hlavního okna aplikace.</p>
+<p>Pokud se objeví jiné chybové hlášení, poznamenej jeho přesný text a řeš jeho příčinu samostatně.</p>
+<p>Toto nastavení neopravuje chybějící soubory aplikace ani jiné ochrany Windows.</p>
+<h2 id="jak-ochranu-znovu-zapnout">Jak ochranu znovu zapnout</h2>
+<p>Vrať se stejnou cestou do nastavení Inteligentního řízení aplikací a vyber <strong>Zapnuto</strong> (<em>On</em>), pokud je tato možnost dostupná.</p>
+<p>Potom nastavení znovu otevři a ověř vybraný stav.</p>
+<p>Aktuální <a href="https://support.microsoft.com/en-us/windows/security/threat-malware-protection/smart-app-control-frequently-asked-questions">FAQ Microsoftu</a> uvádí, že nedávné aktualizace umožňují opětovné zapnutí bez čisté instalace Windows na podporovaných zařízeních.</p>
+<p>Na starších sestaveních může návrat vyžadovat reset nebo přeinstalaci, proto se před vypnutím řiď také upozorněním svého systému.</p>
+<p>Pokud <strong>Zapnuto</strong> není dostupné, zkontroluj aktualizace a podmínky v odkazovaném FAQ.</p>
+<p>Po opětovném zapnutí může být stejná nepodepsaná aplikace znovu zablokovaná.</p>
+<h2 id="řešení-pro-autora-aplikace">Řešení pro autora aplikace</h2>
+<p>Pro distribuci vlastní aplikace zajisti podpis kódu certifikátem od důvěryhodného poskytovatele.</p>
+<p>Vlastní testovací certifikát sám tuto důvěru nenahrazuje.</p>
+<p>Požadavky včetně podporovaných podpisů popisuje <a href="https://learn.microsoft.com/en-us/windows/apps/develop/smart-app-control/code-signing-for-smart-app-control">Microsoft: podepsání aplikace pro Smart App Control</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

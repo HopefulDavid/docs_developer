@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Kubernetes – prvn&#237; aplikace krok za krokem | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Kubernetes – prvn&#237; aplikace krok za krokem | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Prvn&#237; lok&#225;ln&#237; cluster, vztah Deployment–Pod–Service a diagnostika nasazen&#237;.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/virtualization/kubernetes.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="kubernetes--první-aplikace-krok-za-krokem">Kubernetes – první aplikace krok za krokem</h1>
+
+<p>Kubernetes udržuje kontejnery podle požadovaného stavu, například „spouštěj dvě připravené instance tohoto webu“.</p>
+<p>Když instance zanikne, řídicí mechanismus se pokusí vytvořit náhradu, takže aplikaci neřídíš jen jednorázovým spuštěním procesu.</p>
+<h2 id="kdy-ho-použít">Kdy ho použít</h2>
+<p>Hodí se pro více služeb, řízené aktualizace a provoz přes více uzlů.</p>
+<p>Pro jednoduchou místní sestavu může stačit Docker Compose.</p>
+<p>Nejprve porozuměj <a href="docker/index.html">image, kontejneru a portům</a>.</p>
+<h2 id="jak-součásti-spolupracují">Jak součásti spolupracují</h2>
+<pre><code class="lang-text">kubectl → API clusteru → Deployment → ReplicaSet → Pody → kontejnery
+                                                    ↑
+                              Service vybírá Pody podle labelů
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Pojem</th>
+<th>Praktický význam</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cluster</td>
+<td>Celek s řídicí vrstvou a pracovními uzly</td>
+</tr>
+<tr>
+<td>Node / uzel</td>
+<td>Stroj nebo virtuální prostředí pro běh Podů</td>
+</tr>
+<tr>
+<td>Pod</td>
+<td>Nejmenší plánovaná jednotka, obvykle s hlavním kontejnerem aplikace</td>
+</tr>
+<tr>
+<td>Deployment</td>
+<td>Předpis počtu instancí a aktualizace bezstavové aplikace</td>
+</tr>
+<tr>
+<td>ReplicaSet</td>
+<td>Hlídá počet Podů, u Deploymentu jej spravuje Kubernetes</td>
+</tr>
+<tr>
+<td>Service</td>
+<td>Stabilní síťový vstup pro vybranou skupinu Podů</td>
+</tr>
+<tr>
+<td>Namespace</td>
+<td>Prostor názvů a správy uvnitř clusteru</td>
+</tr>
+<tr>
+<td>Manifest</td>
+<td>YAML soubor požadovaných prostředků</td>
+</tr>
+<tr>
+<td>Context</td>
+<td>Volba clusteru, účtu a případného výchozího namespace pro kubectl</td>
+</tr>
+</tbody>
+</table>
+<p>Pod může být nahrazen jiným jménem a IP, proto aplikaci obvykle zpřístupníš přes Service.</p>
+<p>Namespace sám není úplná síťová ani bezpečnostní izolace.</p>
+<h2 id="1-připrav-výukový-cluster">1. Připrav výukový cluster</h2>
+<table>
+<thead>
+<tr>
+<th>Možnost</th>
+<th>Kdy ji zvolit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Minikube</td>
+<td>Pojmenovaný lokální cluster s jednoduchým start/stop</td>
+</tr>
+<tr>
+<td>Kubernetes v Docker Desktopu</td>
+<td>Využití podporované integrace své instalace</td>
+</tr>
+<tr>
+<td>kind</td>
+<td>Krátkodobé testovací clustery jako kontejnery</td>
+</tr>
+</tbody>
+</table>
+<p>Příklad používá Minikube s Docker driverem, běžící linuxový engine Dockeru a instalované <a href="https://minikube.sigs.k8s.io/docs/start/">minikube</a> a <a href="https://kubernetes.io/docs/tasks/tools/">kubectl</a>.</p>
+<p>První start potřebuje internet a volné prostředky podle požadavků Minikube.</p>
+<pre><code class="lang-bash">docker version
+minikube start --driver=docker --profile docs-demo
+kubectl config current-context
+kubectl get nodes
+</code></pre>
+<p><code>docs-demo</code> je vlastní profil clusteru.</p>
+<p>Očekávej jeho context a uzel ve stavu <code>Ready</code>.</p>
+<p>Existující lokální cluster lze použít místo Minikube, ale vždy ověř context, aby příkazy nezasáhly jiné prostředí.</p>
+<h2 id="2-vytvoř-prostor-pro-ukázku">2. Vytvoř prostor pro ukázku</h2>
+<pre><code class="lang-bash">kubectl create namespace docs-demo
+</code></pre>
+<p>Jde o namespace uvnitř clusteru, který má zde stejné jméno jako profil Minikube, ale je jiným objektem.</p>
+<p>Pokud již existuje, ověř jeho obsah a vlastníka, než budeš pokračovat.</p>
+<h2 id="3-popiš-web-a-přístup-k-němu">3. Popiš web a přístup k němu</h2>
+<p>Do nové složky ulož <code>web.yaml</code>:</p>
+<pre><code class="lang-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  namespace: docs-demo
+spec:
+  replicas: 2 # Dvě instance, nikoli automatické škálování.
+  selector:
+    matchLabels:
+      app: docs-web
+  template:
+    metadata:
+      labels:
+        app: docs-web # Stejnou značku vybírá Service.
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:stable-alpine
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 100m
+              memory: 32Mi
+            limits:
+              memory: 128Mi
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+  namespace: docs-demo
+spec:
+  type: ClusterIP
+  selector:
+    app: docs-web
+  ports:
+    - port: 80
+      targetPort: 80
+</code></pre>
+<p><code>---</code> odděluje dva YAML dokumenty.</p>
+<p>Deployment vytvoří Pody a Service je vybere podle stejné značky <code>app: docs-web</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Hodnota</th>
+<th>Úloha</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>replicas: 2</code></td>
+<td>Dvě instance stejného webu</td>
+</tr>
+<tr>
+<td><code>containerPort: 80</code></td>
+<td>Popis portu nginxu, sám naslouchání nespouští</td>
+</tr>
+<tr>
+<td><code>requests.cpu: 100m</code></td>
+<td>Pro plánování žádá desetinu CPU na kontejner</td>
+</tr>
+<tr>
+<td><code>requests.memory: 32Mi</code></td>
+<td>Malá výchozí paměťová žádost pro ukázku</td>
+</tr>
+<tr>
+<td><code>limits.memory: 128Mi</code></td>
+<td>Limit, jehož překročení může ukončit kontejner</td>
+</tr>
+<tr>
+<td><code>readinessProbe</code></td>
+<td>Kontrola připravenosti přijímat provoz</td>
+</tr>
+<tr>
+<td><code>ClusterIP</code></td>
+<td>Dostupnost Service uvnitř clusteru</td>
+</tr>
+<tr>
+<td><code>port / targetPort</code></td>
+<td>Port Service a skutečný port aplikace</td>
+</tr>
+</tbody>
+</table>
+<p>Zdroje jsou výukové nastavení nginxu, nikoli univerzální hodnoty pro jinou aplikaci.</p>
+<p>Tag <code>stable-alpine</code> je pohyblivý.</p>
+<p>Pro reprodukovatelné nasazení použij ověřený digest image.</p>
+<h2 id="4-ověř-a-aplikuj">4. Ověř a aplikuj</h2>
+<p>V PowerShellu nebo Bashi ve složce manifestu:</p>
+<pre><code class="lang-bash">kubectl apply --dry-run=server -f web.yaml
+kubectl apply -f web.yaml
+kubectl rollout status deployment/web -n docs-demo --timeout=120s
+kubectl get pods,services -n docs-demo
+</code></pre>
+<p>První příkaz provede serverovou kontrolu bez uložení, druhý prostředky skutečně vytvoří nebo aktualizuje.</p>
+<p>Kontrola rollout počká nejvýše 120 sekund.</p>
+<p>Při timeoutu pokračuj diagnostikou, ne automatickým smazáním clusteru.</p>
+<p>Očekávej dva Pody <code>Running</code> s <code>READY 1/1</code> a Service <code>web</code>.</p>
+<h2 id="5-otevři-web">5. Otevři web</h2>
+<pre><code class="lang-bash">kubectl port-forward -n docs-demo service/web 8080:80
+</code></pre>
+<p>Dočasný tunel propojí místní port <code>8080</code> s portem <code>80</code> služby.</p>
+<p>Otevři <code>http://localhost:8080</code> a očekávej stránku nginx.</p>
+<p><code>Ctrl+C</code> ukončí pouze tunel, nikoli aplikaci.</p>
+<p>Port-forward je místní zkouška, není trvalé veřejné publikování a při zániku vybraného Podu se může ukončit.</p>
+<h2 id="6-změň-požadovaný-stav">6. Změň požadovaný stav</h2>
+<p>Změň v YAML <code>replicas</code> ze <code>2</code> na <code>3</code> a znovu spusť <code>kubectl apply -f web.yaml</code>.</p>
+<p><code>kubectl get pods -n docs-demo</code> má po chvíli ukázat tři připravené Pody.</p>
+<p>Při změně image vzniká nová revize a Deployment postupně nahrazuje Pody podle strategie.</p>
+<p><code>kubectl rollout history deployment/web -n docs-demo</code> vypíše dostupné revize a <code>kubectl rollout undo deployment/web -n docs-demo</code> může vrátit předchozí šablonu Podů.</p>
+<p>Undo nevrací databázové změny, externí data ani všechnu konfiguraci.</p>
+<p>Po návratu oprav také zdrojový manifest, jinak další apply znovu požádá o vadný stav.</p>
+<h2 id="když-aplikace-neběží">Když aplikace neběží</h2>
+<p>Najdi konkrétní Pod ve výpisu a použij:</p>
+<pre><code class="lang-text">kubectl describe pod &lt;pod&gt; -n &lt;namespace&gt;
+kubectl logs &lt;pod&gt; -n &lt;namespace&gt; [--previous]
+kubectl get events -n &lt;namespace&gt; --sort-by=.metadata.creationTimestamp
+</code></pre>
+<p><code>describe</code> ukáže plánování a události, <code>logs</code> výstup aplikace a <code>--previous</code> log předchozí ukončené instance.</p>
+<table>
+<thead>
+<tr>
+<th>Stav</th>
+<th>Co ověřit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Pending</code></td>
+<td>Kapacitu uzlů, plánovací podmínky a volume</td>
+</tr>
+<tr>
+<td><code>ImagePullBackOff</code></td>
+<td>Image, jeho verzi a přístup k registru</td>
+</tr>
+<tr>
+<td><code>CrashLoopBackOff</code></td>
+<td>Log aplikace, spuštění, konfiguraci a paměť</td>
+</tr>
+<tr>
+<td><code>Running</code>, ale <code>READY 0/1</code></td>
+<td>Port a výsledek readiness kontroly</td>
+</tr>
+<tr>
+<td>Nefunkční Service</td>
+<td>Shodu labelů, selectoru a <code>targetPort</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="konfigurace-data-a-veřejný-provoz">Konfigurace, data a veřejný provoz</h2>
+<table>
+<thead>
+<tr>
+<th>Potřeba</th>
+<th>Navazující prostředek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Běžné nastavení</td>
+<td>ConfigMap</td>
+</tr>
+<tr>
+<td>Přístupové údaje</td>
+<td>Secret a odpovídající správa přístupu a šifrování</td>
+</tr>
+<tr>
+<td>Trvalá data</td>
+<td>PersistentVolumeClaim a úložiště clusteru</td>
+</tr>
+<tr>
+<td>Stabilní identita stavové aplikace</td>
+<td>Podle návrhu StatefulSet</td>
+</tr>
+<tr>
+<td>Jednorázová nebo pravidelná úloha</td>
+<td>Job nebo CronJob</td>
+</tr>
+<tr>
+<td>Veřejný HTTP vstup</td>
+<td>Gateway API nebo Ingress s příslušnou implementací řadiče</td>
+</tr>
+</tbody>
+</table>
+<p>Base64 v Secretu není šifrování.</p>
+<p>Dvě repliky na jednom místním uzlu nechrání před jeho výpadkem a Deployment nenahrazuje zálohu dat.</p>
+<h2 id="úklid">Úklid</h2>
+<p>Pro odstranění jen prostředků tohoto souboru:</p>
+<pre><code class="lang-bash">kubectl delete -f web.yaml
+</code></pre>
+<p><code>kubectl delete namespace docs-demo</code> odstraní celý výukový prostor včetně dalších prostředků, které v něm mezitím vznikly.</p>
+<p><code>minikube stop --profile docs-demo</code> cluster zastaví a <code>minikube delete --profile docs-demo</code> ho včetně dat odstraní.</p>
+<p>Zdroje: <a href="https://minikube.sigs.k8s.io/docs/start/">Minikube</a>, <a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/">Deployment</a>, <a href="https://kubernetes.io/docs/concepts/services-networking/service/">Service</a>, <a href="https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/">port-forward</a>, <a href="https://kubernetes.io/docs/concepts/configuration/secret/">Secrets</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

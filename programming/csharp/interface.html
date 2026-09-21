@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>C# – rozhran&#237; a kop&#237;rov&#225;n&#237; objektů | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="C# – rozhran&#237; a kop&#237;rov&#225;n&#237; objektů | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Smlouvy rozhran&#237; a rozd&#237;l mezi mělkou a hlubokou kopi&#237; objektu.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/csharp/interface.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="c--rozhraní-a-kopírování-objektů">C# – rozhraní a kopírování objektů</h1>
+
+<p>Rozhraní popisuje kontrakt implementace.</p>
+<p>Význam jednotlivých metod musí být jednoznačný pro volajícího.</p>
+<h2 id="mělká-a-hluboká-kopie">Mělká a hluboká kopie</h2>
+<p>Přiřazení proměnné referenčního typu kopíruje referenci na stejný objekt.</p>
+<p>Mělká kopie vytvoří nový vnější objekt, ale jeho referenční pole stále odkazují na původní vnořené objekty.</p>
+<p>Metoda <code>MemberwiseClone</code> dělá mělkou kopii.</p>
+<p>Rozhraní <code>ICloneable</code> neurčuje, zda má <code>Clone</code> kopírovat mělce, nebo hluboce. <a href="https://learn.microsoft.com/en-us/dotnet/api/system.object.memberwiseclone">MemberwiseClone</a>, <a href="https://learn.microsoft.com/en-us/dotnet/api/system.icloneable">ICloneable</a></p>
+<h2 id="jednoznačný-kontrakt-kopie">Jednoznačný kontrakt kopie</h2>
+<p>Následující příklad kopíruje seznam značek profilu, aby jeho úprava neovlivnila originál.</p>
+<p>Řetězce lze sdílet, protože jsou neměnné.</p>
+<pre><code class="lang-csharp">var original = new Profile { Name = &quot;Jana&quot;, Tags = [&quot;editor&quot;] };
+var copy = original.Copy();
+copy.Tags.Add(&quot;reviewer&quot;);
+Console.WriteLine($&quot;{original.Tags.Count}, {copy.Tags.Count}&quot;); // 1, 2
+
+/// &lt;summary&gt;Poskytuje kopii s nezávislými měnitelnými daty.&lt;/summary&gt;
+public interface ICopyable&lt;T&gt;
+{
+    /// &lt;summary&gt;Vytvoří kopii podle kontraktu konkrétního typu.&lt;/summary&gt;
+    T Copy();
+}
+
+/// &lt;summary&gt;Jméno a měnitelné značky jednoho profilu.&lt;/summary&gt;
+public sealed class Profile : ICopyable&lt;Profile&gt;
+{
+    /// &lt;summary&gt;Zobrazované jméno.&lt;/summary&gt;
+    public string Name { get; set; } = &quot;&quot;;
+
+    /// &lt;summary&gt;Značky přiřazené profilu.&lt;/summary&gt;
+    public List&lt;string&gt; Tags { get; set; } = [];
+
+    /// &lt;summary&gt;Vrátí nový profil s vlastní kopií seznamu značek.&lt;/summary&gt;
+    public Profile Copy() =&gt; new() { Name = Name, Tags = [.. Tags] };
+}
+</code></pre>
+<p>Pokud později přidáš měnitelné objekty do seznamu, musíš rozhodnout a otestovat i jejich kopírování.</p>
+<h2 id="serializace-není-univerzální-klonování">Serializace není univerzální klonování</h2>
+<p>Pro kopírování nepoužívej <code>BinaryFormatter</code>.</p>
+<p>V .NET 9 a novějším jeho vestavěná implementace vyhazuje výjimku a formát má bezpečnostní problémy.</p>
+<p>Zvol explicitní kopii nebo serializaci s jasným datovým kontraktem, pokud skutečně potřebuješ přenos či uložení dat. <a href="https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-migration-guide/">Migrace z BinaryFormatter</a></p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

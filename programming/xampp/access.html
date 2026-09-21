@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>XAMPP: spuštěn&#237; lok&#225;ln&#237;ho PHP projektu | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="XAMPP: spuštěn&#237; lok&#225;ln&#237;ho PHP projektu | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Zpř&#237;stupněn&#237; m&#237;stn&#237; aplikace a kontrola portů Apache.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/xampp/access.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="xampp-spuštění-lokálního-php-projektu">XAMPP: spuštění lokálního PHP projektu</h1>
+
+<p>XAMPP spojuje Apache, PHP a další nástroje pro místní vývoj.</p>
+<p>Apache přijme HTTP požadavek a pro <code>.php</code> soubor spustí PHP.</p>
+<p>Prohlížeč dostane výsledek, nikoli zdrojový kód.</p>
+<h2 id="před-použitím">Před použitím</h2>
+<p>Návod předpokládá XAMPP ve Windows v <code>C:\xampp</code> a volný HTTP port 80.</p>
+<p>Používej jej pro vývoj na vlastním počítači, ne jako hotovou konfiguraci veřejného produkčního serveru.</p>
+<p><a href="https://www.apachefriends.org/faq_windows.html">Oficiální FAQ XAMPP</a> popisuje výchozí cesty, služby a omezení této sestavy.</p>
+<h2 id="praktické-použití">Praktické použití</h2>
+<ol>
+<li>Vytvoř složku <code>C:\xampp\htdocs\moje-aplikace</code>.</li>
+<li>Ulož do ní soubor <code>index.php</code> s následujícím obsahem.</li>
+<li>V <strong>XAMPP Control Panel</strong> spusť <strong>Apache</strong> tlačítkem <strong>Start</strong>.</li>
+<li>Otevři <code>http://localhost/moje-aplikace/</code> a ověř zobrazení zprávy.</li>
+</ol>
+<pre><code class="lang-php">&lt;?php
+// HTTP hlavička popisuje formát odpovědi a kódování českých znaků.
+header('Content-Type: text/plain; charset=utf-8');
+echo &quot;PHP projekt funguje.\n&quot;;
+</code></pre>
+<p>Soubor neotevírej dvojklikem přes <code>file://</code>, protože tím obcházíš Apache a PHP se nespustí.</p>
+<p>Pro tuto ukázku není potřeba zapínat databázovou službu ani měnit práva na správce.</p>
+<h2 id="co-lze-upravit">Co lze upravit</h2>
+<table>
+<thead>
+<tr>
+<th>Hodnota</th>
+<th>Význam</th>
+<th>Co změnit společně</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>C:\xampp</code></td>
+<td>Místo instalace</td>
+<td>Všechny odkazované konfigurační cesty</td>
+</tr>
+<tr>
+<td><code>moje-aplikace</code></td>
+<td>Podsložka webového kořene</td>
+<td>Stejnou část URL za <code>localhost/</code></td>
+</tr>
+<tr>
+<td>Port 80</td>
+<td>HTTP naslouchání Apache</td>
+<td>Při jiném portu přidat například <code>:8080</code> do URL</td>
+</tr>
+</tbody>
+</table>
+<p>Další projekt může mít vlastní podsložku, například <code>htdocs\druha-aplikace</code>.</p>
+<p>Aplikaci vyžadující vlastní doménu nebo veřejný kořen <code>public</code> nastav jako <a href="virtual-hosts.html">Virtual Host</a>.</p>
+<h2 id="časté-problémy">Časté problémy</h2>
+<table>
+<thead>
+<tr>
+<th>Projev</th>
+<th>Kontrola</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Apache se nespustí</td>
+<td>Chybový log a obsazení portu jinou službou</td>
+</tr>
+<tr>
+<td>404 Not Found</td>
+<td>Název podsložky, souboru a skutečný DocumentRoot</td>
+</tr>
+<tr>
+<td>Zobrazuje se zdroj PHP</td>
+<td>Použití HTTP a aktivní konfigurace PHP v Apache</td>
+</tr>
+<tr>
+<td>Po změně nic nového</td>
+<td>Správná URL, uložený soubor a případná cache</td>
+</tr>
+</tbody>
+</table>
+<p>Do veřejné složky nepatří zálohy, soukromé klíče ani konfigurace s hesly.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>SSH kl&#237;če – vytvořen&#237; a použ&#237;v&#225;n&#237; | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="SSH kl&#237;če – vytvořen&#237; a použ&#237;v&#225;n&#237; | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Vytvořen&#237; a ochrana SSH kl&#237;če, registrace veřejn&#233; č&#225;sti a použ&#237;v&#225;n&#237; agenta.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/network/ssh/keys.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="ssh-klíče--vytvoření-a-používání">SSH klíče – vytvoření a používání</h1>
+
+<p>SSH pár tvoří soukromý klíč u tebe a veřejný klíč uložený u cílového účtu.</p>
+<p>Server ověří, že ovládáš odpovídající soukromou část, aniž bys mu ji posílal.</p>
+<h2 id="rozliš-dvě-ověření">Rozliš dvě ověření</h2>
+<table>
+<thead>
+<tr>
+<th>Ověření</th>
+<th>Co prokazuje</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hostitelský klíč serveru</td>
+<td>Že ses připojil ke známému správnému serveru</td>
+</tr>
+<tr>
+<td>Tvůj uživatelský klíč</td>
+<td>Že smíš vystupovat jako daný účet</td>
+</tr>
+</tbody>
+</table>
+<p>Heslová fráze chrání soukromý klíč na disku.</p>
+<p>Není to heslo vzdáleného účtu.</p>
+<h2 id="vytvoření-klíče">Vytvoření klíče</h2>
+<p>S dostupným OpenSSH v PowerShellu nebo Bashi:</p>
+<pre><code class="lang-bash">ssh-keygen -t ed25519 -C &quot;Osobni notebook&quot;
+</code></pre>
+<p><code>-t</code> volí algoritmus a <code>-C</code> čitelný popisek zařízení.</p>
+<ol>
+<li>Zvol nabízenou cestu nebo vlastní jméno v <code>.ssh</code>.</li>
+<li>Při nabídce přepsání existujícího klíče zvol <code>n</code> a nový název, pokud nechceš původní identitu ztratit.</li>
+<li>Zadej silnou heslovou frázi a uchovej ji ve správci hesel.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Výchozí soubor</th>
+<th>Zacházení</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id_ed25519</code></td>
+<td>Soukromý klíč, nepatří do hostingu, chatu ani repozitáře</td>
+</tr>
+<tr>
+<td><code>id_ed25519.pub</code></td>
+<td>Veřejná část, kterou můžeš registrovat u serveru</td>
+</tr>
+</tbody>
+</table>
+<p>Pro starší systém, který Ed25519 nepodporuje, lze po ověření jeho požadavků použít <code>ssh-keygen -t rsa -b 4096 -C &quot;Osobni notebook&quot;</code>.</p>
+<p>Počet <code>4096</code> určuje velikost RSA klíče, nikoli délku hesla.</p>
+<h2 id="registrace-veřejného-klíče">Registrace veřejného klíče</h2>
+<p>V PowerShellu:</p>
+<pre><code class="lang-powershell">Get-Content &quot;$env:USERPROFILE\.ssh\id_ed25519.pub&quot;
+</code></pre>
+<p>V Bashi použij <code>cat ~/.ssh/id_ed25519.pub</code> a zkopíruj celý řádek začínající <code>ssh-ed25519</code>.</p>
+<ul>
+<li>U Git hostingu vlož řádek do nastavení SSH klíčů svého účtu. <a href="git.html#p%C5%99ipojen%C3%AD-ke-githubu">GitHub postup</a> popisuje konkrétní obrazovku.</li>
+<li>U linuxového serveru patří veřejný řádek do <code>~/.ssh/authorized_keys</code> cílového účtu.</li>
+<li>U Windows serveru závisí umístění i oprávnění na typu účtu. Použij <a href="https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_keymanagement">postup Microsoftu</a>.</li>
+</ul>
+<p>Na Linuxu s existujícím heslovým přístupem a nástrojem <code>ssh-copy-id</code> má automatické přidání syntaxi <code>ssh-copy-id -i &lt;veřejný-klíč.pub&gt; &lt;uživatel&gt;@&lt;server&gt;</code>.</p>
+<p>Při ručním nastavení na Linuxu bývá potřeba <code>chmod 700 ~/.ssh</code> a <code>chmod 600 ~/.ssh/authorized_keys</code> provedené na serveru pod správným účtem.</p>
+<p>Vlastník souboru musí odpovídat tomuto účtu.</p>
+<h2 id="ověření-konkrétní-identity">Ověření konkrétní identity</h2>
+<pre><code class="lang-text">ssh -i &lt;soukromý-klíč&gt; -o IdentitiesOnly=yes &lt;uživatel&gt;@&lt;server&gt;
+ssh-keygen -lf &lt;veřejný-klíč.pub&gt;
+</code></pre>
+<p>První příkaz nabídne vybranou identitu a druhý ukáže její otisk pro porovnání s registrovaným klíčem.</p>
+<p>Pokud přístup funguje, můžeš cestu trvale uvést v <a href="../ssh.html#ulo%C5%BE-p%C5%99ipojen%C3%AD-pod-n%C3%A1zvem">SSH config</a>.</p>
+<h2 id="odemykání-přes-agenta">Odemykání přes agenta</h2>
+<p>Pro Windows OpenSSH použij <a href="windows.html#agent-windows-openssh">službu ssh-agent</a>.</p>
+<h3 id="agent-v-git-bash-linuxu-a-macos">Agent v Git Bash, Linuxu a macOS</h3>
+<p>Nejprve:</p>
+<pre><code class="lang-bash">ssh-add -l
+</code></pre>
+<p>Výpis identit znamená dostupného agenta.</p>
+<p>Hlášení <code>The agent has no identities</code> znamená běžícího agenta bez načteného klíče.</p>
+<p>Pouze pokud se k agentovi nelze připojit, spusť pro tuto relaci:</p>
+<pre><code class="lang-bash">eval &quot;$(ssh-agent -s)&quot;
+</code></pre>
+<p>Příkaz načte proměnné nově spuštěného agenta do aktuálního shellu.</p>
+<p>Potom přidej klíč:</p>
+<pre><code class="lang-bash">ssh-add ~/.ssh/id_ed25519
+ssh-add -l
+</code></pre>
+<p>Procesy musí zdědit odpovídající <code>SSH_AUTH_SOCK</code>.</p>
+<p>Samostatně spuštěné IDE nemusí vidět stejného agenta.</p>
+<table>
+<thead>
+<tr>
+<th>Syntaxe</th>
+<th>Účinek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ssh-add &lt;soukromý-klíč&gt;</code></td>
+<td>Odemkne a načte identitu</td>
+</tr>
+<tr>
+<td><code>ssh-add -l</code></td>
+<td>Vypíše otisky načtených klíčů</td>
+</tr>
+<tr>
+<td><code>ssh-add -d &lt;veřejný-klíč.pub&gt;</code></td>
+<td>Odebere jednu identitu z agenta</td>
+</tr>
+<tr>
+<td><code>ssh-add -D</code></td>
+<td>Odebere všechny identity z tohoto agenta</td>
+</tr>
+</tbody>
+</table>
+<p>Odebrání identity nemaže soubor klíče, jen jeho dostupnost pro další přihlášení přes agenta.</p>
+<h2 id="změna-fráze-záloha-a-ztráta">Změna fráze, záloha a ztráta</h2>
+<p><code>ssh-keygen -p -f &lt;soukromý-klíč&gt;</code> změní ochrannou frázi po zadání původní.</p>
+<p>Veřejná identita zůstane stejná.</p>
+<p>Pro zálohu použij chráněné šifrované úložiště a uchovej frázi odděleně od nechráněné kopie souboru.</p>
+<p>Při podezření na únik soukromého klíče odeber jeho veřejnou část ze všech účtů, vytvoř nový pár a nahraď registrace.</p>
+<p>Pouhá změna fráze neodvolá již zkopírovanou identitu.</p>
+<p>Agent forwarding <code>ssh -A</code> nezapínej plošně: vzdálený systém může po dobu spojení využívat dostupného agenta.</p>
+<p>Zdroje: <a href="https://man.openbsd.org/ssh-keygen">ssh-keygen</a>, <a href="https://man.openbsd.org/ssh-add">ssh-add</a>, <a href="https://man.openbsd.org/ssh-agent">ssh-agent</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

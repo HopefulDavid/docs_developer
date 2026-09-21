@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Z&#225;loha a obnova bal&#237;čků | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Z&#225;loha a obnova bal&#237;čků | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Z&#225;loha a obnova bal&#237;čků npm, pnpm, pip, NuGet, .NET tools a Dart bez internetu.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/packages/backup-and-restore.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="záloha-a-obnova-balíčků">Záloha a obnova balíčků</h1>
+
+<p><a href="offline/transfer.ps1">Skript</a> připraví archiv pro obnovu balíčků bez internetu.</p>
+<p>Na obou počítačích potřebuješ <strong>PowerShell 6 nebo novější</strong> a program, kterým své balíčky spravuješ, například npm nebo pip.</p>
+<p>Na počítači, kde budeš zálohu obnovovat, musí být také programy nutné ke spuštění projektu, například Node.js, Python, .NET, Dart nebo Flutter.</p>
+<p>Nemusíš použít stejné verze programů jako na prvním počítači, ale zvolené verze musí fungovat s projektem a jeho balíčky.</p>
+<p>Počítače běžně nemusí mít stejný systém ani typ procesoru.</p>
+<p>Pokud ale projekt používá balíček vytvořený jen pro určitý systém nebo typ procesoru, potřebuješ balíček určený pro cílový počítač.</p>
+<p>U nástrojů instalovaných přes <code>dart install</code> musí mít oba počítače Windows a stejný typ procesoru, například x64.</p>
+<h2 id="npm">npm</h2>
+<p>Záloha ověří, že uložená cache stačí k offline instalaci.</p>
+<div class="tabGroup" id="tabgroup_1">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_1_npm-lokalni" role="tab" aria-controls="tabpanel_1_npm-lokalni" data-tab="npm-lokalni" tabindex="0" aria-selected="true">Lokální</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_1_npm-globalni" role="tab" aria-controls="tabpanel_1_npm-globalni" data-tab="npm-globalni" tabindex="-1">Globální</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_1_npm-vlastni" role="tab" aria-controls="tabpanel_1_npm-vlastni" data-tab="npm-vlastni" tabindex="-1">Vlastní</a>
+</li>
+</ul>
+<section id="tabpanel_1_npm-lokalni" role="tabpanel" data-tab="npm-lokalni">
+
+<p>Projekt vyžaduje <code>package.json</code> a <code>package-lock.json</code>.</p>
+<p>Obnova pomocí <code>npm ci</code> nahradí <code>node_modules</code> a vyžaduje původní adresu registru.</p>
+<p>Workspace, kořenové instalační skripty a nestandardní zdroje skript odmítne.</p>
+</section>
+<section id="tabpanel_1_npm-globalni" role="tabpanel" data-tab="npm-globalni" aria-hidden="true" hidden="hidden">
+
+<p>Zahrne všechny přímé balíčky z <code>npm ls --global --depth=0</code>.</p>
+</section>
+<section id="tabpanel_1_npm-vlastni" role="tabpanel" data-tab="npm-vlastni" aria-hidden="true" hidden="hidden">
+
+<p>Zahrne všechny přímé balíčky ve zvoleném prefixu.</p>
+</section>
+</div>
+<div class="tabGroup" id="tabgroup_2">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_2_npm-zaloha_npm-lokalni" role="tab" aria-controls="tabpanel_2_npm-zaloha_npm-lokalni" data-tab="npm-zaloha" data-condition="npm-lokalni" tabindex="0" aria-selected="true">Záloha</a>
+</li>
+<li role="presentation" aria-hidden="true" hidden="hidden">
+<a href="#tabpanel_2_npm-zaloha_npm-globalni" role="tab" aria-controls="tabpanel_2_npm-zaloha_npm-globalni" data-tab="npm-zaloha" data-condition="npm-globalni" tabindex="-1">Záloha</a>
+</li>
+<li role="presentation" aria-hidden="true" hidden="hidden">
+<a href="#tabpanel_2_npm-zaloha_npm-vlastni" role="tab" aria-controls="tabpanel_2_npm-zaloha_npm-vlastni" data-tab="npm-zaloha" data-condition="npm-vlastni" tabindex="-1">Záloha</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_2_npm-obnova_npm-lokalni" role="tab" aria-controls="tabpanel_2_npm-obnova_npm-lokalni" data-tab="npm-obnova" data-condition="npm-lokalni" tabindex="-1">Obnova</a>
+</li>
+<li role="presentation" aria-hidden="true" hidden="hidden">
+<a href="#tabpanel_2_npm-obnova_npm-globalni" role="tab" aria-controls="tabpanel_2_npm-obnova_npm-globalni" data-tab="npm-obnova" data-condition="npm-globalni" tabindex="-1">Obnova</a>
+</li>
+<li role="presentation" aria-hidden="true" hidden="hidden">
+<a href="#tabpanel_2_npm-obnova_npm-vlastni" role="tab" aria-controls="tabpanel_2_npm-obnova_npm-vlastni" data-tab="npm-obnova" data-condition="npm-vlastni" tabindex="-1">Obnova</a>
+</li>
+</ul>
+<section id="tabpanel_2_npm-zaloha_npm-lokalni" role="tabpanel" data-tab="npm-zaloha" data-condition="npm-lokalni">
+
+<pre><code class="lang-powershell">pwsh ./transfer.ps1 -Akce Zaloha -Spravce npm -Rozsah Lokalni -Archiv ./archiv
+</code></pre>
+<p>Skript se zeptá na kořen projektu a vytvoří <code>./archiv</code>.</p>
+</section>
+<section id="tabpanel_2_npm-zaloha_npm-globalni" role="tabpanel" data-tab="npm-zaloha" data-condition="npm-globalni" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-powershell">pwsh ./transfer.ps1 -Akce Zaloha -Spravce npm -Rozsah Globalni -Archiv ./archiv
+</code></pre>
+<p>Skript zjistí celý globální seznam a vytvoří <code>./archiv</code>.</p>
+<p>Globální seznam patří právě používanému <code>npm prefix --global</code>, proto balíčky v jiném prefixu zálohuj přes kartu Vlastní.</p>
+</section>
+<section id="tabpanel_2_npm-zaloha_npm-vlastni" role="tabpanel" data-tab="npm-zaloha" data-condition="npm-vlastni" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-powershell">pwsh ./transfer.ps1 -Akce Zaloha -Spravce npm -Rozsah Vlastni -Archiv ./archiv
+</code></pre>
+<p>Skript se zeptá na stávající prefix a vytvoří <code>./archiv</code>.</p>
+</section>
+<section id="tabpanel_2_npm-obnova_npm-lokalni" role="tabpanel" data-tab="npm-obnova" data-condition="npm-lokalni" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-powershell">pwsh ./archiv/transfer.ps1 -Akce Obnova -Archiv ./archiv
+</code></pre>
+<p>Zadej cestu ke stejnému projektu na cílovém počítači.</p>
+</section>
+<section id="tabpanel_2_npm-obnova_npm-globalni" role="tabpanel" data-tab="npm-obnova" data-condition="npm-globalni" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-powershell">pwsh ./archiv/transfer.ps1 -Akce Obnova -Archiv ./archiv
+</code></pre>
+<p>Po dokončení ověř příkaz nainstalovaného nástroje.</p>
+</section>
+<section id="tabpanel_2_npm-obnova_npm-vlastni" role="tabpanel" data-tab="npm-obnova" data-condition="npm-vlastni" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-powershell">pwsh ./archiv/transfer.ps1 -Akce Obnova -Archiv ./archiv
+</code></pre>
+<p>Zadej nový cílový prefix a spusť nástroj jeho úplnou cestou.</p>
+</section>
+</div>
+<h2 id="pnpm">pnpm</h2>
+<p>Skript zálohuje offline store a při obnově jej sloučí do úložiště pnpm.</p>
+<p>Jinou cílovou cestu určíš pomocí <code>-ObnoveneUloziste</code>.</p>
+<div class="tabGroup" id="tabgroup_3">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_3_pnpm-lokalni" role="tab" aria-controls="tabpanel_3_pnpm-lokalni" data-tab="pnpm-lokalni" tabindex="0" aria-selected="true">Lokální</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_3_pnpm-globalni" role="tab" aria-controls="tabpanel_3_pnpm-globalni" data-tab="pnpm-globalni" tabindex="-1">Globální</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_3_pnpm-vlastni" role="tab" aria-controls="tabpanel_3_pnpm-vlastni" data-tab="pnpm-vlastni" tabindex="-1">Vlastní</a>
+</li>
+</ul>
+<section id="tabpanel_3_pnpm-lokalni" role="tabpanel" data-tab="pnpm-lokalni">
+
+<p>Projekt vyžaduje <code>package.json</code> a <code>pnpm-lock.yaml</code>.</p>
+<p>Závislosti se vrátí do <code>node_modules</code>.</p>
+<p>Workspace, místní a nestandardní zdroje skript odmítne.</p>
+</section>
+<section id="tabpanel_3_pnpm-globalni" role="tabpanel" data-tab="pnpm-globalni" aria-hidden="true" hidden="hidden">
+
+<p>Zahrne všechny nástroje z <code>pnpm list --global --depth=0</code>.</p>
+<p>Na obou počítačích nastav správné <code>PNPM_HOME</code>.</p>
+</section>
+<section id="tabpanel_3_pnpm-vlastni" role="tabpanel" data-tab="pnpm-vlastni" aria-hidden="true" hidden="hidden">
+
+<p>Zadané <code>PNPM_HOME</code> určuje instalační složku nástrojů.</p>
+</section>
+</div>
+<div class="tabGroup" id="tabgroup_4">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_4_pnpm-zaloha_pnpm-lokalni" role="tab" aria-controls="tabpanel_4_pnpm-zaloha_pnpm-lokalni" data-tab="pnpm-zaloha" data-condition="pnpm-lokalni" tabindex="0" aria-selected="true">Záloha</a>
+</li>
+<li role="presentation" aria-hidden="true" hidden="hidden">
+<a href="#tabpanel_4_pnpm-zaloha_pnpm-globalni" role="tab" aria-controls="tabpanel_4_pnpm-zaloha_pnpm-globalni" data-tab="pnpm-zaloha" data-condition="pnpm-globalni" tabindex="-1">Záloha</a>
+</li>
+<li role="presentation" aria-hidden="true" hidden="hidden">
+<a href="#tabpanel_4_pnpm-zaloha_pnpm-vlastni" role="tab" aria-controls="tabpanel_4_pnpm-zaloha_pnpm-vlastni" data-tab="pnpm-zaloha" data-condition="pnpm-vlastni" tabindex="-1">Záloha</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_4_pnpm-obnova_pnpm-lokalni" role="tab" aria-controls="tabpanel_4_pnpm-obnova_pnpm-lokalni" data-tab="pnpm-obnova" data-condition="pnpm-lokalni" tabindex="-1">Obnova</a>
+</li>
+<li role="presentation" aria-hidden="true" hidden="hidden">
+<a href="#tabpanel_4_pnpm-obnova_pnpm-globalni" role="tab" aria-controls="tabpanel_4_pnpm-obnova_pnpm-globalni" data-tab="pnpm-obnova" data-condition="pnpm-globalni" tabindex="-1">Obnova</a>
+</li>
+<li role="presentation" aria-hidden="true" hidden="hidden">
+<a href="#tabpanel_4_pnpm-obnova_pnpm-vlastni" role="tab" aria-controls="tabpanel_4_pnpm-obnova_pnpm-vlastni" data-tab="pnpm-obnova" data-condition="pnpm-vlastni" tabindex="-1">Obnova</a>
+</li>
+</ul>
+<section id="tabpanel_4_pnpm-zaloha_pnpm-lokalni" role="tabpanel" data-tab="pnpm-zaloha" data-condition="pnpm-lokalni">
+
+<pre><code class="lang-powershell">pwsh ./transfer.ps1 -Akce Zaloha -Spravce pnpm -Rozsah Lokalni -Archiv ./archiv
+</code></pre>
+</section>
+<section id="tabpanel_4_pnpm-zaloha_pnpm-globalni" role="tabpanel" data-tab="pnpm-zaloha" data-condition="pnpm-globalni" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-powershell">pwsh ./transfer.ps1 -Akce Zaloha -Spravce pnpm -Rozsah Globalni -Archiv ./archiv
+</code></pre>
+</section>
+<section id="tabpanel_4_pnpm-zaloha_pnpm-vlastni" role="tabpanel" data-tab="pnpm-zaloha" data-condition="pnpm-vlastni" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-powershell">pwsh ./transfer.ps1 -Akce Zaloha -Spravce pnpm -Rozsah Vlastni -Archiv ./archiv
+</code></pre>
+</section>
+<section id="tabpanel_4_pnpm-obnova_pnpm-lokalni" role="tabpanel" data-tab="pnpm-obnova" data-condition="pnpm-lokalni" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-powershell">pwsh ./archiv/transfer.ps1 -Akce Obnova -Archiv ./archiv
+</code></pre>
+<p>Zadej kořen cílového projektu.</p>
+</section>
+<section id="tabpanel_4_pnpm-obnova_pnpm-globalni" role="tabpanel" data-tab="pnpm-obnova" data-condition="pnpm-globalni" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-powershell">pwsh ./archiv/transfer.ps1 -Akce Obnova -Archiv ./archiv
+</code></pre>
+<p>Ověř obnovený příkaz nástroje.</p>
+</section>
+<section id="tabpanel_4_pnpm-obnova_pnpm-vlastni" role="tabpanel" data-tab="pnpm-obnova" data-condition="pnpm-vlastni" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-powershell">pwsh ./archiv/transfer.ps1 -Akce Obnova -Archiv ./archiv
+</code></pre>
+<p>Zadej nové <code>PNPM_HOME</code> a ověř jeho spouštěče.</p>
+</section>
+</div>
+<h2 id="python-a-pip">Python a pip</h2>
+<p>Skript vytvoří wheelhouse ověřený instalací bez indexu.</p>
+<p>Editovatelné, Git, URL a místní zdroje odmítne.</p>
+<div class="tabGroup" id="tabgroup_5">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_5_pip-lokalni" role="tab" aria-controls="tabpanel_5_pip-lokalni" data-tab="pip-lokalni" tabindex="0" aria-selected="true">Lokální</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_5_pip-globalni" role="tab" aria-controls="tabpanel_5_pip-globalni" data-tab="pip-globalni" tabindex="-1">Globální</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_5_pip-vlastni" role="tab" aria-controls="tabpanel_5_pip-vlastni" data-tab="pip-vlastni" tabindex="-1">Vlastní</a>
+</li>
+</ul>
+<section id="tabpanel_5_pip-lokalni" role="tabpanel" data-tab="pip-lokalni">
+
+<p>Zadej Python z existujícího <code>.venv</code> a kořen projektu.</p>
+<p>Obnova vytvoří nové <code>.venv</code>.</p>
+</section>
+<section id="tabpanel_5_pip-globalni" role="tabpanel" data-tab="pip-globalni" aria-hidden="true" hidden="hidden">
+
+<p>Tato záložka znamená instalaci aktuálního uživatele pomocí <code>pip install --user</code>.</p>
+<p>Systémovou instalaci se zvýšenými právy skript nemění.</p>
+</section>
+<section id="tabpanel_5_pip-vlastni" role="tabpanel" data-tab="pip-vlastni" aria-hidden="true" hidden="hidden">
+
+<p>Zadej adresář balíčků nainstalovaných pomocí <code>pip install --target</code>.</p>
+<p>Po obnově nastav pro spuštění aplikace <code>PYTHONPATH</code> na obnovený adresář.</p>
+</section>
+</div>
+<div class="tabGroup" id="tabgroup_6">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_6_pip-zaloha_pip-lokalni" role="tab" aria-controls="tabpanel_6_pip-zaloha_pip-lokalni" data-tab="pip-zaloha" data-condition="pip-lokalni" tabindex="0" aria-selected="true">Záloha</a>
+</li>
+<li role="presentation" aria-hidden="true" hidden="hidden">
+<a href="#tabpanel_6_pip-zaloha_pip-globalni" role="tab" aria-controls="tabpanel_6_pip-zaloha_pip-globalni" data-tab="pip-zaloha" data-condition="pip-globalni" tabindex="-1">Záloha</a>
+</li>
+<li role="presentation" aria-hidden="true" hidden="hidden">
+<a href="#tabpanel_6_pip-zaloha_pip-vlastni" role="tab" aria-controls="tabpanel_6_pip-zaloha_pip-vlastni" data-tab="pip-zaloha" data-condition="pip-vlastni" tabindex="-1">Záloha</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_6_pip-obnova_pip-lokalni" role="tab" aria-controls="tabpanel_6_pip-obnova_pip-lokalni" data-tab="pip-obnova" data-condition="pip-lokalni" tabindex="-1">Obnova</a>
+</li>
+<li role="presentation" aria-hidden="true" hidden="hidden">
+<a href="#tabpanel_6_pip-obnova_pip-globalni" role="tab" aria-controls="tabpanel_6_pip-obnova_pip-globalni" data-tab="pip-obnova" data-condition="pip-globalni" tabindex="-1">Obnova</a>
+</li>
+<li role="presentation" aria-hidden="true" hidden="hidden">
+<a href="#tabpanel_6_pip-obnova_pip-vlastni" role="tab" aria-controls="tabpanel_6_pip-obnova_pip-vlastni" data-tab="pip-obnova" data-condition="pip-vlastni" tabindex="-1">Obnova</a>
+</li>
+</ul>
+<section id="tabpanel_6_pip-zaloha_pip-lokalni" role="tabpanel" data-tab="pip-zaloha" data-condition="pip-lokalni">
+
+<pre><code class="lang-powershell">pwsh ./transfer.ps1 -Akce Zaloha -Spravce pip -Rozsah Lokalni -Archiv ./archiv
+</code></pre>
+</section>
+<section id="tabpanel_6_pip-zaloha_pip-globalni" role="tabpanel" data-tab="pip-zaloha" data-condition="pip-globalni" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-powershell">pwsh ./transfer.ps1 -Akce Zaloha -Spravce pip -Rozsah Globalni -Archiv ./archiv
+</code></pre>
+</section>
+<section id="tabpanel_6_pip-zaloha_pip-vlastni" role="tabpanel" data-tab="pip-zaloha" data-condition="pip-vlastni" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-powershell">pwsh ./transfer.ps1 -Akce Zaloha -Spravce pip -Rozsah Vlastni -Archiv ./archiv
+</code></pre>
+</section>
+<section id="tabpanel_6_pip-obnova_pip-lokalni" role="tabpanel" data-tab="pip-obnova" data-condition="pip-lokalni" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-powershell">pwsh ./archiv/transfer.ps1 -Akce Obnova -Archiv ./archiv
+</code></pre>
+<p>Zadej kompatibilní základní Python a kořen cílového projektu bez <code>.venv</code>.</p>
+</section>
+<section id="tabpanel_6_pip-obnova_pip-globalni" role="tabpanel" data-tab="pip-obnova" data-condition="pip-globalni" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-powershell">pwsh ./archiv/transfer.ps1 -Akce Obnova -Archiv ./archiv
+</code></pre>
+<p>Zadej Python cílového uživatele.</p>
+</section>
+<section id="tabpanel_6_pip-obnova_pip-vlastni" role="tabpanel" data-tab="pip-obnova" data-condition="pip-vlastni" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-powershell">pwsh ./archiv/transfer.ps1 -Akce Obnova -Archiv ./archiv
+</code></pre>
+<p>Zadej Python a novou prázdnou cílovou složku.</p>
+</section>
+</div>
+<h2 id="nuget">NuGet</h2>
+<p>Kořen projektu musí obsahovat právě jeden projektový soubor a jeho <code>packages.lock.json</code>.</p>
+<p>Archiv obsahuje místní feed <code>.nupkg</code> pro uzamčenou obnovu.</p>
+<div class="tabGroup" id="tabgroup_7">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_7_nuget-zaloha" role="tab" aria-controls="tabpanel_7_nuget-zaloha" data-tab="nuget-zaloha" tabindex="0" aria-selected="true">Záloha</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_7_nuget-obnova" role="tab" aria-controls="tabpanel_7_nuget-obnova" data-tab="nuget-obnova" tabindex="-1">Obnova</a>
+</li>
+</ul>
+<section id="tabpanel_7_nuget-zaloha" role="tabpanel" data-tab="nuget-zaloha">
+
+<pre><code class="lang-powershell">pwsh ./transfer.ps1 -Akce Zaloha -Spravce nuget -Rozsah Lokalni -Archiv ./archiv
+</code></pre>
+<p>Zadej kořen projektu a archiv vznikne v <code>./archiv</code>.</p>
+</section>
+<section id="tabpanel_7_nuget-obnova" role="tabpanel" data-tab="nuget-obnova" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-powershell">pwsh ./archiv/transfer.ps1 -Akce Obnova -Archiv ./archiv
+</code></pre>
+<p>Zadej kořen shodného projektu.</p>
+<p>Skript po obnově spustí <code>dotnet build --no-restore</code>.</p>
+</section>
+</div>
+<h2 id="net-tools">.NET tools</h2>
+<p>Archiv obsahuje místní NuGet feed ověřený zkušební obnovou.</p>
+<div class="tabGroup" id="tabgroup_8">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_8_tools-lokalni" role="tab" aria-controls="tabpanel_8_tools-lokalni" data-tab="tools-lokalni" tabindex="0" aria-selected="true">Lokální</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_8_tools-globalni" role="tab" aria-controls="tabpanel_8_tools-globalni" data-tab="tools-globalni" tabindex="-1">Globální</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_8_tools-vlastni" role="tab" aria-controls="tabpanel_8_tools-vlastni" data-tab="tools-vlastni" tabindex="-1">Vlastní</a>
+</li>
+</ul>
+<section id="tabpanel_8_tools-lokalni" role="tabpanel" data-tab="tools-lokalni">
+
+<p>Projekt potřebuje <code>.config/dotnet-tools.json</code> nebo kořenový <code>dotnet-tools.json</code> podle verze SDK.</p>
+</section>
+<section id="tabpanel_8_tools-globalni" role="tabpanel" data-tab="tools-globalni" aria-hidden="true" hidden="hidden">
+
+<p>Zahrne všechny nástroje aktuálního účtu z <code>dotnet tool list --global</code>.</p>
+</section>
+<section id="tabpanel_8_tools-vlastni" role="tabpanel" data-tab="tools-vlastni" aria-hidden="true" hidden="hidden">
+
+<p>Zahrne nástroje ze zadané složky <code>--tool-path</code> a obnoví je do nové cílové složky.</p>
+</section>
+</div>
+<div class="tabGroup" id="tabgroup_9">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_9_tools-zaloha_tools-lokalni" role="tab" aria-controls="tabpanel_9_tools-zaloha_tools-lokalni" data-tab="tools-zaloha" data-condition="tools-lokalni" tabindex="0" aria-selected="true">Záloha</a>
+</li>
+<li role="presentation" aria-hidden="true" hidden="hidden">
+<a href="#tabpanel_9_tools-zaloha_tools-globalni" role="tab" aria-controls="tabpanel_9_tools-zaloha_tools-globalni" data-tab="tools-zaloha" data-condition="tools-globalni" tabindex="-1">Záloha</a>
+</li>
+<li role="presentation" aria-hidden="true" hidden="hidden">
+<a href="#tabpanel_9_tools-zaloha_tools-vlastni" role="tab" aria-controls="tabpanel_9_tools-zaloha_tools-vlastni" data-tab="tools-zaloha" data-condition="tools-vlastni" tabindex="-1">Záloha</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_9_tools-obnova_tools-lokalni" role="tab" aria-controls="tabpanel_9_tools-obnova_tools-lokalni" data-tab="tools-obnova" data-condition="tools-lokalni" tabindex="-1">Obnova</a>
+</li>
+<li role="presentation" aria-hidden="true" hidden="hidden">
+<a href="#tabpanel_9_tools-obnova_tools-globalni" role="tab" aria-controls="tabpanel_9_tools-obnova_tools-globalni" data-tab="tools-obnova" data-condition="tools-globalni" tabindex="-1">Obnova</a>
+</li>
+<li role="presentation" aria-hidden="true" hidden="hidden">
+<a href="#tabpanel_9_tools-obnova_tools-vlastni" role="tab" aria-controls="tabpanel_9_tools-obnova_tools-vlastni" data-tab="tools-obnova" data-condition="tools-vlastni" tabindex="-1">Obnova</a>
+</li>
+</ul>
+<section id="tabpanel_9_tools-zaloha_tools-lokalni" role="tabpanel" data-tab="tools-zaloha" data-condition="tools-lokalni">
+
+<pre><code class="lang-powershell">pwsh ./transfer.ps1 -Akce Zaloha -Spravce dotnet-tools -Rozsah Lokalni -Archiv ./archiv
+</code></pre>
+</section>
+<section id="tabpanel_9_tools-zaloha_tools-globalni" role="tabpanel" data-tab="tools-zaloha" data-condition="tools-globalni" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-powershell">pwsh ./transfer.ps1 -Akce Zaloha -Spravce dotnet-tools -Rozsah Globalni -Archiv ./archiv
+</code></pre>
+</section>
+<section id="tabpanel_9_tools-zaloha_tools-vlastni" role="tabpanel" data-tab="tools-zaloha" data-condition="tools-vlastni" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-powershell">pwsh ./transfer.ps1 -Akce Zaloha -Spravce dotnet-tools -Rozsah Vlastni -Archiv ./archiv
+</code></pre>
+</section>
+<section id="tabpanel_9_tools-obnova_tools-lokalni" role="tabpanel" data-tab="tools-obnova" data-condition="tools-lokalni" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-powershell">pwsh ./archiv/transfer.ps1 -Akce Obnova -Archiv ./archiv
+</code></pre>
+<p>Zadej kořen projektu s odpovídajícím manifestem.</p>
+</section>
+<section id="tabpanel_9_tools-obnova_tools-globalni" role="tabpanel" data-tab="tools-obnova" data-condition="tools-globalni" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-powershell">pwsh ./archiv/transfer.ps1 -Akce Obnova -Archiv ./archiv
+</code></pre>
+</section>
+<section id="tabpanel_9_tools-obnova_tools-vlastni" role="tabpanel" data-tab="tools-obnova" data-condition="tools-vlastni" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-powershell">pwsh ./archiv/transfer.ps1 -Akce Obnova -Archiv ./archiv
+</code></pre>
+<p>Zadej novou cílovou složku a spusť nástroj její úplnou cestou.</p>
+</section>
+</div>
+<h2 id="dart-a-flutter">Dart a Flutter</h2>
+<p>Vyber projektové závislosti nebo globální nástroje <code>dart install</code>.</p>
+<div class="tabGroup" id="tabgroup_10">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_10_dart-lokalni" role="tab" aria-controls="tabpanel_10_dart-lokalni" data-tab="dart-lokalni" tabindex="0" aria-selected="true">Lokální</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_10_dart-globalni" role="tab" aria-controls="tabpanel_10_dart-globalni" data-tab="dart-globalni" tabindex="-1">Globální</a>
+</li>
+</ul>
+<section id="tabpanel_10_dart-lokalni" role="tabpanel" data-tab="dart-lokalni">
+
+<p>Projekt potřebuje <code>pubspec.yaml</code>, <code>pubspec.lock</code> a odpovídající SDK.</p>
+<p>Zachovej <code>PUB_HOSTED_URL</code>.</p>
+<p>Workspace, místní a Git zdroje skript odmítne.</p>
+</section>
+<section id="tabpanel_10_dart-globalni" role="tabpanel" data-tab="dart-globalni" aria-hidden="true" hidden="hidden">
+
+<p>Vyžaduje Dart 3.10+, Windows a stejnou architekturu.</p>
+<p>Vlastní <code>DART_DATA_HOME</code> nastav před zálohou i obnovou.</p>
+<p>Obnovené spouštěče najdeš v <code>install/bin</code>.</p>
+</section>
+</div>
+<div class="tabGroup" id="tabgroup_11">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_11_dart-zaloha_dart-lokalni" role="tab" aria-controls="tabpanel_11_dart-zaloha_dart-lokalni" data-tab="dart-zaloha" data-condition="dart-lokalni" tabindex="0" aria-selected="true">Záloha</a>
+</li>
+<li role="presentation" aria-hidden="true" hidden="hidden">
+<a href="#tabpanel_11_dart-zaloha_dart-globalni" role="tab" aria-controls="tabpanel_11_dart-zaloha_dart-globalni" data-tab="dart-zaloha" data-condition="dart-globalni" tabindex="-1">Záloha</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_11_dart-obnova_dart-lokalni" role="tab" aria-controls="tabpanel_11_dart-obnova_dart-lokalni" data-tab="dart-obnova" data-condition="dart-lokalni" tabindex="-1">Obnova</a>
+</li>
+<li role="presentation" aria-hidden="true" hidden="hidden">
+<a href="#tabpanel_11_dart-obnova_dart-globalni" role="tab" aria-controls="tabpanel_11_dart-obnova_dart-globalni" data-tab="dart-obnova" data-condition="dart-globalni" tabindex="-1">Obnova</a>
+</li>
+</ul>
+<section id="tabpanel_11_dart-zaloha_dart-lokalni" role="tabpanel" data-tab="dart-zaloha" data-condition="dart-lokalni">
+
+<pre><code class="lang-powershell">pwsh ./transfer.ps1 -Akce Zaloha -Spravce dart -Rozsah Lokalni -Archiv ./archiv
+</code></pre>
+<p>Pro Flutter přidej <code>-DartPrikaz flutter</code> a přenes také Flutter SDK.</p>
+</section>
+<section id="tabpanel_11_dart-zaloha_dart-globalni" role="tabpanel" data-tab="dart-zaloha" data-condition="dart-globalni" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-powershell">pwsh ./transfer.ps1 -Akce Zaloha -Spravce dart -Rozsah Globalni -Archiv ./archiv
+</code></pre>
+</section>
+<section id="tabpanel_11_dart-obnova_dart-lokalni" role="tabpanel" data-tab="dart-obnova" data-condition="dart-lokalni" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-powershell">pwsh ./archiv/transfer.ps1 -Akce Obnova -Archiv ./archiv
+</code></pre>
+<p>Zadej kořen shodného projektu.</p>
+</section>
+<section id="tabpanel_11_dart-obnova_dart-globalni" role="tabpanel" data-tab="dart-obnova" data-condition="dart-globalni" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-powershell">pwsh ./archiv/transfer.ps1 -Akce Obnova -Archiv ./archiv
+</code></pre>
+<p>Po dokončení spusť příkaz nástroje a ověř jeho výstup.</p>
+</section>
+</div>
+<h2 id="ověření-výsledku-a-úklid">Ověření výsledku a úklid</h2>
+<p>Na cíli spusť testy projektu nebo příkaz nástroje bez internetu.</p>
+<p>Archiv si ponech, dokud neprojdou.</p>
+<p>Úplnost archivu můžeš ověřit samostatně:</p>
+<pre><code class="lang-powershell">pwsh ./archiv/transfer.ps1 -Akce Overeni -Archiv ./archiv
+</code></pre>
+<p>Úklid po ověření vyžaduje potvrzení <code>SMAZAT</code> a smaže celý archiv:</p>
+<pre><code class="lang-powershell">pwsh ./archiv/transfer.ps1 -Akce Uklid -Archiv ./archiv
+</code></pre>
+<h2 id="omezení">Omezení</h2>
+<p>Archiv nepřenáší runtime, SDK, systémové knihovny, certifikáty, přihlašovací údaje ani data stahovaná instalačními skripty.</p>
+<p>Složka bez <code>archiv.json</code> není dokončená záloha.</p>
+<p>Minimální verze PowerShellu vychází z použitých funkcí pro <a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertfrom-json#-ashashtable">načítání JSON</a>, <a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/set-content#-encoding">zápis UTF-8</a> a <a href="https://learn.microsoft.com/en-us/dotnet/api/system.io.path.getrelativepath">relativní cesty</a>.</p>
+<p>Kompatibilitu cíle určují <a href="https://docs.npmjs.com/files/package-lock.json/">formát npm lockfilu</a>, <a href="https://pnpm.io/cli/install#--offline">offline instalace pnpm</a>, <a href="https://packaging.python.org/en/latest/specifications/platform-compatibility-tags/">tagy Python wheel</a>, <a href="https://learn.microsoft.com/en-us/dotnet/core/rid-catalog">varianty NuGet pro runtime</a>, <a href="https://learn.microsoft.com/en-us/dotnet/core/tools/global-json">výběr .NET SDK</a>, <a href="https://learn.microsoft.com/en-us/dotnet/core/tools/troubleshoot-usage-issues">.NET runtime pro tools</a> a <a href="https://dart.dev/tools/pub/pubspec#sdk-constraints">omezení Dart SDK</a>.</p>
+<p>Požadavek pro globální Dart vychází z <a href="https://dart.dev/tools/pub/cmd/pub-global">nativních binárek <code>dart install</code></a> a jejich <a href="https://dart.dev/tools/dart-compile#subcommands">vazby na architekturu</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>.NET tools | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=".NET tools | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Př&#237;kazy .NET tools a postup vypnut&#237; telemetrie .NET SDK.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/packages/dotnet-tools.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="net-tools">.NET tools</h1>
+
+<p>.NET tools jsou příkazové nástroje, například DocFX.</p>
+<p>Pro přenos nástrojů použij <a href="backup-and-restore.html#net-tools">zálohu a obnovu bez internetu</a>.</p>
+<p><strong>Doporučení:</strong> Před prvním použitím .NET SDK <a href="#vypnut%C3%AD-telemetrie-net-sdk">vypni jeho telemetrii</a>.</p>
+<h2 id="základní-příkazy">Základní příkazy</h2>
+<p>Zápis <code>&lt;balíček&gt;</code> znamená ID balíčku nástroje a <code>&lt;příkaz&gt;</code> název, kterým se nástroj spouští.</p>
+<p>Tyto názvy nemusí být stejné.</p>
+<p>Další značky popisuje <a href="../../operating-system/command-line-syntax.html">klíč syntaxe příkazů</a>.</p>
+<div class="tabGroup" id="tabgroup_1">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_1_tools-commands-global" role="tab" aria-controls="tabpanel_1_tools-commands-global" data-tab="tools-commands-global" tabindex="0" aria-selected="true">Globální</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_1_tools-commands-local" role="tab" aria-controls="tabpanel_1_tools-commands-local" data-tab="tools-commands-local" tabindex="-1">Lokální v projektu</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_1_tools-commands-path" role="tab" aria-controls="tabpanel_1_tools-commands-path" data-tab="tools-commands-path" tabindex="-1">Vlastní složka</a>
+</li>
+</ul>
+<section id="tabpanel_1_tools-commands-global" role="tabpanel" data-tab="tools-commands-global">
+
+<table>
+<thead>
+<tr>
+<th>Účel</th>
+<th>Příkaz</th>
+<th>Výsledek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vyhledat nástroj</td>
+<td><code>dotnet tool search &lt;hledaný-text&gt;</code></td>
+<td>Vyhledá nástroje v NuGet zdrojích</td>
+</tr>
+<tr>
+<td>Nainstalovat nástroj pro aktuální účet</td>
+<td><code>dotnet tool install --global &lt;balíček&gt; [--version &lt;verze&gt;]</code></td>
+<td>Zpřístupní jeho příkaz ze všech složek</td>
+</tr>
+<tr>
+<td>Vypsat nainstalované nástroje</td>
+<td><code>dotnet tool list --global</code></td>
+<td>Zobrazí ID balíčků, verze a příkazy</td>
+</tr>
+<tr>
+<td>Aktualizovat nástroj</td>
+<td><code>dotnet tool update --global &lt;balíček&gt; [--version &lt;verze&gt;]</code></td>
+<td>Nahradí nainstalovanou verzi</td>
+</tr>
+<tr>
+<td>Odinstalovat nástroj</td>
+<td><code>dotnet tool uninstall --global &lt;balíček&gt;</code></td>
+<td>Odebere globální instalaci aktuálního účtu</td>
+</tr>
+<tr>
+<td>Spustit nástroj</td>
+<td><code>&lt;příkaz&gt; [argumenty]</code></td>
+<td>Spustí příkaz zveřejněný balíčkem</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="tabpanel_1_tools-commands-local" role="tabpanel" data-tab="tools-commands-local" aria-hidden="true" hidden="hidden">
+
+<table>
+<thead>
+<tr>
+<th>Účel</th>
+<th>Příkaz</th>
+<th>Výsledek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vytvořit manifest</td>
+<td><code>dotnet new tool-manifest</code></td>
+<td>Vytvoří <code>.config/dotnet-tools.json</code> pro projekt</td>
+</tr>
+<tr>
+<td>Přidat nástroj do manifestu</td>
+<td><code>dotnet tool install &lt;balíček&gt; [--version &lt;verze&gt;]</code></td>
+<td>Zapíše lokální nástroj a obnoví ho</td>
+</tr>
+<tr>
+<td>Obnovit všechny nástroje</td>
+<td><code>dotnet tool restore</code></td>
+<td>Nainstaluje nástroje uvedené v manifestu</td>
+</tr>
+<tr>
+<td>Vypsat lokální nástroje</td>
+<td><code>dotnet tool list --local</code></td>
+<td>Zobrazí nástroje dostupné z aktuální složky</td>
+</tr>
+<tr>
+<td>Aktualizovat nástroj</td>
+<td><code>dotnet tool update &lt;balíček&gt; [--version &lt;verze&gt;]</code></td>
+<td>Změní verzi v nalezeném manifestu</td>
+</tr>
+<tr>
+<td>Odebrat nástroj</td>
+<td><code>dotnet tool uninstall &lt;balíček&gt;</code></td>
+<td>Odebere záznam z nalezeného manifestu</td>
+</tr>
+<tr>
+<td>Spustit nástroj</td>
+<td><code>dotnet tool run &lt;příkaz&gt; -- [argumenty]</code></td>
+<td>Spustí lokální příkaz a předá mu argumenty za <code>--</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="tabpanel_1_tools-commands-path" role="tabpanel" data-tab="tools-commands-path" aria-hidden="true" hidden="hidden">
+
+<table>
+<thead>
+<tr>
+<th>Účel</th>
+<th>Příkaz</th>
+<th>Výsledek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nainstalovat do zvolené složky</td>
+<td><code>dotnet tool install &lt;balíček&gt; --tool-path &lt;složka&gt; [--version &lt;verze&gt;]</code></td>
+<td>Umístí nástroj mimo výchozí globální cestu</td>
+</tr>
+<tr>
+<td>Vypsat nástroje ve složce</td>
+<td><code>dotnet tool list --tool-path &lt;složka&gt;</code></td>
+<td>Zobrazí instalace v přesně zadané cestě</td>
+</tr>
+<tr>
+<td>Aktualizovat nástroj</td>
+<td><code>dotnet tool update &lt;balíček&gt; --tool-path &lt;složka&gt; [--version &lt;verze&gt;]</code></td>
+<td>Nahradí verzi v této složce</td>
+</tr>
+<tr>
+<td>Odinstalovat nástroj</td>
+<td><code>dotnet tool uninstall &lt;balíček&gt; --tool-path &lt;složka&gt;</code></td>
+<td>Odebere nástroj z této složky</td>
+</tr>
+<tr>
+<td>Spustit nástroj</td>
+<td><code>&lt;složka&gt;/&lt;příkaz&gt; [argumenty]</code></td>
+<td>Spustí nástroj úplnou nebo relativní cestou</td>
+</tr>
+</tbody>
+</table>
+</section>
+</div>
+
+<p>.NET tools běží s oprávněními uživatele, proto před instalací ověř autora a původ balíčku.</p>
+<p>Podporované rozsahy a syntaxi shrnuje oficiální návod <a href="https://learn.microsoft.com/en-us/dotnet/core/tools/global-tools">Jak spravovat .NET tools</a>.</p>
+<h3 id="první-lokální-nástroj">První lokální nástroj</h3>
+<p>V novém testovacím projektu s nainstalovaným .NET SDK spusť:</p>
+<pre><code class="lang-powershell">dotnet new tool-manifest
+dotnet tool install docfx
+dotnet tool list --local
+dotnet tool run docfx -- --version
+</code></pre>
+<p>Manifest vytvoř jen jednou.</p>
+<p>Instalace do něj zapíše vybranou verzi a poslední příkaz ověří spustitelnost nástroje. <a href="https://learn.microsoft.com/en-us/dotnet/core/tools/local-tools-how-to-use">Lokální nástroje</a></p>
+<h2 id="vypnutí-telemetrie-net-sdk">Vypnutí telemetrie .NET SDK</h2>
+<p>Telemetrii .NET SDK vypneš proměnnou prostředí <code>DOTNET_CLI_TELEMETRY_OPTOUT</code> s hodnotou <code>1</code> nebo <code>true</code> nastavenou před spuštěním příkazu <code>dotnet</code>. <a href="https://learn.microsoft.com/en-us/dotnet/core/tools/telemetry#how-to-opt-out">Dokumentace Microsoftu</a></p>
+<p>Následující postup používá jednotně hodnotu <code>1</code>.</p>
+<p>Nastavení se vztahuje na telemetrii SDK při příkazech jako <code>dotnet build</code>, <code>dotnet restore</code>, <code>dotnet run</code> nebo <code>dotnet test</code> a není nutné přidávat parametr ke každému spuštění.</p>
+<p>Telemetrie Visual Studia, VS Code nebo aplikace spuštěné přes <code>dotnet run</code> má vlastní nastavení.</p>
+<p>Vyber systém, ve kterém spouštíš .NET SDK.</p>
+<div class="tabGroup" id="tabgroup_2">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_2_telemetry-windows" role="tab" aria-controls="tabpanel_2_telemetry-windows" data-tab="telemetry-windows" tabindex="0" aria-selected="true">Windows</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_2_telemetry-unix" role="tab" aria-controls="tabpanel_2_telemetry-unix" data-tab="telemetry-unix" tabindex="-1">Linux a macOS</a>
+</li>
+</ul>
+<section id="tabpanel_2_telemetry-windows" role="tabpanel" data-tab="telemetry-windows">
+
+<p><strong>Trvalé vypnutí pro aktuální účet</strong></p>
+<p>V běžném PowerShellu nebo CMD spusť:</p>
+<pre><code class="lang-text">setx DOTNET_CLI_TELEMETRY_OPTOUT 1
+</code></pre>
+<p>Příkaz uloží hodnotu pro přihlášeného uživatele a nevyžaduje spuštění jako správce.</p>
+<p>Nastavení zůstane uložené i po restartu počítače, dokud jej nezměníš nebo neodstraníš.</p>
+<p><code>setx</code> mění uložené prostředí, ale neaktualizuje již běžící terminál ani editor. <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/setx#remarks">Popis příkazu setx</a></p>
+<p>Po uložení proto proveď obě kontroly níže.</p>
+<p><strong>Ověření uložené a aktuální hodnoty</strong></p>
+<p><strong>1. Ověř trvalé uložení v PowerShellu:</strong></p>
+<pre><code class="lang-text">[Environment]::GetEnvironmentVariable(
+    &quot;DOTNET_CLI_TELEMETRY_OPTOUT&quot;, &quot;User&quot;
+)
+</code></pre>
+<p>Očekávaný výstup po uvedeném příkazu <code>setx</code> je:</p>
+<pre><code class="lang-text">1
+</code></pre>
+<p>Tuto kontrolu můžeš provést ihned ve stejném okně, protože čte uloženou uživatelskou hodnotu z registru. <a href="https://learn.microsoft.com/en-us/dotnet/api/system.environment.getenvironmentvariable">Environment.GetEnvironmentVariable</a></p>
+<p>Alternativou použitelnou v CMD i PowerShellu je:</p>
+<pre><code class="lang-text">reg query HKCU\Environment /v DOTNET_CLI_TELEMETRY_OPTOUT
+</code></pre>
+<p>Ve výpisu najdi řádek s názvem <code>DOTNET_CLI_TELEMETRY_OPTOUT</code>, typem <code>REG_SZ</code> a hodnotou <code>1</code>.</p>
+<p><strong>2. Ověř prostředí, ze kterého budeš spouštět <code>dotnet</code>:</strong></p>
+<p>Úplně ukonči a znovu otevři terminál.</p>
+<p>Při práci v integrovaném terminálu restartuj také celý editor nebo IDE.</p>
+<p>Nový terminál spusť například z nabídky Start, protože proces spuštěný ze starého terminálu může zdědit jeho původní prostředí. <a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_environment_variables#long-description">Dědění proměnných prostředí</a></p>
+<p>V novém <strong>PowerShellu</strong> zadej:</p>
+<pre><code class="lang-text">$env:DOTNET_CLI_TELEMETRY_OPTOUT
+</code></pre>
+<p>V novém <strong>CMD</strong> použij místo toho:</p>
+<pre><code class="lang-text">echo %DOTNET_CLI_TELEMETRY_OPTOUT%
+</code></pre>
+<p>Očekávaný výstup je znovu <code>1</code> a z tohoto okna už můžeš běžně spouštět příkazy <code>dotnet</code>.</p>
+<p>Pokud CMD vypíše doslova <code>%DOTNET_CLI_TELEMETRY_OPTOUT%</code>, proměnná v jeho prostředí není definovaná.</p>
+<table>
+<thead>
+<tr>
+<th>Výsledek kontroly</th>
+<th>Význam a další krok</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Uložená i aktuální hodnota je <code>1</code></td>
+<td>Trvalé nastavení je uložené a aktuální terminál jej předá přímo spuštěnému procesu <code>dotnet</code>.</td>
+</tr>
+<tr>
+<td>Uložená hodnota je <code>1</code>, aktuální je prázdná nebo <code>0</code></td>
+<td>Běžící proces nastavení nepřevzal nebo jej něco přepsalo. Restartuj celou hostitelskou aplikaci a zkontroluj její konfiguraci i profil shellu.</td>
+</tr>
+<tr>
+<td>Uložená uživatelská hodnota je prázdná</td>
+<td>Pro tento účet není uživatelská hodnota uložená. Zopakuj <code>setx</code> pod správným účtem, případně zkontroluj systémovou variantu níže.</td>
+</tr>
+</tbody>
+</table>
+<p>Pokud nové okno stále přebírá staré prostředí, odhlášení a nové přihlášení do Windows obnoví uživatelskou relaci.</p>
+<p>Pro okamžité vypnutí také v již otevřeném okně nastav <strong>navíc</strong> jeho aktuální prostředí:</p>
+<table>
+<thead>
+<tr>
+<th>Shell</th>
+<th>Příkaz pouze pro aktuální proces a jeho potomky</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PowerShell</td>
+<td><code>$env:DOTNET_CLI_TELEMETRY_OPTOUT = &quot;1&quot;</code></td>
+</tr>
+<tr>
+<td>CMD</td>
+<td><code>set &quot;DOTNET_CLI_TELEMETRY_OPTOUT=1&quot;</code></td>
+</tr>
+</tbody>
+</table>
+<p>Tyto dva příkazy samy o sobě trvalé nastavení neukládají.</p>
+<p><strong>Trvalé nastavení pro všechny uživatele</strong></p>
+<p>Pokud má být hodnota uložená na úrovni počítače, otevři PowerShell nebo CMD <strong>jako správce</strong> a spusť:</p>
+<pre><code class="lang-text">setx DOTNET_CLI_TELEMETRY_OPTOUT 1 /M
+</code></pre>
+<p>Uložení ověř v PowerShellu pro rozsah <code>Machine</code>:</p>
+<pre><code class="lang-text">[Environment]::GetEnvironmentVariable(
+    &quot;DOTNET_CLI_TELEMETRY_OPTOUT&quot;, &quot;Machine&quot;
+)
+</code></pre>
+<p>Očekávej <code>1</code> a následně zopakuj také kontrolu aktuální hodnoty v nově spuštěném terminálu.</p>
+<p>Systémová hodnota nepřepisuje prostředí již běžících procesů a není vynucenou zásadou, která by zabránila uživateli nebo aplikaci nastavení změnit.</p>
+<p>Při rozporu ověř také rozsah <code>User</code> a nastavení shellu či IDE, protože pro <code>dotnet</code> rozhoduje hodnota v prostředí jeho procesu.</p>
+<p><strong>Kam Windows nastavení ukládá</strong></p>
+<p><code>setx</code> uloží hodnotu pojmenovanou <code>DOTNET_CLI_TELEMETRY_OPTOUT</code> do registru podle zvoleného rozsahu:</p>
+<ul>
+<li><strong>Aktuální účet</strong> bez <code>/M</code>: <code>HKEY_CURRENT_USER\Environment</code>.</li>
+<li><strong>Celý počítač</strong> s <code>/M</code>: <code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment</code>.</li>
+</ul>
+<p>Tyto cesty odpovídají rozsahům <code>User</code> a <code>Machine</code> v rozhraní <a href="https://learn.microsoft.com/en-us/dotnet/api/system.environmentvariabletarget">EnvironmentVariableTarget</a>.</p>
+</section>
+<section id="tabpanel_2_telemetry-unix" role="tabpanel" data-tab="telemetry-unix" aria-hidden="true" hidden="hidden">
+
+<p>Postup je pro Bash a Zsh.</p>
+<p>Pro aktuální shell nastav proměnnou před prvním příkazem <code>dotnet</code>:</p>
+<pre><code class="lang-text">export DOTNET_CLI_TELEMETRY_OPTOUT=1
+</code></pre>
+<p>Pro trvalé použití v dalších terminálech přidej stejný řádek do inicializačního souboru používaného shellem:</p>
+<ul>
+<li><strong>Interaktivní Bash bez přihlašovacího režimu:</strong> <code>~/.bashrc</code>.</li>
+<li><strong>Bash v přihlašovacím režimu:</strong> první existující čitelný soubor z <code>~/.bash_profile</code>, <code>~/.bash_login</code> a <code>~/.profile</code>. Samotný <code>~/.bashrc</code> se načte jen tehdy, pokud jej přihlašovací soubor výslovně načítá. <a href="https://www.gnu.org/s/bash/manual/html_node/Bash-Startup-Files.html">Pravidla Bash</a></li>
+<li><strong>Interaktivní Zsh:</strong> <code>~/.zshrc</code>, případně <code>$ZDOTDIR/.zshrc</code>, pokud používáš vlastní <code>ZDOTDIR</code>. <a href="https://zsh.sourceforge.io/Doc/Release/Files.html">Pravidla Zsh</a></li>
+</ul>
+<p>Po otevření nového terminálu ověř zděděnou exportovanou hodnotu:</p>
+<pre><code class="lang-text">printenv DOTNET_CLI_TELEMETRY_OPTOUT
+</code></pre>
+<p>Očekávaný výstup je <code>1</code>.</p>
+<p>Profil terminálu nepokrývá automaticky služby, CI, kontejnery ani aplikace spouštěné z grafického prostředí, proto nastav a ověř proměnnou také přímo v prostředí, kde tyto procesy spouštějí <code>dotnet</code>.</p>
+</section>
+</div>
+<h3 id="co-ověření-potvrzuje">Co ověření potvrzuje</h3>
+<p>Hodnota <code>1</code> v prostředí spouštěného procesu potvrzuje použití dokumentovaného vypínače telemetrie SDK.</p>
+<p>Také <code>true</code> je platné vypnutí.</p>
+<p>Prázdná hodnota ani <code>0</code> telemetrii nevypínají. <a href="https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-environment-variables#dotnet_cli_telemetry_optout">Význam proměnné</a></p>
+<p>Jde o kontrolu konfigurace, nikoli měření síťového provozu všech nástrojů a aplikací, které příkaz může spustit.</p>
+<p>Zmizení úvodní zprávy o telemetrii není důkazem vypnutí, protože <code>DOTNET_NOLOGO</code> pouze skrývá úvodní text. <a href="https://learn.microsoft.com/en-us/dotnet/core/tools/telemetry#disclosure">Rozdíl mezi zprávou a telemetrií</a></p>
+<p>Chceš-li zabránit i telemetrickému záznamu instalátoru .NET SDK, nastav proměnnou ještě před jeho spuštěním.</p>
+<p>Pozdější změna nevrátí již odeslaný záznam. <a href="https://learn.microsoft.com/en-us/dotnet/core/tools/telemetry#how-to-opt-out">Telemetrie instalátoru</a></p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Git – submoduly | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git – submoduly | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Připojen&#237; ciz&#237;ho repozit&#225;ře na konkr&#233;tn&#237; commit a jeho aktualizace.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/submodules.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git--submoduly">Git – submoduly</h1>
+
+<p>Submodul připojuje samostatný repozitář do podadresáře projektu a hlavní repozitář zaznamenává jeho konkrétní commit.</p>
+<h2 id="jak-to-funguje">Jak to funguje</h2>
+<p>Soubor <code>.gitmodules</code> obsahuje cesty a URL.</p>
+<p>Samotný gitlink v historii určuje verzi závislosti.</p>
+<p>Submodul má vlastní historii a jeho <code>.git</code> bývá soubor odkazující do úložiště hlavního projektu. <a href="https://git-scm.com/docs/gitsubmodules">Model submodulů</a></p>
+<h2 id="před-použitím">Před použitím</h2>
+<p>Potřebuješ přístup do obou repozitářů.</p>
+<p>Nepoužívej submodul jen jako náhradu správce balíčků, pokud potřebuješ běžnou publikovanou knihovnu.</p>
+<p>Příkazy spouštěj z kořene hlavního projektu, <code>libs/knihovna</code> je ukázková cesta.</p>
+<h2 id="přidání-a-klonování">Přidání a klonování</h2>
+<pre><code class="lang-bash"># URL nahraď existujícím repozitářem knihovny.
+git submodule add https://git.example.com/tym/knihovna.git libs/knihovna
+git add .gitmodules libs/knihovna
+git commit -m &quot;build: přidává submodul knihovny&quot;
+</code></pre>
+<p>Pro nový klon hlavního projektu použij <code>git clone --recurse-submodules &lt;URL&gt; [&lt;cílová-složka&gt;]</code>, kde <code>&lt;URL&gt;</code> nahradíš adresou hlavního projektu.</p>
+<p>V již naklonovaném projektu obnov přesně zapsané verze:</p>
+<pre><code class="lang-bash">git submodule update --init --recursive
+git submodule status --recursive
+</code></pre>
+<p>Tento postup obnovuje připnuté commity, nikoli automaticky nejnovější verzi knihovny. <a href="https://git-scm.com/docs/git-submodule">Příkazy submodule</a></p>
+<h2 id="změna-verze">Změna verze</h2>
+<pre><code class="lang-bash">git -C libs/knihovna fetch --tags
+git -C libs/knihovna switch --detach v2.0.0
+git diff --submodule
+git add libs/knihovna
+git commit -m &quot;build: připíná knihovnu na verzi 2.0.0&quot;
+</code></pre>
+<p>Nahraď <code>v2.0.0</code> existujícím ověřeným tagem.</p>
+<p><code>-C</code> spouští Git v daném adresáři bez změny tvého terminálu.</p>
+<p>Před commitem hlavního projektu otestuj aplikaci s novou verzí závislosti.</p>
+<h2 id="úpravy-uvnitř-submodulu">Úpravy uvnitř submodulu</h2>
+<p>Přes <code>git -C libs/knihovna switch -c oprava</code> vytvoř pracovní větev.</p>
+<p>Úpravy commituj a publikuj v repozitáři knihovny.</p>
+<p>Až poté aktualizuj gitlink v hlavním projektu, aby jej ostatní dokázali stáhnout.</p>
+<p>Stav <strong>detached HEAD</strong> je při obnově připnuté verze očekávaný.</p>
+<p>Sám o sobě není závada.</p>
+<h2 id="změna-adresy-nebo-odstranění">Změna adresy nebo odstranění</h2>
+<p><code>git submodule set-url &lt;cesta-submodulu&gt; &lt;nová-URL&gt;</code> změní adresu a synchronizuje místní konfiguraci.</p>
+<p>Obě hodnoty nahraď podle své knihovny a commituj <code>.gitmodules</code>.</p>
+<p>Po uchování vlastní práce lze submodul odstranit přes <code>git rm libs/knihovna</code>, zkontrolovat <code>git diff --cached</code> a vytvořit commit.</p>
+<p>Neodstraňuj ručně <code>.git/modules</code> jako běžný úklid.</p>
+<p>Může obsahovat jediné kopie místních commitů. <a href="https://git-scm.com/docs/gitsubmodules">Odstranění a obnova submodulů</a></p>
+<h2 id="když-je-složka-prázdná-nebo-ukazuje-jinou-verzi">Když je složka prázdná nebo ukazuje jinou verzi</h2>
+<p>Po běžném pull hlavního projektu spusť <code>git submodule update --init --recursive</code>.</p>
+<p>Tím obnovíš verze zapsané hlavním projektem, aniž bys vybíral nejnovější vzdálenou větev.</p>
+<p>Znak <code>+</code> před ID ve výpisu <code>git submodule status</code> znamená jiný vybraný commit než ten zapsaný v hlavním indexu, <code>-</code> neinicializovaný submodul a <code>U</code> konflikt.</p>
+<p>Před aktualizací prohlédni vlastní změny přes <code>git -C libs/knihovna status</code> a zachovej je, pokud nejsou hotové.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

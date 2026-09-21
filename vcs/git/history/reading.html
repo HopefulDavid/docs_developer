@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Git – čten&#237; historie a hled&#225;n&#237; chyby | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git – čten&#237; historie a hled&#225;n&#237; chyby | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Porovn&#225;n&#237; verz&#237;, historie souboru a nalezen&#237; commitu, kter&#253; zavedl chybu.">
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/history/reading.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git--čtení-historie-a-hledání-chyby">Git – čtení historie a hledání chyby</h1>
+
+<p>Historie pomáhá zjistit, proč se kód změnil a který uložený stav ještě fungoval.</p>
+<p>Než začneš historii opravovat, nejprve prohlédni konkrétní rozdíl.</p>
+<h2 id="základní-reference">Základní reference</h2>
+<table>
+<thead>
+<tr>
+<th>Syntaxe</th>
+<th>Co zobrazí</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>git log --oneline --graph --all [-&lt;počet&gt;]</code></td>
+<td>Stručnou návaznost všech místních referencí</td>
+</tr>
+<tr>
+<td><code>git show &lt;commit&gt;</code></td>
+<td>Zprávu a změnu konkrétního commitu</td>
+</tr>
+<tr>
+<td><code>git diff &lt;starší-stav&gt; &lt;novější-stav&gt; [-- &lt;cesta&gt;]</code></td>
+<td>Rozdíl konečného obsahu dvou stavů</td>
+</tr>
+<tr>
+<td><code>git log --follow -- &lt;soubor&gt;</code></td>
+<td>Historii jednoho souboru s pokusem sledovat přejmenování</td>
+</tr>
+<tr>
+<td><code>git blame -L &lt;od-řádku&gt;,&lt;do-řádku&gt; -- &lt;soubor&gt;</code></td>
+<td>Poslední zaznamenanou změnu jednotlivých řádků</td>
+</tr>
+<tr>
+<td><code>git log -S &quot;&lt;text&gt;&quot; -- &lt;cesta&gt;</code></td>
+<td>Commity, které změnily počet výskytů daného textu</td>
+</tr>
+</tbody>
+</table>
+<p>Blame pomáhá dohledat kontext.</p>
+<p>Autor poslední úpravy řádku nemusí být původcem chyby.</p>
+<h2 id="jak-označit-verzi">Jak označit verzi</h2>
+<table>
+<thead>
+<tr>
+<th>Zápis</th>
+<th>Význam</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>HEAD</code></td>
+<td>Aktuální commit</td>
+</tr>
+<tr>
+<td><code>HEAD~1</code></td>
+<td>Jeho první rodič</td>
+</tr>
+<tr>
+<td><code>HEAD~3</code></td>
+<td>Třetí předek po prvních rodičích, nikoli „poslední tři libovolné řádky logu“</td>
+</tr>
+<tr>
+<td><code>&lt;hash&gt;</code></td>
+<td>Konkrétní ID z logu</td>
+</tr>
+<tr>
+<td><code>v1.0.0</code></td>
+<td>Tag s tímto názvem, pokud existuje</td>
+</tr>
+<tr>
+<td><code>main..feature/hledani</code> v logu</td>
+<td>Commity dosažitelné z pracovní větve a nedosažitelné z main</td>
+</tr>
+</tbody>
+</table>
+<p>U merge existuje více rodičů.</p>
+<p><code>HEAD^2</code> označuje druhého rodiče, zatímco <code>HEAD~2</code> postupuje dvakrát po prvním.</p>
+<p>Příklad v PowerShellu i Bashi:</p>
+<pre><code class="lang-bash">git log --oneline -- README.md
+git diff HEAD~1 HEAD -- README.md
+</code></pre>
+<p>Výpis historie pomůže vybrat skutečný commit.</p>
+<p>Druhý příkaz vyžaduje alespoň dva commity a porovná poslední změnu souboru vůči předchozímu stavu celé větve.</p>
+<h2 id="bisect-najdi-první-vadný-commit">Bisect: najdi první vadný commit</h2>
+<p>Bisect postupně vybírá verze mezi známým funkčním a nefunkčním stavem, aby zúžil místo vzniku chyby.</p>
+<p>Předpokladem je opakovatelná zkouška, čistý pracovní strom a možnost spustit také starší verze projektu.</p>
+<p>Na současné vadné verzi například:</p>
+<pre><code class="lang-bash">git bisect start
+git bisect bad
+git bisect good v1.0.0
+</code></pre>
+<p><code>v1.0.0</code> musí být existující ověřená funkční verze.</p>
+<p>Nahraď ji konkrétním dobrým commitem nebo tagem svého projektu.</p>
+<p>Git vybere prostřední commit a změní pracovní soubory, proto během hledání nevyvíjej novou funkci.</p>
+<ol>
+<li>Obnov závislosti odpovídající právě vybrané verzi.</li>
+<li>Spusť stejný test chyby.</li>
+<li>Označ výsledek <code>git bisect good</code> nebo <code>git bisect bad</code>.</li>
+<li>Pokud tuto verzi vůbec nelze vyzkoušet, použij <code>git bisect skip</code>.</li>
+<li>Opakuj, dokud Git neurčí první vadný commit nebo interval, který kvůli přeskočeným verzím nejde zúžit.</li>
+</ol>
+<p>Po zapsání výsledku se vrať na původní stav:</p>
+<pre><code class="lang-bash">git bisect reset
+</code></pre>
+<p>Ani nalezení commitu samo neopraví chybu.</p>
+<p>Zobraz jeho diff, pochop příčinu a vytvoř běžný opravný commit.</p>
+<p>Pro automatizaci lze použít <code>git bisect run &lt;testovací-příkaz&gt; [&lt;argument&gt;...]</code>.</p>
+<p>Test musí vracet <code>0</code> pro dobrý stav, <code>1–127</code> kromě <code>125</code> pro vadný a <code>125</code> pro nevyzkoušitelný stav.</p>
+<p>Zdroje: <a href="https://git-scm.com/docs/git-log">git log</a>, <a href="https://git-scm.com/docs/gitrevisions">gitrevisions</a>, <a href="https://git-scm.com/docs/git-bisect">git bisect</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

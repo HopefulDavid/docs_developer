@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>sqlcmd – spuštěn&#237; SQL skriptů ze složky | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="sqlcmd – spuštěn&#237; SQL skriptů ze složky | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Spuštěn&#237; seřazen&#253;ch SQL skriptů d&#225;vkou, zastaven&#237; při chybě a kontrola v&#253;sledku.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/database/sqlcmd.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="sqlcmd--spuštění-sql-skriptů-ze-složky">sqlcmd – spuštění SQL skriptů ze složky</h1>
+
+<p>Dávkový soubor umožní opakovat zkontrolovanou sadu SQL skriptů ve stanoveném pořadí.</p>
+<h2 id="před-použitím">Před použitím</h2>
+<p>Následující dávka je pro ručně zkontrolované skripty v testovací databázi a nainstalovaný <code>sqlcmd</code> s přihlášením Windows.</p>
+<p>Soubory pojmenuj například <code>001-schema.sql</code> a <code>002-data.sql</code>, aby řazení podle názvu odpovídalo požadovanému pořadí.</p>
+<p>Ulož <code>run-sql.cmd</code> vedle nich a uprav dvě konfigurační hodnoty.</p>
+<pre><code class="lang-cmd">@echo off
+setlocal
+rem Zmen pouze na server a testovaci databazi, ktere chces upravit.
+set &quot;SQL_SERVER=localhost&quot;
+set &quot;SQL_DATABASE=MojeTestovaciDatabaze&quot;
+rem Prepnuti do slozky skriptu zabrani pouziti souboru z jineho adresare.
+pushd &quot;%~dp0&quot; || exit /b 1
+if not exist &quot;*.sql&quot; (
+  echo Ve slozce nejsou SQL skripty.
+  popd
+  exit /b 1
+)
+for /f &quot;delims=&quot; %%G in ('dir /b /a-d /on *.sql') do (
+  echo Spoustim %%G
+  sqlcmd -S &quot;%SQL_SERVER%&quot; -d &quot;%SQL_DATABASE%&quot; -E -b -i &quot;%%G&quot;
+  if errorlevel 1 (
+    echo Chyba: dalsi skripty se nespusti.
+    popd
+    exit /b 1
+  )
+)
+popd
+exit /b 0
+</code></pre>
+<p><code>-S</code> určuje server, <code>-d</code> databázi, <code>-E</code> použije identitu Windows, <code>-i</code> načte soubor a <code>-b</code> způsobí chybový návratový kód při odpovídající SQL chybě.</p>
+<p><code>%%G</code> patří do dávkového souboru.</p>
+<p>Při ručním zápisu smyčky přímo do CMD se používá <code>%G</code>.</p>
+<p>Chyba zastaví další skripty, ale nevrátí dříve potvrzené změny.</p>
+<p>Transakce a opakovatelnost musí řešit samotné SQL nebo migrační nástroj.</p>
+<p>Po spuštění ověř očekávané tabulky a data, ne pouze návratový kód.</p>
+<p>Při SQL autentizaci neukládej heslo do dávky ani nepoužívej <code>-P</code> s heslem v historii.</p>
+<p>Způsob přihlášení a TLS nastav podle <a href="https://learn.microsoft.com/en-us/sql/tools/sqlcmd/sqlcmd-utility">dokumentace své varianty sqlcmd</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

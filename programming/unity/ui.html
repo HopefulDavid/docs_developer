@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Unity UI: Canvas a tvar klikac&#237;ho tlač&#237;tka | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Unity UI: Canvas a tvar klikac&#237;ho tlač&#237;tka | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Nastaven&#237; Canvasu a omezen&#237; klik&#225;n&#237; podle průhlednosti tlač&#237;tka.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/unity/ui.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="unity-ui-canvas-a-tvar-klikacího-tlačítka">Unity UI: Canvas a tvar klikacího tlačítka</h1>
+
+<p>Unity UI neboli uGUI používá GameObjecty s komponentami, například Canvas, Image a Button.</p>
+<p>Je odlišný od <a href="ui-toolkit.html">UI Toolkitu</a>, takže jeho komponenty a události nelze zaměňovat.</p>
+<h2 id="jak-funguje-kliknutí">Jak funguje kliknutí</h2>
+<p>Canvas vykresluje grafické prvky, Graphic Raycaster vyhledává zásahy a EventSystem s vhodným vstupním modulem předává události.</p>
+<p>Button musí být interaktivní a jeho grafika musí přijímat raycasty.</p>
+<h2 id="před-použitím">Před použitím</h2>
+<p>V projektu Unity 6 s Unity UI vytvoř tlačítko přes <strong>GameObject → UI → Button</strong> a ověř Canvas, Graphic Raycaster a EventSystem.</p>
+<p>Vstupní modul musí odpovídat používanému Input Systemu projektu.</p>
+<p>Nejprve ověř běžné obdélníkové tlačítko, teprve potom přidávej test průhlednosti.</p>
+<h2 id="rozsah-detekce-kliknutí-podle-průhlednosti">Rozsah detekce kliknutí podle průhlednosti</h2>
+<p><code>Image.alphaHitTestMinimumThreshold</code> odmítá pixel spritu, jehož alfa je menší než zadaný práh.</p>
+<p>Hodnota <code>0</code> ponechá obdélníkový zásah a například <code>0.5</code> vyžaduje alespoň poloviční krytí pixelu.</p>
+<p>V importu textury zapni <strong>Read/Write</strong>, přiřaď sprite s průhlednými okraji a pro tuto ukázku jej vynech ze Sprite Atlasu.</p>
+<p>Čtení pixelů může zvýšit paměťové nároky.</p>
+<p>Alfa barvy komponenty <code>Image.color</code> se při tomto testu nepoužívá.</p>
+<p>Ulož komponentu jako <code>AlphaHitButton.cs</code> a přidej ji přímo na objekt s Image tlačítka.</p>
+<pre><code class="lang-csharp">using UnityEngine;
+using UnityEngine.UI;
+
+/// &lt;summary&gt;Nastavuje klikací oblast Image podle průhlednosti spritu.&lt;/summary&gt;
+[RequireComponent(typeof(Image))]
+public class AlphaHitButton : MonoBehaviour
+{
+    [SerializeField, Range(0f, 1f)] private float threshold = 0.5f;
+
+    private void Awake()
+    {
+        // Práh ovlivní test pixelů spritu, nikoli jeho vykreslenou průhlednost.
+        GetComponent&lt;Image&gt;().alphaHitTestMinimumThreshold = threshold;
+    }
+}
+</code></pre>
+<h2 id="ověření-výsledku">Ověření výsledku</h2>
+<p>Přiřaď tlačítku viditelnou akci přes <strong>On Click</strong>, spusť Play a vyzkoušej neprůhledný střed i průhledný roh.</p>
+<p>Střed má akci vyvolat a průhledný roh ji vyvolat nemá.</p>
+<p>Pokud roh dál reaguje, vypni <strong>Raycast Target</strong> na dekorativním textu nebo jiných překrývajících grafikách a zkontroluj, který prvek zásah skutečně přijímá.</p>
+<h2 id="co-lze-upravit">Co lze upravit</h2>
+<p><code>threshold</code> měň v Inspectoru podle okrajů spritu, ale zachovej dostatečně velkou ovládací plochu pro dotyk.</p>
+<p>Práh neovlivňuje aktivaci tlačítka klávesnicí nebo gamepadem.</p>
+<p>Ověř i tuto cestu.</p>
+<p>Podmínky čitelnosti textury popisuje <a href="https://docs.unity3d.com/Packages/com.unity.ugui@2.0/api/UnityEngine.UI.Image.html#UnityEngine_UI_Image_alphaHitTestMinimumThreshold">API Image</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>WPF – Rozložen&#237;, datov&#233; vazby a styly | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="WPF – Rozložen&#237;, datov&#233; vazby a styly | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Rozložen&#237; oken, datov&#233; vazby, styly a opakovan&#233; použit&#237; vzhledu.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/csharp/wpf.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="wpf--rozložení-datové-vazby-a-styly">WPF – Rozložení, datové vazby a styly</h1>
+
+<p>WPF je UI framework pro desktopové aplikace Windows.</p>
+<p>Vzhled popisuje XAML a chování obvykle C#.</p>
+<h2 id="založení-projektu">Založení projektu</h2>
+<p>Na Windows se SDK .NET 10:</p>
+<pre><code class="lang-powershell">dotnet new wpf -n WpfDemo -f net10.0
+cd WpfDemo
+</code></pre>
+<p>WPF zůstává technologií pro Windows i v moderním .NET. <a href="https://learn.microsoft.com/en-us/dotnet/desktop/wpf/overview/">Microsoft: WPF</a>.</p>
+<h2 id="data-binding-vazba-dat">Data Binding (Vazba dat)</h2>
+<p>Nahraď <code>MainWindow.xaml</code> následujícím obsahem:</p>
+<pre><code class="lang-xml">&lt;Window x:Class=&quot;WpfDemo.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        Title=&quot;Vazba dat&quot; Width=&quot;480&quot; Height=&quot;260&quot;
+        MinWidth=&quot;320&quot; MinHeight=&quot;220&quot;&gt;
+    &lt;Grid Margin=&quot;24&quot;&gt;
+        &lt;Grid.RowDefinitions&gt;
+            &lt;RowDefinition Height=&quot;Auto&quot;/&gt;
+            &lt;RowDefinition Height=&quot;Auto&quot;/&gt;
+            &lt;RowDefinition Height=&quot;Auto&quot;/&gt;
+        &lt;/Grid.RowDefinitions&gt;
+        &lt;Label Content=&quot;_Jméno:&quot; Target=&quot;{Binding ElementName=NameInput}&quot;/&gt;
+        &lt;TextBox x:Name=&quot;NameInput&quot; Grid.Row=&quot;1&quot; Margin=&quot;0,8&quot;
+                 Text=&quot;{Binding Name, UpdateSourceTrigger=PropertyChanged,
+                                ValidatesOnDataErrors=True}&quot;/&gt;
+        &lt;TextBlock Grid.Row=&quot;2&quot; Text=&quot;{Binding Name}&quot; TextWrapping=&quot;Wrap&quot;/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</code></pre>
+<p>Nahraď <code>MainWindow.xaml.cs</code>:</p>
+<pre><code class="lang-csharp">using System.ComponentModel;
+using System.Windows;
+
+namespace WpfDemo;
+
+/// &lt;summary&gt;Okno demonstrující vazbu na model.&lt;/summary&gt;
+public partial class MainWindow : Window
+{
+    /// &lt;summary&gt;Vytvoří ovládací prvky a jejich zdroj dat.&lt;/summary&gt;
+    public MainWindow()
+    {
+        InitializeComponent();
+        DataContext = new PersonViewModel();
+    }
+}
+
+/// &lt;summary&gt;Upravované jméno s oznámením změn a validací.&lt;/summary&gt;
+public sealed class PersonViewModel : INotifyPropertyChanged, IDataErrorInfo
+{
+    private string name = &quot;Eva&quot;;
+
+    /// &lt;summary&gt;Jméno zobrazené v obou ovládacích prvcích.&lt;/summary&gt;
+    public string Name
+    {
+        get =&gt; name;
+        set
+        {
+            if (name == value)
+                return;
+            name = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
+        }
+    }
+
+    /// &lt;summary&gt;Oznámí změnu vlastnosti datové vazbě.&lt;/summary&gt;
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    /// &lt;summary&gt;Ukázka nepoužívá chybu celého objektu.&lt;/summary&gt;
+    public string Error =&gt; &quot;&quot;;
+
+    /// &lt;summary&gt;Vrátí chybu pro ověřovanou vlastnost.&lt;/summary&gt;
+    public string this[string columnName] =&gt;
+        columnName == nameof(Name) &amp;&amp; string.IsNullOrWhiteSpace(Name)
+            ? &quot;Jméno je povinné.&quot;
+            : &quot;&quot;;
+}
+</code></pre>
+<p>Po <code>dotnet run</code> změna textu ihned mění náhled pod vstupem.</p>
+<p>Vymazání jména aktivuje výchozí chybový rámeček WPF.</p>
+<p><code>DataContext</code> určuje zdroj vazby, <code>INotifyPropertyChanged</code> hlásí jeho změny a <code>UpdateSourceTrigger=PropertyChanged</code> přenáší úpravy při psaní. <a href="https://learn.microsoft.com/en-us/dotnet/desktop/wpf/data/">Microsoft: datové vazby a validace</a>.</p>
+<h2 id="základní-ovládací-prvky-a-rozložení">Základní ovládací prvky a rozložení</h2>
+<table>
+<thead>
+<tr>
+<th>Prvek</th>
+<th>Účel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Button</code></td>
+<td>Spuštění akce nebo příkazu</td>
+</tr>
+<tr>
+<td><code>TextBox</code>, <code>TextBlock</code></td>
+<td>Editovatelný a zobrazovaný text</td>
+</tr>
+<tr>
+<td><code>CheckBox</code></td>
+<td>Nezávislá volba</td>
+</tr>
+<tr>
+<td><code>RadioButton</code></td>
+<td>Výběr ve skupině</td>
+</tr>
+<tr>
+<td><code>ComboBox</code></td>
+<td>Výběr ze seznamu</td>
+</tr>
+<tr>
+<td><code>Slider</code></td>
+<td>Číselná hodnota v intervalu</td>
+</tr>
+<tr>
+<td><code>Grid</code></td>
+<td>Řádky a sloupce</td>
+</tr>
+<tr>
+<td><code>StackPanel</code>, <code>WrapPanel</code></td>
+<td>Řazení bez zalamování nebo se zalamováním</td>
+</tr>
+<tr>
+<td><code>DockPanel</code></td>
+<td>Umístění k okrajům</td>
+</tr>
+<tr>
+<td><code>Viewbox</code></td>
+<td>Škálování obsahu</td>
+</tr>
+</tbody>
+</table>
+<p>U <code>Grid</code> znamená <code>Auto</code> velikost podle obsahu a <code>*</code> podíl zbývajícího prostoru.</p>
+<p>Například sloupce <code>2*</code> a <code>*</code> si dostupný prostor rozdělí v poměru 2: 1.</p>
+<p>Zápis procent není podporovaný.</p>
+<p><code>Viewbox</code> škáluje celý obsah a nenahrazuje přeskupení formuláře při zúžení okna. <a href="https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/panels-overview">Microsoft: panely</a>, <a href="https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/viewbox">Viewbox</a>.</p>
+<h2 id="styly-a-šablony">Styly a šablony</h2>
+<p><code>Style</code> sdílí hodnoty vlastností a <code>ControlTemplate</code> definuje vizuální strom prvku.</p>
+<p><code>Button</code> nemá vlastnost <code>CornerRadius</code>.</p>
+<p>Zaoblení patří například prvku <code>Border</code> uvnitř jeho šablony. <a href="https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/styles-templates-overview">Microsoft: styly a šablony</a>.</p>
+<p>Následující samostatný fragment patří do <code>Window.Resources</code> před hlavní <code>Grid</code>:</p>
+<pre><code class="lang-xml">&lt;Window.Resources&gt;
+    &lt;Style x:Key=&quot;RoundedButton&quot; TargetType=&quot;Button&quot;&gt;
+        &lt;Setter Property=&quot;Background&quot; Value=&quot;#174B75&quot;/&gt;
+        &lt;Setter Property=&quot;Foreground&quot; Value=&quot;White&quot;/&gt;
+        &lt;Setter Property=&quot;Padding&quot; Value=&quot;12,8&quot;/&gt;
+        &lt;Setter Property=&quot;Template&quot;&gt;
+            &lt;Setter.Value&gt;
+                &lt;ControlTemplate TargetType=&quot;Button&quot;&gt;
+                    &lt;Border x:Name=&quot;Surface&quot; CornerRadius=&quot;6&quot;
+                            Padding=&quot;{TemplateBinding Padding}&quot;
+                            Background=&quot;{TemplateBinding Background}&quot;&gt;
+                        &lt;ContentPresenter HorizontalAlignment=&quot;Center&quot;
+                                          VerticalAlignment=&quot;Center&quot;
+                                          RecognizesAccessKey=&quot;True&quot;/&gt;
+                    &lt;/Border&gt;
+                    &lt;ControlTemplate.Triggers&gt;
+                        &lt;Trigger Property=&quot;IsMouseOver&quot; Value=&quot;True&quot;&gt;
+                            &lt;Setter TargetName=&quot;Surface&quot; Property=&quot;Background&quot; Value=&quot;#24679D&quot;/&gt;
+                        &lt;/Trigger&gt;
+                        &lt;Trigger Property=&quot;IsPressed&quot; Value=&quot;True&quot;&gt;
+                            &lt;Setter TargetName=&quot;Surface&quot; Property=&quot;Background&quot; Value=&quot;#103550&quot;/&gt;
+                        &lt;/Trigger&gt;
+                        &lt;Trigger Property=&quot;IsKeyboardFocused&quot; Value=&quot;True&quot;&gt;
+                            &lt;Setter TargetName=&quot;Surface&quot; Property=&quot;BorderBrush&quot; Value=&quot;#F0B400&quot;/&gt;
+                            &lt;Setter TargetName=&quot;Surface&quot; Property=&quot;BorderThickness&quot; Value=&quot;2&quot;/&gt;
+                        &lt;/Trigger&gt;
+                        &lt;Trigger Property=&quot;IsEnabled&quot; Value=&quot;False&quot;&gt;
+                            &lt;Setter TargetName=&quot;Surface&quot; Property=&quot;Opacity&quot; Value=&quot;0.5&quot;/&gt;
+                        &lt;/Trigger&gt;
+                    &lt;/ControlTemplate.Triggers&gt;
+                &lt;/ControlTemplate&gt;
+            &lt;/Setter.Value&gt;
+        &lt;/Setter&gt;
+    &lt;/Style&gt;
+&lt;/Window.Resources&gt;
+</code></pre>
+<p>Styl použij například na tlačítku v jiném řádku formuláře:</p>
+<pre><code class="lang-xml">&lt;Button Style=&quot;{StaticResource RoundedButton}&quot; Content=&quot;_Uložit&quot;/&gt;
+</code></pre>
+<p>Akci připoj přes <code>Command</code> nebo obsluhu <code>Click</code>.</p>
+<p>Samotný styl data neukládá.</p>
+<p>Při vlastní šabloně ověř stavy myši, stisku, klávesnicového fokusu a zakázání.</p>
+<h2 id="prefixy-v-xaml">Prefixy v XAML</h2>
+<p>Prefix platí až po deklaraci příslušného <code>xmlns</code>.</p>
+<p><code>x</code> obvykle označuje jazykové prvky jako <code>x:Class</code>.</p>
+<p><code>local</code> je běžně volené jméno pro vlastní CLR namespace, nikoli automaticky dostupné klíčové slovo. <a href="https://learn.microsoft.com/en-us/dotnet/desktop/wpf/advanced/xaml-namespaces-and-namespace-mapping-for-wpf-xaml">Microsoft: jmenné prostory XAML</a>.</p>
+<h2 id="animace">Animace</h2>
+<p>Pro změny v čase použij <code>Storyboard</code> a animaci vhodnou pro daný typ vlastnosti.</p>
+<p>Například <code>ColorAnimation</code> na <code>(Background).(SolidColorBrush.Color)</code> vyžaduje pozadí typu <code>SolidColorBrush</code>.</p>
+<p>U vlastní šablony animuj skutečně zobrazovaný prvek.</p>
+<p>Výchozí šablona může barvu tlačítka řídit svými stavy. <a href="https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/animation-overview">Microsoft: přehled animací</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

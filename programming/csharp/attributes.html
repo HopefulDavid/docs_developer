@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>.NET – Atributy, validace a FileHelpers | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=".NET – Atributy, validace a FileHelpers | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Metadata typů a členů a jejich čten&#237; pomoc&#237; reflexe.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/csharp/attributes.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="net--atributy-validace-a-filehelpers">.NET – Atributy, validace a FileHelpers</h1>
+
+<p>Atributy připojují metadata k typům a členům.</p>
+<p>Jejich účinek závisí na kompilátoru, runtime nebo knihovně, která je zpracovává.</p>
+<p>Samotné přidání validačního atributu neověří každé přiřazení hodnoty. <a href="https://learn.microsoft.com/en-us/dotnet/csharp/advanced-topics/reflection-and-attributes/">Microsoft: atributy</a>.</p>
+<h2 id="datové-anotace">Datové anotace</h2>
+<table>
+<thead>
+<tr>
+<th>Atribut</th>
+<th>Účel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Required</code></td>
+<td>Povinná hodnota</td>
+</tr>
+<tr>
+<td><code>Range</code></td>
+<td>Rozsah hodnot</td>
+</tr>
+<tr>
+<td><code>StringLength</code></td>
+<td>Maximální a případně minimální délka řetězce</td>
+</tr>
+<tr>
+<td><code>MinLength</code>, <code>MaxLength</code></td>
+<td>Mezní délky podporovaných hodnot</td>
+</tr>
+<tr>
+<td><code>RegularExpression</code></td>
+<td>Kontrola formátu regulárním výrazem</td>
+</tr>
+<tr>
+<td><code>EmailAddress</code>, <code>Phone</code></td>
+<td>Kontrola formátu, nikoli existence schránky nebo čísla</td>
+</tr>
+<tr>
+<td><code>DataType</code></td>
+<td>Nápověda pro prezentaci dat. Sama nezajišťuje validaci</td>
+</tr>
+<tr>
+<td><code>Display</code></td>
+<td>Zobrazovaný název a další metadata</td>
+</tr>
+</tbody>
+</table>
+<p>Úplný <code>Program.cs</code> pro .NET 10 spustí validaci explicitně:</p>
+<pre><code class="lang-csharp">using System.ComponentModel.DataAnnotations;
+
+var author = new Author { Name = &quot;&quot;, Email = &quot;eva@example.test&quot; };
+var errors = new List&lt;ValidationResult&gt;();
+bool valid = Validator.TryValidateObject(
+    author, new ValidationContext(author), errors,
+    validateAllProperties: true);
+
+Console.WriteLine(valid);
+foreach (var error in errors)
+    Console.WriteLine(error.ErrorMessage);
+
+/// &lt;summary&gt;Vstupní údaje autora.&lt;/summary&gt;
+public sealed class Author
+{
+    /// &lt;summary&gt;Jméno požadované při uložení autora.&lt;/summary&gt;
+    [Required(ErrorMessage = &quot;Jméno je povinné.&quot;)]
+    [StringLength(50)]
+    public string Name { get; set; } = &quot;&quot;;
+
+    /// &lt;summary&gt;Volitelná e-mailová adresa.&lt;/summary&gt;
+    [EmailAddress]
+    public string? Email { get; set; }
+}
+</code></pre>
+<p>Výstup obsahuje <code>False</code> a zprávu <code>Jméno je povinné.</code>.</p>
+<p><code>TryValidateObject</code> s <code>validateAllProperties: true</code> vyhodnotí validační atributy vlastností, ale neprochází rekurzivně celý graf vnořených objektů. <a href="https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validator.tryvalidateobject?view=net-10.0">Microsoft: TryValidateObject</a>.</p>
+<p>Pro vlastní pravidlo lze odvodit <code>ValidationAttribute</code> a implementovat <code>IsValid</code>.</p>
+<p>Běžnou povinnou hodnotu již řeší <code>Required</code>. <a href="https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations">Microsoft: DataAnnotations</a>.</p>
+<h2 id="filehelpers--zpracování-souborů">FileHelpers – Zpracování souborů</h2>
+<p>FileHelpers mapuje textové záznamy na pole třídy podle atributů.</p>
+<p>V samostatném konzolovém projektu přidej balíček:</p>
+<pre><code class="lang-powershell">dotnet add package FileHelpers
+</code></pre>
+<p>Následující úplný <code>Program.cs</code> čte dva záznamy s oddělovačem <code>;</code>:</p>
+<pre><code class="lang-csharp">using FileHelpers;
+
+var engine = new FileHelperEngine&lt;Order&gt;();
+var orders = engine.ReadString(&quot;1;Tuzka\n2;Sesit\n&quot;);
+foreach (var order in orders)
+    Console.WriteLine($&quot;{order.Id}: {order.Product}&quot;);
+
+/// &lt;summary&gt;Jeden záznam souboru objednávek.&lt;/summary&gt;
+[DelimitedRecord(&quot;;&quot;)]
+public sealed class Order
+{
+    /// &lt;summary&gt;Číselný identifikátor objednávky.&lt;/summary&gt;
+    public int Id;
+
+    /// &lt;summary&gt;Název objednané položky.&lt;/summary&gt;
+    public string Product = &quot;&quot;;
+}
+</code></pre>
+<p>Pro soubory použij <code>engine.ReadFile(&quot;Input.txt&quot;)</code> a <code>engine.WriteFile(&quot;Output.txt&quot;, orders)</code>. <a href="https://www.filehelpers.net/quickstart/">FileHelpers: Quick Start</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Atribut</th>
+<th>Použití</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DelimitedRecord</code>, <code>FixedLengthRecord</code></td>
+<td>Oddělená pole nebo pevné šířky</td>
+</tr>
+<tr>
+<td><code>FieldQuoted</code></td>
+<td>Hodnoty v uvozovkách</td>
+</tr>
+<tr>
+<td><code>FieldTrim</code></td>
+<td>Odstranění okrajových mezer</td>
+</tr>
+<tr>
+<td><code>FieldOptional</code></td>
+<td>Volitelné pole</td>
+</tr>
+<tr>
+<td><code>FieldConverter</code></td>
+<td>Konverze, například data s konkrétním formátem</td>
+</tr>
+<tr>
+<td><code>FieldOrder</code></td>
+<td>Explicitní pořadí polí</td>
+</tr>
+</tbody>
+</table>
+<p>Formát a pravidla konverze zvol podle vstupu.</p>
+<p>Možnosti knihovny nejsou omezené jen na jeden neměnný typ záznamu. <a href="https://www.filehelpers.net/">FileHelpers: dokumentace a příklady</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

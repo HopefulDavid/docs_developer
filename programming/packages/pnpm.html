@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>pnpm | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="pnpm | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Instalace pnpm a z&#225;kladn&#237; př&#237;kazy pro projektov&#233; a glob&#225;ln&#237; bal&#237;čky.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/packages/pnpm.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="pnpm">pnpm</h1>
+
+<p>pnpm spravuje balíčky Node.js pomocí sdíleného úložiště a projektových odkazů v <code>node_modules</code>.</p>
+<p>Pro přenos balíčků použij <a href="backup-and-restore.html#pnpm">zálohu a obnovu bez internetu</a>.</p>
+<h2 id="instalace-a-umístění-pnpm">Instalace a umístění pnpm</h2>
+<p>Příkaz <code>npx get-pnpm</code> spustí instalátor přes npm a nainstaluje samostatný pnpm. <a href="https://pnpm.io/installation#using-npm">Oficiální postup instalace</a></p>
+<p>Na Windows najdeš nainstalovaný příkaz ve složce určené uživatelskou proměnnou <code>PNPM_HOME</code>.</p>
+<p>Po instalaci otevři nový PowerShell a ověř umístění i verzi:</p>
+<pre><code class="lang-powershell">$pnpmHome = [Environment]::GetEnvironmentVariable('PNPM_HOME', 'User')
+$pnpmHome
+Get-Command pnpm -All | Select-Object Source
+&amp; (Join-Path $pnpmHome 'bin/pnpm.cmd') --version
+</code></pre>
+<p>První položka z <code>Get-Command</code> ukazuje, který příkaz se spustí při zadání <code>pnpm</code>.</p>
+<p>Pokud ukazuje jinam než do <code>PNPM_HOME/bin</code>, máš v <code>PATH</code> také jinou instalaci pnpm.</p>
+<p>Pomocný balíček <code>get-pnpm</code> může zůstat v cache npm pro <code>npx</code>, zatímco nainstalovaný pnpm leží v <code>PNPM_HOME</code>.</p>
+<p>Příkaz <code>pnpm list --global</code> vypisuje balíčky nainstalované pomocí pnpm, nikoli umístění samotného pnpm.</p>
+<h2 id="základní-příkazy">Základní příkazy</h2>
+<p>Příkazy projektové záložky spusť ve složce s <code>package.json</code>.</p>
+<p>Zápis <code>&lt;balíček&gt;</code> nahraď názvem balíčku a <code>[&lt;balíček&gt;]</code> můžeš vynechat pro práci se všemi přímými závislostmi.</p>
+<p>Další značky popisuje <a href="../../operating-system/command-line-syntax.html">klíč syntaxe příkazů</a>.</p>
+<div class="tabGroup" id="tabgroup_1">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_1_pnpm-project" role="tab" aria-controls="tabpanel_1_pnpm-project" data-tab="pnpm-project" tabindex="0" aria-selected="true">Projekt</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_1_pnpm-global" role="tab" aria-controls="tabpanel_1_pnpm-global" data-tab="pnpm-global" tabindex="-1">Globální nástroje</a>
+</li>
+</ul>
+<section id="tabpanel_1_pnpm-project" role="tabpanel" data-tab="pnpm-project">
+
+<table>
+<thead>
+<tr>
+<th>Účel</th>
+<th>Příkaz</th>
+<th>Výsledek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Přidat běhovou závislost</td>
+<td><code>pnpm add &lt;balíček&gt;[@&lt;verze&gt;]</code></td>
+<td>Zapíše balíček do <code>dependencies</code> a aktualizuje lockfile</td>
+</tr>
+<tr>
+<td>Přidat vývojovou závislost</td>
+<td><code>pnpm add --save-dev &lt;balíček&gt;[@&lt;verze&gt;]</code></td>
+<td>Zapíše balíček do <code>devDependencies</code></td>
+</tr>
+<tr>
+<td>Odebrat přímou závislost</td>
+<td><code>pnpm remove &lt;balíček&gt;</code></td>
+<td>Odebere balíček z manifestu, lockfilu i instalace</td>
+</tr>
+<tr>
+<td>Vypsat přímé závislosti</td>
+<td><code>pnpm list --depth=0</code></td>
+<td>Zobrazí přímé nainstalované balíčky</td>
+</tr>
+<tr>
+<td>Najít dostupné aktualizace</td>
+<td><code>pnpm outdated</code></td>
+<td>Porovná používané verze s registrem</td>
+</tr>
+<tr>
+<td>Aktualizovat v povoleném rozsahu</td>
+<td><code>pnpm update [&lt;balíček&gt;]</code></td>
+<td>Aktualizuje jeden nebo všechny balíčky podle rozsahů</td>
+</tr>
+<tr>
+<td>Obnovit přesný lockfile</td>
+<td><code>pnpm install --frozen-lockfile</code></td>
+<td>Nainstaluje závislosti bez změny <code>pnpm-lock.yaml</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="tabpanel_1_pnpm-global" role="tabpanel" data-tab="pnpm-global" aria-hidden="true" hidden="hidden">
+
+<table>
+<thead>
+<tr>
+<th>Účel</th>
+<th>Příkaz</th>
+<th>Výsledek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nainstalovat nástroj</td>
+<td><code>pnpm add --global &lt;balíček&gt;[@&lt;verze&gt;]</code></td>
+<td>Přidá globální balíček a jeho příkazy</td>
+</tr>
+<tr>
+<td>Odinstalovat nástroj</td>
+<td><code>pnpm remove --global &lt;balíček&gt;</code></td>
+<td>Odebere globální instalaci</td>
+</tr>
+<tr>
+<td>Vypsat globální balíčky</td>
+<td><code>pnpm list --global --depth=0</code></td>
+<td>Zobrazí přímo nainstalované globální balíčky</td>
+</tr>
+<tr>
+<td>Najít dostupné aktualizace</td>
+<td><code>pnpm outdated --global</code></td>
+<td>Porovná globální instalace s registrem</td>
+</tr>
+<tr>
+<td>Aktualizovat nástroje</td>
+<td><code>pnpm update --global [&lt;balíček&gt;]</code></td>
+<td>Aktualizuje jeden nebo všechny globální balíčky</td>
+</tr>
+<tr>
+<td>Zjistit globální adresář</td>
+<td><code>pnpm root --global</code></td>
+<td>Vypíše kořen globální instalace</td>
+</tr>
+</tbody>
+</table>
+</section>
+</div>
+
+<p>V kořeni workspace použij <code>--filter &lt;výběr&gt;</code> pro cílený projekt nebo <code>--recursive</code> pro všechny projekty, pokud daný příkaz tyto volby podporuje.</p>
+<p>Před potvrzením aktualizace zkontroluj změny <code>package.json</code> a <code>pnpm-lock.yaml</code> a spusť testy.</p>
+<p>Podrobnosti uvádí oficiální reference příkazů <a href="https://pnpm.io/cli/add"><code>pnpm add</code></a>, <a href="https://pnpm.io/cli/remove"><code>pnpm remove</code></a>, <a href="https://pnpm.io/cli/list"><code>pnpm list</code></a>, <a href="https://pnpm.io/cli/update"><code>pnpm update</code></a> a <a href="https://pnpm.io/cli/outdated"><code>pnpm outdated</code></a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

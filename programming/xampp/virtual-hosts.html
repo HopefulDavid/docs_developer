@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>XAMPP: vlastn&#237; lok&#225;ln&#237; dom&#233;na projektu | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="XAMPP: vlastn&#237; lok&#225;ln&#237; dom&#233;na projektu | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Vlastn&#237; lok&#225;ln&#237; dom&#233;ny a směrov&#225;n&#237; na jednotliv&#233; projekty.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/xampp/virtual-hosts.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="xampp-vlastní-lokální-doména-projektu">XAMPP: vlastní lokální doména projektu</h1>
+
+<p>Virtual Host vybírá web podle názvu v HTTP požadavku a přiřadí mu vlastní <code>DocumentRoot</code>.</p>
+<p>Hodí se pro aplikaci, která má běžet přímo na kořeni domény nebo vystavovat jen složku <code>public</code>.</p>
+<h2 id="jak-spolu-části-souvisejí">Jak spolu části souvisejí</h2>
+<p>Soubor <code>hosts</code> přeloží <code>moje-aplikace.test</code> na místní IP adresu a Apache podle <code>ServerName</code> zvolí správnou složku.</p>
+<p>Samotný záznam v <code>hosts</code> nenastavuje server ani port.</p>
+<p>Doména <code>.test</code> je vyhrazená pro testování.</p>
+<p><code>.local</code> může kolidovat s multicast DNS.</p>
+<h2 id="před-použitím">Před použitím</h2>
+<p>Předpokladem je funkční <a href="access.html">XAMPP</a>, Apache 2.4 a existující soubor <code>C:\projekty\moje-aplikace\public\index.php</code>.</p>
+<p>Zálohuj upravované konfigurační soubory a ověř, že v <code>C:\xampp\apache\conf\httpd.conf</code> je aktivní tento řádek.</p>
+<pre><code class="lang-apache"># Načte doplňkovou konfiguraci virtuálních hostitelů.
+Include conf/extra/httpd-vhosts.conf
+</code></pre>
+<h2 id="konfigurace-apache">Konfigurace Apache</h2>
+<p>Do <code>C:\xampp\apache\conf\extra\httpd-vhosts.conf</code> vlož blok pro <code>localhost</code> jako první výchozí host a potom projekt.</p>
+<p>Pokud už hostitele máš, sluč změny s existující konfigurací a nevytvářej duplicitní názvy.</p>
+<pre><code class="lang-apache">&lt;VirtualHost *:80&gt;
+    ServerName localhost
+    DocumentRoot &quot;C:/xampp/htdocs&quot;
+    &lt;Directory &quot;C:/xampp/htdocs&quot;&gt;
+        Require local
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+
+&lt;VirtualHost *:80&gt;
+    ServerName moje-aplikace.test
+    DocumentRoot &quot;C:/projekty/moje-aplikace/public&quot;
+    &lt;Directory &quot;C:/projekty/moje-aplikace/public&quot;&gt;
+        # Zákaz výpisu souborů a přístupu z jiných zařízení.
+        Options -Indexes
+        Require local
+        # Konfigurace se spravuje zde, nikoli souborem .htaccess.
+        AllowOverride None
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+</code></pre>
+<p>Cesta v <code>Directory</code> musí odpovídat veřejné složce a <code>Require local</code> dovoluje přístup pouze z místního počítače.</p>
+<p>Pokud framework vyžaduje <code>.htaccess</code>, povol jen potřebné direktivy a modul podle jeho dokumentace.</p>
+<p>Samotná ukázka ještě nenastavuje přepis URL.</p>
+<h2 id="překlad-názvu-a-ověření">Překlad názvu a ověření</h2>
+<p>V editoru spuštěném jako správce otevři <code>C:\Windows\System32\drivers\etc\hosts</code> a přidej následující záznam bez změny přípony souboru.</p>
+<pre><code class="lang-text">127.0.0.1 moje-aplikace.test
+</code></pre>
+<p>Řádek mapuje uvedený název na tento počítač, netýká se ostatních zařízení v síti.</p>
+<p>V PowerShellu ověř syntaxi a seznam hostitelů před restartem Apache.</p>
+<pre><code class="lang-powershell"># -t kontroluje syntaxi, -S vypíše přiřazení virtuálních hostitelů.
+&amp; 'C:/xampp/apache/bin/httpd.exe' -t
+&amp; 'C:/xampp/apache/bin/httpd.exe' -S
+</code></pre>
+<p>Pokračuj po <code>Syntax OK</code>, restartuj Apache přes Control Panel a otevři <code>http://moje-aplikace.test/</code>.</p>
+<p>Zároveň ověř původní <code>http://localhost/</code>, aby první hostitel nepřesměroval jiné místní projekty do nové aplikace.</p>
+<h2 id="co-lze-upravit-a-časté-chyby">Co lze upravit a časté chyby</h2>
+<p>Název měň současně v <code>hosts</code> a <code>ServerName</code>, cestu současně v <code>DocumentRoot</code> a <code>Directory</code>.</p>
+<p>Při 403 prověř <code>Require</code> a oprávnění souborového systému, při zobrazení jiného webu výpis <code>httpd -S</code> a první výchozí host.</p>
+<p>Pro HTTPS přidej důvěryhodný <a href="../../network/certificates.html">lokální certifikát</a> a odpovídající TLS Virtual Host.</p>
+<p>Změna URL na <code>https://</code> sama nestačí.</p>
+<p>Příklady konfigurace vlastní <a href="https://httpd.apache.org/docs/2.4/vhosts/examples.html">Apache HTTP Server</a>, rezervované názvy <a href="https://www.iana.org/assignments/special-use-domain-names/special-use-domain-names.xhtml">IANA</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Git – synchronizace se serverem | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git – synchronizace se serverem | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Načten&#237; a odesl&#225;n&#237; commitů, rozch&#225;zej&#237;c&#237; se větve a odm&#237;tnut&#253; push.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/synchronization.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git--synchronizace-se-serverem">Git – synchronizace se serverem</h1>
+
+<p>Synchronizace přenáší hotové commity mezi místní kopií a serverem.</p>
+<p>Necommitované úpravy ani nové nesledované soubory se nepřenášejí.</p>
+<h2 id="tři-odlišné-operace">Tři odlišné operace</h2>
+<table>
+<thead>
+<tr>
+<th>Syntaxe</th>
+<th>Účinek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>git fetch &lt;remote&gt;</code></td>
+<td>Stáhne dostupnou historii a aktualizuje místní záznam vzdálených větví</td>
+</tr>
+<tr>
+<td><code>git pull --ff-only [&lt;remote&gt; &lt;větev&gt;]</code></td>
+<td>Načte historii a posune aktuální větev pouze tehdy, když se nerozešla se zdrojem</td>
+</tr>
+<tr>
+<td><code>git push [-u] &lt;remote&gt; &lt;větev&gt;</code></td>
+<td>Odešle místní větev. <code>-u</code> nastaví její upstream</td>
+</tr>
+</tbody>
+</table>
+<p><code>fetch</code> nemění tvoje pracovní soubory, zatímco <code>pull</code> může změnit aktuální větev i její soubory.</p>
+<p>Upstream je sledovaná vzdálená větev pro porovnání stavu a výchozí synchronizaci.</p>
+<p>První push ji běžně nastavuje přes <code>-u</code>.</p>
+<h2 id="běžná-aktualizace-hlavní-větve">Běžná aktualizace hlavní větve</h2>
+<p>Příklad funguje v PowerShellu i Bashi a předpokládá existující <code>main</code>, remote <code>origin</code> a čistý pracovní strom.</p>
+<pre><code class="lang-bash">git switch main
+git fetch origin
+git log --oneline --left-right main...origin/main
+git merge --ff-only origin/main
+</code></pre>
+<p>Tři tečky v tomto Git výrazu skutečně napíšeš.</p>
+<p>Porovnávají commity, které jsou jen na jedné z obou stran.</p>
+<p><code>&lt;</code> ve výpisu označuje pouze místní commity, <code>&gt;</code> pouze vzdálené.</p>
+<p><code>merge --ff-only</code> aktualizuje <code>main</code> bez vzniku nového merge commitu a při rozchodu větví skončí chybou.</p>
+<p>Pro běžné opakování stejného záměru lze místo odděleného fetch a merge použít <code>git pull --ff-only origin main</code>, ale <strong>až na vybrané větvi main</strong>.</p>
+<p><code>pull origin main</code> spuštěný na pracovní větvi začleňuje <code>main</code> do této pracovní větve.</p>
+<p>Nepřepíná za tebe větev.</p>
+<h2 id="když-se-větve-rozešly">Když se větve rozešly</h2>
+<table>
+<thead>
+<tr>
+<th>Co ukazuje porovnání</th>
+<th>Další krok</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pouze <code>&gt;</code></td>
+<td>Místní větev je pozadu, fast-forward ji může aktualizovat</td>
+</tr>
+<tr>
+<td>Pouze <code>&lt;</code></td>
+<td>Místní větev má neodeslané commity, ověř je a pushni</td>
+</tr>
+<tr>
+<td>Oba znaky</td>
+<td>Obě strany mají vlastní commity. Zvol merge nebo rebase</td>
+</tr>
+<tr>
+<td>Nic</td>
+<td>Obě strany ukazují na stejnou historii</td>
+</tr>
+</tbody>
+</table>
+<p>Pro zachování obou linií použij na své aktuální větvi <code>git merge origin/main</code>.</p>
+<p>Pro přehrání vlastních <strong>dosud nesdílených</strong> commitů na novější základ použij místo merge <code>git rebase origin/main</code>.</p>
+<p>Tyto dvě varianty nespouštěj po sobě jako jeden postup.</p>
+<p>Jejich rozdíl a řešení konfliktů popisuje <a href="merging.html">slučování</a>.</p>
+<h2 id="odeslání-vlastní-větve">Odeslání vlastní větve</h2>
+<p>Po kontrole diffu a testech například:</p>
+<pre><code class="lang-bash">git push -u origin feature/hledani
+git branch -vv
+</code></pre>
+<p>První příkaz vytvoří nebo aktualizuje vzdálenou <code>feature/hledani</code> a druhý ukáže nastavené sledování.</p>
+<p>Další odeslání může používat explicitní <code>git push origin feature/hledani</code>.</p>
+<p>Na <code>main</code> názvy přizpůsob skutečné větvi.</p>
+<h2 id="co-dělat-když-push-selže">Co dělat, když push selže</h2>
+<table>
+<thead>
+<tr>
+<th>Hlášení</th>
+<th>Význam a náprava</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>non-fast-forward</code> / <code>fetch first</code></td>
+<td>Server má jinou historii. Načti ji a prohlédni rozdíl, než zvolíš merge nebo rebase</td>
+</tr>
+<tr>
+<td><code>no upstream branch</code></td>
+<td>Pro první odeslání použij <code>git push -u &lt;remote&gt; &lt;větev&gt;</code></td>
+</tr>
+<tr>
+<td><code>src refspec ... does not match any</code></td>
+<td>Ověř název větve a existenci prvního commitu</td>
+</tr>
+<tr>
+<td>Chráněná větev / odmítnutí pravidlem</td>
+<td>Použij pracovní větev a PR podle pravidel serveru</td>
+</tr>
+<tr>
+<td>Přístup zamítnut</td>
+<td>Ověř <a href="server.html">URL a účet</a>, u SSH <a href="../../network/ssh/git.html">nabízený klíč</a></td>
+</tr>
+</tbody>
+</table>
+<p>Po vlastním amend nebo rebase mohou mít logicky stejné změny jiná ID.</p>
+<p>Publikování přepsané vlastní větve řeší <a href="history/fix-commits.html#publikov%C3%A1n%C3%AD-p%C5%99epsan%C3%A9-vlastn%C3%AD-v%C4%9Btve">opravy historie</a>.</p>
+<h2 id="ověření-serveru">Ověření serveru</h2>
+<pre><code class="lang-bash">git fetch origin
+git status --short --branch
+git log --oneline --left-right HEAD...origin/feature/hledani
+</code></pre>
+<p>Poslední výpis má být prázdný, pokud aktuální a vzdálená pracovní větev obsahují stejnou historii.</p>
+<p>Názvy nahraď svou větví.</p>
+<p>Samotný stav „up to date“ bez čerstvého fetch může vycházet ze staršího místního záznamu serveru.</p>
+<p>Zdroje: <a href="https://git-scm.com/docs/git-fetch">fetch</a>, <a href="https://git-scm.com/docs/git-pull">pull</a>, <a href="https://git-scm.com/docs/git-push">push</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

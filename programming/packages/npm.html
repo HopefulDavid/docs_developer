@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>npm | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="npm | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Z&#225;kladn&#237; př&#237;kazy npm pro spr&#225;vu projektov&#253;ch a glob&#225;ln&#237;ch bal&#237;čků.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/programming/packages/npm.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="npm">npm</h1>
+
+<p>npm spravuje závislosti projektů Node.js i příkazové nástroje instalované pro celý uživatelský účet.</p>
+<p>Pro přenos balíčků použij <a href="backup-and-restore.html#npm">zálohu a obnovu bez internetu</a>.</p>
+<h2 id="základní-příkazy">Základní příkazy</h2>
+<p>Příkazy projektové záložky spusť ve složce s <code>package.json</code>.</p>
+<p>Zápis <code>&lt;balíček&gt;</code> nahraď názvem balíčku a <code>[&lt;balíček&gt;]</code> můžeš vynechat pro práci se všemi přímými závislostmi.</p>
+<p>Další značky popisuje <a href="../../operating-system/command-line-syntax.html">klíč syntaxe příkazů</a>.</p>
+<div class="tabGroup" id="tabgroup_1">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_1_npm-project" role="tab" aria-controls="tabpanel_1_npm-project" data-tab="npm-project" tabindex="0" aria-selected="true">Projekt</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_1_npm-global" role="tab" aria-controls="tabpanel_1_npm-global" data-tab="npm-global" tabindex="-1">Globální nástroje</a>
+</li>
+</ul>
+<section id="tabpanel_1_npm-project" role="tabpanel" data-tab="npm-project">
+
+<table>
+<thead>
+<tr>
+<th>Účel</th>
+<th>Příkaz</th>
+<th>Výsledek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Přidat běhovou závislost</td>
+<td><code>npm install &lt;balíček&gt;[@&lt;verze&gt;]</code></td>
+<td>Zapíše balíček do <code>dependencies</code> a aktualizuje lockfile</td>
+</tr>
+<tr>
+<td>Přidat vývojovou závislost</td>
+<td><code>npm install --save-dev &lt;balíček&gt;[@&lt;verze&gt;]</code></td>
+<td>Zapíše balíček do <code>devDependencies</code></td>
+</tr>
+<tr>
+<td>Odebrat přímou závislost</td>
+<td><code>npm uninstall &lt;balíček&gt;</code></td>
+<td>Odebere balíček z manifestu, lockfilu i instalace</td>
+</tr>
+<tr>
+<td>Vypsat přímé závislosti</td>
+<td><code>npm list --depth=0</code></td>
+<td>Zobrazí jednu úroveň nainstalovaného stromu</td>
+</tr>
+<tr>
+<td>Najít dostupné aktualizace</td>
+<td><code>npm outdated</code></td>
+<td>Porovná nainstalované, povolené a nejnovější verze</td>
+</tr>
+<tr>
+<td>Aktualizovat v povoleném rozsahu</td>
+<td><code>npm update [&lt;balíček&gt;]</code></td>
+<td>Aktualizuje instalaci podle omezení v <code>package.json</code></td>
+</tr>
+<tr>
+<td>Čistě obnovit lockfile</td>
+<td><code>npm ci</code></td>
+<td>Nahradí <code>node_modules</code> přesným obsahem <code>package-lock.json</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="tabpanel_1_npm-global" role="tabpanel" data-tab="npm-global" aria-hidden="true" hidden="hidden">
+
+<table>
+<thead>
+<tr>
+<th>Účel</th>
+<th>Příkaz</th>
+<th>Výsledek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nainstalovat nástroj</td>
+<td><code>npm install --global &lt;balíček&gt;[@&lt;verze&gt;]</code></td>
+<td>Zpřístupní příkazy balíčku globálně pro aktuální instalaci npm</td>
+</tr>
+<tr>
+<td>Odinstalovat nástroj</td>
+<td><code>npm uninstall --global &lt;balíček&gt;</code></td>
+<td>Odebere globální instalaci</td>
+</tr>
+<tr>
+<td>Vypsat globální balíčky</td>
+<td><code>npm list --global --depth=0</code></td>
+<td>Zobrazí přímo nainstalované globální balíčky</td>
+</tr>
+<tr>
+<td>Najít dostupné aktualizace</td>
+<td><code>npm outdated --global</code></td>
+<td>Porovná globální instalace s registrem</td>
+</tr>
+<tr>
+<td>Aktualizovat nástroje</td>
+<td><code>npm update --global [&lt;balíček&gt;]</code></td>
+<td>Aktualizuje jeden nebo všechny zastaralé globální balíčky</td>
+</tr>
+<tr>
+<td>Zjistit kořen instalace</td>
+<td><code>npm root --global</code></td>
+<td>Vypíše adresář globálních balíčků</td>
+</tr>
+</tbody>
+</table>
+</section>
+</div>
+
+<p>Příkazy měnící projekt kontroluj spolu se změnami <code>package.json</code> a <code>package-lock.json</code> a po aktualizaci spusť testy.</p>
+<p>Podrobnosti uvádí oficiální reference příkazů <a href="https://docs.npmjs.com/cli/v11/commands/npm-install/"><code>npm install</code></a>, <a href="https://docs.npmjs.com/cli/v11/commands/npm-uninstall/"><code>npm uninstall</code></a>, <a href="https://docs.npmjs.com/cli/v11/commands/npm-update/"><code>npm update</code></a> a <a href="https://docs.npmjs.com/cli/v11/commands/npm-outdated/"><code>npm outdated</code></a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

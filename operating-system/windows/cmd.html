@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>CMD – př&#237;kazov&#253; ř&#225;dek Windows | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="CMD – př&#237;kazov&#253; ř&#225;dek Windows | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Z&#225;kladn&#237; orientace v CMD, soubory, proměnn&#233; a d&#225;vkov&#233; skripty.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/operating-system/windows/cmd.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="cmd--příkazový-řádek-windows">CMD – příkazový řádek Windows</h1>
+
+<p>CMD spouští příkazy Windows a dávkové soubory <code>.cmd</code> nebo <code>.bat</code>.</p>
+<p>Jeho syntaxe používá například <code>%PROMENNA%</code> a není zaměnitelná s PowerShellem ani Bashem.</p>
+<h2 id="začni-ve-správné-složce">Začni ve správné složce</h2>
+<p>Otevři profil <strong>Příkazový řádek</strong> ve Windows Terminalu nebo spusť <code>cmd.exe</code>.</p>
+<pre><code class="lang-cmd">rem Vypise aktualni slozku a jeji obsah.
+cd
+dir
+rem /d prejde i na jinou jednotku; cestu nahrad vlastnim projektem.
+cd /d &quot;C:\projekty\moje-aplikace&quot;
+</code></pre>
+<p>Při neexistující cestě oprav název.</p>
+<p>Další příkazy jinak zůstanou v předchozí složce.</p>
+<h2 id="nejčastější-operace">Nejčastější operace</h2>
+<table>
+<thead>
+<tr>
+<th>Syntaxe CMD</th>
+<th>Účinek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dir [&lt;cesta&gt;]</code></td>
+<td>Vypíše obsah složky</td>
+</tr>
+<tr>
+<td><code>dir /a /x [&lt;cesta&gt;]</code></td>
+<td>Zahrne skryté položky a existující krátké názvy</td>
+</tr>
+<tr>
+<td><code>cd /d &quot;&lt;cesta&gt;&quot;</code></td>
+<td>Změní složku i jednotku</td>
+</tr>
+<tr>
+<td><code>mkdir &quot;&lt;složka&gt;&quot;</code></td>
+<td>Vytvoří složku</td>
+</tr>
+<tr>
+<td><code>copy &quot;&lt;zdroj&gt;&quot; &quot;&lt;cíl&gt;&quot;</code></td>
+<td>Zkopíruje soubor. Zkontroluj případné přepsání cíle</td>
+</tr>
+<tr>
+<td><code>type &quot;&lt;soubor&gt;&quot;</code></td>
+<td>Vypíše textový obsah</td>
+</tr>
+<tr>
+<td><code>where.exe &lt;program&gt;</code></td>
+<td>Vyhledá program v cestách</td>
+</tr>
+<tr>
+<td><code>&lt;příkaz&gt; /?</code></td>
+<td>U většiny vestavěných příkazů zobrazí nápovědu</td>
+</tr>
+</tbody>
+</table>
+<p>Mazání souboru a celé složky se liší.</p>
+<p>Použij <a href="cannot-delete-item.html?tabs=remove-cmd#cmd-rozli%C5%A1en%C3%AD-souboru-a-slo%C5%BEky">cílený postup</a>.</p>
+<h2 id="proměnné-a-přesměrování">Proměnné a přesměrování</h2>
+<pre><code class="lang-cmd">set &quot;PROJECT_NAME=moje-aplikace&quot;
+echo %PROJECT_NAME%
+dir /b &gt; soubory.txt
+</code></pre>
+<p><code>set</code> nastaví proměnnou pro aktuální proces, <code>echo</code> ji vypíše a <code>&gt;</code> přepíše výstupní soubor seznamem názvů.</p>
+<p><code>&gt;&gt;</code> by připojovalo na konec a <code>|</code> předává textový výstup dalšímu příkazu.</p>
+<p>Použij nový výstupní soubor, protože přesměrování může bez dalšího dotazu nahradit jeho obsah.</p>
+<h2 id="malý-opakovatelný-skript">Malý opakovatelný skript</h2>
+<p>Do nové složky ulož <code>seznam.cmd</code>:</p>
+<pre><code class="lang-cmd">@echo off
+setlocal
+rem Zacni ve slozce tohoto skriptu; pri neuspechu okamzite skonci.
+pushd &quot;%~dp0&quot; || exit /b 1
+dir /b
+popd
+exit /b 0
+</code></pre>
+<p>Spusť <code>seznam.cmd</code> v CMD.</p>
+<p>Skript vypíše obsah své složky, vrátí původní pracovní adresář a oznámí úspěch kódem <code>0</code>.</p>
+<p><code>@echo off</code> skryje vypisování samotných příkazů, <code>setlocal</code> omezí změny prostředí a <code>%~dp0</code> označuje disk a cestu dávky.</p>
+<p>Nenulový návrat signalizuje chybu podle použitého programu.</p>
+<p>V dávce <code>if errorlevel 1</code> kontroluje hodnotu alespoň jedna.</p>
+<p>Ve smyčce dávkového souboru se používá například <code>%%G</code>, zatímco stejná ručně zadaná smyčka v CMD používá <code>%G</code>.</p>
+<p>Pro konkrétní databázový postup pokračuj na <a href="../../database/sqlcmd.html">spouštění SQL souborů přes sqlcmd</a>.</p>
+<h2 id="kontrola-a-optimalizace-disku">Kontrola a optimalizace disku</h2>
+<p>Windows běžně zajišťuje plánovanou údržbu přes <strong>Defragmentovat a optimalizovat jednotky</strong>.</p>
+<p>Pokud potřebuješ ruční analýzu, v CMD jako správce:</p>
+<pre><code class="lang-cmd">defrag C: /A /V
+</code></pre>
+<p><code>/A</code> jen analyzuje a <code>/V</code> vypíše podrobnosti.</p>
+<p><code>C:</code> nahraď skutečně kontrolovanou jednotkou.</p>
+<p>Pro vědomě požadovanou optimalizaci <code>defrag C: /O /U</code> nechá Windows zvolit postup podle typu média a zobrazí průběh.</p>
+<p>Písmeno jednotky neurčuje SSD/HDD a TRIM nepředstavuje bezpečné vymazání dat.</p>
+<p>Zdroje: <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd">CMD</a>, <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/set_1">set</a>, <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/defrag">defrag</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

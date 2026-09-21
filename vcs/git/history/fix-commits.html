@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Git – oprava zpr&#225;vy a obsahu commitu | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git – oprava zpr&#225;vy a obsahu commitu | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Oprava posledn&#237;ho i starš&#237;ho commitu a pravidla publikov&#225;n&#237; přepsan&#233; vlastn&#237; větve.">
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/history/fix-commits.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git--oprava-zprávy-a-obsahu-commitu">Git – oprava zprávy a obsahu commitu</h1>
+
+<p>Amend nebo rebase vytvoří opravené commity s novými ID.</p>
+<p>Původní záznam se neupravuje na místě.</p>
+<p>Pro již sdílenou historii je často přehlednější nový opravný commit, který nevyžaduje přepis serveru.</p>
+<h2 id="vyber-podle-situace">Vyber podle situace</h2>
+<table>
+<thead>
+<tr>
+<th>Potřeba</th>
+<th>Možnost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Změnit zprávu posledního místního commitu</td>
+<td><code>git commit --amend -m &quot;&lt;nová-zpráva&gt;&quot;</code></td>
+</tr>
+<tr>
+<td>Doplnit obsah posledního místního commitu</td>
+<td>Připrav opravu a použij <code>git commit --amend --no-edit</code></td>
+</tr>
+<tr>
+<td>Opravit starší vlastní commit</td>
+<td>Fixup a interaktivní autosquash</td>
+</tr>
+<tr>
+<td>Opravit již sdílenou změnu</td>
+<td>Běžný nový commit, pro opačnou změnu <a href="delete-commits.html">revert</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="vyber-opravovaný-commit">Vyber opravovaný commit</h2>
+<p><a id="poslední-místní-commit"></a>
+<a id="starší-commit-fixup-a-autosquash"></a></p>
+<div class="tabGroup" id="tabgroup_1">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_1_fix-amend" role="tab" aria-controls="tabpanel_1_fix-amend" data-tab="fix-amend" tabindex="0" aria-selected="true">Poslední commit</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_1_fix-autosquash" role="tab" aria-controls="tabpanel_1_fix-autosquash" data-tab="fix-autosquash" tabindex="-1">Starší commit</a>
+</li>
+</ul>
+<section id="tabpanel_1_fix-amend" role="tabpanel" data-tab="fix-amend">
+
+<p>V PowerShellu nebo Bashi nejprve prohlédni index a uchovej původní historii:</p>
+<pre><code class="lang-bash">git status
+git diff --cached
+git branch backup/pred-amend
+</code></pre>
+<p>Pro změnu pouze zprávy musí být index bez připravených změn:</p>
+<pre><code class="lang-bash">git commit --amend -m &quot;fix: opravuje výběr jazyka&quot;
+git show --stat HEAD
+</code></pre>
+<p>Pro doplnění souboru místo toho uprav příslušný soubor, například <code>README.md</code>:</p>
+<pre><code class="lang-bash">git add -- README.md
+git diff --cached
+git commit --amend --no-edit
+</code></pre>
+<p><code>--no-edit</code> zachová zprávu posledního commitu a zahrne připravený obsah.</p>
+<p>Ověř, že index neobsahuje jinou rozpracovanou změnu.</p>
+</section>
+<section id="tabpanel_1_fix-autosquash" role="tabpanel" data-tab="fix-autosquash" aria-hidden="true" hidden="hidden">
+
+<p>Tato ukázka je pro <strong>PowerShell</strong>, vlastní lineární větev s několika commity a čistý stav před opravou.</p>
+<pre><code class="lang-powershell">git log --oneline -10
+$target = Read-Host &quot;Vlož ID opravovaného commitu z výpisu&quot;
+git show --stat $target
+git branch backup/pred-fixup
+$base = git rev-parse &quot;$target^&quot;
+</code></pre>
+<p><code>$target</code> je zvolený opravovaný commit a <code>$base</code> jeho rodič, od kterého se později přehraje historie.</p>
+<p>Pro první commit repozitáře rodič neexistuje.</p>
+<p>V takovém případě krok s <code>$base</code> vynech a použij níže variantu <code>--root</code>.</p>
+<p>Uprav soubor a vytvoř samostatný opravný commit:</p>
+<pre><code class="lang-powershell">git add -- README.md
+git diff --cached
+git commit --fixup $target
+git rebase -i --autosquash $base
+</code></pre>
+<p>Fixup se nejprve uloží jako normální commit a teprve autosquash ho v editoru navrhne přesunout za původní commit a spojit.</p>
+<p>Zkontroluj pořadí a rozsah, ulož a zavři seznam.</p>
+<p>Pro opravu prvního commitu použij místo posledního řádku <code>git rebase -i --autosquash --root</code>.</p>
+<p>V Bashi použij stejné Git operace s ručně zadaným skutečným ID místo PowerShellových proměnných.</p>
+<p>Při konfliktu postupuj podle <a href="../merging.html#konflikt-git-pot%C5%99ebuje-rozhodnut%C3%AD-o-obsahu">rebase konfliktu</a>.</p>
+<p><code>git rebase --abort</code> vrátí stav před zahájením rebase, tedy včetně samostatného fixup commitu.</p>
+</section>
+</div>
+<h2 id="ověření">Ověření</h2>
+<p>Prohlédni <code>git log --oneline -10</code>, <code>git show HEAD</code> a rozdíl proti záložní větvi.</p>
+<p>Rozdíl má odpovídat právě opravovanému obsahu.</p>
+<p>Při změně jen zpráv má být prázdný.</p>
+<p>Spusť testy a záložní větev ponech do ověření publikování.</p>
+<h2 id="publikování-přepsané-vlastní-větve">Publikování přepsané vlastní větve</h2>
+<p>Tuto možnost použij pouze u své krátké větve, kde přepis dovolují pravidla serveru a nespoléhá na ni jiná práce.</p>
+<p>Příklad je pro <strong>PowerShell</strong> a existující vzdálenou <code>feature/hledani</code>.</p>
+<p><strong>Ještě před amend nebo rebase</strong> zaznamenej vzdálený stav:</p>
+<pre><code class="lang-powershell">git fetch origin
+$expected = git rev-parse refs/remotes/origin/feature/hledani
+git log --oneline --left-right HEAD...origin/feature/hledani
+</code></pre>
+<p>Před přepisem musíš rozumět všem rozdílům a zachovat případné nové vzdálené commity.</p>
+<p><code>$expected</code> ponech ve stejné otevřené relaci terminálu.</p>
+<p>Po dokončené a otestované opravě:</p>
+<pre><code class="lang-powershell">git push &quot;--force-with-lease=refs/heads/feature/hledani:$expected&quot; origin HEAD:refs/heads/feature/hledani
+</code></pre>
+<p>Explicitní lease povolí přepis jen tehdy, pokud server stále ukazuje na dříve uložený commit.</p>
+<p>Automatický fetch v IDE uloženou proměnnou nezmění.</p>
+<p>Pokud příkaz selže, znovu prohlédni serverovou historii a začleň novou práci.</p>
+<p>Pouhé přepsání <code>$expected</code> by obešlo účel této kontroly.</p>
+<p>Běžný <code>--force</code> tuto kontrolu neposkytuje a chráněné větve nepřepisuj obcházením pravidel.</p>
+<p>Zdroje: <a href="https://git-scm.com/docs/git-commit">git commit</a>, <a href="https://git-scm.com/docs/git-rebase">git rebase</a>, <a href="https://git-scm.com/docs/git-push">git push</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

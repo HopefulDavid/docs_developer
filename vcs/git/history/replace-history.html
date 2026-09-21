@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Git – nahrazen&#237; cel&#233; historie jedn&#237;m commitem | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git – nahrazen&#237; cel&#233; historie jedn&#237;m commitem | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Nahrazen&#237; historie vzd&#225;len&#233; větve jedin&#253;m kořenov&#253;m commitem z aktu&#225;ln&#237;ho m&#237;stn&#237;ho obsahu.">
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/vcs/git/history/replace-history.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git--nahrazení-celé-historie-jedním-commitem">Git – nahrazení celé historie jedním commitem</h1>
+
+<p>Tento postup zachová aktuální soubory místní větve, vytvoří z nich <strong>jeden nový commit bez rodiče</strong> a nahradí jím historii zvolené vzdálené větve.</p>
+<p>Hodí se pro vědomý nový začátek projektu nebo odvozenou publikační větev, u které nechceš uchovávat předchozí verze.</p>
+<p>Pro spojení jen několika pracovních commitů použij <a href="squash-branch-commits.html">squash</a>.</p>
+<p>Pro vrácení chyby použij <a href="delete-commits.html">revert</a>.</p>
+<h2 id="před-použitím">Před použitím</h2>
+<p>Ukázka používá <strong>PowerShell</strong>, místní větev <code>main</code> s požadovaným obsahem a existující vzdálenou <code>origin/main</code>.</p>
+<p>Ve všech příkazech uprav <code>main</code> a <code>origin</code>, pokud se tvá větev nebo server jmenují jinak.</p>
+<p>Přepis musí být dovolený pravidly cílového repozitáře a domluvený se všemi, kdo na historii navazují.</p>
+<p>Pracovní strom musí být čistý a názvy <code>backup/pred-novou-historii</code>, <code>nova-historie</code> i soubor zálohy dosud nepoužité.</p>
+<p>Každý krok proveď až po úspěchu předchozího.</p>
+<h2 id="1-ověř-cíl-a-zálohuj-starou-historii">1. Ověř cíl a zálohuj starou historii</h2>
+<pre><code class="lang-powershell">git status --short
+git switch main
+git remote -v
+git fetch origin
+$expected = git rev-parse refs/remotes/origin/main
+git log --oneline --left-right main...origin/main
+git branch --no-track backup/pred-novou-historii
+git bundle create ../pred-novou-historii.bundle --all
+git bundle verify ../pred-novou-historii.bundle
+</code></pre>
+<p>Pokud status vypíše rozpracované soubory, nejprve je ulož a začni znovu.</p>
+<p>Prohlédni rozdíly vůči serveru: výsledkem bude <strong>místní obsah</strong>, takže potřebné vzdálené změny musíš začlenit před pokračováním.</p>
+<p>Proměnná <code>$expected</code> uchová přesné ID vzdáleného commitu pro pozdější kontrolu pushe.</p>
+<p>Pracuj dále ve stejném terminálu.</p>
+<p>Bundle ulož také mimo tento počítač.</p>
+<p>Obsah a hranice zálohy včetně LFS vysvětluje <a href="../backups.html">záloha Gitu</a>.</p>
+<h2 id="2-vytvoř-jediný-kořenový-commit">2. Vytvoř jediný kořenový commit</h2>
+<pre><code class="lang-powershell">git checkout --orphan nova-historie main
+git diff --cached --stat
+git commit -m &quot;Initial commit&quot;
+git rev-list --count HEAD
+git diff backup/pred-novou-historii HEAD
+</code></pre>
+<p><code>checkout --orphan</code> připraví novou historii se sledovanými soubory z <code>main</code> už v indexu, takže není potřeba <code>git add -A</code>. <a href="https://git-scm.com/docs/git-checkout">Git checkout</a></p>
+<p>Tím se do nového commitu nepřidají náhodné nesledované soubory.</p>
+<p>Počet commitů musí být <strong>1</strong> a poslední diff prázdný, protože výsledný obsah má být stejný jako před přepisem.</p>
+<p>Záměrně zde používáme <code>checkout --orphan</code>: <code>switch --orphan</code> odstraňuje sledované soubory a není přímou náhradou tohoto příkazu. <a href="https://git-scm.com/docs/git-switch">Git switch</a></p>
+<h2 id="3-nahraď-místní-větev">3. Nahraď místní větev</h2>
+<pre><code class="lang-powershell">git branch -M main
+git log --oneline main
+</code></pre>
+<p>Přejmenování nahradí původní místní <code>main</code> novou větví.</p>
+<p>Starou historii stále uchovává záložní větev a bundle.</p>
+<p>Není potřeba předem mazat <code>main</code> samostatným příkazem ani odstraňovat adresář <code>.git</code>.</p>
+<p>Pokud už máš požadovanou místní větev s jediným kořenovým commitem připravenou, po ověření cíle a záloze z kroku 1 můžeš kroky 2 a 3 vynechat a přejít k publikování.</p>
+<h2 id="4-nahraď-vzdálenou-historii">4. Nahraď vzdálenou historii</h2>
+<p>Nejdříve prohlédni návrh, potom proveď stejnou operaci bez <code>--dry-run</code>:</p>
+<pre><code class="lang-powershell">git push --dry-run &quot;--force-with-lease=refs/heads/main:$expected&quot; origin main:refs/heads/main
+git push &quot;--force-with-lease=refs/heads/main:$expected&quot; origin main:refs/heads/main
+git fetch origin
+git branch --set-upstream-to=origin/main main
+git rev-list --count origin/main
+git diff main origin/main
+</code></pre>
+<p>Explicitní lease povolí přepis jen tehdy, pokud vzdálená <code>main</code> stále ukazuje na commit zaznamenaný před změnou. <a href="https://git-scm.com/docs/git-push">Git push</a></p>
+<p>Při odmítnutí prohlédni novou vzdálenou práci.</p>
+<p>Pouhé přenastavení <code>$expected</code> nebo použití <code>--force</code> by tuto kontrolu obešlo.</p>
+<p>Po úspěchu má také <code>origin/main</code> jeden commit a diff vůči místní větvi je prázdný.</p>
+<h2 id="ověření-a-další-práce">Ověření a další práce</h2>
+<p>Naklonuj server do nové složky a ověř <code>git log</code>, soubory a běžné testy projektu.</p>
+<p>Ostatní pracovní kopie by měly po záloze vlastní rozpracované práce přejít na novou historii.</p>
+<p>Běžný pull může narazit na nesouvisející historie.</p>
+<table>
+<thead>
+<tr>
+<th>Co postup změní</th>
+<th>Co zůstává zvlášť</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Historii konkrétní vzdálené větve <code>main</code></td>
+<td>Ostatní větve a tagy</td>
+</tr>
+<tr>
+<td>Místní <code>main</code></td>
+<td>Záložní větev, bundle a reflog</td>
+</tr>
+<tr>
+<td>Historii nového klonu pro tuto větev</td>
+<td>Staré klony, forky, reference hostingu a LFS objekty</td>
+</tr>
+</tbody>
+</table>
+<p>Postup tedy nahrazuje celou historii <strong>jedné větve</strong>, ale nezaručuje fyzické vymazání starých objektů ze všech kopií repozitáře.</p>
+<h2 id="návrat-k-původnímu-stavu">Návrat k původnímu stavu</h2>
+<p>Před publikováním lze starý obsah otevřít přes <code>git switch backup/pred-novou-historii</code>.</p>
+<p>Pro obnovu do samostatné složky použij <code>git clone pred-novou-historii.bundle projekt-obnoveny</code> z adresáře s bundlem.</p>
+<p>Po publikování by i návrat serveru představoval další přepis.</p>
+<p>Musí znovu zohlednit případnou novou vzdálenou práci.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
