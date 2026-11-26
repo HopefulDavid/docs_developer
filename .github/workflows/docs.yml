@@ -10,6 +10,11 @@ name: Dokumentace
 permissions:
   contents: read
 
+# Kontroly pull requestů se při novém pushi ruší, publikování z main nikdy.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   verify:
     name: Ověření a sestavení
@@ -75,3 +80,16 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: _site
           force_orphan: true
+
+  # Jediná povinná kontrola v pravidlech větve main, selže, pokud některá potřebná úloha neuspěla.
+  ci-ok:
+    if: ${{ always() }}
+    needs: [verify]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Souhrn výsledků potřebných úloh
+        run: |
+          for r in "${{ needs.verify.result }}"; do
+            [ "$r" = "success" ] || { echo "Výsledek potřebné úlohy: $r"; exit 1; }
+          done
