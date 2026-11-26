@@ -12,14 +12,25 @@ const patterns = [
 ];
 
 /** Ponechá jen prózu: bez bloků kódu, kódu v textu, adres odkazů, HTML, kotev a tučných názvů z rozhraní. */
+function stripInlineHtmlTags(input) {
+  let previous;
+  let current = input;
+  do {
+    previous = current;
+    current = current.replace(/<[^>\n]*>/g, '');
+  } while (current !== previous);
+  return current;
+}
+
 function prose(source) {
-  return source
-    // Blok kódu se nahradí prázdnými řádky, aby čísla řádků v nálezech seděla.
-    .replace(/^(`{3,}|~{3,})[\s\S]*?^\1/gm, (block) => block.replace(/[^\n]/g, ''))
-    .replace(/`[^`\n]*`/g, '')
-    .replace(/\]\([^)]*\)/g, ']')
-    .replace(/<[^>\n]*>/g, '')
-    .replace(/\*\*[^*\n]*\*\*/g, '');
+  return stripInlineHtmlTags(
+    source
+      // Blok kódu se nahradí prázdnými řádky, aby čísla řádků v nálezech seděla.
+      .replace(/^(`{3,}|~{3,})[\s\S]*?^\1/gm, (block) => block.replace(/[^\n]/g, ''))
+      .replace(/`[^`\n]*`/g, '')
+      .replace(/\]\([^)]*\)/g, ']')
+      .replace(/\*\*[^*\n]*\*\*/g, ''),
+  );
 }
 
 function addressing(source) {
