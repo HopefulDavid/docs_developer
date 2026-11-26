@@ -1,0 +1,2 @@
+# Jednotné LF v repozitáři i pracovní kopii nezávisle na nastavení core.autocrlf.
+* text=auto eol=lf

@@ -1,0 +1,127 @@
+---
+description: "Identita autora, editor, konce řádků a kontrola účinného nastavení."
+---
+
+# Git – nastavení pro vlastní projekty
+
+Konfigurace určuje identitu commitů a chování nástrojů.
+
+Jméno a e-mail autora nejsou přihlašovací údaje k serveru.
+
+<a id="nastav-jednou-pro-svůj-účet"></a>
+
+## Jednorázové nastavení účtu
+
+V PowerShellu nebo Bashi se ukázkové údaje nahradí vlastními:
+
+```bash
+git config --global user.name "Jana Novakova"
+git config --global user.email "jana@example.com"
+git config --global init.defaultBranch main
+```
+
+Jméno a e-mail budou zapsané v nových commitech, které mohou být veřejné.
+
+Na GitHubu lze použít přesnou soukromou noreply adresu uvedenou v nastavení účtu.
+
+`init.defaultBranch` určuje název větve nových repozitářů, existující větve nepřejmenuje.
+
+## Osobní versus projektové nastavení
+
+| Rozsah | Kde platí | Kdy jej použít |
+|---|---|---|
+| `--local` | Jen aktuální repozitář, zpravidla `.git/config` | Jiný e-mail pro pracovní projekt |
+| `--global` | Projekty uživatelského účtu | Osobní výchozí nastavení |
+| `--system` | Instalace Gitu pro více uživatelů | Správa společného prostředí |
+
+Místní hodnota přebíjí globální.
+
+Jednotlivý příkaz může navíc dostat dočasné nastavení přes `git -c <klíč>=<hodnota> <příkaz>`.
+
+V kořeni pracovního projektu například:
+
+```bash
+git config --local user.email "jana@firma.example"
+git config --show-origin --get user.email
+```
+
+Druhý příkaz ukáže účinnou hodnotu a zdrojový soubor.
+
+Změna nepozmění autorství již vytvořených commitů.
+
+## Editor zpráv commitů
+
+Pro VS Code s funkčním příkazem `code` v terminálu:
+
+```bash
+git config --global core.editor "code --wait"
+```
+
+`--wait` nechá Git počkat na uložení a zavření editační karty.
+
+Lze zvolit jiný nainstalovaný editor s odpovídající volbou čekání, nebo ponechat výchozí.
+
+`git commit -m "<zpráva>"` editor vůbec neotevírá.
+
+## Konce řádků patří k pravidlům projektu
+
+LF a CRLF jsou dva způsoby ukončení textového řádku.
+
+Nevhodné převody dokážou zobrazit celý soubor jako změněný.
+
+Pokud projekt používá `.gitattributes`, platí jeho pravidla a cizí historie se hromadně nenormalizuje.
+
+Pro nový projekt lze do `.gitattributes` uložit:
+
+```gitattributes
+# Rozpoznané texty se ukládají do historie s normalizovanými konci řádků.
+* text=auto
+# Shell skripty potřebují LF, dávkové skripty Windows obvykle CRLF.
+*.sh text eol=lf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+```
+
+Pravidla jsou verzovaná společně s projektem.
+
+Vlastní typy souborů lze doplnit podle nástrojů, které je čtou.
+
+Změna pravidel ve stávajícím projektu probíhá v čistém stromu jako samostatná změna a nejprve se zkontroluje efekt `git add --renormalize .` přes `git diff --cached`.
+
+## Porovnávání v grafickém nástroji
+
+IDE obvykle umí zobrazit Git diff i vyřešit konflikt bez další konfigurace.
+
+Samostatný Meld se nejprve nainstaluje a ve Windows se ověří jeho skutečná cesta:
+
+```bash
+git config --global diff.tool meld
+git config --global difftool.meld.path "C:/Program Files/Meld/Meld.exe"
+git config --global merge.tool meld
+git config --global mergetool.meld.path "C:/Program Files/Meld/Meld.exe"
+```
+
+Na systému s příkazem `meld` v `PATH` obvykle stačí nastavit `diff.tool` a `merge.tool` bez vlastní cesty.
+
+`git difftool` porovná pracovní změny s indexem a `git mergetool` otevře existující konflikty.
+
+Po jejich vyřešení se vždy zkontroluje výsledný kód a testy.
+
+## Diagnostika a vrácení volby
+
+```bash
+git config --show-origin --get core.editor
+git config --global --unset core.editor
+```
+
+První příkaz přečte nastavení a druhý odstraní jen osobní volbu editoru, čímž se uplatní případná jiná nebo výchozí hodnota.
+
+Nenulový návrat při neexistujícím klíči znamená, že není co číst či mazat.
+
+Při problému s dlouhou cestou ve Windows nejdříve se zkrátí umístění projektu, například na `C:\src\aplikace`.
+
+`git config --global core.longpaths true` rozšíří podporu v Git for Windows, nikoli automaticky ve všech ostatních programech.
+
+SSH klienta řeší [Git přes SSH](../../network/ssh/git.md).
+
+Zdroje: [git config](https://git-scm.com/docs/git-config), [gitattributes](https://git-scm.com/docs/gitattributes), [Git for Windows FAQ](https://gitforwindows.org/faq.html).

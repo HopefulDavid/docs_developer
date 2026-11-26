@@ -1,0 +1,8 @@
+.idea/
+private/
+_site/
+content/changelog.md
+node_modules/
+
+# Místní index Repowise, vzniká znovu příkazem repowise init nebo update.
+.repowise/

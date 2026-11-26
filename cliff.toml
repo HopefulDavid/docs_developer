@@ -1,0 +1,117 @@
+# Veřejná stránka Změny. Roky a kategorie mají stálé kotvy, první výskyt kategorie má i kotvu bez roku.
+
+[changelog]
+header = """
+# Změny
+
+> Tento soubor se automaticky generuje z úplné Git historie. Ručně se neupravuje.
+"""
+body = """
+> Zdrojový stav: `{{ commit_id | truncate(length=7, end="") }}`. Zahrnuté commity: **{{ statistics.commit_count }}**.
+
+---
+{% if commits | length == 0 %}\
+> V dostupné historii nejsou žádné změny.
+{% else %}\
+{% set newest_commit = commits | first %}\
+{% set latest_period = newest_commit.author.timestamp | date(format="%Y", timezone="Europe/Prague") %}\
+{% set_global rendered_period = "" %}\
+{% set_global rendered_anchors = [] %}\
+{% for period_marker in commits %}\
+{% set period = period_marker.author.timestamp | date(format="%Y", timezone="Europe/Prague") %}\
+{% if period != rendered_period %}\
+{% set_global rendered_period = period %}\
+{% set_global period_count = 0 %}\
+{% for period_commit in commits %}\
+{% set period_commit_year = period_commit.author.timestamp | date(format="%Y", timezone="Europe/Prague") %}\
+{% if period_commit_year == period %}\
+{% set_global period_count = period_count + 1 %}\
+{% endif %}\
+{% endfor %}\
+<a id="obdobi-{{ period }}"></a>
+{% if period == latest_period %}\
+## Nejnovější období · {{ period }}
+
+> Počet změn v období: **{{ period_count }}**.
+> Zobrazují se pouze roky, ve kterých vznikla změna; prázdné roky se vynechávají.
+
+{% else %}\
+<details>
+<summary><strong>{{ period }}</strong> · počet změn: {{ period_count }}</summary>
+
+{% endif %}\
+{% for group, grouped_commits in commits | group_by(attribute="group") %}\
+{% set_global category_count = 0 %}\
+{% for grouped_commit in grouped_commits %}\
+{% set grouped_commit_year = grouped_commit.author.timestamp | date(format="%Y", timezone="Europe/Prague") %}\
+{% if grouped_commit_year == period %}\
+{% set_global category_count = category_count + 1 %}\
+{% endif %}\
+{% endfor %}\
+{% if category_count > 0 %}\
+{% set title = group | striptags | trim %}\
+{% set anchor = title | split(pat=" ") | slice(start=1) | join(sep=" ") | slugify %}\
+{% if anchor not in rendered_anchors %}\
+<a id="{{ anchor }}"></a>
+{% set_global rendered_anchors = rendered_anchors | concat(with=anchor) %}\
+{% endif %}\
+<a id="{{ anchor }}-{{ period }}"></a>
+### {{ title }}
+
+{% if title == "🔩 Technické změny" %}\
+<details>
+<summary>Zobrazit technické záznamy ({{ category_count }})</summary>
+
+{% endif %}\
+{% for commit in grouped_commits %}\
+{% set commit_year = commit.author.timestamp | date(format="%Y", timezone="Europe/Prague") %}\
+{% if commit_year == period %}\
+- {% if commit.breaking %}⚠️ **Nekompatibilní změna:** {% endif %}{% if commit.scope %}**{{ commit.scope }}:** {% endif %}{{ commit.message | upper_first }} · {{ commit.author.timestamp | date(format="%Y-%m-%d", timezone="Europe/Prague") }} · `{{ commit.id | truncate(length=7, end="") }}`
+{% endif %}\
+{% endfor %}
+{% if title == "🔩 Technické změny" %}\
+</details>
+
+{% endif %}\
+{% endif %}\
+{% endfor %}
+{% if period != latest_period %}\
+</details>
+
+{% endif %}\
+{% endif %}\
+{% endfor %}\
+{% endif %}
+"""
+trim = true
+render_always = true
+footer = """
+<!-- Vygenerováno pomocí git-cliff; zdrojem pravdy je Git historie a cliff.toml. -->
+"""
+
+[git]
+conventional_commits = true
+filter_unconventional = false
+require_conventional = false
+split_commits = false
+commit_parsers = [
+  { message = "(?i)^chore(?:\\([^)]*\\))?: (?:update changelog|release)", skip = true },
+  { message = "^Merge ", skip = true },
+  { message = "^feat", group = "<!-- 0 -->✨ Nové funkce" },
+  { message = "^fix", group = "<!-- 1 -->🐛 Opravy" },
+  { message = "^perf", group = "<!-- 2 -->⚡ Výkon" },
+  { message = "^docs?", group = "<!-- 3 -->📚 Dokumentace" },
+  { message = "^revert", group = "<!-- 4 -->⏪ Vrácené změny" },
+  { message = "^(?:refactor|build|ci|test|style|chore)", group = "<!-- 9 -->🔩 Technické změny" },
+  { message = ".*", group = "<!-- 5 -->🧾 Ostatní změny" },
+]
+protect_breaking_commits = true
+filter_commits = false
+fail_on_unmatched_commit = false
+tag_pattern = "^$"
+topo_order = false
+topo_order_commits = false
+sort_commits = "newest"
+
+[remote]
+offline = true

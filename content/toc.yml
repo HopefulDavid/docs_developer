@@ -1,0 +1,32 @@
+- name: Vývoj
+  items:
+    - name: Programování
+      href: programming/
+    - name: IDE
+      href: ide/
+    - name: Verzování
+      href: vcs/
+    - name: Databáze
+      href: database/
+- name: Provoz
+  items:
+    - name: DevOps
+      href: devops/
+    - name: Virtualizace
+      href: virtualization/
+    - name: Síť
+      href: network/
+    - name: Operační systémy
+      href: operating-system/
+- name: AI
+  href: ai/
+- name: Tvorba
+  items:
+    - name: Dokumentace
+      href: documentation/
+    - name: Grafika
+      href: graphics/
+    - name: Video
+      href: video/
+- name: Tým
+  href: teamwork/

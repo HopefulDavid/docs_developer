@@ -1,0 +1,34 @@
+# Operační systémy
+
+Praktické poznámky k operačním systémům a jejich příkazovým nástrojům.
+
+## Přehled stránek
+
+<!-- přehled: generuje bun run build:overviews -->
+
+### Příkazová řádka
+
+| Stránka | Popis |
+| --- | --- |
+| [Jak číst zápis příkazů](command-line-syntax.md) | Parametry, nepovinné části a sestavení příkazu pro vlastní data. |
+
+### Notebooky
+
+| Stránka | Popis |
+| --- | --- |
+| [Nabíjení baterie na 80 %](laptop-battery.md) | Omezení nabíjení na 80 % přednostně bez aplikací, s postupy podle systému a výrobce a kontrolou výsledku. |
+
+### Windows
+
+| Stránka | Popis |
+| --- | --- |
+| [Windows](windows/index.md) | Místní účet, nastavení hodin a rychlé vstupy k běžným problémům Windows. |
+| [PixPin na Print Screen](windows/pixpin.md) | Nastavení PixPinu pro klávesu Print Screen a zapnutí nebo vypnutí historie snímků a oblastí ve Windows. |
+| [Instalátor nevidí SSD](windows/installation-missing-ssd.md) | Kontrola detekce SSD, načtení správného ovladače a ověření cílového disku. |
+| [Nelze odstranit položku](windows/cannot-delete-item.md) | Rozlišení zamčeného souboru, oprávnění a chybné cesty před přesným odstraněním. |
+| [Smart App Control – zablokovaná aplikace](windows/smart-app-control.md) | Postup při blokování důvěryhodné aplikace funkcí Smart App Control, dopad vypnutí a opětovné zapnutí ochrany. |
+| [Příkazový řádek (CMD)](windows/cmd.md) | Základní orientace v CMD, soubory, proměnné a dávkové skripty. |
+| [PowerShell](windows/powershell.md) | Objekty v rouře, soubory, proměnné, skripty a čitelné zacházení s chybami. |
+| [Prostředí PowerShellu](windows/terminal.md) | Profily PowerShellu, moduly a bezpečné nastavení Execution Policy. |
+
+<!-- /přehled -->

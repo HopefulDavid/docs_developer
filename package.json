@@ -1,0 +1,20 @@
+{
+  "name": "docs-developer",
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.4.3",
+  "devDependencies": {
+    "git-cliff": "2.13.1"
+  },
+  "scripts": {
+    "validate": "bun run check && bun run test && bun run build",
+    "check": "bun run --sequential \"check:*\"",
+    "check:overviews": "bun scripts/generate.js --check",
+    "test": "bun test",
+    "build": "bun run --sequential \"build:*\"",
+    "build:changelog": "git-cliff --config cliff.toml --output content/changelog.md",
+    "build:overviews": "bun scripts/generate.js",
+    "build:site": "rm -rf _site && dotnet docfx docfx.json --warningsAsErrors",
+    "preview": "dotnet docfx serve _site --hostname 127.0.0.1 --port 4173"
+  }
+}

@@ -1,0 +1,48 @@
+---
+description: "Automatické zahájení nahrávání a výběr profilu při spuštění."
+---
+
+# OBS Studio – parametry spuštění
+
+Parametry OBS umožňují vybrat profil, scénu a případně automaticky zahájit nahrávání nebo streamování.
+
+## Argumenty příkazové řádky
+
+`<název>` zastupuje přesný existující název v OBS.
+
+Uvozovky umožňují mezery.
+
+| Syntaxe argumentu | Význam |
+|---|---|
+| `--help` | Nápověda parametrů |
+| `--startrecording` | Zahájení nahrávání |
+| `--startstreaming` | Zahájení vysílání |
+| `--startvirtualcam` | Spuštění virtuální kamery |
+| `--startreplaybuffer` | Spuštění předem nastaveného replay bufferu |
+| `--collection "<název>"` | Výběr existující kolekce scén |
+| `--profile "<název>"` | Výběr existujícího profilu |
+| `--scene "<název>"` | Výběr scény |
+| `--studio-mode` | Režim Studio |
+| `--minimize-to-tray` | Minimalizace do oznamovací oblasti |
+| `--portable` | Přenosný režim |
+| `--multi` | Povolení více instancí bez varování |
+| `--verbose` | Podrobnější log |
+| `--safe-mode` | Diagnostický běh bez pluginů třetích stran, skriptů a websocketů |
+
+Parametr `--version` není dostupný ve Windows. [Oficiální parametry OBS](https://obsproject.com/kb/launch-parameters)
+
+## Příklad automatického spuštění nahrávání
+
+Zdroje, zvuk a cesta pro záznam se nejprve nastaví v OBS a krátký záznam se ručně vyzkouší.
+
+Následující příkaz pro **CMD ve Windows** ihned zahájí nahrávání:
+
+```cmd
+start "" /d "C:\Program Files\obs-studio\bin\64bit" obs64.exe --startrecording
+```
+
+Prázdný první argument je název okna pro příkaz `start`.
+
+`/d` nastavuje pracovní složku OBS.
+
+Cesta se upraví podle instalace a po spuštění se ověří indikátor záznamu i výsledný soubor. [Spuštění OBS](https://obsproject.com/kb/launch-parameters), [Příkaz start](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/start)

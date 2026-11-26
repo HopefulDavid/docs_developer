@@ -1,0 +1,15 @@
+{
+  "build": {
+    "template": ["default", "modern", "templates/material"],
+    "content": [{ "src": "content", "files": ["**/*.{md,yml}"] }],
+    "resource": [{ "src": "content", "files": ["images/**", "pdf/**"] }],
+    "output": "_site",
+    "globalMetadata": {
+      "_appName": "Vývojář",
+      "_appTitle": "Vývojář",
+      "_enableSearch": true,
+      "_lang": "cs",
+      "_disableContribution": true
+    }
+  }
+}
