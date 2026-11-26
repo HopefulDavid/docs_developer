@@ -4,7 +4,7 @@
   "type": "module",
   "packageManager": "bun@1.4.3",
   "devDependencies": {
-    "git-cliff": "2.13.1"
+    "git-cliff": "2.14.2"
   },
   "scripts": {
     "validate": "bun run check && bun run test && bun run build",
