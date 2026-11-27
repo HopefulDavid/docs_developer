@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Git – jak si vybrat způsob pr&#225;ce | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git – jak si vybrat způsob pr&#225;ce | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="V&#253;běr mezi jednou větv&#237;, kr&#225;tk&#253;mi pracovn&#237;mi větvemi a oddělen&#253;m vyd&#225;v&#225;n&#237;m.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/content/vcs/git/workflows.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git--jak-si-vybrat-způsob-práce">Git – jak si vybrat způsob práce</h1>
+
+<p>Workflow je dohoda, kde se vyvíjí, jak se kontroluje změna a kdy je hotová.</p>
+<p>Solo vývojář nepotřebuje povinně <code>develop</code> ani pull request pro každý commit.</p>
+<p>Potřebuje rozumět stavu projektu a umět se vrátit k funkční verzi.</p>
+<h2 id="volba-podle-situace">Volba podle situace</h2>
+<table>
+<thead>
+<tr>
+<th>Způsob</th>
+<th>Kdy se hodí</th>
+<th>Na co dát pozor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jedna větev <code>main</code></td>
+<td>Učení, poznámky, malý projekt a krátké postupné změny</td>
+<td>Každý commit přímo mění hlavní linii</td>
+</tr>
+<tr>
+<td><code>main</code> a krátké pracovní větve</td>
+<td>Funkce zabere více commitů, jde o experiment nebo se má před sloučením posoudit celý rozdíl</td>
+<td>Větev průběžně dokončovat a nenechat ji dlouho rozcházet s <code>main</code></td>
+</tr>
+<tr>
+<td><code>main</code> a <code>develop</code></td>
+<td>Stabilní vydání má zůstat oddělené od rozpracované příští verze</td>
+<td>Opravy vydané verze vracet i do vývoje</td>
+</tr>
+<tr>
+<td>Git Flow</td>
+<td>Plánované verze potřebují samostatnou stabilizaci, release a hotfix větve</td>
+<td>Více slučování a pravidel, která u malého projektu nemusí přinést užitek</td>
+</tr>
+</tbody>
+</table>
+<p>Pro běžnou solo aplikaci jsou krátké větve užitečný výchozí bod.</p>
+<p>Pokud tě jejich správa zdržuje u drobných změn, jedna větev je plnohodnotná možnost.</p>
+<p>Pravidla existujícího repozitáře mají přednost před zde uvedeným výběrem.</p>
+<h2 id="postup-podle-workflow">Postup podle workflow</h2>
+<p><a id="varianta-a-jedna-větev"></a>
+<a id="varianta-b-krátká-větev-pro-jednu-změnu"></a>
+<a id="varianta-c-stabilní-a-vývojová-větev"></a></p>
+<div class="tabGroup" id="tabgroup_1">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_1_workflow-single" role="tab" aria-controls="tabpanel_1_workflow-single" data-tab="workflow-single" tabindex="0" aria-selected="true">Jedna větev</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_1_workflow-feature" role="tab" aria-controls="tabpanel_1_workflow-feature" data-tab="workflow-feature" tabindex="-1">Krátké pracovní větve</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_1_workflow-develop" role="tab" aria-controls="tabpanel_1_workflow-develop" data-tab="workflow-develop" tabindex="-1">Stabilní a vývojová větev</a>
+</li>
+</ul>
+<section id="tabpanel_1_workflow-single" role="tabpanel" data-tab="workflow-single">
+
+<p>Na <code>main</code> se načte vzdálený stav, upraví a otestují se soubory, vznikne commit a odešle se.</p>
+<pre><code class="lang-text">main: A ── B ── C
+</code></pre>
+<p>Písmena představují postupně uložené stavy.</p>
+<p>Rozpracované změny mezi nimi nejsou v historii.</p>
+<p>Postup je v <a href="in-practice.html">běžném pracovním dni</a>, kde se jednoduše vynechá vytvoření pracovní větve.</p>
+</section>
+<section id="tabpanel_1_workflow-feature" role="tabpanel" data-tab="workflow-feature" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-text">main:           A ───────── M
+                 \         /
+feature/hledani: B ─────── C
+</code></pre>
+<p><code>B</code> a <code>C</code> tvoří jednu funkci.</p>
+<p><code>M</code> je její sloučení do hlavní větve.</p>
+<ol>
+<li>Z aktuální <code>main</code> vznikne <code>feature/hledani</code>.</li>
+<li>Na této větvi se pracuje a commituje, dokud funkce nefunguje.</li>
+<li>Celý rozdíl se porovná proti <code>main</code> a spustí se testy.</li>
+<li>Sloučení proběhne lokálně nebo přes pull request.</li>
+<li>Ověřená <code>main</code> se odešle a teprve potom se odstraní dokončená pracovní větev.</li>
+</ol>
+<p>Lokální merge je vhodný, když není potřeba serverová kontrola.</p>
+<p><a href="branches/pull-request.html">Pull request</a> přidá přehled změn, výsledky CI a vlastní review před sloučením.</p>
+<p>Nemusí ho schvalovat druhá osoba, pokud to pravidla hostingu nevyžadují.</p>
+</section>
+<section id="tabpanel_1_workflow-develop" role="tabpanel" data-tab="workflow-develop" aria-hidden="true" hidden="hidden">
+
+<p><code>main</code> obsahuje vydaný stav a <code>develop</code> změny pro příští vydání.</p>
+<p>Pracovní větve vznikají z <code>develop</code> a do <code>main</code> se přenáší až připravené vydání.</p>
+<p>Tato varianta přidává smysluplnou hranici například při vydávání desktopové aplikace po verzích.</p>
+<p>Sama o sobě ale nevyžaduje všechny větve Git Flow.</p>
+<p>Pro stabilizační období a urgentní opravy slouží <a href="git-flow.html">Git Flow</a>.</p>
+</section>
+</div>
+<h2 id="jak-změny-slučovat">Jak změny slučovat</h2>
+<table>
+<thead>
+<tr>
+<th>Metoda</th>
+<th>Výsledek</th>
+<th>Rozumné použití</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fast-forward</td>
+<td>Cílová větev se posune na již existující commit</td>
+<td>Krátká větev bez souběžných změn</td>
+</tr>
+<tr>
+<td>Merge commit</td>
+<td>Zachová jednotlivé commity a zaznamená spojení linií</td>
+<td>Má se uchovat hranice funkce a její historie</td>
+</tr>
+<tr>
+<td>Squash</td>
+<td>Celá funkce se uloží jako jeden nový commit</td>
+<td>Pomocné pracovní commity nejsou užitečné v hlavní historii</td>
+</tr>
+<tr>
+<td>Rebase</td>
+<td>Přehraje vlastní commity na novější základ a změní jejich ID</td>
+<td>Aktualizace soukromé pracovní větve před sloučením</td>
+</tr>
+</tbody>
+</table>
+<p>Rebase není odeslání ani dokončení funkce.</p>
+<p>Po něm stále následuje testování a začlenění do cílové větve.</p>
+<p>Konkrétní příkazy, konflikt a návrat vysvětluje <a href="merging.html">slučování větví</a>.</p>
+<h2 id="co-si-zapsat-do-vlastního-projektu">Co si zapsat do vlastního projektu</h2>
+<ul>
+<li>Která větev znamená stabilní stav.</li>
+<li>Z jaké větve začíná nová práce a kam se vrací.</li>
+<li>Zda se slučuje lokálně, nebo přes PR a CI.</li>
+<li>Jak se označí <a href="releases.html">vydaná verze</a> a kam se uloží <a href="backups.html">záloha</a>.</li>
+</ul>
+<p>Git podporuje různé modely práce.</p>
+<p>Porovnání navazuje na <a href="https://git-scm.com/book/en/v2/Git-Branching-Branching-Workflows">Git Book: workflow větví</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

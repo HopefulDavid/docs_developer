@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+      <title>Git – co dělat, když se něco nepovedlo | V&#253;voj&#225;ř </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Git – co dělat, když se něco nepovedlo | V&#253;voj&#225;ř ">
+      
+      <meta name="description" content="Volba opravy podle stavu změny, z&#225;chrana přes reflog a řešen&#237; běžn&#253;ch chyb.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HopefulDavid/docs_developer/blob/main/content/vcs/git/recovery.md/#L1">
+      <meta name="loc:inThisArticle" content="V tomto čl&#225;nku">
+      <meta name="loc:searchResultsCount" content="V&#253;sledky: {count} pro „{query}“">
+      <meta name="loc:searchNoResults" content="Pro „{query}“ nebyly nalezeny ž&#225;dn&#233; v&#253;sledky">
+      <meta name="loc:tocFilter" content="Filtrovat čl&#225;nky">
+      <meta name="loc:nextArticle" content="Dalš&#237;">
+      <meta name="loc:prevArticle" content="Předchoz&#237;">
+      <meta name="loc:themeLight" content="Světl&#253;">
+      <meta name="loc:themeDark" content="Tmav&#253;">
+      <meta name="loc:themeAuto" content="Automatick&#253;">
+      <meta name="loc:changeTheme" content="Změnit motiv">
+      <meta name="loc:copy" content="Kop&#237;rovat">
+      <meta name="loc:downloadPdf" content="St&#225;hnout PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="V&#253;voj&#225;ř">
+            V&#253;voj&#225;ř
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Hledat" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="git--co-dělat-když-se-něco-nepovedlo">Git – co dělat, když se něco nepovedlo</h1>
+
+<p>Nejdříve se zjistí, zda je změna jen v souborech, připravená v indexu, uložená místně nebo už zveřejněná.</p>
+<p>Podle toho se vybere oprava, která zachová potřebnou práci.</p>
+<p><a id="začni-kontrolou"></a></p>
+<h2 id="úvodní-kontrola">Úvodní kontrola</h2>
+<pre><code class="lang-bash">git status
+git log --oneline -8
+git diff
+git diff --cached
+</code></pre>
+<p>Příkazy pouze čtou stav a fungují v PowerShellu i Bashi.</p>
+<p>Při nejistotě se před opravou uchová kopie rozpracovaných souborů mimo repozitář.</p>
+<p>Samotná záložní větev chrání jen commity.</p>
+<p><a id="najdi-správný-případ"></a></p>
+<h2 id="správný-případ">Správný případ</h2>
+<table>
+<thead>
+<tr>
+<th>Situace</th>
+<th>Postup</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Do commitu je připravený špatný soubor</td>
+<td>Vyřazení z indexu podle následujícího příkladu</td>
+</tr>
+<tr>
+<td>Necommitovaná úprava souboru se má zahodit</td>
+<td>Obnovení souboru až po kontrole diffu</td>
+</tr>
+<tr>
+<td>Oprava zprávy nebo obsahu místního commitu</td>
+<td><a href="history/fix-commits.html">Amend a fixup</a></td>
+</tr>
+<tr>
+<td>Chybný commit už je na serveru</td>
+<td><a href="history/delete-commits.html">Revert</a></td>
+</tr>
+<tr>
+<td>Commit vznikl na špatné větvi</td>
+<td><a href="history/move-commits.html">Přesun nebo cherry-pick</a></td>
+</tr>
+<tr>
+<td>Probíhá konflikt</td>
+<td><a href="merging.html#konflikt-git-pot%C5%99ebuje-rozhodnut%C3%AD-o-obsahu">Pokračování nebo zrušení operace</a></td>
+</tr>
+<tr>
+<td>Zmizela větev nebo je historie posunutá špatně</td>
+<td>Záchrana pomocí reflogu níže</td>
+</tr>
+<tr>
+<td>Není jasné, který commit způsobil chybu</td>
+<td><a href="history/reading.html">Historie a bisect</a></td>
+</tr>
+<tr>
+<td>Push je odmítnutý</td>
+<td><a href="synchronization.html#kdy%C5%BE-push-sel%C5%BEe">Synchronizace</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="vyřazení-souboru-z-indexu">Vyřazení souboru z indexu</h2>
+<p>Příklad předpokládá repozitář s alespoň jedním commitem:</p>
+<pre><code class="lang-bash">git restore --staged -- README.md
+git diff -- README.md
+</code></pre>
+<p><code>README.md</code> se vrátí z připravených do nepřipravených změn.</p>
+<p>Jeho upravený obsah na disku zůstane.</p>
+<p>U nového souboru <strong>před prvním commitem repozitáře</strong> ještě neexistuje HEAD, proto ho z indexu vyřadí <code>git rm --cached -- README.md</code>.</p>
+<h2 id="zahození-necommitované-úpravy-souboru">Zahození necommitované úpravy souboru</h2>
+<p>Nejprve kontrola rozdílu:</p>
+<pre><code class="lang-bash">git diff -- README.md
+git restore -- README.md
+</code></pre>
+<p>Druhý příkaz <strong>přepíše pracovní soubor obsahem indexu</strong>.</p>
+<p>Pokud nic není připravené, jde obvykle o poslední commit.</p>
+<p>Pro výslovný návrat k poslednímu commitu v indexu i souboru:</p>
+<pre><code class="lang-bash">git restore --source=HEAD --staged --worktree -- README.md
+</code></pre>
+<p>Tato varianta zahodí připravené i nepřipravené změny daného souboru.</p>
+<p>Necommitovaný obsah nemusí být možné z Gitu obnovit.</p>
+<p>Pomoci může historie editoru nebo záloha.</p>
+<h2 id="obnovení-smazaného-souboru-ze-starší-verze">Obnovení smazaného souboru ze starší verze</h2>
+<p>Obecná syntaxe:</p>
+<pre><code class="lang-text">git restore --source=&lt;commit-nebo-tag&gt; -- &lt;soubor&gt;
+</code></pre>
+<p>Například <code>git restore --source=v1.0.0 -- README.md</code> obnoví soubor z existujícího tagu <code>v1.0.0</code> do pracovní složky.</p>
+<p>Pak se zkontroluje <code>git diff</code> a obnovení se běžně commitne.</p>
+<p>Celá větev se tím nepřesouvá do minulosti.</p>
+<h2 id="záchrana-přes-reflog">Záchrana přes reflog</h2>
+<p>Reflog je místní záznam dřívějších poloh HEAD a větví.</p>
+<p>Může najít commit, na který už žádná běžná větev neukazuje.</p>
+<pre><code class="lang-bash">git reflog --date=local -20
+</code></pre>
+<p>ID se vybírá podle obsahu a času, ne pouze podle pořadového čísla z cizího příkladu.</p>
+<pre><code class="lang-text">git show --stat &lt;nalezený-commit&gt;
+git branch zachrana &lt;nalezený-commit&gt;
+git log --oneline zachrana -5
+</code></pre>
+<p>Nová větev zpřístupní nalezenou historii, aniž by přepsala aktuální pracovní soubory.</p>
+<p>Po kontrole na ni lze přepnout v čistém stromu nebo z ní přenést konkrétní commit.</p>
+<p>Reflog neobnoví libovolný nikdy neuložený soubor a staré nedosažitelné objekty mohou být časem odstraněné údržbou.</p>
+<h2 id="detached-head">Detached HEAD</h2>
+<p>Při prohlížení tagu či starého commitu může HEAD ukazovat přímo na commit bez větve.</p>
+<p>Vzniklou práci zachová větev vytvořená ještě před odchodem:</p>
+<pre><code class="lang-bash">git switch -c zachrana-experimentu
+</code></pre>
+<p>Existující commity tím dostanou trvalé pojmenování.</p>
+<p>Bez změn stačí běžné <code>git switch main</code>.</p>
+<h2 id="nesledované-soubory-a-tajemství">Nesledované soubory a tajemství</h2>
+<p><code>git clean -nd</code> pouze vypíše nesledované soubory a složky navržené k odstranění.</p>
+<p>Ke skutečnému odstranění se po záloze hodí spíše přesně vybrané položky v editoru či správci souborů.</p>
+<p><code>clean</code> nemá vlastní koš ani obnovu a <code>-x</code> by zahrnulo i ignorované soubory.</p>
+<p>Token či heslo, které se dostalo do historie, se nejprve zneplatní a nahradí.</p>
+<p>Odstranění aktuálního souboru ani reset neodstraní všechny kopie zveřejněného údaje.</p>
+<p>Zdroje: <a href="https://git-scm.com/docs/git-restore">restore</a>, <a href="https://git-scm.com/docs/git-reflog">reflog</a>, <a href="https://git-scm.com/docs/git-clean">clean</a>.</p>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
